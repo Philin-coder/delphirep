@@ -1,0 +1,229 @@
+unit uins_pas2;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Grids, DBGrids, StdCtrls, ExtCtrls, ComCtrls, DBCtrls;
+
+type
+  TFins_pass = class(TForm)
+    PageControl1: TPageControl;
+    TabSheet1: TTabSheet;
+    GroupBox1: TGroupBox;
+    GroupBox2: TGroupBox;
+    GroupBox3: TGroupBox;
+    DBGrid1: TDBGrid;
+    Button1: TButton;
+    LabeledEdit5: TLabeledEdit;
+    LabeledEdit1: TLabeledEdit;
+    TabSheet2: TTabSheet;
+    GroupBox5: TGroupBox;
+    GroupBox6: TGroupBox;
+    Panel1: TPanel;
+    RadioButton1: TRadioButton;
+    RadioButton2: TRadioButton;
+    RadioButton3: TRadioButton;
+    RadioButton4: TRadioButton;
+    RadioButton5: TRadioButton;
+    LabeledEdit13: TLabeledEdit;
+    DBGrid2: TDBGrid;
+    TabSheet3: TTabSheet;
+    GroupBox4: TGroupBox;
+    Panel2: TPanel;
+    RadioButton6: TRadioButton;
+    RadioButton7: TRadioButton;
+    RadioButton8: TRadioButton;
+    RadioButton9: TRadioButton;
+    RadioButton10: TRadioButton;
+    bdbdbg: TGroupBox;
+    DBGrid3: TDBGrid;
+    Label1: TLabel;
+    DBLookupComboBox1: TDBLookupComboBox;
+    DBLookupComboBox2: TDBLookupComboBox;
+    DBLookupComboBox3: TDBLookupComboBox;
+    DBLookupComboBox4: TDBLookupComboBox;
+    DBLookupComboBox5: TDBLookupComboBox;
+    procedure Button1Click(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure RadioButton1Click(Sender: TObject);
+    procedure LabeledEdit13Change(Sender: TObject);
+    procedure RadioButton2Click(Sender: TObject);
+    procedure RadioButton3Click(Sender: TObject);
+    procedure RadioButton4Click(Sender: TObject);
+    procedure RadioButton5Click(Sender: TObject);
+    procedure RadioButton7Click(Sender: TObject);
+    procedure RadioButton8Click(Sender: TObject);
+    procedure RadioButton9Click(Sender: TObject);
+    procedure RadioButton10Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Fins_pass: TFins_pass;
+  var qstr:string;
+  var t:Integer;
+  var udal:Integer;
+
+implementation
+
+uses Uap, Udm, DB;
+
+{$R *.dfm}
+
+procedure TFins_pass.Button1Click(Sender: TObject);
+begin
+try
+fdm.ins.Parameters.ParamValues['@user_pass']:=LabeledEdit5.Text;
+fdm.ins.Parameters.ParamValues['@usver_name']:=LabeledEdit1.Text;
+if ((LabeledEdit5.Text='') or(LabeledEdit1.Text=''))  then
+begin
+ShowMessage('Проверьте поля');
+Exit;
+end;
+fdm.ins.ExecProc;
+ShowMessage('Изменения внесены');
+fdm.Querypas.Close;
+fdm.Querypas.sql.Clear;
+fdm.Querypas.sql.Text:='select * from usver';
+fdm.Querypas.Open;
+fdm.Querypas.Next;
+fdm.Querypas.first;
+fdm.Querypas.Last;
+except
+ShowMessage('Ошибка выполнения');
+Exit;
+end;
+
+end;
+
+procedure TFins_pass.FormActivate(Sender: TObject);
+begin
+fdm.Querymen.Open;
+fdm.Querypas.Open;
+fdm.Queryklient.Open;
+fdm.Queryplan.Open;
+fdm.Queryusl.Open;
+fdm.Queryokaz.Open;
+end;
+
+procedure TFins_pass.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+fdm.Querymen.Close;
+fdm.Querypas.Close;
+fdm.Queryklient.Close;
+fdm.Queryplan.Close;
+fdm.Queryusl.Close;
+fdm.Queryokaz.close;
+end;
+
+procedure TFins_pass.LabeledEdit13Change(Sender: TObject);
+begin
+
+case t of
+1:
+begin
+fdm.Querysl.Close;
+fdm.Querysl.SQL.Clear;
+qstr:='select * from klient where klient.naim like '+QuotedStr(LabeledEdit13.Text+'%');
+fdm.Querysl.SQL.Text:=qstr;
+fdm.Queryusl.ExecSQL;
+fdm.Querysl.Open;
+end;
+2:
+begin
+fdm.Querysl.Close;
+fdm.Querysl.SQL.Clear;
+qstr:='select * from manager where manager.fio like '+QuotedStr(LabeledEdit13.Text+'%');
+fdm.Querysl.SQL.Text:=qstr;
+fdm.Queryusl.ExecSQL;
+fdm.Querysl.Open;
+end;
+3:
+begin
+fdm.Querysl.Close;
+fdm.Querysl.SQL.Clear;
+qstr:='select * from mplan where mplan.nazv like '+QuotedStr(LabeledEdit13.Text+'%');
+fdm.Querysl.SQL.Text:=qstr;
+fdm.Queryusl.ExecSQL;
+fdm.Querysl.Open;
+end;
+4:
+begin
+fdm.Querysl.Close;
+fdm.Querysl.SQL.Clear;
+qstr:='select * from  usluga where usluga.opis like '+QuotedStr(LabeledEdit13.Text+'%');
+fdm.Querysl.SQL.Text:=qstr;
+fdm.Queryusl.ExecSQL;
+fdm.Querysl.Open;
+end;
+5:
+begin
+fdm.Querysl.Close;
+fdm.Querysl.SQL.Clear;
+qstr:='select * from  usver where usver.user_pas like  '+QuotedStr(LabeledEdit13.Text+'%');
+fdm.Querysl.SQL.Text:=qstr;
+fdm.Queryusl.ExecSQL;
+fdm.Querysl.Open;
+end;
+end;//case
+end;
+
+procedure TFins_pass.RadioButton10Click(Sender: TObject);
+begin
+DBLookupComboBox5.Visible:=true;
+end;
+
+procedure TFins_pass.RadioButton1Click(Sender: TObject);
+begin
+if RadioButton1.Checked=True then
+begin
+LabeledEdit13.EditLabel.Caption:='Поиск клиента по имени';
+t:=1;
+end;
+end;
+
+procedure TFins_pass.RadioButton2Click(Sender: TObject);
+begin
+LabeledEdit13.EditLabel.Caption:='Поиск менеджера по имени';
+t:=2;
+end;
+
+procedure TFins_pass.RadioButton3Click(Sender: TObject);
+begin
+LabeledEdit13.EditLabel.Caption:='Плана  по Названию';
+t:=3;
+end;
+
+procedure TFins_pass.RadioButton4Click(Sender: TObject);
+begin
+LabeledEdit13.EditLabel.Caption:='услуги   по описаниюю';
+t:=4;
+end;
+
+procedure TFins_pass.RadioButton5Click(Sender: TObject);
+begin
+LabeledEdit13.EditLabel.Caption:='Пароля по Юзерю';
+t:=5;
+end;
+
+procedure TFins_pass.RadioButton7Click(Sender: TObject);
+begin
+DBLookupComboBox2.Visible:=true;
+end;
+
+procedure TFins_pass.RadioButton8Click(Sender: TObject);
+begin
+DBLookupComboBox3.Visible:=true;
+end;
+
+procedure TFins_pass.RadioButton9Click(Sender: TObject);
+begin
+DBLookupComboBox4.Visible:=true;
+end;
+
+end.

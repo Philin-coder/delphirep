@@ -1,0 +1,111 @@
+object dm: Tdm
+  Left = 256
+  Height = 240
+  Top = 145
+  Width = 320
+  Caption = 'dm'
+  LCLVersion = '2.0.2.0'
+  object SQLQuery1: TSQLQuery
+    FieldDefs = <    
+      item
+        Name = 'id_stud'
+        Attributes = [faReadonly]
+        DataType = ftAutoInc
+        Precision = -1
+      end    
+      item
+        Name = 'fio'
+        DataType = ftString
+        Precision = -1
+        Size = 510
+      end    
+      item
+        Name = 'tel'
+        DataType = ftString
+        Precision = -1
+        Size = 150
+      end    
+      item
+        Name = 'persdata'
+        DataType = ftString
+        Precision = -1
+        Size = 500
+      end    
+      item
+        Name = 'bdate'
+        DataType = ftDate
+        Precision = -1
+      end    
+      item
+        Name = 'id_gruppa'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'emai'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'skype'
+        DataType = ftString
+        Precision = -1
+        Size = 190
+      end    
+      item
+        Name = 'fiorod'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'telrod'
+        DataType = ftString
+        Precision = -1
+        Size = 500
+      end    
+      item
+        Name = 'whereisthen'
+        DataType = ftString
+        Precision = -1
+        Size = 100
+      end    
+      item
+        Name = 'datno'
+        DataType = ftDate
+        Precision = -1
+      end    
+      item
+        Name = 'dateko'
+        DataType = ftDate
+        Precision = -1
+      end>
+    SQL.Strings = (
+      'select * from stud'
+    )
+    Params = <>
+    left = 144
+    top = 16
+  end
+  object DataSource1: TDataSource
+    DataSet = SQLQuery1
+    left = 88
+    top = 16
+  end
+  object SQLConnector1: TSQLConnector
+    Connected = True
+    LoginPrompt = False
+    DatabaseName = 'serc'
+    KeepConnection = True
+    CharSet = 'Cyrillic_General_CI_AS'
+    ConnectorType = 'ODBC'
+    left = 200
+    top = 16
+  end
+  object SQLTransaction1: TSQLTransaction
+    Active = False
+    left = 24
+    top = 24
+  end
+end

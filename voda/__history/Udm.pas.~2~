@@ -1,0 +1,23 @@
+unit Udm;
+
+interface
+
+uses
+  SysUtils, Classes;
+
+type
+  TfDM = class(TDataModule)
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  fDM: TfDM;
+
+implementation
+
+{$R *.dfm}
+
+end.

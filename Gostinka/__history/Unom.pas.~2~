@@ -1,0 +1,26 @@
+unit Unom;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs;
+
+type
+  TFnom = class(TForm)
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Fnom: TFnom;
+
+implementation
+
+uses Udm, Umain;
+
+{$R *.dfm}
+
+end.

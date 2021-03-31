@@ -1,0 +1,24 @@
+unit Uopl;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs;
+
+type
+  TFopl = class(TForm)
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Fopl: TFopl;
+
+implementation
+
+{$R *.dfm}
+
+end.

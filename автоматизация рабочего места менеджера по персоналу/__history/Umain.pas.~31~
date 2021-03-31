@@ -1,0 +1,340 @@
+unit Umain;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ComCtrls, StdCtrls, ExtCtrls, DBCtrls, Grids, DBGrids,DateUtils;
+
+type
+  TFmain = class(TForm)
+    PageControl1: TPageControl;
+    TabSheet1: TTabSheet;
+    TabSheet2: TTabSheet;
+    PageControl2: TPageControl;
+    TabSheet3: TTabSheet;
+    GroupBox1: TGroupBox;
+    bu: TGroupBox;
+    LabeledEdit1: TLabeledEdit;
+    LabeledEdit2: TLabeledEdit;
+    LabeledEdit3: TLabeledEdit;
+    LabeledEdit4: TLabeledEdit;
+    Label1: TLabel;
+    Label2: TLabel;
+    DBLookupComboBox1: TDBLookupComboBox;
+    Button1: TButton;
+    DBGrid1: TDBGrid;
+    TabSheet4: TTabSheet;
+    GroupBox4: TGroupBox;
+    GroupBox2: TGroupBox;
+    GroupBox3: TGroupBox;
+    Button2: TButton;
+    DBGrid2: TDBGrid;
+    LabeledEdit5: TLabeledEdit;
+    LabeledEdit6: TLabeledEdit;
+    LabeledEdit7: TLabeledEdit;
+    Label3: TLabel;
+    LabeledEdit8: TLabeledEdit;
+    LabeledEdit9: TLabeledEdit;
+    LabeledEdit10: TLabeledEdit;
+    DateTimePicker1: TDateTimePicker;
+    TabSheet5: TTabSheet;
+    GroupBox5: TGroupBox;
+    GroupBox6: TGroupBox;
+    GroupBox7: TGroupBox;
+    Button3: TButton;
+    LabeledEdit11: TLabeledEdit;
+    Label4: TLabel;
+    DateTimePicker2: TDateTimePicker;
+    Label5: TLabel;
+    DBLookupComboBox2: TDBLookupComboBox;
+    LabeledEdit12: TLabeledEdit;
+    DBLookupComboBox3: TDBLookupComboBox;
+    Label6: TLabel;
+    DBGrid3: TDBGrid;
+    TabSheet6: TTabSheet;
+    Panel1: TPanel;
+    Panel2: TPanel;
+    GroupBox8: TGroupBox;
+    GroupBox9: TGroupBox;
+    GroupBox10: TGroupBox;
+    Button4: TButton;
+    DBGrid4: TDBGrid;
+    LabeledEdit13: TLabeledEdit;
+    LabeledEdit14: TLabeledEdit;
+    Label7: TLabel;
+    DBLookupComboBox4: TDBLookupComboBox;
+    GroupBox11: TGroupBox;
+    GroupBox12: TGroupBox;
+    GroupBox13: TGroupBox;
+    Button5: TButton;
+    DBGrid5: TDBGrid;
+    Label8: TLabel;
+    DBLookupComboBox5: TDBLookupComboBox;
+    Label9: TLabel;
+    DBLookupComboBox6: TDBLookupComboBox;
+    Label10: TLabel;
+    DateTimePicker3: TDateTimePicker;
+    PageControl3: TPageControl;
+    g: TTabSheet;
+    GroupBox14: TGroupBox;
+    DBGrid6: TDBGrid;
+    GroupBox15: TGroupBox;
+    Button6: TButton;
+    Button7: TButton;
+    GroupBox16: TGroupBox;
+    Label11: TLabel;
+    Label12: TLabel;
+    DateTimePicker4: TDateTimePicker;
+    DateTimePicker5: TDateTimePicker;
+    TabSheet8: TTabSheet;
+    GroupBox17: TGroupBox;
+    Label13: TLabel;
+    DateTimePicker6: TDateTimePicker;
+    GroupBox18: TGroupBox;
+    DBGrid7: TDBGrid;
+    GroupBox19: TGroupBox;
+    Button8: TButton;
+    Button9: TButton;
+    procedure Button1Click(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure LabeledEdit4KeyPress(Sender: TObject; var Key: Char);
+    procedure Button2Click(Sender: TObject);
+    procedure LabeledEdit9KeyPress(Sender: TObject; var Key: Char);
+    procedure Button3Click(Sender: TObject);
+    procedure Button4Click(Sender: TObject);
+    procedure LabeledEdit14KeyPress(Sender: TObject; var Key: Char);
+    procedure Button5Click(Sender: TObject);
+    procedure DateTimePicker4Change(Sender: TObject);
+    procedure DateTimePicker5Change(Sender: TObject);
+    function DateToStr_(Dat : TDate): String;
+
+  private
+
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Fmain: TFmain;
+
+
+
+implementation
+
+uses Udm, ureg, DB;
+
+{$R *.dfm}
+function TFmain.DateToStr_(Dat : TDate): String;
+begin
+  Result:= IntToStr(MonthOf(Dat))+'.'
+  +IntToStr(DayOf(Dat))+'.'
+  +IntToStr(YearOf(Dat));
+end;
+
+
+
+procedure TFmain.Button1Click(Sender: TObject);
+begin
+try
+fdm.ins_manager.Parameters.ParamByName('@fio').Value:=LabeledEdit1.Text;
+fdm.ins_manager.Parameters.ParamByName('@cont').Value:=LabeledEdit2.Text;
+fdm.ins_manager.Parameters.ParamByName('@email').Value:=LabeledEdit3.Text;
+fdm.ins_manager.Parameters.ParamByName('@phone').Value:=LabeledEdit4.Text;
+fdm.ins_manager.Parameters.ParamByName('@User_id').Value:=fdm.Querymen.FieldByName('User_id').AsString;
+if (LabeledEdit1.Text='') or(LabeledEdit2.Text='') or(LabeledEdit3.Text=' ') or (LabeledEdit4.Text='') then
+begin
+ShowMessage('проверьте поля');
+exit;
+end;
+fdm.ins_manager.ExecProc;
+fdm.Querymen.close;
+fdm.Querymen.SQL.Clear;
+fdm.Querymen.sql.Text:='select * from manager';
+fdm.Querymen.Open;
+fdm.Querymen.last;
+except
+ShowMessage('Ошибка выполнения');
+end
+end;
+
+procedure TFmain.Button2Click(Sender: TObject);
+begin
+try
+fdm.ins_klient.Parameters.ParamByName('@naim').Value:=LabeledEdit5.Text;
+fdm.ins_klient.Parameters.ParamByName('@otch').Value:=LabeledEdit7.Text;
+fdm.ins_klient.Parameters.ParamByName('@snmae').Value:=LabeledEdit6.Text;
+fdm.ins_klient.Parameters.ParamByName('@b_date').Value:=DateToStr(DateTimePicker1.Date);
+fdm.ins_klient.Parameters.ParamByName('@cont').Value:=LabeledEdit8.Text;
+fdm.ins_klient.Parameters.ParamByName('@phone').Value:=StrToInt(LabeledEdit9.Text);
+fdm.ins_klient.Parameters.ParamByName('@email').Value:=LabeledEdit10.Text;
+if (LabeledEdit5.Text='')or(LabeledEdit7.Text='') or(LabeledEdit6.Text='') or(DateTimePicker1.Date=Now)or(LabeledEdit8.Text='')or(LabeledEdit9.Text='') or(LabeledEdit10.Text='') then
+begin
+ShowMessage('проверьте поля');
+exit;
+end;
+fdm.ins_klient.ExecProc;
+
+fdm.Queryklient.Close;
+fdm.Queryklient.SQL.Clear;
+fdm.Queryklient.SQL.Text:='select * from klient';
+fdm.Queryklient.Open;
+fdm.Queryklient.Last;
+except
+
+ShowMessage('Ошибка выполнения');
+end;
+end;
+
+procedure TFmain.Button3Click(Sender: TObject);
+begin
+try
+fdm.ins_mplan.Parameters.ParamByName('@nazv').Value:=LabeledEdit11.Text;
+fdm.ins_mplan.Parameters.ParamByName('@date_n').Value:=DateToStr(DateTimePicker2.Date);
+fdm.ins_mplan.Parameters.ParamByName('@klient_id').Value:=fdm.Queryklient.FieldByName('klient_id').AsString;
+fdm.ins_mplan.Parameters.ParamByName('@opis').Value:=LabeledEdit12.Text;
+fdm.ins_mplan.Parameters.ParamByName('@maneger_id').Value:=fdm.Querymen.FieldByName('maneger_id').AsString;
+if (LabeledEdit11.Text='')or(DateTimePicker2.Date=Now) or(LabeledEdit12.Text='') then
+begin
+ShowMessage('проверьте поля');
+exit;
+end;
+fdm.ins_mplan.ExecProc;
+fdm.Queryplan.Close;
+fdm.Queryplan.SQL.Clear;
+fdm.Queryplan.SQL.Text:='select * from mplan';
+fdm.Queryplan.Open;
+fdm.Queryplan.Last;
+except
+ShowMessage('Ошибка выполнения');
+end;
+end;
+
+procedure TFmain.Button4Click(Sender: TObject);
+begin
+try
+    fdm.ins_usluga.Parameters.ParamByName('@opis').Value:=LabeledEdit13.Text;
+    fdm.ins_usluga.Parameters.ParamByName('@cost').Value:=StrToFloat(LabeledEdit14.Text);
+    fdm.ins_usluga.Parameters.ParamByName('@klient_id').Value:=FDM.Queryklient.FieldByName('klient_id').AsString;
+if (LabeledEdit13.Text='') or(LabeledEdit14.Text='')  then
+begin
+  ShowMessage('проверьте поля');
+  Exit;
+end;
+FDM.ins_usluga.ExecProc;
+FDM.Queryusl.Close;
+FDM.Queryusl.sql.Clear;
+FDM.Queryusl.SQL.Text:='select * from usluga where usluga.date_o is null';
+FDM.Queryusl.Open;
+fdm.Queryusl.Last;
+except
+ShowMessage('Ошибка выполнения');
+end;
+end;
+
+procedure TFmain.Button5Click(Sender: TObject);
+begin
+try
+fdm.okaz_usl.Parameters.ParamByName('@id_usl').Value:=fdm.Queryusl.FieldByName('id_usl').AsString;
+fdm.okaz_usl.Parameters.ParamByName('@klient_id').Value:=fdm.Queryklient.FieldByName('klient_id').AsString;
+fdm.okaz_usl.Parameters.ParamByName('@date_o').Value:=DateToStr(DateTimePicker3.Date);
+if (DateTimePicker3.Date=Now) then
+begin
+  ShowMessage('провекрьте поля');
+  Exit;
+end;
+fdm.okaz_usl.ExecProc;
+fdm.Queryokaz.Close;
+fdm.Queryokaz.sql.Clear;
+fdm.Queryokaz.SQL.Text:='select * from usluga where usluga.date_o is  not null';
+fdm.Queryokaz.Open;
+fdm.Queryokaz.Last;
+
+FDM.Queryusl.Close;
+FDM.Queryusl.sql.Clear;
+FDM.Queryusl.SQL.Text:='select * from usluga where usluga.date_o is null';
+FDM.Queryusl.Open;
+fdm.Queryusl.Last;
+
+except
+ShowMessage('Ошибка выполнения');
+end;
+end;
+
+procedure TFmain.DateTimePicker4Change(Sender: TObject);
+begin
+//exec report1 '2020-01-01','2020-12-12'
+//exec report1 '2005-01-01','2010-12-12'{не рвыводит, для проверки}
+fdm.Querysl.Close;
+fdm.Querysl.SQL.Clear;
+fdm.Querysl.SQL.Text:='exec report1 '+QuotedStr(DateToStr_(DateTimePicker4.Date))+','+QuotedStr(DateToStr(DateTimePicker5.Date));
+fdm.Querysl.ExecSQL;
+//ShowMessage(fdm.Querysl.SQL.Text);
+fdm.Querysl.Open;
+fdm.Querysl.Close;
+fdm.Querysl.Open;
+end;
+
+procedure TFmain.DateTimePicker5Change(Sender: TObject);
+begin
+//exec report1 '2020-01-01','2020-12-12'
+fdm.Querysl.Close;
+fdm.Querysl.SQL.Clear;
+fdm.Querysl.SQL.Text:='exec report1 '+QuotedStr(DateToStr_(DateTimePicker4.Date))+','+QuotedStr(DateToStr(DateTimePicker5.Date));
+fdm.Querysl.ExecSQL;
+fdm.Querysl.Open;
+fdm.Querysl.Close;
+fdm.Querysl.Open;
+end;
+
+procedure TFmain.FormActivate(Sender: TObject);
+begin
+fdm.Querymen.Open;
+fdm.Querypas.Open;
+fdm.Queryklient.Open;
+fdm.Queryplan.Open;
+fdm.Queryusl.Open;
+fdm.Queryokaz.Open;
+end;
+
+procedure TFmain.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+fdm.Querymen.close;
+fdm.Querypas.close;
+fdm.Queryklient.close;
+fdm.Queryplan.Close;
+fdm.Queryusl.close;
+fdm.Queryokaz.close;
+end;
+
+procedure TFmain.LabeledEdit14KeyPress(Sender: TObject; var Key: Char);
+begin
+ if not  (Key in ['0'..'9',','] ) then
+ begin
+   key:=#0;
+   ShowMessage('введенн не тот  знак ');
+ end;
+
+end;
+
+procedure TFmain.LabeledEdit4KeyPress(Sender: TObject; var Key: Char);
+begin
+ if not  (Key in ['0'..'9'] ) then 
+ begin
+   key:=#0;
+   ShowMessage('введенна не цифра ');
+ end;
+end;
+
+procedure TFmain.LabeledEdit9KeyPress(Sender: TObject; var Key: Char);
+begin
+ if not  (Key in ['0'..'9'] ) then
+ begin
+   key:=#0;
+   ShowMessage('введенна не цифра ');
+ end;
+end;
+
+end.

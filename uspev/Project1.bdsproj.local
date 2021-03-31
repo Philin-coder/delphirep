@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2020.11.24 21:13:01.261.pas,C:\Users\User\Documents\Borland Studio Projects\Unit1.pas=C:\Users\User\Documents\Borland Studio Projects\Umain.pas</Transaction>
+    <Transaction>2020.11.24 21:13:01.261.dfm,C:\Users\User\Documents\Borland Studio Projects\Unit1.dfm=C:\Users\User\Documents\Borland Studio Projects\Umain.dfm</Transaction>
+    <Transaction>2020.11.24 21:15:45.710.pas,C:\Users\User\Documents\Borland Studio Projects\Unit1.pas=F:\code\Result\delphi\uspev\Ureg.pas</Transaction>
+    <Transaction>2020.11.24 21:15:45.710.dfm,C:\Users\User\Documents\Borland Studio Projects\Unit1.dfm=F:\code\Result\delphi\uspev\Ureg.dfm</Transaction>
+    <Transaction>2020.11.24 21:15:57.573.bdsproj,C:\Users\User\Documents\Borland Studio Projects\Project1.bdsproj=F:\code\Result\delphi\uspev\Project1.bdsproj</Transaction>
+    <Transaction>2020.11.24 22:08:35.014.pas,F:\code\Result\delphi\uspev\Unit1.pas=F:\code\Result\delphi\uspev\Udm.pas</Transaction>
+    <Transaction>2020.11.24 22:08:35.014.dfm,F:\code\Result\delphi\uspev\Unit1.dfm=F:\code\Result\delphi\uspev\Udm.dfm</Transaction>
+    <Transaction>2020.11.25 09:05:10.584.bdsproj,F:\code\Result\delphi\uspev\Project1.bdsproj=F:\code\Result\delphi\uspev\Project1.bdsproj</Transaction>
+    <Transaction>2020.11.25 09:07:07.333.pas,C:\Users\User\Documents\Borland Studio Projects\Umain.pas=F:\code\Result\delphi\uspev\Umain.pas</Transaction>
+    <Transaction>2020.11.25 09:07:07.333.dfm,C:\Users\User\Documents\Borland Studio Projects\Umain.dfm=F:\code\Result\delphi\uspev\Umain.dfm</Transaction>
+  </Transactions>
+</BorlandProject>

@@ -1,0 +1,32 @@
+unit ins_dol;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ExtCtrls, Grids, DBGrids;
+
+type
+  TFins_dol = class(TForm)
+    GroupBox1: TGroupBox;
+    GroupBox2: TGroupBox;
+    GroupBox3: TGroupBox;
+    Button1: TButton;
+    DBGrid1: TDBGrid;
+    LabeledEdit1: TLabeledEdit;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Fins_dol: TFins_dol;
+
+implementation
+
+uses main;
+
+{$R *.dfm}
+
+end.

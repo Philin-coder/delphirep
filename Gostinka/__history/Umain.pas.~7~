@@ -1,0 +1,49 @@
+unit Umain;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Menus;
+
+type
+  TFmain = class(TForm)
+    MainMenu1: TMainMenu;
+    N1: TMenuItem;
+    N2: TMenuItem;
+    N3: TMenuItem;
+    N4: TMenuItem;
+    procedure FormShow(Sender: TObject);
+    procedure N3Click(Sender: TObject);
+    procedure N4Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Fmain: TFmain;
+
+implementation
+
+uses ureg, Uadmn, UUsl;
+
+{$R *.dfm}
+
+procedure TFmain.FormShow(Sender: TObject);
+begin
+//Freg.ShowModal;
+end;
+
+procedure TFmain.N3Click(Sender: TObject);
+begin
+Fadmin.ShowModal;
+end;
+
+procedure TFmain.N4Click(Sender: TObject);
+begin
+fusl.ShowModal;
+end;
+
+end.

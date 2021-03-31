@@ -1,0 +1,25 @@
+unit Umain;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Menus;
+
+type
+  TFmain = class(TForm)
+    MainMenu1: TMainMenu;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Fmain: TFmain;
+
+implementation
+
+{$R *.dfm}
+
+end.

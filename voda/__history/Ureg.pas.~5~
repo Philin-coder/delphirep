@@ -1,0 +1,37 @@
+unit Ureg;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ExtCtrls;
+
+type
+  TFreg = class(TForm)
+    GroupBox1: TGroupBox;
+    GroupBox2: TGroupBox;
+    Button1: TButton;
+    LabeledEdit1: TLabeledEdit;
+    LabeledEdit2: TLabeledEdit;
+    procedure Button1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Freg: TFreg;
+
+implementation
+
+uses Udm, Uman;
+
+{$R *.dfm}
+
+procedure TFreg.Button1Click(Sender: TObject);
+begin
+Close;
+end;
+
+end.

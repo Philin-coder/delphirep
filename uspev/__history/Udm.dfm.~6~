@@ -1,0 +1,155 @@
+object fDM: TfDM
+  OldCreateOrder = False
+  Height = 317
+  Width = 626
+  object ADOConnection1: TADOConnection
+    Connected = True
+    ConnectionString = 
+      'Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security In' +
+      'fo=False;Initial Catalog=uspev'
+    LoginPrompt = False
+    Provider = 'SQLOLEDB.1'
+    Left = 40
+    Top = 24
+  end
+  object Queryprich: TADOQuery
+    Connection = ADOConnection1
+    Parameters = <>
+    SQL.Strings = (
+      'select * from prich')
+    Left = 48
+    Top = 88
+  end
+  object ins_prich: TADOStoredProc
+    Connection = ADOConnection1
+    ProcedureName = 'ins_prich;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@prich_naim'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 150
+        Value = ''
+      end>
+    Left = 48
+    Top = 224
+  end
+  object DSprich: TDataSource
+    DataSet = Queryprich
+    Left = 56
+    Top = 160
+  end
+  object Querytype_class: TADOQuery
+    Connection = ADOConnection1
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select * from type_class')
+    Left = 112
+    Top = 96
+  end
+  object ins_klass_type: TADOStoredProc
+    Connection = ADOConnection1
+    ProcedureName = 'ins_klass_type;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@naim_tip'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 100
+        Value = ''
+      end>
+    Left = 120
+    Top = 224
+  end
+  object DStype_class: TDataSource
+    DataSet = Querytype_class
+    Left = 120
+    Top = 168
+  end
+  object Queryklass: TADOQuery
+    Connection = ADOConnection1
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select * from klass')
+    Left = 184
+    Top = 96
+    object Queryklassklass_id: TAutoIncField
+      FieldName = 'klass_id'
+      ReadOnly = True
+    end
+    object Queryklassklass_naim: TStringField
+      FieldName = 'klass_naim'
+      Size = 150
+    end
+    object QueryklassKlass_r: TStringField
+      FieldName = 'Klass_r'
+      Size = 150
+    end
+    object Queryklasskol_m: TIntegerField
+      FieldName = 'kol_m'
+    end
+    object QueryklassTYpe_claass_id: TIntegerField
+      FieldName = 'TYpe_claass_id'
+    end
+  end
+  object ins_klass: TADOStoredProc
+    Connection = ADOConnection1
+    ProcedureName = 'ins_klass;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@klass_naim'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 150
+        Value = ''
+      end
+      item
+        Name = '@Klass_r'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 150
+        Value = ''
+      end
+      item
+        Name = '@kol_m'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@TYpe_claass_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 184
+    Top = 232
+  end
+  object Dsklass: TDataSource
+    DataSet = Queryklass
+    Left = 176
+    Top = 168
+  end
+end

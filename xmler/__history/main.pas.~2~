@@ -1,0 +1,52 @@
+unit main;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, xmldom, XMLIntf, msxmldom, XMLDoc;
+
+type
+  TFmain = class(TForm)
+    GroupBox1: TGroupBox;
+    GroupBox2: TGroupBox;
+    GroupBox3: TGroupBox;
+    Button1: TButton;
+    OD1: TOpenDialog;
+    XMLDocument1: TXMLDocument;
+    procedure Button1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Fmain: TFmain;
+
+implementation
+
+{$R *.dfm}
+
+procedure TFmain.Button1Click(Sender: TObject);
+var
+S:AnsiString;
+Ws:WideString;
+fs:TFileStream;
+Od:TOpenDialog;
+begin
+od:=od1;
+if OD.InitialDir='' then od.InitialDir:=ExtractFilePath(ParamStr(0));
+if not Od.Execute then Exit;
+if not FileExists(od.FileName) then begin
+  MessageBox(0, 'Файл с заданным именем не найден. Действие отменено.'
+      ,'Файл не найден!', MB_OK + MB_ICONWARNING + MB_APPLMODAL);
+end;
+
+
+
+
+
+end;
+
+end.

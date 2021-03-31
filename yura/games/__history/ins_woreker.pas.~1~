@@ -1,0 +1,24 @@
+unit ins_woreker;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs;
+
+type
+  TFins = class(TForm)
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Fins: TFins;
+
+implementation
+
+{$R *.dfm}
+
+end.

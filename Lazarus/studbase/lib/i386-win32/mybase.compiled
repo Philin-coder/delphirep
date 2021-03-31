@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Compiler Value="C:\lazarus\fpc\3.0.4\bin\i386-win32\fpc.exe" Date="1317892300"/>
+  <Params Value=" -MObjFPC -Scghi -O1 -g -gl -WG -l -vewnhibq -FiF:\code\Result\delphi\Lazarus\studbase\lib\i386-win32 -FuF:\code\Result\delphi\Lazarus\ufo -FuC:\lazarus\lcl\units\i386-win32\win32 -FuC:\lazarus\components\datetimectrls\lib\i386-win32\win32 -FuC:\lazarus\lcl\units\i386-win32 -FuC:\lazarus\components\lazutils\lib\i386-win32 -FuC:\lazarus\packager\units\i386-win32 -FuF:\code\Result\delphi\Lazarus\studbase\ -FUF:\code\Result\delphi\Lazarus\studbase\lib\i386-win32\ -FEF:\code\Result\delphi\Lazarus\studbase\ -oF:\code\Result\delphi\Lazarus\studbase\mybase.exe -dLCL -dLCLwin32 mybase.lpr"/>
+  <Complete Value="False"/>
+</CONFIG>

@@ -1,0 +1,21 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = #1043#1083#1072#1074#1085#1072#1103' '#1092#1086#1088#1084#1072
+  ClientHeight = 985
+  ClientWidth = 752
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  Menu = MainMenu1
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object MainMenu1: TMainMenu
+    Left = 312
+    Top = 152
+  end
+end

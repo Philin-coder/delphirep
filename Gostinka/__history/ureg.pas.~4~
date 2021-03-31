@@ -1,0 +1,33 @@
+unit ureg;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ExtCtrls;
+
+type
+  TFreg = class(TForm)
+    GroupBox1: TGroupBox;
+    Label1: TLabel;
+    ComboBox1: TComboBox;
+    Label2: TLabel;
+    Edit1: TEdit;
+    Panel1: TPanel;
+    Button1: TButton;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Freg: TFreg;
+
+implementation
+
+uses Umain;
+
+{$R *.dfm}
+
+end.

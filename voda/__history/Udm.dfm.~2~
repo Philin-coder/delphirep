@@ -1,0 +1,5 @@
+object fDM: TfDM
+  OldCreateOrder = False
+  Height = 280
+  Width = 410
+end

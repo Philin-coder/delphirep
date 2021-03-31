@@ -1,0 +1,41 @@
+unit Unit2;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls;
+
+type
+  TForm2 = class(TForm)
+    ComboBox1: TComboBox;
+    procedure ComboBox1Change(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form2: TForm2;
+
+implementation
+
+uses form;
+
+{$R *.dfm}
+
+procedure TForm2.ComboBox1Change(Sender: TObject);
+begin
+if Form2.ComboBox1.ItemIndex=0 then
+begin
+ShowMessage('первый user');
+end;
+if   Form2.ComboBox1.ItemIndex=1 then
+begin
+ShowMessage('второй user');
+end;
+
+end;
+
+end.

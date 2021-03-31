@@ -1,0 +1,48 @@
+unit Uman;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Menus;
+
+type
+  TFmain = class(TForm)
+    MainMenu1: TMainMenu;
+    N1: TMenuItem;
+    N2: TMenuItem;
+    procedure N1Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Fmain: TFmain;
+
+implementation
+
+uses Udm, Uins, Ureg;
+
+{$R *.dfm}
+
+procedure TFmain.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+fDM.Querytpe_s.Close;
+end;
+
+procedure TFmain.FormShow(Sender: TObject);
+begin
+Freg.ShowModal;
+end;
+
+procedure TFmain.N1Click(Sender: TObject);
+begin
+Fins:=TFins.Create(Application);
+fins.Show;
+end;
+
+end.

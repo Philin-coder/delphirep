@@ -1,0 +1,5 @@
+object fDm: TfDm
+  OldCreateOrder = False
+  Height = 465
+  Width = 637
+end

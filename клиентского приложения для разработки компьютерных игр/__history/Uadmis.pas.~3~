@@ -1,0 +1,26 @@
+unit Uadmis;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs;
+
+type
+  TFadmins = class(TForm)
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Fadmins: TFadmins;
+
+implementation
+
+uses Uadmpass, Udm;
+
+{$R *.dfm}
+
+end.

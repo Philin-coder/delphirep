@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2020.12.25 10:06:29.660.pas,C:\Users\User\Documents\Borland Studio Projects\Unit1.pas=F:\code\Result\delphi\OpengLdemo\Umain.pas</Transaction>
+    <Transaction>2020.12.25 10:06:29.660.dfm,C:\Users\User\Documents\Borland Studio Projects\Unit1.dfm=F:\code\Result\delphi\OpengLdemo\Umain.dfm</Transaction>
+    <Transaction>2020.12.25 10:07:19.523.bdsproj,C:\Users\User\Documents\Borland Studio Projects\Project1.bdsproj=F:\code\Result\delphi\OpengLdemo\Project1.bdsproj</Transaction>
+  </Transactions>
+</BorlandProject>

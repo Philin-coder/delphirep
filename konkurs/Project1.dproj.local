@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.055,F:\code\Result\delphi\konkurs\Unit2.dfm=F:\code\Result\delphi\konkurs\dm.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.295,=C:\Users\User\Documents\RAD Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.965,C:\Users\User\Documents\RAD Studio\Projects\Unit1.pas=F:\code\Result\delphi\konkurs\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.884,C:\Users\User\Documents\RAD Studio\Projects\Project1.dproj=F:\code\Result\delphi\konkurs\Project1.dproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.055,F:\code\Result\delphi\konkurs\Unit2.pas=F:\code\Result\delphi\konkurs\dm.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.100,=F:\code\Result\delphi\konkurs\Unit2.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.965,C:\Users\User\Documents\RAD Studio\Projects\Unit1.dfm=F:\code\Result\delphi\konkurs\Unit1.dfm</Transaction>
+  </Transactions>
+</BorlandProject>

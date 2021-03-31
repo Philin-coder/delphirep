@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2020.11.29 16:44:55.509.pas,C:\Users\User\Documents\Borland Studio Projects\Unit1.pas=F:\code\Result\delphi\yura\turbo\Umain.pas</Transaction>
+    <Transaction>2020.11.29 16:44:55.509.dfm,C:\Users\User\Documents\Borland Studio Projects\Unit1.dfm=F:\code\Result\delphi\yura\turbo\Umain.dfm</Transaction>
+    <Transaction>2020.11.29 16:45:42.365.pas,C:\Users\User\Documents\Borland Studio Projects\Unit1.pas=F:\code\Result\delphi\yura\turbo\Udm.pas</Transaction>
+    <Transaction>2020.11.29 16:45:42.365.dfm,C:\Users\User\Documents\Borland Studio Projects\Unit1.dfm=F:\code\Result\delphi\yura\turbo\Udm.dfm</Transaction>
+    <Transaction>2020.11.29 16:48:04.405.pas,C:\Users\User\Documents\Borland Studio Projects\Unit1.pas=F:\code\Result\delphi\yura\turbo\Ureg.pas</Transaction>
+    <Transaction>2020.11.29 16:48:04.405.dfm,C:\Users\User\Documents\Borland Studio Projects\Unit1.dfm=F:\code\Result\delphi\yura\turbo\Ureg.dfm</Transaction>
+    <Transaction>2020.11.29 16:55:12.853.bdsproj,C:\Users\User\Documents\Borland Studio Projects\Project1.bdsproj=F:\code\Result\delphi\yura\turbo\Project1.bdsproj</Transaction>
+    <Transaction>2020.11.30 13:20:00.296.pas,F:\code\Result\delphi\yura\turbo\Unit1.pas=F:\code\Result\delphi\yura\turbo\Umen.pas</Transaction>
+    <Transaction>2020.11.30 13:20:00.296.dfm,F:\code\Result\delphi\yura\turbo\Unit1.dfm=F:\code\Result\delphi\yura\turbo\Umen.dfm</Transaction>
+    <Transaction>2020.11.30 22:40:41.033.pas,F:\code\Result\delphi\yura\turbo\Unit1.pas=F:\code\Result\delphi\yura\turbo\Usotr.pas</Transaction>
+    <Transaction>2020.11.30 22:40:41.033.dfm,F:\code\Result\delphi\yura\turbo\Unit1.dfm=F:\code\Result\delphi\yura\turbo\Usotr.dfm</Transaction>
+    <Transaction>2020.12.01 16:43:01.976.pas,F:\code\Result\delphi\yura\turbo\Unit1.pas=F:\code\Result\delphi\yura\turbo\Uadmpass.pas</Transaction>
+    <Transaction>2020.12.01 16:43:01.976.dfm,F:\code\Result\delphi\yura\turbo\Unit1.dfm=F:\code\Result\delphi\yura\turbo\Uadmpass.dfm</Transaction>
+    <Transaction>2020.12.01 17:07:48.511.pas,F:\code\Result\delphi\yura\turbo\Unit1.pas=F:\code\Result\delphi\yura\turbo\Uadmis.pas</Transaction>
+    <Transaction>2020.12.01 17:07:48.511.dfm,F:\code\Result\delphi\yura\turbo\Unit1.dfm=F:\code\Result\delphi\yura\turbo\Uadmis.dfm</Transaction>
+    <Transaction>2020.12.01 23:58:08.249.bdsproj,F:\code\Result\delphi\yura\turbo\Project1.bdsproj=F:\code\Result\delphi\yura\turbo\Project1.bdsproj</Transaction>
+  </Transactions>
+</BorlandProject>

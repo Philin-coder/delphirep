@@ -1,0 +1,47 @@
+unit author;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ExtCtrls;
+
+type
+  Tauthorisze = class(TForm)
+    GroupBox1: TGroupBox;
+    LabeledEdit1: TLabeledEdit;
+    LabeledEdit2: TLabeledEdit;
+    Button1: TButton;
+    procedure Button1Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  authorisze: Tauthorisze;
+
+implementation
+
+uses fmain;
+
+{$R *.dfm}
+
+procedure Tauthorisze.Button1Click(Sender: TObject);
+begin
+if (LabeledEdit1.Text='логин') and (LabeledEdit2.Text='пароль') then
+begin
+
+end
+else ShowMessage('введит пароль верно');
+end;
+
+procedure Tauthorisze.FormCreate(Sender: TObject);
+begin
+LabeledEdit1.Text:='логин';
+LabeledEdit2.Text:='пароль';
+end;
+
+end.

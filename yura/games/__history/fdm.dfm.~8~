@@ -1,0 +1,337 @@
+object DM1: TDM1
+  OldCreateOrder = False
+  Height = 357
+  Width = 528
+  object ADOConnection1: TADOConnection
+    Connected = True
+    ConnectionString = 
+      'Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security In' +
+      'fo=False;Initial Catalog=Razrab_Andryuschenko'
+    LoginPrompt = False
+    Provider = 'SQLOLEDB.1'
+    Left = 32
+    Top = 24
+  end
+  object Querydol: TADOQuery
+    Connection = ADOConnection1
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select * from dolshnost')
+    Left = 48
+    Top = 80
+  end
+  object ins_dol: TADOStoredProc
+    Connection = ADOConnection1
+    ProcedureName = 'ins_dol;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@Nam_dol'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 100
+        Value = ''
+      end>
+    Left = 40
+    Top = 200
+  end
+  object DSdol: TDataSource
+    DataSet = Querydol
+    Left = 40
+    Top = 144
+  end
+  object Queryetap: TADOQuery
+    Connection = ADOConnection1
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select * from etap')
+    Left = 104
+    Top = 80
+  end
+  object DSetap: TDataSource
+    DataSet = Queryetap
+    Left = 112
+    Top = 136
+  end
+  object ins_etap: TADOStoredProc
+    Connection = ADOConnection1
+    ProcedureName = 'ins_etap;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@Nam_etap'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 150
+        Value = ''
+      end>
+    Left = 120
+    Top = 200
+  end
+  object Querywork: TADOQuery
+    Connection = ADOConnection1
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select * from work')
+    Left = 168
+    Top = 80
+  end
+  object DSwork: TDataSource
+    DataSet = Querywork
+    Left = 176
+    Top = 144
+  end
+  object ins_work: TADOStoredProc
+    Connection = ADOConnection1
+    ProcedureName = 'ins_work;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@Nam_work'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 100
+        Value = ''
+      end
+      item
+        Name = '@T_days'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 10
+        Value = ''
+      end
+      item
+        Name = '@N_Etap'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 176
+    Top = 200
+  end
+  object Querywoker: TADOQuery
+    Connection = ADOConnection1
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select * from  rabotnik')
+    Left = 232
+    Top = 80
+  end
+  object ins_rabotnic: TADOStoredProc
+    Connection = ADOConnection1
+    ProcedureName = 'ins_rabotnic;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@Fio'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 100
+        Value = ''
+      end
+      item
+        Name = '@N_Dol'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@Iphone'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@St_rab'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 50
+        Value = ''
+      end
+      item
+        Name = '@Date_pr'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 10
+        Value = ''
+      end>
+    Left = 240
+    Top = 200
+  end
+  object DSwoker: TDataSource
+    DataSet = Querywoker
+    Left = 240
+    Top = 136
+  end
+  object Queryproect: TADOQuery
+    Connection = ADOConnection1
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select * from proect')
+    Left = 296
+    Top = 80
+  end
+  object DSproect: TDataSource
+    DataSet = Queryproect
+    Left = 296
+    Top = 136
+  end
+  object ins_proect: TADOStoredProc
+    Connection = ADOConnection1
+    ProcedureName = 'ins_proect;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@Nam_proect'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 200
+        Value = ''
+      end
+      item
+        Name = '@janr'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 50
+        Value = ''
+      end
+      item
+        Name = '@data_nash'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 10
+        Value = ''
+      end
+      item
+        Name = '@menager'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 50
+        Value = ''
+      end
+      item
+        Name = '@cost_plan'
+        Attributes = [paNullable]
+        DataType = ftFloat
+        NumericScale = 2
+        Precision = 10
+        Value = 0.000000000000000000
+      end
+      item
+        Name = '@cost_fact'
+        Attributes = [paNullable]
+        DataType = ftFloat
+        NumericScale = 2
+        Precision = 10
+        Value = 0.000000000000000000
+      end>
+    Left = 304
+    Top = 208
+  end
+  object Queryzadanie: TADOQuery
+    Connection = ADOConnection1
+    Parameters = <>
+    SQL.Strings = (
+      'select * from  zadanie')
+    Left = 368
+    Top = 80
+  end
+  object ins_zadanie: TADOStoredProc
+    Connection = ADOConnection1
+    ProcedureName = 'ins_zadanie;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@Sr_vip'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 10
+        Value = ''
+      end
+      item
+        Name = '@N_Rab'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@St_rab'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 50
+        Value = Null
+      end
+      item
+        Name = '@Data_nash'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 10
+        Value = ''
+      end
+      item
+        Name = '@N_Proekta'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@N_Work'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 368
+    Top = 200
+  end
+  object DSzadanie: TDataSource
+    DataSet = Queryzadanie
+    Left = 368
+    Top = 136
+  end
+end

@@ -1,0 +1,397 @@
+{$A8,B-,C+,D+,E-,F-,G+,H+,I+,J-,K-,L+,M-,N+,O+,P+,Q-,R-,S-,T-,U-,V+,W-,X+,Y+,Z1}
+{$MINSTACKSIZE $00004000}
+{$MAXSTACKSIZE $00100000}
+{$IMAGEBASE $00400000}
+{$APPTYPE GUI}
+{$WARN SYMBOL_DEPRECATED ON}
+{$WARN SYMBOL_LIBRARY ON}
+{$WARN SYMBOL_PLATFORM ON}
+{$WARN SYMBOL_EXPERIMENTAL ON}
+{$WARN UNIT_LIBRARY ON}
+{$WARN UNIT_PLATFORM ON}
+{$WARN UNIT_DEPRECATED ON}
+{$WARN UNIT_EXPERIMENTAL ON}
+{$WARN HRESULT_COMPAT ON}
+{$WARN HIDING_MEMBER ON}
+{$WARN HIDDEN_VIRTUAL ON}
+{$WARN GARBAGE ON}
+{$WARN BOUNDS_ERROR ON}
+{$WARN ZERO_NIL_COMPAT ON}
+{$WARN STRING_CONST_TRUNCED ON}
+{$WARN FOR_LOOP_VAR_VARPAR ON}
+{$WARN TYPED_CONST_VARPAR ON}
+{$WARN ASG_TO_TYPED_CONST ON}
+{$WARN CASE_LABEL_RANGE ON}
+{$WARN FOR_VARIABLE ON}
+{$WARN CONSTRUCTING_ABSTRACT ON}
+{$WARN COMPARISON_FALSE ON}
+{$WARN COMPARISON_TRUE ON}
+{$WARN COMPARING_SIGNED_UNSIGNED ON}
+{$WARN COMBINING_SIGNED_UNSIGNED ON}
+{$WARN UNSUPPORTED_CONSTRUCT ON}
+{$WARN FILE_OPEN ON}
+{$WARN FILE_OPEN_UNITSRC ON}
+{$WARN BAD_GLOBAL_SYMBOL ON}
+{$WARN DUPLICATE_CTOR_DTOR ON}
+{$WARN INVALID_DIRECTIVE ON}
+{$WARN PACKAGE_NO_LINK ON}
+{$WARN PACKAGED_THREADVAR ON}
+{$WARN IMPLICIT_IMPORT ON}
+{$WARN HPPEMIT_IGNORED ON}
+{$WARN NO_RETVAL ON}
+{$WARN USE_BEFORE_DEF ON}
+{$WARN FOR_LOOP_VAR_UNDEF ON}
+{$WARN UNIT_NAME_MISMATCH ON}
+{$WARN NO_CFG_FILE_FOUND ON}
+{$WARN IMPLICIT_VARIANTS ON}
+{$WARN UNICODE_TO_LOCALE ON}
+{$WARN LOCALE_TO_UNICODE ON}
+{$WARN IMAGEBASE_MULTIPLE ON}
+{$WARN SUSPICIOUS_TYPECAST ON}
+{$WARN PRIVATE_PROPACCESSOR ON}
+{$WARN UNSAFE_TYPE OFF}
+{$WARN UNSAFE_CODE OFF}
+{$WARN UNSAFE_CAST OFF}
+{$WARN OPTION_TRUNCATED ON}
+{$WARN WIDECHAR_REDUCED ON}
+{$WARN DUPLICATES_IGNORED ON}
+{$WARN UNIT_INIT_SEQ ON}
+{$WARN LOCAL_PINVOKE ON}
+{$WARN MESSAGE_DIRECTIVE ON}
+unit Umain;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ComCtrls, Grids, DBGrids, StdCtrls, DBCtrls, ExtCtrls,dateutils;
+
+type
+  TFmain = class(TForm)
+    PageControl1: TPageControl;
+    TabSheet1: TTabSheet;
+    TabSheet2: TTabSheet;
+    TabSheet3: TTabSheet;
+    TabSheet4: TTabSheet;
+    TabSheet5: TTabSheet;
+    laka: TGroupBox;
+    LabeledEdit1: TLabeledEdit;
+    LabeledEdit2: TLabeledEdit;
+    Label1: TLabel;
+    DateTimePicker1: TDateTimePicker;
+    Label2: TLabel;
+    DBLookupComboBox1: TDBLookupComboBox;
+    LabeledEdit3: TLabeledEdit;
+    LabeledEdit4: TLabeledEdit;
+    Label3: TLabel;
+    DateTimePicker2: TDateTimePicker;
+    GroupBox1: TGroupBox;
+    Button1: TButton;
+    GroupBox2: TGroupBox;
+    DBGrid1: TDBGrid;
+    GroupBox3: TGroupBox;
+    Label4: TLabel;
+    DateTimePicker3: TDateTimePicker;
+    GroupBox4: TGroupBox;
+    DBGrid2: TDBGrid;
+    GroupBox5: TGroupBox;
+    GroupBox6: TGroupBox;
+    Label5: TLabel;
+    Label6: TLabel;
+    DBGrid3: TDBGrid;
+    DBLookupComboBox2: TDBLookupComboBox;
+    Label7: TLabel;
+    DateTimePicker4: TDateTimePicker;
+    GroupBox7: TGroupBox;
+    GroupBox8: TGroupBox;
+    DBGrid4: TDBGrid;
+    Label8: TLabel;
+    Label9: TLabel;
+    DateTimePicker5: TDateTimePicker;
+    DateTimePicker6: TDateTimePicker;
+    GroupBox9: TGroupBox;
+    Label10: TLabel;
+    Label11: TLabel;
+    DateTimePicker7: TDateTimePicker;
+    DateTimePicker8: TDateTimePicker;
+    GroupBox10: TGroupBox;
+    DBGrid5: TDBGrid;
+    TabSheet6: TTabSheet;
+    GroupBox11: TGroupBox;
+    GroupBox12: TGroupBox;
+    GroupBox13: TGroupBox;
+    Button2: TButton;
+    DBGrid6: TDBGrid;
+    LabeledEdit5: TLabeledEdit;
+    DBLookupComboBox3: TDBLookupComboBox;
+    Label12: TLabel;
+    TabSheet7: TTabSheet;
+    GroupBox14: TGroupBox;
+    GroupBox15: TGroupBox;
+    GroupBox16: TGroupBox;
+    LabeledEdit6: TLabeledEdit;
+    Label13: TLabel;
+    DBLookupComboBox4: TDBLookupComboBox;
+    Button3: TButton;
+    DBGrid7: TDBGrid;
+    TabSheet8: TTabSheet;
+    GroupBox17: TGroupBox;
+    GroupBox18: TGroupBox;
+    DBGrid8: TDBGrid;
+    LabeledEdit7: TLabeledEdit;
+    procedure FormShow(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure Button1Click(Sender: TObject);
+    function DateToStr_(Dat : TDate): String;
+    procedure DateTimePicker3Change(Sender: TObject);
+    procedure DBLookupComboBox2Click(Sender: TObject);
+    procedure DateTimePicker5Change(Sender: TObject);
+    procedure DateTimePicker7Change(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
+    procedure LabeledEdit7KeyPress(Sender: TObject; var Key: Char);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Fmain: TFmain;
+
+implementation
+
+uses Ureg, Udm, DB;
+
+{$R *.dfm}
+procedure TFmain.Button2Click(Sender: TObject);
+begin
+try
+dm.Ins_dol.Parameters.ParamByName('@Nam_dol').Value:=LabeledEdit5.Text;
+dm.Ins_dol.Parameters.ParamByName('@id_manager').Value:=dm.Querymanager.FieldByName('id_manager').AsString;
+
+if LabeledEdit5.Text='' then
+   begin
+   MessageDlg('поверьте поля ввода',mtInformation,[mbOK],0);
+  Exit;
+   end;
+   dm.Ins_dol.ExecProc;
+   MessageDlg('Изменения внесены',mtInformation,[mbOK],0);
+   dm.Querydol.Close;
+   dm.Querydol.sql.Clear;
+   dm.Querydol.sql.text:='select * from Dolshnost';
+   dm.Querydol.Open;
+   dm.Querydol.Next;
+   dm.Querydol.first;
+   dm.Querydol.last;
+except on e:Exception do
+begin
+ShowMessage('Сбой процелуры');
+exit;
+end;
+end;
+end;
+
+procedure TFmain.Button3Click(Sender: TObject);
+begin
+try
+dm.Ins_manager.Parameters.ParamByName('@fio').Value:=LabeledEdit6.Text;
+dm.Ins_manager.Parameters.ParamByName('@usverid').Value:=DBLookupComboBox4.KeyValue;
+if  LabeledEdit6.Text='' then
+begin
+MessageDlg('Ошибка ввода',mtWarning,[mbAbort],0);
+Exit;
+end;
+dm.Ins_manager.ExecProc;
+MessageDlg('Изменения внесены',mtInformation,[mbOK],0);
+dm.Querymanager.Close;
+dm.Querymanager.sql.Clear;
+dm.Querymanager.sql.Text:='select * from manager';
+dm.Querymanager.Open;
+dm.Querymanager.Next;
+dm.Querymanager.First;
+dm.Querymanager.last;
+except on e:exception do
+begin
+MessageDlg('Ошибка ввода',mtWarning,[mbAbort],0);
+Exit;
+end;
+end;
+end;
+
+procedure TFmain.DateTimePicker3Change(Sender: TObject);
+begin
+try
+dm.Queryot.Close;
+dm.Queryot.SQL.Clear;
+dm.Queryot.SQL.Text:='exec report1' +QuotedStr(DateToStr_(DateTimePicker3.Date));
+dm.Queryot.ExecSQL;
+dm.Queryot.Open;
+except on e:Exception do
+begin
+ShowMessage('не удалось выполнить запрос');
+exit;
+end;
+end;
+end;
+
+procedure TFmain.DateTimePicker5Change(Sender: TObject);
+begin
+try
+//exec t7 '2012-12-12','2020-12-12'
+ dm.Queryot.Close;
+ dm.Queryot.SQL.Clear;
+ dm.Queryot.SQL.Text:='exec t7 '+QuotedStr(DateToStr_(DateTimePicker5.Date))+','+
+ QuotedStr(DateToStr_(DateTimePicker6.Date));
+ dm.Queryot.ExecSQL;
+ dm.Queryot.Open;
+except on e:Exception do
+begin
+ShowMessage('не удалось выполнить запрос');
+Exit;
+end;
+end;
+end;
+
+procedure TFmain.DateTimePicker7Change(Sender: TObject);
+begin
+try
+dm.Queryot.Close;
+dm.Queryot.sql.Clear;
+dm.Queryot.sql.text:='exec t8'+ QuotedStr(DateToStr_(DateTimePicker7.Date))+','
++QuotedStr(DateToStr_(DateTimePicker8.Date));
+dm.Queryot.ExecSQL;
+dm.Queryot.Open;
+except on e:Exception do
+begin
+ShowMessage('не удалось выполнить запрос ');
+exit;
+end;
+end;
+
+end;
+
+function TFmain.DateToStr_(Dat : TDate): String;
+begin
+  Result:= IntToStr(MonthOf(Dat))+'.'
+  +IntToStr(DayOf(Dat))+'.'
+  +IntToStr(YearOf(Dat));
+end;
+
+
+procedure TFmain.DBLookupComboBox2Click(Sender: TObject);
+begin
+try
+//exec report2 1, '2020-12-12'
+dm.Queryot.Close;
+dm.Queryot.SQL.Clear;
+dm.Queryot.SQL.Text:='exec report2 ' +dm.Queryproekt.FieldByName('N_proekta').AsString+ ',' +QuotedStr(DateToStr_(DateTimePicker4.Date)) ;
+dm.Queryot.ExecSQL;
+dm.Queryot.Open;
+except on e:Exception do
+begin
+ShowMessage('не удалось выполнить запрос');
+exit;
+end;
+end;
+end;
+
+procedure TFmain.Button1Click(Sender: TObject);
+begin
+if ((LabeledEdit3.Text='') or(LabeledEdit4.Text=''))  then
+begin
+MessageDlg('Ошибка ввода стоимости ',mtWarning,[mbAbort],0);
+  Exit;
+end
+else
+begin
+try
+dm.ins_proekt.Parameters.ParamByName('@Nam_proect').Value:=LabeledEdit1.Text;
+dm.ins_proekt.Parameters.ParamByName('@janr').Value:=LabeledEdit2.Text;
+dm.ins_proekt.Parameters.ParamByName('@data_nash').Value:=DateToStr_(DateTimePicker1.Date);
+dm.ins_proekt.Parameters.ParamByName('@id_manager').Value:=dm.Querymanager.FieldByName('id_manager').AsString;
+dm.ins_proekt.Parameters.ParamByName('@cost_plan').Value:=StrToFloat(LabeledEdit3.Text);
+dm.ins_proekt.Parameters.ParamByName('@cost_fact').Value:=StrToFloat(LabeledEdit4.Text);
+dM.ins_proekt.Parameters.ParamByName('@dataendplan').Value:=DateToStr_(DateTimePicker2.Date);
+if ((LabeledEdit1.Text='')or(LabeledEdit2.Text='') or(LabeledEdit3.Text='')or(LabeledEdit4.Text='')) then
+begin
+  MessageDlg('поверьте поля ввода',mtInformation,[mbOK],0);
+  Exit;
+end;
+dm.ins_proekt.ExecProc;
+MessageDlg('Изменения внесены',mtInformation,[mbYes],0);
+dm.Queryproekt.Close;
+dm.Queryproekt.sql.Clear;
+dm.Queryproekt.SQL.Text:='select * from Proect';
+dm.Queryproekt.Open;
+dm.Queryproekt.Next;
+dm.Queryproekt.First;
+dm.Queryproekt.Last;
+
+except
+MessageDlg('Ошибка ввода',mtWarning,[mbAbort],0);
+Exit;
+end;
+end;
+end;
+
+procedure TFmain.FormActivate(Sender: TObject);
+begin
+dm.Queryproekt.Open;
+dm.Queryot.Open;
+dm.Querymanager.Open;
+dm.Querydol.Open;
+dm.Querypass.Open;
+dm.Querysearch.Open;
+end;
+
+procedure TFmain.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+dm.Queryot.Close;
+dm.Queryproekt.Close;
+dm.Querymanager.Close;
+dm.Querydol.Close;
+dm.Querypass.Close;
+dm.Querysearch.close;;
+end;
+
+procedure TFmain.FormShow(Sender: TObject);
+begin
+Freg.ShowModal;
+end;
+
+procedure TFmain.LabeledEdit7KeyPress(Sender: TObject; var Key: Char);
+var str:string;
+begin
+try
+str:='select Zadanie.N_Zad, Zadanie.Sr_vip,Rabotnik.Fio, Zadanie.St_rab,'+
+'Zadanie.Data_nash,Zadanie.Date_fakt, Proect.Nam_proect, Work.Nam_work'+
+'from Zadanie'+
+'join Proect on Zadanie.N_Proekta=Proect.N_Proekta'+
+'join Work on Zadanie.N_Work=Work.N_Work'+
+'join Rabotnik on Rabotnik.N_Rab=Zadanie.N_Rab'+
+'where Zadanie.Date_fakt is null';
+if LabeledEdit7.Text='' then
+begin
+dm.Querysearch.Close;
+dM.Querysearch.SQL.Text:=str;
+dm.Querysearch.Open;
+end
+else
+begin
+dm.Querysearch.Close;
+dM.Querysearch.SQL.Text:=dM.Querysearch.SQL.Text+'and Proect.Nam_proect like'+#39
++LabeledEdit7.Text+'%'+#39;
+dm.Querysearch.Open;
+end;
+except on e:exception do
+begin
+MessageDlg('не удалось выплднить запрос',mtWarning,[mbAbort],0);
+exit;
+end;
+end;
+
+end;
+
+end.

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="11"/>
+    <BuildModes Active="Default"/>
+    <Units Count="12">
+      <Unit0>
+        <Filename Value="mybase.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos Y="16"/>
+        <UsageCount Value="34"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="vid.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="58"/>
+        <CursorPos X="14" Y="88"/>
+        <UsageCount Value="34"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="ot.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Fot"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="17"/>
+        <CursorPos X="55" Y="21"/>
+        <UsageCount Value="34"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="fdm.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="dm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="8"/>
+        <CursorPos X="57" Y="15"/>
+        <UsageCount Value="26"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="C:\lazarus\lcl\include\customform.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="2930"/>
+        <CursorPos Y="2946"/>
+        <UsageCount Value="10"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="C:\Users\User\AppData\Local\Temp\Rar$DIa0.718\Unit4.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="24"/>
+        <UsageCount Value="10"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="..\..\vol\help\Таблицы\2\Unit4.pas"/>
+        <ComponentName Value="Form4"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="47"/>
+        <CursorPos Y="67"/>
+        <UsageCount Value="12"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="..\..\vol\help\Таблицы\3\Unit4.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="39"/>
+        <UsageCount Value="12"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="C:\Users\User\AppData\Local\Temp\Rar$DIa0.882\Unit1.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="20"/>
+        <UsageCount Value="10"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="C:\Users\User\Desktop\Новая папка (2)\Билет 13\ЗАДАНИЕ 2.pas"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="12"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="C:\Users\User\AppData\Local\Temp\Rar$DIa0.049\gribi.pas"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="5" Y="18"/>
+        <UsageCount Value="10"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="..\ufo\unit1.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form2"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Unit1"/>
+        <IsVisibleTab Value="True"/>
+        <CursorPos Y="15"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit11>
+    </Units>
+    <JumpHistory HistoryIndex="-1"/>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes Count="0" ActiveMode=""/>
+    </RunParams>
+  </ProjectSession>
+</CONFIG>

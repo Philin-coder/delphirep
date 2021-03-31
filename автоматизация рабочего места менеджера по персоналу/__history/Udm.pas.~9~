@@ -1,0 +1,41 @@
+unit Udm;
+
+interface
+
+uses
+  SysUtils, Classes, DB, ADODB;
+
+type
+  Tfdm = class(TDataModule)
+    ADOConnection1: TADOConnection;
+    Querypas: TADOQuery;
+    DsSpass: TDataSource;
+    ins: TADOStoredProc;
+    Querymen: TADOQuery;
+    ins_manager: TADOStoredProc;
+    DSmanager: TDataSource;
+    Queryklient: TADOQuery;
+    ins_klient: TADOStoredProc;
+    DSklient: TDataSource;
+    Queryplan: TADOQuery;
+    ins_mplan: TADOStoredProc;
+    DSplan: TDataSource;
+    Queryusl: TADOQuery;
+    DSusluga: TDataSource;
+    ADOStoredProc1: TADOStoredProc;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  fdm: Tfdm;
+
+implementation
+
+uses Umain, ureg, uins_pas2;
+
+{$R *.dfm}
+
+end.

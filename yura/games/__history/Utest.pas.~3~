@@ -1,0 +1,57 @@
+unit Utest;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Grids, DBGrids, StdCtrls, ComCtrls, DBCtrls, ExtCtrls;
+
+type
+  TFtest = class(TForm)
+    Panel1: TPanel;
+    LabeledEdit1: TLabeledEdit;
+    Должность: TLabel;
+    DBLookupComboBox1: TDBLookupComboBox;
+    Label2: TLabel;
+    DateTimePicker1: TDateTimePicker;
+    LabeledEdit2: TLabeledEdit;
+    LabeledEdit3: TLabeledEdit;
+    DBLookupComboBox2: TDBLookupComboBox;
+    Label3: TLabel;
+    Label4: TLabel;
+    DateTimePicker2: TDateTimePicker;
+    Panel2: TPanel;
+    Button1: TButton;
+    DBGrid1: TDBGrid;
+    procedure FormActivate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Ftest: TFtest;
+
+implementation
+
+uses fdm, main;
+
+{$R *.dfm}
+
+procedure TFtest.FormActivate(Sender: TObject);
+begin
+DM1.Querydol.Open;
+dm1.Queryproect.Open;
+DM1.Querytest.Open;
+end;
+
+procedure TFtest.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+DM1.Querydol.Close;
+dm1.Queryproect.Close;
+DM1.Querytest.close;
+end;
+
+end.

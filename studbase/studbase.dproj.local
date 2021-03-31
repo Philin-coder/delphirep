@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.334,C:\Users\User\Documents\RAD Studio\Projects\Unit6.dfm=C:\Users\User\Desktop\move2\Unit6.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.950,=C:\Users\User\Documents\RAD Studio\Projects\Unit6.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.334,C:\Users\User\Documents\RAD Studio\Projects\Unit6.pas=C:\Users\User\Desktop\move2\Unit6.pas</Transaction>
+    <Transaction>2019.10.05 22:43:21.373,=C:\Users\User\Documents\RAD Studio\Projects\Unit6.pas</Transaction>
+    <Transaction>2019.10.05 22:46:37.988,F:\code\Result\delphi\studbase\fmain.pas=C:\Users\User\Documents\RAD Studio\Projects\Unit6.pas</Transaction>
+    <Transaction>2019.10.05 22:46:37.988,F:\code\Result\delphi\studbase\fmain.dfm=C:\Users\User\Documents\RAD Studio\Projects\Unit6.dfm</Transaction>
+    <Transaction>2019.10.05 22:47:00.698,F:\code\Result\delphi\studbase\studbase.dproj=C:\Users\User\Documents\RAD Studio\Projects\Project2.dproj</Transaction>
+    <Transaction>2019.10.05 22:51:18.523,=F:\code\Result\delphi\studbase\Unit1.pas</Transaction>
+    <Transaction>2019.10.05 22:51:35.765,F:\code\Result\delphi\studbase\author.dfm=F:\code\Result\delphi\studbase\Unit1.dfm</Transaction>
+    <Transaction>2019.10.05 22:51:35.765,F:\code\Result\delphi\studbase\author.pas=F:\code\Result\delphi\studbase\Unit1.pas</Transaction>
+    <Transaction>2019.10.05 23:09:18.595,=F:\code\Result\delphi\studbase\Unit1.pas</Transaction>
+    <Transaction>2019.10.05 23:09:41.217,F:\code\Result\delphi\studbase\Uvvod.pas=F:\code\Result\delphi\studbase\Unit1.pas</Transaction>
+    <Transaction>2019.10.05 23:09:41.217,F:\code\Result\delphi\studbase\Uvvod.dfm=F:\code\Result\delphi\studbase\Unit1.dfm</Transaction>
+    <Transaction>2019.10.05 23:22:11.743,=F:\code\Result\delphi\studbase\Unit1.pas</Transaction>
+    <Transaction>2019.10.05 23:22:30.835,F:\code\Result\delphi\studbase\fdm.dfm=F:\code\Result\delphi\studbase\Unit1.dfm</Transaction>
+    <Transaction>2019.10.05 23:22:30.835,F:\code\Result\delphi\studbase\fdm.pas=F:\code\Result\delphi\studbase\Unit1.pas</Transaction>
+  </Transactions>
+</BorlandProject>

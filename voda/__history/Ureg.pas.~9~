@@ -1,0 +1,79 @@
+unit Ureg;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ExtCtrls;
+
+type
+  TFreg = class(TForm)
+    GroupBox1: TGroupBox;
+    GroupBox2: TGroupBox;
+    Button1: TButton;
+    LabeledEdit1: TLabeledEdit;
+    LabeledEdit2: TLabeledEdit;
+    procedure Button1Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Freg: TFreg;
+
+implementation
+
+uses Udm, Uman, DB;
+
+{$R *.dfm}
+
+procedure TFreg.Button1Click(Sender: TObject);
+begin
+if((LabeledEdit1.Text=fdm.Querypass.FieldByName('user_name').AsString)and(LabeledEdit2.Text=fdm.Querypass.FieldByName('user_pass').AsString))  then
+begin
+freg.Close;
+Fmain.ShowModal;
+end
+else
+begin
+ShowMessage('wrong pass');
+exit;
+end;
+
+end;
+
+procedure TFreg.FormActivate(Sender: TObject);
+var i:Integer;
+begin
+with GroupBox1 do
+for I := 0 to ControlCount - 1 do
+if (Controls[i]is  TLabeledEdit) then
+begin
+  (Controls[i]as TLabeledEdit).Text:='test';
+end;
+fdm.Querypass.Open;
+end;
+
+procedure TFreg.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+fdm.Querypass.Close;
+end;
+
+procedure TFreg.FormShow(Sender: TObject);
+var i: Integer;
+begin
+with GroupBox1 do
+for i := 0 to ControlCount - 1 do
+  if (Controls[i]is TLabeledEdit) then
+  begin
+  (Controls[i] as TLabeledEdit).PasswordChar:='*';
+  end;
+
+end;
+
+end.

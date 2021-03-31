@@ -1,0 +1,136 @@
+object fdm: Tfdm
+  OldCreateOrder = False
+  Height = 374
+  Width = 506
+  object ADOConnection1: TADOConnection
+    Connected = True
+    ConnectionString = 
+      'Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security In' +
+      'fo=False;Initial Catalog=men_pers'
+    LoginPrompt = False
+    Provider = 'SQLOLEDB.1'
+    Left = 24
+    Top = 24
+  end
+  object Querypas: TADOQuery
+    Connection = ADOConnection1
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select  * from usver')
+    Left = 56
+    Top = 72
+  end
+  object DsSpass: TDataSource
+    DataSet = Querypas
+    Left = 56
+    Top = 128
+  end
+  object ins: TADOStoredProc
+    Connection = ADOConnection1
+    ProcedureName = 'ins_pass;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@user_pass'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 100
+        Value = ''
+      end
+      item
+        Name = '@usver_name'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 100
+        Value = ''
+      end>
+    Left = 56
+    Top = 184
+  end
+  object Querymen: TADOQuery
+    Connection = ADOConnection1
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select * from manager')
+    Left = 112
+    Top = 72
+  end
+  object ins_manager: TADOStoredProc
+    Connection = ADOConnection1
+    ProcedureName = 'ins_manager;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@fio'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 150
+        Value = ''
+      end
+      item
+        Name = '@cont'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 1000
+        Value = ''
+      end
+      item
+        Name = '@email'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 1000
+        Value = ''
+      end
+      item
+        Name = '@phone'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 1000
+      end
+      item
+        Name = '@User_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 112
+    Top = 184
+  end
+  object DSmanager: TDataSource
+    DataSet = Querymen
+    Left = 112
+    Top = 128
+  end
+  object Queryplan: TADOQuery
+    Connection = ADOConnection1
+    Parameters = <>
+    SQL.Strings = (
+      'select * from  mplan')
+    Left = 192
+    Top = 80
+  end
+  object ins_mplan: TADOStoredProc
+    Connection = ADOConnection1
+    Parameters = <>
+    Left = 200
+    Top = 192
+  end
+  object DSplan: TDataSource
+    DataSet = Queryplan
+    Left = 200
+    Top = 136
+  end
+end

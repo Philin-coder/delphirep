@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2020.11.26 09:56:16.615.pas,C:\Users\User\Documents\Borland Studio Projects\Unit1.pas=F:\code\Result\delphi\sql_query_gen\Umain.pas</Transaction>
+    <Transaction>2020.11.26 09:56:16.615.dfm,C:\Users\User\Documents\Borland Studio Projects\Unit1.dfm=F:\code\Result\delphi\sql_query_gen\Umain.dfm</Transaction>
+    <Transaction>2020.11.26 09:56:27.571.bdsproj,C:\Users\User\Documents\Borland Studio Projects\Project1.bdsproj=F:\code\Result\delphi\sql_query_gen\Project1.bdsproj</Transaction>
+    <Transaction>2020.11.26 09:57:34.180.pas,F:\code\Result\delphi\sql_query_gen\Unit1.pas=F:\code\Result\delphi\sql_query_gen\Udm.pas</Transaction>
+    <Transaction>2020.11.26 09:57:34.180.dfm,F:\code\Result\delphi\sql_query_gen\Unit1.dfm=F:\code\Result\delphi\sql_query_gen\Udm.dfm</Transaction>
+  </Transactions>
+</BorlandProject>

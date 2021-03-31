@@ -1,0 +1,35 @@
+object fDM: TfDM
+  OldCreateOrder = False
+  Height = 317
+  Width = 626
+  object ADOConnection1: TADOConnection
+    Connected = True
+    ConnectionString = 
+      'Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security In' +
+      'fo=False;Initial Catalog=uspev'
+    LoginPrompt = False
+    Provider = 'SQLOLEDB.1'
+    Left = 40
+    Top = 24
+  end
+  object Queryprich: TADOQuery
+    Connection = ADOConnection1
+    Parameters = <>
+    SQL.Strings = (
+      'select * from prich')
+    Left = 48
+    Top = 88
+  end
+  object ins_prich: TADOStoredProc
+    Connection = ADOConnection1
+    ProcedureName = 'ins_prich;1'
+    Parameters = <>
+    Left = 48
+    Top = 224
+  end
+  object DSprich: TDataSource
+    DataSet = Queryprich
+    Left = 56
+    Top = 160
+  end
+end

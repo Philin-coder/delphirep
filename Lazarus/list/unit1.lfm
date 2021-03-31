@@ -1,0 +1,56 @@
+object Form1: TForm1
+  Left = 256
+  Height = 240
+  Top = 210
+  Width = 320
+  Caption = 'Form1'
+  ClientHeight = 240
+  ClientWidth = 320
+  LCLVersion = '1.8.4.0'
+  object Panel1: TPanel
+    Left = 0
+    Height = 240
+    Top = 0
+    Width = 320
+    Align = alClient
+    ClientHeight = 240
+    ClientWidth = 320
+    TabOrder = 0
+    object Panel2: TPanel
+      Left = 1
+      Height = 50
+      Top = 1
+      Width = 318
+      Align = alTop
+      ClientHeight = 50
+      ClientWidth = 318
+      TabOrder = 0
+      object Button1: TButton
+        Left = 16
+        Height = 25
+        Top = 8
+        Width = 75
+        Caption = 'Вывол списка'
+        OnClick = Button1Click
+        TabOrder = 0
+      end
+      object Button2: TButton
+        Left = 112
+        Height = 25
+        Top = 8
+        Width = 75
+        Caption = 'Узез списка'
+        OnClick = Button2Click
+        TabOrder = 1
+      end
+    end
+    object Memo1: TMemo
+      Left = 1
+      Height = 188
+      Top = 51
+      Width = 318
+      Align = alClient
+      TabOrder = 1
+    end
+  end
+end
