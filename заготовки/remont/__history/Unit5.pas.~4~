@@ -1,0 +1,41 @@
+unit Unit5;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ExtCtrls;
+
+type
+  TForm5 = class(TForm)
+    RadioGroup1: TRadioGroup;
+    Panel1: TPanel;
+    Button1: TButton;
+    Panel2: TPanel;
+    GroupBox1: TGroupBox;
+    Memo1: TMemo;
+    procedure Button1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form5: TForm5;
+  var pol:Integer;
+   var pobelka:Integer;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm5.Button1Click(Sender: TObject);
+var k:Integer;
+begin
+pol:=random(300000);
+pobelka:=random(300000);
+ShowMessage(IntToStr(RadioGroup1.ItemIndex)+' '+ IntToStr(pol));
+end;
+
+end.

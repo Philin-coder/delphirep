@@ -1,0 +1,15 @@
+object DataModule1: TDataModule1
+  OldCreateOrder = False
+  Height = 427
+  HorizontalOffset = 256
+  VerticalOffset = 145
+  Width = 587
+  PPI = 96
+  object MSSQLConnection2: TMSSQLConnection
+    Connected = False
+    LoginPrompt = False
+    KeepConnection = False
+    left = 156
+    top = 103
+  end
+end

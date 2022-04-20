@@ -1,0 +1,146 @@
+unit Unit1;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ExtCtrls, Menus;
+
+type
+  TForm1 = class(TForm)
+    MainMenu1: TMainMenu;
+    N1: TMenuItem;
+    fasm1: TMenuItem;
+    N2: TMenuItem;
+    N3: TMenuItem;
+    Panel1: TPanel;
+    LabeledEdit4: TLabeledEdit;
+    LabeledEdit2: TLabeledEdit;
+    LabeledEdit3: TLabeledEdit;
+    LabeledEdit1: TLabeledEdit;
+    Memo1: TMemo;
+    N4: TMenuItem;
+    N5: TMenuItem;
+    N6: TMenuItem;
+    N7: TMenuItem;
+    N8: TMenuItem;
+    procedure N3Click(Sender: TObject);
+    procedure N2Click(Sender: TObject);
+    procedure N8Click(Sender: TObject);
+    procedure N1Click(Sender: TObject);
+    procedure N4Click(Sender: TObject);
+    procedure N5Click(Sender: TObject);
+    procedure N6Click(Sender: TObject);
+    procedure N7Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+  var a,b,c,d,e,f:integer;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.N1Click(Sender: TObject);
+begin
+A:=StrToInt(LabeledEdit4.Text);
+B:=StrToInt(LabeledEdit2.Text);
+C:=StrToInt(LabeledEdit3.Text);
+D:=StrToInt(LabeledEdit1.Text);
+
+end;
+
+procedure TForm1.N2Click(Sender: TObject);
+begin
+LabeledEdit4.Clear;
+LabeledEdit3.Clear;
+LabeledEdit2.Clear;
+LabeledEdit1.Clear;
+D:=0;
+end;
+
+procedure TForm1.N3Click(Sender: TObject);
+begin
+Form1.Close;
+
+end;
+
+procedure TForm1.N4Click(Sender: TObject);
+begin
+asm
+  mov eax,a
+  add  eax,b
+  add eax, c
+  mov d, eax
+end;
+Memo1.Lines.Add('Расчет в Assembler сумма D=' +IntToStr((D)));
+end;
+
+procedure TForm1.N5Click(Sender: TObject);
+begin
+asm
+mov eax,a
+sub eax,b
+sub eax, c
+mov d,eax
+end;
+end;
+
+procedure TForm1.N6Click(Sender: TObject);
+begin
+asm
+xor eax,eax
+xor edx, ebx
+mov eax,a
+mul b
+mul c
+mov d,eax
+end;
+Memo1.Lines.Add('Расчет в Assembler умножение A*B*С='+IntToStr((D)));
+end;
+
+procedure TForm1.N7Click(Sender: TObject);
+var E:Integer;
+begin
+asm
+xor eax,eax
+xor ebx,ebx
+mov eax,a
+div b
+div c
+mov d, eax
+mov c,edx
+end;
+Memo1.Lines.Add ('Расчет в Assembler деление A div B div С= '+' Результат='+ IntToStr(D)+' Остаток от деления='+IntToStr(E));
+
+end;
+
+procedure TForm1.N8Click(Sender: TObject);
+begin
+// ASS D = D + A*B + A^2*C
+asm
+xor eax,eax
+xor ebx,ebx
+xor ecx,ecx
+xor edx, edx
+mov eax, a
+mul eax
+mul c
+xor edx,edx
+mov ebx, eax
+mov eax,a
+mul b
+add ebx, eax
+add ebx, d
+mov d, eax
+end;
+Memo1.Clear;
+Memo1.Lines.Add('Рассчет по формуле d='+IntToStr((D)) );
+end;
+
+end.

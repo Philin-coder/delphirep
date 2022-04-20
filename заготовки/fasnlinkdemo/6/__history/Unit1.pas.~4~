@@ -1,0 +1,65 @@
+unit Unit1;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Menus, StdCtrls, ExtCtrls;
+
+type
+  TForm1 = class(TForm)
+    MainMenu1: TMainMenu;
+    N1: TMenuItem;
+    N2: TMenuItem;
+    N3: TMenuItem;
+    N4: TMenuItem;
+    Panel1: TPanel;
+    LabeledEdit1: TLabeledEdit;
+    LabeledEdit2: TLabeledEdit;
+    Memo1: TMemo;
+    procedure N4Click(Sender: TObject);
+    procedure N3Click(Sender: TObject);
+    procedure N1Click(Sender: TObject);
+    procedure N2Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+     var xb,xc:Integer;
+     x,a:Integer;
+     y,y2,y1,otv:Integer;
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.N1Click(Sender: TObject);
+begin
+ x:=strtoint(LabeledEdit1.Text);
+ a:=strtoint(LabeledEdit2.Text);
+end;
+
+procedure TForm1.N2Click(Sender: TObject);
+label,p1,p2,per,endd
+begin
+
+
+end;
+
+procedure TForm1.N3Click(Sender: TObject);
+begin
+   Memo1.Lines.Add(' x='+IntToStr(x)+' a='+IntToStr(a)+
+ '  y1= '+IntToStr(y1)+'  y2= '+IntToStr(Y2)+
+'   y='+inttostr(y)+'  otv= '+inttostr(otv));
+
+end;
+
+procedure TForm1.N4Click(Sender: TObject);
+begin
+Form1.Close;
+end;
+
+end.

@@ -1,0 +1,602 @@
+object Form1: TForm1
+  Left = 256
+  Height = 797
+  Top = 145
+  Width = 663
+  Caption = 'Form1'
+  ClientHeight = 797
+  ClientWidth = 663
+  LCLVersion = '2.0.2.0'
+  object PageControl1: TPageControl
+    Left = 0
+    Height = 797
+    Top = 0
+    Width = 663
+    ActivePage = TabSheet1
+    Align = alClient
+    TabIndex = 0
+    TabOrder = 0
+    object TabSheet1: TTabSheet
+      Caption = 'Вводы'
+      ClientHeight = 769
+      ClientWidth = 655
+      object PageControl2: TPageControl
+        Left = 0
+        Height = 769
+        Top = 0
+        Width = 655
+        ActivePage = TabSheet3
+        Align = alClient
+        TabIndex = 0
+        TabOrder = 0
+        object TabSheet3: TTabSheet
+          Caption = 'Ввод специальности'
+          ClientHeight = 741
+          ClientWidth = 647
+          object GroupBox1: TGroupBox
+            Left = 0
+            Height = 73
+            Top = 0
+            Width = 647
+            Align = alTop
+            Caption = 'Входные данные'
+            ClientHeight = 53
+            ClientWidth = 643
+            TabOrder = 0
+            object LabeledEdit1: TLabeledEdit
+              Left = 6
+              Height = 23
+              Top = 24
+              Width = 637
+              EditLabel.Height = 15
+              EditLabel.Width = 637
+              EditLabel.Caption = 'специальность'
+              EditLabel.ParentColor = False
+              TabOrder = 0
+            end
+          end
+          object GroupBox2: TGroupBox
+            Left = 0
+            Height = 65
+            Top = 676
+            Width = 647
+            Align = alBottom
+            ClientHeight = 45
+            ClientWidth = 643
+            TabOrder = 1
+            object Button1: TButton
+              Left = 144
+              Height = 45
+              Top = -8
+              Width = 96
+              Caption = 'ввести'
+              OnClick = Button1Click
+              TabOrder = 0
+            end
+            object Button2: TButton
+              Left = 272
+              Height = 45
+              Top = -8
+              Width = 96
+              Caption = 'изменить'
+              TabOrder = 1
+            end
+            object Button3: TButton
+              Left = 416
+              Height = 45
+              Top = -8
+              Width = 96
+              Caption = 'отменить'
+              TabOrder = 2
+            end
+          end
+          object GroupBox3: TGroupBox
+            Left = 0
+            Height = 603
+            Top = 73
+            Width = 647
+            Align = alClient
+            Caption = 'Выходные данные'
+            ClientHeight = 583
+            ClientWidth = 643
+            TabOrder = 2
+            object DBGrid1: TDBGrid
+              Left = 0
+              Height = 583
+              Top = 0
+              Width = 643
+              Align = alClient
+              Color = clWindow
+              Columns = <>
+              TabOrder = 0
+            end
+          end
+        end
+        object TabSheet4: TTabSheet
+          Caption = 'Ввод  группы'
+          ClientHeight = 741
+          ClientWidth = 647
+          object GroupBox4: TGroupBox
+            Left = 0
+            Height = 160
+            Top = 0
+            Width = 647
+            Align = alTop
+            Caption = 'Входные данне '
+            ClientHeight = 140
+            ClientWidth = 643
+            TabOrder = 0
+            object LabeledEdit2: TLabeledEdit
+              Left = 8
+              Height = 23
+              Top = 8
+              Width = 632
+              EditLabel.Height = 15
+              EditLabel.Width = 632
+              EditLabel.Caption = 'название'
+              EditLabel.ParentColor = False
+              TabOrder = 0
+            end
+            object Label1: TLabel
+              Left = 16
+              Height = 15
+              Top = 40
+              Width = 83
+              Caption = 'специальность'
+              ParentColor = False
+            end
+            object Label2: TLabel
+              Left = 16
+              Height = 15
+              Top = 88
+              Width = 69
+              Caption = 'социальный'
+              ParentColor = False
+            end
+            object DBLookupComboBox1: TDBLookupComboBox
+              Left = 16
+              Height = 23
+              Top = 56
+              Width = 624
+              ListFieldIndex = 0
+              LookupCache = False
+              TabOrder = 1
+            end
+            object DBLookupComboBox2: TDBLookupComboBox
+              Left = 16
+              Height = 23
+              Top = 104
+              Width = 624
+              ListFieldIndex = 0
+              LookupCache = False
+              TabOrder = 2
+            end
+          end
+          object GroupBox5: TGroupBox
+            Left = 0
+            Height = 41
+            Top = 700
+            Width = 647
+            Align = alBottom
+            ClientHeight = 21
+            ClientWidth = 643
+            TabOrder = 1
+            object Button4: TButton
+              Left = 56
+              Height = 25
+              Top = 0
+              Width = 75
+              Caption = 'добавить'
+              OnClick = Button4Click
+              TabOrder = 0
+            end
+            object Button5: TButton
+              Left = 208
+              Height = 25
+              Top = 0
+              Width = 75
+              Caption = 'изменить'
+              TabOrder = 1
+            end
+            object Button6: TButton
+              Left = 344
+              Height = 25
+              Top = 0
+              Width = 75
+              Caption = 'отмнгить'
+              TabOrder = 2
+            end
+          end
+          object GroupBox6: TGroupBox
+            Left = 0
+            Height = 540
+            Top = 160
+            Width = 647
+            Align = alClient
+            Caption = 'Выходные даннеы'
+            ClientHeight = 520
+            ClientWidth = 643
+            TabOrder = 2
+            object DBGrid2: TDBGrid
+              Left = 0
+              Height = 520
+              Top = 0
+              Width = 643
+              Align = alClient
+              Color = clWindow
+              Columns = <>
+              TabOrder = 0
+            end
+          end
+        end
+        object TabSheet5: TTabSheet
+          Caption = 'Информация о социальном'
+          ClientHeight = 741
+          ClientWidth = 647
+          object GroupBox7: TGroupBox
+            Left = 0
+            Height = 177
+            Top = 0
+            Width = 647
+            Align = alTop
+            Caption = 'Входные даннеые'
+            ClientHeight = 157
+            ClientWidth = 643
+            TabOrder = 0
+            object LabeledEdit3: TLabeledEdit
+              Left = 8
+              Height = 23
+              Top = 16
+              Width = 616
+              EditLabel.Height = 15
+              EditLabel.Width = 616
+              EditLabel.Caption = 'ФИО'
+              EditLabel.ParentColor = False
+              TabOrder = 0
+            end
+            object LabeledEdit4: TLabeledEdit
+              Left = 8
+              Height = 23
+              Top = 72
+              Width = 616
+              EditLabel.Height = 15
+              EditLabel.Width = 616
+              EditLabel.Caption = 'Образование'
+              EditLabel.ParentColor = False
+              TabOrder = 1
+            end
+            object LabeledEdit5: TLabeledEdit
+              Left = 8
+              Height = 23
+              Top = 128
+              Width = 616
+              EditLabel.Height = 15
+              EditLabel.Width = 616
+              EditLabel.Caption = 'прочие свединия'
+              EditLabel.ParentColor = False
+              TabOrder = 2
+            end
+          end
+          object GroupBox8: TGroupBox
+            Left = 0
+            Height = 63
+            Top = 678
+            Width = 647
+            Align = alBottom
+            ClientHeight = 43
+            ClientWidth = 643
+            TabOrder = 1
+            object Button7: TButton
+              Left = 156
+              Height = 25
+              Top = 6
+              Width = 75
+              Caption = 'добавить'
+              OnClick = Button7Click
+              TabOrder = 0
+            end
+            object Button8: TButton
+              Left = 272
+              Height = 25
+              Top = 8
+              Width = 75
+              Caption = 'изменить'
+              TabOrder = 1
+            end
+            object Button9: TButton
+              Left = 448
+              Height = 25
+              Top = 6
+              Width = 75
+              Caption = 'отменить'
+              TabOrder = 2
+            end
+          end
+          object GroupBox9: TGroupBox
+            Left = 0
+            Height = 501
+            Top = 177
+            Width = 647
+            Align = alClient
+            Caption = 'Выходные данные'
+            ClientHeight = 481
+            ClientWidth = 643
+            TabOrder = 2
+            object DBGrid3: TDBGrid
+              Left = 0
+              Height = 481
+              Top = 0
+              Width = 643
+              Align = alClient
+              Color = clWindow
+              Columns = <>
+              TabOrder = 0
+            end
+          end
+        end
+        object TabSheet6: TTabSheet
+          Caption = 'Ввод информации о студенте'
+          ClientHeight = 741
+          ClientWidth = 647
+          object GroupBox10: TGroupBox
+            Left = 0
+            Height = 512
+            Top = 0
+            Width = 647
+            Align = alTop
+            Caption = 'Входные даннные'
+            ClientHeight = 492
+            ClientWidth = 643
+            TabOrder = 0
+            object LabeledEdit6: TLabeledEdit
+              Left = 16
+              Height = 23
+              Top = 8
+              Width = 624
+              EditLabel.Height = 15
+              EditLabel.Width = 624
+              EditLabel.Caption = 'Фио студента'
+              EditLabel.ParentColor = False
+              TabOrder = 0
+            end
+            object LabeledEdit7: TLabeledEdit
+              Left = 16
+              Height = 23
+              Top = 56
+              Width = 624
+              EditLabel.Height = 15
+              EditLabel.Width = 624
+              EditLabel.Caption = 'Телефон'
+              EditLabel.ParentColor = False
+              TabOrder = 1
+            end
+            object LabeledEdit8: TLabeledEdit
+              Left = 16
+              Height = 23
+              Top = 104
+              Width = 624
+              EditLabel.Height = 15
+              EditLabel.Width = 624
+              EditLabel.Caption = 'О студенте'
+              EditLabel.ParentColor = False
+              TabOrder = 2
+            end
+            object Label3: TLabel
+              Left = 12
+              Height = 15
+              Top = 128
+              Width = 83
+              Caption = 'Дата рождения'
+              ParentColor = False
+            end
+            object DateTimePicker1: TDateTimePicker
+              Left = 16
+              Height = 23
+              Top = 144
+              Width = 616
+              CenturyFrom = 1941
+              MaxDate = 2958465
+              MinDate = -53780
+              TabOrder = 3
+              TrailingSeparator = False
+              TextForNullDate = 'NULL'
+              LeadingZeros = True
+              Anchors = [akTop, akLeft, akRight]
+              Kind = dtkDate
+              TimeFormat = tf24
+              TimeDisplay = tdHMS
+              DateMode = dmComboBox
+              Date = 43750
+              Time = 0.969759097220958
+              UseDefaultSeparators = True
+              HideDateTimeParts = []
+              MonthNames = 'Long'
+            end
+            object Label4: TLabel
+              Left = 16
+              Height = 15
+              Top = 168
+              Width = 39
+              Caption = 'Группа'
+              ParentColor = False
+            end
+            object DBLookupComboBox3: TDBLookupComboBox
+              Left = 16
+              Height = 23
+              Top = 184
+              Width = 624
+              ListFieldIndex = 0
+              LookupCache = False
+              TabOrder = 4
+            end
+            object Label5: TLabel
+              Left = 16
+              Height = 15
+              Top = 392
+              Width = 121
+              Caption = 'дата начала обучения'
+              ParentColor = False
+            end
+            object DateTimePicker2: TDateTimePicker
+              Left = 12
+              Height = 23
+              Top = 416
+              Width = 632
+              CenturyFrom = 1941
+              MaxDate = 2958465
+              MinDate = -53780
+              TabOrder = 5
+              TrailingSeparator = False
+              TextForNullDate = 'NULL'
+              LeadingZeros = True
+              Anchors = [akTop, akLeft, akRight]
+              Kind = dtkDate
+              TimeFormat = tf24
+              TimeDisplay = tdHMS
+              DateMode = dmComboBox
+              Date = 43750
+              Time = 0.969759097220958
+              UseDefaultSeparators = True
+              HideDateTimeParts = []
+              MonthNames = 'Long'
+            end
+            object LabeledEdit9: TLabeledEdit
+              Left = 16
+              Height = 23
+              Top = 232
+              Width = 624
+              EditLabel.Height = 15
+              EditLabel.Width = 624
+              EditLabel.Caption = 'maill'
+              EditLabel.ParentColor = False
+              TabOrder = 6
+            end
+            object LabeledEdit10: TLabeledEdit
+              Left = 16
+              Height = 23
+              Top = 272
+              Width = 624
+              EditLabel.Height = 15
+              EditLabel.Width = 624
+              EditLabel.Caption = 'skype'
+              EditLabel.ParentColor = False
+              TabOrder = 7
+            end
+            object LabeledEdit11: TLabeledEdit
+              Left = 12
+              Height = 23
+              Top = 320
+              Width = 624
+              EditLabel.Height = 15
+              EditLabel.Width = 624
+              EditLabel.Caption = 'Фио Родителей'
+              EditLabel.ParentColor = False
+              TabOrder = 8
+            end
+            object LabeledEdit12: TLabeledEdit
+              Left = 12
+              Height = 23
+              Top = 368
+              Width = 624
+              EditLabel.Height = 15
+              EditLabel.Width = 624
+              EditLabel.Caption = 'Телефон родителей'
+              EditLabel.ParentColor = False
+              TabOrder = 9
+            end
+            object Label6: TLabel
+              Left = 16
+              Height = 15
+              Top = 440
+              Width = 115
+              Caption = 'дата конца обучения'
+              ParentColor = False
+            end
+            object DateTimePicker3: TDateTimePicker
+              Left = 12
+              Height = 23
+              Top = 464
+              Width = 632
+              CenturyFrom = 1941
+              MaxDate = 2958465
+              MinDate = -53780
+              TabOrder = 10
+              TrailingSeparator = False
+              TextForNullDate = 'NULL'
+              LeadingZeros = True
+              Anchors = [akTop, akLeft, akRight]
+              Kind = dtkDate
+              TimeFormat = tf24
+              TimeDisplay = tdHMS
+              DateMode = dmComboBox
+              Date = 43750
+              Time = 0.969759097220958
+              UseDefaultSeparators = True
+              HideDateTimeParts = []
+              MonthNames = 'Long'
+            end
+          end
+          object GroupBox11: TGroupBox
+            Left = 0
+            Height = 57
+            Top = 684
+            Width = 647
+            Align = alBottom
+            ClientHeight = 37
+            ClientWidth = 643
+            TabOrder = 1
+            object Button10: TButton
+              Left = 140
+              Height = 25
+              Top = 8
+              Width = 75
+              Caption = 'Добавить'
+              OnClick = Button10Click
+              TabOrder = 0
+            end
+            object Button11: TButton
+              Left = 240
+              Height = 25
+              Top = 12
+              Width = 75
+              Caption = 'Изменить'
+              TabOrder = 1
+            end
+            object Button12: TButton
+              Left = 440
+              Height = 25
+              Top = 8
+              Width = 75
+              Caption = 'Отмнгть'
+              TabOrder = 2
+            end
+          end
+          object GroupBox12: TGroupBox
+            Left = 0
+            Height = 172
+            Top = 512
+            Width = 647
+            Align = alClient
+            Caption = 'Выходные данные'
+            ClientHeight = 152
+            ClientWidth = 643
+            TabOrder = 2
+            object DBGrid4: TDBGrid
+              Left = 0
+              Height = 152
+              Top = 0
+              Width = 643
+              Align = alClient
+              Color = clWindow
+              Columns = <>
+              TabOrder = 0
+            end
+          end
+        end
+      end
+    end
+    object TabSheet2: TTabSheet
+      Caption = 'отчеты'
+    end
+  end
+end

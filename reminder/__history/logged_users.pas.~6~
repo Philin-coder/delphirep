@@ -1,0 +1,71 @@
+unit logged_users;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, DBCtrls, StdCtrls, ExtCtrls;
+
+type
+  Tflogged_users = class(TForm)
+    GroupBox1: TGroupBox;
+    Label1: TLabel;
+    GroupBox2: TGroupBox;
+    Button1: TButton;
+    Edit1: TEdit;
+    Label2: TLabel;
+    Edit2: TEdit;
+    procedure Button1KeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure FormActivate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure Button1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  flogged_users: Tflogged_users;
+
+implementation
+
+uses fadm_pass, main, Serv_f, Ulog, Udm;
+
+{$R *.dfm}
+
+procedure Tflogged_users.Button1Click(Sender: TObject);
+begin
+fdm.Query_pass.Open;
+if (Edit2.Text=fdm.Query_pass.FieldByName('usver_name').AsString)
+and (Edit1.Text=fdm.Query_pass.FieldByName('user_pass').AsString) then
+begin
+ Fmain.ShowModal;
+end
+else
+begin
+showMessage('Пароль некорректен');
+end;
+end;
+
+procedure Tflogged_users.Button1KeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+if (key=115) then
+begin
+Fadm_passs.ShowModal;
+end;
+
+end;
+
+procedure Tflogged_users.FormActivate(Sender: TObject);
+begin
+fdm.Query_pass.Open;
+end;
+
+procedure Tflogged_users.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+fdm.Query_pass.close;
+end;
+
+end.

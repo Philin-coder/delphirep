@@ -1,0 +1,25 @@
+object Form3: TForm3
+  Left = 256
+  Height = 240
+  Top = 210
+  Width = 320
+  Align = alClient
+  Caption = 'Form3'
+  ClientHeight = 240
+  ClientWidth = 320
+  OnCreate = FormCreate
+  LCLVersion = '1.8.4.0'
+  object OpenGLControl1: TOpenGLControl
+    Left = 0
+    Height = 240
+    Top = 0
+    Width = 320
+    Align = alClient
+  end
+  object Timer1: TTimer
+    Interval = 1
+    OnTimer = Timer1Timer
+    left = 10
+    top = 10
+  end
+end

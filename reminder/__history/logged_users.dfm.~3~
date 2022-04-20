@@ -1,0 +1,78 @@
+object flogged_users: Tflogged_users
+  Left = 0
+  Top = 0
+  Caption = #1042#1074#1086#1076' '#1083#1086#1075#1080#1085#1072' '#1080' '#1087#1072#1088#1086#1083#1103
+  ClientHeight = 148
+  ClientWidth = 635
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object GroupBox1: TGroupBox
+    Left = 0
+    Top = 0
+    Width = 635
+    Height = 105
+    Align = alTop
+    Caption = #1042#1074#1086#1076'  '#1083#1086#1075#1080#1085#1072' '#1080' '#1087#1072#1088#1086#1083#1103
+    TabOrder = 0
+    ExplicitLeft = 40
+    ExplicitTop = 8
+    DesignSize = (
+      635
+      105)
+    object Label1: TLabel
+      Left = 4
+      Top = 37
+      Width = 30
+      Height = 13
+      Caption = #1051#1086#1075#1080#1085
+    end
+    object LabeledEdit1: TLabeledEdit
+      Left = 40
+      Top = 64
+      Width = 592
+      Height = 21
+      EditLabel.Width = 37
+      EditLabel.Height = 13
+      EditLabel.Caption = #1055#1072#1088#1086#1083#1100
+      LabelPosition = lpLeft
+      TabOrder = 0
+    end
+    object DBLookupComboBox1: TDBLookupComboBox
+      Left = 40
+      Top = 37
+      Width = 595
+      Height = 21
+      Anchors = [akLeft, akTop, akRight]
+      TabOrder = 1
+    end
+  end
+  object GroupBox2: TGroupBox
+    Left = 0
+    Top = 105
+    Width = 635
+    Height = 43
+    Align = alClient
+    TabOrder = 1
+    ExplicitHeight = 79
+    DesignSize = (
+      635
+      43)
+    object Button1: TButton
+      Left = 248
+      Top = 15
+      Width = 75
+      Height = 25
+      Anchors = [akLeft, akTop, akRight]
+      Caption = #1042#1093#1086#1076
+      TabOrder = 0
+      OnKeyUp = Button1KeyUp
+    end
+  end
+end

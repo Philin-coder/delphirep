@@ -1,0 +1,49 @@
+unit Unit6;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Grids, DBGrids, StdCtrls, ExtCtrls;
+
+type
+  TForm6 = class(TForm)
+    GroupBox1: TGroupBox;
+    LabeledEdit1: TLabeledEdit;
+    GroupBox2: TGroupBox;
+    Button1: TButton;
+    GroupBox3: TGroupBox;
+    DBGrid1: TDBGrid;
+    Button2: TButton;
+    GroupBox4: TGroupBox;
+    DBGrid2: TDBGrid;
+    procedure FormActivate(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form6: TForm6;
+
+implementation
+
+uses fdm;
+
+{$R *.dfm}
+
+procedure TForm6.Button1Click(Sender: TObject);
+begin
+dm.shifr.Parameters.ParamValues['@KOD']:=LabeledEdit1.Text;
+dm.Queryshifr.Close;
+dm.Queryshifr.Open;
+end;
+
+procedure TForm6.FormActivate(Sender: TObject);
+begin
+     dm.Queryshifr.Open;
+end;
+
+end.
