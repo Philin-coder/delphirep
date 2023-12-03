@@ -1,0 +1,125 @@
+unit Unit1;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ComCtrls, IniFiles;
+
+type
+  TForm1 = class(TForm)
+    Edit1: TEdit;
+    GroupBox1: TGroupBox;
+    Label1: TLabel;
+    Edit2: TEdit;
+    UpDown1: TUpDown;
+    CheckBox1: TCheckBox;
+    GroupBox2: TGroupBox;
+    Button1: TButton;
+    Button2: TButton;
+    procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure ini_creator(var Pathini);
+    procedure ini_reader(var pathini);
+
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+ Pathini:string;
+//  Ini : TIniFile;
+
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.Button1Click(Sender: TObject);
+
+begin
+//  Ini:=nil;
+    Pathini:=ExtractFileDir(Application.ExeName)+'\settings.ini';
+//  try
+//  Ini := TIniFile.Create(Pathini);
+//  ini.WriteString('Test','editval',Edit1.Text);
+//  ini.WriteInteger('tesr','spval',UpDown1.Position);
+//  ini.WriteBool('test','chval',CheckBox1.Checked);
+//  ini.WriteInteger('FormPosition','ftop',Form1.Top);
+//  ini.WriteInteger('FormPosition','fleft',Form1.Left);
+//  ini.Free;
+//  except
+//     ShowMessage('Не удается сохранить настройки в файл : '+
+//Ini.FileName)
+//
+//  end;
+ini_creator(QuotedStr(ExtractFileDir(Application.ExeName)+'\settings.ini';));
+ShowMessage(QuotedStr( Pathini));
+end;
+
+procedure TForm1.Button2Click(Sender: TObject);
+begin
+//  Pathini:=ExtractFileDir(Application.ExeName)+'\settings.ini';
+//if FileExists(Pathini) then
+//begin
+//  Ini := TIniFile.Create(ExtractFileDir(Application.ExeName)+'\settings.ini');
+//  Edit1.Text:=ini.ReadString('Test','editval','Раздел не найден');
+//  UpDown1.Position:=ini.ReadInteger('tesr','spval',0);
+//  CheckBox1.Checked:=ini.ReadBool('test','chval',False);
+//  Form1.top:=ini.ReadInteger('FormPosition','ftop',100);
+//  Form1.Left:=ini.ReadInteger('FormPosition','fleft',100);
+//  ini.Free;
+//end
+//  else
+//  begin
+//    ShowMessage('файла нэт');
+//  end;
+
+end;
+
+procedure TForm1.ini_creator(var Pathini);
+  //ini:TIniFile;
+begin
+//  Ini:=nil;
+//  Pathini:=ExtractFileDir(Application.ExeName)+'\settings.ini';
+//  try
+//  Ini := TIniFile.Create(Pathini);
+//  ini.WriteString('Test','editval',Edit1.Text);
+//  ini.WriteInteger('tesr','spval',UpDown1.Position);
+//  ini.WriteBool('test','chval',CheckBox1.Checked);
+//  ini.WriteInteger('FormPosition','ftop',Form1.Top);
+//  ini.WriteInteger('FormPosition','fleft',Form1.Left);
+//  ini.Free;
+//  except
+//     ShowMessage('Не удается сохранить настройки в файл : '+
+//Ini.FileName)
+
+//  end;
+end;
+
+procedure TForm1.ini_reader(var pathini);
+var ini:TIniFile;
+begin
+//Pathini:=ExtractFileDir(Application.ExeName)+'\settings.ini';
+//if FileExists(Pathini) then
+//begin
+//  Ini := TIniFile.Create(ExtractFileDir(Application.ExeName)+'\settings.ini');
+//  Edit1.Text:=ini.ReadString('Test','editval','Раздел не найден');
+//  UpDown1.Position:=ini.ReadInteger('tesr','spval',0);
+//  CheckBox1.Checked:=ini.ReadBool('test','chval',False);
+//  Form1.top:=ini.ReadInteger('FormPosition','ftop',100);
+//  Form1.Left:=ini.ReadInteger('FormPosition','fleft',100);
+//  ini.Free;
+//end
+//  else
+//  begin
+//    ShowMessage('файла нэт');
+//  end;
+//end;
+//ini_reader(ExtractFileDir(Application.ExeName)+'\settings.ini');
+end;
+
+end.

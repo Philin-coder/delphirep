@@ -1,0 +1,62 @@
+unit main;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, StdCtrls, Buttons;
+
+type
+  TForm1 = class(TForm)
+    Panel1: TPanel;
+    Image1: TImage;
+    procedure FormActivate(Sender: TObject);
+
+
+
+
+  private
+
+
+    { Private declarations }
+
+
+  public
+
+
+    { Public declarations }
+  end;
+
+
+
+var
+  Form1: TForm1;
+implementation
+
+
+
+{$R *.dfm}
+
+  procedure TForm1.FormActivate(Sender: TObject);
+  const N=8;
+  var i, j,x,y :integer;
+
+begin
+
+
+
+x:=image1.Width div 2;
+y:=image1.Height div 2;
+Image1.Canvas.Pen.Color := clBlack;
+for i:= 0 to N-1 do
+for j:= 0 to N-1 do begin
+if odd(N-i+1) = odd(j) then
+Image1.Canvas.Brush.Color := clBlack
+else
+Image1.Canvas.Brush.Color := clWhite;
+Image1.Canvas.Rectangle(x+i*40,y+j*40, x+(i+1)*40, y+(j+1)*40);
+end;
+end;
+
+
+end.

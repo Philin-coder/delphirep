@@ -1,0 +1,47 @@
+unit main;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants,Serv_f, Classes, Graphics, Controls, Forms,
+  Dialogs,IniFiles, Grids, DBGrids, StdCtrls, ComCtrls;
+
+type
+  TFmain = class(TForm)
+    GroupBox1: TGroupBox;
+    GroupBox2: TGroupBox;
+    RichEdit1: TRichEdit;
+    Label1: TLabel;
+    DateTimePicker1: TDateTimePicker;
+    GroupBox3: TGroupBox;
+    Button1: TButton;
+    GroupBox4: TGroupBox;
+    DBGrid1: TDBGrid;
+    Fd: TFontDialog;
+    procedure FormActivate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Fmain: TFmain;
+
+implementation
+
+uses Ulog, fadm_pass, logged_users;
+
+{$R *.dfm}
+
+procedure TFmain.FormActivate(Sender: TObject);
+begin
+
+Fmain.Width:=1024;
+Fmain.Height:=768;
+Fmain.Position:=poScreenCenter;
+Fmain.Caption:='Uлавная форма пользователя'
+
+end;
+
+end.

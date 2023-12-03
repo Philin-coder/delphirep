@@ -8,7 +8,8 @@ uses
   Serv_f in 'Serv_f.pas',
   User_creator in 'User_creator.pas' {user_creation},
   Udm in 'Udm.pas' {fdm: TDataModule},
-  logged_users in 'logged_users.pas' {flogged_users};
+  logged_users in 'logged_users.pas' {flogged_users},
+  Uthrme_creator in 'Uthrme_creator.pas' {Ftheme_creator};
 
 {$R *.res}
 
@@ -20,5 +21,6 @@ begin
   Application.CreateForm(TFadm_passs, Fadm_passs);
   Application.CreateForm(Tuser_creation, user_creation);
   Application.CreateForm(Tfdm, fdm);
+  Application.CreateForm(TFtheme_creator, Ftheme_creator);
   Application.Run;
 end.
