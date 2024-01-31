@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2024.01.25 13:09:19.127.pas,C:\Users\user\OneDrive\Документы\Borland Studio Projects\Unit1.pas=F:\code\Result\delphi\resume\stip_r\Umain.pas</Transaction>
+    <Transaction>2024.01.25 13:09:19.127.dfm,C:\Users\user\OneDrive\Документы\Borland Studio Projects\Unit1.dfm=F:\code\Result\delphi\resume\stip_r\Umain.dfm</Transaction>
+    <Transaction>2024.01.25 13:09:47.937.bdsproj,C:\Users\user\OneDrive\Документы\Borland Studio Projects\Project1.bdsproj=F:\code\Result\delphi\resume\stip_r\stip.bdsproj</Transaction>
+    <Transaction>2024.01.25 15:58:45.154.pas,F:\code\Result\delphi\resume\stip_r\Unit1.pas=F:\code\Result\delphi\resume\stip_r\Udm.pas</Transaction>
+    <Transaction>2024.01.25 15:58:45.154.dfm,F:\code\Result\delphi\resume\stip_r\Unit1.dfm=F:\code\Result\delphi\resume\stip_r\Udm.dfm</Transaction>
+    <Transaction>2024.01.31 16:18:32.314.pas,F:\code\Result\delphi\resume\stip_r\Unit1.pas=F:\code\Result\delphi\resume\stip_r\Ugruppa.pas</Transaction>
+    <Transaction>2024.01.31 16:18:32.314.dfm,F:\code\Result\delphi\resume\stip_r\Unit1.dfm=F:\code\Result\delphi\resume\stip_r\Ugruppa.dfm</Transaction>
+    <Transaction>2024.01.31 17:53:52.803.pas,F:\code\Result\delphi\resume\stip_r\Unit1.pas=F:\code\Result\delphi\resume\stip_r\Urpv.pas</Transaction>
+    <Transaction>2024.01.31 17:53:52.803.dfm,F:\code\Result\delphi\resume\stip_r\Unit1.dfm=F:\code\Result\delphi\resume\stip_r\Urpv.dfm</Transaction>
+    <Transaction>2024.01.31 22:05:52.757.pas,F:\code\Result\delphi\resume\stip_r\Unit1.pas=F:\code\Result\delphi\resume\stip_r\Ureport.pas</Transaction>
+    <Transaction>2024.01.31 22:05:52.757.dfm,F:\code\Result\delphi\resume\stip_r\Unit1.dfm=F:\code\Result\delphi\resume\stip_r\Ureport.dfm</Transaction>
+  </Transactions>
+</BorlandProject>

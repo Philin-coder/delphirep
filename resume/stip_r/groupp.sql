@@ -1,0 +1,21 @@
+USE [stip_r]
+GO
+
+/****** Object:  Table [dbo].[groupp]    Script Date: 31.01.2024 22:50:31 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[groupp](
+	[n_gr] [int] IDENTITY(1,1) NOT NULL,
+	[naim] [varchar](1000) NOT NULL,
+	[spec] [varchar](1000) NOT NULL,
+ CONSTRAINT [PK_group] PRIMARY KEY CLUSTERED 
+(
+	[n_gr] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
