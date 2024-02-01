@@ -46,7 +46,7 @@ procedure TFreport.Button1Click(Sender: TObject);
 begin
 dm.Query_report.Open;
 dm.Query_report.SQL.Text:='select      naim, sum(stip), COUNT(*) otl from stud, groupp where stip>0  and groupp.n_gr=stud.n_gr'+' and stud.date_k <='+QuotedStr(DateToStr_(DateTimePicker1.Date))+' and date_k  <='+QuotedStr(DateToStr_(DateTimePicker2.Date))+  ' group by  naim,stud.date_k';
-//ShowMessage(dm.Query_report.SQL.Text);
+ShowMessage(dm.Query_report.SQL.Text);
 dm.Query_report.ExecSQL;
 dm.Query_report.Close;
 dm.Query_report.Open;

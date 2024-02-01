@@ -62,6 +62,7 @@ object Freport: TFreport
     Height = 81
     Align = alBottom
     TabOrder = 1
+    ExplicitTop = 8
     object Button1: TButton
       Left = 264
       Top = 32
@@ -80,6 +81,8 @@ object Freport: TFreport
     Align = alClient
     Caption = #1044#1072#1085#1085#1099#1077
     TabOrder = 2
+    ExplicitTop = 8
+    ExplicitHeight = 81
     object DBGrid1: TDBGrid
       Left = 2
       Top = 15

@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2020.11.20 12:21:30.857.pas,C:\Users\User\Documents\Borland Studio Projects\Unit1.pas=F:\code\Result\delphi\voda\Uman.pas</Transaction>
+    <Transaction>2020.11.20 12:21:30.857.dfm,C:\Users\User\Documents\Borland Studio Projects\Unit1.dfm=F:\code\Result\delphi\voda\Uman.dfm</Transaction>
+    <Transaction>2020.11.20 12:26:39.279.pas,C:\Users\User\Documents\Borland Studio Projects\Unit1.pas=F:\code\Result\delphi\voda\Udm.pas</Transaction>
+    <Transaction>2020.11.20 12:26:39.279.dfm,C:\Users\User\Documents\Borland Studio Projects\Unit1.dfm=F:\code\Result\delphi\voda\Udm.dfm</Transaction>
+    <Transaction>2020.11.20 12:27:29.140.pas,C:\Users\User\Documents\Borland Studio Projects\Unit1.pas=F:\code\Result\delphi\voda\Ureg.pas</Transaction>
+    <Transaction>2020.11.20 12:27:29.140.dfm,C:\Users\User\Documents\Borland Studio Projects\Unit1.dfm=F:\code\Result\delphi\voda\Ureg.dfm</Transaction>
+    <Transaction>2020.11.20 12:49:18.635.pas,C:\Users\User\Documents\Borland Studio Projects\Unit1.pas=F:\code\Result\delphi\voda\Uins.pas</Transaction>
+    <Transaction>2020.11.20 12:49:18.635.dfm,C:\Users\User\Documents\Borland Studio Projects\Unit1.dfm=F:\code\Result\delphi\voda\Uins.dfm</Transaction>
+    <Transaction>2020.11.20 13:13:35.455.bdsproj,C:\Users\User\Documents\Borland Studio Projects\Project1.bdsproj=F:\code\Result\delphi\voda\Project1.bdsproj</Transaction>
+  </Transactions>
+</BorlandProject>
