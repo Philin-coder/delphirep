@@ -1,0 +1,8 @@
+object Fspiral: TFspiral
+  Left = 332
+  Height = 240
+  Top = 145
+  Width = 320
+  Caption = 'Форма для спирапли'
+  LCLVersion = '2.0.12.0'
+end
