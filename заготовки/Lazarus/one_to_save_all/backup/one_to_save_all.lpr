@@ -18,7 +18,7 @@ begin
   Application.Initialize;
   Application.CreateForm(TFmain, Fmain);
   Application.CreateForm(TFspiral, Fspiral);
-
+//  Application.CreateForm(TForm1, Form1);
   Application.Run;
 end.
 
