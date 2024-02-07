@@ -14,6 +14,7 @@ type
   TFspiral = class(TForm)
     MainMenu1: TMainMenu;
     MenuItem1: TMenuItem;
+    procedure FormCreate(Sender: TObject);
     procedure MenuItem1Click(Sender: TObject);
 
 
@@ -70,6 +71,11 @@ begin
       fi:=fi+0.1;
       end;
    end;
+end;
+
+procedure TFspiral.FormCreate(Sender: TObject);
+begin
+
 end;
 
 end.
