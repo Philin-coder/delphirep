@@ -6,17 +6,21 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Menus, ComCtrls,
-  ExtCtrls, StdCtrls,uspiral;
+  ExtCtrls, StdCtrls, Grids, uspiral,windows;
 
 type
 
   { TFmain }
 
+
   TFmain = class(TForm)
+    ApplicationProperties1: TApplicationProperties;
     Button1: TButton;
     Button2: TButton;
     Button3: TButton;
     Button4: TButton;
+    Button5: TButton;
+    Button6: TButton;
     Edit1: TEdit;
     Edit2: TEdit;
     GroupBox1: TGroupBox;
@@ -24,6 +28,9 @@ type
     GroupBox3: TGroupBox;
     GroupBox4: TGroupBox;
     GroupBox5: TGroupBox;
+    GroupBox6: TGroupBox;
+    GroupBox7: TGroupBox;
+    GroupBox8: TGroupBox;
     Label1: TLabel;
     Label2: TLabel;
     MainMenu1: TMainMenu;
@@ -32,15 +39,24 @@ type
     MenuItem1: TMenuItem;
     PageControl1: TPageControl;
     Panel1: TPanel;
+    StringGrid1: TStringGrid;
     TabSheet1: TTabSheet;
     TabSheet2: TTabSheet;
     TabSheet3: TTabSheet;
+    TabSheet4: TTabSheet;
+    TabSheet5: TTabSheet;
+    TrayIcon1: TTrayIcon;
+    procedure ApplicationProperties1Minimize(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
+    procedure Button5Click(Sender: TObject);
+    procedure Button6Click(Sender: TObject);
     procedure FormActivate(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
     procedure MenuItem1Click(Sender: TObject);
+    procedure TrayIcon1DblClick(Sender: TObject);
 
 
   private
@@ -67,6 +83,12 @@ type  TData = record
     PFirst : TPElem;
     PLast : TPElem;
   end;
+    var
+    i:Integer;
+  x,a:real;
+  b:String;
+  h:Array[1..5] of real=(1, 0.2, 0.1, 0.01, 0.001);
+  p1,p2,p3: array [1..5] of real;
 
 
 
@@ -75,7 +97,14 @@ implementation
 
 {$R *.lfm}
 
+
 { TFmain }
+function y(x:Real):real;
+begin
+  y:=ln((2*x*x+x-3)/(3*x*x+15*x+12));
+end;
+
+
 procedure ListFree(var aList : TList);
 var
   PNext, PDel : TPElem;
@@ -230,9 +259,31 @@ end;
 
 end;
 
+procedure TFmain.FormCreate(Sender: TObject);
+begin
+  StringGrid1.Cells[0,0]:='h';
+  StringGrid1.Cells[0,1]:='p1';
+  StringGrid1.Cells[0,2]:='p2';
+  StringGrid1.Cells[0,3]:='p2';
+  StringGrid1.Cells[1,0]:='1';
+  StringGrid1.Cells[2,0]:='0.2';
+  StringGrid1.Cells[3,0]:='0.1';
+  StringGrid1.Cells[4,0]:='0.01';
+  StringGrid1.Cells[5,0]:='0.001';
+
+end;
+
 procedure TFmain.MenuItem1Click(Sender: TObject);
 begin
   Fspiral.ShowModal;
+end;
+
+procedure TFmain.TrayIcon1DblClick(Sender: TObject);
+begin
+  TrayIcon1.ShowBalloonHint;
+ShowWindow(Handle,SW_RESTORE);
+SetForegroundWindow(Handle);
+TrayIcon1.Visible:=False;
 end;
 
 
@@ -240,6 +291,16 @@ end;
 procedure TFmain.Button1Click(Sender: TObject);
 begin
   ShowMessage('First programm');
+end;
+
+procedure TFmain.ApplicationProperties1Minimize(Sender: TObject);
+begin
+  TrayIcon1.visible:=true;
+//Убираем с панели задач
+ ShowWindow(Handle,SW_HIDE);  // Скрываем программу
+   ShowWindow(Application.Handle,SW_HIDE);  // Скрываем кнопку с TaskBar'а
+SetWindowLong(Application.Handle, GWL_EXSTYLE,
+GetWindowLong(Application.Handle, GWL_EXSTYLE) or (not WS_EX_APPWINDOW));
 end;
 
 procedure TFmain.Button2Click(Sender: TObject);
@@ -308,10 +369,45 @@ end;
   ListFree(List);
 end;
 
+
 procedure TFmain.Button4Click(Sender: TObject);
 begin
   Memo2.Clear;
 end;
+
+procedure TFmain.Button5Click(Sender: TObject);
+begin
+  TrayIcon1.visible:=true; // делаем значок в трее видимым
+trayicon1.balloontitle:=('Текст 1');
+trayicon1.balloonhint:=('Текст 2');
+trayicon1.showballoonHint;// показываем наше уведомление
+end;
+
+procedure TFmain.Button6Click(Sender: TObject);
+begin
+  x:=5; //начало
+  for i:=1 to 5 do
+  begin
+  p1[i]:=(y(x+h[i])-y(x))/h[i];// btnjls счета
+    p2[i]:=(y(x)-y(x-h[i]))/h[i];
+    p3[i]:=(y(x+h[i])-y(x-h[i]))/(2*h[i]);
+end;
+  for i:=1 to 5 do
+  begin
+    a:=p1[i];
+    str(a:4:4,b);
+     StringGrid1.Cells[i,1]:=b;
+      a:=p2[i];
+   str(a:4:4,b);
+   StringGrid1.Cells[i,2]:=b;
+   a:=p3[i];
+   str(a:4:4,b);
+   StringGrid1.Cells[i,3]:=b;
+   end;
+
+  end;
+end;
+
 
 
 end.

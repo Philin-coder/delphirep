@@ -1,35 +1,36 @@
 object Fmain: TFmain
-  Left = 553
+  Left = 356
   Height = 568
-  Top = 132
+  Top = 194
   Width = 1266
   Caption = 'Главная форма'
   ClientHeight = 548
   ClientWidth = 1266
   Menu = MainMenu1
   OnActivate = FormActivate
+  OnCreate = FormCreate
   LCLVersion = '2.0.12.0'
   object PageControl1: TPageControl
     Left = 0
     Height = 548
     Top = 0
     Width = 1266
-    ActivePage = TabSheet3
+    ActivePage = TabSheet5
     Align = alClient
-    TabIndex = 2
+    TabIndex = 4
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'Раз'
-      ClientHeight = 192
-      ClientWidth = 312
+      ClientHeight = 520
+      ClientWidth = 1258
       object Panel1: TPanel
         Left = 0
         Height = 50
-        Top = 142
-        Width = 312
+        Top = 470
+        Width = 1258
         Align = alBottom
         ClientHeight = 50
-        ClientWidth = 312
+        ClientWidth = 1258
         TabOrder = 0
         object Button1: TButton
           Left = 40
@@ -183,6 +184,77 @@ object Fmain: TFmain
         end
       end
     end
+    object TabSheet4: TTabSheet
+      Caption = 'Уведомления в трей'
+      ClientHeight = 520
+      ClientWidth = 1258
+      object GroupBox6: TGroupBox
+        Left = 0
+        Height = 65
+        Top = 455
+        Width = 1258
+        Align = alBottom
+        ClientHeight = 45
+        ClientWidth = 1254
+        TabOrder = 0
+        object Button5: TButton
+          Left = 0
+          Height = 45
+          Top = 0
+          Width = 1254
+          Align = alClient
+          Caption = 'Уведомление'
+          OnClick = Button5Click
+          TabOrder = 0
+        end
+      end
+    end
+    object TabSheet5: TTabSheet
+      Caption = 'Диффуры'
+      ClientHeight = 520
+      ClientWidth = 1258
+      object GroupBox7: TGroupBox
+        Left = 0
+        Height = 64
+        Top = 456
+        Width = 1258
+        Align = alBottom
+        ClientHeight = 44
+        ClientWidth = 1254
+        TabOrder = 0
+        object Button6: TButton
+          Left = 0
+          Height = 44
+          Top = 0
+          Width = 1254
+          Align = alClient
+          Caption = 'Ввод'
+          OnClick = Button6Click
+          TabOrder = 0
+        end
+      end
+      object GroupBox8: TGroupBox
+        Left = 0
+        Height = 456
+        Top = 0
+        Width = 1258
+        Align = alClient
+        Caption = 'Данные'
+        ClientHeight = 436
+        ClientWidth = 1254
+        TabOrder = 1
+        object StringGrid1: TStringGrid
+          Left = 0
+          Height = 436
+          Top = 0
+          Width = 1254
+          Align = alClient
+          ColCount = 6
+          RowCount = 4
+          TabOrder = 0
+        end
+      end
+    end
   end
   object MainMenu1: TMainMenu
     Left = 144
@@ -191,5 +263,15 @@ object Fmain: TFmain
       Caption = 'Новая форма'
       OnClick = MenuItem1Click
     end
+  end
+  object TrayIcon1: TTrayIcon
+    OnDblClick = TrayIcon1DblClick
+    Left = 86
+    Top = 77
+  end
+  object ApplicationProperties1: TApplicationProperties
+    OnMinimize = ApplicationProperties1Minimize
+    Left = 368
+    Top = 88
   end
 end
