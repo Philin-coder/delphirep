@@ -23,7 +23,7 @@ type
     MenuItem1: TMenuItem;
     PopupMenu1: TPopupMenu;
     procedure Button1Click(Sender: TObject);
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
+
     procedure FormCreate(Sender: TObject);
     procedure MenuItem1Click(Sender: TObject);
 
@@ -76,6 +76,17 @@ begin
       lst2.LoadFromFile(LabeledEdit2.Text);
       Memo1.Lines.Add(lst1.Text);
       Memo1.Lines.add(lst2.Text);
+      with TStringList.Create do
+begin
+  Sorted:=True;
+  Duplicates:=dupIgnore;
+  AddStrings(lst1);
+  if Count<>lst1.Count then
+    Result:='Все-таки были дубликаты';
+  AddStrings(lst2);
+  if Count=Strings2.Count then
+   Result:='Строки равны';
+end;
 
   end;
 

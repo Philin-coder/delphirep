@@ -16,9 +16,9 @@ object Fmain: TFmain
     Height = 548
     Top = 0
     Width = 1266
-    ActivePage = TabSheet6
+    ActivePage = TabSheet3
     Align = alClient
-    TabIndex = 5
+    TabIndex = 2
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'Раз'
@@ -294,6 +294,7 @@ object Fmain: TFmain
           Top = -8
           Width = 1254
           Align = alCustom
+          Anchors = [akTop, akLeft, akRight]
           Caption = ' Ввод'
           OnClick = Button7Click
           TabOrder = 0
@@ -335,6 +336,9 @@ object Fmain: TFmain
     object MenuItem3: TMenuItem
       Caption = 'Чтение файлов'
       OnClick = MenuItem3Click
+    end
+    object MenuItem5: TMenuItem
+      Caption = 'Opengl'
     end
   end
   object TrayIcon1: TTrayIcon

@@ -62,6 +62,7 @@ end;
 
 procedure TFrm2.Button1Click(Sender: TObject);
 Var lst1,lst2:TStringList;
+  var result:String;
 begin
   lst1:=TStringList.Create;
   lst2:=TStringList.Create;
@@ -76,6 +77,19 @@ begin
       lst2.LoadFromFile(LabeledEdit2.Text);
       Memo1.Lines.Add(lst1.Text);
       Memo1.Lines.add(lst2.Text);
+      with TStringList.Create do
+begin
+  Sorted:=True;
+  Duplicates:=dupIgnore;
+  AddStrings(lst1);
+  if Count<>lst1.Count then
+    Result:='Все-таки были дубликаты';
+  ShowMessage(result);
+  AddStrings(lst2);
+  if Count=lst2.Count then
+   Result:='Строки равны';
+  ShowMessage(result);
+end;
 
   end;
 

@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Menus, ComCtrls,
-  ExtCtrls, StdCtrls, Grids, uspiral, ufrm,  windows, Types,Clipbrd;
+  ExtCtrls, StdCtrls, Grids, uspiral, ufrm,uogl,  windows, Types,Clipbrd;
 
 type
 
@@ -45,6 +45,7 @@ type
     MenuItem2: TMenuItem;
     MenuItem3: TMenuItem;
     MenuItem4: TMenuItem;
+    MenuItem5: TMenuItem;
     PageControl1: TPageControl;
     Panel1: TPanel;
     PopupMenu1: TPopupMenu;
@@ -73,6 +74,7 @@ type
 
     procedure MenuItem3Click(Sender: TObject);
     procedure MenuItem4Click(Sender: TObject);
+    procedure MenuItem5Click(Sender: TObject);
 
     procedure TrayIcon1DblClick(Sender: TObject);
 
@@ -318,6 +320,11 @@ procedure TFmain.MenuItem4Click(Sender: TObject);
 begin
   Clipboard.AsText:=Fmain.TreeView1.Selected.Text;
 
+end;
+
+procedure TFmain.MenuItem5Click(Sender: TObject);
+begin
+  Fogl.ShowModal;
 end;
 
 

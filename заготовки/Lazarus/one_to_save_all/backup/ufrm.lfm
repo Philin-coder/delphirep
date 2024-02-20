@@ -7,7 +7,6 @@ object Frm2: TFrm2
   Caption = 'Форма для чтения файлов'
   ClientHeight = 254
   ClientWidth = 320
-  OnClose = FormClose
   OnCreate = FormCreate
   LCLVersion = '2.0.12.0'
   object GroupBox1: TGroupBox
