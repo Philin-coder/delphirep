@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Menus, ComCtrls,
-  ExtCtrls, StdCtrls, Grids, uspiral,windows;
+  ExtCtrls, StdCtrls, Grids, uspiral, ufrm,  windows, Types,Clipbrd;
 
 type
 
@@ -21,9 +21,12 @@ type
     Button4: TButton;
     Button5: TButton;
     Button6: TButton;
+    Button7: TButton;
     Edit1: TEdit;
     Edit2: TEdit;
     GroupBox1: TGroupBox;
+    GroupBox10: TGroupBox;
+    GroupBox11: TGroupBox;
     GroupBox2: TGroupBox;
     GroupBox3: TGroupBox;
     GroupBox4: TGroupBox;
@@ -31,21 +34,30 @@ type
     GroupBox6: TGroupBox;
     GroupBox7: TGroupBox;
     GroupBox8: TGroupBox;
+    GroupBox9: TGroupBox;
     Label1: TLabel;
     Label2: TLabel;
     MainMenu1: TMainMenu;
     Memo1: TMemo;
     Memo2: TMemo;
+    Memo3: TMemo;
     MenuItem1: TMenuItem;
+    MenuItem2: TMenuItem;
+    MenuItem3: TMenuItem;
+    MenuItem4: TMenuItem;
     PageControl1: TPageControl;
     Panel1: TPanel;
+    PopupMenu1: TPopupMenu;
+    SaveDialog1: TSaveDialog;
     StringGrid1: TStringGrid;
     TabSheet1: TTabSheet;
     TabSheet2: TTabSheet;
     TabSheet3: TTabSheet;
     TabSheet4: TTabSheet;
     TabSheet5: TTabSheet;
+    TabSheet6: TTabSheet;
     TrayIcon1: TTrayIcon;
+    TreeView1: TTreeView;
     procedure ApplicationProperties1Minimize(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
@@ -53,10 +65,21 @@ type
     procedure Button4Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
     procedure Button6Click(Sender: TObject);
+    procedure Button7Click(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
     procedure MenuItem1Click(Sender: TObject);
+
+    procedure MenuItem3Click(Sender: TObject);
+    procedure MenuItem4Click(Sender: TObject);
+
     procedure TrayIcon1DblClick(Sender: TObject);
+
+    procedure TreeView1Click(Sender: TObject);
+    procedure TreeView1ContextPopup(Sender: TObject; MousePos: TPoint;
+      var Handled: Boolean);
+
 
 
   private
@@ -273,10 +296,31 @@ begin
 
 end;
 
+procedure TFmain.FormShow(Sender: TObject);
+begin
+  TreeView1.Items.Clear;
+  TreeView1.Items.Add(nil,'Адреса тестовых файлов');
+end;
+
 procedure TFmain.MenuItem1Click(Sender: TObject);
 begin
   Fspiral.ShowModal;
 end;
+
+
+
+procedure TFmain.MenuItem3Click(Sender: TObject);
+begin
+  Frm2.Show;
+end;
+
+procedure TFmain.MenuItem4Click(Sender: TObject);
+begin
+  Clipboard.AsText:=Fmain.TreeView1.Selected.Text;
+
+end;
+
+
 
 procedure TFmain.TrayIcon1DblClick(Sender: TObject);
 begin
@@ -285,6 +329,22 @@ ShowWindow(Handle,SW_RESTORE);
 SetForegroundWindow(Handle);
 TrayIcon1.Visible:=False;
 end;
+
+
+procedure TFmain.TreeView1Click(Sender: TObject);
+begin
+Frm2.LabeledEdit1.Text:=Fmain.TreeView1.Selected.Text;
+Frm2.LabeledEdit2.Clear;
+Exit;
+end;
+
+procedure TFmain.TreeView1ContextPopup(Sender: TObject; MousePos: TPoint;
+  var Handled: Boolean);
+begin
+  PopupMenu1.PopUp;
+
+end;
+
 
 
 
@@ -377,10 +437,14 @@ end;
 
 procedure TFmain.Button5Click(Sender: TObject);
 begin
-  TrayIcon1.visible:=true; // делаем значок в трее видимым
-trayicon1.balloontitle:=('Текст 1');
-trayicon1.balloonhint:=('Текст 2');
-trayicon1.showballoonHint;// показываем наше уведомление
+with TrayIcon1 do
+begin
+visible:=true; // делаем значок в трее видимым
+balloontitle:=('Текст 1');
+balloonhint:=('Текст 2');
+showballoonHint;// показываем наше уведомление
+end;
+
 end;
 
 procedure TFmain.Button6Click(Sender: TObject);
@@ -406,6 +470,23 @@ end;
    end;
 
 
+end;
+
+procedure TFmain.Button7Click(Sender: TObject);
+begin
+  if SaveDialog1.Execute then
+    begin
+        Memo3.Lines.SaveToFile(SaveDialog1.FileName);
+        ShowMessage('Имя файла'+' '+SaveDialog1.FileName);
+        with TreeView1 do
+        begin
+        Items.BeginUpdate;
+        Items.AddChild(TreeView1.Items.Item[0], SaveDialog1.FileName);
+        Items.EndUpdate;
+        Selected;
+
+        end;
+    end;
 end;
 
 

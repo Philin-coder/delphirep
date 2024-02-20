@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.645,C:\Users\Lesha\Documents\RAD Studio\Projects\Unit1.pas=C:\Users\Lesha\Desktop\delphi md5\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.323,=C:\Users\Lesha\Desktop\delphi md5\Unit2.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.665,C:\Users\Lesha\Desktop\delphi md5\Unit2.pas=C:\Users\Lesha\Desktop\delphi md5\md5Hash.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.645,C:\Users\Lesha\Documents\RAD Studio\Projects\Unit1.dfm=C:\Users\Lesha\Desktop\delphi md5\Unit1.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.513,C:\Users\Lesha\Documents\RAD Studio\Projects\Project1.dproj=C:\Users\Lesha\Desktop\delphi md5\Project1.dproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.497,=C:\Users\Lesha\Documents\RAD Studio\Projects\Unit1.pas</Transaction>
+  </Transactions>
+</BorlandProject>

@@ -57,6 +57,7 @@ end;
 
 procedure TFmain.Button2Click(Sender: TObject);
 begin
+  Edit1.Clear;
   edit1.Text:=md5(trim(memo1.Text));
 end;
 

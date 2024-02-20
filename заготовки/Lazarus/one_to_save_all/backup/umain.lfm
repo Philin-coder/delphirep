@@ -1,7 +1,7 @@
 object Fmain: TFmain
-  Left = 356
+  Left = 331
   Height = 568
-  Top = 194
+  Top = 208
   Width = 1266
   Caption = 'Главная форма'
   ClientHeight = 548
@@ -9,15 +9,16 @@ object Fmain: TFmain
   Menu = MainMenu1
   OnActivate = FormActivate
   OnCreate = FormCreate
+  OnShow = FormShow
   LCLVersion = '2.0.12.0'
   object PageControl1: TPageControl
     Left = 0
     Height = 548
     Top = 0
     Width = 1266
-    ActivePage = TabSheet5
+    ActivePage = TabSheet6
     Align = alClient
-    TabIndex = 4
+    TabIndex = 5
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'Раз'
@@ -255,6 +256,71 @@ object Fmain: TFmain
         end
       end
     end
+    object TabSheet6: TTabSheet
+      Caption = 'Работа  с treeview'
+      ClientHeight = 520
+      ClientWidth = 1258
+      object GroupBox9: TGroupBox
+        Left = 0
+        Height = 105
+        Top = 0
+        Width = 1258
+        Align = alTop
+        Caption = 'Вввод данных'
+        ClientHeight = 85
+        ClientWidth = 1254
+        TabOrder = 0
+        object Memo3: TMemo
+          Left = 0
+          Height = 85
+          Top = 0
+          Width = 1254
+          Align = alClient
+          TabOrder = 0
+        end
+      end
+      object GroupBox10: TGroupBox
+        Left = 0
+        Height = 56
+        Top = 464
+        Width = 1258
+        Align = alBottom
+        ClientHeight = 36
+        ClientWidth = 1254
+        TabOrder = 1
+        object Button7: TButton
+          Left = 0
+          Height = 52
+          Top = -8
+          Width = 1254
+          Align = alCustom
+          Caption = ' Ввод'
+          OnClick = Button7Click
+          TabOrder = 0
+        end
+      end
+      object GroupBox11: TGroupBox
+        Left = 0
+        Height = 359
+        Top = 105
+        Width = 1258
+        Align = alClient
+        Caption = 'Данные'
+        ClientHeight = 339
+        ClientWidth = 1254
+        TabOrder = 2
+        object TreeView1: TTreeView
+          Left = 0
+          Height = 339
+          Top = 0
+          Width = 1254
+          Align = alClient
+          TabOrder = 0
+          OnClick = TreeView1Click
+          OnContextPopup = TreeView1ContextPopup
+        end
+      end
+    end
   end
   object MainMenu1: TMainMenu
     Left = 144
@@ -262,6 +328,13 @@ object Fmain: TFmain
     object MenuItem1: TMenuItem
       Caption = 'Новая форма'
       OnClick = MenuItem1Click
+      object MenuItem2: TMenuItem
+        Caption = 'MenuItem2'
+      end
+    end
+    object MenuItem3: TMenuItem
+      Caption = 'Чтение файлов'
+      OnClick = MenuItem3Click
     end
   end
   object TrayIcon1: TTrayIcon
@@ -273,5 +346,18 @@ object Fmain: TFmain
     OnMinimize = ApplicationProperties1Minimize
     Left = 368
     Top = 88
+  end
+  object SaveDialog1: TSaveDialog
+    Filter = 'txt|*.txt'
+    Left = 703
+    Top = 519
+  end
+  object PopupMenu1: TPopupMenu
+    Left = 402
+    Top = 194
+    object MenuItem4: TMenuItem
+      Caption = 'Копировать'
+      OnClick = MenuItem4Click
+    end
   end
 end

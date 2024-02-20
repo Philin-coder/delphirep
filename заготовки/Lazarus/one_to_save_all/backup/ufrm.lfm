@@ -1,0 +1,95 @@
+object Frm2: TFrm2
+  Left = 605
+  Height = 254
+  Top = 230
+  Width = 320
+  Anchors = [akTop, akLeft, akRight]
+  Caption = 'Форма для чтения файлов'
+  ClientHeight = 254
+  ClientWidth = 320
+  OnClose = FormClose
+  OnCreate = FormCreate
+  LCLVersion = '2.0.12.0'
+  object GroupBox1: TGroupBox
+    Left = 0
+    Height = 105
+    Top = 0
+    Width = 320
+    Align = alTop
+    Caption = 'Ввод данных'
+    ClientHeight = 85
+    ClientWidth = 316
+    TabOrder = 0
+    object LabeledEdit1: TLabeledEdit
+      Left = 8
+      Height = 23
+      Top = 16
+      Width = 304
+      Anchors = [akTop, akLeft, akRight]
+      EditLabel.Height = 15
+      EditLabel.Width = 304
+      EditLabel.Caption = 'Раз файл'
+      EditLabel.ParentColor = False
+      TabOrder = 0
+    end
+    object LabeledEdit2: TLabeledEdit
+      Left = 8
+      Height = 23
+      Top = 56
+      Width = 304
+      Anchors = [akTop, akLeft, akRight]
+      EditLabel.Height = 15
+      EditLabel.Width = 304
+      EditLabel.Caption = 'Два файл'
+      EditLabel.ParentColor = False
+      PopupMenu = PopupMenu1
+      TabOrder = 1
+    end
+  end
+  object GroupBox2: TGroupBox
+    Left = 0
+    Height = 45
+    Top = 209
+    Width = 320
+    Align = alBottom
+    ClientHeight = 25
+    ClientWidth = 316
+    TabOrder = 1
+    object Button1: TButton
+      Left = 104
+      Height = 25
+      Top = -8
+      Width = 75
+      Caption = 'Сравнить'
+      OnClick = Button1Click
+      TabOrder = 0
+    end
+  end
+  object GroupBox3: TGroupBox
+    Left = 0
+    Height = 105
+    Top = 105
+    Width = 320
+    Align = alTop
+    Caption = 'Данные'
+    ClientHeight = 85
+    ClientWidth = 316
+    TabOrder = 2
+    object Memo1: TMemo
+      Left = 0
+      Height = 85
+      Top = 0
+      Width = 316
+      Align = alClient
+      TabOrder = 0
+    end
+  end
+  object PopupMenu1: TPopupMenu
+    Left = 208
+    Top = 216
+    object MenuItem1: TMenuItem
+      Caption = 'Вставить'
+      OnClick = MenuItem1Click
+    end
+  end
+end
