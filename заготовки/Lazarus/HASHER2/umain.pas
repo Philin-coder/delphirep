@@ -52,6 +52,7 @@ end;
 
 procedure TFmain.Button1Click(Sender: TObject);
 begin
+  Edit1.Clear;
   edit1.Text:=md5UTF8(trim(memo1.Text));
 end;
 

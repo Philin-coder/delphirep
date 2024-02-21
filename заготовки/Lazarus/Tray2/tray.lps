@@ -8,7 +8,6 @@
       <Unit0>
         <Filename Value="tray.lpr"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
         <CursorPos Y="16"/>
         <UsageCount Value="26"/>
@@ -31,6 +30,7 @@
         <ComponentName Value="md5_main"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
         <CursorPos Y="34"/>
         <UsageCount Value="26"/>
         <Loaded Value="True"/>
