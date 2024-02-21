@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<BorlandProject>
-	<Transactions>
-    <Transaction>2021.12.14 12:46:28.442.pas,C:\Users\user\OneDrive\Документы\Borland Studio Projects\Unit1.pas=F:\code\Result\delphi\totest_a_add_b\main.pas</Transaction>
-    <Transaction>2021.12.14 12:46:28.442.dfm,C:\Users\user\OneDrive\Документы\Borland Studio Projects\Unit1.dfm=F:\code\Result\delphi\totest_a_add_b\main.dfm</Transaction>
-    <Transaction>2021.12.14 12:55:48.580.bdsproj,C:\Users\user\OneDrive\Документы\Borland Studio Projects\Project1.bdsproj=F:\code\Result\delphi\totest_a_add_b\Project1.bdsproj</Transaction>
-  </Transactions>
-</BorlandProject>
