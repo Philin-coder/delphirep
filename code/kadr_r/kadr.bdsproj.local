@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+  <Transactions>
+    <Transaction>2025.01.12 22:12:11.752.pas,C:\Users\user\OneDrive\Документы\Borland Studio Projects\Unit1.pas=F:\code\Result\delphi\code\kadr_r\Unmain.pas</Transaction>
+    <Transaction>2025.01.12 22:12:11.752.dfm,C:\Users\user\OneDrive\Документы\Borland Studio Projects\Unit1.dfm=F:\code\Result\delphi\code\kadr_r\Unmain.dfm</Transaction>
+    <Transaction>2025.01.12 22:16:05.949.bdsproj,C:\Users\user\OneDrive\Документы\Borland Studio Projects\Project2.bdsproj=F:\code\Result\delphi\code\kadr_r\kadr.bdsproj</Transaction>
+  </Transactions>
+</BorlandProject>
