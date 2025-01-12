@@ -282,7 +282,7 @@ object Fmain: TFmain
         682
         79)
       object LabeledEdit5: TLabeledEdit
-        Left = 56
+        Left = 58
         Top = 40
         Width = 601
         Height = 21

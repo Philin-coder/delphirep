@@ -4,7 +4,8 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ExtCtrls, Grids, DBGrids, ComCtrls,DateUtils, DBCtrls;
+  Dialogs, StdCtrls, ExtCtrls, Grids, DBGrids, ComCtrls,DateUtils, DBCtrls,
+  Menus;
 
 type
   TFmain = class(TForm)
@@ -49,6 +50,10 @@ type
     DBLookupComboBox3: TDBLookupComboBox;
     DBLookupComboBox4: TDBLookupComboBox;
     Label9: TLabel;
+    MainMenu1: TMainMenu;
+    N1: TMenuItem;
+    Button4: TButton;
+    N2: TMenuItem;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -66,6 +71,9 @@ type
     procedure RadioButton1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
+    procedure N1Click(Sender: TObject);
+    procedure Button4Click(Sender: TObject);
+    procedure N2Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -77,7 +85,7 @@ var
 
 implementation
 
-uses Udm, ADODB, DB;
+uses Udm, ADODB, DB, Ugruppa, Urpv, Ureport;
 
 
 
@@ -126,6 +134,11 @@ dm.Query_stud.Open;
 Except
 ShowMessage('wrong situation');
 end;
+end;
+
+procedure TFmain.Button4Click(Sender: TObject);
+begin
+frpv.ShowModal;
 end;
 
 procedure TFmain.CheckBox1Click(Sender: TObject);
@@ -223,7 +236,6 @@ end;
 
 
 procedure TFmain.Button1Click(Sender: TObject);
-
 begin
 try
 dm.Query_stud.Active:=false;
@@ -252,7 +264,7 @@ end;
 end;
 
 procedure TFmain.FormActivate(Sender: TObject);
-var i,j,t:Integer;
+var i,j,t,k:Integer;
 begin
 with dm do
 for I := 0 to ComponentCount - 1 do
@@ -266,21 +278,31 @@ if (Components[j] is TDBLookupComboBox)then
 begin
   (Components[j] as TDBLookupComboBox).DropDown;
 end;
+
 Fmain.DBLookupComboBox1.SetFocus;
-Fmain.DBLookupComboBox2.SetFocus;
 Fmain.RadioButton1.Checked:=False;
 with Fmain do
-for t := 0 to ControlCount - 1 do
-  if (Controls[t] is TDateTimePicker) then
+for t := 0 to ComponentCount - 1 do
+  if (Components[t] is TDateTimePicker) then
   begin
-  (Controls[t] as TDateTimePicker).Date:=Now;
-  ShowMessage(Controls[t].Name);
+  (Components[t] as TDateTimePicker).Date:=Now;
   end;
-  
+With GroupBox2 do
+for k := 0 to ControlCount - 1 do
+  begin
+    if (Controls[k]is TLabeledEdit)  then
+    begin
+      (Controls[k] as TLabeledEdit).Clear;
+
+    end;
+
+  end;
+
 end;
 
 procedure TFmain.FormClose(Sender: TObject; var Action: TCloseAction);
 var  i:Integer;
+var j:Integer;
 begin
 with DM do
 for I := 0 to ComponentCount - 1 do
@@ -288,6 +310,15 @@ if  (Components[i] is TADOQuery) then
 begin
   (Components[i] as TADOQuery).Close;
 end;
+With GroupBox2 do
+for j := 0 to ControlCount - 1 do
+  begin
+    if (Controls[j]is TLabeledEdit)  then
+    begin
+      (Controls[j] as TLabeledEdit).Clear;
+    end;
+
+  end;
 end;
 
 procedure TFmain.FormCreate(Sender: TObject);
@@ -358,6 +389,16 @@ dm.Query_stud.Open;
 except
 ShowMessage('wrong situation');
 end;
+end;
+
+procedure TFmain.N1Click(Sender: TObject);
+begin
+Fgruppa.ShowModal;
+end;
+
+procedure TFmain.N2Click(Sender: TObject);
+begin
+     Freport.ShowModal;
 end;
 
 procedure TFmain.RadioButton1Click(Sender: TObject);
