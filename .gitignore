@@ -1,4 +1,4 @@
 *.rar
-.gitignore
-/code\stip_r\__history
-./\__history
+*.gitignore
+/code\stip_r\__history/
+./\__history/
