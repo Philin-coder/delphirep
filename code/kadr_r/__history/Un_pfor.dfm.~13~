@@ -123,7 +123,6 @@ object Frm_pfor: TFrm_pfor
             Anchors = [akLeft, akTop, akRight]
             Caption = #1042#1082#1083#1102#1095#1077#1085#1080#1077' '#1087#1086#1080#1089#1082#1072' '#1087#1086' '#1080#1085#1076#1091#1089#1090#1088#1080#1080
             TabOrder = 1
-            OnClick = Check_group_searchClick
           end
         end
       end

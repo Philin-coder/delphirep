@@ -16,7 +16,6 @@ type
     function   CommaPoint (X: String) : String;
     procedure prof_menuClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -50,6 +49,12 @@ end;
 
 procedure TFrmMain.FormActivate(Sender: TObject);
 begin
+with FrmMain do
+begin
+  width:=1024;
+  height:=768;
+end;
+
 With MainImage do
 begin
 Stretch:=True;
@@ -63,17 +68,6 @@ begin
 With MainImage do
 begin
 Picture:=nil;
-end;
-
-end;
-
-procedure TFrmMain.FormCreate(Sender: TObject);
-begin
-with FrmMain do
-begin
-  width:=1024;
-  height:=768;
-  Position:=poScreenCenter;
 end;
 
 end;

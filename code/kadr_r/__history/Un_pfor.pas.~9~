@@ -26,7 +26,6 @@ type
     CondEdit: TLabeledEdit;
     fndPanel: TPanel;
     fndEdit: TLabeledEdit;
-    Check_group_search: TCheckBox;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure SelButtonClick(Sender: TObject);
@@ -35,8 +34,6 @@ type
     procedure Radio_prof_nameClick(Sender: TObject);
     procedure Radio_prof_gruppClick(Sender: TObject);
     procedure fndEditKeyPress(Sender: TObject; var Key: Char);
-    procedure CondEditKeyPress(Sender: TObject; var Key: Char);
-    procedure Check_group_searchClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -52,61 +49,14 @@ uses Un_dm, Unmain, DB;
 
 {$R *.dfm}
 
-procedure TFrm_pfor.Check_group_searchClick(Sender: TObject);
-begin
-if Check_group_search.Checked then
-begin
-   CondEdit.EditLabel.Caption:='Живой поиск (по индустрии)';
-end
-else
-begin
- CondEdit.EditLabel.Caption:='Точное совпадение (по названию)';
- try
-  with dm.ProfQuery do
-    begin
-    close;
-    SQL.Text:='select * from prof where 1=1';
-    open;
-    end;
-except
-begin
-    ShowMessage('Wrong situation');
-end;
-end;
-
-
-end;
-
-end;
-
-procedure TFrm_pfor.CondEditKeyPress(Sender: TObject; var Key: Char);
-begin
-if Check_group_search.Checked=true then
-  begin
-  dm.ProfQuery.sql.Text:='select * from prof where prof_group like'+
-   QuotedStr(Concat(CondEdit.Text,#37));
-   dm.ProfQuery.Close;
-   dm.ProfQuery.Open;
-    //Check_group_search.Enabled:=false;
-    end
-    else
-          with dm.ProfQuery do
-     begin
-     Close;
-     sql.Clear;
-     SQL.Text:='select * from prof;';
-     Open;
-     end;
-end;
-
 procedure TFrm_pfor.fndEditKeyPress(Sender: TObject; var Key: Char);
 begin
 try
-   Check_group_search.Enabled:=false;
-   dm.ProfQuery.SQL.Text:='select * from prof  where prof_name like'+
+   dm.ProfQuery.SQL.Text:='select * from prof where where prof.prof_name like'+
    QuotedStr(Concat(fndEdit.Text,#37));
    dm.ProfQuery.close;
    dm.ProfQuery.Open;
+
 except
   begin
   ShowMessage('wrong situation');
@@ -122,9 +72,6 @@ end;
 procedure TFrm_pfor.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
 dm.ProfQuery.Close;
-Check_group_search.Enabled:=true;
-Check_group_search.Checked:=False;
-CondEdit.EditLabel.Caption:='Точное совпадение (по названию)';
 end;
 
 procedure TFrm_pfor.FormCreate(Sender: TObject);
@@ -134,13 +81,7 @@ begin
   width:=1024;
   height:=768;
   Position:=poScreenCenter;
-  with Check_group_search do
-  begin
-  Checked:=false;
-  Enabled:=True;
-  end;
 end;
-  CondEdit.EditLabel.Caption:='Точное совпадение (по названию)';
 end;
 
 procedure TFrm_pfor.RadioResetClick(Sender: TObject);
@@ -172,9 +113,6 @@ begin
       end;
     end;
 end;
-  Check_group_search.Enabled:=true;
-  Check_group_search.Checked:=False;
-  CondEdit.EditLabel.Caption:='Точное совпадение (по названию)';
 end;
 
 procedure TFrm_pfor.Radio_prof_gruppClick(Sender: TObject);

@@ -15,8 +15,6 @@ type
     function DateToStr_(Dat : TDate): String;
     function   CommaPoint (X: String) : String;
     procedure prof_menuClick(Sender: TObject);
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -50,32 +48,11 @@ end;
 
 procedure TFrmMain.FormActivate(Sender: TObject);
 begin
-With MainImage do
-begin
-Stretch:=True;
-Picture.LoadFromFile('1.jpeg');
-end;
-
-end;
-
-procedure TFrmMain.FormClose(Sender: TObject; var Action: TCloseAction);
-begin
-With MainImage do
-begin
-Picture:=nil;
-end;
-
-end;
-
-procedure TFrmMain.FormCreate(Sender: TObject);
-begin
 with FrmMain do
 begin
   width:=1024;
   height:=768;
-  Position:=poScreenCenter;
 end;
-
 end;
 
 procedure TFrmMain.prof_menuClick(Sender: TObject);
