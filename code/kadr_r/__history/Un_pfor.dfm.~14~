@@ -13,6 +13,7 @@ object Frm_pfor: TFrm_pfor
   OldCreateOrder = False
   OnActivate = FormActivate
   OnClose = FormClose
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object PfroPage: TPageControl
@@ -23,12 +24,8 @@ object Frm_pfor: TFrm_pfor
     ActivePage = SelPage
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 635
-    ExplicitHeight = 299
     object SelPage: TTabSheet
       Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1088#1086#1092#1077#1089#1089#1080#1080
-      ExplicitWidth = 627
-      ExplicitHeight = 271
       object ConditionBox: TGroupBox
         Left = 0
         Top = 0
@@ -44,30 +41,32 @@ object Frm_pfor: TFrm_pfor
           Height = 81
           Align = alBottom
           TabOrder = 0
-          ExplicitTop = 112
           object Radio_prof_name: TRadioButton
             Left = 24
             Top = 20
-            Width = 113
+            Width = 217
             Height = 17
-            Caption = #1054#1090#1073#1086#1088' '#1087#1086' '#1085#1072#1079#1074#1072#1085#1080#1102' '#1087#1088#1086#1092#1077#1089#1080#1080
+            Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072'  '#1087#1086' '#1085#1072#1079#1074#1072#1085#1080#1102' '#1087#1088#1086#1092#1077#1089#1080#1080
             TabOrder = 0
+            OnClick = Radio_prof_nameClick
           end
           object Radio_prof_grupp: TRadioButton
-            Left = 191
+            Left = 255
             Top = 20
-            Width = 186
+            Width = 226
             Height = 17
-            Caption = #1054#1090#1073#1086#1088' '#1087#1086' '#1075#1088#1091#1087#1087#1077' '#1087#1088#1086#1092#1077#1089#1080#1081
+            Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1080#1085#1076#1091#1089#1090#1088#1080#1080' '#1087#1088#1086#1092#1077#1089#1080#1081
             TabOrder = 1
+            OnClick = Radio_prof_gruppClick
           end
           object RadioReset: TRadioButton
-            Left = 464
+            Left = 568
             Top = 20
             Width = 113
             Height = 17
             Caption = #1057#1073#1088#1086#1089
             TabOrder = 2
+            OnClick = RadioResetClick
           end
         end
         object condPanel: TPanel
@@ -77,9 +76,6 @@ object Frm_pfor: TFrm_pfor
           Height = 41
           Align = alTop
           TabOrder = 1
-          ExplicitLeft = 3
-          ExplicitTop = 16
-          ExplicitWidth = 185
           DesignSize = (
             805
             41)
@@ -89,11 +85,11 @@ object Frm_pfor: TFrm_pfor
             Width = 767
             Height = 21
             Anchors = [akLeft, akTop, akRight]
-            EditLabel.Width = 53
+            EditLabel.Width = 175
             EditLabel.Height = 13
-            EditLabel.Caption = #1056#1072#1074#1077#1085#1089#1090#1074#1086
+            EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' ('#1087#1086' '#1085#1072#1079#1074#1072#1085#1080#1102')'
             TabOrder = 0
-            ExplicitWidth = 585
+            OnKeyPress = CondEditKeyPress
           end
         end
         object fndPanel: TPanel
@@ -103,7 +99,6 @@ object Frm_pfor: TFrm_pfor
           Height = 78
           Align = alClient
           TabOrder = 2
-          ExplicitHeight = 65
           DesignSize = (
             805
             78)
@@ -113,11 +108,22 @@ object Frm_pfor: TFrm_pfor
             Width = 767
             Height = 21
             Anchors = [akLeft, akTop, akRight]
-            EditLabel.Width = 66
+            EditLabel.Width = 122
             EditLabel.Height = 13
-            EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082
+            EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082'('#1053#1072#1079#1074#1072#1085#1080#1077')'
             TabOrder = 0
-            ExplicitWidth = 585
+            OnKeyPress = fndEditKeyPress
+          end
+          object Check_group_search: TCheckBox
+            Left = 264
+            Top = 48
+            Width = 199
+            Height = 17
+            Align = alCustom
+            Anchors = [akLeft, akTop, akRight]
+            Caption = #1042#1082#1083#1102#1095#1077#1085#1080#1077' '#1087#1086#1080#1089#1082#1072' '#1087#1086' '#1080#1085#1076#1091#1089#1090#1088#1080#1080
+            TabOrder = 1
+            OnClick = Check_group_searchClick
           end
         end
       end
@@ -129,9 +135,6 @@ object Frm_pfor: TFrm_pfor
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
-        ExplicitTop = 129
-        ExplicitWidth = 627
-        ExplicitHeight = 227
         object DataGrid: TDBGrid
           Left = 2
           Top = 15
@@ -145,6 +148,27 @@ object Frm_pfor: TFrm_pfor
           TitleFont.Height = -11
           TitleFont.Name = 'Tahoma'
           TitleFont.Style = []
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'id_prof'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Width = 100
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'prof_name'
+              Title.Caption = #1053#1072#1079#1074#1072#1085#1080#1077
+              Width = 400
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'prof_group'
+              Title.Caption = #1048#1085#1076#1091#1089#1090#1088#1080#1103
+              Visible = True
+            end>
         end
       end
       object ButtonoBox: TGroupBox
@@ -154,35 +178,30 @@ object Frm_pfor: TFrm_pfor
         Height = 47
         Align = alBottom
         TabOrder = 2
-        ExplicitTop = 224
-        ExplicitWidth = 627
         object SelButton: TButton
-          Left = 232
+          Left = 336
           Top = 19
           Width = 129
           Height = 25
+          Align = alCustom
+          Anchors = [akLeft, akTop, akRight]
           Caption = #1054#1090#1073#1086#1088' '#1087#1086' '#1091#1089#1083#1086#1074#1080#1080#1102
           TabOrder = 0
+          OnClick = SelButtonClick
         end
       end
     end
     object TabSheet2: TTabSheet
       Caption = 'TabSheet2'
       ImageIndex = 1
-      ExplicitWidth = 627
-      ExplicitHeight = 271
     end
     object TabSheet3: TTabSheet
       Caption = 'TabSheet3'
       ImageIndex = 2
-      ExplicitWidth = 627
-      ExplicitHeight = 271
     end
     object TabSheet4: TTabSheet
       Caption = 'TabSheet4'
       ImageIndex = 3
-      ExplicitWidth = 627
-      ExplicitHeight = 271
     end
   end
 end

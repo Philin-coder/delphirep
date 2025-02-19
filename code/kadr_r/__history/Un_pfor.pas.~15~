@@ -44,7 +44,6 @@ type
     procedure fndEditKeyPress(Sender: TObject; var Key: Char);
     procedure CondEditKeyPress(Sender: TObject; var Key: Char);
     procedure Check_group_searchClick(Sender: TObject);
-    procedure ins_BtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -56,7 +55,7 @@ var
 
 implementation
 
-uses Un_dm, Unmain, DB, ADODB;
+uses Un_dm, Unmain, DB;
 
 {$R *.dfm}
 
@@ -151,43 +150,6 @@ end;
   CondEdit.EditLabel.Caption:='Точное совпадение (по названию)';
 end;
 
-procedure TFrm_pfor.ins_BtnClick(Sender: TObject);
-begin
-
-if  (Prof_name_inp.Text<>'')and(Prof_group_inp.Text<>'')  then
-begin
-try
-with dm.ProfQuery do 
-begin
-  Active:=false;
-  SQL.Clear;
-  SQL.Text:='INSERT INTO prof ( prof_name, prof_group )VALUES('
-  +QuotedStr(Prof_name_inp.Text)+','+QuotedStr(Prof_group_inp.Text)+')';
-  ExecSQL;
-  sql.Text:='select * from prof;';
-  Active:=true;
-  close;
-  open;
-end;
-  MessageDlg('Изменения внесены',mtInformation,[mbOK],0);
-  Beep();
-  Prof_name_inp.Clear;
-  Prof_group_inp.Clear;
-except 
-begin
-  ShowMessage('wrong situation');
-  Exit;
-end;
-end;
-end
-else  
-begin
-  MessageDlg('Заполните все поля',mtError,[mbOK],0);
-  Beep();
-  Exit;
-end;
-end;
-
 procedure TFrm_pfor.RadioResetClick(Sender: TObject);
  var i,j:Integer;
 begin
@@ -242,7 +204,6 @@ begin
    end;
    end;
  end;
- 
 
 end;
 

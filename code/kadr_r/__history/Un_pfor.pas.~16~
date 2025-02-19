@@ -153,9 +153,6 @@ end;
 
 procedure TFrm_pfor.ins_BtnClick(Sender: TObject);
 begin
-
-if  (Prof_name_inp.Text<>'')and(Prof_group_inp.Text<>'')  then
-begin
 try
 with dm.ProfQuery do 
 begin
@@ -171,20 +168,17 @@ begin
 end;
   MessageDlg('Изменения внесены',mtInformation,[mbOK],0);
   Beep();
-  Prof_name_inp.Clear;
-  Prof_group_inp.Clear;
+  if (Prof_name_inp.Text='')or(Prof_group_inp.Text='') then
+  begin
+  MessageDlg('Заолните все поля',mtError,[mbOK],0);
+  Beep();
+  Exit;
+  end;
 except 
 begin
   ShowMessage('wrong situation');
   Exit;
 end;
-end;
-end
-else  
-begin
-  MessageDlg('Заполните все поля',mtError,[mbOK],0);
-  Beep();
-  Exit;
 end;
 end;
 
@@ -242,7 +236,6 @@ begin
    end;
    end;
  end;
- 
 
 end;
 
