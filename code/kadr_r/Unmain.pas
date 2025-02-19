@@ -4,13 +4,17 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,jpeg,
-  Dialogs,dateutils;
+  Dialogs,dateutils, Menus, ExtCtrls;
 
 type
   TFrmMain = class(TForm)
+    ItemMenu: TMainMenu;
+    prof_menu: TMenuItem;
+    MainImage: TImage;
     procedure FormActivate(Sender: TObject);
     function DateToStr_(Dat : TDate): String;
     function   CommaPoint (X: String) : String;
+    procedure prof_menuClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -21,6 +25,8 @@ var
   FrmMain: TFrmMain;
 
 implementation
+
+uses Un_dm, Un_pfor;
 
 {$R *.dfm}
 function TfrmMain.DateToStr_(Dat : TDate): String;
@@ -48,6 +54,11 @@ begin
   height:=768;
 
 end;
+end;
+
+procedure TFrmMain.prof_menuClick(Sender: TObject);
+begin
+Frm_pfor.ShowModal;
 end;
 
 end.

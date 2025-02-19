@@ -1,0 +1,27 @@
+object DataModule1: TDataModule1
+  OldCreateOrder = False
+  Height = 226
+  Width = 390
+  object Connection: TADOConnection
+    ConnectionString = 
+      'Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security In' +
+      'fo=False;Initial Catalog=testworkdb'
+    LoginPrompt = False
+    Provider = 'SQLOLEDB.1'
+    Left = 16
+    Top = 16
+  end
+  object StudQuery: TADOQuery
+    Connection = Connection
+    Parameters = <>
+    SQL.Strings = (
+      'select * from stud')
+    Left = 24
+    Top = 64
+  end
+  object StudDS: TDataSource
+    DataSet = StudQuery
+    Left = 24
+    Top = 120
+  end
+end

@@ -1,0 +1,57 @@
+unit Un_main;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ExtCtrls, Grids, DBGrids;
+
+type
+  TFrm_main = class(TForm)
+    DataBox: TGroupBox;
+    ButtonBox: TGroupBox;
+    TestButton: TButton;
+    DataGrid: TDBGrid;
+    InpEdit: TLabeledEdit;
+    procedure TestButtonClick(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_main: TFrm_main;
+
+implementation
+
+uses Un_dm;
+
+{$R *.dfm}
+
+procedure TFrm_main.FormActivate(Sender: TObject);
+begin
+dm.TestQuery.Open;
+end;
+
+procedure TFrm_main.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+dm.TestQuery.close;
+end;
+
+procedure TFrm_main.TestButtonClick(Sender: TObject);
+begin
+dm.TestQuery.Active:=False;
+dm.TestQuery.SQL.Clear;
+dm.TestQuery.SQL.Text:='insert into Test_tbl(fld_kind)values('+QuotedStr(InpEdit.Text)+')';
+ShowMessage(dm.TestQuery.SQL.Text);
+dm.TestQuery.ExecSQL;
+dm.TestQuery.SQL.Text:='select * from Test_tbl';
+dm.TestQuery.Close;
+dm.TestQuery.Open;
+dm.TestQuery.Active:=True;
+end;
+
+end.

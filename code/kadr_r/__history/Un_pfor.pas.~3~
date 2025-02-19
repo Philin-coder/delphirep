@@ -1,0 +1,26 @@
+unit Un_pfor;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs;
+
+type
+  TFrm_pfor = class(TForm)
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_pfor: TFrm_pfor;
+
+implementation
+
+uses Un_dm, Unmain;
+
+{$R *.dfm}
+
+end.

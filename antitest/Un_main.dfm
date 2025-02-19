@@ -1,0 +1,73 @@
+object Frm_main: TFrm_main
+  Left = 0
+  Top = 0
+  Caption = #1043#1083#1072#1074#1085#1072#1103' '#1092#1086#1088#1084#1072
+  ClientHeight = 280
+  ClientWidth = 635
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  OnActivate = FormActivate
+  OnClose = FormClose
+  PixelsPerInch = 96
+  TextHeight = 13
+  object DataBox: TGroupBox
+    Left = 0
+    Top = 0
+    Width = 635
+    Height = 209
+    Align = alTop
+    Caption = #1044#1072#1085#1085#1099#1077
+    TabOrder = 0
+    DesignSize = (
+      635
+      209)
+    object DataGrid: TDBGrid
+      Left = 2
+      Top = 15
+      Width = 631
+      Height = 120
+      Align = alTop
+      DataSource = DM.DSTest
+      TabOrder = 0
+      TitleFont.Charset = DEFAULT_CHARSET
+      TitleFont.Color = clWindowText
+      TitleFont.Height = -11
+      TitleFont.Name = 'Tahoma'
+      TitleFont.Style = []
+    end
+    object InpEdit: TLabeledEdit
+      Left = 24
+      Top = 160
+      Width = 608
+      Height = 21
+      Anchors = [akLeft, akRight]
+      EditLabel.Width = 40
+      EditLabel.Height = 13
+      EditLabel.Caption = #1044#1072#1085#1085#1099#1077
+      TabOrder = 1
+    end
+  end
+  object ButtonBox: TGroupBox
+    Left = 0
+    Top = 196
+    Width = 635
+    Height = 84
+    Align = alBottom
+    TabOrder = 1
+    ExplicitTop = 215
+    object TestButton: TButton
+      Left = 272
+      Top = 40
+      Width = 75
+      Height = 25
+      Caption = #1042#1074#1086#1076
+      TabOrder = 0
+      OnClick = TestButtonClick
+    end
+  end
+end

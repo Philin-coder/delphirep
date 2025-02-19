@@ -1,0 +1,48 @@
+unit Un_pfor;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ComCtrls, ExtCtrls, StdCtrls, Grids, DBGrids;
+
+type
+  TFrm_pfor = class(TForm)
+    PfroPage: TPageControl;
+    SelPage: TTabSheet;
+    TabSheet2: TTabSheet;
+    TabSheet3: TTabSheet;
+    TabSheet4: TTabSheet;
+    ConditionBox: TGroupBox;
+    DataBox: TGroupBox;
+    ButtonoBox: TGroupBox;
+    DBGrid1: TDBGrid;
+    Button1: TButton;
+    selPanel: TPanel;
+    procedure FormActivate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_pfor: TFrm_pfor;
+
+implementation
+
+uses Un_dm, Unmain;
+
+{$R *.dfm}
+
+procedure TFrm_pfor.FormActivate(Sender: TObject);
+begin
+with Frm_pfor do
+begin
+  width:=1024;
+  height:=768;
+end;
+
+end;
+
+end.

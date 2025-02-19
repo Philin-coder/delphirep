@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2025.02.09 15:21:23.568.pas,C:\Users\user\OneDrive\Документы\Borland Studio Projects\Unit1.pas=F:\code\Result\delphi\test_work\Un_main.pas</Transaction>
+    <Transaction>2025.02.09 15:21:23.568.dfm,C:\Users\user\OneDrive\Документы\Borland Studio Projects\Unit1.dfm=F:\code\Result\delphi\test_work\Un_main.dfm</Transaction>
+    <Transaction>2025.02.09 15:22:36.415.bdsproj,C:\Users\user\OneDrive\Документы\Borland Studio Projects\Project1.bdsproj=F:\code\Result\delphi\test_work\study_project.bdsproj</Transaction>
+    <Transaction>2025.02.16 14:55:52.421.pas,F:\code\Result\delphi\test_work\Unit1.pas=F:\code\Result\delphi\test_work\Un_dm.pas</Transaction>
+    <Transaction>2025.02.16 14:55:52.421.dfm,F:\code\Result\delphi\test_work\Unit1.dfm=F:\code\Result\delphi\test_work\Un_dm.dfm</Transaction>
+    <Transaction>2025.02.16 18:29:00.748.pas,F:\code\Result\delphi\test_work\Unit1.pas=F:\code\Result\delphi\test_work\Un_dm.pas</Transaction>
+    <Transaction>2025.02.16 18:29:00.748.dfm,F:\code\Result\delphi\test_work\Unit1.dfm=F:\code\Result\delphi\test_work\Un_dm.dfm</Transaction>
+    <Transaction>2025.02.16 21:54:56.492.pas,F:\code\Result\delphi\test_work\Unit1.pas=F:\code\Result\delphi\test_work\Un_dm.pas</Transaction>
+    <Transaction>2025.02.16 21:54:56.492.dfm,F:\code\Result\delphi\test_work\Unit1.dfm=F:\code\Result\delphi\test_work\Un_dm.dfm</Transaction>
+  </Transactions>
+</BorlandProject>

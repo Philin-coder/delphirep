@@ -10,8 +10,29 @@ object FrmMain: TFrmMain
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
+  Menu = ItemMenu
   OldCreateOrder = False
   OnActivate = FormActivate
+  OnCreate = FormActivate
   PixelsPerInch = 96
   TextHeight = 13
+  object MainImage: TImage
+    Left = 0
+    Top = 0
+    Width = 635
+    Height = 299
+    Align = alClient
+    ExplicitLeft = 272
+    ExplicitTop = 128
+    ExplicitWidth = 105
+    ExplicitHeight = 105
+  end
+  object ItemMenu: TMainMenu
+    Left = 312
+    Top = 152
+    object prof_menu: TMenuItem
+      Caption = '&'#1055#1088#1086#1092#1077#1089#1089#1080#1103
+      OnClick = prof_menuClick
+    end
+  end
 end
