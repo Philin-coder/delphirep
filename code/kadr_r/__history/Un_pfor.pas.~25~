@@ -4,14 +4,14 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, ExtCtrls, StdCtrls, Grids, DBGrids;
+  Dialogs, ComCtrls, ExtCtrls, StdCtrls, Grids, DBGrids, DBCtrls;
 
 type
   TFrm_pfor = class(TForm)
     PfroPage: TPageControl;
     SelPage: TTabSheet;
-    TabSheet2: TTabSheet;
-    TabSheet3: TTabSheet;
+    InsPage: TTabSheet;
+    UpdPage: TTabSheet;
     TabSheet4: TTabSheet;
     ConditionBox: TGroupBox;
     DataBox: TGroupBox;
@@ -27,6 +27,30 @@ type
     fndPanel: TPanel;
     fndEdit: TLabeledEdit;
     Check_group_search: TCheckBox;
+    InpBox: TGroupBox;
+    DataOutBox: TGroupBox;
+    BtnBox: TGroupBox;
+    ins_Btn: TButton;
+    Prof_name_inp: TLabeledEdit;
+    Prof_group_inp: TLabeledEdit;
+    Pfor_ins_Grid: TDBGrid;
+    oldDtaBox: TGroupBox;
+    profnameLbl: TLabel;
+    profgroupLbl: TLabel;
+    DBLookupComboBox_prof: TDBLookupComboBox;
+    DBLookupComboBox_group: TDBLookupComboBox;
+    UpdStPanel: TPanel;
+    upddataBox: TGroupBox;
+    prof_name_upd: TLabeledEdit;
+    prof_group_upd: TLabeledEdit;
+    Upd_data_outBox: TGroupBox;
+    UpdDatagrd: TDBGrid;
+    Staticexchange: TStaticText;
+    Upd_btn_box: TGroupBox;
+    UpdBtn: TButton;
+    MultyUpdateRadio: TRadioButton;
+    groupUpdateRadio: TRadioButton;
+    ProfNameUpdateRadio: TRadioButton;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure SelButtonClick(Sender: TObject);
@@ -36,6 +60,9 @@ type
     procedure Radio_prof_gruppClick(Sender: TObject);
     procedure fndEditKeyPress(Sender: TObject; var Key: Char);
     procedure CondEditKeyPress(Sender: TObject; var Key: Char);
+    procedure Check_group_searchClick(Sender: TObject);
+    procedure ins_BtnClick(Sender: TObject);
+    procedure MultyUpdateRadioClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -47,13 +74,55 @@ var
 
 implementation
 
-uses Un_dm, Unmain, DB;
+uses Un_dm, Unmain, DB, ADODB;
 
 {$R *.dfm}
 
+procedure TFrm_pfor.Check_group_searchClick(Sender: TObject);
+begin
+if Check_group_search.Checked then
+begin
+   CondEdit.EditLabel.Caption:='Живой поиск (по индустрии)';
+end
+else
+begin
+ CondEdit.EditLabel.Caption:='Точное совпадение (по названию)';
+ try
+  with dm.ProfQuery do
+    begin
+    close;
+    SQL.Text:='select * from prof where 1=1';
+    open;
+    end;
+except
+begin
+    ShowMessage('Wrong situation');
+end;
+end;
+
+
+end;
+
+end;
+
 procedure TFrm_pfor.CondEditKeyPress(Sender: TObject; var Key: Char);
 begin
-    Check_group_search.Enabled:=false;
+if Check_group_search.Checked=true then
+  begin
+  dm.ProfQuery.sql.Text:='select * from prof where prof_group like'+
+   QuotedStr(Concat(CondEdit.Text,#37));
+   dm.ProfQuery.Close;
+   dm.ProfQuery.Open;
+    //Check_group_search.Enabled:=false;
+    end
+    else
+          with dm.ProfQuery do
+     begin
+     Close;
+     sql.Clear;
+     SQL.Text:='select * from prof;';
+     Open;
+     end;
 end;
 
 procedure TFrm_pfor.fndEditKeyPress(Sender: TObject; var Key: Char);
@@ -72,8 +141,18 @@ except
   end;
 
 procedure TFrm_pfor.FormActivate(Sender: TObject);
+var t:Integer;
 begin
 dm.ProfQuery.Open;
+with Frm_pfor do
+for t := 0 to ComponentCount - 1 do
+begin
+if (Components[t] is TDBLookupComboBox) then
+begin
+  (Components[t] as TDBLookupComboBox).DropDown; 
+end;
+ 
+end;
 end;
 
 procedure TFrm_pfor.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -98,6 +177,52 @@ begin
   end;
 end;
   CondEdit.EditLabel.Caption:='Точное совпадение (по названию)';
+end;
+
+procedure TFrm_pfor.ins_BtnClick(Sender: TObject);
+begin
+if  (Prof_name_inp.Text<>'')and(Prof_group_inp.Text<>'')  then
+begin
+try
+with dm.ProfQuery do 
+begin
+  Active:=false;
+  SQL.Clear;
+  SQL.Text:='INSERT INTO prof ( prof_name, prof_group )VALUES('
+  +QuotedStr(Prof_name_inp.Text)+','+QuotedStr(Prof_group_inp.Text)+')';
+  ExecSQL;
+  sql.Text:='select * from prof;';
+  Active:=true;
+  close;
+  open;
+end;
+  MessageDlg('Изменения внесены',mtInformation,[mbOK],0);
+  Beep();
+  Prof_name_inp.Clear;
+  Prof_group_inp.Clear;
+except 
+begin
+  ShowMessage('wrong situation');
+  Exit;
+end;
+end;
+end
+else  
+begin
+  MessageDlg('Заполните все поля',mtError,[mbOK],0);
+  Beep();
+  Exit;
+end;
+end;
+
+procedure TFrm_pfor.MultyUpdateRadioClick(Sender: TObject);
+begin
+if MultyUpdateRadio.Checked=true then
+begin
+groupUpdateRadio.Enabled:=false;
+ProfNameUpdateRadio.Enabled:=False;
+end;
+
 end;
 
 procedure TFrm_pfor.RadioResetClick(Sender: TObject);
@@ -130,6 +255,7 @@ begin
     end;
 end;
   Check_group_search.Enabled:=true;
+  Check_group_search.Checked:=False;
   CondEdit.EditLabel.Caption:='Точное совпадение (по названию)';
 end;
 
@@ -153,6 +279,7 @@ begin
    end;
    end;
  end;
+ 
 
 end;
 
@@ -188,11 +315,22 @@ try
 except
 begin
     ShowMessage('Wrong situation');
+    exit;
 end;
 end;
 
 end;
 
 
+
+ShowMessage(dm.ProfQuery.SQL.Text);
+except 
+begin
+    ShowMessage('Wrong situation');
+    exit;
+end;
+end;
+end;
+end;
 
 end.

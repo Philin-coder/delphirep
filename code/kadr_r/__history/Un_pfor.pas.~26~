@@ -323,5 +323,14 @@ end;
 
 
 
+ShowMessage(dm.ProfQuery.SQL.Text);
+except 
+begin
+    ShowMessage('Wrong situation');
+    exit;
+end;
+end;
+end;
+end;
 
 end.
