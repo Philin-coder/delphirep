@@ -1,7 +1,7 @@
-object Frm_pfor: TFrm_pfor
+object Frm_dog: TFrm_dog
   Left = 0
   Top = 0
-  Caption = #1055#1088#1086#1092#1077#1089#1089#1080#1080
+  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1076#1086#1075#1086#1074#1086#1088#1086#1084
   ClientHeight = 616
   ClientWidth = 817
   Color = clBtnFace
@@ -16,60 +16,57 @@ object Frm_pfor: TFrm_pfor
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object PfroPage: TPageControl
+  object DogPage: TPageControl
     Left = 0
     Top = 0
     Width = 817
     Height = 616
-    ActivePage = UpdPage
+    ActivePage = SeldogPage
     Align = alClient
     TabOrder = 0
-    object SelPage: TTabSheet
-      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1088#1086#1092#1077#1089#1089#1080#1080
-      object ConditionBox: TGroupBox
+    object SeldogPage: TTabSheet
+      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1076#1086#1075#1086#1074#1086#1088#1077
+      object ConditiondogBox: TGroupBox
         Left = 0
         Top = 0
         Width = 809
         Height = 217
         Align = alTop
-        Caption = #1059#1089#1083#1086#1074#1080#1077' '#1086#1090#1073#1086#1088#1072
+        Caption = #1055#1086#1080#1089#1082' '#1087#1086' '
         TabOrder = 0
-        object selPanel: TPanel
+        object seldogPanel: TPanel
           Left = 2
           Top = 134
           Width = 805
           Height = 81
           Align = alBottom
           TabOrder = 0
-          object Radio_prof_name: TRadioButton
+          object Radio_dcomp_name: TRadioButton
             Left = 24
             Top = 20
             Width = 217
             Height = 17
-            Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072'  '#1087#1086' '#1085#1072#1079#1074#1072#1085#1080#1102' '#1087#1088#1086#1092#1077#1089#1080#1080
+            Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072'  '#1087#1086' '#1085#1072#1079#1074#1072#1085#1080#1102' '#1082#1086#1084#1087#1072#1085#1080#1080
             TabOrder = 0
-            OnClick = Radio_prof_nameClick
           end
-          object Radio_prof_grupp: TRadioButton
+          object Radio_dpay_cond_grupp: TRadioButton
             Left = 255
             Top = 20
             Width = 226
             Height = 17
-            Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1080#1085#1076#1091#1089#1090#1088#1080#1080' '#1087#1088#1086#1092#1077#1089#1080#1081
+            Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1091#1089#1083#1086#1074#1080#1103#1084' '#1086#1087#1083#1072#1090#1099
             TabOrder = 1
-            OnClick = Radio_prof_gruppClick
           end
-          object RadioReset: TRadioButton
+          object RadiodogselReset: TRadioButton
             Left = 568
             Top = 20
             Width = 113
             Height = 17
             Caption = #1057#1073#1088#1086#1089
             TabOrder = 2
-            OnClick = RadioResetClick
           end
         end
-        object condPanel: TPanel
+        object conddogPanel: TPanel
           Left = 2
           Top = 15
           Width = 805
@@ -79,20 +76,19 @@ object Frm_pfor: TFrm_pfor
           DesignSize = (
             805
             41)
-          object CondEdit: TLabeledEdit
+          object ConddogEdit: TLabeledEdit
             Left = 16
             Top = 16
             Width = 767
             Height = 21
             Anchors = [akLeft, akTop, akRight]
-            EditLabel.Width = 175
+            EditLabel.Width = 226
             EditLabel.Height = 13
-            EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' ('#1087#1086' '#1085#1072#1079#1074#1072#1085#1080#1102')'
+            EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' ('#1087#1086' '#1085#1072#1079#1074#1072#1085#1080#1102' '#1082#1086#1084#1087#1072#1085#1080#1080')'
             TabOrder = 0
-            OnKeyPress = CondEditKeyPress
           end
         end
-        object fndPanel: TPanel
+        object fnddogPanel: TPanel
           Left = 2
           Top = 56
           Width = 805
@@ -102,32 +98,30 @@ object Frm_pfor: TFrm_pfor
           DesignSize = (
             805
             78)
-          object fndEdit: TLabeledEdit
+          object fnd_cont_face_Edit: TLabeledEdit
             Left = 16
             Top = 16
             Width = 767
             Height = 21
             Anchors = [akLeft, akTop, akRight]
-            EditLabel.Width = 122
+            EditLabel.Width = 162
             EditLabel.Height = 13
-            EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082'('#1053#1072#1079#1074#1072#1085#1080#1077')'
+            EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082'('#1050#1086#1085#1090#1072#1082#1090#1085#1086#1077' '#1083#1080#1094#1086')'
             TabOrder = 0
-            OnKeyPress = fndEditKeyPress
           end
-          object Check_group_search: TCheckBox
+          object Check_adr_search: TCheckBox
             Left = 264
             Top = 48
             Width = 199
             Height = 17
             Align = alCustom
             Anchors = [akLeft, akTop, akRight]
-            Caption = #1042#1082#1083#1102#1095#1077#1085#1080#1077' '#1087#1086#1080#1089#1082#1072' '#1087#1086' '#1080#1085#1076#1091#1089#1090#1088#1080#1080
+            Caption = #1042#1082#1083#1102#1095#1077#1085#1080#1077' '#1087#1086#1080#1089#1082#1072' '#1087#1086' '#1072#1076#1088#1077#1089#1091
             TabOrder = 1
-            OnClick = Check_group_searchClick
           end
         end
       end
-      object DataBox: TGroupBox
+      object DatadogBox: TGroupBox
         Left = 0
         Top = 217
         Width = 809
@@ -135,50 +129,29 @@ object Frm_pfor: TFrm_pfor
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
-        object DataGrid: TDBGrid
+        object DatadogGrd: TDBGrid
           Left = 2
           Top = 15
           Width = 805
           Height = 307
           Align = alClient
-          DataSource = DM.ProfDS
+          DataSource = DM.dogDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
           TitleFont.Height = -11
           TitleFont.Name = 'Tahoma'
           TitleFont.Style = []
-          Columns = <
-            item
-              Expanded = False
-              FieldName = 'id_prof'
-              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-              Width = 100
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'prof_name'
-              Title.Caption = #1053#1072#1079#1074#1072#1085#1080#1077
-              Width = 400
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'prof_group'
-              Title.Caption = #1048#1085#1076#1091#1089#1090#1088#1080#1103
-              Visible = True
-            end>
         end
       end
-      object ButtonoBox: TGroupBox
+      object ButtondogBox: TGroupBox
         Left = 0
         Top = 541
         Width = 809
         Height = 47
         Align = alBottom
         TabOrder = 2
-        object SelButton: TButton
+        object SedoglBtn: TButton
           Left = 336
           Top = 19
           Width = 129
@@ -187,7 +160,6 @@ object Frm_pfor: TFrm_pfor
           Anchors = [akLeft, akTop, akRight]
           Caption = #1054#1090#1073#1086#1088' '#1087#1086' '#1091#1089#1083#1086#1074#1080#1080#1102
           TabOrder = 0
-          OnClick = SelButtonClick
         end
       end
     end
@@ -290,13 +262,16 @@ object Frm_pfor: TFrm_pfor
           Anchors = [akLeft, akTop, akRight]
           Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
           TabOrder = 0
-          OnClick = ins_BtnClick
         end
       end
     end
     object UpdPage: TTabSheet
       Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1088#1086#1092#1077#1089#1080#1080
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object oldDtaBox: TGroupBox
         Left = 0
         Top = 105
@@ -305,7 +280,6 @@ object Frm_pfor: TFrm_pfor
         Align = alTop
         Caption = #1042#1099#1073#1088#1072#1090#1100' '#1076#1072#1085#1085#1099#1077
         TabOrder = 0
-        ExplicitTop = 0
         DesignSize = (
           809
           105)
@@ -358,13 +332,12 @@ object Frm_pfor: TFrm_pfor
         object UpdBtn: TButton
           Left = 328
           Top = 15
-          Width = 137
+          Width = 281
           Height = 25
           Align = alCustom
           Anchors = [akLeft, akTop, akRight]
           Caption = #1048#1079#1084#1077#1085#1080#1090#1100
           TabOrder = 0
-          OnClick = UpdBtnClick
         end
       end
       object setdataBox: TGroupBox
@@ -405,21 +378,19 @@ object Frm_pfor: TFrm_pfor
       end
       object UpddataBox: TGroupBox
         Left = 0
-        Top = 210
+        Top = 256
         Width = 809
-        Height = 335
-        Align = alClient
+        Height = 289
+        Align = alBottom
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 3
-        ExplicitTop = 105
-        ExplicitHeight = 440
         object UpddbGrid: TDBGrid
           Left = 2
           Top = 15
           Width = 805
-          Height = 318
+          Height = 272
           Align = alClient
-          DataSource = DM.ProfDS
+          DataSource = DM.doDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -449,10 +420,142 @@ object Frm_pfor: TFrm_pfor
             end>
         end
       end
+      object filterPanel: TPanel
+        Left = 0
+        Top = 210
+        Width = 809
+        Height = 46
+        Align = alClient
+        TabOrder = 4
+        object Upd_all: TRadioButton
+          Left = 16
+          Top = 6
+          Width = 185
+          Height = 17
+          Align = alCustom
+          Caption = #1054#1073#1085#1086#1074#1080#1090#1100' '#1074#1089#1077' '#1087#1086#1083#1103
+          TabOrder = 0
+        end
+        object Upd_prof: TRadioButton
+          Left = 192
+          Top = 6
+          Width = 169
+          Height = 17
+          Align = alCustom
+          Caption = #1054#1073#1085#1086#1074#1080#1090#1100' '#1089#1087#1077#1094#1080#1072#1083#1100#1085#1086#1089#1090#1100
+          TabOrder = 1
+        end
+        object Upd_ind: TRadioButton
+          Left = 504
+          Top = 6
+          Width = 169
+          Height = 17
+          Align = alCustom
+          Caption = #1054#1073#1085#1086#1074#1080#1090#1100' '#1086#1090#1088#1072#1089#1083#1100
+          TabOrder = 2
+        end
+      end
     end
-    object TabSheet4: TTabSheet
-      Caption = 'TabSheet4'
+    object delPage: TTabSheet
+      Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1088#1086#1092#1077#1089#1089#1080#1080
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
+      object del_seldataBox: TGroupBox
+        Left = 0
+        Top = 0
+        Width = 809
+        Height = 57
+        Align = alTop
+        Caption = #1042#1099#1073#1088#1072#1090#1100' '#1076#1072#1085#1085#1099#1077
+        TabOrder = 0
+        DesignSize = (
+          809
+          57)
+        object profLbl: TLabel
+          Left = 16
+          Top = 16
+          Width = 125
+          Height = 13
+          Anchors = [akLeft, akTop, akRight]
+          Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077' '#1087#1088#1086#1092#1077#1089#1080#1080
+        end
+        object delseldataComboBox: TDBLookupComboBox
+          Left = 147
+          Top = 16
+          Width = 654
+          Height = 21
+          Anchors = [akLeft, akTop, akRight]
+          KeyField = 'id_prof'
+          ListField = 'prof_name'
+          ListSource = DM.ProfDS
+          TabOrder = 0
+        end
+      end
+      object dlbtnBox: TGroupBox
+        Left = 0
+        Top = 545
+        Width = 809
+        Height = 43
+        Align = alBottom
+        TabOrder = 1
+        object dlBtn: TButton
+          Left = 328
+          Top = 15
+          Width = 281
+          Height = 25
+          Align = alCustom
+          Anchors = [akLeft, akTop, akRight]
+          Caption = #1059#1076#1072#1083#1080#1090#1100
+          TabOrder = 0
+        end
+      end
+      object dldaraBox: TGroupBox
+        Left = 0
+        Top = 57
+        Width = 809
+        Height = 488
+        Align = alClient
+        Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 2
+        object dldataGrid: TDBGrid
+          Left = 2
+          Top = 15
+          Width = 805
+          Height = 471
+          Align = alClient
+          DataSource = DM.doDS
+          TabOrder = 0
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWindowText
+          TitleFont.Height = -11
+          TitleFont.Name = 'Tahoma'
+          TitleFont.Style = []
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'id_prof'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'prof_name'
+              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077
+              Width = 500
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'prof_group'
+              Title.Caption = #1048#1085#1076#1091#1089#1090#1088#1080#1103
+              Width = 700
+              Visible = True
+            end>
+        end
+      end
     end
   end
 end

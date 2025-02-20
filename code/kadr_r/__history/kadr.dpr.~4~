@@ -4,8 +4,7 @@ uses
   Forms,
   Unmain in 'Unmain.pas' {FrmMain},
   Un_dm in 'Un_dm.pas' {DM: TDataModule},
-  Un_pfor in 'Un_pfor.pas' {Frm_pfor},
-  Un_dog in 'Un_dog.pas' {Frm_dog};
+  Un_pfor in 'Un_pfor.pas' {Frm_pfor};
 
 {$R *.res}
 
@@ -14,6 +13,5 @@ begin
   Application.CreateForm(TFrmMain, FrmMain);
   Application.CreateForm(TDM, DM);
   Application.CreateForm(TFrm_pfor, Frm_pfor);
-  Application.CreateForm(TFrm_dog, Frm_dog);
   Application.Run;
 end.

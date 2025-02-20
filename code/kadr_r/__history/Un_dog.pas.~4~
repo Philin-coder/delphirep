@@ -1,0 +1,86 @@
+unit Un_dog;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, DBCtrls, StdCtrls, Grids, DBGrids, ExtCtrls, ComCtrls;
+
+type
+  TFrm_dog = class(TForm)
+    DogPage: TPageControl;
+    SeldogPage: TTabSheet;
+    ConditiondogBox: TGroupBox;
+    selPanel: TPanel;
+    Radio_prof_name: TRadioButton;
+    Radio_prof_grupp: TRadioButton;
+    RadioReset: TRadioButton;
+    conddogPanel: TPanel;
+    ConddogEdit: TLabeledEdit;
+    fndPanel: TPanel;
+    fndEdit: TLabeledEdit;
+    Check_group_search: TCheckBox;
+    DatadogBox: TGroupBox;
+    DatadogGrd: TDBGrid;
+    ButtondogBox: TGroupBox;
+    SedoglBtn: TButton;
+    InsPage: TTabSheet;
+    InpBox: TGroupBox;
+    Prof_name_inp: TLabeledEdit;
+    Prof_group_inp: TLabeledEdit;
+    DataOutBox: TGroupBox;
+    Pfor_ins_Grid: TDBGrid;
+    BtnBox: TGroupBox;
+    ins_Btn: TButton;
+    UpdPage: TTabSheet;
+    oldDtaBox: TGroupBox;
+    profnameLbl: TLabel;
+    profgroupLbl: TLabel;
+    DBLookupComboBox_prof: TDBLookupComboBox;
+    DBLookupComboBox_group: TDBLookupComboBox;
+    UpdBtnGroup: TGroupBox;
+    UpdBtn: TButton;
+    setdataBox: TGroupBox;
+    setNameEdit: TLabeledEdit;
+    SetGroupEdit: TLabeledEdit;
+    UpddataBox: TGroupBox;
+    UpddbGrid: TDBGrid;
+    filterPanel: TPanel;
+    Upd_all: TRadioButton;
+    Upd_prof: TRadioButton;
+    Upd_ind: TRadioButton;
+    delPage: TTabSheet;
+    del_seldataBox: TGroupBox;
+    profLbl: TLabel;
+    delseldataComboBox: TDBLookupComboBox;
+    dlbtnBox: TGroupBox;
+    dlBtn: TButton;
+    dldaraBox: TGroupBox;
+    dldataGrid: TDBGrid;
+    procedure FormCreate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_dog: TFrm_dog;
+
+implementation
+
+uses Un_dm, Unmain;
+
+{$R *.dfm}
+
+procedure TFrm_dog.FormCreate(Sender: TObject);
+begin
+ with Frm_dog do
+begin
+  width:=1024;
+  height:=768;
+  Position:=poScreenCenter;
+end;
+end;
+
+end.

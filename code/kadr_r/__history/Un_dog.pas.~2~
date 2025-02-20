@@ -1,0 +1,37 @@
+unit Un_dog;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs;
+
+type
+  TFrm_dog = class(TForm)
+    procedure FormCreate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_dog: TFrm_dog;
+
+implementation
+
+uses Un_dm, Unmain;
+
+{$R *.dfm}
+
+procedure TFrm_dog.FormCreate(Sender: TObject);
+begin
+ with Frm_dog do
+begin
+  width:=1024;
+  height:=768;
+  Position:=poScreenCenter;
+end;
+end;
+
+end.

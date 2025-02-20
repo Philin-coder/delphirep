@@ -12,8 +12,6 @@ type
     ProfDS: TDataSource;
     doQuery: TADOQuery;
     doDS: TDataSource;
-    dogQuery: TADOQuery;
-    dogDS: TDataSource;
   private
     { Private declarations }
   public
@@ -25,7 +23,7 @@ var
 
 implementation
 
-uses Unmain, Un_pfor, Un_dog;
+uses Unmain, Un_pfor;
 
 {$R *.dfm}
 
