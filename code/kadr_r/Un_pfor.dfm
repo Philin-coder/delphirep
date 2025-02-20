@@ -21,7 +21,7 @@ object Frm_pfor: TFrm_pfor
     Top = 0
     Width = 817
     Height = 616
-    ActivePage = UpdPage
+    ActivePage = delPage
     Align = alClient
     TabOrder = 0
     object SelPage: TTabSheet
@@ -489,9 +489,105 @@ object Frm_pfor: TFrm_pfor
         end
       end
     end
-    object TabSheet4: TTabSheet
-      Caption = 'TabSheet4'
+    object delPage: TTabSheet
+      Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1088#1086#1092#1077#1089#1089#1080#1080
       ImageIndex = 3
+      object del_seldataBox: TGroupBox
+        Left = 0
+        Top = 0
+        Width = 809
+        Height = 57
+        Align = alTop
+        Caption = #1042#1099#1073#1088#1072#1090#1100' '#1076#1072#1085#1085#1099#1077
+        TabOrder = 0
+        DesignSize = (
+          809
+          57)
+        object profLbl: TLabel
+          Left = 16
+          Top = 16
+          Width = 125
+          Height = 13
+          Anchors = [akLeft, akTop, akRight]
+          Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077' '#1087#1088#1086#1092#1077#1089#1080#1080
+        end
+        object delseldataComboBox: TDBLookupComboBox
+          Left = 147
+          Top = 16
+          Width = 654
+          Height = 21
+          Anchors = [akLeft, akTop, akRight]
+          KeyField = 'id_prof'
+          ListField = 'prof_name'
+          ListSource = DM.ProfDS
+          TabOrder = 0
+        end
+      end
+      object dlbtnBox: TGroupBox
+        Left = 0
+        Top = 545
+        Width = 809
+        Height = 43
+        Align = alBottom
+        TabOrder = 1
+        object dlBtn: TButton
+          Left = 328
+          Top = 15
+          Width = 281
+          Height = 25
+          Align = alCustom
+          Anchors = [akLeft, akTop, akRight]
+          Caption = #1059#1076#1072#1083#1080#1090#1100
+          TabOrder = 0
+          OnClick = dlBtnClick
+        end
+      end
+      object dldaraBox: TGroupBox
+        Left = 0
+        Top = 57
+        Width = 809
+        Height = 488
+        Align = alClient
+        Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 2
+        ExplicitTop = 256
+        ExplicitHeight = 289
+        object dldataGrid: TDBGrid
+          Left = 2
+          Top = 15
+          Width = 805
+          Height = 471
+          Align = alClient
+          DataSource = DM.doDS
+          TabOrder = 0
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWindowText
+          TitleFont.Height = -11
+          TitleFont.Name = 'Tahoma'
+          TitleFont.Style = []
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'id_prof'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'prof_name'
+              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077
+              Width = 500
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'prof_group'
+              Title.Caption = #1048#1085#1076#1091#1089#1090#1088#1080#1103
+              Width = 700
+              Visible = True
+            end>
+        end
+      end
     end
   end
 end

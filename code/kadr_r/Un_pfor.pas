@@ -12,7 +12,7 @@ type
     SelPage: TTabSheet;
     InsPage: TTabSheet;
     UpdPage: TTabSheet;
-    TabSheet4: TTabSheet;
+    delPage: TTabSheet;
     ConditionBox: TGroupBox;
     DataBox: TGroupBox;
     ButtonoBox: TGroupBox;
@@ -50,6 +50,13 @@ type
     Upd_all: TRadioButton;
     Upd_prof: TRadioButton;
     Upd_ind: TRadioButton;
+    del_seldataBox: TGroupBox;
+    profLbl: TLabel;
+    delseldataComboBox: TDBLookupComboBox;
+    dlbtnBox: TGroupBox;
+    dlBtn: TButton;
+    dldaraBox: TGroupBox;
+    dldataGrid: TDBGrid;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure SelButtonClick(Sender: TObject);
@@ -65,6 +72,7 @@ type
     procedure Upd_allClick(Sender: TObject);
     procedure Upd_profClick(Sender: TObject);
     procedure Upd_indClick(Sender: TObject);
+    procedure dlBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -80,6 +88,31 @@ implementation
 uses Un_dm, Unmain, DB, ADODB;
 
 {$R *.dfm}
+
+procedure TFrm_pfor.dlBtnClick(Sender: TObject);
+begin
+        try
+         dm.doQuery.Close;
+         dm.doQuery.SQL.Clear;
+         dm.doQuery.SQL.Text:='delete from prof  where prof.id_prof='
+         +dm.ProfQuery.FieldByName('id_prof').AsString;
+         dm.doQuery.ExecSQL;
+         dm.doQuery.SQL.Text:='select * from  prof';
+         dm.doQuery.Open;
+         dm.doQuery.Close;
+         dm.doQuery.Open;
+         dm.doQuery.Close;
+         dm.doQuery.Open;
+
+
+     except
+     begin
+         ShowMessage('Wrong situation');
+         exit;
+     end;
+     end;
+
+end;
 
 procedure TFrm_pfor.Check_group_searchClick(Sender: TObject);
 begin
@@ -146,6 +179,7 @@ except
 procedure TFrm_pfor.FormActivate(Sender: TObject);
 var t,k:Integer;
 begin
+PfroPage.ActivePage:=delPage;
 UpdBtn.Caption:='Изменить';
 dm.doQuery.Open;
 dm.ProfQuery.Open;
