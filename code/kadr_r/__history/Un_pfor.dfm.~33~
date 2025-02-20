@@ -2,7 +2,7 @@ object Frm_pfor: TFrm_pfor
   Left = 0
   Top = 0
   Caption = #1055#1088#1086#1092#1077#1089#1089#1080#1080
-  ClientHeight = 431
+  ClientHeight = 616
   ClientWidth = 817
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -20,8 +20,8 @@ object Frm_pfor: TFrm_pfor
     Left = 0
     Top = 0
     Width = 817
-    Height = 431
-    ActivePage = InsPage
+    Height = 616
+    ActivePage = UpdPage
     Align = alClient
     TabOrder = 0
     object SelPage: TTabSheet
@@ -131,7 +131,7 @@ object Frm_pfor: TFrm_pfor
         Left = 0
         Top = 217
         Width = 809
-        Height = 139
+        Height = 324
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
@@ -139,7 +139,7 @@ object Frm_pfor: TFrm_pfor
           Left = 2
           Top = 15
           Width = 805
-          Height = 122
+          Height = 307
           Align = alClient
           DataSource = DM.ProfDS
           TabOrder = 0
@@ -173,7 +173,7 @@ object Frm_pfor: TFrm_pfor
       end
       object ButtonoBox: TGroupBox
         Left = 0
-        Top = 356
+        Top = 541
         Width = 809
         Height = 47
         Align = alBottom
@@ -234,7 +234,7 @@ object Frm_pfor: TFrm_pfor
         Left = 0
         Top = 105
         Width = 809
-        Height = 255
+        Height = 440
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
@@ -242,7 +242,7 @@ object Frm_pfor: TFrm_pfor
           Left = 2
           Top = 15
           Width = 805
-          Height = 238
+          Height = 423
           Align = alClient
           DataSource = DM.ProfDS
           TabOrder = 0
@@ -276,7 +276,7 @@ object Frm_pfor: TFrm_pfor
       end
       object BtnBox: TGroupBox
         Left = 0
-        Top = 360
+        Top = 545
         Width = 809
         Height = 43
         Align = alBottom
@@ -294,9 +294,200 @@ object Frm_pfor: TFrm_pfor
         end
       end
     end
-    object TabSheet3: TTabSheet
-      Caption = 'TabSheet3'
+    object UpdPage: TTabSheet
+      Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1088#1086#1092#1077#1089#1080#1080
       ImageIndex = 2
+      object oldDtaBox: TGroupBox
+        Left = 0
+        Top = 105
+        Width = 809
+        Height = 105
+        Align = alTop
+        Caption = #1042#1099#1073#1088#1072#1090#1100' '#1076#1072#1085#1085#1099#1077
+        TabOrder = 0
+        DesignSize = (
+          809
+          105)
+        object profnameLbl: TLabel
+          Left = 16
+          Top = 16
+          Width = 125
+          Height = 13
+          Anchors = [akLeft, akTop, akRight]
+          Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077' '#1087#1088#1086#1092#1077#1089#1080#1080
+        end
+        object profgroupLbl: TLabel
+          Left = 24
+          Top = 67
+          Width = 55
+          Height = 13
+          Anchors = [akLeft, akTop, akRight]
+          Caption = #1048#1085#1076#1091#1089#1090#1088#1080#1103
+        end
+        object DBLookupComboBox_prof: TDBLookupComboBox
+          Left = 147
+          Top = 16
+          Width = 654
+          Height = 21
+          Anchors = [akLeft, akTop, akRight]
+          KeyField = 'id_prof'
+          ListField = 'prof_name'
+          ListSource = DM.ProfDS
+          TabOrder = 0
+        end
+        object DBLookupComboBox_group: TDBLookupComboBox
+          Left = 147
+          Top = 67
+          Width = 654
+          Height = 21
+          Anchors = [akLeft, akTop, akRight]
+          KeyField = 'prof_group'
+          ListField = 'prof_group'
+          ListSource = DM.ProfDS
+          TabOrder = 1
+        end
+      end
+      object UpdBtnGroup: TGroupBox
+        Left = 0
+        Top = 545
+        Width = 809
+        Height = 43
+        Align = alBottom
+        TabOrder = 1
+        object UpdBtn: TButton
+          Left = 328
+          Top = 15
+          Width = 281
+          Height = 25
+          Align = alCustom
+          Anchors = [akLeft, akTop, akRight]
+          Caption = #1048#1079#1084#1077#1085#1080#1090#1100
+          TabOrder = 0
+          OnClick = UpdBtnClick
+        end
+      end
+      object setdataBox: TGroupBox
+        Left = 0
+        Top = 0
+        Width = 809
+        Height = 105
+        Align = alTop
+        Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 2
+        DesignSize = (
+          809
+          105)
+        object setNameEdit: TLabeledEdit
+          Left = 128
+          Top = 16
+          Width = 657
+          Height = 21
+          Anchors = [akLeft, akTop, akRight]
+          EditLabel.Width = 125
+          EditLabel.Height = 13
+          EditLabel.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077' '#1087#1088#1086#1092#1077#1089#1080#1080
+          LabelPosition = lpLeft
+          TabOrder = 0
+        end
+        object SetGroupEdit: TLabeledEdit
+          Left = 128
+          Top = 64
+          Width = 657
+          Height = 21
+          Anchors = [akLeft, akTop, akRight]
+          EditLabel.Width = 55
+          EditLabel.Height = 13
+          EditLabel.Caption = #1048#1085#1076#1091#1089#1090#1088#1080#1103
+          LabelPosition = lpLeft
+          TabOrder = 1
+        end
+      end
+      object UpddataBox: TGroupBox
+        Left = 0
+        Top = 256
+        Width = 809
+        Height = 289
+        Align = alBottom
+        Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 3
+        object UpddbGrid: TDBGrid
+          Left = 2
+          Top = 15
+          Width = 805
+          Height = 272
+          Align = alClient
+          DataSource = DM.doDS
+          TabOrder = 0
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWindowText
+          TitleFont.Height = -11
+          TitleFont.Name = 'Tahoma'
+          TitleFont.Style = []
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'id_prof'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'prof_name'
+              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077
+              Width = 500
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'prof_group'
+              Title.Caption = #1048#1085#1076#1091#1089#1090#1088#1080#1103
+              Width = 700
+              Visible = True
+            end>
+        end
+      end
+      object filterPanel: TPanel
+        Left = 0
+        Top = 210
+        Width = 809
+        Height = 46
+        Align = alClient
+        TabOrder = 4
+        ExplicitLeft = -4
+        ExplicitTop = 216
+        ExplicitWidth = 185
+        ExplicitHeight = 41
+        object Upd_all: TRadioButton
+          Left = 16
+          Top = 6
+          Width = 185
+          Height = 17
+          Align = alCustom
+          Caption = #1054#1073#1085#1086#1074#1080#1090#1100' '#1074#1089#1077' '#1087#1086#1083#1103
+          TabOrder = 0
+          OnClick = Upd_allClick
+        end
+        object Upd_prof: TRadioButton
+          Left = 192
+          Top = 6
+          Width = 169
+          Height = 17
+          Align = alCustom
+          Caption = #1054#1073#1085#1086#1074#1080#1090#1100' '#1089#1087#1077#1094#1080#1072#1083#1100#1085#1086#1089#1090#1100
+          TabOrder = 1
+          OnClick = Upd_profClick
+        end
+        object Upd_ind: TRadioButton
+          Left = 504
+          Top = 6
+          Width = 169
+          Height = 17
+          Align = alCustom
+          Caption = #1054#1073#1085#1086#1074#1080#1090#1100' '#1089#1087#1077#1094#1080#1072#1083#1100#1085#1086#1089#1090#1100
+          TabOrder = 2
+          OnClick = Upd_indClick
+        end
+      end
     end
     object TabSheet4: TTabSheet
       Caption = 'TabSheet4'

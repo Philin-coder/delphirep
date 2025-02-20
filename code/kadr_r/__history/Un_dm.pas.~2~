@@ -10,8 +10,6 @@ type
     Connection: TADOConnection;
     ProfQuery: TADOQuery;
     ProfDS: TDataSource;
-    doQuery: TADOQuery;
-    doDS: TDataSource;
   private
     { Private declarations }
   public

@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, ExtCtrls, StdCtrls, Grids, DBGrids;
+  Dialogs, ComCtrls, ExtCtrls, StdCtrls, Grids, DBGrids, DBCtrls;
 
 type
   TFrm_pfor = class(TForm)
@@ -34,6 +34,22 @@ type
     Prof_name_inp: TLabeledEdit;
     Prof_group_inp: TLabeledEdit;
     Pfor_ins_Grid: TDBGrid;
+    oldDtaBox: TGroupBox;
+    profnameLbl: TLabel;
+    profgroupLbl: TLabel;
+    DBLookupComboBox_prof: TDBLookupComboBox;
+    DBLookupComboBox_group: TDBLookupComboBox;
+    UpdBtnGroup: TGroupBox;
+    UpdBtn: TButton;
+    setdataBox: TGroupBox;
+    setNameEdit: TLabeledEdit;
+    SetGroupEdit: TLabeledEdit;
+    UpddataBox: TGroupBox;
+    UpddbGrid: TDBGrid;
+    filterPanel: TPanel;
+    Upd_all: TRadioButton;
+    Upd_prof: TRadioButton;
+    Upd_ind: TRadioButton;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure SelButtonClick(Sender: TObject);
@@ -45,6 +61,10 @@ type
     procedure CondEditKeyPress(Sender: TObject; var Key: Char);
     procedure Check_group_searchClick(Sender: TObject);
     procedure ins_BtnClick(Sender: TObject);
+    procedure UpdBtnClick(Sender: TObject);
+    procedure Upd_allClick(Sender: TObject);
+    procedure Upd_profClick(Sender: TObject);
+    procedure Upd_indClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -53,6 +73,7 @@ type
 
 var
   Frm_pfor: TFrm_pfor;
+  var flag:Integer;
 
 implementation
 
@@ -123,16 +144,65 @@ except
   end;
 
 procedure TFrm_pfor.FormActivate(Sender: TObject);
+var t,k:Integer;
 begin
+UpdBtn.Caption:='Изменить';
+dm.doQuery.Open;
 dm.ProfQuery.Open;
+with Frm_pfor do
+for t := 0 to ComponentCount - 1 do
+begin
+if (Components[t] is TDBLookupComboBox) then
+begin
+  (Components[t] as TDBLookupComboBox).DropDown;
+end;
+with Frm_pfor do
+for k := 0 to ComponentCount - 1 do
+begin
+if (Components[k] is TRadioButton) then
+begin
+  (Components[k] as TRadioButton).Checked:=False;
+end;
+end;
+end;
 end;
 
 procedure TFrm_pfor.FormClose(Sender: TObject; var Action: TCloseAction);
+var k,e,c:Integer;
 begin
+flag:=0;
+dm.doQuery.close;
 dm.ProfQuery.Close;
 Check_group_search.Enabled:=true;
 Check_group_search.Checked:=False;
 CondEdit.EditLabel.Caption:='Точное совпадение (по названию)';
+with Frm_pfor do
+for k := 0 to ComponentCount - 1 do
+begin
+if (Components[k] is TRadioButton) then
+begin
+  (Components[k] as TRadioButton).Enabled:=True;
+end;
+end;
+with Frm_pfor do
+for e := 0 to ComponentCount - 1 do
+begin
+if (Components[e] is TLabeledEdit) then
+begin
+  (Components[e] as TLabeledEdit).Enabled:=True;
+end;
+end;
+with Frm_pfor do
+for c:= 0 to ComponentCount - 1 do
+begin
+if (Components[c] is TDBLookupComboBox) then
+begin
+  (Components[c] as TDBLookupComboBox).Enabled:=True;
+end;
+end;
+
+
+
 end;
 
 procedure TFrm_pfor.FormCreate(Sender: TObject);
@@ -153,7 +223,6 @@ end;
 
 procedure TFrm_pfor.ins_BtnClick(Sender: TObject);
 begin
-
 if  (Prof_name_inp.Text<>'')and(Prof_group_inp.Text<>'')  then
 begin
 try
@@ -242,7 +311,7 @@ begin
    end;
    end;
  end;
- 
+
 
 end;
 
@@ -278,11 +347,112 @@ try
 except
 begin
     ShowMessage('Wrong situation');
+    exit;
 end;
 end;
 
 end;
 
 
+
+
+procedure TFrm_pfor.UpdBtnClick(Sender: TObject);
+//UPDATE prof SET prof_name = 't2', prof_group = 't3'
+//WHERE id_prof=10;
+
+begin
+case flag  of
+1:begin
+
+ try
+         dm.doQuery.Close;
+         dm.doQuery.SQL.Clear;
+         dm.doQuery.SQL.Text:='Update prof set prof_name='
+         +QuotedStr(setNameEdit.Text)+','+'prof_group ='+
+         QuotedStr(SetGroupEdit.Text)+'where prof.id_prof='
+         +dm.ProfQuery.FieldByName('id_prof').AsString;
+         dm.doQuery.ExecSQL;
+         dm.doQuery.SQL.Text:='select * from  prof';
+         dm.doQuery.Open;
+         dm.doQuery.Close;
+         dm.doQuery.Open;
+     except
+     begin
+         ShowMessage('Wrong situation');
+         exit;
+     end;
+     end;
+end;
+2:
+begin
+//Update prof set prof_name='upd_test' where prof.id_prof=10;
+     try
+         dm.doQuery.Close;
+         dm.doQuery.SQL.Clear;
+         dm.doQuery.SQL.Text:='Update prof set prof_name='
+         +QuotedStr(setNameEdit.Text)+'where prof.id_prof='
+         +dm.ProfQuery.FieldByName('id_prof').AsString;
+         dm.doQuery.ExecSQL;
+         dm.doQuery.SQL.Text:='select * from  prof';
+         dm.doQuery.Open;
+         dm.doQuery.Close;
+         dm.doQuery.Open;
+
+     except
+     begin
+         ShowMessage('Wrong situation');
+         exit;
+     end;
+     end;
+
+end;
+
+3:
+begin
+//Update prof set prof_name='upd_test' where prof.id_prof=10;
+     try
+         dm.doQuery.Close;
+         dm.doQuery.SQL.Clear;
+         dm.doQuery.SQL.Text:='Update prof set prof_group='
+         +QuotedStr(SetGroupEdit.Text)+'where prof.id_prof='
+         +dm.ProfQuery.FieldByName('id_prof').AsString;
+         dm.doQuery.ExecSQL;
+         dm.doQuery.SQL.Text:='select * from  prof';
+         dm.doQuery.Open;
+         dm.doQuery.Close;
+         dm.doQuery.Open;
+     except
+     begin
+         ShowMessage('Wrong situation');
+         exit;
+     end;
+     end;
+
+end;
+end; //case;
+end;
+
+procedure TFrm_pfor.Upd_allClick(Sender: TObject);
+begin
+flag:=1;
+UpdBtn.Caption:='Изменть информацию в обоих полях';
+ Upd_prof.Enabled:=False;
+ Upd_ind.Enabled:=False;
+end;
+
+procedure TFrm_pfor.Upd_indClick(Sender: TObject);
+begin
+ flag:=3;
+ UpdBtn.Caption:='Изменть информацию в  полe отрасль';
+ Upd_all.Enabled:=false;
+ Upd_prof.Enabled:=False;
+ setNameEdit.Enabled:=False;
+ DBLookupComboBox_group.Enabled:=False;
+end;
+
+procedure TFrm_pfor.Upd_profClick(Sender: TObject);
+begin
+flag:=2;
+end;
 
 end.

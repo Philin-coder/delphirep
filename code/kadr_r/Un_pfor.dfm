@@ -21,7 +21,7 @@ object Frm_pfor: TFrm_pfor
     Top = 0
     Width = 817
     Height = 616
-    ActivePage = InsPage
+    ActivePage = UpdPage
     Align = alClient
     TabOrder = 0
     object SelPage: TTabSheet
@@ -299,7 +299,7 @@ object Frm_pfor: TFrm_pfor
       ImageIndex = 2
       object oldDtaBox: TGroupBox
         Left = 0
-        Top = 0
+        Top = 105
         Width = 809
         Height = 105
         Align = alTop
@@ -347,38 +347,37 @@ object Frm_pfor: TFrm_pfor
           TabOrder = 1
         end
       end
-      object UpdStPanel: TPanel
+      object UpdBtnGroup: TGroupBox
         Left = 0
-        Top = 105
+        Top = 545
         Width = 809
-        Height = 41
-        Align = alTop
+        Height = 43
+        Align = alBottom
         TabOrder = 1
-        DesignSize = (
-          809
-          41)
-        object Staticexchange: TStaticText
-          Left = 56
-          Top = 8
-          Width = 67
-          Height = 17
+        object UpdBtn: TButton
+          Left = 328
+          Top = 15
+          Width = 281
+          Height = 25
+          Align = alCustom
           Anchors = [akLeft, akTop, akRight]
-          Caption = #1047#1072#1084#1077#1085#1080#1090#1100' '#1085#1072
+          Caption = #1048#1079#1084#1077#1085#1080#1090#1100
           TabOrder = 0
+          OnClick = UpdBtnClick
         end
       end
-      object upddataBox: TGroupBox
+      object setdataBox: TGroupBox
         Left = 0
-        Top = 146
+        Top = 0
         Width = 809
-        Height = 135
+        Height = 105
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
         DesignSize = (
           809
-          135)
-        object prof_name_upd: TLabeledEdit
+          105)
+        object setNameEdit: TLabeledEdit
           Left = 128
           Top = 16
           Width = 657
@@ -390,7 +389,7 @@ object Frm_pfor: TFrm_pfor
           LabelPosition = lpLeft
           TabOrder = 0
         end
-        object prof_group_upd: TLabeledEdit
+        object SetGroupEdit: TLabeledEdit
           Left = 128
           Top = 64
           Width = 657
@@ -402,53 +401,22 @@ object Frm_pfor: TFrm_pfor
           LabelPosition = lpLeft
           TabOrder = 1
         end
-        object MultyUpdateRadio: TRadioButton
-          Left = 112
-          Top = 103
-          Width = 138
-          Height = 17
-          Align = alCustom
-          Anchors = [akLeft, akTop, akRight]
-          Caption = #1054#1073#1085#1086#1074#1080#1090#1100' '#1086#1073#1072' '#1087#1086#1083#1103
-          TabOrder = 2
-          OnClick = MultyUpdateRadioClick
-        end
-        object groupUpdateRadio: TRadioButton
-          Left = 319
-          Top = 103
-          Width = 138
-          Height = 17
-          Align = alCustom
-          Anchors = [akLeft, akTop, akRight]
-          Caption = #1054#1073#1085#1086#1074#1080#1090#1100' '#1048#1085#1076#1091#1089#1090#1088#1080#1102
-          TabOrder = 3
-        end
-        object ProfNameUpdateRadio: TRadioButton
-          Left = 631
-          Top = 103
-          Width = 154
-          Height = 17
-          Align = alCustom
-          Anchors = [akLeft, akTop, akRight]
-          Caption = #1054#1073#1085#1086#1074#1080#1090#1100' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077
-          TabOrder = 4
-        end
       end
-      object Upd_data_outBox: TGroupBox
+      object UpddataBox: TGroupBox
         Left = 0
-        Top = 281
+        Top = 256
         Width = 809
-        Height = 264
-        Align = alClient
+        Height = 289
+        Align = alBottom
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 3
-        object UpdDatagrd: TDBGrid
+        object UpddbGrid: TDBGrid
           Left = 2
           Top = 15
           Width = 805
-          Height = 247
+          Height = 272
           Align = alClient
-          DataSource = DM.ProfDS
+          DataSource = DM.doDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -478,22 +446,46 @@ object Frm_pfor: TFrm_pfor
             end>
         end
       end
-      object Upd_btn_box: TGroupBox
+      object filterPanel: TPanel
         Left = 0
-        Top = 545
+        Top = 210
         Width = 809
-        Height = 43
-        Align = alBottom
+        Height = 46
+        Align = alClient
         TabOrder = 4
-        object UpdBtn: TButton
-          Left = 264
-          Top = 15
-          Width = 137
-          Height = 25
+        ExplicitLeft = -4
+        ExplicitTop = 216
+        ExplicitWidth = 185
+        ExplicitHeight = 41
+        object Upd_all: TRadioButton
+          Left = 16
+          Top = 6
+          Width = 185
+          Height = 17
           Align = alCustom
-          Anchors = [akLeft, akTop, akRight]
-          Caption = #1054#1073#1085#1086#1074#1080#1090#1100' '#1076#1072#1085#1085#1099#1077
+          Caption = #1054#1073#1085#1086#1074#1080#1090#1100' '#1074#1089#1077' '#1087#1086#1083#1103
           TabOrder = 0
+          OnClick = Upd_allClick
+        end
+        object Upd_prof: TRadioButton
+          Left = 192
+          Top = 6
+          Width = 169
+          Height = 17
+          Align = alCustom
+          Caption = #1054#1073#1085#1086#1074#1080#1090#1100' '#1089#1087#1077#1094#1080#1072#1083#1100#1085#1086#1089#1090#1100
+          TabOrder = 1
+          OnClick = Upd_profClick
+        end
+        object Upd_ind: TRadioButton
+          Left = 504
+          Top = 6
+          Width = 169
+          Height = 17
+          Align = alCustom
+          Caption = #1054#1073#1085#1086#1074#1080#1090#1100' '#1086#1090#1088#1072#1089#1083#1100
+          TabOrder = 2
+          OnClick = Upd_indClick
         end
       end
     end

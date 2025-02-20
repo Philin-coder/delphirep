@@ -28,17 +28,4 @@ object DM: TDM
     Left = 32
     Top = 160
   end
-  object doQuery: TADOQuery
-    Connection = Connection
-    Parameters = <>
-    SQL.Strings = (
-      'select * from prof;')
-    Left = 112
-    Top = 96
-  end
-  object doDS: TDataSource
-    DataSet = doQuery
-    Left = 112
-    Top = 168
-  end
 end
