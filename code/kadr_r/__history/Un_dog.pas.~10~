@@ -11,17 +11,17 @@ type
     DogPage: TPageControl;
     SeldogPage: TTabSheet;
     ConditiondogBox: TGroupBox;
-    selPanel: TPanel;
-    Radio_prof_name: TRadioButton;
-    Radio_prof_grupp: TRadioButton;
-    RadioReset: TRadioButton;
-    condPanel: TPanel;
-    CondEdit: TLabeledEdit;
-    fndPanel: TPanel;
-    fndEdit: TLabeledEdit;
-    Check_group_search: TCheckBox;
+    seldogPanel: TPanel;
+    Radio_dcomp_name: TRadioButton;
+    Radio_dpay_cond_grupp: TRadioButton;
+    RadiodogselReset: TRadioButton;
+    conddogPanel: TPanel;
+    ConddogEdit: TLabeledEdit;
+    fnddogPanel: TPanel;
+    fnd_cont_face_Edit: TLabeledEdit;
+    Check_adr_search: TCheckBox;
     DatadogBox: TGroupBox;
-    DataGrid: TDBGrid;
+    DatadogGrd: TDBGrid;
     ButtondogBox: TGroupBox;
     SedoglBtn: TButton;
     InsPage: TTabSheet;
@@ -58,6 +58,10 @@ type
     dldaraBox: TGroupBox;
     dldataGrid: TDBGrid;
     procedure FormCreate(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure SedoglBtnClick(Sender: TObject);
+    procedure Radio_dcomp_nameClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -73,6 +77,18 @@ uses Un_dm, Unmain;
 
 {$R *.dfm}
 
+procedure TFrm_dog.FormActivate(Sender: TObject);
+begin
+dm.doQuery.Open;
+dm.dogQuery.Open;
+end;
+
+procedure TFrm_dog.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+dm.dogQuery.Close;
+dm.dogQuery.Close;
+end;
+
 procedure TFrm_dog.FormCreate(Sender: TObject);
 begin
  with Frm_dog do
@@ -81,6 +97,45 @@ begin
   height:=768;
   Position:=poScreenCenter;
 end;
+end;
+
+procedure TFrm_dog.Radio_dcomp_nameClick(Sender: TObject);
+begin
+if Radio_dcomp_name.Checked=true then
+  begin
+    try
+     Radio_dpay_cond_grupp.Checked:=false;
+     RadiodogselReset.Checked:=False;
+     with dm.dogQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:='select * from dogovor order by company asc ';
+      Open;
+     end;
+    except
+    begin
+      ShowMessage('wrong situation');
+    end;
+    end;
+  end;
+
+end;
+
+procedure TFrm_dog.SedoglBtnClick(Sender: TObject);
+begin
+try
+    dm.dogQuery.close;
+    dm.dogQuery.SQL.Text:='select * from dogovor where dogovor.company='+
+    QuotedStr(ConddogEdit.Text);
+    dm.dogQuery.open;
+except
+begin
+    ShowMessage('Wrong situation');
+    exit;
+end;
+end;
+
 end;
 
 end.

@@ -75,7 +75,7 @@ type
 
 var
   Frm_dog: TFrm_dog;
-  var d_flag:Integer;
+
 implementation
 
 uses Un_dm, Unmain;
@@ -147,54 +147,16 @@ except
 end;
 
 procedure TFrm_dog.FormActivate(Sender: TObject);
-var k:Integer;
+var t,k:Integer;
 begin
 dm.doQuery.Open;
 dm.dogQuery.Open;
-DogPage.ActivePage:=SeldogPage;
-UpdBtn.Caption:='Изменить';
-dm.doQuery.Open;
-dm.ProfQuery.Open;
-with Frm_dog do
-for k := 0 to ComponentCount - 1 do
-begin
-if (Components[k] is TRadioButton) then
-begin
-  (Components[k] as TRadioButton).Checked:=False;
 end;
-end;
-end;
-
-
-
-
 
 procedure TFrm_dog.FormClose(Sender: TObject; var Action: TCloseAction);
-var k,e:Integer;
 begin
 dm.dogQuery.Close;
 dm.dogQuery.Close;
-d_flag:=0;
-Check_adr_search.Enabled:=true;
-Check_adr_search.Checked:=False;
-ConddogEdit.EditLabel.Caption:='Точное совпадение (по названию компании)';
-with Frm_dog do
-for k := 0 to ComponentCount - 1 do
-begin
-if (Components[k] is TRadioButton) then
-begin
-  (Components[k] as TRadioButton).Enabled:=True;
-end;
-end;
-with Frm_dog do
-for e := 0 to ComponentCount - 1 do
-begin
-if (Components[e] is TLabeledEdit) then
-begin
-  (Components[e] as TLabeledEdit).Enabled:=True;
-end;
-end;
-
 end;
 
 procedure TFrm_dog.FormCreate(Sender: TObject);

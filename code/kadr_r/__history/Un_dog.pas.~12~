@@ -59,6 +59,10 @@ type
     dldataGrid: TDBGrid;
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure SedoglBtnClick(Sender: TObject);
+    procedure Radio_dcomp_nameClick(Sender: TObject);
+    procedure Radio_dpay_cond_gruppClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -80,6 +84,12 @@ dm.doQuery.Open;
 dm.dogQuery.Open;
 end;
 
+procedure TFrm_dog.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+dm.dogQuery.Close;
+dm.dogQuery.Close;
+end;
+
 procedure TFrm_dog.FormCreate(Sender: TObject);
 begin
  with Frm_dog do
@@ -88,6 +98,67 @@ begin
   height:=768;
   Position:=poScreenCenter;
 end;
+end;
+
+procedure TFrm_dog.Radio_dcomp_nameClick(Sender: TObject);
+begin
+if Radio_dcomp_name.Checked=true then
+  begin
+    try
+     Radio_dpay_cond_grupp.Checked:=false;
+     RadiodogselReset.Checked:=False;
+     with dm.dogQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:='select * from dogovor order by company asc ';
+      Open;
+     end;
+    except
+    begin
+      ShowMessage('wrong situation');
+    end;
+    end;
+  end;
+
+end;
+
+procedure TFrm_dog.Radio_dpay_cond_gruppClick(Sender: TObject);
+begin
+if Radio_dpay_cond_grupp.Checked=true then
+  begin
+    try
+     Radio_dcomp_name.Checked:=false;
+     RadiodogselReset.Checked:=False;
+     with dm.dogQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:='select * from dogovor order by pay_cond asc ';
+      Open;
+     end;
+    except
+    begin
+      ShowMessage('wrong situation');
+    end;
+    end;
+  end;
+end;
+
+procedure TFrm_dog.SedoglBtnClick(Sender: TObject);
+begin
+try
+    dm.dogQuery.close;
+    dm.dogQuery.SQL.Text:='select * from dogovor where dogovor.company='+
+    QuotedStr(ConddogEdit.Text);
+    dm.dogQuery.open;
+except
+begin
+    ShowMessage('Wrong situation');
+    exit;
+end;
+end;
+
 end;
 
 end.
