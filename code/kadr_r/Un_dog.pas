@@ -41,11 +41,10 @@ type
     delPage: TTabSheet;
     del_seldataBox: TGroupBox;
     profLbl: TLabel;
-    delseldataComboBox: TDBLookupComboBox;
+    delseldatadgComboBox: TDBLookupComboBox;
     dlbtnBox: TGroupBox;
     dlBtn: TButton;
     dldaraBox: TGroupBox;
-    dldataGrid: TDBGrid;
     dogoutGrid: TDBGrid;
     compamy_inp: TLabeledEdit;
     c_adrees_inp: TLabeledEdit;
@@ -57,6 +56,7 @@ type
     UpddatadogBox: TGroupBox;
     set_contdata_inp: TLabeledEdit;
     Upd_contdataBtn: TButton;
+    del_outGrid: TDBGrid;
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -70,6 +70,7 @@ type
     procedure ins_BtnClick(Sender: TObject);
     procedure Upd_contdataBtnClick(Sender: TObject);
     procedure UpdBtnClick(Sender: TObject);
+    procedure dlBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -130,6 +131,24 @@ if Check_adr_search.Checked=true then
      SQL.Text:='select * from dogovor;';
      Open;
      end;
+
+end;
+
+procedure TFrm_dog.dlBtnClick(Sender: TObject);
+begin
+
+
+        dm.doQuery.Close;
+        dm.doQuery.SQL.Clear;
+        dm.doQuery.SQL.Text:='delete from dogovor  where dogovor.id_dog='
+         +dm.dogQuery.FieldByName('id_dog').AsString;
+         dm.doQuery.ExecSQL;
+         dm.doQuery.SQL.Text:='select * from  dogovor';
+         dm.doQuery.Open;
+         dm.doQuery.Close;
+         dm.doQuery.Open;
+         dm.doQuery.Close;
+         dm.doQuery.Open;
 
 end;
 

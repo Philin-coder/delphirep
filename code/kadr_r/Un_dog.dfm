@@ -21,7 +21,7 @@ object Frm_dog: TFrm_dog
     Top = 0
     Width = 817
     Height = 616
-    ActivePage = UpddogPage
+    ActivePage = delPage
     Align = alClient
     TabOrder = 0
     object SeldogPage: TTabSheet
@@ -607,15 +607,15 @@ object Frm_dog: TFrm_dog
           Anchors = [akLeft, akTop, akRight]
           Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077' '#1087#1088#1086#1092#1077#1089#1080#1080
         end
-        object delseldataComboBox: TDBLookupComboBox
+        object delseldatadgComboBox: TDBLookupComboBox
           Left = 147
           Top = 16
           Width = 654
           Height = 21
           Anchors = [akLeft, akTop, akRight]
-          KeyField = 'id_prof'
-          ListField = 'prof_name'
-          ListSource = DM.ProfDS
+          KeyField = 'id_dog'
+          ListField = 'company'
+          ListSource = DM.dogDS
           TabOrder = 0
         end
       end
@@ -635,6 +635,7 @@ object Frm_dog: TFrm_dog
           Anchors = [akLeft, akTop, akRight]
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
+          OnClick = dlBtnClick
         end
       end
       object dldaraBox: TGroupBox
@@ -645,7 +646,7 @@ object Frm_dog: TFrm_dog
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        object dldataGrid: TDBGrid
+        object del_outGrid: TDBGrid
           Left = 2
           Top = 15
           Width = 805
@@ -661,22 +662,50 @@ object Frm_dog: TFrm_dog
           Columns = <
             item
               Expanded = False
-              FieldName = 'id_prof'
+              FieldName = 'id_dog'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Width = 98
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'prof_name'
-              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077
-              Width = 500
+              FieldName = 'pay_cond'
+              Title.Caption = #1059#1089#1083#1086#1074#1080#1103' '#1086#1087#1083#1072#1090#1099
+              Width = 600
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'prof_group'
-              Title.Caption = #1048#1085#1076#1091#1089#1090#1088#1080#1103
-              Width = 700
+              FieldName = 'cont_face'
+              Title.Caption = #1050#1086#1085#1090#1072#1082#1090#1085#1086#1077' '#1083#1080#1094#1086
+              Width = 600
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'company'
+              Title.Caption = #1054#1088#1075#1072#1085#1080#1079#1072#1094#1080#1103
+              Width = 600
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'c_adress'
+              Title.Caption = #1040#1076#1088#1077#1089' '#1086#1088#1075#1072#1085#1080#1079#1072#1094#1080#1080
+              Width = 600
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'c_contdara'
+              Title.Caption = #1050#1086#1085#1090#1072#1082#1090#1085#1099#1077' '#1076#1072#1085#1085#1099#1077' '#1086#1088#1075#1072#1085#1080#1079#1072#1094#1080#1080
+              Width = 600
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'dogterm'
+              Title.Caption = #1044#1072#1090#1072' '#1076#1086#1075#1086#1074#1086#1088#1072
               Visible = True
             end>
         end
