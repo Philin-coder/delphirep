@@ -1,4 +1,4 @@
-unit Un_dog;
+п»їunit Un_dog;
 
 interface
 
@@ -25,30 +25,19 @@ type
     ButtondogBox: TGroupBox;
     SedoglBtn: TButton;
     InsPage: TTabSheet;
-    InpBox: TGroupBox;
-    Prof_name_inp: TLabeledEdit;
-    Prof_group_inp: TLabeledEdit;
-    DataOutBox: TGroupBox;
-    Pfor_ins_Grid: TDBGrid;
+    InpdogBox: TGroupBox;
+    cond_pay_inp: TLabeledEdit;
+    Cont_face_inp: TLabeledEdit;
+    DataOutdogBox: TGroupBox;
     BtnBox: TGroupBox;
     ins_Btn: TButton;
-    UpdPage: TTabSheet;
+    UpddogPage: TTabSheet;
     oldDtaBox: TGroupBox;
     profnameLbl: TLabel;
-    profgroupLbl: TLabel;
-    DBLookupComboBox_prof: TDBLookupComboBox;
-    DBLookupComboBox_group: TDBLookupComboBox;
-    UpdBtnGroup: TGroupBox;
-    UpdBtn: TButton;
+    DBLookupComboBox_dog: TDBLookupComboBox;
     setdataBox: TGroupBox;
-    setNameEdit: TLabeledEdit;
-    SetGroupEdit: TLabeledEdit;
+    seCfaceEdit: TLabeledEdit;
     UpddataBox: TGroupBox;
-    UpddbGrid: TDBGrid;
-    filterPanel: TPanel;
-    Upd_all: TRadioButton;
-    Upd_prof: TRadioButton;
-    Upd_ind: TRadioButton;
     delPage: TTabSheet;
     del_seldataBox: TGroupBox;
     profLbl: TLabel;
@@ -57,6 +46,17 @@ type
     dlBtn: TButton;
     dldaraBox: TGroupBox;
     dldataGrid: TDBGrid;
+    dogoutGrid: TDBGrid;
+    compamy_inp: TLabeledEdit;
+    c_adrees_inp: TLabeledEdit;
+    c_contdata_inp: TLabeledEdit;
+    dog_term_1bl: TLabel;
+    dog_term_inp: TDateTimePicker;
+    Grid_dog_out: TDBGrid;
+    UpdBtn: TButton;
+    UpddatadogBox: TGroupBox;
+    set_contdata_inp: TLabeledEdit;
+    Upd_contdataBtn: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -67,6 +67,8 @@ type
     procedure Check_adr_searchClick(Sender: TObject);
     procedure ConddogEditKeyPress(Sender: TObject; var Key: Char);
     procedure fnd_cont_face_EditKeyPress(Sender: TObject; var Key: Char);
+    procedure ins_BtnClick(Sender: TObject);
+    procedure Upd_contdataBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -75,7 +77,7 @@ type
 
 var
   Frm_dog: TFrm_dog;
-
+  var d_flag:Integer;
 implementation
 
 uses Un_dm, Unmain;
@@ -86,11 +88,11 @@ procedure TFrm_dog.Check_adr_searchClick(Sender: TObject);
 begin
 if Check_adr_search.Checked then
 begin
-   ConddogEdit.EditLabel.Caption:='Живой поиск (по адресу)';
+   ConddogEdit.EditLabel.Caption:='Р–РёРІРѕР№ РїРѕРёСЃРє (РїРѕ Р°РґСЂРµСЃСѓ)';
 end
 else
 begin
- ConddogEdit.EditLabel.Caption:='Точное совпадение (по названию компании)';
+ ConddogEdit.EditLabel.Caption:='РўРѕС‡РЅРѕРµ СЃРѕРІРїР°РґРµРЅРёРµ (РїРѕ РЅР°Р·РІР°РЅРёСЋ РєРѕРјРїР°РЅРёРё)';
  try
   with dm.dogQuery do
     begin
@@ -147,15 +149,54 @@ except
 end;
 
 procedure TFrm_dog.FormActivate(Sender: TObject);
+var k:Integer;
 begin
 dm.doQuery.Open;
 dm.dogQuery.Open;
+DogPage.ActivePage:=SeldogPage;
+UpdBtn.Caption:='РР·РјРµРЅРёС‚СЊ';
+dm.doQuery.Open;
+dm.ProfQuery.Open;
+with Frm_dog do
+for k := 0 to ComponentCount - 1 do
+begin
+if (Components[k] is TRadioButton) then
+begin
+  (Components[k] as TRadioButton).Checked:=False;
+end;
 end;
 
+end;
+
+
+
+
 procedure TFrm_dog.FormClose(Sender: TObject; var Action: TCloseAction);
+var k,e:Integer;
 begin
 dm.dogQuery.Close;
 dm.dogQuery.Close;
+d_flag:=0;
+Check_adr_search.Enabled:=true;
+Check_adr_search.Checked:=False;
+ConddogEdit.EditLabel.Caption:='РўРѕС‡РЅРѕРµ СЃРѕРІРїР°РґРµРЅРёРµ (РїРѕ РЅР°Р·РІР°РЅРёСЋ РєРѕРјРїР°РЅРёРё)';
+with Frm_dog do
+for k := 0 to ComponentCount - 1 do
+begin
+if (Components[k] is TRadioButton) then
+begin
+  (Components[k] as TRadioButton).Enabled:=True;
+end;
+end;
+with Frm_dog do
+for e := 0 to ComponentCount - 1 do
+begin
+if (Components[e] is TLabeledEdit) then
+begin
+  (Components[e] as TLabeledEdit).Enabled:=True;
+end;
+end;
+
 end;
 
 procedure TFrm_dog.FormCreate(Sender: TObject);
@@ -165,6 +206,51 @@ begin
   width:=1024;
   height:=768;
   Position:=poScreenCenter;
+end;
+end;
+
+procedure TFrm_dog.ins_BtnClick(Sender: TObject);
+begin
+if  (cond_pay_inp.Text<>'')and(Cont_face_inp.Text<>'')and (compamy_inp.Text<>'')
+and  (c_adrees_inp.Text<>'')and (c_contdata_inp.Text<>'')  then
+begin
+try
+with dm.dogQuery do
+begin
+  Active:=false;
+  SQL.Clear;
+  SQL.Text:='INSERT INTO dogovor (pay_cond, cont_face, company,'+
+  'c_adress, c_contdara, dogterm )VALUES('
+  +QuotedStr(cond_pay_inp.Text)+','+QuotedStr(Cont_face_inp.Text)+','+
+  QuotedStr(compamy_inp.Text)+','+QuotedStr(c_adrees_inp.Text)+','+
+  QuotedStr(c_contdata_inp.Text)+','
+  +QuotedStr(FrmMain.DateToStr_(dog_term_inp.Date))+')';
+  ExecSQL;
+  sql.Text:='select * from dogovor;';
+  Active:=true;
+  close;
+  open;
+end;
+  MessageDlg('Р—Р°РїРѕР»РЅРёС‚Рµ РІСЃРµ РїРѕР»СЏ',mtInformation,[mbOK],0);
+  Beep();
+  cond_pay_inp.Clear;
+  Cont_face_inp.Clear;
+  compamy_inp.Clear;
+  c_adrees_inp.Clear;
+  c_contdata_inp.Clear;
+  dog_term_inp.DateTime:=Now;
+except
+begin
+  ShowMessage('wrong situation');
+  Exit;
+end;
+end;
+end
+else
+begin
+  MessageDlg('РР·РјРµРЅРµРЅРёСЏ РІРЅРµСЃРµРЅС‹',mtError,[mbOK],0);
+  Beep();
+  Exit;
 end;
 end;
 
@@ -199,7 +285,7 @@ begin
 end;
   Check_adr_search.Enabled:=true;
   Check_adr_search.Checked:=False;
-  ConddogEdit.EditLabel.Caption:='Точное совпадение (по названию компании)';
+  ConddogEdit.EditLabel.Caption:='РўРѕС‡РЅРѕРµ СЃРѕРІРїР°РґРµРЅРёРµ (РїРѕ РЅР°Р·РІР°РЅРёСЋ РєРѕРјРїР°РЅРёРё)';
 
 
 
@@ -263,6 +349,29 @@ begin
     exit;
 end;
 end;
+
+end;
+
+procedure TFrm_dog.Upd_contdataBtnClick(Sender: TObject);
+begin
+    try
+         dm.doQuery.Close;
+         dm.doQuery.SQL.Clear;
+         dm.doQuery.SQL.Text:='Update dogovor set  c_contdara='
+         +QuotedStr(set_contdata_inp.Text)+'where dogovor.id_dog='
+         +dm.dogQuery.FieldByName('id_dog').AsString;
+         dm.doQuery.ExecSQL;
+         dm.doQuery.SQL.Text:='select * from  dogivor';
+         dm.doQuery.Open;
+         dm.doQuery.Close;
+         dm.doQuery.Open;
+     except
+     begin
+         ShowMessage('Wrong situation');
+         exit;
+     end;
+     end;
+
 
 end;
 

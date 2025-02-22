@@ -21,7 +21,7 @@ object Frm_pfor: TFrm_pfor
     Top = 0
     Width = 817
     Height = 616
-    ActivePage = SelPage
+    ActivePage = UpdPage
     Align = alClient
     TabOrder = 0
     object SelPage: TTabSheet
@@ -453,10 +453,6 @@ object Frm_pfor: TFrm_pfor
         Height = 46
         Align = alClient
         TabOrder = 4
-        ExplicitLeft = -4
-        ExplicitTop = 216
-        ExplicitWidth = 185
-        ExplicitHeight = 41
         object Upd_all: TRadioButton
           Left = 16
           Top = 6
@@ -550,8 +546,6 @@ object Frm_pfor: TFrm_pfor
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        ExplicitTop = 256
-        ExplicitHeight = 289
         object dldataGrid: TDBGrid
           Left = 2
           Top = 15

@@ -31,23 +31,13 @@ type
     DataOutdogBox: TGroupBox;
     BtnBox: TGroupBox;
     ins_Btn: TButton;
-    UpdPage: TTabSheet;
+    UpddogPage: TTabSheet;
     oldDtaBox: TGroupBox;
     profnameLbl: TLabel;
-    profgroupLbl: TLabel;
-    DBLookupComboBox_prof: TDBLookupComboBox;
-    DBLookupComboBox_group: TDBLookupComboBox;
-    UpdBtnGroup: TGroupBox;
-    UpdBtn: TButton;
+    DBLookupComboBox_dog: TDBLookupComboBox;
     setdataBox: TGroupBox;
-    setNameEdit: TLabeledEdit;
-    SetGroupEdit: TLabeledEdit;
+    seCfaceEdit: TLabeledEdit;
     UpddataBox: TGroupBox;
-    UpddbGrid: TDBGrid;
-    filterPanel: TPanel;
-    Upd_all: TRadioButton;
-    Upd_prof: TRadioButton;
-    Upd_ind: TRadioButton;
     delPage: TTabSheet;
     del_seldataBox: TGroupBox;
     profLbl: TLabel;
@@ -62,6 +52,11 @@ type
     c_contdata_inp: TLabeledEdit;
     dog_term_1bl: TLabel;
     dog_term_inp: TDateTimePicker;
+    Grid_dog_out: TDBGrid;
+    UpdBtn: TButton;
+    UpddatadogBox: TGroupBox;
+    set_contdata_inp: TLabeledEdit;
+    Upd_contdataBtn: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -73,6 +68,8 @@ type
     procedure ConddogEditKeyPress(Sender: TObject; var Key: Char);
     procedure fnd_cont_face_EditKeyPress(Sender: TObject; var Key: Char);
     procedure ins_BtnClick(Sender: TObject);
+    procedure Upd_contdataBtnClick(Sender: TObject);
+    procedure UpdBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -84,7 +81,7 @@ var
   var d_flag:Integer;
 implementation
 
-uses Un_dm, Unmain;
+uses Un_dm, Unmain, DB;
 
 {$R *.dfm}
 
@@ -155,6 +152,7 @@ end;
 procedure TFrm_dog.FormActivate(Sender: TObject);
 var k:Integer;
 begin
+dm.doQuery.SQL.Text:='select * from dogovor';
 dm.doQuery.Open;
 dm.dogQuery.Open;
 DogPage.ActivePage:=SeldogPage;
@@ -354,6 +352,44 @@ begin
 end;
 end;
 
+end;
+
+procedure TFrm_dog.UpdBtnClick(Sender: TObject);
+begin
+           with dm.doQuery do
+           begin
+           close;
+           sql.Clear;
+           SQL.Text:='Update dogovor set   cont_face='
+            +QuotedStr(seCfaceEdit.Text)+'where dogovor.id_dog='
+            +dm.dogQuery.FieldByName('id_dog').AsString;
+            ExecSQL;
+            SQL.Text:='select * from  dogovor;';
+            Open;
+           close;
+            Open;
+
+           end;
+               MessageDlg('Изменения внесены',mtInformation,[mbOK],0);
+
+end;
+
+procedure TFrm_dog.Upd_contdataBtnClick(Sender: TObject);
+begin
+        with dm.doQuery do
+        begin
+        Close;
+        SQL.Clear;
+        SQL.Text:='Update dogovor set  c_contdara='
+         +QuotedStr(set_contdata_inp.Text)+'where dogovor.id_dog='
+         +dm.dogQuery.FieldByName('id_dog').AsString;
+          ExecSQL;
+        SQL.Text:='select * from  dogovor;';
+        Open;
+        Close;
+        Open;
+        end;
+        MessageDlg('Изменения внесены',mtInformation,[mbOK],0);
 end;
 
 end.
