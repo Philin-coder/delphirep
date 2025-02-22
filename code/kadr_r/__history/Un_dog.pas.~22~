@@ -252,7 +252,7 @@ end;
 end
 else
 begin
-  MessageDlg('Изменения внесены',mtError,[mbOK],0);
+  MessageDlg('Çàïîëíèòå âñå ïîëÿ',mtError,[mbOK],0);
   Beep();
   Exit;
 end;

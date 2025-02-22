@@ -21,7 +21,7 @@ object Frm_dog: TFrm_dog
     Top = 0
     Width = 817
     Height = 616
-    ActivePage = SeldogPage
+    ActivePage = InsPage
     Align = alClient
     TabOrder = 0
     object SeldogPage: TTabSheet
@@ -148,6 +148,55 @@ object Frm_dog: TFrm_dog
           TitleFont.Height = -11
           TitleFont.Name = 'Tahoma'
           TitleFont.Style = []
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'id_dog'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Width = 98
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'pay_cond'
+              Title.Caption = #1059#1089#1083#1086#1074#1080#1103' '#1086#1087#1083#1072#1090#1099
+              Width = 600
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'cont_face'
+              Title.Caption = #1050#1086#1085#1090#1072#1082#1090#1085#1086#1077' '#1083#1080#1094#1086
+              Width = 600
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'company'
+              Title.Caption = #1054#1088#1075#1072#1085#1080#1079#1072#1094#1080#1103
+              Width = 600
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'c_adress'
+              Title.Caption = #1040#1076#1088#1077#1089' '#1086#1088#1075#1072#1085#1080#1079#1072#1094#1080#1080
+              Width = 600
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'c_contdara'
+              Title.Caption = #1050#1086#1085#1090#1072#1082#1090#1085#1099#1077' '#1076#1072#1085#1085#1099#1077' '#1086#1088#1075#1072#1085#1080#1079#1072#1094#1080#1080
+              Width = 600
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'dogterm'
+              Title.Caption = #1044#1072#1090#1072' '#1076#1086#1075#1086#1074#1086#1088#1072
+              Visible = True
+            end>
         end
       end
       object ButtondogBox: TGroupBox
@@ -171,59 +220,115 @@ object Frm_dog: TFrm_dog
       end
     end
     object InsPage: TTabSheet
-      Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1088#1086#1092#1077#1089#1089#1080#1080
+      Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1076#1086#1075#1086#1074#1086#1088#1077
       ImageIndex = 1
-      object InpBox: TGroupBox
+      object InpdogBox: TGroupBox
         Left = 0
         Top = 0
         Width = 809
-        Height = 105
+        Height = 257
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
         DesignSize = (
           809
-          105)
-        object Prof_name_inp: TLabeledEdit
+          257)
+        object dog_term_1bl: TLabel
+          Left = 88
+          Top = 241
+          Width = 77
+          Height = 13
+          Caption = #1044#1072#1090#1072' '#1076#1086#1075#1086#1074#1086#1088#1072
+        end
+        object cond_pay_inp: TLabeledEdit
           Left = 128
           Top = 16
           Width = 657
           Height = 21
           Anchors = [akLeft, akTop, akRight]
-          EditLabel.Width = 125
+          EditLabel.Width = 83
           EditLabel.Height = 13
-          EditLabel.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077' '#1087#1088#1086#1092#1077#1089#1080#1080
+          EditLabel.Caption = #1059#1089#1083#1086#1074#1080#1103' '#1086#1087#1083#1072#1090#1099
           LabelPosition = lpLeft
           TabOrder = 0
         end
-        object Prof_group_inp: TLabeledEdit
+        object Cont_face_inp: TLabeledEdit
           Left = 128
           Top = 64
           Width = 657
           Height = 21
           Anchors = [akLeft, akTop, akRight]
-          EditLabel.Width = 55
+          EditLabel.Width = 88
           EditLabel.Height = 13
-          EditLabel.Caption = #1048#1085#1076#1091#1089#1090#1088#1080#1103
+          EditLabel.Caption = #1050#1086#1085#1090#1072#1082#1090#1085#1086#1077' '#1083#1080#1094#1086
           LabelPosition = lpLeft
           TabOrder = 1
         end
+        object compamy_inp: TLabeledEdit
+          Left = 128
+          Top = 112
+          Width = 657
+          Height = 21
+          Anchors = [akLeft, akTop, akRight]
+          EditLabel.Width = 49
+          EditLabel.Height = 13
+          EditLabel.Caption = #1050#1086#1084#1087#1072#1085#1080#1103
+          LabelPosition = lpLeft
+          TabOrder = 2
+        end
+        object c_adrees_inp: TLabeledEdit
+          Left = 128
+          Top = 152
+          Width = 657
+          Height = 21
+          Anchors = [akLeft, akTop, akRight]
+          EditLabel.Width = 82
+          EditLabel.Height = 13
+          EditLabel.Caption = #1040#1076#1088#1077'c '#1082#1086#1084#1087#1072#1085#1080#1080
+          LabelPosition = lpLeft
+          TabOrder = 3
+        end
+        object c_contdata_inp: TLabeledEdit
+          Left = 168
+          Top = 194
+          Width = 617
+          Height = 21
+          Anchors = [akLeft, akTop, akRight]
+          EditLabel.Width = 159
+          EditLabel.Height = 13
+          EditLabel.Caption = #1050#1086#1085#1090#1072#1082#1090#1085#1099#1077' '#1076#1072#1085#1085#1099#1077'  '#1082#1086#1084#1087#1072#1085#1080#1080
+          LabelPosition = lpLeft
+          TabOrder = 4
+        end
+        object dog_term_inp: TDateTimePicker
+          Left = 171
+          Top = 233
+          Width = 614
+          Height = 21
+          Align = alCustom
+          Anchors = [akLeft, akTop, akRight]
+          Date = 45710.475503935190000000
+          Time = 45710.475503935190000000
+          TabOrder = 5
+        end
       end
-      object DataOutBox: TGroupBox
+      object DataOutdogBox: TGroupBox
         Left = 0
-        Top = 105
+        Top = 257
         Width = 809
-        Height = 440
+        Height = 288
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
-        object Pfor_ins_Grid: TDBGrid
+        ExplicitTop = 280
+        ExplicitHeight = 265
+        object dogoutGrid: TDBGrid
           Left = 2
           Top = 15
           Width = 805
-          Height = 423
+          Height = 271
           Align = alClient
-          DataSource = DM.ProfDS
+          DataSource = DM.dogDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -233,22 +338,50 @@ object Frm_dog: TFrm_dog
           Columns = <
             item
               Expanded = False
-              FieldName = 'id_prof'
+              FieldName = 'id_dog'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Width = 98
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'prof_name'
-              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077
-              Width = 500
+              FieldName = 'pay_cond'
+              Title.Caption = #1059#1089#1083#1086#1074#1080#1103' '#1086#1087#1083#1072#1090#1099
+              Width = 600
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'prof_group'
-              Title.Caption = #1048#1085#1076#1091#1089#1090#1088#1080#1103
-              Width = 700
+              FieldName = 'cont_face'
+              Title.Caption = #1050#1086#1085#1090#1072#1082#1090#1085#1086#1077' '#1083#1080#1094#1086
+              Width = 600
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'company'
+              Title.Caption = #1054#1088#1075#1072#1085#1080#1079#1072#1094#1080#1103
+              Width = 600
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'c_adress'
+              Title.Caption = #1040#1076#1088#1077#1089' '#1086#1088#1075#1072#1085#1080#1079#1072#1094#1080#1080
+              Width = 600
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'c_contdara'
+              Title.Caption = #1050#1086#1085#1090#1072#1082#1090#1085#1099#1077' '#1076#1072#1085#1085#1099#1077' '#1086#1088#1075#1072#1085#1080#1079#1072#1094#1080#1080
+              Width = 600
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'dogterm'
+              Title.Caption = #1044#1072#1090#1072' '#1076#1086#1075#1086#1074#1086#1088#1072
               Visible = True
             end>
         end
@@ -269,6 +402,7 @@ object Frm_dog: TFrm_dog
           Anchors = [akLeft, akTop, akRight]
           Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
           TabOrder = 0
+          OnClick = ins_BtnClick
         end
       end
     end
