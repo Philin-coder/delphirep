@@ -12,7 +12,6 @@ type
     prof_menu: TMenuItem;
     MainImage: TImage;
     dog_menu: TMenuItem;
-    ank_menu: TMenuItem;
     procedure FormActivate(Sender: TObject);
     function DateToStr_(Dat : TDate): String;
     function   CommaPoint (X: String) : String;
@@ -20,7 +19,6 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure dog_menuClick(Sender: TObject);
-    procedure ank_menuClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -32,7 +30,7 @@ var
 
 implementation
 
-uses Un_dm, Un_pfor, Un_dog, Un_ank;
+uses Un_dm, Un_pfor, Un_dog;
 
 {$R *.dfm}
 function TfrmMain.DateToStr_(Dat : TDate): String;
@@ -45,11 +43,6 @@ end;
 procedure TFrmMain.dog_menuClick(Sender: TObject);
 begin
 Frm_dog.ShowModal;
-end;
-
-procedure TFrmMain.ank_menuClick(Sender: TObject);
-begin
-  Frm_ank.ShowModal;
 end;
 
 function   TfrmMain.CommaPoint (X: String) : String;

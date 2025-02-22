@@ -1,7 +1,7 @@
-object Frm_dog: TFrm_dog
+object Frm_ank: TFrm_ank
   Left = 0
   Top = 0
-  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1076#1086#1075#1086#1074#1086#1088#1086#1084
+  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1072#1085#1082#1077#1090#1086#1081
   ClientHeight = 616
   ClientWidth = 817
   Color = clBtnFace
@@ -21,7 +21,7 @@ object Frm_dog: TFrm_dog
     Top = 0
     Width = 817
     Height = 616
-    ActivePage = SeldogPage
+    ActivePage = delPage
     Align = alClient
     TabOrder = 0
     object SeldogPage: TTabSheet
@@ -320,6 +320,8 @@ object Frm_dog: TFrm_dog
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
+        ExplicitTop = 280
+        ExplicitHeight = 265
         object dogoutGrid: TDBGrid
           Left = 2
           Top = 15
@@ -481,6 +483,7 @@ object Frm_dog: TFrm_dog
         Align = alBottom
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
+        ExplicitTop = 256
         object Grid_dog_out: TDBGrid
           Left = 2
           Top = 15

@@ -21,7 +21,7 @@ object Frm_dog: TFrm_dog
     Top = 0
     Width = 817
     Height = 616
-    ActivePage = SeldogPage
+    ActivePage = delPage
     Align = alClient
     TabOrder = 0
     object SeldogPage: TTabSheet
@@ -320,6 +320,8 @@ object Frm_dog: TFrm_dog
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
+        ExplicitTop = 280
+        ExplicitHeight = 265
         object dogoutGrid: TDBGrid
           Left = 2
           Top = 15
@@ -415,6 +417,7 @@ object Frm_dog: TFrm_dog
         Align = alClient
         Caption = #1042#1099#1073#1088#1072#1090#1100' '#1076#1072#1085#1085#1099#1077
         TabOrder = 0
+        ExplicitTop = 198
         DesignSize = (
           809
           95)
@@ -481,6 +484,7 @@ object Frm_dog: TFrm_dog
         Align = alBottom
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
+        ExplicitTop = 256
         object Grid_dog_out: TDBGrid
           Left = 2
           Top = 15

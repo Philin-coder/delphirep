@@ -61,12 +61,12 @@ object DM: TDM
     Parameters = <>
     SQL.Strings = (
       
-        'SELECT questionnaire.ank_nom, questionnaire.b_data, questionnair' +
-        'e.fio, questionnaire.kval, questionnaire.staj, questionnaire.kva' +
-        'l, questionnaire.wish_cond, prof.prof_name'
-      'FROM questionnaire'
-      'inner join prof on questionnaire.id_prof= prof.id_prof'
-      'WHERE (((1)=1));')
+        'SELECT questionnaire.ank_nom, questionnaire.b_data,questionnaire' +
+        '.fio, questionnaire.kval, questionnaire.staj, questionnaire.kval' +
+        ', questionnaire.wish_cond, prof.prof_name'
+      
+        '     FROM questionnaire inner join prof on questionnaire.id_prof' +
+        '= prof.id_prof WHERE (((1)=1)')
     Left = 152
     Top = 96
   end

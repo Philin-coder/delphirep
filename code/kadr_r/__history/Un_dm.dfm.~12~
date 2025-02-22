@@ -60,13 +60,7 @@ object DM: TDM
     CursorType = ctStatic
     Parameters = <>
     SQL.Strings = (
-      
-        'SELECT questionnaire.ank_nom, questionnaire.b_data, questionnair' +
-        'e.fio, questionnaire.kval, questionnaire.staj, questionnaire.kva' +
-        'l, questionnaire.wish_cond, prof.prof_name'
-      'FROM questionnaire'
-      'inner join prof on questionnaire.id_prof= prof.id_prof'
-      'WHERE (((1)=1));')
+      'select * from questionnaire;')
     Left = 152
     Top = 96
   end

@@ -14,8 +14,6 @@ type
     doDS: TDataSource;
     dogQuery: TADOQuery;
     dogDS: TDataSource;
-    ankQuery: TADOQuery;
-    ankDS: TDataSource;
   private
     { Private declarations }
   public
@@ -27,7 +25,7 @@ var
 
 implementation
 
-uses Unmain, Un_pfor, Un_dog, Un_ank;
+uses Unmain, Un_pfor, Un_dog;
 
 {$R *.dfm}
 

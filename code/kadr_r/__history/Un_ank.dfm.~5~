@@ -1,7 +1,7 @@
-object Frm_dog: TFrm_dog
+object Frm_ank: TFrm_ank
   Left = 0
   Top = 0
-  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1076#1086#1075#1086#1074#1086#1088#1086#1084
+  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1072#1085#1082#1077#1090#1086#1081
   ClientHeight = 616
   ClientWidth = 817
   Color = clBtnFace
@@ -16,17 +16,17 @@ object Frm_dog: TFrm_dog
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object DogPage: TPageControl
+  object AnkPage: TPageControl
     Left = 0
     Top = 0
     Width = 817
     Height = 616
-    ActivePage = SeldogPage
+    ActivePage = SelAnkPage
     Align = alClient
     TabOrder = 0
-    object SeldogPage: TTabSheet
-      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1076#1086#1075#1086#1074#1086#1088#1077
-      object ConditiondogBox: TGroupBox
+    object SelAnkPage: TTabSheet
+      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1072#1085#1082#1077#1090#1077
+      object ConditionAnkBox: TGroupBox
         Left = 0
         Top = 0
         Width = 809
@@ -41,35 +41,35 @@ object Frm_dog: TFrm_dog
           Height = 81
           Align = alBottom
           TabOrder = 0
-          object Radio_dcomp_name: TRadioButton
+          object Radio_staj_name: TRadioButton
             Left = 24
             Top = 20
             Width = 217
             Height = 17
-            Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072'  '#1087#1086' '#1085#1072#1079#1074#1072#1085#1080#1102' '#1082#1086#1084#1087#1072#1085#1080#1080
+            Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072'  '#1087#1086' '#1089#1090#1072#1078#1091
             TabOrder = 0
-            OnClick = Radio_dcomp_nameClick
+            OnClick = Radio_staj_nameClick
           end
-          object Radio_dpay_cond_grupp: TRadioButton
+          object Radio_kval_grupp: TRadioButton
             Left = 255
             Top = 20
             Width = 226
             Height = 17
-            Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1091#1089#1083#1086#1074#1080#1103#1084' '#1086#1087#1083#1072#1090#1099
+            Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1082#1074#1072#1083#1080#1092#1080#1082#1072#1094#1080#1080
             TabOrder = 1
-            OnClick = Radio_dpay_cond_gruppClick
+            OnClick = Radio_kval_gruppClick
           end
-          object RadiodogselReset: TRadioButton
+          object RadioankselReset: TRadioButton
             Left = 568
             Top = 20
             Width = 113
             Height = 17
             Caption = #1057#1073#1088#1086#1089
             TabOrder = 2
-            OnClick = RadiodogselResetClick
+            OnClick = RadioankselResetClick
           end
         end
-        object conddogPanel: TPanel
+        object condankPanel: TPanel
           Left = 2
           Top = 15
           Width = 805
@@ -79,20 +79,20 @@ object Frm_dog: TFrm_dog
           DesignSize = (
             805
             41)
-          object ConddogEdit: TLabeledEdit
+          object CondankEdit: TLabeledEdit
             Left = 16
             Top = 16
             Width = 767
             Height = 21
             Anchors = [akLeft, akTop, akRight]
-            EditLabel.Width = 226
+            EditLabel.Width = 196
             EditLabel.Height = 13
-            EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' ('#1087#1086' '#1085#1072#1079#1074#1072#1085#1080#1102' '#1082#1086#1084#1087#1072#1085#1080#1080')'
+            EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' ('#1087#1086' '#1060#1048#1054' '#1074' '#1072#1085#1082#1077#1090#1077')'
             TabOrder = 0
-            OnKeyPress = ConddogEditKeyPress
+            OnKeyPress = CondankEditKeyPress
           end
         end
-        object fnddogPanel: TPanel
+        object fndankPanel: TPanel
           Left = 2
           Top = 56
           Width = 805
@@ -102,32 +102,32 @@ object Frm_dog: TFrm_dog
           DesignSize = (
             805
             78)
-          object fnd_cont_face_Edit: TLabeledEdit
+          object fnd_kval_Edit: TLabeledEdit
             Left = 16
             Top = 16
             Width = 767
             Height = 21
             Anchors = [akLeft, akTop, akRight]
-            EditLabel.Width = 162
+            EditLabel.Width = 149
             EditLabel.Height = 13
-            EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082'('#1050#1086#1085#1090#1072#1082#1090#1085#1086#1077' '#1083#1080#1094#1086')'
+            EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082'('#1050#1074#1072#1083#1080#1092#1080#1082#1072#1094#1080#1103')'
             TabOrder = 0
-            OnKeyPress = fnd_cont_face_EditKeyPress
+            OnKeyPress = fnd_kval_EditKeyPress
           end
-          object Check_adr_search: TCheckBox
+          object Check_wish_search: TCheckBox
             Left = 264
             Top = 48
-            Width = 199
+            Width = 233
             Height = 17
             Align = alCustom
             Anchors = [akLeft, akTop, akRight]
-            Caption = #1042#1082#1083#1102#1095#1077#1085#1080#1077' '#1087#1086#1080#1089#1082#1072' '#1087#1086' '#1072#1076#1088#1077#1089#1091
+            Caption = #1042#1082#1083#1102#1095#1077#1085#1080#1077' '#1087#1086#1080#1089#1082#1072' '#1087#1086' '#1091#1089#1083#1086#1074#1080#1103#1084'('#1078#1077#1083#1072#1077#1084#1099#1084') '
             TabOrder = 1
-            OnClick = Check_adr_searchClick
+            OnClick = Check_wish_searchClick
           end
         end
       end
-      object DatadogBox: TGroupBox
+      object DataankBox: TGroupBox
         Left = 0
         Top = 217
         Width = 809
@@ -135,7 +135,7 @@ object Frm_dog: TFrm_dog
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
-        object DatadogGrd: TDBGrid
+        object DataankGrd: TDBGrid
           Left = 2
           Top = 15
           Width = 805
@@ -148,55 +148,6 @@ object Frm_dog: TFrm_dog
           TitleFont.Height = -11
           TitleFont.Name = 'Tahoma'
           TitleFont.Style = []
-          Columns = <
-            item
-              Expanded = False
-              FieldName = 'id_dog'
-              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-              Width = 98
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'pay_cond'
-              Title.Caption = #1059#1089#1083#1086#1074#1080#1103' '#1086#1087#1083#1072#1090#1099
-              Width = 600
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'cont_face'
-              Title.Caption = #1050#1086#1085#1090#1072#1082#1090#1085#1086#1077' '#1083#1080#1094#1086
-              Width = 600
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'company'
-              Title.Caption = #1054#1088#1075#1072#1085#1080#1079#1072#1094#1080#1103
-              Width = 600
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'c_adress'
-              Title.Caption = #1040#1076#1088#1077#1089' '#1086#1088#1075#1072#1085#1080#1079#1072#1094#1080#1080
-              Width = 600
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'c_contdara'
-              Title.Caption = #1050#1086#1085#1090#1072#1082#1090#1085#1099#1077' '#1076#1072#1085#1085#1099#1077' '#1086#1088#1075#1072#1085#1080#1079#1072#1094#1080#1080
-              Width = 600
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'dogterm'
-              Title.Caption = #1044#1072#1090#1072' '#1076#1086#1075#1086#1074#1086#1088#1072
-              Visible = True
-            end>
         end
       end
       object ButtondogBox: TGroupBox
@@ -206,7 +157,7 @@ object Frm_dog: TFrm_dog
         Height = 47
         Align = alBottom
         TabOrder = 2
-        object SedoglBtn: TButton
+        object SeanklBtn: TButton
           Left = 336
           Top = 19
           Width = 129
@@ -215,7 +166,7 @@ object Frm_dog: TFrm_dog
           Anchors = [akLeft, akTop, akRight]
           Caption = #1054#1090#1073#1086#1088' '#1087#1086' '#1091#1089#1083#1086#1074#1080#1080#1102
           TabOrder = 0
-          OnClick = SedoglBtnClick
+          OnClick = SeanklBtnClick
         end
       end
     end

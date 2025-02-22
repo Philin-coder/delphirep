@@ -1,7 +1,7 @@
-object Frm_dog: TFrm_dog
+object Frm_ank: TFrm_ank
   Left = 0
   Top = 0
-  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1076#1086#1075#1086#1074#1086#1088#1086#1084
+  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1072#1085#1082#1077#1090#1086#1081
   ClientHeight = 616
   ClientWidth = 817
   Color = clBtnFace
@@ -16,15 +16,15 @@ object Frm_dog: TFrm_dog
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object DogPage: TPageControl
+  object AnkPage: TPageControl
     Left = 0
     Top = 0
     Width = 817
     Height = 616
-    ActivePage = SeldogPage
+    ActivePage = SelAnkPage
     Align = alClient
     TabOrder = 0
-    object SeldogPage: TTabSheet
+    object SelAnkPage: TTabSheet
       Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1076#1086#1075#1086#1074#1086#1088#1077
       object ConditiondogBox: TGroupBox
         Left = 0
