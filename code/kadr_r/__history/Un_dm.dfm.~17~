@@ -56,7 +56,6 @@ object DM: TDM
     Top = 160
   end
   object ankQuery: TADOQuery
-    Active = True
     Connection = Connection
     CursorType = ctStatic
     Parameters = <>

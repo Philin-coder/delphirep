@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, DBCtrls, StdCtrls, Grids, DBGrids, ExtCtrls, ComCtrls;
+  Dialogs, DBCtrls, StdCtrls, Grids, DBGrids, ExtCtrls, ComCtrls,ADODB;
 
 type
   TFrm_ank = class(TForm)
@@ -24,39 +24,41 @@ type
     DataankGrd: TDBGrid;
     ButtondogBox: TGroupBox;
     SeanklBtn: TButton;
-    InsPage: TTabSheet;
-    InpdogBox: TGroupBox;
-    cond_pay_inp: TLabeledEdit;
-    Cont_face_inp: TLabeledEdit;
+    InsankPage: TTabSheet;
+    InpankBox: TGroupBox;
+    fio_inp: TLabeledEdit;
     DataOutdogBox: TGroupBox;
-    BtnBox: TGroupBox;
-    ins_Btn: TButton;
-    UpddogPage: TTabSheet;
+    ankinpBtnBox: TGroupBox;
+    ins_ank_Btn: TButton;
+    UpdankPage: TTabSheet;
     oldDtaBox: TGroupBox;
-    profnameLbl: TLabel;
-    DBLookupComboBox_dog: TDBLookupComboBox;
+    nakfioLbl: TLabel;
+    DBLookupComboBox_ank: TDBLookupComboBox;
     setdataBox: TGroupBox;
-    seCfaceEdit: TLabeledEdit;
+    updwishinp: TLabeledEdit;
     UpddataBox: TGroupBox;
-    delPage: TTabSheet;
-    del_seldataBox: TGroupBox;
-    profLbl: TLabel;
-    delseldatadgComboBox: TDBLookupComboBox;
-    dlbtnBox: TGroupBox;
-    dlBtn: TButton;
+    deanklPage: TTabSheet;
+    del_ankdataBox: TGroupBox;
+    ankLbl: TLabel;
+    delankdatadgComboBox: TDBLookupComboBox;
+    dlankbtnBox: TGroupBox;
+    dlankBtn: TButton;
     dldaraBox: TGroupBox;
-    dogoutGrid: TDBGrid;
-    compamy_inp: TLabeledEdit;
-    c_adrees_inp: TLabeledEdit;
-    c_contdata_inp: TLabeledEdit;
-    dog_term_1bl: TLabel;
-    dog_term_inp: TDateTimePicker;
-    Grid_dog_out: TDBGrid;
-    UpdBtn: TButton;
-    UpddatadogBox: TGroupBox;
-    set_contdata_inp: TLabeledEdit;
-    Upd_contdataBtn: TButton;
-    del_outGrid: TDBGrid;
+    kval_inp: TLabeledEdit;
+    staj_inp: TLabeledEdit;
+    wish_inp: TLabeledEdit;
+    UpdwishBtn: TButton;
+    UpddatankBox: TGroupBox;
+    set_kval_inp: TLabeledEdit;
+    Upd_kvalBtn: TButton;
+    bdata_1bl: TLabel;
+    bdata_inp: TDateTimePicker;
+    profankLbl: TLabel;
+    profankDBL: TDBLookupComboBox;
+    Obr_inp: TLabeledEdit;
+    ankinsoutGrd: TDBGrid;
+    updaklGrd: TDBGrid;
+    ankdelGrd: TDBGrid;
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -67,10 +69,10 @@ type
     procedure Check_wish_searchClick(Sender: TObject);
     procedure CondankEditKeyPress(Sender: TObject; var Key: Char);
     procedure fnd_kval_EditKeyPress(Sender: TObject; var Key: Char);
-    procedure ins_BtnClick(Sender: TObject);
-    procedure Upd_contdataBtnClick(Sender: TObject);
-    procedure UpdBtnClick(Sender: TObject);
-    procedure dlBtnClick(Sender: TObject);
+    procedure ins_ank_BtnClick(Sender: TObject);
+    procedure Upd_kvalBtnClick(Sender: TObject);
+    procedure UpdwishBtnClick(Sender: TObject);
+    procedure dlankBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -100,8 +102,8 @@ begin
     begin
     close;
     SQL.Text:='SELECT questionnaire.ank_nom, questionnaire.b_data,'+
-    'questionnaire.fio, questionnaire.kval, questionnaire.staj,'+
-    'questionnaire.kval, questionnaire.wish_cond, prof.prof_name'+ ' '+
+    'questionnaire.fio, questionnaire.obr, questionnaire.kval, questionnaire.staj,'+
+    'questionnaire.wish_cond, prof.prof_name'+ ' '+
     'FROM questionnaire'+' '+
     'inner join prof on questionnaire.id_prof= prof.id_prof';
     open;
@@ -122,8 +124,8 @@ begin
 if Check_wish_search.Checked=true then
   begin
   dm.ankQuery.sql.Text:='SELECT questionnaire.ank_nom, questionnaire.b_data,'+
-'questionnaire.fio, questionnaire.kval, questionnaire.staj,'+
-'questionnaire.kval, questionnaire.wish_cond, prof.prof_name'+' '+
+'questionnaire.fio,questionnaire.obr, questionnaire.kval, questionnaire.staj,'+
+'questionnaire.wish_cond, prof.prof_name'+' '+
   'FROM questionnaire' +' '+
     'inner join prof on questionnaire.id_prof=prof.id_prof'+ ' '+
   'where wish_cond  like'+
@@ -137,7 +139,7 @@ if Check_wish_search.Checked=true then
      Close;
      sql.Clear;
      SQL.Text:='SELECT questionnaire.ank_nom, questionnaire.b_data,'+
-'questionnaire.fio, questionnaire.kval, questionnaire.staj,'+
+'questionnaire.fio,questionnaire.obr, questionnaire.kval, questionnaire.staj,'+
 'questionnaire.kval, questionnaire.wish_cond, prof.prof_name'+' '+
   'FROM questionnaire' +' '+
     'inner join prof on questionnaire.id_prof=prof.id_prof';
@@ -146,21 +148,25 @@ if Check_wish_search.Checked=true then
 
 end;
 
-procedure TFrm_ank.dlBtnClick(Sender: TObject);
+procedure TFrm_ank.dlankBtnClick(Sender: TObject);
 begin
 
 
-//        dm.doQuery.Close;
-//        dm.doQuery.SQL.Clear;
-//        dm.doQuery.SQL.Text:='delete from dogovor  where dogovor.id_dog='
-//         +dm.dogQuery.FieldByName('id_dog').AsString;
-//         dm.doQuery.ExecSQL;
-//         dm.doQuery.SQL.Text:='select * from  dogovor';
-//         dm.doQuery.Open;
-//         dm.doQuery.Close;
-//         dm.doQuery.Open;
-//         dm.doQuery.Close;
-//         dm.doQuery.Open;
+        dm.doQuery.Close;
+        dm.doQuery.SQL.Clear;
+        dm.doQuery.SQL.Text:='delete from questionnaire  where questionnaire.ank_nom='
+         +dm.ankQuery.FieldByName('ank_nom').AsString;
+         dm.doQuery.ExecSQL;
+         dm.doQuery.SQL.Text:='SELECT questionnaire.ank_nom, questionnaire.b_data,'+
+'questionnaire.fio,questionnaire.obr, questionnaire.kval, questionnaire.staj,'+
+'questionnaire.kval, questionnaire.wish_cond, prof.prof_name'+' '+
+  'FROM questionnaire' +' '+
+    'inner join prof on questionnaire.id_prof=prof.id_prof';
+         dm.doQuery.Open;
+         dm.doQuery.Close;
+         dm.doQuery.Open;
+         dm.doQuery.Close;
+         dm.doQuery.Open;
 
 end;
 
@@ -169,7 +175,7 @@ begin
 try
    Check_wish_search.Enabled:=false;
    dm.ankQuery.SQL.Text:='SELECT questionnaire.ank_nom, questionnaire.b_data,'+
-'questionnaire.fio, questionnaire.kval, questionnaire.staj,'+
+'questionnaire.fio,questionnaire.obr, questionnaire.kval, questionnaire.staj,'+
 'questionnaire.kval, questionnaire.wish_cond, prof.prof_name'+' '+
   'FROM questionnaire' +' '+
   ' inner join prof on questionnaire.id_prof=prof.id_prof where kval like'+
@@ -185,19 +191,26 @@ except
 end;
 
 procedure TFrm_ank.FormActivate(Sender: TObject);
-var k:Integer;
+var k,q,d:Integer;
 begin
+dm.doQuery.Close;
 dm.doQuery.SQL.Text:='SELECT questionnaire.ank_nom, questionnaire.b_data,'+
-'questionnaire.fio, questionnaire.kval, questionnaire.staj,'+
+'questionnaire.fio,questionnaire.obr, questionnaire.kval, questionnaire.staj,'+
 'questionnaire.kval, questionnaire.wish_cond, prof.prof_name'+' '+
   'FROM questionnaire' +' '+
     'inner join prof on questionnaire.id_prof=prof.id_prof';
-
-dm.doQuery.Open;
-dm.dogQuery.Open;
-dm.ankQuery.Open;
+with DM do
+begin
+for q := 0 to ComponentCount - 1 do
+begin
+if (Components[q] is TADOQuery) then
+begin
+  (Components[q] as TADOQuery).Open;
+end;
+end;
+end;
 ankPage.ActivePage:=SelankPage;
-UpdBtn.Caption:='Изменить';
+UpdwishBtn.Caption:='Изменить';
 dm.doQuery.Open;
 dm.ProfQuery.Open;
 with Frm_ank do
@@ -209,17 +222,33 @@ begin
 end;
 end;
 
+with Frm_ank do
+for d := 0 to ComponentCount - 1 do
+begin
+if (Components[d] is TDateTimePicker) then
+begin
+  (Components[d] as TDateTimePicker).Date:=Now;
+end;
+end;
+
+
 end;
 
 
 
 
 procedure TFrm_ank.FormClose(Sender: TObject; var Action: TCloseAction);
-var k,e:Integer;
+var k,e,q:Integer;
 begin
-dm.dogQuery.Close;
-dm.dogQuery.Close;
-dm.ankQuery.Close;
+with DM do
+begin
+for q := 0 to ComponentCount - 1 do
+begin
+if (Components[q] is TADOQuery) then
+begin
+  (Components[q] as TADOQuery).Close;
+end;
+end;
 d_flag:=0;
 Check_wish_search.Enabled:=true;
 Check_wish_search.Checked:=False;
@@ -240,10 +269,12 @@ begin
   (Components[e] as TLabeledEdit).Enabled:=True;
 end;
 end;
+end;
 
 end;
 
 procedure TFrm_ank.FormCreate(Sender: TObject);
+var d:Integer;
 begin
  with Frm_ank do
 begin
@@ -251,51 +282,64 @@ begin
   height:=768;
   Position:=poScreenCenter;
 end;
+ with Frm_ank do
+for d := 0 to ComponentCount - 1 do
+begin
+if (Components[d] is TDateTimePicker) then
+begin
+  (Components[d] as TDateTimePicker).Date:=Now;
+end;
+end;
 end;
 
-procedure TFrm_ank.ins_BtnClick(Sender: TObject);
+procedure TFrm_ank.ins_ank_BtnClick(Sender: TObject);
 begin
-//if  (cond_pay_inp.Text<>'')and(Cont_face_inp.Text<>'')and (compamy_inp.Text<>'')
-//and  (c_adrees_inp.Text<>'')and (c_contdata_inp.Text<>'')  then
-//begin
-//try
-//with dm.dogQuery do
-//begin
-//  Active:=false;
-//  SQL.Clear;
-//  SQL.Text:='INSERT INTO dogovor (pay_cond, cont_face, company,'+
-//  'c_adress, c_contdara, dogterm )VALUES('
-//  +QuotedStr(cond_pay_inp.Text)+','+QuotedStr(Cont_face_inp.Text)+','+
-//  QuotedStr(compamy_inp.Text)+','+QuotedStr(c_adrees_inp.Text)+','+
-//  QuotedStr(c_contdata_inp.Text)+','
-//  +QuotedStr(FrmMain.DateToStr_(dog_term_inp.Date))+')';
-//  ExecSQL;
-//  sql.Text:='select * from dogovor;';
-//  Active:=true;
-//  close;
-//  open;
-//end;
-//  MessageDlg('Заполните все поля',mtInformation,[mbOK],0);
-//  Beep();
-//  cond_pay_inp.Clear;
-//  Cont_face_inp.Clear;
-//  compamy_inp.Clear;
-//  c_adrees_inp.Clear;
-//  c_contdata_inp.Clear;
-//  dog_term_inp.DateTime:=Now;
-//except
-//begin
-//  ShowMessage('wrong situation');
-//  Exit;
-//end;
-//end;
-//end
-//else
-//begin
-//  MessageDlg('Изменения внесены',mtError,[mbOK],0);
-//  Beep();
-//  Exit;
-//end;
+if  (fio_inp.Text<>'')and(kval_inp.Text<>'')and (staj_inp.Text<>'')
+and (Obr_inp.Text<>'')and (wish_inp.Text<>'')  then
+begin
+try
+with dm.ankQuery do
+begin
+  Active:=false;
+  SQL.Clear;
+  SQL.Text:='INSERT INTO questionnaire (b_data, fio, obr,kval,'+
+  'staj, wish_cond, id_prof)VALUES('
+  +QuotedStr( FrmMain.DateToStr_(bdata_inp.Date))+','+
+  QuotedStr(fio_inp.Text)+','+QuotedStr(Obr_inp.Text)+','+
+  QuotedStr(kval_inp.Text)+','+QuotedStr((staj_inp.Text)) +','+
+  QuotedStr(wish_inp.Text)+','+
+  dm.ProfQuery.FieldByName('id_prof').AsString+')';
+  ExecSQL;
+  sql.Text:='SELECT questionnaire.ank_nom, questionnaire.b_data,'+
+'questionnaire.fio, questionnaire.obr, questionnaire.staj,'+
+'questionnaire.kval, questionnaire.wish_cond, prof.prof_name'+' '+
+  'FROM questionnaire' +' '+
+    'inner join prof on questionnaire.id_prof=prof.id_prof';
+  Active:=true;
+  close;
+  open;
+end;
+  MessageDlg('Изменения внесены',mtInformation,[mbOK],0);
+  Beep();
+  fio_inp.Clear;
+  obr_inp.Clear;
+  kval_inp.Clear;
+  wish_inp.Clear;
+  staj_inp.Clear;
+  bdata_inp.DateTime:=Now;
+except
+begin
+  ShowMessage('wrong situation');
+  Exit;
+end;
+end;
+end
+else
+begin
+  MessageDlg('Заполните все поля',mtError,[mbOK],0);
+  Beep();
+  Exit;
+end;
 end;
 
 procedure TFrm_ank.RadioankselResetClick(Sender: TObject);
@@ -316,7 +360,7 @@ begin
      Close;
      sql.Clear;
      SQL.Text:='SELECT questionnaire.ank_nom, questionnaire.b_data,'+
-'questionnaire.fio, questionnaire.kval, questionnaire.staj,'+
+'questionnaire.fio, questionnaire.obr, questionnaire.staj,'+
 'questionnaire.kval, questionnaire.wish_cond, prof.prof_name'+' '+
   'FROM questionnaire' +' '+
     'inner join prof on questionnaire.id_prof=prof.id_prof';
@@ -351,11 +395,11 @@ if Radio_staj_name.Checked=true then
       close;
       sql.Clear;
       sql.Text:='SELECT questionnaire.ank_nom, questionnaire.b_data,'+
-'questionnaire.fio, questionnaire.kval, questionnaire.staj,'+
+'questionnaire.fio, questionnaire.obr, questionnaire.staj,'+
 'questionnaire.kval, questionnaire.wish_cond, prof.prof_name'+' '+
   'FROM questionnaire' +' '+
     'inner join prof on questionnaire.id_prof=prof.id_prof order by staj asc';
-      //'select * from questionnaire order by staj asc ';
+
       Open;
      end;
     except
@@ -379,11 +423,10 @@ if Radio_kval_grupp.Checked=true then
       close;
       sql.Clear;
       sql.Text:='SELECT questionnaire.ank_nom, questionnaire.b_data,'+
-'questionnaire.fio, questionnaire.kval, questionnaire.staj,'+
+'questionnaire.fio, questionnaire.obr, questionnaire.staj,'+
 'questionnaire.kval, questionnaire.wish_cond, prof.prof_name'+' '+
   'FROM questionnaire' +' '+
     'inner join prof on questionnaire.id_prof=prof.id_prof order by kval asc';
-//      order by kval asc ';
       Open;
      end;
     except
@@ -399,10 +442,10 @@ begin
 try
     dm.ankQuery.close;
     dm.ankQuery.SQL.Text:='SELECT questionnaire.ank_nom, questionnaire.b_data,'+
-'questionnaire.fio, questionnaire.kval, questionnaire.staj,'+
+'questionnaire.fio, questionnaire.obr, questionnaire.staj,'+
 'questionnaire.kval, questionnaire.wish_cond, prof.prof_name'+' '+
   'FROM questionnaire' +' '+
-    'inner join prof on questionnaire.id_prof=prof.id_prof'+
+    'inner join prof on questionnaire.id_prof=prof.id_prof'+ ' '+
     'where questionnaire.fio='+
     QuotedStr(CondankEdit.Text);
     dm.ankQuery.open;
@@ -415,42 +458,57 @@ end;
 
 end;
 
-procedure TFrm_ank.UpdBtnClick(Sender: TObject);
+procedure TFrm_ank.UpdwishBtnClick(Sender: TObject);
 begin
-//           with dm.doQuery do
-//           begin
-//           close;
-//           sql.Clear;
-//           SQL.Text:='Update dogovor set   cont_face='
-//            +QuotedStr(seCfaceEdit.Text)+'where dogovor.id_dog='
-//            +dm.dogQuery.FieldByName('id_dog').AsString;
-//            ExecSQL;
-//            SQL.Text:='select * from  dogovor;';
-//            Open;
-//           close;
-//            Open;
-//
-//           end;
-//               MessageDlg('Изменения внесены',mtInformation,[mbOK],0);
+           with dm.doQuery do
+           begin
+           close;
+           sql.Clear;
+           SQL.Text:='Update questionnaire set  wish_cond='
+            +QuotedStr(updwishinp.Text)+'where questionnaire.ank_nom='
+            +dm.ankQuery.FieldByName('ank_nom').AsString;
+            ExecSQL;
+            SQL.Text:='SELECT questionnaire.ank_nom, questionnaire.b_data,'+
+'questionnaire.fio, questionnaire.obr, questionnaire.staj,'+
+'questionnaire.kval, questionnaire.wish_cond, prof.prof_name'+' '+
+  'FROM questionnaire' +' '+
+    'inner join prof on questionnaire.id_prof=prof.id_prof';
+            Open;
+           close;
+           end;
+               MessageDlg('Изменения внесены',mtInformation,[mbOK],0);
+                dm.ankQuery.Close;
+                dm.ankQuery.Open;
 
 end;
 
-procedure TFrm_ank.Upd_contdataBtnClick(Sender: TObject);
+procedure TFrm_ank.Upd_kvalBtnClick(Sender: TObject);
 begin
-//        with dm.doQuery do
-//        begin
-//        Close;
-//        SQL.Clear;
-//        SQL.Text:='Update dogovor set  c_contdara='
-//         +QuotedStr(set_contdata_inp.Text)+'where dogovor.id_dog='
-//         +dm.dogQuery.FieldByName('id_dog').AsString;
-//          ExecSQL;
-//        SQL.Text:='select * from  dogovor;';
-//        Open;
-//        Close;
-//        Open;
-//        end;
-//        MessageDlg('Изменения внесены',mtInformation,[mbOK],0);
+dm.doQuery.SQL.Text:='SELECT questionnaire.ank_nom, questionnaire.b_data,'+
+'questionnaire.fio, questionnaire.obr, questionnaire.staj,'+
+'questionnaire.kval, questionnaire.wish_cond, prof.prof_name'+' '+
+  'FROM questionnaire' +' '+
+    'inner join prof on questionnaire.id_prof=prof.id_prof';
+        with dm.doQuery do
+        begin
+        Close;
+        SQL.Clear;
+        SQL.Text:='Update questionnaire set  kval='
+         +QuotedStr(set_kval_inp.Text)+'where questionnaire.ank_nom='
+         +dm.ankQuery.FieldByName('ank_nom').AsString;
+          ExecSQL;
+        SQL.Text:='SELECT questionnaire.ank_nom, questionnaire.b_data,'+
+'questionnaire.fio, questionnaire.obr, questionnaire.staj,'+
+'questionnaire.kval, questionnaire.wish_cond, prof.prof_name'+' '+
+  'FROM questionnaire' +' '+
+    'inner join prof on questionnaire.id_prof=prof.id_prof';
+        Open;
+        Close;
+        end;
+        dm.ankQuery.Close;
+        dm.ankQuery.Open;
+
+        MessageDlg('Изменения внесены',mtInformation,[mbOK],0);
 end;
 
 end.

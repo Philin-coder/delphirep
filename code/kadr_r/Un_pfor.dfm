@@ -21,7 +21,7 @@ object Frm_pfor: TFrm_pfor
     Top = 0
     Width = 817
     Height = 616
-    ActivePage = UpdPage
+    ActivePage = SelPage
     Align = alClient
     TabOrder = 0
     object SelPage: TTabSheet
