@@ -16,8 +16,6 @@ type
     dogDS: TDataSource;
     ankQuery: TADOQuery;
     ankDS: TDataSource;
-    VaKQuery: TADOQuery;
-    VakDS: TDataSource;
   private
     { Private declarations }
   public

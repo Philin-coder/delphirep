@@ -76,4 +76,18 @@ object DM: TDM
     Left = 160
     Top = 160
   end
+  object VaKQuery: TADOQuery
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'SELECT*  FROM VAKANSIA;')
+    Left = 216
+    Top = 96
+  end
+  object VakDS: TDataSource
+    DataSet = VaKQuery
+    Left = 224
+    Top = 160
+  end
 end
