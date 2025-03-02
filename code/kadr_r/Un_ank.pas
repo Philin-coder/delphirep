@@ -304,7 +304,7 @@ begin
   SQL.Clear;
   SQL.Text:='INSERT INTO questionnaire (b_data, fio, obr,kval,'+
   'staj, wish_cond, id_prof)VALUES('
-  +QuotedStr( FrmMain.DateToStr_(bdata_inp.Date))+','+
+  +QuotedStr( DateToStr(bdata_inp.Date))+','+
   QuotedStr(fio_inp.Text)+','+QuotedStr(Obr_inp.Text)+','+
   QuotedStr(kval_inp.Text)+','+QuotedStr((staj_inp.Text)) +','+
   QuotedStr(wish_inp.Text)+','+
