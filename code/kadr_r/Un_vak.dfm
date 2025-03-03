@@ -26,10 +26,6 @@ object Frm_vak: TFrm_vak
     TabOrder = 0
     object SelvAkPage: TTabSheet
       Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1042#1072#1082#1072#1085#1089#1080#1080
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object ConditionvakBox: TGroupBox
         Left = 0
         Top = 0
@@ -435,10 +431,6 @@ object Frm_vak: TFrm_vak
     object UpdankPage: TTabSheet
       Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1072#1085#1082#1077#1090#1077' '
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object oldDtaBox: TGroupBox
         Left = 0
         Top = 204
@@ -605,10 +597,6 @@ object Frm_vak: TFrm_vak
     object deanklPage: TTabSheet
       Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1088#1086#1092#1077#1089#1089#1080#1080
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object del_ankdataBox: TGroupBox
         Left = 0
         Top = 0
