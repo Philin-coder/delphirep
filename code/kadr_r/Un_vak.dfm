@@ -217,30 +217,31 @@ object Frm_vak: TFrm_vak
         Left = 0
         Top = 0
         Width = 809
-        Height = 361
+        Height = 369
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
+        ExplicitTop = -6
         DesignSize = (
           809
-          361)
+          369)
         object compvakLbl: TLabel
-          Left = 43
-          Top = 202
+          Left = 56
+          Top = 122
           Width = 66
           Height = 13
           Caption = #1054#1088#1075#1072#1085#1080#1079#1072#1094#1080#1103
         end
         object prfvakLbl: TLabel
-          Left = 43
-          Top = 234
+          Left = 67
+          Top = 170
           Width = 55
           Height = 13
           Caption = #1055#1088#1086#1092#1077#1089#1089#1080#1103
         end
         object vakstlbl: TLabel
-          Left = 67
-          Top = 306
+          Left = 86
+          Top = 283
           Width = 36
           Height = 13
           Caption = #1057#1090#1072#1090#1091#1089
@@ -257,41 +258,17 @@ object Frm_vak: TFrm_vak
           LabelPosition = lpLeft
           TabOrder = 0
         end
-        object kval_inp: TLabeledEdit
-          Left = 128
-          Top = 112
-          Width = 657
-          Height = 21
-          Anchors = [akLeft, akTop, akRight]
-          EditLabel.Width = 75
-          EditLabel.Height = 13
-          EditLabel.Caption = #1050#1074#1072#1083#1080#1092#1080#1082#1072#1094#1080#1103
-          LabelPosition = lpLeft
-          TabOrder = 1
-        end
-        object staj_inp: TLabeledEdit
-          Left = 128
-          Top = 152
-          Width = 657
-          Height = 21
-          Anchors = [akLeft, akTop, akRight]
-          EditLabel.Width = 27
-          EditLabel.Height = 13
-          EditLabel.Caption = #1057#1090#1072#1078
-          LabelPosition = lpLeft
-          TabOrder = 2
-        end
         object compvakDBL: TDBLookupComboBox
           Left = 128
-          Top = 194
+          Top = 122
           Width = 657
           Height = 21
           Align = alCustom
           Anchors = [akLeft, akTop, akRight]
-          KeyField = 'id_prof'
-          ListField = 'prof_name'
-          ListSource = DM.ProfDS
-          TabOrder = 3
+          KeyField = 'id_dog'
+          ListField = 'company'
+          ListSource = DM.dogDS
+          TabOrder = 1
         end
         object position_inp: TLabeledEdit
           Left = 128
@@ -303,23 +280,23 @@ object Frm_vak: TFrm_vak
           EditLabel.Height = 13
           EditLabel.Caption = #1044#1086#1083#1078#1085#1086#1089#1090#1100
           LabelPosition = lpLeft
-          TabOrder = 4
+          TabOrder = 2
         end
         object profvakdbl: TDBLookupComboBox
           Left = 128
-          Top = 226
-          Width = 657
+          Top = 170
+          Width = 665
           Height = 21
           Align = alCustom
           Anchors = [akLeft, akTop, akRight]
           KeyField = 'id_prof'
           ListField = 'prof_name'
           ListSource = DM.ProfDS
-          TabOrder = 5
+          TabOrder = 3
         end
         object quant_inp: TLabeledEdit
-          Left = 128
-          Top = 264
+          Left = 136
+          Top = 224
           Width = 657
           Height = 21
           Anchors = [akLeft, akTop, akRight]
@@ -327,36 +304,39 @@ object Frm_vak: TFrm_vak
           EditLabel.Height = 13
           EditLabel.Caption = #1050#1086#1083#1080#1095#1077#1089#1090#1074#1086
           LabelPosition = lpLeft
-          TabOrder = 6
+          TabOrder = 4
         end
         object vakstBox: TComboBox
-          Left = 128
-          Top = 304
+          Left = 136
+          Top = 286
           Width = 657
           Height = 21
           Align = alCustom
           Anchors = [akLeft, akRight]
           ItemHeight = 13
-          TabOrder = 7
+          TabOrder = 5
           Text = 'vakstBox'
           Items.Strings = (
             #1057#1074#1086#1073#1086#1076#1085#1072
             #1047#1072#1085#1103#1090#1072)
+          ExplicitTop = 280
         end
       end
       object DataOutdvakBox: TGroupBox
         Left = 0
-        Top = 361
+        Top = 369
         Width = 809
-        Height = 184
+        Height = 176
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
+        ExplicitTop = 361
+        ExplicitHeight = 184
         object vakoutGrid: TDBGrid
           Left = 2
           Top = 15
           Width = 805
-          Height = 167
+          Height = 159
           Align = alClient
           DataSource = DM.VakDS
           TabOrder = 0
@@ -409,14 +389,14 @@ object Frm_vak: TFrm_vak
             end>
         end
       end
-      object ankinpBtnBox: TGroupBox
+      object vakinpBtnBox: TGroupBox
         Left = 0
         Top = 545
         Width = 809
         Height = 43
         Align = alBottom
         TabOrder = 2
-        object ins_ank_Btn: TButton
+        object ins_vak_Btn: TButton
           Left = 328
           Top = 15
           Width = 137
@@ -425,6 +405,7 @@ object Frm_vak: TFrm_vak
           Anchors = [akLeft, akTop, akRight]
           Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
           TabOrder = 0
+          OnClick = ins_vak_BtnClick
         end
       end
     end

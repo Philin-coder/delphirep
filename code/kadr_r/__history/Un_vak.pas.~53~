@@ -284,16 +284,17 @@ begin
   QuotedStr(pay_inp.Text)+','+DM.dogQuery.FieldByName('id_dog').AsString+','+
   dm.ProfQuery.FieldByName('id_prof').AsString +','+QuotedStr(quant_inp.Text)+','+
   QuotedStr(IntToStr(0))+')';
+  ShowMessage(dm.VaKQuery.SQL.Text);
   ExecSQL;
   end
   else if   vakstBox.ItemIndex=1 then
   begin
-  SQL.Clear;
   SQL.Text:=' insert into vakansia(position, pay,id_dog,id_prof,'+
   'quantity, vak_st)values('+QuotedStr(position_inp.Text )+','+
   QuotedStr(pay_inp.Text)+','+DM.dogQuery.FieldByName('id_dog').AsString+','+
   dm.ProfQuery.FieldByName('id_prof').AsString +','+QuotedStr(quant_inp.Text)+','+
   QuotedStr(IntToStr(1))+')';
+  ShowMessage(dm.VaKQuery.SQL.Text);
   ExecSQL;
   end;
        

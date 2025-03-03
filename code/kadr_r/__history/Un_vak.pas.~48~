@@ -26,10 +26,10 @@ type
     SelvaklBtn: TButton;
     InsvakPage: TTabSheet;
     InpvakBox: TGroupBox;
-    fio_inp: TLabeledEdit;
+    pay_inp: TLabeledEdit;
     DataOutdvakBox: TGroupBox;
-    ankinpBtnBox: TGroupBox;
-    ins_ank_Btn: TButton;
+    vakinpBtnBox: TGroupBox;
+    ins_vak_Btn: TButton;
     UpdankPage: TTabSheet;
     oldDtaBox: TGroupBox;
     nakfioLbl: TLabel;
@@ -44,21 +44,21 @@ type
     dlankbtnBox: TGroupBox;
     dlankBtn: TButton;
     dldaraBox: TGroupBox;
-    kval_inp: TLabeledEdit;
-    staj_inp: TLabeledEdit;
-    wish_inp: TLabeledEdit;
     UpdwishBtn: TButton;
     UpddatankBox: TGroupBox;
     set_kval_inp: TLabeledEdit;
     Upd_kvalBtn: TButton;
-    bdata_1bl: TLabel;
-    bdata_inp: TDateTimePicker;
-    profankLbl: TLabel;
-    profankDBL: TDBLookupComboBox;
-    Obr_inp: TLabeledEdit;
+    compvakLbl: TLabel;
+    compvakDBL: TDBLookupComboBox;
     vakoutGrid: TDBGrid;
     DBGrid2: TDBGrid;
     DBGrid3: TDBGrid;
+    position_inp: TLabeledEdit;
+    prfvakLbl: TLabel;
+    profvakdbl: TDBLookupComboBox;
+    quant_inp: TLabeledEdit;
+    vakstlbl: TLabel;
+    vakstBox: TComboBox;
     procedure FormActivate(Sender: TObject);
     procedure SelvaklBtnClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -69,6 +69,8 @@ type
     procedure Radio_company_gruppClick(Sender: TObject);
     procedure Check_prof_searchClick(Sender: TObject);
     procedure CondvakdolEditKeyPress(Sender: TObject; var Key: Char);
+    procedure ins_vak_BtnClick(Sender: TObject);
+    procedure vakstBoxSelect(Sender: TObject);
   private
     { Private declarations }
   public
@@ -183,6 +185,9 @@ dm.doQuery.SQL.Text:='select vakansia.position,vakansia.pay,dogovor.company,'+
   'prof.id_prof=vakansia.id_prof where vakansia.quantity >0';
 
 dm.VaKQuery.Open;
+dm.dogQuery.Open;
+dm.ProfQuery.Open;
+dm.doQuery.Open;
 vakPage.ActivePage:=SelvakPage;
 UpdwishBtn.Caption:='Изменить';
 dm.doQuery.Open;
@@ -258,6 +263,53 @@ if (Components[d] is TDateTimePicker) then
 begin
   (Components[d] as TDateTimePicker).Date:=Now;
 end;
+end;
+vakstBox.Text:='Установите сотстояние вакансии';
+end;
+
+procedure TFrm_vak.ins_vak_BtnClick(Sender: TObject);
+begin
+if  (position_inp.Text<>'')and(pay_inp.Text<>'')and (quant_inp.Text<>'') then
+begin
+try
+with dm.vakQuery do
+begin
+  Active:=false;
+  SQL.Clear;
+  SQL.Text:='into vakansia(position, pay,id_dog,id_prof,'+
+  'quantity, vak_st)values('+QuotedStr(position_inp.Text )+','+
+  QuotedStr(pay_inp.Text)+','+DM.dogQuery.FieldByName('id_dog').AsString+','+
+  dm.ProfQuery.FieldByName('id_prof').AsString +','+QuotedStr(quant_inp.Text)+','+
+  QuotedStr(vakstBox.Text)+')';
+  ShowMessage(dm.VaKQuery.SQL.Text);
+
+//  ExecSQL;
+  sql.Text:='SELECT questionarie.ank_nom, questionarie.b_data,'+
+'questionarie.fio, questionarie.obr, questionarie.staj,'+
+'questionarie.kval, questionarie.wish_cond, prof.prof_name'+' '+
+  'FROM questionarie' +' '+
+    'inner join prof on questionarie.id_prof=prof.id_prof';
+  Active:=true;
+  close;
+  open;
+end;
+  MessageDlg('Изменения внесены',mtInformation,[mbOK],0);
+  Beep();
+  position_inp.Clear;
+  pay_inp.Clear;
+  vakstBox.Text:='Введите состояние вакансии';
+except
+begin
+  ShowMessage('wrong situation');
+  Exit;
+end;
+end;
+end
+else
+begin
+  MessageDlg('Заполните все поля',mtError,[mbOK],0);
+  Beep();
+  Exit;
 end;
 end;
 
@@ -372,6 +424,20 @@ begin
     ShowMessage('Wrong situation');
     exit;
 end;
+end;
+end;
+
+procedure TFrm_vak.vakstBoxSelect(Sender: TObject);
+begin
+if vakstBox.ItemIndex=0 then
+begin
+vakstBox.Text:=QuotedStr(IntToStr(0));
+ShowMessage(vakstBox.Text);
+end
+else
+begin
+vakstBox.Text:=QuotedStr(IntToStr(1));
+ShowMessage(vakstBox.Text);
 end;
 end;
 
