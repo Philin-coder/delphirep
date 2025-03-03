@@ -558,7 +558,7 @@ object Frm_vak: TFrm_vak
           Anchors = [akLeft, akTop, akRight]
           Caption = #1040#1085#1082#1077#1090#1072
         end
-        object delankdatadgComboBox: TDBLookupComboBox
+        object delvakdatadgComboBox: TDBLookupComboBox
           Left = 147
           Top = 16
           Width = 654

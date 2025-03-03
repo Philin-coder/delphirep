@@ -35,7 +35,7 @@ type
     delvaklPage: TTabSheet;
     del_vakdataBox: TGroupBox;
     ankLbl: TLabel;
-    delankdatadgComboBox: TDBLookupComboBox;
+    delvakdatadgComboBox: TDBLookupComboBox;
     dlankbtnBox: TGroupBox;
     dlvakBtn: TButton;
     dldaraBox: TGroupBox;
