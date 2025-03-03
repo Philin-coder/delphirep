@@ -80,12 +80,12 @@ object DM: TDM
     Parameters = <>
     SQL.Strings = (
       'select '
-      '  vakansia.id_vakans,'
       '  vakansia.position,'
       '  vakansia.pay, '
       '  dogovor.company,'
       '  prof.prof_name, '
       '  vakansia.quantity, '
+      '  --vakansia.vak_st,'
       '  case '
       
         '  when vakansia.vak_st=0  then '#39#1042#1072#1082#1072#1085#1089#1080#1080' '#1077#1089#1090#1100#39'  else '#39#1042#1072#1082#1072#1085#1089#1080#1081' '#1085 +
@@ -96,8 +96,7 @@ object DM: TDM
       '  dogovor.id_dog=vakansia.id_dog'
       '  inner join prof on '
       '  prof.id_prof=vakansia.id_prof'
-      '  where vakansia.quantity>0 '
-      '')
+      '  where vakansia.quantity>0')
     Left = 216
     Top = 96
   end

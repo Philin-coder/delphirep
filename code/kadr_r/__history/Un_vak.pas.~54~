@@ -70,7 +70,7 @@ type
     procedure Check_prof_searchClick(Sender: TObject);
     procedure CondvakdolEditKeyPress(Sender: TObject; var Key: Char);
     procedure ins_vak_BtnClick(Sender: TObject);
-    procedure vakstBoxSelect(Sender: TObject);
+//    procedure vakstBoxSelect(Sender: TObject);
   private
     { Private declarations }
   public
@@ -271,24 +271,39 @@ procedure TFrm_vak.ins_vak_BtnClick(Sender: TObject);
 begin
 if  (position_inp.Text<>'')and(pay_inp.Text<>'')and (quant_inp.Text<>'') then
 begin
+
 try
 with dm.vakQuery do
 begin
   Active:=false;
   SQL.Clear;
-  SQL.Text:='into vakansia(position, pay,id_dog,id_prof,'+
+  if vakstBox.ItemIndex=0 then 
+  begin
+  SQL.Text:=' insert into vakansia(position, pay,id_dog,id_prof,'+
   'quantity, vak_st)values('+QuotedStr(position_inp.Text )+','+
   QuotedStr(pay_inp.Text)+','+DM.dogQuery.FieldByName('id_dog').AsString+','+
   dm.ProfQuery.FieldByName('id_prof').AsString +','+QuotedStr(quant_inp.Text)+','+
-  QuotedStr(vakstBox.Text)+')';
-  ShowMessage(dm.VaKQuery.SQL.Text);
+  QuotedStr(IntToStr(0))+')';
+  ExecSQL;
+  end
+  else if   vakstBox.ItemIndex=1 then
+  begin
+  SQL.Clear;
+  SQL.Text:=' insert into vakansia(position, pay,id_dog,id_prof,'+
+  'quantity, vak_st)values('+QuotedStr(position_inp.Text )+','+
+  QuotedStr(pay_inp.Text)+','+DM.dogQuery.FieldByName('id_dog').AsString+','+
+  dm.ProfQuery.FieldByName('id_prof').AsString +','+QuotedStr(quant_inp.Text)+','+
+  QuotedStr(IntToStr(1))+')';
+  ExecSQL;
+  end;
+       
 
-//  ExecSQL;
-  sql.Text:='SELECT questionarie.ank_nom, questionarie.b_data,'+
-'questionarie.fio, questionarie.obr, questionarie.staj,'+
-'questionarie.kval, questionarie.wish_cond, prof.prof_name'+' '+
-  'FROM questionarie' +' '+
-    'inner join prof on questionarie.id_prof=prof.id_prof';
+  sql.Text:='select vakansia.position,vakansia.pay,dogovor.company,'+
+  'prof.prof_name,vakansia.quantity,case when'+ ' '+
+  'vakansia.vak_st=0  then'+#39+ 'Вакансии есть'+#39+' '+  'else'+ ' '+
+  #39+'Вакансий нет'+#39+' '+ 'end as vak_free from vakansia inner'+' '+
+  'join dogovor on'+' '+ 'dogovor.id_dog=vakansia.id_dog inner join prof on'+' '+
+  'prof.id_prof=vakansia.id_prof where vakansia.quantity >0';
   Active:=true;
   close;
   open;
@@ -427,10 +442,5 @@ end;
 end;
 end;
 
-procedure TFrm_vak.vakstBoxSelect(Sender: TObject);
-begin
-if vakstBox.ItemIndex=0 then ShowMessage('free')
-else ShowMessage('vakant');
-end;
 
 end.

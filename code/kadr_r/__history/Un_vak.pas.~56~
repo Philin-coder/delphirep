@@ -30,7 +30,7 @@ type
     DataOutdvakBox: TGroupBox;
     vakinpBtnBox: TGroupBox;
     ins_vak_Btn: TButton;
-    UpdankPage: TTabSheet;
+    UpdvakPage: TTabSheet;
     oldDtaBox: TGroupBox;
     nakfioLbl: TLabel;
     DBLookupComboBox_ank: TDBLookupComboBox;
@@ -70,6 +70,7 @@ type
     procedure Check_prof_searchClick(Sender: TObject);
     procedure CondvakdolEditKeyPress(Sender: TObject; var Key: Char);
     procedure ins_vak_BtnClick(Sender: TObject);
+//    procedure vakstBoxSelect(Sender: TObject);
   private
     { Private declarations }
   public
@@ -184,6 +185,9 @@ dm.doQuery.SQL.Text:='select vakansia.position,vakansia.pay,dogovor.company,'+
   'prof.id_prof=vakansia.id_prof where vakansia.quantity >0';
 
 dm.VaKQuery.Open;
+dm.dogQuery.Open;
+dm.ProfQuery.Open;
+dm.doQuery.Open;
 vakPage.ActivePage:=SelvakPage;
 UpdwishBtn.Caption:='Изменить';
 dm.doQuery.Open;
@@ -272,19 +276,31 @@ with dm.vakQuery do
 begin
   Active:=false;
   SQL.Clear;
-  SQL.Text:='into vakansia(position, pay,id_dog,id_prof,'+
+  if vakstBox.ItemIndex=0 then
+  begin
+  SQL.Text:=' insert into vakansia(position, pay,id_dog,id_prof,'+
   'quantity, vak_st)values('+QuotedStr(position_inp.Text )+','+
   QuotedStr(pay_inp.Text)+','+DM.dogQuery.FieldByName('id_dog').AsString+','+
   dm.ProfQuery.FieldByName('id_prof').AsString +','+QuotedStr(quant_inp.Text)+','+
-  QuotedStr(vakstBox.Text)+')';
-  ShowMessage(dm.VaKQuery.SQL.Text);
-
-//  ExecSQL;
-  sql.Text:='SELECT questionarie.ank_nom, questionarie.b_data,'+
-'questionarie.fio, questionarie.obr, questionarie.staj,'+
-'questionarie.kval, questionarie.wish_cond, prof.prof_name'+' '+
-  'FROM questionarie' +' '+
-    'inner join prof on questionarie.id_prof=prof.id_prof';
+  QuotedStr(IntToStr(0))+')';
+  ExecSQL;
+  end
+  else if   vakstBox.ItemIndex=1 then
+  begin
+  SQL.Clear;
+  SQL.Text:=' insert into vakansia(position, pay,id_dog,id_prof,'+
+  'quantity, vak_st)values('+QuotedStr(position_inp.Text )+','+
+  QuotedStr(pay_inp.Text)+','+DM.dogQuery.FieldByName('id_dog').AsString+','+
+  dm.ProfQuery.FieldByName('id_prof').AsString +','+QuotedStr(quant_inp.Text)+','+
+  QuotedStr(IntToStr(1))+')';
+  ExecSQL;
+  end;
+  sql.Text:='select vakansia.position,vakansia.pay,dogovor.company,'+
+  'prof.prof_name,vakansia.quantity,case when'+ ' '+
+  'vakansia.vak_st=0  then'+#39+ 'Вакансии есть'+#39+' '+  'else'+ ' '+
+  #39+'Вакансий нет'+#39+' '+ 'end as vak_free from vakansia inner'+' '+
+  'join dogovor on'+' '+ 'dogovor.id_dog=vakansia.id_dog inner join prof on'+' '+
+  'prof.id_prof=vakansia.id_prof where vakansia.quantity >0';
   Active:=true;
   close;
   open;
@@ -422,5 +438,6 @@ begin
 end;
 end;
 end;
+
 
 end.
