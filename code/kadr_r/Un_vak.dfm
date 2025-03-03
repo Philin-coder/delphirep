@@ -21,7 +21,7 @@ object Frm_vak: TFrm_vak
     Top = 0
     Width = 817
     Height = 616
-    ActivePage = UpdvakPage
+    ActivePage = delvaklPage
     Align = alClient
     TabOrder = 0
     object SelvAkPage: TTabSheet
@@ -536,10 +536,10 @@ object Frm_vak: TFrm_vak
         end
       end
     end
-    object deanklPage: TTabSheet
-      Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1088#1086#1092#1077#1089#1089#1080#1080
+    object delvaklPage: TTabSheet
+      Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1074#1072#1082#1072#1085#1089#1080#1080
       ImageIndex = 3
-      object del_ankdataBox: TGroupBox
+      object del_vakdataBox: TGroupBox
         Left = 0
         Top = 0
         Width = 809
@@ -564,9 +564,9 @@ object Frm_vak: TFrm_vak
           Width = 654
           Height = 21
           Anchors = [akLeft, akTop, akRight]
-          KeyField = 'ank_nom'
-          ListField = 'fio'
-          ListSource = DM.ankDS
+          KeyField = 'id_vakans'
+          ListField = 'position'
+          ListSource = DM.VakDS
           TabOrder = 0
         end
       end
@@ -577,7 +577,7 @@ object Frm_vak: TFrm_vak
         Height = 43
         Align = alBottom
         TabOrder = 1
-        object dlankBtn: TButton
+        object dlvakBtn: TButton
           Left = 328
           Top = 15
           Width = 281
@@ -586,6 +586,7 @@ object Frm_vak: TFrm_vak
           Anchors = [akLeft, akTop, akRight]
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
+          OnClick = dlvakBtnClick
         end
       end
       object dldaraBox: TGroupBox
@@ -596,7 +597,7 @@ object Frm_vak: TFrm_vak
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        object DBGrid3: TDBGrid
+        object DelvakoutGrid: TDBGrid
           Left = 2
           Top = 15
           Width = 805

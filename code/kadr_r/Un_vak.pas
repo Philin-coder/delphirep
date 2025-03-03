@@ -32,12 +32,12 @@ type
     ins_vak_Btn: TButton;
     UpdvakPage: TTabSheet;
     UpddataBox: TGroupBox;
-    deanklPage: TTabSheet;
-    del_ankdataBox: TGroupBox;
+    delvaklPage: TTabSheet;
+    del_vakdataBox: TGroupBox;
     ankLbl: TLabel;
     delankdatadgComboBox: TDBLookupComboBox;
     dlankbtnBox: TGroupBox;
-    dlankBtn: TButton;
+    dlvakBtn: TButton;
     dldaraBox: TGroupBox;
     UpddatankBox: TGroupBox;
     Upd_vak_st_Btn: TButton;
@@ -45,7 +45,7 @@ type
     compvakDBL: TDBLookupComboBox;
     vakoutGrid: TDBGrid;
     vaupdkoutGrid: TDBGrid;
-    DBGrid3: TDBGrid;
+    DelvakoutGrid: TDBGrid;
     position_inp: TLabeledEdit;
     prfvakLbl: TLabel;
     profvakdbl: TDBLookupComboBox;
@@ -68,6 +68,7 @@ type
     procedure CondvakdolEditKeyPress(Sender: TObject; var Key: Char);
     procedure ins_vak_BtnClick(Sender: TObject);
     procedure Upd_vak_st_BtnClick(Sender: TObject);
+    procedure dlvakBtnClick(Sender: TObject);
 //    procedure vakstBoxSelect(Sender: TObject);
   private
     { Private declarations }
@@ -146,6 +147,36 @@ if Check_prof_search.Checked=true then
      end;
 
 
+end;
+
+procedure TFrm_vak.dlvakBtnClick(Sender: TObject);
+begin
+
+        try
+         dm.doQuery.Close;
+         dm.doQuery.SQL.Clear;
+         dm.doQuery.SQL.Text:='delete from vakansia  where vakansia.id_vakans='
+         +dm.VaKQuery.FieldByName('id_vakans').AsString;
+         dm.doQuery.ExecSQL;
+         dm.doQuery.SQL.Text:='select vakansia.position,vakansia.pay,dogovor.company,'+
+  'prof.prof_name,vakansia.quantity,case when'+ ' '+
+  'vakansia.vak_st=0  then'+#39+ 'Вакансии есть'+#39+' '+  'else'+ ' '+
+  #39+'Вакансий нет'+#39+' '+ 'end as vak_free from vakansia inner'+' '+
+  'join dogovor on'+' '+ 'dogovor.id_dog=vakansia.id_dog inner join prof on'+' '+
+  'prof.id_prof=vakansia.id_prof where vakansia.quantity >0';
+         dm.doQuery.Open;
+         dm.doQuery.Close;
+         dm.doQuery.Open;
+         dm.VaKQuery.Close;
+         dm.VaKQuery.Open;
+
+
+     except
+     begin
+         ShowMessage('Wrong situation');
+         exit;
+     end;
+     end;
 end;
 
 procedure TFrm_vak.fnd_company_EditKeyPress(Sender: TObject; var Key: Char);
