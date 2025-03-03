@@ -2,7 +2,7 @@ object FrmMain: TFrmMain
   Left = 0
   Top = 0
   Caption = #1043#1083#1072#1074#1085#1072#1103' '#1092#1086#1088#1084#1072
-  ClientHeight = 359
+  ClientHeight = 399
   ClientWidth = 635
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -21,7 +21,7 @@ object FrmMain: TFrmMain
     Left = 0
     Top = 0
     Width = 635
-    Height = 359
+    Height = 399
     Align = alClient
     ExplicitLeft = 272
     ExplicitTop = 128
@@ -45,6 +45,7 @@ object FrmMain: TFrmMain
     end
     object vak_menu: TMenuItem
       Caption = '&'#1042#1072#1082#1072#1085#1089#1080#1103
+      OnClick = vak_menuClick
     end
   end
 end

@@ -1,0 +1,414 @@
+﻿unit Un_dog;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, DBCtrls, StdCtrls, Grids, DBGrids, ExtCtrls, ComCtrls;
+
+type
+  TFrm_dog = class(TForm)
+    DogPage: TPageControl;
+    SeldogPage: TTabSheet;
+    ConditiondogBox: TGroupBox;
+    seldogPanel: TPanel;
+    Radio_dcomp_name: TRadioButton;
+    Radio_dpay_cond_grupp: TRadioButton;
+    RadiodogselReset: TRadioButton;
+    conddogPanel: TPanel;
+    ConddogEdit: TLabeledEdit;
+    fnddogPanel: TPanel;
+    fnd_cont_face_Edit: TLabeledEdit;
+    Check_adr_search: TCheckBox;
+    DatadogBox: TGroupBox;
+    DatadogGrd: TDBGrid;
+    ButtondogBox: TGroupBox;
+    SedoglBtn: TButton;
+    InsPage: TTabSheet;
+    InpdogBox: TGroupBox;
+    cond_pay_inp: TLabeledEdit;
+    Cont_face_inp: TLabeledEdit;
+    DataOutdogBox: TGroupBox;
+    BtnBox: TGroupBox;
+    ins_Btn: TButton;
+    UpddogPage: TTabSheet;
+    oldDtaBox: TGroupBox;
+    profnameLbl: TLabel;
+    DBLookupComboBox_dog: TDBLookupComboBox;
+    setdataBox: TGroupBox;
+    seCfaceEdit: TLabeledEdit;
+    UpddataBox: TGroupBox;
+    delPage: TTabSheet;
+    del_seldataBox: TGroupBox;
+    profLbl: TLabel;
+    delseldatadgComboBox: TDBLookupComboBox;
+    dlbtnBox: TGroupBox;
+    dlBtn: TButton;
+    dldaraBox: TGroupBox;
+    dogoutGrid: TDBGrid;
+    compamy_inp: TLabeledEdit;
+    c_adrees_inp: TLabeledEdit;
+    c_contdata_inp: TLabeledEdit;
+    dog_term_1bl: TLabel;
+    dog_term_inp: TDateTimePicker;
+    Grid_dog_out: TDBGrid;
+    UpdBtn: TButton;
+    UpddatadogBox: TGroupBox;
+    set_contdata_inp: TLabeledEdit;
+    Upd_contdataBtn: TButton;
+    del_outGrid: TDBGrid;
+    procedure FormCreate(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure SedoglBtnClick(Sender: TObject);
+    procedure Radio_dcomp_nameClick(Sender: TObject);
+    procedure Radio_dpay_cond_gruppClick(Sender: TObject);
+    procedure RadiodogselResetClick(Sender: TObject);
+    procedure Check_adr_searchClick(Sender: TObject);
+    procedure ConddogEditKeyPress(Sender: TObject; var Key: Char);
+    procedure fnd_cont_face_EditKeyPress(Sender: TObject; var Key: Char);
+    procedure ins_BtnClick(Sender: TObject);
+    procedure Upd_contdataBtnClick(Sender: TObject);
+    procedure UpdBtnClick(Sender: TObject);
+    procedure dlBtnClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_dog: TFrm_dog;
+  var d_flag:Integer;
+implementation
+
+uses Un_dm, Unmain, DB;
+
+{$R *.dfm}
+
+procedure TFrm_dog.Check_adr_searchClick(Sender: TObject);
+begin
+if Check_adr_search.Checked then
+begin
+   ConddogEdit.EditLabel.Caption:='Живой поиск (по адресу)';
+end
+else
+begin
+ ConddogEdit.EditLabel.Caption:='Точное совпадение (по названию компании)';
+ try
+  with dm.dogQuery do
+    begin
+    close;
+    SQL.Text:='select * from dogovor where 1=1';
+    open;
+    end;
+except
+begin
+    ShowMessage('Wrong situation');
+end;
+end;
+
+
+end;
+
+end;
+
+procedure TFrm_dog.ConddogEditKeyPress(Sender: TObject; var Key: Char);
+begin
+if Check_adr_search.Checked=true then
+  begin
+  dm.dogQuery.sql.Text:='select * from dogovor where c_adress  like'+
+   QuotedStr(Concat(ConddogEdit.Text,#37));
+   dm.dogQuery.Close;
+   dm.dogQuery.Open;
+    //Check_group_search.Enabled:=false;
+    end
+    else
+          with dm.dogQuery do
+     begin
+     Close;
+     sql.Clear;
+     SQL.Text:='select * from dogovor;';
+     Open;
+     end;
+
+end;
+
+procedure TFrm_dog.dlBtnClick(Sender: TObject);
+begin
+
+
+        dm.doQuery.Close;
+        dm.doQuery.SQL.Clear;
+        dm.doQuery.SQL.Text:='delete from dogovor  where dogovor.id_dog='
+         +dm.dogQuery.FieldByName('id_dog').AsString;
+         dm.doQuery.ExecSQL;
+         dm.doQuery.SQL.Text:='select * from  dogovor';
+         dm.doQuery.Open;
+         dm.doQuery.Close;
+         dm.doQuery.Open;
+         dm.doQuery.Close;
+         dm.doQuery.Open;
+
+end;
+
+procedure TFrm_dog.fnd_cont_face_EditKeyPress(Sender: TObject; var Key: Char);
+begin
+try
+   Check_adr_search.Enabled:=false;
+   dm.dogQuery.SQL.Text:='select * from dogovor  where cont_face like'+
+   QuotedStr(Concat(fnd_cont_face_Edit.Text,#37));
+   dm.dogQuery.close;
+   dm.dogQuery.Open;
+except
+  begin
+  ShowMessage('wrong situation');
+  end;
+  end;
+
+end;
+
+procedure TFrm_dog.FormActivate(Sender: TObject);
+var k:Integer;
+begin
+dm.doQuery.SQL.Text:='select * from dogovor';
+dm.doQuery.Open;
+dm.dogQuery.Open;
+DogPage.ActivePage:=SeldogPage;
+UpdBtn.Caption:='Изменить';
+dm.doQuery.Open;
+dm.ProfQuery.Open;
+with Frm_dog do
+for k := 0 to ComponentCount - 1 do
+begin
+if (Components[k] is TRadioButton) then
+begin
+  (Components[k] as TRadioButton).Checked:=False;
+end;
+end;
+
+end;
+
+
+
+
+procedure TFrm_dog.FormClose(Sender: TObject; var Action: TCloseAction);
+var k,e:Integer;
+begin
+dm.dogQuery.Close;
+dm.dogQuery.Close;
+d_flag:=0;
+Check_adr_search.Enabled:=true;
+Check_adr_search.Checked:=False;
+ConddogEdit.EditLabel.Caption:='Точное совпадение (по названию компании)';
+with Frm_dog do
+for k := 0 to ComponentCount - 1 do
+begin
+if (Components[k] is TRadioButton) then
+begin
+  (Components[k] as TRadioButton).Enabled:=True;
+end;
+end;
+with Frm_dog do
+for e := 0 to ComponentCount - 1 do
+begin
+if (Components[e] is TLabeledEdit) then
+begin
+  (Components[e] as TLabeledEdit).Enabled:=True;
+end;
+end;
+
+end;
+
+procedure TFrm_dog.FormCreate(Sender: TObject);
+begin
+ with Frm_dog do
+begin
+  width:=1024;
+  height:=768;
+  Position:=poScreenCenter;
+end;
+end;
+
+procedure TFrm_dog.ins_BtnClick(Sender: TObject);
+begin
+if  (cond_pay_inp.Text<>'')and(Cont_face_inp.Text<>'')and (compamy_inp.Text<>'')
+and  (c_adrees_inp.Text<>'')and (c_contdata_inp.Text<>'')  then
+begin
+try
+with dm.dogQuery do
+begin
+  Active:=false;
+  SQL.Clear;
+  SQL.Text:='INSERT INTO dogovor (pay_cond, cont_face, company,'+
+  'c_adress, c_contdara, dogterm )VALUES('
+  +QuotedStr(cond_pay_inp.Text)+','+QuotedStr(Cont_face_inp.Text)+','+
+  QuotedStr(compamy_inp.Text)+','+QuotedStr(c_adrees_inp.Text)+','+
+  QuotedStr(c_contdata_inp.Text)+','
+  +QuotedStr(FrmMain.DateToStr_(dog_term_inp.Date))+')';
+  ExecSQL;
+  sql.Text:='select * from dogovor;';
+  Active:=true;
+  close;
+  open;
+end;
+  MessageDlg('Заполните все поля',mtInformation,[mbOK],0);
+  Beep();
+  cond_pay_inp.Clear;
+  Cont_face_inp.Clear;
+  compamy_inp.Clear;
+  c_adrees_inp.Clear;
+  c_contdata_inp.Clear;
+  dog_term_inp.DateTime:=Now;
+except
+begin
+  ShowMessage('wrong situation');
+  Exit;
+end;
+end;
+end
+else
+begin
+  MessageDlg('Изменения внесены',mtError,[mbOK],0);
+  Beep();
+  Exit;
+end;
+end;
+
+procedure TFrm_dog.RadiodogselResetClick(Sender: TObject);
+var i,j:Integer;
+begin
+    if RadiodogselReset.Checked=True then
+begin
+  with Frm_dog do
+    for I := 0 to ComponentCount - 1 do
+     begin
+       if (Components[i] is TLabeledEdit)  then
+        begin
+          (Components[i] as TLabeledEdit).Clear;
+        end;
+     end;
+     with dm.dogQuery do
+     begin
+     Close;
+     sql.Clear;
+     SQL.Text:='select * from dogovor;';
+     Open;
+     end;
+    with Frm_dog do
+    for j := 0 to ComponentCount - 1 do
+    begin
+      if(Components[j] is TRadioButton)  then
+      begin
+        (Components[j] as TRadioButton).Checked:=False;
+      end;
+    end;
+end;
+  Check_adr_search.Enabled:=true;
+  Check_adr_search.Checked:=False;
+  ConddogEdit.EditLabel.Caption:='Точное совпадение (по названию компании)';
+
+
+
+end;
+
+procedure TFrm_dog.Radio_dcomp_nameClick(Sender: TObject);
+begin
+if Radio_dcomp_name.Checked=true then
+  begin
+    try
+     Radio_dpay_cond_grupp.Checked:=false;
+     RadiodogselReset.Checked:=False;
+     with dm.dogQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:='select * from dogovor order by company asc ';
+      Open;
+     end;
+    except
+    begin
+      ShowMessage('wrong situation');
+    end;
+    end;
+  end;
+
+end;
+
+procedure TFrm_dog.Radio_dpay_cond_gruppClick(Sender: TObject);
+begin
+if Radio_dpay_cond_grupp.Checked=true then
+  begin
+    try
+     Radio_dcomp_name.Checked:=false;
+     RadiodogselReset.Checked:=False;
+     with dm.dogQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:='select * from dogovor order by pay_cond asc ';
+      Open;
+     end;
+    except
+    begin
+      ShowMessage('wrong situation');
+    end;
+    end;
+  end;
+end;
+
+procedure TFrm_dog.SedoglBtnClick(Sender: TObject);
+begin
+try
+    dm.dogQuery.close;
+    dm.dogQuery.SQL.Text:='select * from dogovor where dogovor.company='+
+    QuotedStr(ConddogEdit.Text);
+    dm.dogQuery.open;
+except
+begin
+    ShowMessage('Wrong situation');
+    exit;
+end;
+end;
+
+end;
+
+procedure TFrm_dog.UpdBtnClick(Sender: TObject);
+begin
+           with dm.doQuery do
+           begin
+           close;
+           sql.Clear;
+           SQL.Text:='Update dogovor set   cont_face='
+            +QuotedStr(seCfaceEdit.Text)+'where dogovor.id_dog='
+            +dm.dogQuery.FieldByName('id_dog').AsString;
+            ExecSQL;
+            SQL.Text:='select * from  dogovor;';
+            Open;
+           close;
+            Open;
+
+           end;
+               MessageDlg('Изменения внесены',mtInformation,[mbOK],0);
+
+end;
+
+procedure TFrm_dog.Upd_contdataBtnClick(Sender: TObject);
+begin
+        with dm.doQuery do
+        begin
+        Close;
+        SQL.Clear;
+        SQL.Text:='Update dogovor set  c_contdara='
+         +QuotedStr(set_contdata_inp.Text)+'where dogovor.id_dog='
+         +dm.dogQuery.FieldByName('id_dog').AsString;
+          ExecSQL;
+        SQL.Text:='select * from  dogovor;';
+        Open;
+        Close;
+        Open;
+        end;
+        MessageDlg('Изменения внесены',mtInformation,[mbOK],0);
+end;
+
+end.

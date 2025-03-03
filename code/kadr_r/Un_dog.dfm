@@ -21,7 +21,7 @@ object Frm_dog: TFrm_dog
     Top = 0
     Width = 817
     Height = 616
-    ActivePage = InsPage
+    ActivePage = delPage
     Align = alClient
     TabOrder = 0
     object SeldogPage: TTabSheet
@@ -582,7 +582,7 @@ object Frm_dog: TFrm_dog
       end
     end
     object delPage: TTabSheet
-      Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1088#1086#1092#1077#1089#1089#1080#1080
+      Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1076#1086#1075#1086#1074#1086#1088#1077
       ImageIndex = 3
       object del_seldataBox: TGroupBox
         Left = 0

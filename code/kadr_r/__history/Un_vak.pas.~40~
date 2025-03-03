@@ -1,0 +1,378 @@
+﻿unit Un_vak;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, DBCtrls, StdCtrls, Grids, DBGrids, ExtCtrls, ComCtrls,ADODB;
+
+type
+  TFrm_vak = class(TForm)
+    vakPage: TPageControl;
+    SelvAkPage: TTabSheet;
+    ConditionvakBox: TGroupBox;
+    seldogPanel: TPanel;
+    Radio_dl_group: TRadioButton;
+    Radio_company_grupp: TRadioButton;
+    RadiovakselReset: TRadioButton;
+    condvakPanel: TPanel;
+    CondvakdolEdit: TLabeledEdit;
+    fndvakPanel: TPanel;
+    fnd_company_Edit: TLabeledEdit;
+    Check_prof_search: TCheckBox;
+    DatavakBox: TGroupBox;
+    DatavakGrd: TDBGrid;
+    ButtonvakBox: TGroupBox;
+    SelvaklBtn: TButton;
+    InsankPage: TTabSheet;
+    InpankBox: TGroupBox;
+    fio_inp: TLabeledEdit;
+    DataOutdogBox: TGroupBox;
+    ankinpBtnBox: TGroupBox;
+    ins_ank_Btn: TButton;
+    UpdankPage: TTabSheet;
+    oldDtaBox: TGroupBox;
+    nakfioLbl: TLabel;
+    DBLookupComboBox_ank: TDBLookupComboBox;
+    setdataBox: TGroupBox;
+    updwishinp: TLabeledEdit;
+    UpddataBox: TGroupBox;
+    deanklPage: TTabSheet;
+    del_ankdataBox: TGroupBox;
+    ankLbl: TLabel;
+    delankdatadgComboBox: TDBLookupComboBox;
+    dlankbtnBox: TGroupBox;
+    dlankBtn: TButton;
+    dldaraBox: TGroupBox;
+    kval_inp: TLabeledEdit;
+    staj_inp: TLabeledEdit;
+    wish_inp: TLabeledEdit;
+    UpdwishBtn: TButton;
+    UpddatankBox: TGroupBox;
+    set_kval_inp: TLabeledEdit;
+    Upd_kvalBtn: TButton;
+    bdata_1bl: TLabel;
+    bdata_inp: TDateTimePicker;
+    profankLbl: TLabel;
+    profankDBL: TDBLookupComboBox;
+    Obr_inp: TLabeledEdit;
+    DBGrid1: TDBGrid;
+    DBGrid2: TDBGrid;
+    DBGrid3: TDBGrid;
+    procedure FormActivate(Sender: TObject);
+    procedure SelvaklBtnClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure fnd_company_EditKeyPress(Sender: TObject; var Key: Char);
+    procedure RadiovakselResetClick(Sender: TObject);
+    procedure Radio_dl_groupClick(Sender: TObject);
+    procedure Radio_company_gruppClick(Sender: TObject);
+    procedure Check_prof_searchClick(Sender: TObject);
+    procedure CondvakdolEditKeyPress(Sender: TObject; var Key: Char);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_vak: TFrm_vak;
+  var d_flag:Integer;
+implementation
+
+uses Un_dm, Unmain, DB;
+
+{$R *.dfm}
+
+procedure TFrm_vak.Check_prof_searchClick(Sender: TObject);
+begin
+if Check_prof_search.Checked then
+begin
+   CondvakdolEdit.EditLabel.Caption:='Живой поиск по профессии';
+end
+else
+begin
+ CondvakdolEdit.EditLabel.Caption:='Точное совпадение (по  должности)';
+ try
+  with dm.vakQuery do
+    begin
+    close;
+    SQL.Text:='select vakansia.position,vakansia.pay,dogovor.company,'+
+  'prof.prof_name,vakansia.quantity,case when'+ ' '+
+  'vakansia.vak_st=0  then'+#39+ 'Вакансии есть'+#39+' '+  'else'+ ' '+
+  #39+'Вакансий нет'+#39+' '+ 'end as vak_free from vakansia inner'+' '+
+  'join dogovor on'+' '+ 'dogovor.id_dog=vakansia.id_dog inner join prof on'+' '+
+  'prof.id_prof=vakansia.id_prof where vakansia.quantity >0';
+
+    Close;
+    open;
+    end;
+except
+begin
+    ShowMessage('Wrong situation');
+end;
+end;
+end;
+
+end;
+
+procedure TFrm_vak.CondvakdolEditKeyPress(Sender: TObject; var Key: Char);
+begin
+if Check_prof_search.Checked=true then
+  begin
+  dm.VaKQuery.sql.Text:='select vakansia.position,vakansia.pay,dogovor.company,'+
+  'prof.prof_name,vakansia.quantity,case when'+ ' '+
+  'vakansia.vak_st=0  then'+#39+ 'Вакансии есть'+#39+' '+  'else'+ ' '+
+  #39+'Вакансий нет'+#39+' '+ 'end as vak_free from vakansia inner'+' '+
+  'join dogovor on'+' '+ 'dogovor.id_dog=vakansia.id_dog inner join prof on'+' '+
+  'prof.id_prof=vakansia.id_prof where vakansia.quantity >0'+
+  'and vakansia.position like'+
+   QuotedStr(Concat(CondvakdolEdit.Text,#37));
+   dm.vakQuery.Close;
+   dm.vakQuery.Open;
+    end
+    else
+          with dm.vakQuery do
+     begin
+     Close;
+     sql.Clear;
+     SQL.Text:='select vakansia.position,vakansia.pay,dogovor.company,'+
+  'prof.prof_name,vakansia.quantity,case when'+ ' '+
+  'vakansia.vak_st=0  then'+#39+ 'Вакансии есть'+#39+' '+  'else'+ ' '+
+  #39+'Вакансий нет'+#39+' '+ 'end as vak_free from vakansia inner'+' '+
+  'join dogovor on'+' '+ 'dogovor.id_dog=vakansia.id_dog inner join prof on'+' '+
+  'prof.id_prof=vakansia.id_prof where vakansia.quantity >0';
+     Open;
+     end;
+
+
+end;
+
+procedure TFrm_vak.fnd_company_EditKeyPress(Sender: TObject; var Key: Char);
+begin
+try
+   Check_prof_search.Enabled:=false;
+   dm.vakQuery.SQL.Text:='select vakansia.position,vakansia.pay,dogovor.company,'+
+  'prof.prof_name,vakansia.quantity,case when'+ ' '+
+  'vakansia.vak_st=0  then'+#39+ 'Вакансии есть'+#39+' '+  'else'+ ' '+
+  #39+'Вакансий нет'+#39+' '+ 'end as vak_free from vakansia inner'+' '+
+  'join dogovor on'+' '+ 'dogovor.id_dog=vakansia.id_dog inner join prof on'+' '+
+  'prof.id_prof=vakansia.id_prof where vakansia.quantity >0'+
+  'and dogovor.company like'+
+   QuotedStr(Concat(fnd_company_Edit.Text,#37));
+   dm.vakQuery.close;
+   dm.vakQuery.Open;
+except
+  begin
+  ShowMessage('wrong situation');
+  end;
+  end;
+
+end;
+
+procedure TFrm_vak.FormActivate(Sender: TObject);
+var k,d:Integer;
+begin
+dm.doQuery.Close;
+dm.doQuery.SQL.Clear;
+dm.doQuery.SQL.Text:='select vakansia.position,vakansia.pay,dogovor.company,'+
+  'prof.prof_name,vakansia.quantity,case when'+ ' '+
+  'vakansia.vak_st=0  then'+#39+ 'Вакансии есть'+#39+' '+  'else'+ ' '+
+  #39+'Вакансий нет'+#39+' '+ 'end as vak_free from vakansia inner'+' '+
+  'join dogovor on'+' '+ 'dogovor.id_dog=vakansia.id_dog inner join prof on'+' '+
+  'prof.id_prof=vakansia.id_prof where vakansia.quantity >0';
+
+dm.VaKQuery.Open;
+vakPage.ActivePage:=SelvakPage;
+UpdwishBtn.Caption:='Изменить';
+dm.doQuery.Open;
+dm.VaKQuery.Open;
+with Frm_vak do
+for k := 0 to ComponentCount - 1 do
+begin
+if (Components[k] is TRadioButton) then
+begin
+  (Components[k] as TRadioButton).Checked:=False;
+end;
+end;
+
+with Frm_vak do
+for d := 0 to ComponentCount - 1 do
+begin
+if (Components[d] is TDateTimePicker) then
+begin
+  (Components[d] as TDateTimePicker).Date:=Now;
+end;
+end;
+end;
+
+procedure TFrm_vak.FormClose(Sender: TObject; var Action: TCloseAction);
+var k,e,q:Integer;
+begin
+with DM do
+begin
+for q := 0 to ComponentCount - 1 do
+begin
+if (Components[q] is TADOQuery) then
+begin
+  (Components[q] as TADOQuery).Close;
+end;
+end;
+d_flag:=0;
+Check_prof_search.Enabled:=true;
+Check_prof_search.Checked:=False;
+CondvakdolEdit.EditLabel.Caption:='Точное совпадение (по должности)';
+with Frm_vak do
+for k := 0 to ComponentCount - 1 do
+begin
+if (Components[k] is TRadioButton) then
+begin
+  (Components[k] as TRadioButton).Enabled:=True;
+end;
+end;
+with Frm_vak do
+for e := 0 to ComponentCount - 1 do
+begin
+if (Components[e] is TLabeledEdit) then
+begin
+  (Components[e] as TLabeledEdit).Enabled:=True;
+end;
+end;
+end;
+
+end;
+
+procedure TFrm_vak.FormCreate(Sender: TObject);
+var d:Integer;
+begin
+with Frm_vak do
+begin
+  width:=1024;
+  height:=768;
+  Position:=poScreenCenter;
+end;
+ with Frm_vak do
+for d := 0 to ComponentCount - 1 do
+begin
+if (Components[d] is TDateTimePicker) then
+begin
+  (Components[d] as TDateTimePicker).Date:=Now;
+end;
+end;
+end;
+
+procedure TFrm_vak.RadiovakselResetClick(Sender: TObject);
+var i,j:Integer;
+begin
+ if RadiovakselReset.Checked=True then
+begin
+  with Frm_vak do
+    for I := 0 to ComponentCount - 1 do
+     begin
+       if (Components[i] is TLabeledEdit)  then
+        begin
+          (Components[i] as TLabeledEdit).Clear;
+        end;
+     end;
+     with dm.vakQuery do
+     begin
+     Close;
+     sql.Clear;
+     SQL.Text:='select vakansia.position,vakansia.pay,dogovor.company,'+
+  'prof.prof_name,vakansia.quantity,case when'+ ' '+
+  'vakansia.vak_st=0  then'+#39+ 'Вакансии есть'+#39+' '+  'else'+ ' '+
+  #39+'Вакансий нет'+#39+' '+ 'end as vak_free from vakansia inner'+' '+
+  'join dogovor on'+' '+ 'dogovor.id_dog=vakansia.id_dog inner join prof on'+' '+
+  'prof.id_prof=vakansia.id_prof where vakansia.quantity >0';
+     Open;
+     end;
+    with Frm_vak do
+    for j := 0 to ComponentCount - 1 do
+    begin
+      if(Components[j] is TRadioButton)  then
+      begin
+        (Components[j] as TRadioButton).Checked:=False;
+      end;
+    end;
+end;
+  Check_prof_search.Enabled:=true;
+  Check_prof_search.Checked:=False;
+  CondvakdolEdit.EditLabel.Caption:='Точное совпадение (по должности)';
+
+end;
+
+procedure TFrm_vak.Radio_company_gruppClick(Sender: TObject);
+begin
+if Radio_company_grupp.Checked=true then
+  begin
+    try
+     Radio_dl_group.Checked:=false;
+     RadiovakselReset.Checked:=False;
+     with dm.vakQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:='select vakansia.position,vakansia.pay,dogovor.company,'+
+  'prof.prof_name,vakansia.quantity,case when'+ ' '+
+  'vakansia.vak_st=0  then'+#39+ 'Вакансии есть'+#39+' '+  'else'+ ' '+
+  #39+'Вакансий нет'+#39+' '+ 'end as vak_free from vakansia inner'+' '+
+  'join dogovor on'+' '+ 'dogovor.id_dog=vakansia.id_dog inner join prof on'+' '+
+  'prof.id_prof=vakansia.id_prof where vakansia.quantity >0 order by dogovor.company asc';
+      Open;
+     end;
+    except
+    begin
+      ShowMessage('wrong situation');
+    end;
+    end;
+  end;
+end;
+
+procedure TFrm_vak.Radio_dl_groupClick(Sender: TObject);
+begin
+if Radio_dl_group.Checked=true then
+  begin
+    try
+     Radio_company_grupp.Checked:=false;
+     RadiovakselReset.Checked:=False;
+     with dm.vakQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:='select vakansia.position,vakansia.pay,dogovor.company,'+
+  'prof.prof_name,vakansia.quantity,case when'+ ' '+
+  'vakansia.vak_st=0  then'+#39+ 'Вакансии есть'+#39+' '+  'else'+ ' '+
+  #39+'Вакансий нет'+#39+' '+ 'end as vak_free from vakansia inner'+' '+
+  'join dogovor on'+' '+ 'dogovor.id_dog=vakansia.id_dog inner join prof on'+' '+
+  'prof.id_prof=vakansia.id_prof where vakansia.quantity >0 order by position asc';
+      Open;
+     end;
+    except
+    begin
+      ShowMessage('wrong situation');
+    end;
+    end;
+  end;
+end;
+
+procedure TFrm_vak.SelvaklBtnClick(Sender: TObject);
+begin
+try
+    dm.vakQuery.close;
+    dm.vakQuery.SQL.Text:='select vakansia.position,vakansia.pay,dogovor.company,'+
+  'prof.prof_name,vakansia.quantity,case when'+ ' '+
+  'vakansia.vak_st=0  then'+#39+ 'Вакансии есть'+#39+' '+  'else'+ ' '+
+  #39+'Вакансий нет'+#39+' '+ 'end as vak_free from vakansia inner'+' '+
+  'join dogovor on'+' '+ 'dogovor.id_dog=vakansia.id_dog inner join prof on'+' '+
+  'prof.id_prof=vakansia.id_prof where vakansia.quantity >0 and vakansia.position='+
+    QuotedStr(CondvakdolEdit.Text);
+    dm.vakQuery.open;
+except
+begin
+    ShowMessage('Wrong situation');
+    exit;
+end;
+end;
+end;
+
+end.

@@ -101,11 +101,11 @@ begin
   with dm.ankQuery do
     begin
     close;
-    SQL.Text:='SELECT questionnaire.ank_nom, questionnaire.b_data,'+
-    'questionnaire.fio, questionnaire.obr, questionnaire.kval, questionnaire.staj,'+
-    'questionnaire.wish_cond, prof.prof_name'+ ' '+
-    'FROM questionnaire'+' '+
-    'inner join prof on questionnaire.id_prof= prof.id_prof';
+    SQL.Text:='SELECT questionarie.ank_nom, questionarie.b_data,'+
+    'questionarie.fio, questionarie.obr, questionarie.kval, questionarie.staj,'+
+    'questionarie.wish_cond, prof.prof_name'+ ' '+
+    'FROM questionarie'+' '+
+    'inner join prof on questionarie.id_prof= prof.id_prof';
     open;
     end;
 except
@@ -123,11 +123,11 @@ procedure TFrm_ank.CondankEditKeyPress(Sender: TObject; var Key: Char);
 begin
 if Check_wish_search.Checked=true then
   begin
-  dm.ankQuery.sql.Text:='SELECT questionnaire.ank_nom, questionnaire.b_data,'+
-'questionnaire.fio,questionnaire.obr, questionnaire.kval, questionnaire.staj,'+
-'questionnaire.wish_cond, prof.prof_name'+' '+
-  'FROM questionnaire' +' '+
-    'inner join prof on questionnaire.id_prof=prof.id_prof'+ ' '+
+  dm.ankQuery.sql.Text:='SELECT questionarie.ank_nom, questionarie.b_data,'+
+'questionarie.fio,questionarie.obr, questionarie.kval, questionarie.staj,'+
+'questionarie.wish_cond, prof.prof_name'+' '+
+  'FROM questionarie' +' '+
+    'inner join prof on questionarie.id_prof=prof.id_prof'+ ' '+
   'where wish_cond  like'+
    QuotedStr(Concat(CondankEdit.Text,#37));
    dm.ankQuery.Close;
@@ -138,11 +138,11 @@ if Check_wish_search.Checked=true then
      begin
      Close;
      sql.Clear;
-     SQL.Text:='SELECT questionnaire.ank_nom, questionnaire.b_data,'+
-'questionnaire.fio,questionnaire.obr, questionnaire.kval, questionnaire.staj,'+
-'questionnaire.kval, questionnaire.wish_cond, prof.prof_name'+' '+
-  'FROM questionnaire' +' '+
-    'inner join prof on questionnaire.id_prof=prof.id_prof';
+     SQL.Text:='SELECT questionarie.ank_nom, questionarie.b_data,'+
+'questionarie.fio,questionarie.obr, questionarie.kval, questionarie.staj,'+
+'questionarie.kval, questionarie.wish_cond, prof.prof_name'+' '+
+  'FROM questionarie' +' '+
+    'inner join prof on questionarie.id_prof=prof.id_prof';
      Open;
      end;
 
@@ -154,14 +154,14 @@ begin
 
         dm.doQuery.Close;
         dm.doQuery.SQL.Clear;
-        dm.doQuery.SQL.Text:='delete from questionnaire  where questionnaire.ank_nom='
+        dm.doQuery.SQL.Text:='delete from questionarie  where questionarie.ank_nom='
          +dm.ankQuery.FieldByName('ank_nom').AsString;
          dm.doQuery.ExecSQL;
-         dm.doQuery.SQL.Text:='SELECT questionnaire.ank_nom, questionnaire.b_data,'+
-'questionnaire.fio,questionnaire.obr, questionnaire.kval, questionnaire.staj,'+
-'questionnaire.kval, questionnaire.wish_cond, prof.prof_name'+' '+
-  'FROM questionnaire' +' '+
-    'inner join prof on questionnaire.id_prof=prof.id_prof';
+         dm.doQuery.SQL.Text:='SELECT questionarie.ank_nom, questionarie.b_data,'+
+'questionarie.fio,questionarie.obr, questionarie.kval, questionarie.staj,'+
+'questionarie.kval, questionarie.wish_cond, prof.prof_name'+' '+
+  'FROM questionarie' +' '+
+    'inner join prof on questionarie.id_prof=prof.id_prof';
          dm.doQuery.Open;
          dm.doQuery.Close;
          dm.doQuery.Open;
@@ -174,11 +174,11 @@ procedure TFrm_ank.fnd_kval_EditKeyPress(Sender: TObject; var Key: Char);
 begin
 try
    Check_wish_search.Enabled:=false;
-   dm.ankQuery.SQL.Text:='SELECT questionnaire.ank_nom, questionnaire.b_data,'+
-'questionnaire.fio,questionnaire.obr, questionnaire.kval, questionnaire.staj,'+
-'questionnaire.kval, questionnaire.wish_cond, prof.prof_name'+' '+
-  'FROM questionnaire' +' '+
-  ' inner join prof on questionnaire.id_prof=prof.id_prof where kval like'+
+   dm.ankQuery.SQL.Text:='SELECT questionarie.ank_nom, questionarie.b_data,'+
+'questionarie.fio,questionarie.obr, questionarie.kval, questionarie.staj,'+
+'questionarie.kval, questionarie.wish_cond, prof.prof_name'+' '+
+  'FROM questionarie' +' '+
+  ' inner join prof on questionarie.id_prof=prof.id_prof where kval like'+
    QuotedStr(Concat(fnd_kval_Edit.Text,#37));
    dm.ankQuery.close;
    dm.ankQuery.Open;
@@ -194,11 +194,11 @@ procedure TFrm_ank.FormActivate(Sender: TObject);
 var k,q,d:Integer;
 begin
 dm.doQuery.Close;
-dm.doQuery.SQL.Text:='SELECT questionnaire.ank_nom, questionnaire.b_data,'+
-'questionnaire.fio,questionnaire.obr, questionnaire.kval, questionnaire.staj,'+
-'questionnaire.kval, questionnaire.wish_cond, prof.prof_name'+' '+
-  'FROM questionnaire' +' '+
-    'inner join prof on questionnaire.id_prof=prof.id_prof';
+dm.doQuery.SQL.Text:='SELECT questionarie.ank_nom, questionarie.b_data,'+
+'questionarie.fio,questionarie.obr, questionarie.kval, questionarie.staj,'+
+'questionarie.kval, questionarie.wish_cond, prof.prof_name'+' '+
+  'FROM questionarie' +' '+
+    'inner join prof on questionarie.id_prof=prof.id_prof';
 with DM do
 begin
 for q := 0 to ComponentCount - 1 do
@@ -302,19 +302,19 @@ with dm.ankQuery do
 begin
   Active:=false;
   SQL.Clear;
-  SQL.Text:='INSERT INTO questionnaire (b_data, fio, obr,kval,'+
+  SQL.Text:='INSERT INTO questionarie (b_data, fio, obr,kval,'+
   'staj, wish_cond, id_prof)VALUES('
-  +QuotedStr( FrmMain.DateToStr_(bdata_inp.Date))+','+
+  +QuotedStr( DateToStr(bdata_inp.Date))+','+
   QuotedStr(fio_inp.Text)+','+QuotedStr(Obr_inp.Text)+','+
   QuotedStr(kval_inp.Text)+','+QuotedStr((staj_inp.Text)) +','+
   QuotedStr(wish_inp.Text)+','+
   dm.ProfQuery.FieldByName('id_prof').AsString+')';
   ExecSQL;
-  sql.Text:='SELECT questionnaire.ank_nom, questionnaire.b_data,'+
-'questionnaire.fio, questionnaire.obr, questionnaire.staj,'+
-'questionnaire.kval, questionnaire.wish_cond, prof.prof_name'+' '+
-  'FROM questionnaire' +' '+
-    'inner join prof on questionnaire.id_prof=prof.id_prof';
+  sql.Text:='SELECT questionarie.ank_nom, questionarie.b_data,'+
+'questionarie.fio, questionarie.obr, questionarie.staj,'+
+'questionarie.kval, questionarie.wish_cond, prof.prof_name'+' '+
+  'FROM questionarie' +' '+
+    'inner join prof on questionarie.id_prof=prof.id_prof';
   Active:=true;
   close;
   open;
@@ -359,11 +359,11 @@ begin
      begin
      Close;
      sql.Clear;
-     SQL.Text:='SELECT questionnaire.ank_nom, questionnaire.b_data,'+
-'questionnaire.fio, questionnaire.obr, questionnaire.staj,'+
-'questionnaire.kval, questionnaire.wish_cond, prof.prof_name'+' '+
-  'FROM questionnaire' +' '+
-    'inner join prof on questionnaire.id_prof=prof.id_prof';
+     SQL.Text:='SELECT questionarie.ank_nom, questionarie.b_data,'+
+'questionarie.fio, questionarie.obr, questionarie.staj,'+
+'questionarie.kval, questionarie.wish_cond, prof.prof_name'+' '+
+  'FROM questionarie' +' '+
+    'inner join prof on questionarie.id_prof=prof.id_prof';
      Open;
      end;
     with Frm_ank do
@@ -394,11 +394,11 @@ if Radio_staj_name.Checked=true then
      begin
       close;
       sql.Clear;
-      sql.Text:='SELECT questionnaire.ank_nom, questionnaire.b_data,'+
-'questionnaire.fio, questionnaire.obr, questionnaire.staj,'+
-'questionnaire.kval, questionnaire.wish_cond, prof.prof_name'+' '+
-  'FROM questionnaire' +' '+
-    'inner join prof on questionnaire.id_prof=prof.id_prof order by staj asc';
+      sql.Text:='SELECT questionarie.ank_nom, questionarie.b_data,'+
+'questionarie.fio, questionarie.obr, questionarie.staj,'+
+'questionarie.kval, questionarie.wish_cond, prof.prof_name'+' '+
+  'FROM questionarie' +' '+
+    'inner join prof on questionarie.id_prof=prof.id_prof order by staj asc';
 
       Open;
      end;
@@ -422,11 +422,11 @@ if Radio_kval_grupp.Checked=true then
      begin
       close;
       sql.Clear;
-      sql.Text:='SELECT questionnaire.ank_nom, questionnaire.b_data,'+
-'questionnaire.fio, questionnaire.obr, questionnaire.staj,'+
-'questionnaire.kval, questionnaire.wish_cond, prof.prof_name'+' '+
-  'FROM questionnaire' +' '+
-    'inner join prof on questionnaire.id_prof=prof.id_prof order by kval asc';
+      sql.Text:='SELECT questionarie.ank_nom, questionarie.b_data,'+
+'questionarie.fio, questionarie.obr, questionarie.staj,'+
+'questionarie.kval, questionarie.wish_cond, prof.prof_name'+' '+
+  'FROM questionarie' +' '+
+    'inner join prof on questionarie.id_prof=prof.id_prof order by kval asc';
       Open;
      end;
     except
@@ -441,12 +441,12 @@ procedure TFrm_ank.SeanklBtnClick(Sender: TObject);
 begin
 try
     dm.ankQuery.close;
-    dm.ankQuery.SQL.Text:='SELECT questionnaire.ank_nom, questionnaire.b_data,'+
-'questionnaire.fio, questionnaire.obr, questionnaire.staj,'+
-'questionnaire.kval, questionnaire.wish_cond, prof.prof_name'+' '+
-  'FROM questionnaire' +' '+
-    'inner join prof on questionnaire.id_prof=prof.id_prof'+ ' '+
-    'where questionnaire.fio='+
+    dm.ankQuery.SQL.Text:='SELECT questionarie.ank_nom, questionarie.b_data,'+
+'questionarie.fio, questionarie.obr, questionarie.staj,'+
+'questionarie.kval, questionarie.wish_cond, prof.prof_name'+' '+
+  'FROM questionarie' +' '+
+    'inner join prof on questionarie.id_prof=prof.id_prof'+ ' '+
+    'where questionarie.fio='+
     QuotedStr(CondankEdit.Text);
     dm.ankQuery.open;
 except
@@ -464,15 +464,15 @@ begin
            begin
            close;
            sql.Clear;
-           SQL.Text:='Update questionnaire set  wish_cond='
-            +QuotedStr(updwishinp.Text)+'where questionnaire.ank_nom='
+           SQL.Text:='Update questionarie set  wish_cond='
+            +QuotedStr(updwishinp.Text)+'where questionarie.ank_nom='
             +dm.ankQuery.FieldByName('ank_nom').AsString;
             ExecSQL;
-            SQL.Text:='SELECT questionnaire.ank_nom, questionnaire.b_data,'+
-'questionnaire.fio, questionnaire.obr, questionnaire.staj,'+
-'questionnaire.kval, questionnaire.wish_cond, prof.prof_name'+' '+
-  'FROM questionnaire' +' '+
-    'inner join prof on questionnaire.id_prof=prof.id_prof';
+            SQL.Text:='SELECT questionarie.ank_nom, questionarie.b_data,'+
+'questionarie.fio, questionarie.obr, questionarie.staj,'+
+'questionarie.kval, questionarie.wish_cond, prof.prof_name'+' '+
+  'FROM questionarie' +' '+
+    'inner join prof on questionarie.id_prof=prof.id_prof';
             Open;
            close;
            end;
@@ -484,24 +484,24 @@ end;
 
 procedure TFrm_ank.Upd_kvalBtnClick(Sender: TObject);
 begin
-dm.doQuery.SQL.Text:='SELECT questionnaire.ank_nom, questionnaire.b_data,'+
-'questionnaire.fio, questionnaire.obr, questionnaire.staj,'+
-'questionnaire.kval, questionnaire.wish_cond, prof.prof_name'+' '+
-  'FROM questionnaire' +' '+
-    'inner join prof on questionnaire.id_prof=prof.id_prof';
+dm.doQuery.SQL.Text:='SELECT questionarie.ank_nom, questionarie.b_data,'+
+'questionarie.fio, questionarie.obr, questionarie.staj,'+
+'questionarie.kval, questionarie.wish_cond, prof.prof_name'+' '+
+  'FROM questionarie' +' '+
+    'inner join prof on questionarie.id_prof=prof.id_prof';
         with dm.doQuery do
         begin
         Close;
         SQL.Clear;
-        SQL.Text:='Update questionnaire set  kval='
-         +QuotedStr(set_kval_inp.Text)+'where questionnaire.ank_nom='
+        SQL.Text:='Update questionarie set  kval='
+         +QuotedStr(set_kval_inp.Text)+'where questionarie.ank_nom='
          +dm.ankQuery.FieldByName('ank_nom').AsString;
           ExecSQL;
-        SQL.Text:='SELECT questionnaire.ank_nom, questionnaire.b_data,'+
-'questionnaire.fio, questionnaire.obr, questionnaire.staj,'+
-'questionnaire.kval, questionnaire.wish_cond, prof.prof_name'+' '+
-  'FROM questionnaire' +' '+
-    'inner join prof on questionnaire.id_prof=prof.id_prof';
+        SQL.Text:='SELECT questionarie.ank_nom, questionarie.b_data,'+
+'questionarie.fio, questionarie.obr, questionarie.staj,'+
+'questionarie.kval, questionarie.wish_cond, prof.prof_name'+' '+
+  'FROM questionarie' +' '+
+    'inner join prof on questionarie.id_prof=prof.id_prof';
         Open;
         Close;
         end;

@@ -1,0 +1,51 @@
+object FrmMain: TFrmMain
+  Left = 0
+  Top = 0
+  Caption = #1043#1083#1072#1074#1085#1072#1103' '#1092#1086#1088#1084#1072
+  ClientHeight = 379
+  ClientWidth = 635
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  Menu = ItemMenu
+  OldCreateOrder = False
+  OnActivate = FormActivate
+  OnClose = FormClose
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object MainImage: TImage
+    Left = 0
+    Top = 0
+    Width = 635
+    Height = 379
+    Align = alClient
+    ExplicitLeft = 272
+    ExplicitTop = 128
+    ExplicitWidth = 105
+    ExplicitHeight = 105
+  end
+  object ItemMenu: TMainMenu
+    Left = 312
+    Top = 152
+    object prof_menu: TMenuItem
+      Caption = '&'#1055#1088#1086#1092#1077#1089#1089#1080#1103
+      OnClick = prof_menuClick
+    end
+    object dog_menu: TMenuItem
+      Caption = '&'#1044#1086#1075#1086#1074#1086#1088
+      OnClick = dog_menuClick
+    end
+    object ank_menu: TMenuItem
+      Caption = '&'#1040#1085#1082#1077#1090#1072
+      OnClick = ank_menuClick
+    end
+    object vak_menu: TMenuItem
+      Caption = '&'#1042#1072#1082#1072#1085#1089#1080#1103
+      OnClick = vak_menuClick
+    end
+  end
+end

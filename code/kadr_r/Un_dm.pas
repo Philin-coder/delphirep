@@ -29,7 +29,7 @@ var
 
 implementation
 
-uses Unmain, Un_pfor, Un_dog, Un_ank;
+uses Unmain, Un_pfor, Un_dog, Un_ank, Un_vak;
 
 {$R *.dfm}
 
