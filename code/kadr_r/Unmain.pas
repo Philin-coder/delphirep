@@ -14,6 +14,7 @@ type
     dog_menu: TMenuItem;
     ank_menu: TMenuItem;
     vak_menu: TMenuItem;
+    res_menu: TMenuItem;
     procedure FormActivate(Sender: TObject);
     function DateToStr_(Dat : TDate): String;
     function   CommaPoint (X: String) : String;

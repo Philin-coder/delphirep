@@ -112,26 +112,30 @@ object DM: TDM
     Parameters = <>
     SQL.Strings = (
       'select '
-      '  questionarie.fio,'
-      '  vakanlist.datein,'
-      '  case'
+      '  vakansia.id_vakans,'
+      '  vakansia.position,'
+      '  vakansia.pay, '
+      '  dogovor.company,'
+      '  prof.prof_name, '
+      '  vakansia.quantity, '
+      '  case '
       
-        '  when vakanlist.res=1 then '#39#1055#1088#1080#1085#1103#1090#39' else '#39' '#1053#1077' '#1087#1088#1080#1085#1103#1090#39' end as va' +
-        'k_res,'
-      '  vakanlist.dateres,'
-      '  vakansia.position'
-      '  from vakanlist'
-      '  inner join  questionarie '
-      '    on questionarie.ank_nom=vakanlist.ank_nom'
-      '  inner join vakansia '
-      '    on vakansia.id_vakans=vakanlist.id_vakans'
-      '  where 1=1')
-    Left = 280
+        '  when vakansia.vak_st=0  then '#39#1042#1072#1082#1072#1085#1089#1080#1080' '#1077#1089#1090#1100#39'  else '#39#1042#1072#1082#1072#1085#1089#1080#1081' '#1085 +
+        #1077#1090#39' end as vak_free'
+      'from '
+      '  vakansia'
+      '  inner join dogovor on'
+      '  dogovor.id_dog=vakansia.id_dog'
+      '  inner join prof on '
+      '  prof.id_prof=vakansia.id_prof'
+      '  where vakansia.quantity>0 '
+      '')
+    Left = 272
     Top = 96
   end
   object VakanlistDS: TDataSource
     DataSet = vakanlistQuery
-    Left = 296
+    Left = 280
     Top = 160
   end
 end

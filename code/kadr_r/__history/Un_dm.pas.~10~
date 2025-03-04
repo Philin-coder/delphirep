@@ -18,8 +18,6 @@ type
     ankDS: TDataSource;
     VaKQuery: TADOQuery;
     VakDS: TDataSource;
-    vakanlistQuery: TADOQuery;
-    VakanlistDS: TDataSource;
   private
     { Private declarations }
   public

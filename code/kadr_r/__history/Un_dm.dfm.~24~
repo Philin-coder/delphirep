@@ -1,7 +1,7 @@
 object DM: TDM
   OldCreateOrder = False
   Height = 255
-  Width = 525
+  Width = 374
   object Connection: TADOConnection
     Connected = True
     ConnectionString = 
@@ -32,13 +32,13 @@ object DM: TDM
     Parameters = <>
     SQL.Strings = (
       'select * from prof;')
-    Left = 424
+    Left = 320
     Top = 80
   end
   object doDS: TDataSource
     DataSet = doQuery
-    Left = 432
-    Top = 160
+    Left = 328
+    Top = 152
   end
   object dogQuery: TADOQuery
     Connection = Connection
@@ -104,34 +104,6 @@ object DM: TDM
   object VakDS: TDataSource
     DataSet = VaKQuery
     Left = 224
-    Top = 160
-  end
-  object vakanlistQuery: TADOQuery
-    Connection = Connection
-    CursorType = ctStatic
-    Parameters = <>
-    SQL.Strings = (
-      'select '
-      '  questionarie.fio,'
-      '  vakanlist.datein,'
-      '  case'
-      
-        '  when vakanlist.res=1 then '#39#1055#1088#1080#1085#1103#1090#39' else '#39' '#1053#1077' '#1087#1088#1080#1085#1103#1090#39' end as va' +
-        'k_res,'
-      '  vakanlist.dateres,'
-      '  vakansia.position'
-      '  from vakanlist'
-      '  inner join  questionarie '
-      '    on questionarie.ank_nom=vakanlist.ank_nom'
-      '  inner join vakansia '
-      '    on vakansia.id_vakans=vakanlist.id_vakans'
-      '  where 1=1')
-    Left = 280
-    Top = 96
-  end
-  object VakanlistDS: TDataSource
-    DataSet = vakanlistQuery
-    Left = 296
     Top = 160
   end
 end
