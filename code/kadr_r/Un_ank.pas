@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, DBCtrls, StdCtrls, Grids, DBGrids, ExtCtrls, ComCtrls,ADODB;
+  Dialogs, DBCtrls, StdCtrls, Grids, DBGrids, ExtCtrls, ComCtrls,ADODB,DateUtils;
 
 type
   TFrm_ank = class(TForm)
@@ -304,7 +304,7 @@ begin
   SQL.Clear;
   SQL.Text:='INSERT INTO questionarie (b_data, fio, obr,kval,'+
   'staj, wish_cond, id_prof)VALUES('
-  +QuotedStr( DateToStr(bdata_inp.Date))+','+
+  +QuotedStr(FrmMain.DateToStr_(bdata_inp.Date))+','+
   QuotedStr(fio_inp.Text)+','+QuotedStr(Obr_inp.Text)+','+
   QuotedStr(kval_inp.Text)+','+QuotedStr((staj_inp.Text)) +','+
   QuotedStr(wish_inp.Text)+','+

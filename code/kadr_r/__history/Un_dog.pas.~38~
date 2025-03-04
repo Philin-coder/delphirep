@@ -41,11 +41,10 @@ type
     delPage: TTabSheet;
     del_seldataBox: TGroupBox;
     profLbl: TLabel;
-    delseldataComboBox: TDBLookupComboBox;
+    delseldatadgComboBox: TDBLookupComboBox;
     dlbtnBox: TGroupBox;
     dlBtn: TButton;
     dldaraBox: TGroupBox;
-    dldataGrid: TDBGrid;
     dogoutGrid: TDBGrid;
     compamy_inp: TLabeledEdit;
     c_adrees_inp: TLabeledEdit;
@@ -57,6 +56,7 @@ type
     UpddatadogBox: TGroupBox;
     set_contdata_inp: TLabeledEdit;
     Upd_contdataBtn: TButton;
+    del_outGrid: TDBGrid;
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -70,6 +70,7 @@ type
     procedure ins_BtnClick(Sender: TObject);
     procedure Upd_contdataBtnClick(Sender: TObject);
     procedure UpdBtnClick(Sender: TObject);
+    procedure dlBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -81,7 +82,7 @@ var
   var d_flag:Integer;
 implementation
 
-uses Un_dm, Unmain;
+uses Un_dm, Unmain, DB;
 
 {$R *.dfm}
 
@@ -133,6 +134,24 @@ if Check_adr_search.Checked=true then
 
 end;
 
+procedure TFrm_dog.dlBtnClick(Sender: TObject);
+begin
+
+
+        dm.doQuery.Close;
+        dm.doQuery.SQL.Clear;
+        dm.doQuery.SQL.Text:='delete from dogovor  where dogovor.id_dog='
+         +dm.dogQuery.FieldByName('id_dog').AsString;
+         dm.doQuery.ExecSQL;
+         dm.doQuery.SQL.Text:='select * from  dogovor';
+         dm.doQuery.Open;
+         dm.doQuery.Close;
+         dm.doQuery.Open;
+         dm.doQuery.Close;
+         dm.doQuery.Open;
+
+end;
+
 procedure TFrm_dog.fnd_cont_face_EditKeyPress(Sender: TObject; var Key: Char);
 begin
 try
@@ -152,6 +171,7 @@ end;
 procedure TFrm_dog.FormActivate(Sender: TObject);
 var k:Integer;
 begin
+dm.doQuery.SQL.Text:='select * from dogovor';
 dm.doQuery.Open;
 dm.dogQuery.Open;
 DogPage.ActivePage:=SeldogPage;
@@ -221,18 +241,18 @@ begin
   Active:=false;
   SQL.Clear;
   SQL.Text:='INSERT INTO dogovor (pay_cond, cont_face, company,'+
-  'c_adress, c_contdara, dogterm )VALUES('
+  'c_adress, c_contdata, dogterm )VALUES('
   +QuotedStr(cond_pay_inp.Text)+','+QuotedStr(Cont_face_inp.Text)+','+
   QuotedStr(compamy_inp.Text)+','+QuotedStr(c_adrees_inp.Text)+','+
   QuotedStr(c_contdata_inp.Text)+','
-  +QuotedStr(FrmMain.DateToStr_(dog_term_inp.Date))+')';
+  +QuotedStr(DateToStr(dog_term_inp.Date))+')';
   ExecSQL;
   sql.Text:='select * from dogovor;';
   Active:=true;
   close;
   open;
 end;
-  MessageDlg('Заполните все поля',mtInformation,[mbOK],0);
+  MessageDlg('Изменения внесены',mtInformation,[mbOK],0);
   Beep();
   cond_pay_inp.Clear;
   Cont_face_inp.Clear;
@@ -249,7 +269,7 @@ end;
 end
 else
 begin
-  MessageDlg('Изменения внесены',mtError,[mbOK],0);
+  MessageDlg('Заполните все поля',mtError,[mbOK],0);
   Beep();
   Exit;
 end;
@@ -355,49 +375,40 @@ end;
 
 procedure TFrm_dog.UpdBtnClick(Sender: TObject);
 begin
-    try
-         dm.doQuery.Close;
-         dm.doQuery.SQL.Clear;
-         dm.doQuery.SQL.Text:='Update dogovor set   cont_face='
-         +QuotedStr(seCfaceEdit.Text)+'where dogovor.id_dog='
-         +dm.dogQuery.FieldByName('id_dog').AsString;
-         dm.doQuery.ExecSQL;
-         MessageDlg('Изменения внесены',mtInformation,[mbOK],0);
-         dm.doQuery.SQL.Text:='select * from  dogovor;';
-         dm.doQuery.Open;
-         dm.doQuery.Close;
-         dm.doQuery.Open;
-     except
-     begin
-         ShowMessage('Wrong situation');
-         exit;
-     end;
-     end;
+           with dm.doQuery do
+           begin
+           close;
+           sql.Clear;
+           SQL.Text:='Update dogovor set   cont_face='
+            +QuotedStr(seCfaceEdit.Text)+'where dogovor.id_dog='
+            +dm.dogQuery.FieldByName('id_dog').AsString;
+            ExecSQL;
+            SQL.Text:='select * from  dogovor;';
+            Open;
+           close;
+            Open;
+
+           end;
+               MessageDlg('Изменения внесены',mtInformation,[mbOK],0);
 
 end;
 
 procedure TFrm_dog.Upd_contdataBtnClick(Sender: TObject);
 begin
-    try
-         dm.doQuery.Close;
-         dm.doQuery.SQL.Clear;
-         dm.doQuery.SQL.Text:='Update dogovor set  c_contdara='
+        with dm.doQuery do
+        begin
+        Close;
+        SQL.Clear;
+        SQL.Text:='Update dogovor set  c_contdata='
          +QuotedStr(set_contdata_inp.Text)+'where dogovor.id_dog='
          +dm.dogQuery.FieldByName('id_dog').AsString;
-         dm.doQuery.ExecSQL;
-         MessageDlg('Изменения внесены',mtInformation,[mbOK],0);
-         dm.doQuery.SQL.Text:='select * from  dogovor;';
-         dm.doQuery.Open;
-         dm.doQuery.Close;
-         dm.doQuery.Open;
-     except
-     begin
-         ShowMessage('Wrong situation');
-         exit;
-     end;
-     end;
-
-
+          ExecSQL;
+        SQL.Text:='select * from  dogovor;';
+        Open;
+        Close;
+        Open;
+        end;
+        MessageDlg('Изменения внесены',mtInformation,[mbOK],0);
 end;
 
 end.

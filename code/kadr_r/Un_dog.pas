@@ -245,7 +245,7 @@ begin
   +QuotedStr(cond_pay_inp.Text)+','+QuotedStr(Cont_face_inp.Text)+','+
   QuotedStr(compamy_inp.Text)+','+QuotedStr(c_adrees_inp.Text)+','+
   QuotedStr(c_contdata_inp.Text)+','
-  +QuotedStr(DateToStr(dog_term_inp.Date))+')';
+  +QuotedStr(FrmMain.DateToStr_(dog_term_inp.Date))+')';
   ExecSQL;
   sql.Text:='select * from dogovor;';
   Active:=true;

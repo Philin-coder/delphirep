@@ -21,7 +21,7 @@ object Frm_ank: TFrm_ank
     Top = 0
     Width = 817
     Height = 616
-    ActivePage = deanklPage
+    ActivePage = InsankPage
     Align = alClient
     TabOrder = 0
     object SelAnkPage: TTabSheet
