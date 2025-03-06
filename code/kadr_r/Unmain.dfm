@@ -49,6 +49,7 @@ object FrmMain: TFrmMain
     end
     object res_menu: TMenuItem
       Caption = '&'#1056#1077#1079#1091#1083#1100#1090#1072#1090#1099' '#1089#1086#1073#1077#1089#1077#1076#1086#1074#1072#1085#1080#1103
+      OnClick = res_menuClick
     end
   end
 end

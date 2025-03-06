@@ -1,7 +1,7 @@
-object Frm_vak: TFrm_vak
+object Frm_vaklst: TFrm_vaklst
   Left = 0
   Top = 0
-  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089'  '#1074#1072#1082#1072#1085#1089#1080#1077#1081
+  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089'  '#1088#1077#1079#1091#1083#1100#1090#1072#1090#1072#1084#1080' '#1089#1086#1073#1077#1089#1077#1076#1086#1074#1072#1085#1080#1103
   ClientHeight = 616
   ClientWidth = 817
   Color = clBtnFace
@@ -16,17 +16,17 @@ object Frm_vak: TFrm_vak
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object vakPage: TPageControl
+  object vaklstPage: TPageControl
     Left = 0
     Top = 0
     Width = 817
     Height = 616
-    ActivePage = SelvAkPage
+    ActivePage = SelresPage
     Align = alClient
     TabOrder = 0
-    object SelvAkPage: TTabSheet
-      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1042#1072#1082#1072#1085#1089#1080#1080
-      object ConditionvakBox: TGroupBox
+    object SelresPage: TTabSheet
+      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1088#1077#1079#1091#1083#1100#1090#1072#1090#1072#1093' '#1089#1086#1073#1077#1089#1077#1076#1086#1074#1072#1085#1080#1103
+      object ConditionresBox: TGroupBox
         Left = 0
         Top = 0
         Width = 809
@@ -34,42 +34,42 @@ object Frm_vak: TFrm_vak
         Align = alTop
         Caption = #1055#1086#1080#1089#1082' '#1087#1086' '
         TabOrder = 0
-        object seldogPanel: TPanel
+        object seresPanel: TPanel
           Left = 2
-          Top = 134
+          Top = 152
           Width = 805
-          Height = 81
+          Height = 63
           Align = alBottom
           TabOrder = 0
-          object Radio_dl_group: TRadioButton
-            Left = 24
-            Top = 20
+          object Radio_dl_r_group: TRadioButton
+            Left = 32
+            Top = 36
             Width = 217
             Height = 17
             Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072'  '#1087#1086' '#1076#1086#1083#1078#1085#1086#1089#1090#1080
             TabOrder = 0
-            OnClick = Radio_dl_groupClick
+            OnClick = Radio_dl_r_groupClick
           end
-          object Radio_company_grupp: TRadioButton
-            Left = 255
-            Top = 20
-            Width = 226
+          object Radio_fio_r_grupp: TRadioButton
+            Left = 264
+            Top = 36
+            Width = 162
             Height = 17
-            Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1082#1086#1084#1087#1072#1085#1080#1080
+            Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1060#1048#1054
             TabOrder = 1
-            OnClick = Radio_company_gruppClick
+            OnClick = Radio_fio_r_gruppClick
           end
-          object RadiovakselReset: TRadioButton
+          object RadioresrselReset: TRadioButton
             Left = 568
-            Top = 20
+            Top = 36
             Width = 113
             Height = 17
             Caption = #1057#1073#1088#1086#1089
             TabOrder = 2
-            OnClick = RadiovakselResetClick
+            OnClick = RadioresrselResetClick
           end
         end
-        object condvakPanel: TPanel
+        object condresPanel: TPanel
           Left = 2
           Top = 15
           Width = 805
@@ -79,55 +79,74 @@ object Frm_vak: TFrm_vak
           DesignSize = (
             805
             41)
-          object CondvakdolEdit: TLabeledEdit
+          object CondresfioEdit: TLabeledEdit
             Left = 16
-            Top = 16
+            Top = 14
             Width = 767
             Height = 21
             Anchors = [akLeft, akTop, akRight]
-            EditLabel.Width = 184
+            EditLabel.Width = 148
             EditLabel.Height = 13
-            EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' ('#1087#1086'  '#1076#1086#1083#1078#1085#1086#1089#1090#1080')'
+            EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' ('#1087#1086'  '#1092#1080#1086')'
             TabOrder = 0
-            OnKeyPress = CondvakdolEditKeyPress
           end
         end
-        object fndvakPanel: TPanel
+        object fndresPanel: TPanel
           Left = 2
           Top = 56
           Width = 805
-          Height = 78
+          Height = 96
           Align = alClient
           TabOrder = 2
+          ExplicitLeft = 3
+          ExplicitTop = 62
           DesignSize = (
             805
-            78)
-          object fnd_company_Edit: TLabeledEdit
+            96)
+          object fnd_dol_Edit: TLabeledEdit
             Left = 16
             Top = 21
             Width = 767
             Height = 21
             Anchors = [akLeft, akTop, akRight]
-            EditLabel.Width = 123
+            EditLabel.Width = 130
             EditLabel.Height = 13
-            EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082'('#1050#1086#1084#1087#1072#1085#1080#1103')'
+            EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082'('#1076#1086#1083#1078#1085#1086#1089#1090#1100')'
             TabOrder = 0
-            OnKeyPress = fnd_company_EditKeyPress
+            OnKeyPress = fnd_dol_EditKeyPress
           end
-          object Check_prof_search: TCheckBox
+          object Check_res_search: TCheckBox
             Left = 264
             Top = 48
             Width = 265
             Height = 17
             Align = alCustom
             Anchors = [akLeft, akTop, akRight]
-            Caption = #1042#1082#1083#1102#1095#1077#1085#1080#1077' '#1087#1086#1080#1089#1082#1072' '#1087#1086'  '#1087#1088#1086#1092#1077#1089#1089#1080#1080' '
+            Caption = #1054#1090#1073#1086#1088' '#1090#1077#1093', '#1075#1076#1077' '#1086#1078#1080#1076#1072#1085#1080#1077' '#1073#1086#1083#1100#1096#1077' 3 '#1076#1085#1077#1081' '
             TabOrder = 1
-            OnClick = Check_prof_searchClick
+            OnClick = Check_res_searchClick
+          end
+          object date_in_inp: TDateTimePicker
+            Left = 32
+            Top = 69
+            Width = 186
+            Height = 21
+            Date = 45722.852209652780000000
+            Time = 45722.852209652780000000
+            TabOrder = 2
+          end
+          object DateTimePicker2: TDateTimePicker
+            Left = 568
+            Top = 69
+            Width = 186
+            Height = 21
+            Date = 45722.852209652780000000
+            Time = 45722.852209652780000000
+            TabOrder = 3
           end
         end
       end
-      object DatavakBox: TGroupBox
+      object DataresBox: TGroupBox
         Left = 0
         Top = 217
         Width = 809
@@ -135,13 +154,13 @@ object Frm_vak: TFrm_vak
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
-        object DatavakGrd: TDBGrid
+        object DataresGrd: TDBGrid
           Left = 2
           Top = 15
           Width = 805
           Height = 307
           Align = alClient
-          DataSource = DM.VakDS
+          DataSource = DM.resDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -151,41 +170,44 @@ object Frm_vak: TFrm_vak
           Columns = <
             item
               Expanded = False
+              FieldName = 'nomvlist'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Width = 100
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'fio'
+              Title.Caption = #1092#1080#1086
+              Width = 600
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'datein'
+              Title.Caption = #1044#1072#1090#1072' '#1087#1088#1086#1093#1086#1078#1076#1077#1085#1080#1103' '#1089#1086#1073#1077#1089#1077#1076#1086#1074#1072#1085#1080#1103
+              Width = 100
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'vak_res'
+              Title.Caption = #1056#1077#1079#1091#1083#1100#1090#1072#1090' '#1089#1086#1073#1077#1089#1077#1076#1086#1074#1072#1085#1080#1103
+              Width = 100
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'dateres'
+              Title.Caption = #1044#1072#1090#1072' '#1087#1086#1083#1091#1095#1077#1085#1080#1103' '#1088#1077#1079#1091#1083#1100#1090#1072#1090#1072
+              Width = 134
+              Visible = True
+            end
+            item
+              Expanded = False
               FieldName = 'position'
               Title.Caption = #1044#1086#1083#1078#1085#1086#1089#1090#1100
-              Width = 700
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'pay'
-              Title.Caption = #1060#1086#1088#1084#1072' '#1086#1087#1083#1072#1090#1099
-              Width = 700
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'company'
-              Title.Caption = #1054#1088#1075#1072#1085#1080#1079#1072#1094#1080#1103
-              Width = 700
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'prof_name'
-              Title.Caption = #1055#1088#1086#1092#1077#1089#1089#1080#1103
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'quantity'
-              Title.Caption = #1050#1086#1083#1080#1095#1077#1089#1090#1074#1086' '#1074#1072#1082#1072#1085#1089#1080#1081
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'vak_free'
-              Title.Caption = #1057#1090#1072#1090#1091#1089' '#1074#1072#1082#1072#1085#1089#1080#1080
+              Width = 1000
               Visible = True
             end>
         end
@@ -197,7 +219,7 @@ object Frm_vak: TFrm_vak
         Height = 47
         Align = alBottom
         TabOrder = 2
-        object SelvaklBtn: TButton
+        object SelreslBtn: TButton
           Left = 336
           Top = 19
           Width = 129
@@ -206,17 +228,13 @@ object Frm_vak: TFrm_vak
           Anchors = [akLeft, akTop, akRight]
           Caption = #1054#1090#1073#1086#1088' '#1087#1086' '#1091#1089#1083#1086#1074#1080#1080#1102
           TabOrder = 0
-          OnClick = SelvaklBtnClick
+          OnClick = SelreslBtnClick
         end
       end
     end
     object InsvakPage: TTabSheet
       Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1074#1072#1082#1072#1085#1077#1089#1080#1080
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object InpvakBox: TGroupBox
         Left = 0
         Top = 0
@@ -316,7 +334,7 @@ object Frm_vak: TFrm_vak
           Height = 21
           Align = alCustom
           Anchors = [akLeft, akRight]
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 5
           Text = 'vakstBox'
           Items.Strings = (
@@ -332,13 +350,13 @@ object Frm_vak: TFrm_vak
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
-        object vakoutGrid: TDBGrid
+        object DBGrid1: TDBGrid
           Left = 2
           Top = 15
           Width = 805
           Height = 159
           Align = alClient
-          DataSource = DM.VakDS
+          DataSource = DM.resDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -348,43 +366,44 @@ object Frm_vak: TFrm_vak
           Columns = <
             item
               Expanded = False
+              FieldName = 'nomvlist'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Width = 10
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'fio'
+              Title.Caption = #1092#1080#1086
+              Width = 600
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'datein'
+              Title.Caption = #1044#1072#1090#1072' '#1087#1088#1086#1093#1086#1078#1076#1077#1085#1080#1103' '#1089#1086#1073#1077#1089#1077#1076#1086#1074#1072#1085#1080#1103
+              Width = 100
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'vak_res'
+              Title.Caption = #1056#1077#1079#1091#1083#1100#1090#1072#1090' '#1089#1086#1073#1077#1089#1077#1076#1086#1074#1072#1085#1080#1103
+              Width = 100
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'dateres'
+              Title.Caption = #1044#1072#1090#1072' '#1087#1086#1083#1091#1095#1077#1085#1080#1103' '#1088#1077#1079#1091#1083#1100#1090#1072#1090#1072
+              Width = 134
+              Visible = True
+            end
+            item
+              Expanded = False
               FieldName = 'position'
               Title.Caption = #1044#1086#1083#1078#1085#1086#1089#1090#1100
-              Width = 700
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'pay'
-              Title.Caption = #1060#1086#1088#1084#1072' '#1086#1087#1083#1072#1090#1099
-              Width = 700
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'company'
-              Title.Caption = #1054#1088#1075#1072#1085#1080#1079#1072#1094#1080#1103
-              Width = 700
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'prof_name'
-              Title.Caption = #1055#1088#1086#1092#1077#1089#1089#1080#1103
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'quantity'
-              Title.Caption = #1050#1086#1083#1080#1095#1077#1089#1090#1074#1086' '#1074#1072#1082#1072#1085#1089#1080#1081
-              Width = 192
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'vak_free'
-              Title.Caption = #1057#1090#1072#1090#1091#1089' '#1074#1072#1082#1072#1085#1089#1080#1080
-              Width = 112
+              Width = 1000
               Visible = True
             end>
         end
@@ -405,17 +424,12 @@ object Frm_vak: TFrm_vak
           Anchors = [akLeft, akTop, akRight]
           Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
           TabOrder = 0
-          OnClick = ins_vak_BtnClick
         end
       end
     end
     object UpdvakPage: TTabSheet
       Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1074#1072#1082#1072#1085#1089#1080#1080
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object UpddataBox: TGroupBox
         Left = 0
         Top = 143
@@ -424,13 +438,13 @@ object Frm_vak: TFrm_vak
         Align = alBottom
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object vaupdkoutGrid: TDBGrid
+        object DBGrid2: TDBGrid
           Left = 2
           Top = 15
           Width = 805
           Height = 428
           Align = alClient
-          DataSource = DM.VakDS
+          DataSource = DM.resDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -440,41 +454,44 @@ object Frm_vak: TFrm_vak
           Columns = <
             item
               Expanded = False
+              FieldName = 'nomvlist'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Width = 10
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'fio'
+              Title.Caption = #1092#1080#1086
+              Width = 600
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'datein'
+              Title.Caption = #1044#1072#1090#1072' '#1087#1088#1086#1093#1086#1078#1076#1077#1085#1080#1103' '#1089#1086#1073#1077#1089#1077#1076#1086#1074#1072#1085#1080#1103
+              Width = 100
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'vak_res'
+              Title.Caption = #1056#1077#1079#1091#1083#1100#1090#1072#1090' '#1089#1086#1073#1077#1089#1077#1076#1086#1074#1072#1085#1080#1103
+              Width = 100
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'dateres'
+              Title.Caption = #1044#1072#1090#1072' '#1087#1086#1083#1091#1095#1077#1085#1080#1103' '#1088#1077#1079#1091#1083#1100#1090#1072#1090#1072
+              Width = 134
+              Visible = True
+            end
+            item
+              Expanded = False
               FieldName = 'position'
               Title.Caption = #1044#1086#1083#1078#1085#1086#1089#1090#1100
-              Width = 700
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'pay'
-              Title.Caption = #1060#1086#1088#1084#1072' '#1086#1087#1083#1072#1090#1099
-              Width = 700
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'company'
-              Title.Caption = #1054#1088#1075#1072#1085#1080#1079#1072#1094#1080#1103
-              Width = 700
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'prof_name'
-              Title.Caption = #1055#1088#1086#1092#1077#1089#1089#1080#1103
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'quantity'
-              Title.Caption = #1050#1086#1083#1080#1095#1077#1089#1090#1074#1086' '#1074#1072#1082#1072#1085#1089#1080#1081
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'vak_free'
-              Title.Caption = #1057#1090#1072#1090#1091#1089' '#1074#1072#1082#1072#1085#1089#1080#1080
+              Width = 1000
               Visible = True
             end>
         end
@@ -514,7 +531,6 @@ object Frm_vak: TFrm_vak
           Anchors = [akLeft, akTop, akRight]
           Caption = #1048#1079#1084#1077#1085#1080#1090#1100
           TabOrder = 0
-          OnClick = Upd_vak_st_BtnClick
         end
         object DBLookupComboBox_prof: TDBLookupComboBox
           Left = 147
@@ -534,7 +550,7 @@ object Frm_vak: TFrm_vak
           Height = 21
           Align = alCustom
           Anchors = [akLeft, akRight]
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 2
           Text = 'vakstBox'
           Items.Strings = (
@@ -546,10 +562,6 @@ object Frm_vak: TFrm_vak
     object delvaklPage: TTabSheet
       Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1074#1072#1082#1072#1085#1089#1080#1080
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object del_vakdataBox: TGroupBox
         Left = 0
         Top = 0
@@ -597,7 +609,6 @@ object Frm_vak: TFrm_vak
           Anchors = [akLeft, akTop, akRight]
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
-          OnClick = dlvakBtnClick
         end
       end
       object dldaraBox: TGroupBox
@@ -608,13 +619,13 @@ object Frm_vak: TFrm_vak
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        object DelvakoutGrid: TDBGrid
+        object DBGrid3: TDBGrid
           Left = 2
           Top = 15
           Width = 805
           Height = 471
           Align = alClient
-          DataSource = DM.VakDS
+          DataSource = DM.resDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -624,41 +635,44 @@ object Frm_vak: TFrm_vak
           Columns = <
             item
               Expanded = False
+              FieldName = 'nomvlist'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Width = 10
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'fio'
+              Title.Caption = #1092#1080#1086
+              Width = 600
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'datein'
+              Title.Caption = #1044#1072#1090#1072' '#1087#1088#1086#1093#1086#1078#1076#1077#1085#1080#1103' '#1089#1086#1073#1077#1089#1077#1076#1086#1074#1072#1085#1080#1103
+              Width = 100
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'vak_res'
+              Title.Caption = #1056#1077#1079#1091#1083#1100#1090#1072#1090' '#1089#1086#1073#1077#1089#1077#1076#1086#1074#1072#1085#1080#1103
+              Width = 100
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'dateres'
+              Title.Caption = #1044#1072#1090#1072' '#1087#1086#1083#1091#1095#1077#1085#1080#1103' '#1088#1077#1079#1091#1083#1100#1090#1072#1090#1072
+              Width = 134
+              Visible = True
+            end
+            item
+              Expanded = False
               FieldName = 'position'
               Title.Caption = #1044#1086#1083#1078#1085#1086#1089#1090#1100
-              Width = 700
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'pay'
-              Title.Caption = #1060#1086#1088#1084#1072' '#1086#1087#1083#1072#1090#1099
-              Width = 700
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'company'
-              Title.Caption = #1054#1088#1075#1072#1085#1080#1079#1072#1094#1080#1103
-              Width = 700
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'prof_name'
-              Title.Caption = #1055#1088#1086#1092#1077#1089#1089#1080#1103
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'quantity'
-              Title.Caption = #1050#1086#1083#1080#1095#1077#1089#1090#1074#1086' '#1074#1072#1082#1072#1085#1089#1080#1081
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'vak_free'
-              Title.Caption = #1057#1090#1072#1090#1091#1089' '#1074#1072#1082#1072#1085#1089#1080#1080
+              Width = 1000
               Visible = True
             end>
         end

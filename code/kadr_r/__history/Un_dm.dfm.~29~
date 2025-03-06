@@ -106,7 +106,7 @@ object DM: TDM
     Left = 224
     Top = 160
   end
-  object resQuery: TADOQuery
+  object vakanlistQuery: TADOQuery
     Connection = Connection
     CursorType = ctStatic
     Parameters = <>
@@ -130,8 +130,8 @@ object DM: TDM
     Left = 280
     Top = 96
   end
-  object resDS: TDataSource
-    DataSet = resQuery
+  object VakanlistDS: TDataSource
+    DataSet = vakanlistQuery
     Left = 296
     Top = 160
   end

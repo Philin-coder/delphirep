@@ -24,6 +24,7 @@ type
     procedure dog_menuClick(Sender: TObject);
     procedure ank_menuClick(Sender: TObject);
     procedure vak_menuClick(Sender: TObject);
+    procedure res_menuClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -35,7 +36,7 @@ var
 
 implementation
 
-uses Un_dm, Un_pfor, Un_dog, Un_ank, Un_vak;
+uses Un_dm, Un_pfor, Un_dog, Un_ank, Un_vak, Un_vak_lst;
 
 {$R *.dfm}
 function TfrmMain.DateToStr_(Dat : TDate): String;
@@ -98,6 +99,11 @@ end;
 procedure TFrmMain.prof_menuClick(Sender: TObject);
 begin
 Frm_pfor.ShowModal;
+end;
+
+procedure TFrmMain.res_menuClick(Sender: TObject);
+begin
+Frm_vaklst.ShowModal;
 end;
 
 procedure TFrmMain.vak_menuClick(Sender: TObject);

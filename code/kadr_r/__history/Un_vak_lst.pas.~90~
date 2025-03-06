@@ -1,0 +1,307 @@
+﻿unit Un_vak_lst;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, DBCtrls, StdCtrls, Grids, DBGrids, ExtCtrls, ComCtrls,ADODB,DateUtils;
+
+type
+  TFrm_vaklst = class(TForm)
+    vaklstPage: TPageControl;
+    SelresPage: TTabSheet;
+    ConditionresBox: TGroupBox;
+    seresPanel: TPanel;
+    Radio_dl_r_group: TRadioButton;
+    Radio_fio_r_grupp: TRadioButton;
+    RadioresrselReset: TRadioButton;
+    condresPanel: TPanel;
+    CondresfioEdit: TLabeledEdit;
+    fndresPanel: TPanel;
+    fnd_dol_Edit: TLabeledEdit;
+    Check_res_search: TCheckBox;
+    DataresBox: TGroupBox;
+    DataresGrd: TDBGrid;
+    ButtonvakBox: TGroupBox;
+    SelreslBtn: TButton;
+    InsvakPage: TTabSheet;
+    InpvakBox: TGroupBox;
+    pay_inp: TLabeledEdit;
+    DataOutdvakBox: TGroupBox;
+    vakinpBtnBox: TGroupBox;
+    ins_vak_Btn: TButton;
+    UpdvakPage: TTabSheet;
+    UpddataBox: TGroupBox;
+    delvaklPage: TTabSheet;
+    del_vakdataBox: TGroupBox;
+    ankLbl: TLabel;
+    delvakdatadgComboBox: TDBLookupComboBox;
+    dlankbtnBox: TGroupBox;
+    dlvakBtn: TButton;
+    dldaraBox: TGroupBox;
+    UpddatankBox: TGroupBox;
+    Upd_vak_st_Btn: TButton;
+    compvakLbl: TLabel;
+    compvakDBL: TDBLookupComboBox;
+    position_inp: TLabeledEdit;
+    prfvakLbl: TLabel;
+    profvakdbl: TDBLookupComboBox;
+    quant_inp: TLabeledEdit;
+    vakstlbl: TLabel;
+    vakstBox: TComboBox;
+    DBLookupComboBox_prof: TDBLookupComboBox;
+    vakprofLbl: TLabel;
+    vak_stBox: TComboBox;
+    vak_st_lbl: TLabel;
+    DBGrid1: TDBGrid;
+    DBGrid2: TDBGrid;
+    DBGrid3: TDBGrid;
+    procedure FormCreate(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure SelreslBtnClick(Sender: TObject);
+    procedure Radio_dl_r_groupClick(Sender: TObject);
+    procedure Radio_fio_r_gruppClick(Sender: TObject);
+    procedure RadioresrselResetClick(Sender: TObject);
+    procedure fnd_dol_EditKeyPress(Sender: TObject; var Key: Char);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_vaklst: TFrm_vaklst;
+  var d_flag:Integer;
+implementation
+
+uses Un_dm, Unmain, DB;
+
+{$R *.dfm}
+procedure TFrm_vaklst.fnd_dol_EditKeyPress(Sender: TObject; var Key: Char);
+begin
+try
+   Check_res_search.Enabled:=false;
+   dm.resQuery.SQL.Text:='select vakanlist.nomvlist, questionarie.fio,'+' '+
+'vakanlist.datein,case when vakanlist.res=1'+ ' '+
+ 'then'+' '+#39+ 'Принят'+#39+' '+ 'else'+' '+#39'Не принят'+#39+' '+ 'end as vak_res,'+
+  'vakanlist.dateres,vakansia.position from vakanlist inner join  questionarie'+
+  ' '+'on questionarie.ank_nom=vakanlist.ank_nom inner join vakansia on'+' '+
+    'vakansia.id_vakans=vakanlist.id_vakans   where 1=1'
+  +'and vakansia.position like'+
+   QuotedStr(Concat(fnd_dol_Edit.Text,#37));
+   dm.resQuery.close;
+   dm.resQuery.Open;
+except
+  begin
+  ShowMessage('wrong situation');
+  end;
+  end;
+
+end;
+
+procedure TFrm_vaklst.FormActivate(Sender: TObject);
+var k,d:Integer;
+begin
+dm.doQuery.Close;
+dm.doQuery.SQL.Clear;
+dm.doQuery.SQL.Text:='select vakanlist.nomvlist, questionarie.fio,'+' '+
+'vakanlist.datein,case when vakanlist.res=1'+ ' '+
+ 'then'+' '+#39+ 'Принят'+#39+' '+ 'else'+' '+#39'Не принят'+#39+' '+ 'end as vak_res,'+
+  'vakanlist.dateres,vakansia.position from vakanlist inner join  questionarie'+
+  ' '+'on questionarie.ank_nom=vakanlist.ank_nom inner join vakansia on'+' '+
+    'vakansia.id_vakans=vakanlist.id_vakans   where 1=1';
+Upd_vak_st_Btn.Caption:='Изменить';
+dm.doQuery.Open;
+dm.VaKQuery.Open;
+dm.resQuery.Open;
+with Frm_vaklst do
+for k := 0 to ComponentCount - 1 do
+begin
+if (Components[k] is TRadioButton) then
+begin
+  (Components[k] as TRadioButton).Checked:=False;
+end;
+end;
+
+with Frm_vaklst do
+for d := 0 to ComponentCount - 1 do
+begin
+if (Components[d] is TDateTimePicker) then
+begin
+  (Components[d] as TDateTimePicker).Date:=Now;
+end;
+end;
+end;
+
+procedure TFrm_vaklst.FormClose(Sender: TObject; var Action: TCloseAction);
+var k,e,q:Integer;
+begin
+with DM do
+begin
+for q := 0 to ComponentCount - 1 do
+begin
+if (Components[q] is TADOQuery) then
+begin
+  (Components[q] as TADOQuery).Close;
+end;
+end;
+d_flag:=0;
+
+Check_res_search.Enabled:=true;
+Check_res_search.Checked:=False;
+CondresfioEdit.EditLabel.Caption:='Точное совпадение (по фио)';
+with Frm_vaklst do
+for k := 0 to ComponentCount - 1 do
+begin
+if (Components[k] is TRadioButton) then
+begin
+  (Components[k] as TRadioButton).Enabled:=True;
+end;
+end;
+with Frm_vaklst do
+for e := 0 to ComponentCount - 1 do
+begin
+if (Components[e] is TLabeledEdit) then
+begin
+  (Components[e] as TLabeledEdit).Enabled:=True;
+end;
+end;
+end;
+
+end;
+
+procedure TFrm_vaklst.FormCreate(Sender: TObject);
+var d:Integer;
+begin
+with Frm_vaklst do
+begin
+  width:=1024;
+  height:=768;
+  Position:=poScreenCenter;
+end;
+ with Frm_vaklst do
+for d := 0 to ComponentCount - 1 do
+begin
+if (Components[d] is TDateTimePicker) then
+begin
+  (Components[d] as TDateTimePicker).Date:=Now;
+end;
+end;
+end;
+
+procedure TFrm_vaklst.Radio_fio_r_gruppClick(Sender: TObject);
+begin
+if Radio_fio_r_grupp.Checked=true then
+  begin
+    try
+     Radio_dl_r_group.Checked:=false;
+     RadioresrselReset.Checked:=False;
+     with dm.resQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:='select vakanlist.nomvlist, questionarie.fio,'+' '+
+'vakanlist.datein,case when vakanlist.res=1'+ ' '+
+ 'then'+' '+#39+ 'Принят'+#39+' '+ 'else'+' '+#39'Не принят'+#39+' '+ 'end as vak_res,'+
+  'vakanlist.dateres,vakansia.position from vakanlist inner join  questionarie'+
+  ' '+'on questionarie.ank_nom=vakanlist.ank_nom inner join vakansia on'+' '+
+    'vakansia.id_vakans=vakanlist.id_vakans   where 1=1 order by questionarie.fio asc';
+      Open;
+     end;
+    except
+    begin
+      ShowMessage('wrong situation');
+    end;
+    end;
+  end;
+end;
+
+procedure TFrm_vaklst.RadioresrselResetClick(Sender: TObject);
+var i,j:Integer;
+begin
+ if RadioresrselReset.Checked=True then
+begin
+  with Frm_vaklst do
+    for I := 0 to ComponentCount - 1 do
+     begin
+       if (Components[i] is TLabeledEdit)  then
+        begin
+          (Components[i] as TLabeledEdit).Clear;
+        end;
+     end;
+     with dm.resQuery do
+     begin
+     Close;
+    sql.clear;
+     SQL.Text:='select vakanlist.nomvlist, questionarie.fio,'+' '+
+'vakanlist.datein,case when vakanlist.res=1'+ ' '+
+ 'then'+' '+#39+ 'Принят'+#39+' '+ 'else'+' '+#39'Не принят'+#39+' '+ 'end as vak_res,'+
+  'vakanlist.dateres,vakansia.position from vakanlist inner join  questionarie'+
+  ' '+'on questionarie.ank_nom=vakanlist.ank_nom inner join vakansia on'+' '+
+    'vakansia.id_vakans=vakanlist.id_vakans   where 1=1 ';
+     Open;
+     end;
+    with Frm_vaklst do
+    for j := 0 to ComponentCount - 1 do
+    begin
+      if(Components[j] is TRadioButton)  then
+      begin
+        (Components[j] as TRadioButton).Checked:=False;
+      end;
+    end;
+end;
+  Check_res_search.Enabled:=true;
+  Check_res_search.Checked:=False;
+  CondresfioEdit.EditLabel.Caption:='Точное совпадение (по фио)';
+end;
+
+procedure TFrm_vaklst.Radio_dl_r_groupClick(Sender: TObject);
+begin
+if Radio_dl_r_group.Checked=true then
+  begin
+    try
+     Radio_fio_r_grupp.Checked:=false;
+     RadioresrselReset.Checked:=False;
+     with dm.resQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:='select * from vakanlist';
+      sql.Text:='select vakanlist.nomvlist, questionarie.fio,'+' '+
+'vakanlist.datein,case when vakanlist.res=1'+ ' '+
+ 'then'+' '+#39+ 'Принят'+#39+' '+ 'else'+' '+#39'Не принят'+#39+' '+ 'end as vak_res,'+
+  'vakanlist.dateres,vakansia.position from vakanlist inner join  questionarie'+
+  ' '+'on questionarie.ank_nom=vakanlist.ank_nom inner join vakansia on'+' '+
+    'vakansia.id_vakans=vakanlist.id_vakans   where 1=1 order by vakansia.position desc';
+    Open;
+     end;
+    except
+    begin
+      ShowMessage('wrong situation');
+    end;
+    end;
+  end;
+end;
+
+procedure TFrm_vaklst.SelreslBtnClick(Sender: TObject);
+begin
+try
+    dm.resQuery.close;
+    dm.resQuery.SQL.Text:='select vakanlist.nomvlist, questionarie.fio,'+' '+
+'vakanlist.datein,case when vakanlist.res=1'+ ' '+
+ 'then'+' '+#39+ 'Принят'+#39+' '+ 'else'+' '+#39'Не принят'+#39+' '+ 'end as vak_res,'+
+  'vakanlist.dateres,vakansia.position from vakanlist inner join  questionarie'+
+  ' '+'on questionarie.ank_nom=vakanlist.ank_nom inner join vakansia on'+' '+
+    'vakansia.id_vakans=vakanlist.id_vakans   where 1=1 and questionarie.fio='+
+    QuotedStr(CondresfioEdit.Text);
+    dm.resQuery.open;
+except
+begin
+    ShowMessage('Wrong situation');
+    exit;
+end;
+end;
+end;
+
+end.

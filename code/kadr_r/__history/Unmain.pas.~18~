@@ -11,11 +11,19 @@ type
     ItemMenu: TMainMenu;
     prof_menu: TMenuItem;
     MainImage: TImage;
+    dog_menu: TMenuItem;
+    ank_menu: TMenuItem;
+    vak_menu: TMenuItem;
+    res_menu: TMenuItem;
     procedure FormActivate(Sender: TObject);
     function DateToStr_(Dat : TDate): String;
     function   CommaPoint (X: String) : String;
     procedure prof_menuClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure dog_menuClick(Sender: TObject);
+    procedure ank_menuClick(Sender: TObject);
+    procedure vak_menuClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -27,7 +35,7 @@ var
 
 implementation
 
-uses Un_dm, Un_pfor;
+uses Un_dm, Un_pfor, Un_dog, Un_ank, Un_vak;
 
 {$R *.dfm}
 function TfrmMain.DateToStr_(Dat : TDate): String;
@@ -35,6 +43,16 @@ begin
   Result:= IntToStr(MonthOf(Dat))+'.'
   +IntToStr(DayOf(Dat))+'.'
   +IntToStr(YearOf(Dat));
+end;
+
+procedure TFrmMain.dog_menuClick(Sender: TObject);
+begin
+Frm_dog.ShowModal;
+end;
+
+procedure TFrmMain.ank_menuClick(Sender: TObject);
+begin
+  Frm_ank.ShowModal;
 end;
 
 function   TfrmMain.CommaPoint (X: String) : String;
@@ -49,12 +67,6 @@ end;
 
 procedure TFrmMain.FormActivate(Sender: TObject);
 begin
-with FrmMain do
-begin
-  width:=1024;
-  height:=768;
-end;
-
 With MainImage do
 begin
 Stretch:=True;
@@ -72,9 +84,25 @@ end;
 
 end;
 
+procedure TFrmMain.FormCreate(Sender: TObject);
+begin
+with FrmMain do
+begin
+  width:=1024;
+  height:=768;
+  Position:=poScreenCenter;
+end;
+
+end;
+
 procedure TFrmMain.prof_menuClick(Sender: TObject);
 begin
 Frm_pfor.ShowModal;
+end;
+
+procedure TFrmMain.vak_menuClick(Sender: TObject);
+begin
+     Frm_vak.ShowModal;
 end;
 
 end.

@@ -98,13 +98,12 @@ begin
   with dm.vakQuery do
     begin
     close;
-    SQL.Text:='select vakansia.position,vakansia.pay,dogovor.company,'+
+    SQL.Text:='select vakansia.id_vakans, vakansia.position,vakansia.pay,dogovor.company,'+
   'prof.prof_name,vakansia.quantity,case when'+ ' '+
   'vakansia.vak_st=0  then'+#39+ 'Вакансии есть'+#39+' '+  'else'+ ' '+
   #39+'Вакансий нет'+#39+' '+ 'end as vak_free from vakansia inner'+' '+
   'join dogovor on'+' '+ 'dogovor.id_dog=vakansia.id_dog inner join prof on'+' '+
   'prof.id_prof=vakansia.id_prof where vakansia.quantity >0';
-
     Close;
     open;
     end;
@@ -121,7 +120,7 @@ procedure TFrm_vak.CondvakdolEditKeyPress(Sender: TObject; var Key: Char);
 begin
 if Check_prof_search.Checked=true then
   begin
-  dm.VaKQuery.sql.Text:='select vakansia.position,vakansia.pay,dogovor.company,'+
+  dm.VaKQuery.sql.Text:='select vakansia.id_vakans, vakansia.position,vakansia.pay,dogovor.company,'+
   'prof.prof_name,vakansia.quantity,case when'+ ' '+
   'vakansia.vak_st=0  then'+#39+ 'Вакансии есть'+#39+' '+  'else'+ ' '+
   #39+'Вакансий нет'+#39+' '+ 'end as vak_free from vakansia inner'+' '+
@@ -137,7 +136,7 @@ if Check_prof_search.Checked=true then
      begin
      Close;
      sql.Clear;
-     SQL.Text:='select vakansia.position,vakansia.pay,dogovor.company,'+
+     SQL.Text:='select vakansia.id_vakans, vakansia.position,vakansia.pay,dogovor.company,'+
   'prof.prof_name,vakansia.quantity,case when'+ ' '+
   'vakansia.vak_st=0  then'+#39+ 'Вакансии есть'+#39+' '+  'else'+ ' '+
   #39+'Вакансий нет'+#39+' '+ 'end as vak_free from vakansia inner'+' '+
@@ -158,7 +157,7 @@ begin
          dm.doQuery.SQL.Text:='delete from vakansia  where vakansia.id_vakans='
          +dm.VaKQuery.FieldByName('id_vakans').AsString;
          dm.doQuery.ExecSQL;
-         dm.doQuery.SQL.Text:='select vakansia.position,vakansia.pay,dogovor.company,'+
+         dm.doQuery.SQL.Text:='select vakansia.id_vakans, vakansia.position,vakansia.pay,dogovor.company,'+
   'prof.prof_name,vakansia.quantity,case when'+ ' '+
   'vakansia.vak_st=0  then'+#39+ 'Вакансии есть'+#39+' '+  'else'+ ' '+
   #39+'Вакансий нет'+#39+' '+ 'end as vak_free from vakansia inner'+' '+
@@ -183,7 +182,7 @@ procedure TFrm_vak.fnd_company_EditKeyPress(Sender: TObject; var Key: Char);
 begin
 try
    Check_prof_search.Enabled:=false;
-   dm.vakQuery.SQL.Text:='select vakansia.position,vakansia.pay,dogovor.company,'+
+   dm.vakQuery.SQL.Text:='select vakansia.id_vakans,vakansia.position,vakansia.pay,dogovor.company,'+
   'prof.prof_name,vakansia.quantity,case when'+ ' '+
   'vakansia.vak_st=0  then'+#39+ 'Вакансии есть'+#39+' '+  'else'+ ' '+
   #39+'Вакансий нет'+#39+' '+ 'end as vak_free from vakansia inner'+' '+
@@ -206,7 +205,7 @@ var k,d:Integer;
 begin
 dm.doQuery.Close;
 dm.doQuery.SQL.Clear;
-dm.doQuery.SQL.Text:='select vakansia.position,vakansia.pay,dogovor.company,'+
+dm.doQuery.SQL.Text:='select vakansia.id_vakans,vakansia.position,vakansia.pay,dogovor.company,'+
   'prof.prof_name,vakansia.quantity,case when'+ ' '+
   'vakansia.vak_st=0  then'+#39+ 'Вакансии есть'+#39+' '+  'else'+ ' '+
   #39+'Вакансий нет'+#39+' '+ 'end as vak_free from vakansia inner'+' '+
@@ -324,7 +323,7 @@ begin
   QuotedStr(IntToStr(1))+')';
   ExecSQL;
   end;
-  sql.Text:='select vakansia.position,vakansia.pay,dogovor.company,'+
+  sql.Text:='select vakansia.id_vakans, vakansia.position,vakansia.pay,dogovor.company,'+
   'prof.prof_name,vakansia.quantity,case when'+ ' '+
   'vakansia.vak_st=0  then'+#39+ 'Вакансии есть'+#39+' '+  'else'+ ' '+
   #39+'Вакансий нет'+#39+' '+ 'end as vak_free from vakansia inner'+' '+
@@ -371,7 +370,7 @@ begin
      begin
      Close;
      sql.Clear;
-     SQL.Text:='select vakansia.position,vakansia.pay,dogovor.company,'+
+     SQL.Text:='select vakansia.id_vakans, vakansia.position,vakansia.pay,dogovor.company,'+
   'prof.prof_name,vakansia.quantity,case when'+ ' '+
   'vakansia.vak_st=0  then'+#39+ 'Вакансии есть'+#39+' '+  'else'+ ' '+
   #39+'Вакансий нет'+#39+' '+ 'end as vak_free from vakansia inner'+' '+
@@ -405,7 +404,7 @@ if Radio_company_grupp.Checked=true then
      begin
       close;
       sql.Clear;
-      sql.Text:='select vakansia.position,vakansia.pay,dogovor.company,'+
+      sql.Text:='select vakansia.id_vakans, vakansia.position,vakansia.pay,dogovor.company,'+
   'prof.prof_name,vakansia.quantity,case when'+ ' '+
   'vakansia.vak_st=0  then'+#39+ 'Вакансии есть'+#39+' '+  'else'+ ' '+
   #39+'Вакансий нет'+#39+' '+ 'end as vak_free from vakansia inner'+' '+
@@ -432,7 +431,7 @@ if Radio_dl_group.Checked=true then
      begin
       close;
       sql.Clear;
-      sql.Text:='select vakansia.position,vakansia.pay,dogovor.company,'+
+      sql.Text:='select  vakansia.id_vakans, vakansia.position,vakansia.pay,dogovor.company,'+
   'prof.prof_name,vakansia.quantity,case when'+ ' '+
   'vakansia.vak_st=0  then'+#39+ 'Вакансии есть'+#39+' '+  'else'+ ' '+
   #39+'Вакансий нет'+#39+' '+ 'end as vak_free from vakansia inner'+' '+
@@ -452,7 +451,7 @@ procedure TFrm_vak.SelvaklBtnClick(Sender: TObject);
 begin
 try
     dm.vakQuery.close;
-    dm.vakQuery.SQL.Text:='select vakansia.position,vakansia.pay,dogovor.company,'+
+    dm.vakQuery.SQL.Text:='select vakansia.id_vakans, vakansia.position,vakansia.pay,dogovor.company,'+
   'prof.prof_name,vakansia.quantity,case when'+ ' '+
   'vakansia.vak_st=0  then'+#39+ 'Вакансии есть'+#39+' '+  'else'+ ' '+
   #39+'Вакансий нет'+#39+' '+ 'end as vak_free from vakansia inner'+' '+
@@ -493,7 +492,7 @@ with dm.doQuery do
             +dm.vakQuery.FieldByName('id_vakans').AsString;
             ExecSQL;
                 end;
-            SQL.Text:='select vakansia.position,vakansia.pay,dogovor.company,'+
+            SQL.Text:='select vakansia.id_vakans, vakansia.position,vakansia.pay,dogovor.company,'+
   'prof.prof_name,vakansia.quantity,case when'+ ' '+
   'vakansia.vak_st=0  then'+#39+ 'Вакансии есть'+#39+' '+  'else'+ ' '+
   #39+'Вакансий нет'+#39+' '+ 'end as vak_free from vakansia inner'+' '+
