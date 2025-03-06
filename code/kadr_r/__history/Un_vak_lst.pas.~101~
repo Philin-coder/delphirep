@@ -57,7 +57,10 @@ type
     DBGrid2: TDBGrid;
     DBGrid3: TDBGrid;
     date_in_inp: TDateTimePicker;
-    dateres_inp: TDateTimePicker;
+    DateTimePicker2: TDateTimePicker;
+    beginlbl1: TStaticText;
+    endlbl: TStaticText;
+    accept_check: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -67,6 +70,9 @@ type
     procedure RadioresrselResetClick(Sender: TObject);
     procedure fnd_dol_EditKeyPress(Sender: TObject; var Key: Char);
     procedure Check_res_searchClick(Sender: TObject);
+    procedure DataresGrdDrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumn; State: TGridDrawState);
+    procedure accept_checkClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -76,58 +82,102 @@ type
 var
   Frm_vaklst: TFrm_vaklst;
   var d_flag:Integer;
+
 implementation
 
 uses Un_dm, Unmain, DB;
 
 {$R *.dfm}
-procedure TFrm_vaklst.Check_res_searchClick(Sender: TObject);
+procedure TFrm_vaklst.accept_checkClick(Sender: TObject);
 begin
-// work here
-if Check_res_search.Checked=true then
+if accept_check.Checked=true then
 begin
- dm.resQuery.SQL.Text:='select vakanlist.nomvlist, questionarie.fio,'+' '+
-  'vakanlist.datein,case when vakanlist.res=1'+ ' '+
- 'then'+' '+#39+ 'Принят'+#39+' '+ 'else'+' '+#39'Не принят'+#39+' '+ 'end as vak_res,'+
-  'vakanlist.dateres,vakansia.position from vakanlist inner join  questionarie'+
-  ' '+'on questionarie.ank_nom=vakanlist.ank_nom inner join vakansia on'+' '+
-    'vakansia.id_vakans=vakanlist.id_vakans   where 1=1'+' '+
-    'and vakanlist.res=0'+' '+
-     '  AND ABS(DATEDIFF(DAY, :date_in, :date_res)) <= :days_diff';
+      dM.resQuery.FieldByName('vak_res').Value:='Не принят';
 
-dm.resQuery.Parameters.ParamByName('date_in').AsDate := date_in_inp.Date;
-  dm.resQuery.Parameters.ParamByName('date_res').AsDate := dateres_inp.Date;
-  dm.resQuery.Parameters.ParamByName('days_diff').AsInteger := 3;
-
-
-
-
-dm.resQuery.Open;
 end
 else
 begin
-with dm.resQuery do
+    DM.resQuery.FieldByName('vak_res').Value:='принят';
+end;
+end;
+
+procedure TFrm_vaklst.Check_res_searchClick(Sender: TObject);
+var  StartDate, EndDate: TDateTime;
 begin
-close;
-SQL.Text:='select vakanlist.nomvlist, questionarie.fio,'+' '+
-'vakanlist.datein,case when vakanlist.res=1'+ ' '+
- 'then'+' '+#39+ 'Принят'+#39+' '+ 'else'+' '+#39'Не принят'+#39+' '+ 'end as vak_res,'+
-  'vakanlist.dateres,vakansia.position from vakanlist inner join  questionarie'+
-  ' '+'on questionarie.ank_nom=vakanlist.ank_nom inner join vakansia on'+' '+
-    'vakansia.id_vakans=vakanlist.id_vakans   where 1=1';
-  Open;
-  Close;
-  Open;
-end;
-   dm.resQuery.Close;
-   dm.resQuery.Open;
-
-
+  dm.resQuery.Close;
+  dm.resQuery.SQL.Clear;
+  dm.resQuery.Parameters.Clear;
+  if Check_res_search.Checked then
+  begin
+    StartDate := date_in_inp.Date - 3;
+    EndDate := date_in_inp.Date + 3;
+    dm.resQuery.SQL.Text :=
+      'SELECT ' +
+      '  vakanlist.nomvlist, ' +
+      '  questionarie.fio, ' +
+      '  vakanlist.datein, ' +
+      '  CASE WHEN vakanlist.res = 1 ' +
+      '    THEN ''Принят'' ELSE ''Не принят'' ' +
+      '  END AS vak_res, ' +
+      '  vakanlist.dateres, ' +
+      '  vakansia.position ' +
+      'FROM vakanlist ' +
+      'INNER JOIN questionarie ' +
+      '  ON questionarie.ank_nom = vakanlist.ank_nom ' +
+      'INNER JOIN vakansia ' +
+      '  ON vakansia.id_vakans = vakanlist.id_vakans ' +
+      'WHERE 1=1 ' +
+      '  AND vakanlist.res = 0 ' +
+      '  AND vakanlist.dateres BETWEEN :start_date AND :end_date';
+    dm.resQuery.Parameters.ParamByName('start_date').DataType := ftDateTime;
+    dm.resQuery.Parameters.ParamByName('start_date').Value := StartDate;
+    dm.resQuery.Parameters.ParamByName('end_date').DataType := ftDateTime;
+    dm.resQuery.Parameters.ParamByName('end_date').Value := EndDate;
+  end
+  else
+  begin
+    dm.resQuery.SQL.Text :=
+      'SELECT ' +
+      '  vakanlist.nomvlist, ' +
+      '  questionarie.fio, ' +
+      '  vakanlist.datein, ' +
+      '  CASE WHEN vakanlist.res = 1 ' +
+      '    THEN ''Принят'' ELSE ''Не принят'' ' +
+      '  END AS vak_res, ' +
+      '  vakanlist.dateres, ' +
+      '  vakansia.position ' +
+      'FROM vakanlist ' +
+      'INNER JOIN questionarie ' +
+      '  ON questionarie.ank_nom = vakanlist.ank_nom ' +
+      'INNER JOIN vakansia ' +
+      '  ON vakansia.id_vakans = vakanlist.id_vakans ' +
+      'WHERE 1=1';
   end;
+  try
+    dm.resQuery.Open;
+  except
+    on E: Exception do
+      ShowMessage('Ошибка выполнения запроса: ' + E.Message);
+  end;
+end;
+
+procedure TFrm_vaklst.DataresGrdDrawColumnCell(Sender: TObject;
+  const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+begin
+//ShowMessage(dm.resQuery.FieldByName('vak_res').Value);
+if (DM.resQuery.FieldByName('vak_res').Value='Не принят')   then
+begin
+DataresGrd.Canvas.Brush.Color:=clRed;
+DataresGrd.Canvas.Font.Color:=ClWhite;
+DataresGrd.Canvas.FillRect(Rect);
+if Column.Alignment = taRightJustify then        //Если выравнивание столбца по правому краю
+DataresGrd.Canvas.TextOut(Rect.Right-2- DataresGrd.Canvas.TextWidth(Column.Field.Text), Rect.Top+2, Column.Field.Text)
+else                                            //иначе
+DataresGrd.Canvas.TextOut(Rect.Left +2,Rect.Top+2,Column.Field.Text);
+end;
 
 
 end;
-
 
 procedure TFrm_vaklst.fnd_dol_EditKeyPress(Sender: TObject; var Key: Char);
 begin

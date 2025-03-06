@@ -57,7 +57,7 @@ type
     DBGrid2: TDBGrid;
     DBGrid3: TDBGrid;
     date_in_inp: TDateTimePicker;
-    dateres_inp: TDateTimePicker;
+    DateTimePicker2: TDateTimePicker;
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -82,66 +82,64 @@ uses Un_dm, Unmain, DB;
 
 {$R *.dfm}
 procedure TFrm_vaklst.Check_res_searchClick(Sender: TObject);
+var  StartDate, EndDate: TDateTime;
 begin
-// work here
-if Check_res_search.Checked=true then
-begin
-dm.resQuery.Close;
-dm.resQuery.SQL.Clear;
-dm.resQuery.Parameters.Clear;
-dm.resQuery.SQL.Text :=
-  'SELECT ' +
-  '  vakanlist.nomvlist, ' +
-  '  questionarie.fio, ' +
-  '  vakanlist.datein, ' +
-  '  CASE WHEN vakanlist.res = 1 ' +
-  '    THEN ''Принят'' ELSE ''Не принят'' ' +
-  '  END AS vak_res, ' +
-  '  vakanlist.dateres, ' +
-  '  vakansia.position ' +
-  'FROM vakanlist ' +
-  'INNER JOIN questionarie ' +
-  '  ON questionarie.ank_nom = vakanlist.ank_nom ' +
-  'INNER JOIN vakansia ' +
-  '  ON vakansia.id_vakans = vakanlist.id_vakans ' +
-  'WHERE 1=1 ' +
-  '  AND vakanlist.res = 0 ' +  // Условие из Delphi
-  '  AND ABS(DATEDIFF(DAY, :date_in, :date_res)) <= :days_diff ' +
-  '  AND (:date_in_filter IS NULL OR vakanlist.datein >= :date_in_filter) ' +  // Условие из SQL
-  '  AND (:date_res_filter IS NULL OR vakanlist.dateres <= :date_res_filter)';  // Условие из SQL
-
-// Передаем параметры
-dm.resQuery.Parameters.ParamByName('date_in').Value := date_in_inp.Date;
-dm.resQuery.Parameters.ParamByName('date_res').Value := dateres_inp.Date;
-dm.resQuery.Parameters.ParamByName('days_diff').Value := 3;
-dm.resQuery.Parameters.ParamByName('date_in_filter').Value := Null; // Используем Null если не нужно фильтровать
-  dm.resQuery.Parameters.ParamByName('date_res_filter').Value := Null;
-dm.resQuery.Open;
-end
-else
-begin
-with dm.resQuery do
-begin
-close;
-SQL.Text:='select vakanlist.nomvlist, questionarie.fio,'+' '+
-'vakanlist.datein,case when vakanlist.res=1'+ ' '+
- 'then'+' '+#39+ 'Принят'+#39+' '+ 'else'+' '+#39'Не принят'+#39+' '+ 'end as vak_res,'+
-  'vakanlist.dateres,vakansia.position from vakanlist inner join  questionarie'+
-  ' '+'on questionarie.ank_nom=vakanlist.ank_nom inner join vakansia on'+' '+
-    'vakansia.id_vakans=vakanlist.id_vakans   where 1=1';
-  Open;
-  Close;
-  Open;
-end;
-   dm.resQuery.Close;
-   dm.resQuery.Open;
-
-
+  dm.resQuery.Close;
+  dm.resQuery.SQL.Clear;
+  dm.resQuery.Parameters.Clear;
+  if Check_res_search.Checked then
+  begin
+    StartDate := date_in_inp.Date - 3;
+    EndDate := date_in_inp.Date + 3;
+    dm.resQuery.SQL.Text :=
+      'SELECT ' +
+      '  vakanlist.nomvlist, ' +
+      '  questionarie.fio, ' +
+      '  vakanlist.datein, ' +
+      '  CASE WHEN vakanlist.res = 1 ' +
+      '    THEN ''Принят'' ELSE ''Не принят'' ' +
+      '  END AS vak_res, ' +
+      '  vakanlist.dateres, ' +
+      '  vakansia.position ' +
+      'FROM vakanlist ' +
+      'INNER JOIN questionarie ' +
+      '  ON questionarie.ank_nom = vakanlist.ank_nom ' +
+      'INNER JOIN vakansia ' +
+      '  ON vakansia.id_vakans = vakanlist.id_vakans ' +
+      'WHERE 1=1 ' +
+      '  AND vakanlist.res = 0 ' +
+      '  AND vakanlist.dateres BETWEEN :start_date AND :end_date';
+    dm.resQuery.Parameters.ParamByName('start_date').DataType := ftDateTime;
+    dm.resQuery.Parameters.ParamByName('start_date').Value := StartDate;
+    dm.resQuery.Parameters.ParamByName('end_date').DataType := ftDateTime;
+    dm.resQuery.Parameters.ParamByName('end_date').Value := EndDate;
+  end
+  else
+  begin
+    dm.resQuery.SQL.Text :=
+      'SELECT ' +
+      '  vakanlist.nomvlist, ' +
+      '  questionarie.fio, ' +
+      '  vakanlist.datein, ' +
+      '  CASE WHEN vakanlist.res = 1 ' +
+      '    THEN ''Принят'' ELSE ''Не принят'' ' +
+      '  END AS vak_res, ' +
+      '  vakanlist.dateres, ' +
+      '  vakansia.position ' +
+      'FROM vakanlist ' +
+      'INNER JOIN questionarie ' +
+      '  ON questionarie.ank_nom = vakanlist.ank_nom ' +
+      'INNER JOIN vakansia ' +
+      '  ON vakansia.id_vakans = vakanlist.id_vakans ' +
+      'WHERE 1=1';
   end;
-
-
+  try
+    dm.resQuery.Open;
+  except
+    on E: Exception do
+      ShowMessage('Ошибка выполнения запроса: ' + E.Message);
+  end;
 end;
-
 
 procedure TFrm_vaklst.fnd_dol_EditKeyPress(Sender: TObject; var Key: Char);
 begin

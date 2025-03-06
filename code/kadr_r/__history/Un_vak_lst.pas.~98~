@@ -58,6 +58,8 @@ type
     DBGrid3: TDBGrid;
     date_in_inp: TDateTimePicker;
     DateTimePicker2: TDateTimePicker;
+    beginlbl1: TStaticText;
+    endlbl: TStaticText;
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -67,6 +69,8 @@ type
     procedure RadioresrselResetClick(Sender: TObject);
     procedure fnd_dol_EditKeyPress(Sender: TObject; var Key: Char);
     procedure Check_res_searchClick(Sender: TObject);
+    procedure DataresGrdDrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumn; State: TGridDrawState);
   private
     { Private declarations }
   public
@@ -84,19 +88,14 @@ uses Un_dm, Unmain, DB;
 procedure TFrm_vaklst.Check_res_searchClick(Sender: TObject);
 var  StartDate, EndDate: TDateTime;
 begin
-
   dm.resQuery.Close;
   dm.resQuery.SQL.Clear;
   dm.resQuery.Parameters.Clear;
-
   if Check_res_search.Checked then
   begin
-    // Вычисляем даты в Delphi
     StartDate := date_in_inp.Date - 3;
-    EndDate := date_in_inp.Date + 3;   
-
-    // Формируем SQL-запрос
-    dm.resQuery.SQL.Text := 
+    EndDate := date_in_inp.Date + 3;
+    dm.resQuery.SQL.Text :=
       'SELECT ' +
       '  vakanlist.nomvlist, ' +
       '  questionarie.fio, ' +
@@ -112,20 +111,16 @@ begin
       'INNER JOIN vakansia ' +
       '  ON vakansia.id_vakans = vakanlist.id_vakans ' +
       'WHERE 1=1 ' +
-      '  AND vakanlist.res = 0 ' +               // Фильтр по статусу
-      '  AND vakanlist.dateres BETWEEN :start_date AND :end_date'; // BETWEEN
-
-    // Привязываем параметры
+      '  AND vakanlist.res = 0 ' +
+      '  AND vakanlist.dateres BETWEEN :start_date AND :end_date';
     dm.resQuery.Parameters.ParamByName('start_date').DataType := ftDateTime;
     dm.resQuery.Parameters.ParamByName('start_date').Value := StartDate;
-
     dm.resQuery.Parameters.ParamByName('end_date').DataType := ftDateTime;
     dm.resQuery.Parameters.ParamByName('end_date').Value := EndDate;
   end
   else
   begin
-    // Запрос без фильтрации по датам
-    dm.resQuery.SQL.Text := 
+    dm.resQuery.SQL.Text :=
       'SELECT ' +
       '  vakanlist.nomvlist, ' +
       '  questionarie.fio, ' +
@@ -142,14 +137,28 @@ begin
       '  ON vakansia.id_vakans = vakanlist.id_vakans ' +
       'WHERE 1=1';
   end;
-
-  // Выполняем запрос
   try
     dm.resQuery.Open;
   except
     on E: Exception do
       ShowMessage('Ошибка выполнения запроса: ' + E.Message);
   end;
+end;
+
+procedure TFrm_vaklst.DataresGrdDrawColumnCell(Sender: TObject;
+  const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+begin
+if (DM.resQuery.FieldByName('vakanlist.res ').Value=1)   then
+begin
+DataresGrd.Canvas.Brush.Color:=ClGreen;                //Изменить цвет фона
+DataresGrd.Canvas.Font.Color:=ClWhite;                 //Изменить цвет шрифта
+DataresGrd.Canvas.FillRect(Rect);
+if Column.Alignment = taRightJustify then        //Если выравнивание столбца по правому краю
+DataresGrd.Canvas.TextOut(Rect.Right-2- DBGrid1.Canvas.TextWidth(Column.Field.Text), Rect.Top+2, Column.Field.Text)
+else                                            //иначе
+DataresGrd.Canvas.TextOut(Rect.Left +2,Rect.Top+2,Column.Field.Text);
+end;
+
 
 end;
 

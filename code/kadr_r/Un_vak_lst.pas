@@ -58,6 +58,8 @@ type
     DBGrid3: TDBGrid;
     date_in_inp: TDateTimePicker;
     DateTimePicker2: TDateTimePicker;
+    beginlbl1: TStaticText;
+    endlbl: TStaticText;
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -67,6 +69,8 @@ type
     procedure RadioresrselResetClick(Sender: TObject);
     procedure fnd_dol_EditKeyPress(Sender: TObject; var Key: Char);
     procedure Check_res_searchClick(Sender: TObject);
+    procedure DataresGrdDrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumn; State: TGridDrawState);
   private
     { Private declarations }
   public
@@ -76,6 +80,8 @@ type
 var
   Frm_vaklst: TFrm_vaklst;
   var d_flag:Integer;
+  var accept_flag:Integer;
+
 implementation
 
 uses Un_dm, Unmain, DB;
@@ -132,6 +138,7 @@ begin
       'INNER JOIN vakansia ' +
       '  ON vakansia.id_vakans = vakanlist.id_vakans ' +
       'WHERE 1=1';
+      DataresGrd.Canvas.Brush.Color:=clWindow;
   end;
   try
     dm.resQuery.Open;
@@ -139,6 +146,23 @@ begin
     on E: Exception do
       ShowMessage('Ошибка выполнения запроса: ' + E.Message);
   end;
+end;
+
+procedure TFrm_vaklst.DataresGrdDrawColumnCell(Sender: TObject;
+  const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+begin
+if (DM.resQuery.FieldByName('vak_res').Value='Не принят')   then
+begin
+DataresGrd.Canvas.Brush.Color:=clRed;
+DataresGrd.Canvas.Font.Color:=ClWhite;
+DataresGrd.Canvas.FillRect(Rect);
+if Column.Alignment = taRightJustify then        //Если выравнивание столбца по правому краю
+DataresGrd.Canvas.TextOut(Rect.Right-2- DataresGrd.Canvas.TextWidth(Column.Field.Text), Rect.Top+2, Column.Field.Text)
+else                                            //иначе
+DataresGrd.Canvas.TextOut(Rect.Left +2,Rect.Top+2,Column.Field.Text);
+end;
+
+
 end;
 
 procedure TFrm_vaklst.fnd_dol_EditKeyPress(Sender: TObject; var Key: Char);
@@ -195,6 +219,7 @@ begin
   (Components[d] as TDateTimePicker).Date:=Now;
 end;
 end;
+
 end;
 
 procedure TFrm_vaklst.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -210,6 +235,7 @@ begin
 end;
 end;
 d_flag:=0;
+
 
 Check_res_search.Enabled:=true;
 Check_res_search.Checked:=False;
@@ -317,6 +343,7 @@ end;
   Check_res_search.Enabled:=true;
   Check_res_search.Checked:=False;
   CondresfioEdit.EditLabel.Caption:='Точное совпадение (по фио)';
+  DataresGrd.Canvas.Brush.Color:=clWindow;
 end;
 
 procedure TFrm_vaklst.Radio_dl_r_groupClick(Sender: TObject);
