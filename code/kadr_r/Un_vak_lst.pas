@@ -228,7 +228,7 @@ procedure TFrm_vaklst.dlresBtnClick(Sender: TObject);
 begin
         dm.doQuery.Close;
         dm.doQuery.SQL.Clear;
-        dm.doQuery.SQL.Text:='delete from vakanlist  where vakanlist.vakanlist.nomvlist='
+        dm.doQuery.SQL.Text:='delete from vakanlist  where vakanlist.nomvlist='
          +dm.resQuery.FieldByName('nomvlist').AsString;
          dm.doQuery.ExecSQL;
          dm.doQuery.SQL.Text:=

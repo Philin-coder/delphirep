@@ -10,6 +10,16 @@ type
     Connection: TADOConnection;
     ProfQuery: TADOQuery;
     ProfDS: TDataSource;
+    doQuery: TADOQuery;
+    doDS: TDataSource;
+    dogQuery: TADOQuery;
+    dogDS: TDataSource;
+    ankQuery: TADOQuery;
+    ankDS: TDataSource;
+    VaKQuery: TADOQuery;
+    VakDS: TDataSource;
+    resQuery: TADOQuery;
+    resDS: TDataSource;
   private
     { Private declarations }
   public
@@ -21,7 +31,7 @@ var
 
 implementation
 
-uses Unmain, Un_pfor;
+uses Unmain, Un_pfor, Un_dog, Un_ank, Un_vak;
 
 {$R *.dfm}
 

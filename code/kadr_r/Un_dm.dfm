@@ -135,4 +135,15 @@ object DM: TDM
     Left = 296
     Top = 160
   end
+  object reportQuery: TADOQuery
+    Connection = Connection
+    Parameters = <>
+    Left = 344
+    Top = 104
+  end
+  object reportDS: TDataSource
+    DataSet = reportQuery
+    Left = 352
+    Top = 168
+  end
 end

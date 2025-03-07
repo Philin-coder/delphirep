@@ -20,6 +20,8 @@ type
     VakDS: TDataSource;
     resQuery: TADOQuery;
     resDS: TDataSource;
+    reportQuery: TADOQuery;
+    reportDS: TDataSource;
   private
     { Private declarations }
   public
