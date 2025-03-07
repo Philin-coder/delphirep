@@ -23,12 +23,11 @@ type
     DataresGrd: TDBGrid;
     ButtonvakBox: TGroupBox;
     SelreslBtn: TButton;
-    InsvakPage: TTabSheet;
-    InpvakBox: TGroupBox;
-    pay_inp: TLabeledEdit;
-    DataOutdvakBox: TGroupBox;
-    vakinpBtnBox: TGroupBox;
-    ins_vak_Btn: TButton;
+    InsresPage: TTabSheet;
+    InpresBox: TGroupBox;
+    DataOutdresBox: TGroupBox;
+    resinpBtnBox: TGroupBox;
+    ins_res_Btn: TButton;
     UpdvakPage: TTabSheet;
     UpddataBox: TGroupBox;
     delvaklPage: TTabSheet;
@@ -41,18 +40,13 @@ type
     UpddatankBox: TGroupBox;
     Upd_vak_st_Btn: TButton;
     compvakLbl: TLabel;
-    compvakDBL: TDBLookupComboBox;
-    position_inp: TLabeledEdit;
+    resankDBL: TDBLookupComboBox;
     prfvakLbl: TLabel;
-    profvakdbl: TDBLookupComboBox;
-    quant_inp: TLabeledEdit;
-    vakstlbl: TLabel;
-    vakstBox: TComboBox;
     DBLookupComboBox_prof: TDBLookupComboBox;
     vakprofLbl: TLabel;
     vak_stBox: TComboBox;
     vak_st_lbl: TLabel;
-    DBGrid1: TDBGrid;
+    insresgrd: TDBGrid;
     DBGrid2: TDBGrid;
     DBGrid3: TDBGrid;
     date_in_inp: TDateTimePicker;
@@ -61,6 +55,14 @@ type
     endlbl: TStaticText;
     aceptBox: TCheckBox;
     Check_res_search: TCheckBox;
+    res_dateinlbl: TLabel;
+    res_Datein_inp: TDateTimePicker;
+    resEdit: TEdit;
+    resUpDown: TUpDown;
+    resdataLbl: TLabel;
+    res_Date_datares_inp: TDateTimePicker;
+    resvakDBL: TDBLookupComboBox;
+    resvakLbl: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -188,7 +190,7 @@ begin
     end;
   end;
 
-  // Отрисовка фона и текста
+
   DataresGrd.Canvas.FillRect(Rect);
   if Column.Alignment = taRightJustify then
     DataresGrd.Canvas.TextOut(
@@ -230,6 +232,8 @@ end;
 procedure TFrm_vaklst.FormActivate(Sender: TObject);
 var k,d:Integer;
 begin
+resEdit.Clear;
+resUpDown.Position:=0;
 dm.doQuery.Close;
 dm.doQuery.SQL.Clear;
 dm.doQuery.SQL.Text:='select vakanlist.nomvlist, questionarie.fio,'+' '+
@@ -242,6 +246,7 @@ Upd_vak_st_Btn.Caption:='Изменить';
 dm.doQuery.Open;
 dm.VaKQuery.Open;
 dm.resQuery.Open;
+dm.ankQuery.Open;
 with Frm_vaklst do
 for k := 0 to ComponentCount - 1 do
 begin
@@ -265,6 +270,8 @@ end;
 procedure TFrm_vaklst.FormClose(Sender: TObject; var Action: TCloseAction);
 var k,e,q:Integer;
 begin
+resUpDown.Position:=0;
+resEdit.Clear;
 with DM do
 begin
 for q := 0 to ComponentCount - 1 do
@@ -276,8 +283,6 @@ end;
 end;
 d_flag:=0;
 accept_flag:=0;
-
-
 Check_res_search.Enabled:=true;
 Check_res_search.Checked:=False;
 CondresfioEdit.EditLabel.Caption:='Точное совпадение (по фио)';

@@ -23,12 +23,11 @@ type
     DataresGrd: TDBGrid;
     ButtonvakBox: TGroupBox;
     SelreslBtn: TButton;
-    InsvakPage: TTabSheet;
-    InpvakBox: TGroupBox;
-    pay_inp: TLabeledEdit;
-    DataOutdvakBox: TGroupBox;
-    vakinpBtnBox: TGroupBox;
-    ins_vak_Btn: TButton;
+    InsresPage: TTabSheet;
+    InpresBox: TGroupBox;
+    DataOutdresBox: TGroupBox;
+    resinpBtnBox: TGroupBox;
+    ins_res_Btn: TButton;
     UpdvakPage: TTabSheet;
     UpddataBox: TGroupBox;
     delvaklPage: TTabSheet;
@@ -41,18 +40,13 @@ type
     UpddatankBox: TGroupBox;
     Upd_vak_st_Btn: TButton;
     compvakLbl: TLabel;
-    compvakDBL: TDBLookupComboBox;
-    position_inp: TLabeledEdit;
+    resankDBL: TDBLookupComboBox;
     prfvakLbl: TLabel;
-    profvakdbl: TDBLookupComboBox;
-    quant_inp: TLabeledEdit;
-    vakstlbl: TLabel;
-    vakstBox: TComboBox;
     DBLookupComboBox_prof: TDBLookupComboBox;
     vakprofLbl: TLabel;
     vak_stBox: TComboBox;
     vak_st_lbl: TLabel;
-    DBGrid1: TDBGrid;
+    insresgrd: TDBGrid;
     DBGrid2: TDBGrid;
     DBGrid3: TDBGrid;
     date_in_inp: TDateTimePicker;
@@ -61,6 +55,14 @@ type
     endlbl: TStaticText;
     aceptBox: TCheckBox;
     Check_res_search: TCheckBox;
+    res_dateinlbl: TLabel;
+    res_Datein_inp: TDateTimePicker;
+    resEdit: TEdit;
+    resUpDown: TUpDown;
+    resdataLbl: TLabel;
+    res_Date_datares_inp: TDateTimePicker;
+    resvakDBL: TDBLookupComboBox;
+    resvakLbl: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -73,6 +75,7 @@ type
     procedure DataresGrdDrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
     procedure aceptBoxClick(Sender: TObject);
+    procedure ins_res_BtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -230,6 +233,8 @@ end;
 procedure TFrm_vaklst.FormActivate(Sender: TObject);
 var k,d:Integer;
 begin
+resEdit.Clear;
+resUpDown.Position:=0;
 dm.doQuery.Close;
 dm.doQuery.SQL.Clear;
 dm.doQuery.SQL.Text:='select vakanlist.nomvlist, questionarie.fio,'+' '+
@@ -242,6 +247,7 @@ Upd_vak_st_Btn.Caption:='Изменить';
 dm.doQuery.Open;
 dm.VaKQuery.Open;
 dm.resQuery.Open;
+dm.ankQuery.Open;
 with Frm_vaklst do
 for k := 0 to ComponentCount - 1 do
 begin
@@ -265,6 +271,8 @@ end;
 procedure TFrm_vaklst.FormClose(Sender: TObject; var Action: TCloseAction);
 var k,e,q:Integer;
 begin
+resUpDown.Position:=0;
+resEdit.Clear;
 with DM do
 begin
 for q := 0 to ComponentCount - 1 do
@@ -276,8 +284,6 @@ end;
 end;
 d_flag:=0;
 accept_flag:=0;
-
-
 Check_res_search.Enabled:=true;
 Check_res_search.Checked:=False;
 CondresfioEdit.EditLabel.Caption:='Точное совпадение (по фио)';
@@ -318,6 +324,52 @@ begin
   (Components[d] as TDateTimePicker).Date:=Now;
 end;
 end;
+end;
+
+procedure TFrm_vaklst.ins_res_BtnClick(Sender: TObject);
+begin
+try
+with dm.resQuery do
+begin
+  Active:=false;
+  SQL.Clear;
+  SQL.Text:='INSERT INTO vakanlist(ank_nom,datein,res,dateres,id_vakans)VALUES('
+  +dm.ankQuery.FieldByName('ank_nom').AsString+','+
+  QuotedStr(FrmMain.DateToStr_(res_Datein_inp.Date))+','
+  +QuotedStr(resEdit.Text)+','+
+  QuotedStr(FrmMain.DateToStr_(res_Date_datares_inp.Date))+','
+  +dm.VaKQuery.FieldByName('id_vakans').AsString +')';
+  ExecSQL;
+  sql.Text:=
+  'SELECT'+
+      '  vakanlist.nomvlist, ' +
+      '  questionarie.fio, ' +
+      '  vakanlist.datein, ' +
+      '  CASE WHEN vakanlist.res = 1 ' +
+      '    THEN ''Принят'' ELSE ''Не принят'' ' +
+      '  END AS vak_res, ' +
+      '  vakanlist.dateres, ' +
+      '  vakansia.position ' +
+      'FROM vakanlist ' +
+      'INNER JOIN questionarie ' +
+      '  ON questionarie.ank_nom = vakanlist.ank_nom ' +
+      'INNER JOIN vakansia ' +
+      '  ON vakansia.id_vakans = vakanlist.id_vakans ' +
+      'WHERE 1=1 ' +
+      '  AND vakanlist.res = 0';
+  Active:=true;
+  close;
+  open;
+end;
+  MessageDlg('Изменения внесены',mtInformation,[mbOK],0);
+  Beep();
+except
+begin
+  ShowMessage('wrong situation');
+  Exit;
+end;
+end;
+
 end;
 
 procedure TFrm_vaklst.Radio_fio_r_gruppClick(Sender: TObject);

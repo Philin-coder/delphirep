@@ -23,12 +23,11 @@ type
     DataresGrd: TDBGrid;
     ButtonvakBox: TGroupBox;
     SelreslBtn: TButton;
-    InsvakPage: TTabSheet;
-    InpvakBox: TGroupBox;
-    pay_inp: TLabeledEdit;
-    DataOutdvakBox: TGroupBox;
-    vakinpBtnBox: TGroupBox;
-    ins_vak_Btn: TButton;
+    InsresPage: TTabSheet;
+    InpresBox: TGroupBox;
+    DataOutdresBox: TGroupBox;
+    resinpBtnBox: TGroupBox;
+    ins_res_Btn: TButton;
     UpdvakPage: TTabSheet;
     UpddataBox: TGroupBox;
     delvaklPage: TTabSheet;
@@ -41,18 +40,15 @@ type
     UpddatankBox: TGroupBox;
     Upd_vak_st_Btn: TButton;
     compvakLbl: TLabel;
-    compvakDBL: TDBLookupComboBox;
-    position_inp: TLabeledEdit;
+    resankDBL: TDBLookupComboBox;
     prfvakLbl: TLabel;
-    profvakdbl: TDBLookupComboBox;
-    quant_inp: TLabeledEdit;
     vakstlbl: TLabel;
     vakstBox: TComboBox;
     DBLookupComboBox_prof: TDBLookupComboBox;
     vakprofLbl: TLabel;
     vak_stBox: TComboBox;
     vak_st_lbl: TLabel;
-    DBGrid1: TDBGrid;
+    insresgrd: TDBGrid;
     DBGrid2: TDBGrid;
     DBGrid3: TDBGrid;
     date_in_inp: TDateTimePicker;
@@ -61,6 +57,12 @@ type
     endlbl: TStaticText;
     aceptBox: TCheckBox;
     Check_res_search: TCheckBox;
+    res_dateinlbl: TLabel;
+    res_Datein_inp: TDateTimePicker;
+    resEdit: TEdit;
+    resUpDown: TUpDown;
+    resdataLbl: TLabel;
+    res_Date_datares_inp: TDateTimePicker;
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -94,7 +96,6 @@ begin
 if aceptBox.Checked  then
 begin
   accept_flag:=1;
-
 end
 else
 begin
@@ -166,16 +167,16 @@ end;
 procedure TFrm_vaklst.DataresGrdDrawColumnCell(Sender: TObject;
   const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
 begin
- // Определение цветов в зависимости от флага и значения поля
+
   if accept_flag = 0 then
   begin
-    // Возвращаем стандартные цвета
+
     DataresGrd.Canvas.Brush.Color := DataresGrd.Color;
     DataresGrd.Canvas.Font.Color := DataresGrd.Font.Color;
   end
   else
   begin
-    // Проверяем условие только если accept_flag = 1
+
     if DM.resQuery.FieldByName('vak_res').AsString = 'Не принят' then
     begin
       DataresGrd.Canvas.Brush.Color := clRed;
@@ -189,7 +190,7 @@ begin
     end;
   end;
 
-  // Отрисовка фона и текста
+
   DataresGrd.Canvas.FillRect(Rect);
   if Column.Alignment = taRightJustify then
     DataresGrd.Canvas.TextOut(
@@ -231,6 +232,8 @@ end;
 procedure TFrm_vaklst.FormActivate(Sender: TObject);
 var k,d:Integer;
 begin
+resEdit.Clear;
+resUpDown.Position:=0;
 dm.doQuery.Close;
 dm.doQuery.SQL.Clear;
 dm.doQuery.SQL.Text:='select vakanlist.nomvlist, questionarie.fio,'+' '+
@@ -260,12 +263,14 @@ begin
   (Components[d] as TDateTimePicker).Date:=Now;
 end;
 end;
-
+accept_flag:=0;
 end;
 
 procedure TFrm_vaklst.FormClose(Sender: TObject; var Action: TCloseAction);
 var k,e,q:Integer;
 begin
+resUpDown.Position:=0;
+resEdit.Clear;
 with DM do
 begin
 for q := 0 to ComponentCount - 1 do
@@ -276,8 +281,7 @@ begin
 end;
 end;
 d_flag:=0;
-
-
+accept_flag:=0;
 Check_res_search.Enabled:=true;
 Check_res_search.Checked:=False;
 CondresfioEdit.EditLabel.Caption:='Точное совпадение (по фио)';
@@ -352,6 +356,7 @@ var i,j:Integer;
 begin
  if RadioresrselReset.Checked=True then
 begin
+accept_flag:=0;
   with Frm_vaklst do
     for I := 0 to ComponentCount - 1 do
      begin
