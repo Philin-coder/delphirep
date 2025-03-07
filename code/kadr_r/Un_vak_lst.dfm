@@ -21,7 +21,7 @@ object Frm_vaklst: TFrm_vaklst
     Top = 0
     Width = 850
     Height = 616
-    ActivePage = UpdvakPage
+    ActivePage = delreslPage
     Align = alClient
     TabOrder = 0
     object SelresPage: TTabSheet
@@ -331,7 +331,6 @@ object Frm_vaklst: TFrm_vaklst
           Date = 45723.511141608800000000
           Time = 45723.511141608800000000
           TabOrder = 1
-          ExplicitTop = 106
         end
         object resEdit: TEdit
           Left = 191
@@ -344,7 +343,7 @@ object Frm_vaklst: TFrm_vaklst
           Text = '0'
         end
         object resUpDown: TUpDown
-          Left = 164
+          Left = 175
           Top = 180
           Width = 21
           Height = 21
@@ -384,8 +383,6 @@ object Frm_vaklst: TFrm_vaklst
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
-        ExplicitTop = 369
-        ExplicitHeight = 176
         object insresgrd: TDBGrid
           Left = 2
           Top = 15
@@ -464,22 +461,22 @@ object Frm_vaklst: TFrm_vaklst
         end
       end
     end
-    object UpdvakPage: TTabSheet
-      Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1074#1072#1082#1072#1085#1089#1080#1080
+    object UpdresPage: TTabSheet
+      Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1088#1082#1079#1091#1083#1100#1090#1072#1090#1072#1093' '#1089#1086#1073#1077#1089#1077#1076#1086#1074#1072#1085#1080#1103
       ImageIndex = 2
       object UpddataBox: TGroupBox
         Left = 0
-        Top = 143
+        Top = 200
         Width = 842
-        Height = 445
+        Height = 388
         Align = alBottom
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object DBGrid2: TDBGrid
+        object resUpdGrd: TDBGrid
           Left = 2
           Top = 15
           Width = 838
-          Height = 428
+          Height = 371
           Align = alClient
           DataSource = DM.resDS
           TabOrder = 0
@@ -533,73 +530,101 @@ object Frm_vaklst: TFrm_vaklst
             end>
         end
       end
-      object UpddatankBox: TGroupBox
+      object UpddataresBox: TGroupBox
         Left = 0
         Top = 0
         Width = 842
-        Height = 143
+        Height = 200
         Align = alClient
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
         DesignSize = (
           842
-          143)
-        object vakprofLbl: TLabel
-          Left = 104
-          Top = 72
+          200)
+        object resprofLbl: TLabel
+          Left = 22
+          Top = 46
+          Width = 47
+          Height = 13
+          Anchors = [akLeft, akTop, akRight]
+          Caption = #1042#1072#1082#1072#1085#1089#1080#1103
+        end
+        object resanklbl: TLabel
+          Left = 56
+          Top = 78
           Width = 37
           Height = 13
           Anchors = [akLeft, akTop, akRight]
           Caption = #1040#1085#1082#1077#1090#1072
         end
-        object vak_st_lbl: TLabel
-          Left = 94
-          Top = 18
-          Width = 36
-          Height = 13
-          Caption = #1057#1090#1072#1090#1091#1089
-        end
-        object Upd_vak_st_Btn: TButton
-          Left = 240
-          Top = 103
+        object Upd_res_st_Btn: TButton
+          Left = 232
+          Top = 152
           Width = 314
           Height = 25
           Align = alCustom
           Anchors = [akLeft, akTop, akRight]
           Caption = #1048#1079#1084#1077#1085#1080#1090#1100
           TabOrder = 0
+          OnClick = Upd_res_st_BtnClick
         end
-        object DBLookupComboBox_prof: TDBLookupComboBox
-          Left = 147
-          Top = 64
+        object DBLookupComboBox_ank: TDBLookupComboBox
+          Left = 104
+          Top = 46
           Width = 687
           Height = 21
           Anchors = [akLeft, akTop, akRight]
           KeyField = 'id_vakans'
-          ListField = 'position'
+          ListField = 'prof_name'
           ListSource = DM.VakDS
           TabOrder = 1
         end
-        object vak_stBox: TComboBox
-          Left = 144
-          Top = 10
-          Width = 690
-          Height = 21
+        object res_upd_Panel: TPanel
+          Left = 22
+          Top = 105
+          Width = 769
+          Height = 41
           Align = alCustom
-          Anchors = [akLeft, akRight]
-          ItemHeight = 13
+          Anchors = [akLeft, akTop, akRight]
           TabOrder = 2
-          Text = 'vakstBox'
-          Items.Strings = (
-            #1057#1074#1086#1073#1086#1076#1085#1072
-            #1047#1072#1085#1103#1090#1072)
+          object acceotBtn: TRadioButton
+            Left = 16
+            Top = 16
+            Width = 113
+            Height = 17
+            Align = alCustom
+            Caption = #1055#1088#1080#1085#1103#1090
+            TabOrder = 0
+            OnClick = acceotBtnClick
+          end
+          object regectRBn: TRadioButton
+            Left = 504
+            Top = 16
+            Width = 113
+            Height = 17
+            Align = alCustom
+            Caption = #1053#1077' '#1087#1088#1080#1085#1103#1090
+            TabOrder = 1
+            OnClick = regectRBnClick
+          end
+        end
+        object vakablistDBL: TDBLookupComboBox
+          Left = 104
+          Top = 78
+          Width = 687
+          Height = 21
+          Anchors = [akLeft, akTop, akRight]
+          KeyField = 'nomvlist'
+          ListField = 'fio'
+          ListSource = DM.resDS
+          TabOrder = 3
         end
       end
     end
-    object delvaklPage: TTabSheet
-      Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1074#1072#1082#1072#1085#1089#1080#1080
+    object delreslPage: TTabSheet
+      Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086'  '#1088#1077#1079#1091#1083#1100#1090#1072#1090#1072#1093' '#1089#1086#1073#1077#1089#1077#1076#1086#1074#1072#1085#1080#1103
       ImageIndex = 3
-      object del_vakdataBox: TGroupBox
+      object del_resdataBox: TGroupBox
         Left = 0
         Top = 0
         Width = 842
@@ -607,10 +632,12 @@ object Frm_vaklst: TFrm_vaklst
         Align = alTop
         Caption = #1042#1099#1073#1088#1072#1090#1100' '#1076#1072#1085#1085#1099#1077
         TabOrder = 0
+        ExplicitLeft = 2
+        ExplicitTop = 9
         DesignSize = (
           842
           57)
-        object ankLbl: TLabel
+        object resLbl: TLabel
           Left = 16
           Top = 16
           Width = 37
@@ -624,9 +651,9 @@ object Frm_vaklst: TFrm_vaklst
           Width = 687
           Height = 21
           Anchors = [akLeft, akTop, akRight]
-          KeyField = 'id_vakans'
+          KeyField = 'nomvlist'
           ListField = 'position'
-          ListSource = DM.VakDS
+          ListSource = DM.resDS
           TabOrder = 0
         end
       end
@@ -637,7 +664,7 @@ object Frm_vaklst: TFrm_vaklst
         Height = 43
         Align = alBottom
         TabOrder = 1
-        object dlvakBtn: TButton
+        object dlresBtn: TButton
           Left = 328
           Top = 15
           Width = 314
@@ -646,9 +673,10 @@ object Frm_vaklst: TFrm_vaklst
           Anchors = [akLeft, akTop, akRight]
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
+          OnClick = dlresBtnClick
         end
       end
-      object dldaraBox: TGroupBox
+      object dlressataBox: TGroupBox
         Left = 0
         Top = 57
         Width = 842
@@ -656,7 +684,7 @@ object Frm_vaklst: TFrm_vaklst
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        object DBGrid3: TDBGrid
+        object delresGrd: TDBGrid
           Left = 2
           Top = 15
           Width = 838
@@ -674,7 +702,7 @@ object Frm_vaklst: TFrm_vaklst
               Expanded = False
               FieldName = 'nomvlist'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-              Width = 10
+              Width = 77
               Visible = True
             end
             item

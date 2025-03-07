@@ -28,7 +28,7 @@ type
     DataOutdresBox: TGroupBox;
     resinpBtnBox: TGroupBox;
     ins_res_Btn: TButton;
-    UpdvakPage: TTabSheet;
+    UpdresPage: TTabSheet;
     UpddataBox: TGroupBox;
     delvaklPage: TTabSheet;
     del_vakdataBox: TGroupBox;
@@ -37,17 +37,15 @@ type
     dlankbtnBox: TGroupBox;
     dlvakBtn: TButton;
     dldaraBox: TGroupBox;
-    UpddatankBox: TGroupBox;
-    Upd_vak_st_Btn: TButton;
+    UpddataresBox: TGroupBox;
+    Upd_res_st_Btn: TButton;
     compvakLbl: TLabel;
     resankDBL: TDBLookupComboBox;
     prfvakLbl: TLabel;
-    DBLookupComboBox_prof: TDBLookupComboBox;
-    vakprofLbl: TLabel;
-    vak_stBox: TComboBox;
-    vak_st_lbl: TLabel;
+    DBLookupComboBox_ank: TDBLookupComboBox;
+    resprofLbl: TLabel;
     insresgrd: TDBGrid;
-    DBGrid2: TDBGrid;
+    resUpdGrd: TDBGrid;
     DBGrid3: TDBGrid;
     date_in_inp: TDateTimePicker;
     DateTimePicker2: TDateTimePicker;
@@ -63,6 +61,11 @@ type
     res_Date_datares_inp: TDateTimePicker;
     resvakDBL: TDBLookupComboBox;
     resvakLbl: TLabel;
+    res_upd_Panel: TPanel;
+    acceotBtn: TRadioButton;
+    regectRBn: TRadioButton;
+    vakablistDBL: TDBLookupComboBox;
+    resanklbl: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -75,6 +78,10 @@ type
     procedure DataresGrdDrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
     procedure aceptBoxClick(Sender: TObject);
+    procedure ins_res_BtnClick(Sender: TObject);
+    procedure Upd_res_st_BtnClick(Sender: TObject);
+    procedure acceotBtnClick(Sender: TObject);
+    procedure regectRBnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -85,12 +92,21 @@ var
   Frm_vaklst: TFrm_vaklst;
   var d_flag:Integer;
   var accept_flag:Integer;
+  var accept_st:Integer;
 
 implementation
 
 uses Un_dm, Unmain, DB;
 
 {$R *.dfm}
+procedure TFrm_vaklst.acceotBtnClick(Sender: TObject);
+begin
+if acceotBtn.Checked=True then
+begin
+  accept_st:= 1;
+end;
+end;
+
 procedure TFrm_vaklst.aceptBoxClick(Sender: TObject);
 begin
 if aceptBox.Checked  then
@@ -242,7 +258,7 @@ dm.doQuery.SQL.Text:='select vakanlist.nomvlist, questionarie.fio,'+' '+
   'vakanlist.dateres,vakansia.position from vakanlist inner join  questionarie'+
   ' '+'on questionarie.ank_nom=vakanlist.ank_nom inner join vakansia on'+' '+
     'vakansia.id_vakans=vakanlist.id_vakans   where 1=1';
-Upd_vak_st_Btn.Caption:='Изменить';
+Upd_res_st_Btn.Caption:='Изменить';
 dm.doQuery.Open;
 dm.VaKQuery.Open;
 dm.resQuery.Open;
@@ -265,6 +281,7 @@ begin
 end;
 end;
 accept_flag:=0;
+accept_st:=0;
 end;
 
 procedure TFrm_vaklst.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -283,6 +300,7 @@ end;
 end;
 d_flag:=0;
 accept_flag:=0;
+accept_st:=0;
 Check_res_search.Enabled:=true;
 Check_res_search.Checked:=False;
 CondresfioEdit.EditLabel.Caption:='Точное совпадение (по фио)';
@@ -325,6 +343,52 @@ end;
 end;
 end;
 
+procedure TFrm_vaklst.ins_res_BtnClick(Sender: TObject);
+begin
+try
+with dm.resQuery do
+begin
+  Active:=false;
+  SQL.Clear;
+  SQL.Text:='INSERT INTO vakanlist(ank_nom,datein,res,dateres,id_vakans)VALUES('
+  +dm.ankQuery.FieldByName('ank_nom').AsString+','+
+  QuotedStr(FrmMain.DateToStr_(res_Datein_inp.Date))+','
+  +QuotedStr(resEdit.Text)+','+
+  QuotedStr(FrmMain.DateToStr_(res_Date_datares_inp.Date))+','
+  +dm.VaKQuery.FieldByName('id_vakans').AsString +')';
+  ExecSQL;
+  sql.Text:=
+  'SELECT'+
+      '  vakanlist.nomvlist, ' +
+      '  questionarie.fio, ' +
+      '  vakanlist.datein, ' +
+      '  CASE WHEN vakanlist.res = 1 ' +
+      '    THEN ''Принят'' ELSE ''Не принят'' ' +
+      '  END AS vak_res, ' +
+      '  vakanlist.dateres, ' +
+      '  vakansia.position ' +
+      'FROM vakanlist ' +
+      'INNER JOIN questionarie ' +
+      '  ON questionarie.ank_nom = vakanlist.ank_nom ' +
+      'INNER JOIN vakansia ' +
+      '  ON vakansia.id_vakans = vakanlist.id_vakans ' +
+      'WHERE 1=1 ' +
+      '  AND vakanlist.res = 0';
+  Active:=true;
+  close;
+  open;
+end;
+  MessageDlg('Изменения внесены',mtInformation,[mbOK],0);
+  Beep();
+except
+begin
+  ShowMessage('wrong situation');
+  Exit;
+end;
+end;
+
+end;
+
 procedure TFrm_vaklst.Radio_fio_r_gruppClick(Sender: TObject);
 begin
 if Radio_fio_r_grupp.Checked=true then
@@ -350,6 +414,15 @@ if Radio_fio_r_grupp.Checked=true then
     end;
     end;
   end;
+end;
+
+procedure TFrm_vaklst.regectRBnClick(Sender: TObject);
+begin
+if acceotBtn.Checked=False then
+begin
+  accept_st:= 0;
+end;
+
 end;
 
 procedure TFrm_vaklst.RadioresrselResetClick(Sender: TObject);
@@ -439,6 +512,77 @@ begin
     exit;
 end;
 end;
+end;
+
+procedure TFrm_vaklst.Upd_res_st_BtnClick(Sender: TObject);
+
+begin
+with dm.doQuery do
+begin
+  Close;
+  sql.Clear;
+   case accept_st of
+   0:
+   begin
+     // не принят
+     SQL.Text:='update vakanlist set res=0 where'+' '+
+     'vakanlist.ank_nom='+dm.ankQuery.FieldByName('ank_nom').AsString+' '+
+     'and  vakanlist.nomvlist='+Dm.resQuery.FieldByName('nomvlist').AsString;
+
+     ExecSQL;
+     sql.Text:=
+         'SELECT distinct'+
+      '  vakanlist.nomvlist, ' +
+      '  questionarie.fio, ' +
+      '  vakanlist.datein, ' +
+      '  CASE WHEN vakanlist.res = 1 ' +
+      '    THEN ''Принят'' ELSE ''Не принят'' ' +
+      '  END AS vak_res, ' +
+      '  vakanlist.dateres, ' +
+      '  vakansia.position ' +
+      'FROM vakanlist ' +
+      'INNER JOIN questionarie ' +
+      '  ON questionarie.ank_nom = vakanlist.ank_nom ' +
+      'INNER JOIN vakansia ' +
+      '  ON vakansia.id_vakans = vakanlist.id_vakans ' +' '+
+      'WHERE 1=1 ';
+       Open;
+       Close;
+   end;
+   1:
+   begin
+    // принят
+    SQL.Text:='update vakanlist set res=1 where'+' '+
+     'vakanlist.ank_nom='+dm.ankQuery.FieldByName('ank_nom').AsString+' '+
+     'and  vakanlist.nomvlist='+Dm.resQuery.FieldByName('nomvlist').AsString;
+ExecSQL;
+     sql.Text:=
+         'SELECT distinct'+
+      '  vakanlist.nomvlist, ' +
+      '  questionarie.fio, ' +
+      '  vakanlist.datein, ' +
+      '  CASE WHEN vakanlist.res = 1 ' +
+      '    THEN ''Принят'' ELSE ''Не принят'' ' +
+      '  END AS vak_res, ' +
+      '  vakanlist.dateres, ' +
+      '  vakansia.position ' +
+      'FROM vakanlist ' +
+      'INNER JOIN questionarie ' +
+      '  ON questionarie.ank_nom = vakanlist.ank_nom ' +
+      'INNER JOIN vakansia ' +
+      '  ON vakansia.id_vakans = vakanlist.id_vakans ' +' '+
+      'WHERE 1=1 ';
+       Open;
+       Close;
+   end;
+   end;//case
+   MessageDlg('Изменения внесены',mtInformation,[mbOK],0);
+   dm.resQuery.Close;
+   dm.resQuery.Open;
+
+end;
+
+
 end;
 
 end.
