@@ -19,7 +19,6 @@ type
     CondresfioEdit: TLabeledEdit;
     fndresPanel: TPanel;
     fnd_dol_Edit: TLabeledEdit;
-    Check_res_search: TCheckBox;
     DataresBox: TGroupBox;
     DataresGrd: TDBGrid;
     ButtonvakBox: TGroupBox;
@@ -60,6 +59,8 @@ type
     DateTimePicker2: TDateTimePicker;
     beginlbl1: TStaticText;
     endlbl: TStaticText;
+    aceptBox: TCheckBox;
+    Check_res_search: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -71,6 +72,7 @@ type
     procedure Check_res_searchClick(Sender: TObject);
     procedure DataresGrdDrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
+    procedure aceptBoxClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -87,6 +89,18 @@ implementation
 uses Un_dm, Unmain, DB;
 
 {$R *.dfm}
+procedure TFrm_vaklst.aceptBoxClick(Sender: TObject);
+begin
+if aceptBox.Checked  then
+begin
+  accept_flag:=1;
+end
+else
+begin
+  accept_flag:=0;
+end;
+end;
+
 procedure TFrm_vaklst.Check_res_searchClick(Sender: TObject);
 var  StartDate, EndDate: TDateTime;
 begin
@@ -151,17 +165,43 @@ end;
 procedure TFrm_vaklst.DataresGrdDrawColumnCell(Sender: TObject;
   const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
 begin
-if (DM.resQuery.FieldByName('vak_res').Value='Не принят')   then
-begin
-DataresGrd.Canvas.Brush.Color:=clRed;
-DataresGrd.Canvas.Font.Color:=ClWhite;
-DataresGrd.Canvas.FillRect(Rect);
-if Column.Alignment = taRightJustify then        //Если выравнивание столбца по правому краю
-DataresGrd.Canvas.TextOut(Rect.Right-2- DataresGrd.Canvas.TextWidth(Column.Field.Text), Rect.Top+2, Column.Field.Text)
-else                                            //иначе
-DataresGrd.Canvas.TextOut(Rect.Left +2,Rect.Top+2,Column.Field.Text);
-end;
 
+  if accept_flag = 0 then
+  begin
+
+    DataresGrd.Canvas.Brush.Color := DataresGrd.Color;
+    DataresGrd.Canvas.Font.Color := DataresGrd.Font.Color;
+  end
+  else
+  begin
+
+    if DM.resQuery.FieldByName('vak_res').AsString = 'Не принят' then
+    begin
+      DataresGrd.Canvas.Brush.Color := clRed;
+      DataresGrd.Canvas.Font.Color := clWhite;
+    end
+    else
+    begin
+      // Стандартные цвета для остальных случаев
+      DataresGrd.Canvas.Brush.Color := DataresGrd.Color;
+      DataresGrd.Canvas.Font.Color := DataresGrd.Font.Color;
+    end;
+  end;
+
+
+  DataresGrd.Canvas.FillRect(Rect);
+  if Column.Alignment = taRightJustify then
+    DataresGrd.Canvas.TextOut(
+      Rect.Right - 2 - DataresGrd.Canvas.TextWidth(Column.Field.Text),
+      Rect.Top + 2,
+      Column.Field.Text
+    )
+  else
+    DataresGrd.Canvas.TextOut(
+      Rect.Left + 2,
+      Rect.Top + 2,
+      Column.Field.Text
+    );
 
 end;
 
@@ -219,7 +259,7 @@ begin
   (Components[d] as TDateTimePicker).Date:=Now;
 end;
 end;
-
+accept_flag:=0;
 end;
 
 procedure TFrm_vaklst.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -235,6 +275,7 @@ begin
 end;
 end;
 d_flag:=0;
+accept_flag:=0;
 
 
 Check_res_search.Enabled:=true;
@@ -311,6 +352,7 @@ var i,j:Integer;
 begin
  if RadioresrselReset.Checked=True then
 begin
+accept_flag:=0;
   with Frm_vaklst do
     for I := 0 to ComponentCount - 1 do
      begin

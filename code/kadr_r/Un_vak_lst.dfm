@@ -21,7 +21,7 @@ object Frm_vaklst: TFrm_vaklst
     Top = 0
     Width = 817
     Height = 616
-    ActivePage = SelresPage
+    ActivePage = InsvakPage
     Align = alClient
     TabOrder = 0
     object SelresPage: TTabSheet
@@ -68,6 +68,28 @@ object Frm_vaklst: TFrm_vaklst
             TabOrder = 2
             OnClick = RadioresrselResetClick
           end
+          object aceptBox: TCheckBox
+            Left = 32
+            Top = 6
+            Width = 121
+            Height = 17
+            Align = alCustom
+            Anchors = [akLeft, akRight]
+            Caption = #1054#1090#1073#1086#1088' '#1085#1077' '#1087#1088#1080#1085#1103#1090#1099#1093
+            TabOrder = 3
+            OnClick = aceptBoxClick
+          end
+          object Check_res_search: TCheckBox
+            Left = 296
+            Top = 6
+            Width = 241
+            Height = 17
+            Align = alCustom
+            Anchors = [akLeft, akRight]
+            Caption = #1054#1090#1073#1086#1088' '#1090#1077#1093', '#1075#1076#1077' '#1086#1078#1080#1076#1072#1085#1080#1077' '#1073#1086#1083#1100#1096#1077' 3 '#1076#1085#1077#1081' '
+            TabOrder = 4
+            OnClick = Check_res_searchClick
+          end
         end
         object condresPanel: TPanel
           Left = 2
@@ -98,8 +120,6 @@ object Frm_vaklst: TFrm_vaklst
           Height = 96
           Align = alClient
           TabOrder = 2
-          ExplicitLeft = 3
-          ExplicitTop = 62
           DesignSize = (
             805
             96)
@@ -115,36 +135,25 @@ object Frm_vaklst: TFrm_vaklst
             TabOrder = 0
             OnKeyPress = fnd_dol_EditKeyPress
           end
-          object Check_res_search: TCheckBox
-            Left = 256
-            Top = 73
-            Width = 265
-            Height = 17
-            Align = alCustom
-            Anchors = [akLeft, akRight]
-            Caption = #1054#1090#1073#1086#1088' '#1090#1077#1093', '#1075#1076#1077' '#1086#1078#1080#1076#1072#1085#1080#1077' '#1073#1086#1083#1100#1096#1077' 3 '#1076#1085#1077#1081' '
-            TabOrder = 1
-            OnClick = Check_res_searchClick
-          end
           object date_in_inp: TDateTimePicker
             Left = 32
             Top = 69
             Width = 186
             Height = 21
-            Anchors = [akLeft, akTop, akRight]
+            Align = alCustom
             Date = 45722.852209652780000000
             Time = 45722.852209652780000000
-            TabOrder = 2
+            TabOrder = 1
           end
           object DateTimePicker2: TDateTimePicker
             Left = 568
             Top = 69
             Width = 186
             Height = 21
-            Anchors = [akLeft, akTop, akRight]
+            Align = alCustom
             Date = 45722.852209652780000000
             Time = 45722.852209652780000000
-            TabOrder = 3
+            TabOrder = 2
           end
           object beginlbl1: TStaticText
             Left = 64
@@ -152,7 +161,7 @@ object Frm_vaklst: TFrm_vaklst
             Width = 108
             Height = 17
             Caption = #1044#1072#1090#1072' '#1085#1072#1095#1072#1083#1072' '#1086#1090#1073#1086#1088#1072
-            TabOrder = 4
+            TabOrder = 3
           end
           object endlbl: TStaticText
             Left = 568
@@ -160,7 +169,7 @@ object Frm_vaklst: TFrm_vaklst
             Width = 102
             Height = 17
             Caption = #1044#1072#1090#1072' '#1082#1086#1085#1094#1072' '#1086#1090#1073#1086#1088#1072
-            TabOrder = 5
+            TabOrder = 4
           end
         end
       end
