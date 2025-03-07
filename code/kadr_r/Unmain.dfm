@@ -57,6 +57,10 @@ object FrmMain: TFrmMain
         Caption = #1057#1087#1080#1089#1086#1082' '#1087#1088#1086#1092#1085#1089#1089#1080#1081
         OnClick = prorf_listClick
       end
+      object vak_prof_report: TMenuItem
+        Caption = #1042#1072#1082#1072#1085#1089#1080#1080' '#1087#1086' '#1087#1088#1086#1092#1077#1089#1089#1080#1080
+        OnClick = vak_prof_reportClick
+      end
     end
   end
 end

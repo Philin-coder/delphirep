@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, Grids, DBGrids, StdCtrls, ExtCtrls, DBCtrls;
+  Dialogs, ComCtrls, Grids, DBGrids, StdCtrls, ExtCtrls;
 
 type
   TFrm_report = class(TForm)
@@ -13,18 +13,9 @@ type
     reportbtnPanel: TPanel;
     reportButton: TButton;
     reportGid: TDBGrid;
-    vak_prof_page: TTabSheet;
-    Data_outBox: TGroupBox;
-    reportbtnBox: TGroupBox;
-    Btnprfrp: TButton;
-    profBox: TGroupBox;
-    Staticprof: TStaticText;
-    profDBL: TDBLookupComboBox;
-    prof_vakGrd: TDBGrid;
     procedure reportButtonClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure BtnprfrpClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -39,22 +30,6 @@ implementation
 uses Unmain, Un_dm;
 
 {$R *.dfm}
-
-procedure TFrm_report.BtnprfrpClick(Sender: TObject);
-begin
-dm.reportQuery.Open;
-dm.reportQuery.SQL.Text:='select vakansia.id_vakans, vakansia.position,vakansia.pay,dogovor.company,'+
-  'prof.prof_name,vakansia.quantity,case when'+ ' '+
-  'vakansia.vak_st=0  then'+#39+ 'Вакансии есть'+#39+' '+  'else'+ ' '+
-  #39+'Вакансий нет'+#39+' '+ 'end as vak_free from vakansia inner'+' '+
-  'join dogovor on'+' '+ 'dogovor.id_dog=vakansia.id_dog inner join prof on'+' '+
-  'prof.id_prof=vakansia.id_prof where vakansia.quantity >0'+' '+
-  'and  prof.id_prof='+DM.profQuery.FieldByName('id_prof').AsString;
-dm.reportQuery.ExecSQL;
-dm.reportQuery. Close;
-dm.reportQuery.Open;
-
-end;
 
 procedure TFrm_report.FormActivate(Sender: TObject);
 begin

@@ -17,6 +17,7 @@ type
     res_menu: TMenuItem;
     report_menu: TMenuItem;
     prorf_list: TMenuItem;
+    vak_prof_report: TMenuItem;
     procedure FormActivate(Sender: TObject);
     function DateToStr_(Dat : TDate): String;
     function   CommaPoint (X: String) : String;
@@ -28,6 +29,7 @@ type
     procedure vak_menuClick(Sender: TObject);
     procedure res_menuClick(Sender: TObject);
     procedure prorf_listClick(Sender: TObject);
+    procedure vak_prof_reportClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -118,6 +120,12 @@ end;
 procedure TFrmMain.vak_menuClick(Sender: TObject);
 begin
      Frm_vak.ShowModal;
+end;
+
+procedure TFrmMain.vak_prof_reportClick(Sender: TObject);
+begin
+Frm_report.ShowModal;
+Frm_report.reportPage.ActivePage:=Frm_report.vak_prof_page;
 end;
 
 end.

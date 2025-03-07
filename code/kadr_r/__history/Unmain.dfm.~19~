@@ -2,7 +2,7 @@ object FrmMain: TFrmMain
   Left = 0
   Top = 0
   Caption = #1043#1083#1072#1074#1085#1072#1103' '#1092#1086#1088#1084#1072
-  ClientHeight = 339
+  ClientHeight = 439
   ClientWidth = 635
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -21,7 +21,7 @@ object FrmMain: TFrmMain
     Left = 0
     Top = 0
     Width = 635
-    Height = 339
+    Height = 439
     Align = alClient
     ExplicitLeft = 272
     ExplicitTop = 128
@@ -42,6 +42,21 @@ object FrmMain: TFrmMain
     object ank_menu: TMenuItem
       Caption = '&'#1040#1085#1082#1077#1090#1072
       OnClick = ank_menuClick
+    end
+    object vak_menu: TMenuItem
+      Caption = '&'#1042#1072#1082#1072#1085#1089#1080#1103
+      OnClick = vak_menuClick
+    end
+    object res_menu: TMenuItem
+      Caption = '&'#1056#1077#1079#1091#1083#1100#1090#1072#1090#1099' '#1089#1086#1073#1077#1089#1077#1076#1086#1074#1072#1085#1080#1103
+      OnClick = res_menuClick
+    end
+    object report_menu: TMenuItem
+      Caption = '&'#1054#1090#1095#1077#1090#1085#1086#1089#1090#1100
+      object prorf_list: TMenuItem
+        Caption = #1057#1087#1080#1089#1086#1082' '#1087#1088#1086#1092#1085#1089#1089#1080#1081
+        OnClick = prorf_listClick
+      end
     end
   end
 end

@@ -49,7 +49,7 @@ dm.reportQuery.SQL.Text:='select vakansia.id_vakans, vakansia.position,vakansia.
   #39+'Вакансий нет'+#39+' '+ 'end as vak_free from vakansia inner'+' '+
   'join dogovor on'+' '+ 'dogovor.id_dog=vakansia.id_dog inner join prof on'+' '+
   'prof.id_prof=vakansia.id_prof where vakansia.quantity >0'+' '+
-  'and  prof.id_prof='+DM.profQuery.FieldByName('id_prof').AsString;
+  'and  prof.id_pof='+DM.doQuery.FieldByName('id_prof').AsString;
 dm.reportQuery.ExecSQL;
 dm.reportQuery. Close;
 dm.reportQuery.Open;
