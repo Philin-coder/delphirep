@@ -15,6 +15,8 @@ type
     ank_menu: TMenuItem;
     vak_menu: TMenuItem;
     res_menu: TMenuItem;
+    report_menu: TMenuItem;
+    prorf_list: TMenuItem;
     procedure FormActivate(Sender: TObject);
     function DateToStr_(Dat : TDate): String;
     function   CommaPoint (X: String) : String;
@@ -25,6 +27,7 @@ type
     procedure ank_menuClick(Sender: TObject);
     procedure vak_menuClick(Sender: TObject);
     procedure res_menuClick(Sender: TObject);
+    procedure prorf_listClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -36,7 +39,7 @@ var
 
 implementation
 
-uses Un_dm, Un_pfor, Un_dog, Un_ank, Un_vak, Un_vak_lst;
+uses Un_dm, Un_pfor, Un_dog, Un_ank, Un_vak, Un_vak_lst, Un_report;
 
 {$R *.dfm}
 function TfrmMain.DateToStr_(Dat : TDate): String;
@@ -99,6 +102,12 @@ end;
 procedure TFrmMain.prof_menuClick(Sender: TObject);
 begin
 Frm_pfor.ShowModal;
+end;
+
+procedure TFrmMain.prorf_listClick(Sender: TObject);
+begin
+  Frm_report.ShowModal;
+  Frm_report.reportPage.ActivePage:=Frm_report.prof_list_tab;
 end;
 
 procedure TFrmMain.res_menuClick(Sender: TObject);

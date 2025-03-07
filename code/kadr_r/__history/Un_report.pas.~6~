@@ -1,0 +1,42 @@
+unit Un_report;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ComCtrls, Grids, DBGrids, StdCtrls, ExtCtrls;
+
+type
+  TFrm_report = class(TForm)
+    reportPage: TPageControl;
+    prof_list_tab: TTabSheet;
+    reportbtnPanel: TPanel;
+    reportButton: TButton;
+    reportGid: TDBGrid;
+    procedure reportButtonClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_report: TFrm_report;
+
+implementation
+
+uses Unmain, Un_dm;
+
+{$R *.dfm}
+
+procedure TFrm_report.reportButtonClick(Sender: TObject);
+begin
+dm.Query_report.Open;
+dm.Query_report.SQL.Text:='select      naim, sum(stip), COUNT(*) otl from stud, groupp where stip>0  and groupp.n_gr=stud.n_gr'+' and stud.date_k <='+QuotedStr(DateToStr_(DateTimePicker1.Date))+' and date_k  <='+QuotedStr(DateToStr_(DateTimePicker2.Date))+  ' group by  naim,stud.date_k';
+//ShowMessage(dm.Query_report.SQL.Text);
+dm.Query_report.ExecSQL;
+dm.Query_report.Close;
+dm.Query_report.Open;
+end;
+
+end.

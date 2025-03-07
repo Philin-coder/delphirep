@@ -25,6 +25,5 @@ begin
   Application.CreateForm(TFrm_ank, Frm_ank);
   Application.CreateForm(TFrm_vak, Frm_vak);
   Application.CreateForm(TFrm_report, Frm_report);
-  Application.CreateForm(TFrm_report, Frm_report);
   Application.Run;
 end.

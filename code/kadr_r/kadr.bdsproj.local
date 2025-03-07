@@ -16,5 +16,7 @@
     <Transaction>2025.03.02 15:01:42.785.dfm,F:\code\Result\delphi\code\kadr_r\code\kadr_r\Un_ank.dfm=F:\code\Result\delphi\code\kadr_r\code\kadr_r\Un_vak.dfm</Transaction>
     <Transaction>2025.03.04 11:23:08.836.pas,F:\code\Result\delphi\code\kadr_r\Un_vak.pas=F:\code\Result\delphi\code\kadr_r\Un_vak_lst.pas</Transaction>
     <Transaction>2025.03.04 11:23:08.837.dfm,F:\code\Result\delphi\code\kadr_r\Un_vak.dfm=F:\code\Result\delphi\code\kadr_r\Un_vak_lst.dfm</Transaction>
+    <Transaction>2025.03.07 22:17:10.370.pas,F:\code\Result\delphi\code\kadr_r\Unit1.pas=F:\code\Result\delphi\code\kadr_r\Un_report.pas</Transaction>
+    <Transaction>2025.03.07 22:17:10.370.dfm,F:\code\Result\delphi\code\kadr_r\Unit1.dfm=F:\code\Result\delphi\code\kadr_r\Un_report.dfm</Transaction>
   </Transactions>
 </BorlandProject>

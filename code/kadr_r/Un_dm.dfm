@@ -138,6 +138,10 @@ object DM: TDM
   object reportQuery: TADOQuery
     Connection = Connection
     Parameters = <>
+    SQL.Strings = (
+      'select prof.id_prof, prof.prof_name, prof.prof_group'
+      #9#9'from prof'
+      #9#9'where 1=1')
     Left = 344
     Top = 104
   end
