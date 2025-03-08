@@ -1,0 +1,86 @@
+unit Un_report;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ComCtrls, Grids, DBGrids, StdCtrls, ExtCtrls, DBCtrls;
+
+type
+  TFrm_report = class(TForm)
+    reportPage: TPageControl;
+    prof_list_tab: TTabSheet;
+    reportbtnPanel: TPanel;
+    reportButton: TButton;
+    reportGid: TDBGrid;
+    vak_prof_page: TTabSheet;
+    Data_outBox: TGroupBox;
+    reportbtnBox: TGroupBox;
+    Btnprfrp: TButton;
+    profBox: TGroupBox;
+    Staticprof: TStaticText;
+    profDBL: TDBLookupComboBox;
+    prof_vakGrd: TDBGrid;
+    company_page: TTabSheet;
+    reportbtncBox: TGroupBox;
+    Btncreport: TButton;
+    companyoutdata: TGroupBox;
+    companydrd: TDBGrid;
+    procedure reportButtonClick(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure BtnprfrpClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_report: TFrm_report;
+
+implementation
+
+uses Unmain, Un_dm;
+
+{$R *.dfm}
+
+procedure TFrm_report.BtnprfrpClick(Sender: TObject);
+begin
+dm.reportQuery.Open;
+dm.reportQuery.SQL.Clear;
+dm.reportQuery.SQL.Text:=
+' select'+' '+
+'dogovor.id_dog,dogovor.pay_cond,dogovor.cont_face,dogovor.company,'+' '+
+	'dogovor.c_adress,dogovor.c_contdata,dogovor.dogterm from dogovor where 1=1';
+dm.reportQuery.ExecSQL;
+dm.reportQuery. Close;
+dm.reportQuery.Open;
+
+end;
+
+procedure TFrm_report.FormActivate(Sender: TObject);
+begin
+dm.dogQuery.Open;
+dm.ProfQuery.Open;
+dm.reportQuery.Open;
+end;
+
+procedure TFrm_report.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+dm.ProfQuery.Close;
+dm.reportQuery.Close;
+end;
+
+procedure TFrm_report.reportButtonClick(Sender: TObject);
+begin
+dm.reportQuery.Open;
+dm.reportQuery.SQL.Clear;
+dm.reportQuery.SQL.Text:='select id_prof, prof_name, prof_group'+' '+
+		'from prof where 1=1';
+dm.reportQuery.ExecSQL;
+dm.reportQuery. Close;
+dm.reportQuery.Open
+end;
+
+end.

@@ -79,9 +79,7 @@ dm.reportQuery.SQL.Text:=
       '    THEN ''Принят'' ELSE ''Не принят'' ' +
       '  END AS vak_res, ' +
       '  vakanlist.dateres, ' +
-      '  vakansia.position, ' +
-      ' COUNT(*) OVER () AS total_accepted,'+
-      'COUNT(*) AS accepted_per_vacancy  '+
+      '  vakansia.position ' +
       'FROM vakanlist ' +
       'INNER JOIN questionarie ' +
       '  ON questionarie.ank_nom = vakanlist.ank_nom ' +
@@ -90,10 +88,8 @@ dm.reportQuery.SQL.Text:=
       'WHERE 1=1 ' +
       '  AND vakanlist.res = 1'+' '+
       ' and vakanlist.dateres between '+
-      QuotedStr( FrmMain.DateToStr_(begin_date_inp.Date))+'and'+
-      QuotedStr(FrmMain.DateToStr_(end_date_inp.Date))
-      +'group by   vakanlist.nomvlist,questionarie.fio,vakanlist.datein,'+''+
-      'vakanlist.res,vakanlist.dateres,vakansia.position';
+      QuotedStr( FrmMain.DateToStr_(report_begin_date_inp.Date))+'and'+
+      QuotedStr(FrmMain.DateToStr_(report_end_date_inp.Date));
 dm.reportQuery.ExecSQL;
 dm.reportQuery. Close;
 dm.reportQuery.Open;

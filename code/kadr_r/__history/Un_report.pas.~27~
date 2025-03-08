@@ -94,6 +94,7 @@ dm.reportQuery.SQL.Text:=
       QuotedStr(FrmMain.DateToStr_(end_date_inp.Date))
       +'group by   vakanlist.nomvlist,questionarie.fio,vakanlist.datein,'+''+
       'vakanlist.res,vakanlist.dateres,vakansia.position';
+      ShowMessage(dm.reportQuery.SQL.Text);
 dm.reportQuery.ExecSQL;
 dm.reportQuery. Close;
 dm.reportQuery.Open;

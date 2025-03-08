@@ -1,0 +1,185 @@
+object Frm_report: TFrm_report
+  Left = 0
+  Top = 0
+  Caption = #1054#1090#1095#1077#1090#1099
+  ClientHeight = 299
+  ClientWidth = 635
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  OnActivate = FormActivate
+  OnClose = FormClose
+  PixelsPerInch = 96
+  TextHeight = 13
+  object reportPage: TPageControl
+    Left = 0
+    Top = 0
+    Width = 635
+    Height = 299
+    ActivePage = company_page
+    Align = alClient
+    TabOrder = 0
+    object prof_list_tab: TTabSheet
+      Caption = #1057#1087#1080#1089#1086#1082' '#1087#1088#1086#1092#1077#1089#1089#1080#1081
+      object reportbtnPanel: TPanel
+        Left = 0
+        Top = 230
+        Width = 627
+        Height = 41
+        Align = alBottom
+        TabOrder = 0
+        object reportButton: TButton
+          Left = 288
+          Top = 16
+          Width = 75
+          Height = 25
+          Align = alCustom
+          Anchors = [akLeft, akRight]
+          Caption = #1042#1099#1074#1086#1076
+          TabOrder = 0
+          OnClick = reportButtonClick
+        end
+      end
+      object reportGid: TDBGrid
+        Left = 0
+        Top = 0
+        Width = 627
+        Height = 230
+        Align = alClient
+        DataSource = DM.reportDS
+        TabOrder = 1
+        TitleFont.Charset = DEFAULT_CHARSET
+        TitleFont.Color = clWindowText
+        TitleFont.Height = -11
+        TitleFont.Name = 'Tahoma'
+        TitleFont.Style = []
+      end
+    end
+    object vak_prof_page: TTabSheet
+      Caption = #1042#1072#1082#1072#1085#1089#1080#1080' '#1087#1086' '#1087#1088#1086#1092#1077#1089#1089#1080#1080
+      ImageIndex = 1
+      object Data_outBox: TGroupBox
+        Left = 0
+        Top = 57
+        Width = 627
+        Height = 175
+        Align = alClient
+        Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 0
+        object prof_vakGrd: TDBGrid
+          Left = 2
+          Top = 15
+          Width = 623
+          Height = 158
+          Align = alClient
+          DataSource = DM.reportDS
+          TabOrder = 0
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWindowText
+          TitleFont.Height = -11
+          TitleFont.Name = 'Tahoma'
+          TitleFont.Style = []
+        end
+      end
+      object reportbtnBox: TGroupBox
+        Left = 0
+        Top = 232
+        Width = 627
+        Height = 39
+        Align = alBottom
+        TabOrder = 1
+        object Btnprfrp: TButton
+          Left = 296
+          Top = 8
+          Width = 75
+          Height = 25
+          Caption = #1042#1099#1074#1086#1076
+          TabOrder = 0
+          OnClick = BtnprfrpClick
+        end
+      end
+      object profBox: TGroupBox
+        Left = 0
+        Top = 0
+        Width = 627
+        Height = 57
+        Align = alTop
+        Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 2
+        DesignSize = (
+          627
+          57)
+        object Staticprof: TStaticText
+          Left = 47
+          Top = 24
+          Width = 59
+          Height = 17
+          Align = alCustom
+          Caption = #1055#1088#1086#1092#1077#1089#1089#1080#1103
+          TabOrder = 0
+        end
+        object profDBL: TDBLookupComboBox
+          Left = 112
+          Top = 24
+          Width = 497
+          Height = 21
+          Anchors = [akLeft, akRight]
+          KeyField = 'id_prof'
+          ListField = 'prof_name'
+          ListSource = DM.ProfDS
+          TabOrder = 1
+        end
+      end
+    end
+    object company_page: TTabSheet
+      Caption = #1054#1090#1095#1105#1090' '#1086' '#1092#1080#1088#1084#1072#1093' '#1088#1072#1073#1086#1090#1086#1076#1072#1090#1077#1083#1103#1093
+      ImageIndex = 2
+      object reportbtncBox: TGroupBox
+        Left = 0
+        Top = 232
+        Width = 627
+        Height = 39
+        Align = alBottom
+        TabOrder = 0
+        object Btncreport: TButton
+          Left = 296
+          Top = 8
+          Width = 75
+          Height = 25
+          Caption = #1042#1099#1074#1086#1076
+          TabOrder = 0
+          OnClick = BtnprfrpClick
+        end
+      end
+      object companyoutdata: TGroupBox
+        Left = 0
+        Top = 0
+        Width = 627
+        Height = 232
+        Align = alClient
+        Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 1
+        ExplicitTop = 57
+        ExplicitHeight = 175
+        object companydrd: TDBGrid
+          Left = 2
+          Top = 15
+          Width = 623
+          Height = 215
+          Align = alClient
+          DataSource = DM.reportDS
+          TabOrder = 0
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWindowText
+          TitleFont.Height = -11
+          TitleFont.Name = 'Tahoma'
+          TitleFont.Style = []
+        end
+      end
+    end
+  end
+end

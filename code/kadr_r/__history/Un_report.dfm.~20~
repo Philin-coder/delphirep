@@ -346,7 +346,7 @@ object Frm_report: TFrm_report
         TabOrder = 1
         object Button1: TButton
           Left = 296
-          Top = 11
+          Top = 8
           Width = 75
           Height = 25
           Align = alCustom

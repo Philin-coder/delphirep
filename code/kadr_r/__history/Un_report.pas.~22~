@@ -35,17 +35,8 @@ type
     GroupBox3: TGroupBox;
     repGrd: TDBGrid;
     end_term_lbl: TStaticText;
-    report_begin_date_inp: TDateTimePicker;
-    report_end_date_inp: TDateTimePicker;
-    inp_box: TGroupBox;
-    reportbeginlbl: TStaticText;
-    report_endlbl: TStaticText;
-    begin_date_inp: TDateTimePicker;
-    end_date_inp: TDateTimePicker;
-    btBox: TGroupBox;
-    Button1: TButton;
-    dtBox: TGroupBox;
-    dtgrd: TDBGrid;
+    DateTimePicker1: TDateTimePicker;
+    DateTimePicker2: TDateTimePicker;
     procedure reportButtonClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -71,29 +62,9 @@ begin
 dm.reportQuery.Open;
 dm.reportQuery.SQL.Clear;
 dm.reportQuery.SQL.Text:=
-'SELECT'+
-      '  vakanlist.nomvlist, ' +
-      '  questionarie.fio, ' +
-      '  vakanlist.datein, ' +
-      '  CASE WHEN vakanlist.res = 1 ' +
-      '    THEN ''Принят'' ELSE ''Не принят'' ' +
-      '  END AS vak_res, ' +
-      '  vakanlist.dateres, ' +
-      '  vakansia.position, ' +
-      ' COUNT(*) OVER () AS total_accepted,'+
-      'COUNT(*) AS accepted_per_vacancy  '+
-      'FROM vakanlist ' +
-      'INNER JOIN questionarie ' +
-      '  ON questionarie.ank_nom = vakanlist.ank_nom ' +
-      'INNER JOIN vakansia ' +
-      '  ON vakansia.id_vakans = vakanlist.id_vakans ' +
-      'WHERE 1=1 ' +
-      '  AND vakanlist.res = 1'+' '+
-      ' and vakanlist.dateres between '+
-      QuotedStr( FrmMain.DateToStr_(begin_date_inp.Date))+'and'+
-      QuotedStr(FrmMain.DateToStr_(end_date_inp.Date))
-      +'group by   vakanlist.nomvlist,questionarie.fio,vakanlist.datein,'+''+
-      'vakanlist.res,vakanlist.dateres,vakansia.position';
+' select'+' '+
+'dogovor.id_dog,dogovor.pay_cond,dogovor.cont_face,dogovor.company,'+' '+
+	'dogovor.c_adress,dogovor.c_contdata,dogovor.dogterm from dogovor where 1=1';
 dm.reportQuery.ExecSQL;
 dm.reportQuery. Close;
 dm.reportQuery.Open;
@@ -101,20 +72,10 @@ dm.reportQuery.Open;
 end;
 
 procedure TFrm_report.FormActivate(Sender: TObject);
-var d:Integer;
 begin
 dm.dogQuery.Open;
 dm.ProfQuery.Open;
 dm.reportQuery.Open;
-Frm_report.reportPage.ActivePage:=company_page;
-with Frm_report do
-for d := 0 to ComponentCount - 1 do
-begin
-if (Components[d] is TRadioButton) then
-begin
-  (Components[d] as TDateTimePicker).Date:=Now;
-end;
-end;
 end;
 
 procedure TFrm_report.FormClose(Sender: TObject; var Action: TCloseAction);

@@ -74,9 +74,5 @@ object FrmMain: TFrmMain
         OnClick = woker_acceptred_repotrClick
       end
     end
-    object exit_item: TMenuItem
-      Caption = '&'#1042#1099#1093#1086#1076
-      OnClick = exit_itemClick
-    end
   end
 end

@@ -19,9 +19,6 @@ type
     prorf_list: TMenuItem;
     vak_prof_report: TMenuItem;
     dogport: TMenuItem;
-    woker_acceptred_list: TMenuItem;
-    woker_acceptred_repotr: TMenuItem;
-    exit_item: TMenuItem;
     procedure FormActivate(Sender: TObject);
     function DateToStr_(Dat : TDate): String;
     function   CommaPoint (X: String) : String;
@@ -35,9 +32,6 @@ type
     procedure prorf_listClick(Sender: TObject);
     procedure vak_prof_reportClick(Sender: TObject);
     procedure dogportClick(Sender: TObject);
-    procedure woker_acceptred_listClick(Sender: TObject);
-    procedure woker_acceptred_repotrClick(Sender: TObject);
-    procedure exit_itemClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -61,18 +55,13 @@ end;
 
 procedure TFrmMain.dogportClick(Sender: TObject);
 begin
-  Frm_report.ShowModal;
+  Frm_dog.ShowModal;
   Frm_report.reportPage.ActivePage:=Frm_report.company_page;
 end;
 
 procedure TFrmMain.dog_menuClick(Sender: TObject);
 begin
 Frm_dog.ShowModal;
-end;
-
-procedure TFrmMain.exit_itemClick(Sender: TObject);
-begin
-FrmMain.Close;
 end;
 
 procedure TFrmMain.ank_menuClick(Sender: TObject);
@@ -145,19 +134,6 @@ procedure TFrmMain.vak_prof_reportClick(Sender: TObject);
 begin
 Frm_report.ShowModal;
 Frm_report.reportPage.ActivePage:=Frm_report.vak_prof_page;
-end;
-
-procedure TFrmMain.woker_acceptred_listClick(Sender: TObject);
-begin
-Frm_report.ShowModal;
-Frm_report.reportPage.ActivePage:=Frm_report.worker_accept_page;
-end;
-
-procedure TFrmMain.woker_acceptred_repotrClick(Sender: TObject);
-begin
-    Frm_report.ShowModal;
-    Frm_report.reportPage.ActivePage:=Frm_report.worker_acept_repotr;
-
 end;
 
 end.
