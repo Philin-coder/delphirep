@@ -44,16 +44,13 @@ type
     proflstbtn: TButton;
     vak_profBtn: TButton;
     company_reportBtn: TButton;
-    acept_lstBtn: TButton;
-    report_acceptBtn: TButton;
     procedure reportButtonClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
+    procedure proflistBtnClick(Sender: TObject);
     procedure vak_profBtnClick(Sender: TObject);
     procedure company_reportBtnClick(Sender: TObject);
-    procedure acept_lstBtnClick(Sender: TObject);
-    procedure report_acceptBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -69,33 +66,13 @@ uses Unmain, Un_dm, DB, ADODB;
 
 {$R *.dfm}
 
-procedure TFrm_report.acept_lstBtnClick(Sender: TObject);
-begin
-with dm.reportQuery do
-begin
-  Open;
-  SQL.Clear;
-  sql.Text:='select vakanlist.nomvlist, questionarie.fio,'+' '+
-'vakanlist.datein,case when vakanlist.res=1'+ ' '+
- 'then'+' '+#39+ 'Принят'+#39+' '+ 'else'+' '+#39'Не принят'+#39+' '+ 'end as vak_res,'+
-  'vakanlist.dateres,vakansia.position from vakanlist inner join  questionarie'+
-  ' '+'on questionarie.ank_nom=vakanlist.ank_nom inner join vakansia on'+' '+
-    'vakansia.id_vakans=vakanlist.id_vakans   where 1=1  and vakanlist.res=1 '+' '+
-    'and vakanlist.dateres between '+QuotedStr(FrmMain.DateToStr_(report_begin_date_inp.Date))+'and'+' '+
-    QuotedStr(FrmMain.DateToStr_(report_end_date_inp.DateTime));
-  ExecSQL;
-  Close;
-  Open;
-end;
-end;
-
 procedure TFrm_report.company_reportBtnClick(Sender: TObject);
 begin
 with dm.reportQuery do
 begin
   open;
   sql.clear;
-  sql.Text:='select'+' '+
+  sql.Text:='select'+
   'dogovor.id_dog,'+' '+
 	'dogovor.pay_cond,'+' '+
 '	dogovor.cont_face,'+''+
@@ -145,6 +122,11 @@ begin
 end;
 end;
 
+procedure TFrm_report.proflistBtnClick(Sender: TObject);
+begin
+ShowMessage('test');
+end;
+
 procedure TFrm_report.reportButtonClick(Sender: TObject);
 begin
 with dm.reportQuery do
@@ -156,43 +138,6 @@ SQL.Text:='select id_prof, prof_name, prof_group'+' '+
 ExecSQL;
 Close;
 Open
-end;
-end;
-
-procedure TFrm_report.report_acceptBtnClick(Sender: TObject);
-begin
-with dm.reportQuery do
-begin
-Open;
-SQL.Clear;
-SQL.Text:=
-'SELECT'+
-      '  vakanlist.nomvlist, ' +
-      '  questionarie.fio, ' +
-      '  vakanlist.datein, ' +
-      '  CASE WHEN vakanlist.res = 1 ' +
-      '    THEN ''Принят'' ELSE ''Не приня'' ' +
-      '  END AS vak_res, ' +
-      '  vakanlist.dateres, ' +
-      '  vakansia.position, ' +
-      ' COUNT(*) OVER () AS total_accepted,'+
-      'COUNT(*) AS accepted_per_vacancy  '+
-      'FROM vakanlist ' +
-      'INNER JOIN questionarie ' +
-      '  ON questionarie.ank_nom = vakanlist.ank_nom ' +
-      'INNER JOIN vakansia ' +
-      '  ON vakansia.id_vakans = vakanlist.id_vakans ' +
-      'WHERE 1=1 ' +
-      '  AND vakanlist.res = 1'+' '+
-      ' and vakanlist.dateres between '+
-      QuotedStr( FrmMain.DateToStr_(begin_date_inp.Date))+'and'+
-      QuotedStr(FrmMain.DateToStr_(end_date_inp.Date))
-      +'group by   vakanlist.nomvlist,questionarie.fio,vakanlist.datein,'+''+
-      'vakanlist.res,vakanlist.dateres,vakansia.position';
-      ExecSQL;
-      Close;
-      Open;
-
 end;
 end;
 

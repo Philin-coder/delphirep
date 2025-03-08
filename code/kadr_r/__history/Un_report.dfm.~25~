@@ -21,7 +21,7 @@ object Frm_report: TFrm_report
     Top = 0
     Width = 635
     Height = 299
-    ActivePage = worker_acept_repotr
+    ActivePage = prof_list_tab
     Align = alClient
     TabOrder = 0
     object prof_list_tab: TTabSheet
@@ -33,9 +33,9 @@ object Frm_report: TFrm_report
         Height = 41
         Align = alBottom
         TabOrder = 0
-        object proflstbtn: TButton
-          Left = 280
-          Top = 6
+        object reportButton: TButton
+          Left = 288
+          Top = 16
           Width = 75
           Height = 25
           Align = alCustom
@@ -93,17 +93,6 @@ object Frm_report: TFrm_report
         Height = 39
         Align = alBottom
         TabOrder = 1
-        object vak_profBtn: TButton
-          Left = 256
-          Top = 11
-          Width = 75
-          Height = 25
-          Align = alCustom
-          Anchors = [akLeft, akRight]
-          Caption = #1042#1099#1074#1086#1076
-          TabOrder = 0
-          OnClick = vak_profBtnClick
-        end
       end
       object profBox: TGroupBox
         Left = 0
@@ -148,17 +137,6 @@ object Frm_report: TFrm_report
         Height = 39
         Align = alBottom
         TabOrder = 0
-        object company_reportBtn: TButton
-          Left = 264
-          Top = 11
-          Width = 75
-          Height = 25
-          Align = alCustom
-          Anchors = [akLeft, akRight]
-          Caption = #1042#1099#1074#1086#1076
-          TabOrder = 0
-          OnClick = company_reportBtnClick
-        end
       end
       object companyoutdata: TGroupBox
         Left = 0
@@ -191,55 +169,49 @@ object Frm_report: TFrm_report
         Left = 0
         Top = 0
         Width = 627
-        Height = 89
+        Height = 81
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
         object begin_terlmlbl: TStaticText
           Left = 15
-          Top = 18
+          Top = 16
           Width = 115
           Height = 17
           Align = alCustom
           Anchors = [akLeft, akRight]
           Caption = #1044#1072#1090#1072' '#1085#1072#1095#1072#1083#1072' '#1087#1077#1088#1080#1086#1076#1072
           TabOrder = 0
-          ExplicitTop = 16
         end
         object end_term_lbl: TStaticText
           Left = 464
-          Top = 18
+          Top = 16
           Width = 109
           Height = 17
           Align = alCustom
           Anchors = [akLeft, akRight]
           Caption = #1044#1072#1090#1072' '#1082#1086#1085#1094#1072' '#1087#1077#1088#1080#1086#1076#1072
           TabOrder = 1
-          ExplicitTop = 16
         end
         object report_begin_date_inp: TDateTimePicker
-          Left = 2
-          Top = 37
-          Width = 287
+          Left = 3
+          Top = 32
+          Width = 186
           Height = 21
           Align = alCustom
-          Anchors = [akLeft]
           Date = 45724.465184872690000000
           Time = 45724.465184872690000000
           TabOrder = 2
-          ExplicitTop = 46
         end
         object report_end_date_inp: TDateTimePicker
-          Left = 328
-          Top = 37
-          Width = 304
+          Left = 438
+          Top = 39
+          Width = 186
           Height = 21
           Align = alCustom
-          Anchors = [akLeft, akRight]
           Date = 45724.465184872690000000
           Time = 45724.465184872690000000
           TabOrder = 3
-          ExplicitTop = 46
         end
       end
       object repbtnbox: TGroupBox
@@ -249,32 +221,20 @@ object Frm_report: TFrm_report
         Height = 39
         Align = alBottom
         TabOrder = 1
-        object acept_lstBtn: TButton
-          Left = 280
-          Top = 12
-          Width = 75
-          Height = 25
-          Align = alCustom
-          Caption = #1042#1099#1074#1086#1076
-          TabOrder = 0
-          OnClick = acept_lstBtnClick
-        end
       end
-      object GrpBx: TGroupBox
+      object GroupBox3: TGroupBox
         Left = 0
-        Top = 89
+        Top = 81
         Width = 627
-        Height = 143
+        Height = 151
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        ExplicitTop = 81
-        ExplicitHeight = 151
         object repGrd: TDBGrid
           Left = 2
           Top = 15
           Width = 623
-          Height = 126
+          Height = 134
           Align = alClient
           DataSource = DM.reportDS
           TabOrder = 0
@@ -345,16 +305,6 @@ object Frm_report: TFrm_report
         Height = 39
         Align = alBottom
         TabOrder = 1
-        object report_acceptBtn: TButton
-          Left = 288
-          Top = 11
-          Width = 75
-          Height = 25
-          Align = alCustom
-          Caption = #1042#1099#1074#1086#1076
-          TabOrder = 0
-          OnClick = report_acceptBtnClick
-        end
       end
       object dtBox: TGroupBox
         Left = 0

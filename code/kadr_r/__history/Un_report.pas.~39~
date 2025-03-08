@@ -50,6 +50,7 @@ type
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
+    procedure proflistBtnClick(Sender: TObject);
     procedure vak_profBtnClick(Sender: TObject);
     procedure company_reportBtnClick(Sender: TObject);
     procedure acept_lstBtnClick(Sender: TObject);
@@ -143,6 +144,11 @@ begin
   height:=768;
   Position:=poScreenCenter;
 end;
+end;
+
+procedure TFrm_report.proflistBtnClick(Sender: TObject);
+begin
+ShowMessage('test');
 end;
 
 procedure TFrm_report.reportButtonClick(Sender: TObject);

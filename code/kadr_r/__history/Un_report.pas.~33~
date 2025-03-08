@@ -1,0 +1,133 @@
+unit Un_report;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ComCtrls, Grids, DBGrids, StdCtrls, ExtCtrls, DBCtrls;
+
+type
+  TFrm_report = class(TForm)
+    reportPage: TPageControl;
+    prof_list_tab: TTabSheet;
+    reportbtnPanel: TPanel;
+    reportGid: TDBGrid;
+    vak_prof_page: TTabSheet;
+    Data_outBox: TGroupBox;
+    reportbtnBox: TGroupBox;
+    profBox: TGroupBox;
+    Staticprof: TStaticText;
+    profDBL: TDBLookupComboBox;
+    prof_vakGrd: TDBGrid;
+    company_page: TTabSheet;
+    reportbtncBox: TGroupBox;
+    companyoutdata: TGroupBox;
+    companydrd: TDBGrid;
+    worker_accept_page: TTabSheet;
+    worker_acept_repotr: TTabSheet;
+    termBox: TGroupBox;
+    begin_terlmlbl: TStaticText;
+    repbtnbox: TGroupBox;
+    GroupBox3: TGroupBox;
+    repGrd: TDBGrid;
+    end_term_lbl: TStaticText;
+    report_begin_date_inp: TDateTimePicker;
+    report_end_date_inp: TDateTimePicker;
+    inp_box: TGroupBox;
+    reportbeginlbl: TStaticText;
+    report_endlbl: TStaticText;
+    begin_date_inp: TDateTimePicker;
+    end_date_inp: TDateTimePicker;
+    btBox: TGroupBox;
+    dtBox: TGroupBox;
+    dtgrd: TDBGrid;
+    proflstbtn: TButton;
+    vak_profBtn: TButton;
+    procedure reportButtonClick(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure proflistBtnClick(Sender: TObject);
+    procedure vak_profBtnClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_report: TFrm_report;
+
+implementation
+
+uses Unmain, Un_dm, DB;
+
+{$R *.dfm}
+
+procedure TFrm_report.FormActivate(Sender: TObject);
+var d:Integer;
+begin
+dm.dogQuery.Open;
+dm.ProfQuery.Open;
+dm.reportQuery.Open;
+Frm_report.reportPage.ActivePage:=company_page;
+with Frm_report do
+for d := 0 to ComponentCount - 1 do
+begin
+if (Components[d] is TRadioButton) then
+begin
+  (Components[d] as TDateTimePicker).Date:=Now;
+end;
+end;
+end;
+
+procedure TFrm_report.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+dm.ProfQuery.Close;
+dm.resQuery.SQL.Clear;
+dm.reportQuery.Close;
+end;
+
+procedure TFrm_report.FormCreate(Sender: TObject);
+begin
+with Frm_report do
+begin
+  width:=1024;
+  height:=768;
+  Position:=poScreenCenter;
+end;
+end;
+
+procedure TFrm_report.proflistBtnClick(Sender: TObject);
+begin
+ShowMessage('test');
+end;
+
+procedure TFrm_report.reportButtonClick(Sender: TObject);
+begin
+with dm.reportQuery do
+begin
+open;
+SQL.Clear;
+SQL.Text:='select id_prof, prof_name, prof_group'+' '+
+		'from prof where 1=1';
+ExecSQL;
+Close;
+Open
+end;
+end;
+
+procedure TFrm_report.vak_profBtnClick(Sender: TObject);
+begin
+with dm.reportQuery do
+begin
+Open;
+SQL.Clear;
+SQL.Text:='';
+ExecSQL;
+Close;
+open;
+end;
+end;
+
+end.

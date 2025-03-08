@@ -21,10 +21,36 @@ type
     Staticprof: TStaticText;
     profDBL: TDBLookupComboBox;
     prof_vakGrd: TDBGrid;
+    company_page: TTabSheet;
+    reportbtncBox: TGroupBox;
+    Btncreport: TButton;
+    companyoutdata: TGroupBox;
+    companydrd: TDBGrid;
+    worker_accept_page: TTabSheet;
+    worker_acept_repotr: TTabSheet;
+    termBox: TGroupBox;
+    begin_terlmlbl: TStaticText;
+    repbtnbox: TGroupBox;
+    repbtn: TButton;
+    GroupBox3: TGroupBox;
+    repGrd: TDBGrid;
+    end_term_lbl: TStaticText;
+    report_begin_date_inp: TDateTimePicker;
+    report_end_date_inp: TDateTimePicker;
+    inp_box: TGroupBox;
+    reportbeginlbl: TStaticText;
+    report_endlbl: TStaticText;
+    begin_date_inp: TDateTimePicker;
+    end_date_inp: TDateTimePicker;
+    btBox: TGroupBox;
+    Button1: TButton;
+    dtBox: TGroupBox;
+    dtgrd: TDBGrid;
     procedure reportButtonClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure BtnprfrpClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -43,13 +69,16 @@ uses Unmain, Un_dm;
 procedure TFrm_report.BtnprfrpClick(Sender: TObject);
 begin
 dm.reportQuery.Open;
-dm.reportQuery.SQL.Text:='select vakansia.id_vakans, vakansia.position,vakansia.pay,dogovor.company,'+
+dm.reportQuery.SQL.Clear;
+dm.reportQuery.SQL.Text:=
+'SELECT'+
+ 'vakansia.id_vakans, vakansia.position,vakansia.pay,dogovor.company,'+
   'prof.prof_name,vakansia.quantity,case when'+ ' '+
   'vakansia.vak_st=0  then'+#39+ 'Вакансии есть'+#39+' '+  'else'+ ' '+
   #39+'Вакансий нет'+#39+' '+ 'end as vak_free from vakansia inner'+' '+
   'join dogovor on'+' '+ 'dogovor.id_dog=vakansia.id_dog inner join prof on'+' '+
-  'prof.id_prof=vakansia.id_prof where vakansia.quantity >0'+' '+
-  'and  prof.id_pof='+DM.doQuery.FieldByName('id_prof').AsString;
+  'prof.id_prof=vakansia.id_prof where vakansia.quantity >0';'  AND vakanlist.res = 0'+' '+
+
 dm.reportQuery.ExecSQL;
 dm.reportQuery. Close;
 dm.reportQuery.Open;
@@ -57,20 +86,43 @@ dm.reportQuery.Open;
 end;
 
 procedure TFrm_report.FormActivate(Sender: TObject);
+var d:Integer;
 begin
+dm.dogQuery.Open;
 dm.ProfQuery.Open;
 dm.reportQuery.Open;
+Frm_report.reportPage.ActivePage:=company_page;
+with Frm_report do
+for d := 0 to ComponentCount - 1 do
+begin
+if (Components[d] is TRadioButton) then
+begin
+  (Components[d] as TDateTimePicker).Date:=Now;
+end;
+end;
 end;
 
 procedure TFrm_report.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
 dm.ProfQuery.Close;
+dm.resQuery.SQL.Clear;
 dm.reportQuery.Close;
+end;
+
+procedure TFrm_report.FormCreate(Sender: TObject);
+begin
+with Frm_report do
+begin
+  width:=1024;
+  height:=768;
+  Position:=poScreenCenter;
+end;
 end;
 
 procedure TFrm_report.reportButtonClick(Sender: TObject);
 begin
 dm.reportQuery.Open;
+dm.reportQuery.SQL.Clear;
 dm.reportQuery.SQL.Text:='select id_prof, prof_name, prof_group'+' '+
 		'from prof where 1=1';
 dm.reportQuery.ExecSQL;
