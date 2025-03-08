@@ -153,7 +153,7 @@ begin
   (Components[b] as TButton).Width:=257;
   (Components[b] as TButton).Height:=25;
   (Components[b] as TButton).Align:=alCustom;
-  (Components[b] as TButton).Anchors:=[akLeft,akRight];
+  (Components[b] as TButton).Anchors:=[akLeft,akTop ];
 
 end;
 end;
@@ -207,6 +207,7 @@ SQL.Text:=
       ExecSQL;
       Close;
       Open;
+
 end;
 end;
 

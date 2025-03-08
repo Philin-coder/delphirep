@@ -207,6 +207,7 @@ SQL.Text:=
       ExecSQL;
       Close;
       Open;
+
 end;
 end;
 

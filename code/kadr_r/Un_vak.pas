@@ -169,7 +169,6 @@ begin
          dm.VaKQuery.Close;
          dm.VaKQuery.Open;
 
-
      except
      begin
          ShowMessage('Wrong situation');

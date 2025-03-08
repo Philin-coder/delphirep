@@ -21,7 +21,7 @@ object Frm_vaklst: TFrm_vaklst
     Top = 0
     Width = 850
     Height = 616
-    ActivePage = InsresPage
+    ActivePage = UpdresPage
     Align = alClient
     TabOrder = 0
     object SelresPage: TTabSheet

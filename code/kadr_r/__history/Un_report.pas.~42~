@@ -148,13 +148,10 @@ end;
 with Frm_report do
 for b := 0 to ComponentCount - 1 do
 begin
-if (Components[b] is TButton) then
+if (Components[b] is TRadioButton) then
 begin
   (Components[b] as TButton).Width:=257;
   (Components[b] as TButton).Height:=25;
-  (Components[b] as TButton).Align:=alCustom;
-  (Components[b] as TButton).Anchors:=[akLeft,akRight];
-
 end;
 end;
 
@@ -207,6 +204,7 @@ SQL.Text:=
       ExecSQL;
       Close;
       Open;
+
 end;
 end;
 

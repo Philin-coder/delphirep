@@ -149,9 +149,9 @@ object Frm_report: TFrm_report
         Align = alBottom
         TabOrder = 0
         object company_reportBtn: TButton
-          Left = 176
+          Left = 264
           Top = 11
-          Width = 73
+          Width = 75
           Height = 25
           Align = alCustom
           Anchors = [akLeft, akRight]
@@ -252,7 +252,7 @@ object Frm_report: TFrm_report
         object acept_lstBtn: TButton
           Left = 280
           Top = 12
-          Width = 41
+          Width = 75
           Height = 25
           Align = alCustom
           Caption = #1042#1099#1074#1086#1076
@@ -348,7 +348,7 @@ object Frm_report: TFrm_report
         object report_acceptBtn: TButton
           Left = 288
           Top = 11
-          Width = 241
+          Width = 75
           Height = 25
           Align = alCustom
           Caption = #1042#1099#1074#1086#1076

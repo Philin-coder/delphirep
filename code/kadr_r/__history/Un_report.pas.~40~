@@ -126,7 +126,6 @@ begin
   (Components[d] as TDateTimePicker).Date:=Now;
 end;
 end;
-
 end;
 
 procedure TFrm_report.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -137,7 +136,6 @@ dm.reportQuery.Close;
 end;
 
 procedure TFrm_report.FormCreate(Sender: TObject);
-var b:Integer;
 begin
 with Frm_report do
 begin
@@ -145,19 +143,6 @@ begin
   height:=768;
   Position:=poScreenCenter;
 end;
-with Frm_report do
-for b := 0 to ComponentCount - 1 do
-begin
-if (Components[b] is TButton) then
-begin
-  (Components[b] as TButton).Width:=257;
-  (Components[b] as TButton).Height:=25;
-  (Components[b] as TButton).Align:=alCustom;
-  (Components[b] as TButton).Anchors:=[akLeft,akRight];
-
-end;
-end;
-
 end;
 
 procedure TFrm_report.reportButtonClick(Sender: TObject);
@@ -207,6 +192,7 @@ SQL.Text:=
       ExecSQL;
       Close;
       Open;
+
 end;
 end;
 
