@@ -1,0 +1,20 @@
+USE [cont_r]
+GO
+
+/****** Object:  Table [dbo].[spec]    Script Date: 09.03.2025 11:17:23 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[spec](
+	[spec_id] [int] IDENTITY(1,1) NOT NULL,
+	[spec_maim] [varchar](1000) NOT NULL,
+ CONSTRAINT [PK_spec] PRIMARY KEY CLUSTERED 
+(
+	[spec_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
