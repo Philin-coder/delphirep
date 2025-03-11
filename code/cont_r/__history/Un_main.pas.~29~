@@ -4,12 +4,15 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs,dateUtils, StdCtrls, Buttons;
+  Dialogs,dateUtils, StdCtrls, Buttons, ExtCtrls;
 
 type
   TFrm_main = class(TForm)
+    BitBtn1: TBitBtn;
     Button1: TButton;
+    procedure BitBtn1Click(Sender: TObject);
 
+    
 
 
 
@@ -17,6 +20,7 @@ type
     { Private declarations }
   public
     { Public declarations }
+
 
   end;
 
@@ -28,6 +32,18 @@ implementation
 uses Un_func;
 
 {$R *.dfm}
-procedure   PackFile(ArcName, FileName: string);
+
+
+
+
+     
+
+
+procedure TFrm_main.BitBtn1Click(Sender: TObject);
+begin
+ UpdateFormProperties('Frm_main', 'Главная форма', clBtnFace, 1024, 768);
+end;
 
 end.
+
+

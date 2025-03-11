@@ -5,14 +5,18 @@ uses Un_main,
 dateUtils,
 sysUtils,
 Controls,
+Classes,
 Graphics,
 Dialogs,
 Forms,
 StdCtrls,
+IniFiles,
 ExtCtrls;
+
 function DateToStr_(Dat : TDate): String;
 function    CommaPoint (X: String) : String;
 function FindFormByName(const AName: string): TForm;
+procedure SaveFormState(AForm: TForm);
 
 procedure UpdateFormProperties(const FormName: string;
   NewCaption: string = '';
@@ -22,7 +26,7 @@ procedure UpdateFormProperties(const FormName: string;
 
 implementation
 
-uses Classes;
+
 function    CommaPoint (X: String) : String;
 var iii : Integer;
 begin
@@ -39,6 +43,7 @@ begin
   +IntToStr(DayOf(Dat))+'.'
   +IntToStr(YearOf(Dat));
 end;
+
 function FindFormByName(const AName: string): TForm;
 var
   i: Integer;
@@ -93,28 +98,63 @@ begin
           (Components[l] as TLabeledEdit).Anchors:=[akLeft,akRight];
           (Components[l] as TLabeledEdit).Align:=alCustom;
         end;
-
   for b := 0 to ComponentCount - 1 do
   begin
     if (Components[b] is TButton) then
     begin
       (Components[b] as TButton).Anchors:=[akLeft,akRight];
-
-
     end;
   end;
-
       end;
-
     end;
   end;
+  procedure SaveFormState(AForm: TForm);
+var
+  IniFile: TIniFile;
+  FileName: string;
+begin
 
+  FileName := ChangeFileExt(Application.ExeName, '.ini');
 
+  IniFile := TIniFile.Create(FileName);
+  try
 
+    IniFile.WriteInteger(AForm.Name, 'Left', AForm.Left);
+    IniFile.WriteInteger(AForm.Name, 'Top', AForm.Top);
+    IniFile.WriteInteger(AForm.Name, 'Width', AForm.Width);
+    IniFile.WriteInteger(AForm.Name, 'Height', AForm.Height);
+  finally
+    IniFile.Free;
+  end;
+end;
+procedure LoadFormState(AForm: TForm);
+var
+  IniFile: TIniFile;
+  FileName: string;
+begin
+  FileName := ChangeFileExt(Application.ExeName, '.ini');
+  
+  if not FileExists(FileName) then Exit;
 
+  IniFile := TIniFile.Create(FileName);
+  try
+    // Загружаем позицию и размер
+    AForm.Left := IniFile.ReadInteger(AForm.Name, 'Left', AForm.Left);
+    AForm.Top := IniFile.ReadInteger(AForm.Name, 'Top', AForm.Top);
+    AForm.Width := IniFile.ReadInteger(AForm.Name, 'Width', AForm.Width);
+    AForm.Height := IniFile.ReadInteger(AForm.Name, 'Height', AForm.Height);
 
+    // Загружаем данные компонентов
+    if AForm.FindComponent('Edit1') <> nil then
+      TEdit(AForm.FindComponent('Edit1')).Text := 
+        IniFile.ReadString(AForm.Name, 'Edit1', '');
 
-
-
+    if AForm.FindComponent('CheckBox1') <> nil then
+      TCheckBox(AForm.FindComponent('CheckBox1')).Checked := 
+        IniFile.ReadBool(AForm.Name, 'CheckBox1', False);
+        
+  finally
+    IniFile.Free;
+  end;
 
 end.

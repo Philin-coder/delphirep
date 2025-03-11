@@ -11,6 +11,8 @@ object Frm_main: TFrm_main
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnClose = FormClose
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object BitBtn1: TBitBtn

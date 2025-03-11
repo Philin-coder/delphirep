@@ -10,10 +10,14 @@ Graphics,
 Dialogs,
 Forms,
 StdCtrls,
+IniFiles,
 ExtCtrls;
+
 function DateToStr_(Dat : TDate): String;
 function    CommaPoint (X: String) : String;
 function FindFormByName(const AName: string): TForm;
+procedure SaveFormState(AForm: TForm);
+procedure LoadFormState(AForm: TForm);
 
 procedure UpdateFormProperties(const FormName: string;
   NewCaption: string = '';
@@ -105,4 +109,42 @@ begin
       end;
     end;
   end;
+  procedure SaveFormState(AForm: TForm);
+var
+  IniFile: TIniFile;
+  FileName: string;
+begin
+
+  FileName := ChangeFileExt(Application.ExeName, '.ini');
+
+  IniFile := TIniFile.Create(FileName);
+  try
+
+    IniFile.WriteInteger(AForm.Name, 'Left', AForm.Left);
+    IniFile.WriteInteger(AForm.Name, 'Top', AForm.Top);
+    IniFile.WriteInteger(AForm.Name, 'Width', AForm.Width);
+    IniFile.WriteInteger(AForm.Name, 'Height', AForm.Height);
+  finally
+    IniFile.Free;
+  end;
+end;
+procedure LoadFormState(AForm: TForm);
+var
+  IniFile: TIniFile;
+  FileName: string;
+begin
+  FileName := ChangeFileExt(Application.ExeName, '.ini');
+  if not FileExists(FileName) then Exit;
+  IniFile := TIniFile.Create(FileName);
+  try
+    AForm.Left := IniFile.ReadInteger(AForm.Name, 'Left', AForm.Left);
+    AForm.Top := IniFile.ReadInteger(AForm.Name, 'Top', AForm.Top);
+    AForm.Width := IniFile.ReadInteger(AForm.Name, 'Width', AForm.Width);
+    AForm.Height := IniFile.ReadInteger(AForm.Name, 'Height', AForm.Height);
+  finally
+    IniFile.Free;
+  end;
+end;
+
+
 end.

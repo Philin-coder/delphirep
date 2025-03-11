@@ -12,7 +12,6 @@ type
     Button1: TButton;
     procedure BitBtn1Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure FormCreate(Sender: TObject);
 
     
 
@@ -44,12 +43,6 @@ procedure TFrm_main.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
  SaveFormState(Self);
  Action := caFree;
-end;
-
-procedure TFrm_main.FormCreate(Sender: TObject);
-begin
-LoadFormState(Self);
-
 end;
 
 end.
