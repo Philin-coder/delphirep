@@ -4,15 +4,19 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs;
+  Dialogs,dateUtils, StdCtrls, Buttons;
 
 type
   TFrm_main = class(TForm)
+    BitBtn1: TBitBtn;
+
+
   private
     { Private declarations }
   public
     { Public declarations }
-     function DateToStr_(Dat : TDate): String;
+
+
   end;
 
 var
@@ -20,12 +24,10 @@ var
 
 implementation
 
+uses Un_func;
+
 {$R *.dfm}
-function TfrmMain.DateToStr_(Dat : TDate): String;
-begin
-  Result:= IntToStr(MonthOf(Dat))+'.'
-  +IntToStr(DayOf(Dat))+'.'
-  +IntToStr(YearOf(Dat));
-end;
 
 end.
+
+

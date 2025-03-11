@@ -5,7 +5,6 @@ uses Un_main,
 dateUtils,
 sysUtils,
 Controls,
-Classes,
 Graphics,
 Dialogs,
 Forms,
@@ -23,7 +22,7 @@ procedure UpdateFormProperties(const FormName: string;
 
 implementation
 
-
+uses Classes;
 function    CommaPoint (X: String) : String;
 var iii : Integer;
 begin
@@ -40,7 +39,6 @@ begin
   +IntToStr(DayOf(Dat))+'.'
   +IntToStr(YearOf(Dat));
 end;
-
 function FindFormByName(const AName: string): TForm;
 var
   i: Integer;
@@ -63,8 +61,7 @@ procedure UpdateFormProperties(const FormName: string;
   NewHeight: Integer);
 var
   Form: TForm;
-          var l:Integer;
-          var b:Integer;
+
 begin
   Form := FindFormByName(FormName);
   if not Assigned(Form) then
@@ -87,22 +84,16 @@ begin
     if NewHeight > 0 then
       Height := NewHeight;
       form.Position:=poScreenCenter;
-      for l := 0 to ComponentCount - 1 do
-      begin
-        if (Components[l] is TLabeledEdit ) then
-        begin
-          (Components[l] as TLabeledEdit).Clear;
-          (Components[l] as TLabeledEdit).Anchors:=[akLeft,akRight];
-          (Components[l] as TLabeledEdit).Align:=alCustom;
-        end;
-  for b := 0 to ComponentCount - 1 do
-  begin
-    if (Components[b] is TButton) then
-    begin
-      (Components[b] as TButton).Anchors:=[akLeft,akRight];
+      
     end;
   end;
-      end;
-    end;
-  end;
+
+
+
+
+
+
+
+
+
 end.

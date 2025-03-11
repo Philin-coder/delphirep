@@ -1,0 +1,50 @@
+unit Un_main;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs,dateUtils, StdCtrls, Buttons;
+
+type
+  TFrm_main = class(TForm)
+    BitBtn1: TBitBtn;
+    procedure BitBtn1Click(Sender: TObject);
+
+
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+        function TFrm_main.GetCurrentFormName: string;
+
+  end;
+
+var
+  Frm_main: TFrm_main;
+
+implementation
+
+uses Un_func;
+
+{$R *.dfm}
+function GetCurrentFormName: string;
+begin
+if Assigned(Screen.ActiveForm) then
+    Result := Screen.ActiveForm.Name
+  else
+    Result := '';
+end;
+
+
+procedure TFrm_main.BitBtn1Click(Sender: TObject);
+var CurrentFormName: string;
+begin
+    CurrentFormName := GetCurrentFormName;
+  if CurrentFormName <> '' then
+    ShowMessage('Текущая форма: ' + CurrentFormName)
+  else
+    ShowMessage('Нет активной формы');
+end;
+
+end.

@@ -4,11 +4,15 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs,dateUtils;
+  Dialogs,dateUtils, StdCtrls, Buttons;
 
 type
   TFrm_main = class(TForm)
-   function DateToStr_(Dat : TDate): String;
+    Button1: TButton;
+
+
+
+
   private
     { Private declarations }
   public
@@ -20,6 +24,8 @@ var
   Frm_main: TFrm_main;
 
 implementation
+
+uses Un_func;
 
 {$R *.dfm}
 

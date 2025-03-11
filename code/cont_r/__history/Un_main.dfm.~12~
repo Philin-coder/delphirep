@@ -1,7 +1,7 @@
-object Form2: TForm2
+object Frm_main: TFrm_main
   Left = 0
   Top = 0
-  Caption = 'Form2'
+  Caption = #1043#1083#1072#1074#1085#1072#1103' '#1092#1086#1088#1084#1072
   ClientHeight = 299
   ClientWidth = 635
   Color = clBtnFace
@@ -13,4 +13,13 @@ object Form2: TForm2
   OldCreateOrder = False
   PixelsPerInch = 96
   TextHeight = 13
+  object BitBtn1: TBitBtn
+    Left = 408
+    Top = 72
+    Width = 75
+    Height = 25
+    Caption = 'BitBtn1'
+    TabOrder = 0
+    OnClick = BitBtn1Click
+  end
 end

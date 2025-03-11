@@ -14,20 +14,11 @@ object Frm_main: TFrm_main
   PixelsPerInch = 96
   TextHeight = 13
   object BitBtn1: TBitBtn
-    Left = 24
+    Left = 408
     Top = 72
-    Width = 609
+    Width = 75
     Height = 25
     Caption = 'BitBtn1'
     TabOrder = 0
-    OnClick = BitBtn1Click
-  end
-  object Button1: TButton
-    Left = 280
-    Top = 152
-    Width = 75
-    Height = 25
-    Caption = 'Button1'
-    TabOrder = 1
   end
 end

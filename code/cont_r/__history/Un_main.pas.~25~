@@ -4,14 +4,22 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs;
+  Dialogs,dateUtils, StdCtrls, Buttons;
 
 type
   TFrm_main = class(TForm)
+    BitBtn1: TBitBtn;
+    procedure BitBtn1Click(Sender: TObject);
+    
+//     procedure set_frm_params(f_name:string;f_witdh,f_height:Integer);
+
+
   private
     { Private declarations }
   public
     { Public declarations }
+
+
   end;
 
 var
@@ -19,6 +27,14 @@ var
 
 implementation
 
+uses Un_func;
+
 {$R *.dfm}
 
+
+     
+
+
 end.
+
+

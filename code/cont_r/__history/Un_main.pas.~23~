@@ -4,16 +4,12 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs,dateUtils, StdCtrls, Buttons, ExtCtrls;
+  Dialogs,dateUtils, StdCtrls, Buttons;
 
 type
   TFrm_main = class(TForm)
     BitBtn1: TBitBtn;
-    Button1: TButton;
     procedure BitBtn1Click(Sender: TObject);
-
-    
-
 
 
   private
@@ -32,18 +28,19 @@ implementation
 uses Un_func;
 
 {$R *.dfm}
-
-
-
-
-     
-
+function GetActiveFormName: string;
+begin
+  if Assigned(Screen.ActiveForm) then
+    Result := Screen.ActiveForm.Name
+  else
+    Result := '';
+end;
 
 procedure TFrm_main.BitBtn1Click(Sender: TObject);
 begin
- UpdateFormProperties('Frm_main', 'Главная форма', clBtnFace, 1024, 768);
-end;
+ShowMessage( 'Активная форма: ' + GetActiveFormName);
 
+end;
 end.
 
 

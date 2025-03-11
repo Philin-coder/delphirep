@@ -40,7 +40,6 @@ begin
   +IntToStr(DayOf(Dat))+'.'
   +IntToStr(YearOf(Dat));
 end;
-
 function FindFormByName(const AName: string): TForm;
 var
   i: Integer;
@@ -95,14 +94,28 @@ begin
           (Components[l] as TLabeledEdit).Anchors:=[akLeft,akRight];
           (Components[l] as TLabeledEdit).Align:=alCustom;
         end;
+
   for b := 0 to ComponentCount - 1 do
   begin
     if (Components[b] is TButton) then
     begin
       (Components[b] as TButton).Anchors:=[akLeft,akRight];
+
+
     end;
   end;
+
       end;
+
     end;
   end;
+
+
+
+
+
+
+
+
+
 end.
