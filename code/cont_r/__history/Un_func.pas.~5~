@@ -1,0 +1,30 @@
+unit Un_func;
+
+interface
+uses Un_main,dateUtils,sysUtils,Controls;
+function DateToStr_(Dat : TDate): String;
+function    CommaPoint (X: String) : String;
+implementation
+
+function    CommaPoint (X: String) : String;
+var iii : Integer;
+begin
+ iii:=pos(',',X) ;
+ if iii<>0 then
+ Result:=copy(X,1,iii-1)+'.'+copy(X,iii+1,5)
+ else
+ Result:=x;
+end;
+
+
+function DateToStr_(Dat : TDate): String;
+begin
+  Result:= IntToStr(MonthOf(Dat))+'.'
+  +IntToStr(DayOf(Dat))+'.'
+  +IntToStr(YearOf(Dat));
+end;
+
+
+
+
+end.

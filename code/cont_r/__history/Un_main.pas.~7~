@@ -4,12 +4,12 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs,dateUtils, StdCtrls, Buttons;
+  Dialogs,dateUtils;
 
 type
   TFrm_main = class(TForm)
-    BitBtn1: TBitBtn;
-    procedure BitBtn1Click(Sender: TObject);
+   function DateToStr_(Dat : TDate): String;
+   function CommaPoint (X: String) : String;
   private
     { Private declarations }
   public
@@ -29,10 +29,5 @@ uses Un_func;
 
 
 
-
-procedure TFrm_main.BitBtn1Click(Sender: TObject);
-begin
-ShowMessage(QuotedStr(DateToStr_(Now)));
-end;
 
 end.

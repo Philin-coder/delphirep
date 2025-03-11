@@ -13,13 +13,4 @@ object Frm_main: TFrm_main
   OldCreateOrder = False
   PixelsPerInch = 96
   TextHeight = 13
-  object BitBtn1: TBitBtn
-    Left = 448
-    Top = 192
-    Width = 75
-    Height = 25
-    Caption = 'BitBtn1'
-    TabOrder = 0
-    OnClick = BitBtn1Click
-  end
 end
