@@ -32,25 +32,6 @@ implementation
 uses Un_func, Un_dm, Un_spec;
 
 {$R *.dfm}
-// UpdateFormProperties('Frm_main', 'Главная форма', clBtnFace, 1024, 768);
-// var
-// ins_spec:TADOStoredProc;
-//begin
-//ins_spec:=TADOStoredProc.Create(self);
-//with ins_spec do
-//begin
-//Connection:=DM.Connection;
-//ProcedureName:='ins_spec';
-//Parameters.Add;
-//Parameters.Items[0].Name:='spec_maim';
-//Parameters.ParamByName('spec_maim').Value:=LabeledEdit1.Text;
-//ExecProc;
-//Destroy;
-//end;
-//dm.testQuery.Close;
-//dm.testQuery.Open;
-
-
 procedure TFrm_main.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
  SaveFormState(Self);
