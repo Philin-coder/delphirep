@@ -10,7 +10,7 @@ type
   TFrm_spec = class(TForm)
     SpecPage: TPageControl;
     SelTab: TTabSheet;
-    TabSheet2: TTabSheet;
+    InsTab: TTabSheet;
     TabSheet3: TTabSheet;
     TabSheet4: TTabSheet;
     SpecgroupBox: TGroupBox;
@@ -23,12 +23,20 @@ type
     Spec_fnd_edit: TLabeledEdit;
     Spec_groupradio: TRadioButton;
     SpecResetRadio: TRadioButton;
+    spec_inpBox: TGroupBox;
+    spec_inp: TLabeledEdit;
+    Spec_ins_btn_Box: TGroupBox;
+    Spec_insBtn: TButton;
+    SpecDataInsBox: TGroupBox;
+    Spec_insGrd: TDBGrid;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure SpecSelBtnClick(Sender: TObject);
     procedure SpecResetRadioClick(Sender: TObject);
     procedure Spec_groupradioClick(Sender: TObject);
+    procedure Spec_fnd_editKeyPress(Sender: TObject; var Key: Char);
+    procedure Spec_insBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -148,6 +156,26 @@ sel_spec := nil;
 end;
 
 
+procedure TFrm_spec.Spec_fnd_editKeyPress(Sender: TObject; var Key: Char);
+begin
+try
+
+   dm.specQuery.SQL.Text:='select'+ ' '+
+   'spec.spec_id,'+
+  'spec.spec_maim'+' '+
+  'from spec where 1=1'+' '+
+  'and spec_maim like'+
+   QuotedStr(Concat(Spec_fnd_edit.Text,#37));
+   dm.specQuery.close;
+   dm.specQuery.Open;
+except   on E: EADOError do
+  begin
+  ShowMessage('Ошибка БД'+E.Message);
+  Exit;
+  end;
+  end;
+end;
+
 procedure TFrm_spec.Spec_groupradioClick(Sender: TObject);
 begin
 if Spec_groupradio.Checked=true then
@@ -164,12 +192,58 @@ if Spec_groupradio.Checked=true then
   'from spec order by spec_maim  asc';
       Open;
      end;
-    except
+    except on E: EADOError do
     begin
-      ShowMessage('wrong situation');
+      ShowMessage('Ошибка БД'+E.Message);
     end;
     end;
   end;
+end;
+
+procedure TFrm_spec.Spec_insBtnClick(Sender: TObject);
+var ins_spec:TADOStoredProc;
+begin
+    if (spec_inp.Text<>'') then
+    begin
+      ins_spec:=nil;
+      try
+      ins_spec:=TADOStoredProc.Create(nil);
+      try
+      with ins_spec do
+      begin
+      Connection:=dm.Connection;
+      if not  Connection.connected then
+          Raise Exception.Create('Содинение с базой не установелено');
+      ProcedureName:='ins_spec';
+      Parameters.Clear;
+      Parameters.CreateParameter(
+     'spec_maim', 
+     ftString,
+     pdInput, 
+        1000,
+        spec_inp.Text
+      );
+      ExecProc;
+       DM.specQuery.Close;
+       dm.specQuery.Open;
+      MessageDlg('Изменения внесены',mtError,[mbOK],0);
+         end;
+      except on E: EADOError do
+            ShowMessage('wrong situation'+e.Message);
+      on e:Exception do
+            ShowMessage('wrong situation'+e.Message);
+      end;      
+      finally
+      FreeAndNil(ins_spec);
+      end;
+    end
+    else
+begin
+  MessageDlg('Заполните все поля',mtError,[mbOK],0);
+  Beep();
+  Exit;
+end;
+
 end;
 
 end.

@@ -27,6 +27,9 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure SpecSelBtnClick(Sender: TObject);
+    procedure SpecResetRadioClick(Sender: TObject);
+    procedure Spec_groupradioClick(Sender: TObject);
+    procedure Spec_fnd_editKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
   public
@@ -77,8 +80,42 @@ begin
     end;
 end;
 
-procedure TFrm_spec.SpecSelBtnClick(Sender: TObject);
+procedure TFrm_spec.SpecResetRadioClick(Sender: TObject);
+var i,j:Integer;
+begin
+ if SpecResetRadio.Checked=True then
+begin
+  with Frm_spec do
+    for I := 0 to ComponentCount - 1 do
+     begin
+       if (Components[i] is TLabeledEdit)  then
+        begin
+          (Components[i] as TLabeledEdit).Clear;
+        end;
+     end;
+     with dm.specQuery do
+     begin
+     Close;
+     sql.Clear;
+     SQL.Text:=
+     'select '+
+  'spec.spec_id,'+
+  'spec.spec_maim '+
+  'from spec';
+     Open;
+     end;
+    with Frm_spec do
+    for j := 0 to ComponentCount - 1 do
+    begin
+      if(Components[j] is TRadioButton)  then
+      begin
+        (Components[j] as TRadioButton).Checked:=False;
+      end;
+    end;
+end;
+end;
 
+procedure TFrm_spec.SpecSelBtnClick(Sender: TObject);
 var
   sel_spec: TADOStoredProc;
 begin
@@ -91,11 +128,11 @@ sel_spec := nil;
         Connection := DM.Connection;
         if not Connection.Connected then
           raise Exception.Create('Соединение с БД не установлено');
-
         ProcedureName := 'sel_spec';
-
         Parameters.Clear;
-        Parameters.CreateParameter('spec_maim', ftString, pdInput, 1000, Spec_condEdit.Text);
+        Parameters.CreateParameter('spec_maim', ftString,
+        pdInput, 1000,
+        Spec_condEdit.Text);
         Open;
         DM.specQuery.Close;
         DM.specQuery.Recordset := sel_spec.Recordset;
@@ -111,5 +148,49 @@ sel_spec := nil;
   end;
 end;
 
+
+procedure TFrm_spec.Spec_fnd_editKeyPress(Sender: TObject; var Key: Char);
+begin
+try
+
+   dm.specQuery.SQL.Text:='select'+ ' '+
+   'spec.spec_id,'+
+  'spec.spec_maim'+' '+
+  'from spec where 1=1'+' '+
+  'and spec_maim like'+
+   QuotedStr(Concat(Spec_fnd_edit.Text,#37));
+   dm.specQuery.close;
+   dm.specQuery.Open;
+except   on E: EADOError do
+  begin
+  ShowMessage('Ошибка БД'+E.Message);
+  Exit;
+  end;
+  end;
+end;
+
+procedure TFrm_spec.Spec_groupradioClick(Sender: TObject);
+begin
+if Spec_groupradio.Checked=true then
+  begin
+    try
+     with dm.specQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+      'select '+
+  'spec.spec_id,'+
+  'spec.spec_maim '+
+  'from spec order by spec_maim  asc';
+      Open;
+     end;
+    except on E: EADOError do
+    begin
+      ShowMessage('Ошибка БД'+E.Message);
+    end;
+    end;
+  end;
+end;
 
 end.

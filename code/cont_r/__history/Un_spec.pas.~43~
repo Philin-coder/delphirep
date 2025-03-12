@@ -203,12 +203,14 @@ end;
 procedure TFrm_spec.Spec_insBtnClick(Sender: TObject);
 var ins_spec:TADOStoredProc;
 begin
+    // Проверка заполненности поля
   if Trim(spec_inp.Text) = '' then
   begin
     MessageDlg('Заполните все поля', mtError, [mbOK], 0);
     Beep;
     Exit;
   end;
+
   ins_spec := nil;
   try
     ins_spec := TADOStoredProc.Create(nil);
@@ -220,6 +222,7 @@ begin
         begin
           raise Exception.Create('Соединение с базой данных не установлено');
         end;
+
         ProcedureName := 'ins_spec';
         Parameters.Clear;
         Parameters.CreateParameter(
@@ -229,9 +232,19 @@ begin
           1000,
           spec_inp.Text
         );
+
+        // Вывод отладочной информации
+        ShowMessage('Параметр spec_maim установлен: ' + spec_inp.Text);
+
         ExecProc;
+
+        // Вывод отладочной информации
+        ShowMessage('Хранимая процедура ins_spec выполнена успешно');
+
+        // Обновление данных
         DM.specQuery.Close;
         DM.specQuery.Open;
+
         MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
       end;
     except
@@ -247,5 +260,6 @@ begin
   finally
     FreeAndNil(ins_spec);
   end;
-end;
+
+
 end.

@@ -203,6 +203,7 @@ end;
 procedure TFrm_spec.Spec_insBtnClick(Sender: TObject);
 var ins_spec:TADOStoredProc;
 begin
+
   if Trim(spec_inp.Text) = '' then
   begin
     MessageDlg('Заполните все поля', mtError, [mbOK], 0);
