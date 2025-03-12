@@ -168,7 +168,6 @@ object Frm_spec: TFrm_spec
           EditLabel.Height = 13
           EditLabel.Caption = #1042#1074#1086#1076' '#1089#1087#1077#1094#1080#1072#1083#1100#1085#1086#1089#1090#1080
           TabOrder = 0
-          ExplicitTop = 42
         end
       end
       object Spec_ins_btn_Box: TGroupBox
@@ -197,8 +196,6 @@ object Frm_spec: TFrm_spec
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        ExplicitTop = 161
-        ExplicitHeight = 569
         object Spec_insGrd: TDBGrid
           Left = 2
           Top = 15

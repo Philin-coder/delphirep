@@ -159,7 +159,6 @@ end;
 procedure TFrm_spec.Spec_fnd_editKeyPress(Sender: TObject; var Key: Char);
 begin
 try
-
    dm.specQuery.SQL.Text:='select'+ ' '+
    'spec.spec_id,'+
   'spec.spec_maim'+' '+
