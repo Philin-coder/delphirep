@@ -1,0 +1,125 @@
+unit Un_spec;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ComCtrls, StdCtrls, Grids, DBGrids, ExtCtrls, ADODB,DB;
+
+type
+  TFrm_spec = class(TForm)
+    SpecPage: TPageControl;
+    SelTab: TTabSheet;
+    TabSheet2: TTabSheet;
+    TabSheet3: TTabSheet;
+    TabSheet4: TTabSheet;
+    SpecgroupBox: TGroupBox;
+    SpecbtnBox: TGroupBox;
+    SpecDataBox: TGroupBox;
+    SpecSelGrid: TDBGrid;
+    SpecSelBtn: TButton;
+    SpecCondBox: TGroupBox;
+    Spec_condEdit: TLabeledEdit;
+    Spec_fnd_edit: TLabeledEdit;
+    Spec_groupradio: TRadioButton;
+    SpecResetRadio: TRadioButton;
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormActivate(Sender: TObject);
+    procedure SpecSelBtnClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_spec: TFrm_spec;
+
+implementation
+
+uses Un_dm, Un_main, Un_func;
+
+{$R *.dfm}
+
+procedure TFrm_spec.FormActivate(Sender: TObject);
+begin
+dm.specQuery.Open;
+end;
+
+procedure TFrm_spec.FormClose(Sender: TObject; var Action: TCloseAction);
+ var
+ q:Integer;
+begin
+ SaveFormState(Self);
+ with dm do
+ begin
+ for q := 0 to ComponentCount - 1 do
+ begin
+   if(Components[q] is TADOQuery)  then
+   begin
+      (Components[q] as TADOQuery).Close;
+   end;
+ end;
+ end;
+end;
+
+procedure TFrm_spec.FormCreate(Sender: TObject);
+var l:Integer;
+begin
+  LoadFormState(Self);
+  for l := 0 to ComponentCount - 1 do
+    begin
+      if (Components[l] is TLabeledEdit) then
+      begin
+        (Components[l] as TLabeledEdit).Width:=(Frm_spec.Width);
+      end;
+    end;
+end;
+
+procedure TFrm_spec.SpecSelBtnClick(Sender: TObject);
+var
+  sel_spec: TADOStoredProc;
+begin
+sel_spec := nil;
+try
+  sel_spec := TADOStoredProc.Create(nil);  // Лучше использовать nil вместо Self для временных объектов
+  try
+    with sel_spec do
+    begin
+      Connection := DM.Connection;
+      if not Connection.Connected then
+        raise Exception.Create('Соединение с БД не установлено');
+
+      ProcedureName := 'sel_spec';
+
+      // Параметры хранимой процедуры лучше загружать автоматически
+      Parameters.Refresh;  // ? Важное исправление! Автоматически получаем параметры процедуры
+
+      Parameters.ParamByName('spec_maim').Value := Spec_condEdit.Text;
+
+      ExecProc;  // Используем Open вместо ExecProc, если процедура возвращает результат
+    end;
+
+    // Эти операции лучше выполнять в отдельном блоке try-except
+    DM.specQuery.Close;
+    DM.specQuery.Parameters.ParamByName('spec_maim').Value := Spec_condEdit.Text;
+    DM.specQuery.Open;
+
+  except
+    on E: EADOError do
+    begin
+      ShowMessage('Ошибка БД: ' + E.Message);
+      Exit;
+    end;
+    on E: Exception do
+    begin
+      ShowMessage('Ошибка: ' + E.Message);
+      Exit;
+    end;
+  end;
+finally
+  FreeAndNil(sel_spec);
+end;
+end;
+end.

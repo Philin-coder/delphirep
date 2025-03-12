@@ -17,21 +17,16 @@ object Frm_main: TFrm_main
   PixelsPerInch = 96
   TextHeight = 13
   object mainImage: TImage
-    Left = 0
-    Top = 0
-    Width = 635
-    Height = 299
-    Align = alClient
-    ExplicitLeft = 280
-    ExplicitTop = 112
-    ExplicitWidth = 105
-    ExplicitHeight = 105
+    Left = 280
+    Top = 112
+    Width = 105
+    Height = 105
   end
   object ItemMenu: TMainMenu
     Left = 312
     Top = 152
     object spec_item: TMenuItem
-      Caption = '&'#1057#1087#1077#1094#1080#1072#1083#1100#1085#1086#1089#1090#1100
+      Caption = #1057#1087#1077#1094#1080#1072#1083#1100#1085#1086#1089#1090#1100
       OnClick = spec_itemClick
     end
   end

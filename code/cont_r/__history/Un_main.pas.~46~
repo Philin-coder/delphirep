@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs,dateUtils, StdCtrls, Buttons, ExtCtrls, ComCtrls, Grids, DBGrids, 
+  Dialogs,dateUtils, StdCtrls, Buttons, ExtCtrls, ComCtrls, Grids, DBGrids, ADODB,
   Menus,jpeg;
 
 type
@@ -56,6 +56,7 @@ begin
  SaveFormState(Self);
  Action := caFree;
  mainImage.Picture:=nil;
+
 end;
 
 procedure TFrm_main.FormCreate(Sender: TObject);
@@ -72,6 +73,7 @@ begin
   Stretch:=True;
   Picture.LoadFromFile('1.jpg');
   AutoSize:=True;
+
 end;
 end;
 
@@ -79,10 +81,11 @@ procedure TFrm_main.spec_itemClick(Sender: TObject);
 begin
 try
 UpdateFormProperties('frm_spec', 'Форма работы со специальностью',clBtnFace, 1024, 768);
-Frm_spec.ShowModal;
+Frm_spec.Show;
 except
 Frm_spec.Free;
 raise;
+
 end;
 
 end;

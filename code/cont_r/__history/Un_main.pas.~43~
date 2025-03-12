@@ -4,8 +4,8 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs,dateUtils, StdCtrls, Buttons, ExtCtrls, ComCtrls, Grids, DBGrids, 
-  Menus,jpeg;
+  Dialogs,dateUtils, StdCtrls, Buttons, ExtCtrls, ComCtrls, Grids, DBGrids, ADODB,
+  Menus;
 
 type
   TFrm_main = class(TForm)
@@ -29,7 +29,7 @@ var
 
 implementation
 
-uses Un_func, Un_dm, Un_spec;
+uses Un_func, Un_dm;
 
 {$R *.dfm}
 // UpdateFormProperties('Frm_main', 'Главная форма', clBtnFace, 1024, 768);
@@ -55,36 +55,21 @@ procedure TFrm_main.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
  SaveFormState(Self);
  Action := caFree;
- mainImage.Picture:=nil;
 end;
 
 procedure TFrm_main.FormCreate(Sender: TObject);
 begin
-With Frm_main do
-begin
-Width:=1024;
-Height:=768;
-Position:=poScreenCenter;
-end;
 LoadFormState(Self);
 With mainImage do
 begin
   Stretch:=True;
-  Picture.LoadFromFile('1.jpg');
-  AutoSize:=True;
-end;
+
+end; 
 end;
 
 procedure TFrm_main.spec_itemClick(Sender: TObject);
 begin
-try
-UpdateFormProperties('frm_spec', 'Форма работы со специальностью',clBtnFace, 1024, 768);
-Frm_spec.ShowModal;
-except
-Frm_spec.Free;
-raise;
-end;
-
+ShowMessage('test');
 end;
 
 end.

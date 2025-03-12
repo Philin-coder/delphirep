@@ -12,6 +12,7 @@ object Frm_main: TFrm_main
   Font.Style = []
   Menu = ItemMenu
   OldCreateOrder = False
+  OnActivate = FormActivate
   OnClose = FormClose
   OnCreate = FormCreate
   PixelsPerInch = 96

@@ -11,12 +11,11 @@ Dialogs,
 Forms,
 StdCtrls,
 IniFiles,
-ComCtrls,
 ExtCtrls;
 
-function  DateToStr_(Dat : TDate): String;
-function  CommaPoint (X: String) : String;
-function  FindFormByName(const AName: string): TForm;
+function DateToStr_(Dat : TDate): String;
+function    CommaPoint (X: String) : String;
+function FindFormByName(const AName: string): TForm;
 procedure SaveFormState(AForm: TForm);
 procedure LoadFormState(AForm: TForm);
 
@@ -70,7 +69,6 @@ var
   Form: TForm;
           var l:Integer;
           var b:Integer;
-          var d:Integer;
 begin
   Form := FindFormByName(FormName);
   if not Assigned(Form) then
@@ -98,6 +96,8 @@ begin
         if (Components[l] is TLabeledEdit ) then
         begin
           (Components[l] as TLabeledEdit).Clear;
+          (Components[l] as TLabeledEdit).Anchors:=[akLeft,akRight];
+          (Components[l] as TLabeledEdit).Align:=alCustom;
         end;
   for b := 0 to ComponentCount - 1 do
   begin
@@ -105,20 +105,10 @@ begin
     begin
       (Components[b] as TButton).Anchors:=[akLeft,akRight];
     end;
-      for d := 0 to ComponentCount - 1 do
-  begin
-    if (Components[d] is TDateTimePicker ) then
-    begin
-      (Components[b] as TDateTimePicker).Date:=Now;
-    end;
-
   end;
       end;
     end;
-
-
   end;
-end;
   procedure SaveFormState(AForm: TForm);
 var
   IniFile: TIniFile;
@@ -129,6 +119,7 @@ begin
 
   IniFile := TIniFile.Create(FileName);
   try
+
     IniFile.WriteInteger(AForm.Name, 'Left', AForm.Left);
     IniFile.WriteInteger(AForm.Name, 'Top', AForm.Top);
     IniFile.WriteInteger(AForm.Name, 'Width', AForm.Width);
@@ -137,7 +128,6 @@ begin
     IniFile.Free;
   end;
 end;
-
 procedure LoadFormState(AForm: TForm);
 var
   IniFile: TIniFile;

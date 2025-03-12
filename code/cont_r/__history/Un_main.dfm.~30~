@@ -31,7 +31,7 @@ object Frm_main: TFrm_main
     Left = 312
     Top = 152
     object spec_item: TMenuItem
-      Caption = '&'#1057#1087#1077#1094#1080#1072#1083#1100#1085#1086#1089#1090#1100
+      Caption = #1057#1087#1077#1094#1080#1072#1083#1100#1085#1086#1089#1090#1100
       OnClick = spec_itemClick
     end
   end
