@@ -12,7 +12,7 @@ type
     SelTab: TTabSheet;
     InsTab: TTabSheet;
     UpdTab: TTabSheet;
-    TabSheet4: TTabSheet;
+    delTab: TTabSheet;
     SpecgroupBox: TGroupBox;
     SpecbtnBox: TGroupBox;
     SpecDataBox: TGroupBox;
@@ -29,10 +29,21 @@ type
     Spec_insBtn: TButton;
     SpecDataInsBox: TGroupBox;
     Spec_insGrd: TDBGrid;
-    GroupBox1: TGroupBox;
-    LabeledEdit1: TLabeledEdit;
-    StaticText1: TStaticText;
-    DBLookupComboBox1: TDBLookupComboBox;
+    Spec_upd_inp_Box: TGroupBox;
+    spec_upd_spec_inp: TLabeledEdit;
+    Speclbl: TStaticText;
+    SpecUpdDBL: TDBLookupComboBox;
+    Spec_upd_btn_Box: TGroupBox;
+    Spec_upd_Btn: TButton;
+    Spec_upd_dataBox: TGroupBox;
+    SpecUpddataGrd: TDBGrid;
+    delspedatacBox: TGroupBox;
+    delspeclbl: TStaticText;
+    delSpecDBL: TDBLookupComboBox;
+    dlspecbtnBox: TGroupBox;
+    delspecBtn: TButton;
+    delspecdataBox: TGroupBox;
+    delspecGrd: TDBGrid;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
@@ -41,6 +52,8 @@ type
     procedure Spec_groupradioClick(Sender: TObject);
     procedure Spec_fnd_editKeyPress(Sender: TObject; var Key: Char);
     procedure Spec_insBtnClick(Sender: TObject);
+    procedure Spec_upd_BtnClick(Sender: TObject);
+    procedure delspecBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -56,9 +69,108 @@ uses Un_dm, Un_main, Un_func;
 
 {$R *.dfm}
 
+procedure TFrm_spec.Spec_upd_BtnClick(Sender: TObject);
+  var
+    upd_spec:TADOStoredProc;
+begin
+ if Trim(spec_upd_spec_inp.Text)='' then
+ begin
+   MessageDlg('Заполните все поля',mtError,[mbOK],0);
+   Beep;
+   Exit;
+ end;
+ upd_spec :=nil;
+ try
+ upd_spec :=TADOStoredProc.Create(nil);
+ try
+ with upd_spec do
+ begin
+   Connection :=dm.Connection;
+   if not Connection.Connected then
+   begin
+     raise Exception.Create('Соединение с базой  не установлено');
+   end;
+   ProcedureName :='upd_spec';
+   Parameters.Clear;
+   Parameters.CreateParameter(
+   'spec_maim',
+   ftString,
+   pdInput,
+   1000,
+   spec_upd_spec_inp.Text
+   );
+   Parameters.CreateParameter(
+   'spec_id',
+   ftInteger,
+   pdInput,
+   0,
+   SpecUpdDBL.KeyValue
+   );
+   ExecProc;
+   dm.specQuery.Close;
+   dm.specQuery.Open;
+   MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+ end;
+ except on E: EADOError do
+ begin
+   ShowMessage('Ошибка'+' '+e.Message);
+ end;
+ on E: Exception do
+ begin
+  ShowMessage('Ошибка'+' '+e.Message);
+ end;
+ end;
+ finally
+ FreeAndNil(upd_spec);
+ end;
+end;
+
+procedure TFrm_spec.delspecBtnClick(Sender: TObject);
+var del_spec:TADOStoredProc;
+begin
+ del_spec :=nil;
+ try
+ del_spec :=TADOStoredProc.Create(nil);
+ try
+ with del_spec do
+ begin
+   Connection :=dm.Connection;
+   if not Connection.Connected then
+   begin
+     raise Exception.Create('Соединение с базой  не установлено');
+   end;
+   ProcedureName :='del_spec';
+   Parameters.Clear;
+   Parameters.CreateParameter(
+   'spec_id',
+   ftInteger,
+   pdInput,
+   0,
+   delSpecDBL.KeyValue
+   );
+   ExecProc;
+   dm.specQuery.Close;
+   dm.specQuery.Open;
+   MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+ end;
+ except on E: EADOError do
+ begin
+   ShowMessage('Ошибка'+' '+e.Message);
+ end;
+ on E: Exception do
+ begin
+  ShowMessage('Ошибка'+' '+e.Message);
+ end;
+ end;
+ finally
+ FreeAndNil(del_spec);
+ end;
+
+end;
+
 procedure TFrm_spec.FormActivate(Sender: TObject);
 begin
-dm.specQuery.Open;
+  dm.specQuery.Open;
 end;
 
 procedure TFrm_spec.FormClose(Sender: TObject; var Action: TCloseAction);

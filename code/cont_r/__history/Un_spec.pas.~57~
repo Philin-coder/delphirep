@@ -29,10 +29,14 @@ type
     Spec_insBtn: TButton;
     SpecDataInsBox: TGroupBox;
     Spec_insGrd: TDBGrid;
-    GroupBox1: TGroupBox;
-    LabeledEdit1: TLabeledEdit;
-    StaticText1: TStaticText;
-    DBLookupComboBox1: TDBLookupComboBox;
+    Spec_upd_inp_Box: TGroupBox;
+    spec_upd_spec_inp: TLabeledEdit;
+    Speclbl: TStaticText;
+    SpecUpdDBL: TDBLookupComboBox;
+    Spec_upd_btn_Box: TGroupBox;
+    Spec_upd_Btn: TButton;
+    Spec_upd_dataBox: TGroupBox;
+    SpecUpddataGrd: TDBGrid;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
@@ -41,6 +45,7 @@ type
     procedure Spec_groupradioClick(Sender: TObject);
     procedure Spec_fnd_editKeyPress(Sender: TObject; var Key: Char);
     procedure Spec_insBtnClick(Sender: TObject);
+    procedure Spec_upd_BtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -56,9 +61,58 @@ uses Un_dm, Un_main, Un_func;
 
 {$R *.dfm}
 
+procedure TFrm_spec.Spec_upd_BtnClick(Sender: TObject);
+  var upd_spec:TADOStoredProc;
+begin
+  if Trim(spec_upd_spec_inp.Text)='' then
+  begin
+   MessageDlg('Заполните все поля',mtError,[mbOK],0);
+   Beep;
+   Exit;
+  end;
+  upd_spec  :=nil;
+  try
+    upd_spec  :=TADOStoredProc.Create(nil);
+  try      
+    with upd_spec do 
+    begin
+      Connection  :=dm.Connection;
+      if not Connection.Connected then
+      begin
+        MessageDlg('Соединение с базой даных не установлено',mtError,[mbOK],0);
+      end;
+       ProcedureName  :='Upd_spec';
+       Parameters.Clear;
+       Parameters.CreateParameter(
+       'spec_maim',
+       ftString,
+       pdInput,
+       1000,
+       spec_upd_spec_inp.Text           
+       ); 
+       ExecProc;
+       dm.specQuery.Close;
+       dm.specQuery.Open;
+       MessageDlg('Изменения внесены')
+    end;
+    except on E: EADOError do
+    begin
+      ShowMessage('Ошибка'+e.Message);
+    end;
+    on E: Exception do 
+    begin
+       ShowMessage('Ошибка'+e.Message);
+    end;
+    
+    end;
+  finally
+     FreeAndNil(upd_spec);
+  end;
+end;
+
 procedure TFrm_spec.FormActivate(Sender: TObject);
 begin
-dm.specQuery.Open;
+  dm.specQuery.Open;
 end;
 
 procedure TFrm_spec.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -81,7 +135,7 @@ end;
 procedure TFrm_spec.FormCreate(Sender: TObject);
 
 begin
-  UniformizeComponentSizes(Self, 998, 21);
+  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   LoadFormState(Self);
 end;
 
