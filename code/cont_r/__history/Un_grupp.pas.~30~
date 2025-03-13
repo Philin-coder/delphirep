@@ -84,12 +84,11 @@ begin
   with dm.GruppQuery  do
     begin
     close;
-    SQL.Text:='SELECT'+' '+
+    SQL.Text:='SELECT'+''+
    'gruppa.grup_id,  gruppa.naim_grup, gruppa.kurs,spec.spec_maim'+' '+
       'from gruppa'+' '+
       'inner join spec on  spec.spec_id=gruppa.spec_id'+' '+
       'where 1=1';
-
     open;
     end;
 except
@@ -230,9 +229,9 @@ try
    QuotedStr(Concat(grupp_condEdit.Text,#37));
    dm.GruppQuery.close;
    dm.GruppQuery.Open;
-except on E: Exception do
+except
   begin
-  ShowMessage('wrong situation'+' '+E.Message);
+  ShowMessage('wrong situation');
   end;
   end;
 end;

@@ -49,6 +49,8 @@ type
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
+    procedure gruppSelBtnClick(Sender: TObject);
+    procedure gruppResetRadioClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -91,6 +93,85 @@ procedure TFrm_grupp.FormCreate(Sender: TObject);
 begin
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   LoadFormState(Self);
+end;
+
+procedure TFrm_grupp.gruppResetRadioClick(Sender: TObject);
+var
+  i,j,c:Integer;
+begin
+      if gruppResetRadio.Checked=True then
+begin
+  with Frm_grupp do
+    for I := 0 to ComponentCount - 1 do
+     begin
+       if (Components[i] is TLabeledEdit)  then
+        begin
+          (Components[i] as TLabeledEdit).Clear;
+        end;
+     end;
+       with Frm_grupp do
+    for c := 0 to ComponentCount - 1 do
+     begin
+       if (Components[c] is TCheckBox)  then
+        begin
+          (Components[c] as TCheckBox).Checked:=False;
+        end;
+     end;
+     with dm.GruppQuery do
+     begin
+     Close;
+     sql.Clear;
+     SQL.Text:=
+     'select '+
+     'gruppa.grup_id,  gruppa.naim_grup, gruppa.kurs,spec.spec_maim'+' '+
+      'from gruppa'+' '+
+      'inner join spec on  spec.spec_id=gruppa.spec_id'+' '+
+      'where 1=1';
+      Open;
+     end;
+    with Frm_grupp do
+    for j := 0 to ComponentCount - 1 do
+    begin
+      if(Components[j] is TRadioButton)  then
+      begin
+        (Components[j] as TRadioButton).Checked:=False;
+      end;
+    end;
+end;
+end;
+
+procedure TFrm_grupp.gruppSelBtnClick(Sender: TObject);
+var
+  sel_grup: TADOStoredProc;
+begin
+  sel_grup := nil;
+  try
+    sel_grup := TADOStoredProc.Create(nil);
+    try
+      with sel_grup do
+      begin
+        Connection := DM.Connection;
+        if not Connection.Connected then
+          raise Exception.Create('Соединенме с базой не установлено');
+        ProcedureName := 'sel_grup';
+        Parameters.Clear;
+        Parameters.CreateParameter('spec_maim', ftString,
+        pdInput, 1000,
+        grupp_condEdit.Text);
+        Open;
+        DM.gruppQuery.Close;
+        DM.gruppQuery.Recordset := sel_grup.Recordset;
+      end;
+    except
+      on E: EADOError do
+        ShowMessage('Ошибка: ' + E.Message);
+      on E: Exception do
+        ShowMessage('Ошибка: ' + E.Message);
+    end;
+  finally
+    FreeAndNil(sel_grup);
+  end;
+
 end;
 
 end.

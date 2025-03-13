@@ -43,6 +43,7 @@ object Frm_grupp: TFrm_grupp
           Align = alCustom
           Caption = #1055#1086' '#1089#1087#1077#1094#1080#1072#1083#1100#1085#1086#1089#1090#1080
           TabOrder = 0
+          OnClick = grupp_sp_groupradioClick
         end
         object gruppResetRadio: TRadioButton
           Left = 432
@@ -51,6 +52,7 @@ object Frm_grupp: TFrm_grupp
           Height = 17
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 1
+          OnClick = gruppResetRadioClick
         end
         object grupp_gr_groupradio: TRadioButton
           Left = 256
@@ -60,16 +62,18 @@ object Frm_grupp: TFrm_grupp
           Align = alCustom
           Caption = #1055#1086' '#1075#1088#1091#1087#1087#1077
           TabOrder = 2
+          OnClick = grupp_gr_groupradioClick
         end
         object fnd_naimCb: TCheckBox
           Left = 656
           Top = 32
-          Width = 161
+          Width = 209
           Height = 17
           Align = alCustom
           Anchors = [akLeft, akRight]
           Caption = #1046#1080#1074#1086#1081'  '#1087#1086#1080#1089#1082' '#1087#1086' '#1085#1072#1079#1074#1072#1085#1080#1102
           TabOrder = 3
+          OnClick = fnd_naimCbClick
         end
       end
       object gruppbtnBox: TGroupBox
@@ -87,6 +91,7 @@ object Frm_grupp: TFrm_grupp
           Align = alCustom
           Caption = #1042#1099#1073#1086#1088
           TabOrder = 0
+          OnClick = gruppSelBtnClick
         end
       end
       object gruppDataBox: TGroupBox
@@ -162,6 +167,7 @@ object Frm_grupp: TFrm_grupp
           EditLabel.Height = 13
           EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1091#1089#1083#1086#1074#1080#1102
           TabOrder = 0
+          OnKeyPress = grupp_condEditKeyPress
         end
         object grupp_fnd_edit: TLabeledEdit
           Left = 3
@@ -173,6 +179,7 @@ object Frm_grupp: TFrm_grupp
           EditLabel.Height = 13
           EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1089#1087#1077#1094#1080#1072#1083#1100#1085#1086#1089#1090#1080
           TabOrder = 1
+          OnKeyPress = grupp_fnd_editKeyPress
         end
       end
     end

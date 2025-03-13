@@ -230,9 +230,9 @@ try
    QuotedStr(Concat(grupp_condEdit.Text,#37));
    dm.GruppQuery.close;
    dm.GruppQuery.Open;
-except on E: Exception do
+except
   begin
-  ShowMessage('wrong situation'+' '+E.Message);
+  ShowMessage('wrong situation');
   end;
   end;
 end;
