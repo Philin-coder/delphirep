@@ -26,22 +26,4 @@ object DM: TDM
     Left = 24
     Top = 128
   end
-  object GruppQuery: TADOQuery
-    Connection = Connection
-    CursorType = ctStatic
-    Parameters = <>
-    SQL.Strings = (
-      'select '
-      'gruppa.grup_id,  gruppa.naim_grup, gruppa.kurs,spec.spec_maim'
-      'from gruppa'
-      'inner join spec on  spec.spec_id=gruppa.spec_id'
-      'where 1=1;')
-    Left = 96
-    Top = 72
-  end
-  object GruppDS: TDataSource
-    DataSet = GruppQuery
-    Left = 96
-    Top = 136
-  end
 end

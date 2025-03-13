@@ -31,11 +31,7 @@ object DM: TDM
     CursorType = ctStatic
     Parameters = <>
     SQL.Strings = (
-      'select '
-      'gruppa.grup_id,  gruppa.naim_grup, gruppa.kurs,spec.spec_maim'
-      'from gruppa'
-      'inner join spec on  spec.spec_id=gruppa.spec_id'
-      'where 1=1;')
+      'select * from gruppa;')
     Left = 96
     Top = 72
   end

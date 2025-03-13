@@ -23,7 +23,7 @@ var
 
 implementation
 
-uses Un_main, Un_func, Un_spec, Un_grupp;
+uses Un_main, Un_func, Un_spec;
 
 {$R *.dfm}
 

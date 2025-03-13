@@ -10,8 +10,6 @@ type
     Connection: TADOConnection;
     specQuery: TADOQuery;
     spectDS: TDataSource;
-    GruppQuery: TADOQuery;
-    GruppDS: TDataSource;
   private
     { Private declarations }
   public
@@ -23,7 +21,7 @@ var
 
 implementation
 
-uses Un_main, Un_func, Un_spec, Un_grupp;
+uses Un_main, Un_func, Un_spec;
 
 {$R *.dfm}
 

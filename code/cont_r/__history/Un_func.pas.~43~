@@ -1,7 +1,7 @@
 unit Un_func;
 
 interface
-uses 
+uses Un_main,
 dateUtils,
 sysUtils,
 Controls,
