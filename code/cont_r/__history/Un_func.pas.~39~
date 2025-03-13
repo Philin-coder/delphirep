@@ -11,12 +11,15 @@ Dialogs,
 Forms,
 StdCtrls,
 IniFiles,
+ComCtrls,
+DBCtrls,
 ExtCtrls;
 
-function DateToStr_(Dat : TDate): String;
-function    CommaPoint (X: String) : String;
-function FindFormByName(const AName: string): TForm;
+function  DateToStr_(Dat : TDate): String;
+function  CommaPoint (X: String) : String;
+function  FindFormByName(const AName: string): TForm;
 procedure SaveFormState(AForm: TForm);
+procedure LoadFormState(AForm: TForm);
 
 procedure UpdateFormProperties(const FormName: string;
   NewCaption: string = '';
@@ -68,6 +71,7 @@ var
   Form: TForm;
           var l:Integer;
           var b:Integer;
+          var d:Integer;
 begin
   Form := FindFormByName(FormName);
   if not Assigned(Form) then
@@ -95,8 +99,6 @@ begin
         if (Components[l] is TLabeledEdit ) then
         begin
           (Components[l] as TLabeledEdit).Clear;
-          (Components[l] as TLabeledEdit).Anchors:=[akLeft,akRight];
-          (Components[l] as TLabeledEdit).Align:=alCustom;
         end;
   for b := 0 to ComponentCount - 1 do
   begin
@@ -104,10 +106,20 @@ begin
     begin
       (Components[b] as TButton).Anchors:=[akLeft,akRight];
     end;
+      for d := 0 to ComponentCount - 1 do
+  begin
+    if (Components[d] is TDateTimePicker ) then
+    begin
+      (Components[b] as TDateTimePicker).Date:=Now;
+    end;
+
   end;
       end;
     end;
+
+
   end;
+end;
   procedure SaveFormState(AForm: TForm);
 var
   IniFile: TIniFile;
@@ -118,7 +130,6 @@ begin
 
   IniFile := TIniFile.Create(FileName);
   try
-
     IniFile.WriteInteger(AForm.Name, 'Left', AForm.Left);
     IniFile.WriteInteger(AForm.Name, 'Top', AForm.Top);
     IniFile.WriteInteger(AForm.Name, 'Width', AForm.Width);
@@ -127,6 +138,7 @@ begin
     IniFile.Free;
   end;
 end;
+
 procedure LoadFormState(AForm: TForm);
 var
   IniFile: TIniFile;
@@ -140,9 +152,10 @@ begin
     AForm.Top := IniFile.ReadInteger(AForm.Name, 'Top', AForm.Top);
     AForm.Width := IniFile.ReadInteger(AForm.Name, 'Width', AForm.Width);
     AForm.Height := IniFile.ReadInteger(AForm.Name, 'Height', AForm.Height);
-
   finally
     IniFile.Free;
   end;
+end;
+
 
 end.

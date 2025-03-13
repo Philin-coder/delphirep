@@ -4,14 +4,14 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, StdCtrls, Grids, DBGrids, ExtCtrls, ADODB,DB;
+  Dialogs, ComCtrls, StdCtrls, Grids, DBGrids, ExtCtrls, ADODB,DB, DBCtrls;
 
 type
   TFrm_spec = class(TForm)
     SpecPage: TPageControl;
     SelTab: TTabSheet;
     InsTab: TTabSheet;
-    TabSheet3: TTabSheet;
+    UpdTab: TTabSheet;
     TabSheet4: TTabSheet;
     SpecgroupBox: TGroupBox;
     SpecbtnBox: TGroupBox;
@@ -29,6 +29,10 @@ type
     Spec_insBtn: TButton;
     SpecDataInsBox: TGroupBox;
     Spec_insGrd: TDBGrid;
+    GroupBox1: TGroupBox;
+    LabeledEdit1: TLabeledEdit;
+    StaticText1: TStaticText;
+    DBLookupComboBox1: TDBLookupComboBox;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
@@ -75,16 +79,10 @@ begin
 end;
 
 procedure TFrm_spec.FormCreate(Sender: TObject);
-var l:Integer;
+
 begin
+  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   LoadFormState(Self);
-  for l := 0 to ComponentCount - 1 do
-    begin
-      if (Components[l] is TLabeledEdit) then
-      begin
-        (Components[l] as TLabeledEdit).Width:=(Frm_spec.Width);
-      end;
-    end;
 end;
 
 procedure TFrm_spec.SpecResetRadioClick(Sender: TObject);

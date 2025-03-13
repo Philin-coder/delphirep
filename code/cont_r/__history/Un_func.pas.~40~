@@ -25,9 +25,10 @@ procedure UpdateFormProperties(const FormName: string;
   NewColor: TColor = clNone;
   NewWidth: Integer = -1;
   NewHeight: Integer = -1);
- procedure UniformizeComponentSizes(AComponent: TComponent; AWidth, AHeight:
- Integer; AColor: TColor; AFontName: string; AFontSize: Integer);
-implementation
+ procedure UniformizeComponentSizes(AComponent: TComponent;
+ AWidth, AHeight: Integer);
+
+implementation
 
 
 function    CommaPoint (X: String) : String;
@@ -156,49 +157,32 @@ begin
     IniFile.Free;
   end;
 end;
- procedure UniformizeComponentSizes(AComponent: TComponent; AWidth,
- AHeight: Integer; AColor: TColor; AFontName: string; AFontSize: Integer);
-var
-  i: Integer;
+  procedure UniformizeComponentSizes(AComponent: TComponent;
+ AWidth, AHeight: Integer);
+ var
+  i: Integer;
   Control: TControl;
-begin
-  if AComponent is TControl then
+ begin
+    if AComponent is TControl then
   begin
     Control := TControl(AComponent);
     if Control is TLabeledEdit then
     begin
       TLabeledEdit(Control).Width := AWidth;
       TLabeledEdit(Control).Height := AHeight;
-      TLabeledEdit(Control).Color := AColor;
-      TLabeledEdit(Control).Font.Name := AFontName;
-      TLabeledEdit(Control).Font.Size := AFontSize;
     end
     else if Control is TEdit then
     begin
       TEdit(Control).Width := AWidth;
       TEdit(Control).Height := AHeight;
-      TEdit(Control).Color := AColor;
-      TEdit(Control).Font.Name := AFontName;
-      TEdit(Control).Font.Size := AFontSize;
     end
     else if Control is TDBLookupComboBox then
     begin
       TDBLookupComboBox(Control).Width := AWidth;
       TDBLookupComboBox(Control).Height := AHeight;
-      TDBLookupComboBox(Control).Color := AColor;
-      TDBLookupComboBox(Control).Font.Name := AFontName;
-      TDBLookupComboBox(Control).Font.Size := AFontSize;
     end;
-  end;
-  if AComponent is TWinControl then
-  begin
-    for i := 0 to TWinControl(AComponent).ControlCount - 1 do
-    begin
-      UniformizeComponentSizes(TWinControl(AComponent).Controls[i], AWidth,
-      AHeight, AColor, AFontName, AFontSize);
-    end;
-  end;
-end;
+ end;
+
 
 
 end.

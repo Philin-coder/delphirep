@@ -4,14 +4,14 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, StdCtrls, Grids, DBGrids, ExtCtrls, ADODB,DB;
+  Dialogs, ComCtrls, StdCtrls, Grids, DBGrids, ExtCtrls, ADODB,DB, DBCtrls;
 
 type
   TFrm_spec = class(TForm)
     SpecPage: TPageControl;
     SelTab: TTabSheet;
     InsTab: TTabSheet;
-    TabSheet3: TTabSheet;
+    UpdTab: TTabSheet;
     TabSheet4: TTabSheet;
     SpecgroupBox: TGroupBox;
     SpecbtnBox: TGroupBox;
@@ -29,6 +29,10 @@ type
     Spec_insBtn: TButton;
     SpecDataInsBox: TGroupBox;
     Spec_insGrd: TDBGrid;
+    GroupBox1: TGroupBox;
+    LabeledEdit1: TLabeledEdit;
+    StaticText1: TStaticText;
+    DBLookupComboBox1: TDBLookupComboBox;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
@@ -82,7 +86,7 @@ begin
     begin
       if (Components[l] is TLabeledEdit) then
       begin
-        (Components[l] as TLabeledEdit).Width:=(Frm_spec.Width);
+        (Components[l] as TLabeledEdit).Width:=988;//(Frm_spec.Width);
       end;
     end;
 end;
@@ -159,7 +163,6 @@ end;
 procedure TFrm_spec.Spec_fnd_editKeyPress(Sender: TObject; var Key: Char);
 begin
 try
-
    dm.specQuery.SQL.Text:='select'+ ' '+
    'spec.spec_id,'+
   'spec.spec_maim'+' '+
@@ -201,18 +204,51 @@ if Spec_groupradio.Checked=true then
 end;
 
 procedure TFrm_spec.Spec_insBtnClick(Sender: TObject);
+var ins_spec:TADOStoredProc;
 begin
-    if (spec_inp.Text<>'') then
-    begin
-      // процедура
-    end
-    else
-begin
-  MessageDlg('Заполните все поля',mtError,[mbOK],0);
-  Beep();
-  Exit;
+  if Trim(spec_inp.Text) = '' then
+  begin
+    MessageDlg('Заполните все поля', mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  ins_spec := nil;
+  try
+    ins_spec := TADOStoredProc.Create(nil);
+    try
+      with ins_spec do
+      begin
+        Connection := DM.Connection;
+        if not Connection.Connected then
+        begin
+          raise Exception.Create('Соединение с базой данных не установлено');
+        end;
+        ProcedureName := 'ins_spec';
+        Parameters.Clear;
+        Parameters.CreateParameter(
+          'spec_maim',
+          ftString,
+          pdInput,
+          1000,
+          spec_inp.Text
+        );
+        ExecProc;
+        DM.specQuery.Close;
+        DM.specQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка базы данных: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+  finally
+    FreeAndNil(ins_spec);
+  end;
 end;
-
-end;
-
 end.
