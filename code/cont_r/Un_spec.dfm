@@ -285,7 +285,7 @@ object Frm_spec: TFrm_spec
           Width = 305
           Height = 25
           Align = alCustom
-          Caption = #1048#1093#1084#1077#1085#1077#1085#1080#1077' '#1076#1072#1085#1085#1099#1093
+          Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1076#1072#1085#1085#1099#1093
           TabOrder = 0
           OnClick = Spec_upd_BtnClick
         end
@@ -334,27 +334,26 @@ object Frm_spec: TFrm_spec
         Left = 0
         Top = 0
         Width = 1029
-        Height = 41
+        Height = 90
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
         DesignSize = (
           1029
-          41)
+          90)
         object delspeclbl: TStaticText
-          Left = -4
-          Top = 1
+          Left = 2
+          Top = 29
           Width = 127
           Height = 17
           Align = alCustom
           Anchors = [akLeft, akRight]
           Caption = #1042#1099#1073#1088#1072#1090#1100' '#1089#1087#1077#1094#1080#1072#1083#1100#1085#1086#1089#1090#1100
           TabOrder = 0
-          ExplicitTop = 12
         end
         object delSpecDBL: TDBLookupComboBox
           Left = 3
-          Top = 11
+          Top = 52
           Width = 998
           Height = 21
           Anchors = [akLeft, akRight]
@@ -362,7 +361,6 @@ object Frm_spec: TFrm_spec
           ListField = 'spec_maim'
           ListSource = DM.spectDS
           TabOrder = 1
-          ExplicitTop = 35
         end
       end
       object dlspecbtnBox: TGroupBox
@@ -385,19 +383,19 @@ object Frm_spec: TFrm_spec
       end
       object delspecdataBox: TGroupBox
         Left = 0
-        Top = 41
+        Top = 90
         Width = 1029
-        Height = 689
+        Height = 640
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        ExplicitTop = 105
-        ExplicitHeight = 625
+        ExplicitTop = 96
+        ExplicitHeight = 634
         object delspecGrd: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
-          Height = 672
+          Height = 623
           Align = alClient
           DataSource = DM.spectDS
           TabOrder = 0
