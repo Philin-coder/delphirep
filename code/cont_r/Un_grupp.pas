@@ -89,7 +89,6 @@ begin
       'from gruppa'+' '+
       'inner join spec on  spec.spec_id=gruppa.spec_id'+' '+
       'where 1=1';
-
     open;
     end;
 except
