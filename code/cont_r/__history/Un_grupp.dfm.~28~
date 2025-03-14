@@ -21,7 +21,7 @@ object Frm_grupp: TFrm_grupp
     Top = 0
     Width = 1037
     Height = 813
-    ActivePage = SelTab
+    ActivePage = InsTab
     Align = alClient
     TabOrder = 0
     object SelTab: TTabSheet
@@ -34,7 +34,6 @@ object Frm_grupp: TFrm_grupp
         Align = alTop
         Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072
         TabOrder = 0
-        ExplicitTop = 91
         object grupp_sp_groupradio: TRadioButton
           Left = 56
           Top = 32
@@ -67,7 +66,7 @@ object Frm_grupp: TFrm_grupp
         object fnd_naimCb: TCheckBox
           Left = 656
           Top = 32
-          Width = 161
+          Width = 209
           Height = 17
           Align = alCustom
           Anchors = [akLeft, akRight]
@@ -184,7 +183,7 @@ object Frm_grupp: TFrm_grupp
       end
     end
     object InsTab: TTabSheet
-      Caption = #1042#1074#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1089#1087#1077#1094#1080#1072#1083#1100#1085#1086#1089#1090#1080
+      Caption = #1042#1074#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1075#1088#1091#1087#1087#1077
       ImageIndex = 1
       object spec_inpBox: TGroupBox
         Left = 0

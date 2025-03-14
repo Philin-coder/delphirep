@@ -185,37 +185,92 @@ object Frm_grupp: TFrm_grupp
     object InsTab: TTabSheet
       Caption = #1042#1074#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1075#1088#1091#1087#1087#1077
       ImageIndex = 1
-      object spec_inpBox: TGroupBox
+      object Grupp_inpBox: TGroupBox
         Left = 0
         Top = 0
         Width = 1029
-        Height = 73
+        Height = 251
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
         DesignSize = (
           1029
-          73)
-        object spec_inp: TLabeledEdit
+          251)
+        object SpecGinsLbl: TLabel
+          Left = 3
+          Top = 147
+          Width = 78
+          Height = 13
+          Caption = #1057#1087#1077#1094#1080#1072#1083#1100#1085#1086#1089#1090#1100
+        end
+        object Grupp_naim_g_inp: TLabeledEdit
           Left = 0
-          Top = 33
+          Top = 58
           Width = 1026
           Height = 21
           Anchors = [akLeft, akRight]
-          EditLabel.Width = 104
+          EditLabel.Width = 115
           EditLabel.Height = 13
-          EditLabel.Caption = #1042#1074#1086#1076' '#1089#1087#1077#1094#1080#1072#1083#1100#1085#1086#1089#1090#1080
+          EditLabel.Caption = #1042#1074#1086#1076' '#1085#1072#1079#1074#1072#1085#1080#1103' '#1075#1088#1091#1087#1087#1099
           TabOrder = 0
+          ExplicitTop = 32
+        end
+        object GradeUpDown: TUpDown
+          Left = 26
+          Top = 117
+          Width = 17
+          Height = 21
+          AlignButton = udLeft
+          Anchors = [akLeft, akRight]
+          Associate = GradeEdit
+          Orientation = udHorizontal
+          TabOrder = 1
+          ExplicitTop = 124
+        end
+        object GradeEdit: TEdit
+          Left = 3
+          Top = 117
+          Width = 1069
+          Height = 21
+          Cursor = crVSplit
+          Align = alCustom
+          Anchors = [akLeft, akRight]
+          Color = clWhite
+          TabOrder = 2
+          Text = '0'
+          ExplicitTop = 120
+        end
+        object gradelbl: TStaticText
+          Left = 3
+          Top = 85
+          Width = 28
+          Height = 17
+          Align = alCustom
+          Caption = #1050#1091#1088#1089
+          TabOrder = 3
+        end
+        object SpecGrinsDBL: TDBLookupComboBox
+          Left = 3
+          Top = 169
+          Width = 1023
+          Height = 21
+          Align = alCustom
+          Anchors = [akLeft, akRight]
+          KeyField = 'spec_id'
+          ListField = 'spec_maim'
+          ListSource = DM.spectDS
+          TabOrder = 4
+          ExplicitTop = 173
         end
       end
-      object Spec_ins_btn_Box: TGroupBox
+      object Grupp_ins_btn_Box: TGroupBox
         Left = 0
         Top = 730
         Width = 1029
         Height = 55
         Align = alBottom
         TabOrder = 1
-        object Spec_insBtn: TButton
+        object Grupp_insBtn: TButton
           Left = 264
           Top = 27
           Width = 305
@@ -223,23 +278,27 @@ object Frm_grupp: TFrm_grupp
           Align = alCustom
           Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
           TabOrder = 0
+          OnClick = Grupp_insBtnClick
         end
       end
-      object SpecDataInsBox: TGroupBox
+      object Grupp_DataInsBox: TGroupBox
         Left = 0
-        Top = 73
+        Top = 251
         Width = 1029
-        Height = 657
+        Height = 479
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        object Spec_insGrd: TDBGrid
+        ExplicitLeft = 3
+        ExplicitTop = 305
+        ExplicitHeight = 545
+        object Grupp_insGrd: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
-          Height = 640
+          Height = 462
           Align = alClient
-          DataSource = DM.spectDS
+          DataSource = DM.GruppDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -249,14 +308,30 @@ object Frm_grupp: TFrm_grupp
           Columns = <
             item
               Expanded = False
-              FieldName = 'spec_id'
+              FieldName = 'grup_id'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Width = 103
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'naim_grup'
+              Title.Caption = #1053#1072#1079#1074#1072#1085#1080#1077
+              Width = 500
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'kurs'
+              Title.Caption = #1050#1091#1088#1089
+              Width = 100
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'spec_maim'
-              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077' '#1089#1087#1077#1094#1080#1072#1083#1100#1085#1086#1089#1090#1080
+              Title.Caption = #1057#1087#1077#1094#1080#1072#1083#1100#1085#1086#1089#1090#1100
+              Width = 500
               Visible = True
             end>
         end

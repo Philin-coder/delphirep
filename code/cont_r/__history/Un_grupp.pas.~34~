@@ -55,6 +55,7 @@ type
     procedure grupp_gr_groupradioClick(Sender: TObject);
     procedure grupp_fnd_editKeyPress(Sender: TObject; var Key: Char);
     procedure fnd_naimCbClick(Sender: TObject);
+    procedure grupp_condEditKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
   public
@@ -80,14 +81,14 @@ else
 begin
   Grupp_condEdit.EditLabel.Caption:='Точное совпадение условию';
  try
-  with dm.ankQuery do
+  with dm.GruppQuery  do
     begin
     close;
-    SQL.Text:='SELECT questionarie.ank_nom, questionarie.b_data,'+
-    'questionarie.fio, questionarie.obr, questionarie.kval, questionarie.staj,'+
-    'questionarie.wish_cond, prof.prof_name'+ ' '+
-    'FROM questionarie'+' '+
-    'inner join prof on questionarie.id_prof= prof.id_prof';
+    SQL.Text:='SELECT'+' '+
+   'gruppa.grup_id,  gruppa.naim_grup, gruppa.kurs,spec.spec_maim'+' '+
+      'from gruppa'+' '+
+      'inner join spec on  spec.spec_id=gruppa.spec_id'+' '+
+      'where 1=1';
     open;
     end;
 except
@@ -111,6 +112,7 @@ procedure TFrm_grupp.FormClose(Sender: TObject; var Action: TCloseAction);
 var
   q:Integer;
 begin
+  fnd_naimCb.Enabled:=True;
   Grupp_condEdit.EditLabel.Caption:='Точное совпадение условию';
   SaveFormState(Self);
  with dm do
@@ -127,6 +129,7 @@ begin
 
 procedure TFrm_grupp.FormCreate(Sender: TObject);
 begin
+  fnd_naimCb.Enabled:=True;
   Grupp_condEdit.EditLabel.Caption:='Точное совпадение условию';
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   LoadFormState(Self);
@@ -175,6 +178,8 @@ begin
       end;
     end;
 end;
+  Grupp_condEdit.EditLabel.Caption:='Точное совпадение условию';
+    fnd_naimCb.Enabled:=True;
 end;
 
 procedure TFrm_grupp.gruppSelBtnClick(Sender: TObject);
@@ -209,6 +214,26 @@ begin
     FreeAndNil(sel_grup);
   end;
 
+end;
+
+procedure TFrm_grupp.grupp_condEditKeyPress(Sender: TObject; var Key: Char);
+begin
+try
+   fnd_naimCb.Enabled:=false;
+   dm.GruppQuery.SQL.Text:='select'+' '+
+   'gruppa.grup_id,  gruppa.naim_grup, gruppa.kurs,spec.spec_maim'+' '+
+      'from gruppa'+' '+
+      'inner join spec on  spec.spec_id=gruppa.spec_id'+' '+
+      'where 1=1'+' '+
+      'and gruppa.naim_grup like'+
+   QuotedStr(Concat(grupp_condEdit.Text,#37));
+   dm.GruppQuery.close;
+   dm.GruppQuery.Open;
+except on E: Exception do
+  begin
+  ShowMessage('wrong situation'+' '+E.Message);
+  end;
+  end;
 end;
 
 procedure TFrm_grupp.grupp_fnd_editKeyPress(Sender: TObject; var Key: Char);

@@ -23,12 +23,11 @@ type
     grupp_fnd_edit: TLabeledEdit;
     grupp_sp_groupradio: TRadioButton;
     gruppResetRadio: TRadioButton;
-    spec_inpBox: TGroupBox;
-    spec_inp: TLabeledEdit;
-    Spec_ins_btn_Box: TGroupBox;
-    Spec_insBtn: TButton;
-    SpecDataInsBox: TGroupBox;
-    Spec_insGrd: TDBGrid;
+    Grupp_inpBox: TGroupBox;
+    Grupp_naim_inp: TLabeledEdit;
+    Grupp_ins_btn_Box: TGroupBox;
+    Grupp_insBtn: TButton;
+    Grupp_DataInsBox: TGroupBox;
     Spec_upd_inp_Box: TGroupBox;
     spec_upd_spec_inp: TLabeledEdit;
     Speclbl: TStaticText;
@@ -46,6 +45,10 @@ type
     delspecGrd: TDBGrid;
     grupp_gr_groupradio: TRadioButton;
     fnd_naimCb: TCheckBox;
+    Grupp_insGrd: TDBGrid;
+    GradeUpDown: TUpDown;
+    GradeEdit: TEdit;
+    gradelbl: TStaticText;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -84,7 +87,7 @@ begin
   with dm.GruppQuery  do
     begin
     close;
-    SQL.Text:='SELECT'+''+
+    SQL.Text:='SELECT'+' '+
    'gruppa.grup_id,  gruppa.naim_grup, gruppa.kurs,spec.spec_maim'+' '+
       'from gruppa'+' '+
       'inner join spec on  spec.spec_id=gruppa.spec_id'+' '+
@@ -112,6 +115,7 @@ procedure TFrm_grupp.FormClose(Sender: TObject; var Action: TCloseAction);
 var
   q:Integer;
 begin
+  fnd_naimCb.Enabled:=True;
   Grupp_condEdit.EditLabel.Caption:='Точное совпадение условию';
   SaveFormState(Self);
  with dm do
@@ -128,6 +132,7 @@ begin
 
 procedure TFrm_grupp.FormCreate(Sender: TObject);
 begin
+  fnd_naimCb.Enabled:=True;
   Grupp_condEdit.EditLabel.Caption:='Точное совпадение условию';
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   LoadFormState(Self);
@@ -177,6 +182,7 @@ begin
     end;
 end;
   Grupp_condEdit.EditLabel.Caption:='Точное совпадение условию';
+    fnd_naimCb.Enabled:=True;
 end;
 
 procedure TFrm_grupp.gruppSelBtnClick(Sender: TObject);
@@ -222,13 +228,13 @@ try
       'from gruppa'+' '+
       'inner join spec on  spec.spec_id=gruppa.spec_id'+' '+
       'where 1=1'+' '+
-      'and gruppa.naim_grup like'
-   QuotedStr(Concat(fnd_kval_Edit.Text,#37));
+      'and gruppa.naim_grup like'+
+   QuotedStr(Concat(grupp_condEdit.Text,#37));
    dm.GruppQuery.close;
    dm.GruppQuery.Open;
-except
+except on E: Exception do
   begin
-  ShowMessage('wrong situation');
+  ShowMessage('wrong situation'+' '+E.Message);
   end;
   end;
 end;
