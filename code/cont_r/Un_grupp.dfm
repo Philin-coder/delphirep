@@ -1,7 +1,7 @@
 object Frm_grupp: TFrm_grupp
   Left = 0
   Top = 0
-  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1075#1088#1091#1087#1087#1086#1081'_'
+  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1075#1088#1091#1087#1087#1086#1081
   ClientHeight = 813
   ClientWidth = 1037
   Color = clBtnFace
@@ -366,10 +366,6 @@ object Frm_grupp: TFrm_grupp
     object delTab: TTabSheet
       Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1089#1087#1077#1094#1080#1072#1083#1100#1085#1086#1089#1090#1080
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object delspedatacBox: TGroupBox
         Left = 0
         Top = 0
