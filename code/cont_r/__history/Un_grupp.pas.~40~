@@ -23,12 +23,11 @@ type
     grupp_fnd_edit: TLabeledEdit;
     grupp_sp_groupradio: TRadioButton;
     gruppResetRadio: TRadioButton;
-    spec_inpBox: TGroupBox;
-    spec_inp: TLabeledEdit;
-    Spec_ins_btn_Box: TGroupBox;
-    Spec_insBtn: TButton;
-    SpecDataInsBox: TGroupBox;
-    Spec_insGrd: TDBGrid;
+    Grupp_inpBox: TGroupBox;
+    Grupp_naim_g_inp: TLabeledEdit;
+    Grupp_ins_btn_Box: TGroupBox;
+    Grupp_insBtn: TButton;
+    Grupp_DataInsBox: TGroupBox;
     Spec_upd_inp_Box: TGroupBox;
     spec_upd_spec_inp: TLabeledEdit;
     Speclbl: TStaticText;
@@ -46,6 +45,12 @@ type
     delspecGrd: TDBGrid;
     grupp_gr_groupradio: TRadioButton;
     fnd_naimCb: TCheckBox;
+    Grupp_insGrd: TDBGrid;
+    GradeUpDown: TUpDown;
+    GradeEdit: TEdit;
+    gradelbl: TStaticText;
+    SpecGrinsDBL: TDBLookupComboBox;
+    SpecGinsLbl: TLabel;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -56,6 +61,7 @@ type
     procedure grupp_fnd_editKeyPress(Sender: TObject; var Key: Char);
     procedure fnd_naimCbClick(Sender: TObject);
     procedure grupp_condEditKeyPress(Sender: TObject; var Key: Char);
+    procedure Grupp_insBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -89,7 +95,6 @@ begin
       'from gruppa'+' '+
       'inner join spec on  spec.spec_id=gruppa.spec_id'+' '+
       'where 1=1';
-
     open;
     end;
 except
@@ -230,9 +235,9 @@ try
    QuotedStr(Concat(grupp_condEdit.Text,#37));
    dm.GruppQuery.close;
    dm.GruppQuery.Open;
-except
+except on E: Exception do
   begin
-  ShowMessage('wrong situation');
+  ShowMessage('wrong situation'+' '+E.Message);
   end;
   end;
 end;
@@ -282,6 +287,70 @@ if grupp_gr_groupradio.Checked=true then
     end;
   end;
 end;
+
+procedure TFrm_grupp.Grupp_insBtnClick(Sender: TObject);
+var ins_grupp:TADOStoredProc;
+begin
+     if (Trim(Grupp_naim_g_inp.Text) = '')and (GradeUpDown.Position=0) then
+  begin
+    MessageDlg('Заполните все поля', mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  ins_grupp := nil;
+  try
+    ins_grupp := TADOStoredProc.Create(nil);
+    try
+      with ins_grupp do
+      begin
+        Connection := DM.Connection;
+        if not Connection.Connected then
+        begin
+          raise Exception.Create('Соединение с базой не установлено');
+        end;
+        ProcedureName := 'ins_grupp';
+        Parameters.Clear;
+        Parameters.CreateParameter(
+          'naim_grup',
+          ftString,
+          pdInput,
+          1000,
+          Grupp_naim_g_inp.Text
+        );
+        Parameters.CreateParameter(
+          'kurs',
+          ftInteger,
+          pdInput,
+          0,
+          StrToInt(GradeEdit.Text)
+        );
+          Parameters.CreateParameter(
+          'spec_id',
+          ftInteger,
+          pdInput,
+          0,
+          SpecGrinsDBL.KeyValue
+        );
+        ExecProc;
+        DM.GruppQuery.Close;
+        DM.GruppQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+  finally
+    FreeAndNil(ins_grupp);
+  end;
+end;
+
 
 procedure TFrm_grupp.grupp_sp_groupradioClick(Sender: TObject);
 begin

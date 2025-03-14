@@ -1,7 +1,7 @@
 unit Un_func;
 
 interface
-uses Un_main,
+uses 
 dateUtils,
 sysUtils,
 Controls,
@@ -13,6 +13,7 @@ StdCtrls,
 IniFiles,
 ComCtrls,
 DBCtrls,
+Windows,
 ExtCtrls;
 
 function  DateToStr_(Dat : TDate): String;
@@ -25,10 +26,10 @@ procedure UpdateFormProperties(const FormName: string;
   NewColor: TColor = clNone;
   NewWidth: Integer = -1;
   NewHeight: Integer = -1);
- procedure UniformizeComponentSizes(AComponent: TComponent;
- AWidth, AHeight: Integer);
-
-implementation
+ procedure UniformizeComponentSizes(AComponent: TComponent; AWidth, AHeight:
+ Integer; AColor: TColor; AFontName: string; AFontSize: Integer);
+ function FixEncoding(const BrokenText: string): string;
+implementation
 
 
 function    CommaPoint (X: String) : String;
@@ -157,33 +158,104 @@ begin
     IniFile.Free;
   end;
 end;
-  procedure UniformizeComponentSizes(AComponent: TComponent;
- AWidth, AHeight: Integer);
- var
-  i: Integer;
+ procedure UniformizeComponentSizes(AComponent: TComponent; AWidth,
+ AHeight: Integer; AColor: TColor; AFontName: string; AFontSize: Integer);
+var
+  i: Integer;
   Control: TControl;
- begin
-if AComponent is TControl then
+begin
+  if AComponent is TControl then
   begin
     Control := TControl(AComponent);
     if Control is TLabeledEdit then
     begin
       TLabeledEdit(Control).Width := AWidth;
       TLabeledEdit(Control).Height := AHeight;
+      TLabeledEdit(Control).Color := AColor;
+      TLabeledEdit(Control).Font.Name := AFontName;
+      TLabeledEdit(Control).Font.Size := AFontSize;
     end
     else if Control is TEdit then
     begin
       TEdit(Control).Width := AWidth;
       TEdit(Control).Height := AHeight;
+      TEdit(Control).Color := AColor;
+      TEdit(Control).Font.Name := AFontName;
+      TEdit(Control).Font.Size := AFontSize;
     end
     else if Control is TDBLookupComboBox then
     begin
       TDBLookupComboBox(Control).Width := AWidth;
       TDBLookupComboBox(Control).Height := AHeight;
+      TDBLookupComboBox(Control).Color := AColor;
+      TDBLookupComboBox(Control).Font.Name := AFontName;
+      TDBLookupComboBox(Control).Font.Size := AFontSize;
     end;
   end;
- end;
+  if AComponent is TWinControl then
+  begin
+    for i := 0 to TWinControl(AComponent).ControlCount - 1 do
+    begin
+      UniformizeComponentSizes(TWinControl(AComponent).Controls[i], AWidth,
+      AHeight, AColor, AFontName, AFontSize);
+    end;
+  end;
+end;
+function FixEncoding(const BrokenText: string): string;
+var
+  WideStr: WideString; // Unicode-строка
+  AnsiStr: AnsiString; // ANSI-строка
+  Bytes: array of Byte; // Массив байтов для хранения данных
+  Len: Integer;
+begin
+  // Шаг 1: Преобразуем "испорченный" текст из ANSI (Windows-1251) в Unicode
+  SetLength(WideStr, Length(BrokenText));
+  Len := MultiByteToWideChar(
+    1251, // Кодировка Windows-1251
+    0,
+    PAnsiChar(BrokenText),
+    Length(BrokenText),
+    PWideChar(WideStr),
+    Length(WideStr)
+  );
+  if Len = 0 then
+  begin
+    Result := BrokenText; // Если преобразование не удалось, возвращаем исходный текст
+    Exit;
+  end;
 
 
+  Len := WideCharToMultiByte(
+    CP_UTF8, // Кодировка UTF-8
+    0,
+    PWideChar(WideStr),
+    Length(WideStr),
+    nil,
+    0,
+    nil,
+    nil
+  );
+  if Len = 0 then
+  begin
+    Result := BrokenText;
+    Exit;
+  end;
 
-end.
+
+  SetLength(AnsiStr, Len);
+  WideCharToMultiByte(
+    CP_UTF8,
+    0,
+    PWideChar(WideStr),
+    Length(WideStr),
+    PAnsiChar(AnsiStr),
+    Len,
+    nil,
+    nil
+  );
+
+
+  Result := string(AnsiStr);
+end;
+
+end.

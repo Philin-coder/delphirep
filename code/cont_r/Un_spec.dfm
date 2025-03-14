@@ -389,8 +389,6 @@ object Frm_spec: TFrm_spec
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        ExplicitTop = 96
-        ExplicitHeight = 634
         object delspecGrd: TDBGrid
           Left = 2
           Top = 15

@@ -23,20 +23,17 @@ type
     grupp_fnd_edit: TLabeledEdit;
     grupp_sp_groupradio: TRadioButton;
     gruppResetRadio: TRadioButton;
-    spec_inpBox: TGroupBox;
-    spec_inp: TLabeledEdit;
-    Spec_ins_btn_Box: TGroupBox;
-    Spec_insBtn: TButton;
-    SpecDataInsBox: TGroupBox;
-    Spec_insGrd: TDBGrid;
-    Spec_upd_inp_Box: TGroupBox;
-    spec_upd_spec_inp: TLabeledEdit;
-    Speclbl: TStaticText;
-    SpecUpdDBL: TDBLookupComboBox;
-    Spec_upd_btn_Box: TGroupBox;
-    Spec_upd_Btn: TButton;
-    Spec_upd_dataBox: TGroupBox;
-    SpecUpddataGrd: TDBGrid;
+    Grupp_inpBox: TGroupBox;
+    Grupp_naim_g_inp: TLabeledEdit;
+    Grupp_ins_btn_Box: TGroupBox;
+    Grupp_insBtn: TButton;
+    Grupp_DataInsBox: TGroupBox;
+    Grupp_upd_inp_Box: TGroupBox;
+    Grupplbl: TStaticText;
+    GruppUpdDBL: TDBLookupComboBox;
+    Grupp_upd_btn_Box: TGroupBox;
+    Grupp_upd_Btn: TButton;
+    Grupp_upd_dataBox: TGroupBox;
     delspedatacBox: TGroupBox;
     delspeclbl: TStaticText;
     delSpecDBL: TDBLookupComboBox;
@@ -46,6 +43,19 @@ type
     delspecGrd: TDBGrid;
     grupp_gr_groupradio: TRadioButton;
     fnd_naimCb: TCheckBox;
+    Grupp_insGrd: TDBGrid;
+    GradeUpDown: TUpDown;
+    GradeEdit: TEdit;
+    gradelbl: TStaticText;
+    SpecGrinsDBL: TDBLookupComboBox;
+    SpecGinsLbl: TLabel;
+    GruppupdDataGrd: TDBGrid;
+    UpDown_upd_grade: TUpDown;
+    Edit1: TEdit;
+    Label1: TLabel;
+    TimeGroupBox: TGroupBox;
+    TimePanel: TPanel;
+    TimeTimer: TTimer;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -56,6 +66,9 @@ type
     procedure grupp_fnd_editKeyPress(Sender: TObject; var Key: Char);
     procedure fnd_naimCbClick(Sender: TObject);
     procedure grupp_condEditKeyPress(Sender: TObject; var Key: Char);
+    procedure Grupp_insBtnClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure TimeTimerTimer(Sender: TObject);
   private
     { Private declarations }
   public
@@ -125,6 +138,7 @@ begin
  end;
  end;
  end;
+   TimeTimer.Enabled :=False;
  end;
 
 procedure TFrm_grupp.FormCreate(Sender: TObject);
@@ -133,6 +147,12 @@ begin
   Grupp_condEdit.EditLabel.Caption:='Точное совпадение условию';
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   LoadFormState(Self);
+  TimePanel.Caption:=DateTimeToStr(Now);
+end;
+
+procedure TFrm_grupp.FormShow(Sender: TObject);
+begin
+  TimeTimer.Enabled :=True;
 end;
 
 procedure TFrm_grupp.gruppResetRadioClick(Sender: TObject);
@@ -282,6 +302,70 @@ if grupp_gr_groupradio.Checked=true then
   end;
 end;
 
+procedure TFrm_grupp.Grupp_insBtnClick(Sender: TObject);
+var ins_grupp:TADOStoredProc;
+begin
+     if (Trim(Grupp_naim_g_inp.Text) = '')and (GradeUpDown.Position=0) then
+  begin
+    MessageDlg('Заполните все поля', mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  ins_grupp := nil;
+  try
+    ins_grupp := TADOStoredProc.Create(nil);
+    try
+      with ins_grupp do
+      begin
+        Connection := DM.Connection;
+        if not Connection.Connected then
+        begin
+          raise Exception.Create('Соединение с базой не установлено');
+        end;
+        ProcedureName := 'ins_grupp';
+        Parameters.Clear;
+        Parameters.CreateParameter(
+          'naim_grup',
+          ftString,
+          pdInput,
+          1000,
+          Grupp_naim_g_inp.Text
+        );
+        Parameters.CreateParameter(
+          'kurs',
+          ftInteger,
+          pdInput,
+          0,
+          StrToInt(GradeEdit.Text)
+        );
+          Parameters.CreateParameter(
+          'spec_id',
+          ftInteger,
+          pdInput,
+          0,
+          SpecGrinsDBL.KeyValue
+        );
+        ExecProc;
+        DM.GruppQuery.Close;
+        DM.GruppQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+  finally
+    FreeAndNil(ins_grupp);
+  end;
+end;
+
+
 procedure TFrm_grupp.grupp_sp_groupradioClick(Sender: TObject);
 begin
 if grupp_sp_groupradio.Checked=true then
@@ -306,6 +390,11 @@ if grupp_sp_groupradio.Checked=true then
     end;
     end;
   end;
+end;
+
+procedure TFrm_grupp.TimeTimerTimer(Sender: TObject);
+begin
+  TimePanel.Caption :=DateTimeToStr(Now);
 end;
 
 end.

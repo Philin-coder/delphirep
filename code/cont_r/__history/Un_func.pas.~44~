@@ -1,7 +1,7 @@
 unit Un_func;
 
 interface
-uses
+uses 
 dateUtils,
 sysUtils,
 Controls,
@@ -13,7 +13,6 @@ StdCtrls,
 IniFiles,
 ComCtrls,
 DBCtrls,
-Windows,
 ExtCtrls;
 
 function  DateToStr_(Dat : TDate): String;
@@ -29,7 +28,7 @@ procedure UpdateFormProperties(const FormName: string;
  procedure UniformizeComponentSizes(AComponent: TComponent; AWidth, AHeight:
  Integer; AColor: TColor; AFontName: string; AFontSize: Integer);
 implementation
-
+
 
 function    CommaPoint (X: String) : String;
 var iii : Integer;
@@ -202,6 +201,4 @@ begin
 end;
 
 
-
-end.
-
+end.
