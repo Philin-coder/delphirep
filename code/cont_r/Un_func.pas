@@ -28,6 +28,7 @@ procedure UpdateFormProperties(const FormName: string;
   NewHeight: Integer = -1);
  procedure UniformizeComponentSizes(AComponent: TComponent; AWidth, AHeight:
  Integer; AColor: TColor; AFontName: string; AFontSize: Integer);
+ procedure SaveConnectionStringToFile(const FileName, ConnectionString: string);
 implementation
 
 
@@ -201,7 +202,17 @@ begin
   end;
 end;
 
-
-
+procedure SaveConnectionStringToFile(const FileName, ConnectionString: string);
+var
+  FileStream: TextFile;
+begin
+  AssignFile(FileStream, FileName);
+  try
+    Rewrite(FileStream);
+    Writeln(FileStream, ConnectionString);
+  finally
+    CloseFile(FileStream); 
+  end;
+end;
 end.
 

@@ -1,7 +1,7 @@
 unit Un_func;
 
 interface
-uses 
+uses
 dateUtils,
 sysUtils,
 Controls,
@@ -28,9 +28,9 @@ procedure UpdateFormProperties(const FormName: string;
   NewHeight: Integer = -1);
  procedure UniformizeComponentSizes(AComponent: TComponent; AWidth, AHeight:
  Integer; AColor: TColor; AFontName: string; AFontSize: Integer);
- function FixEncoding(const BrokenText: string): string;
+ procedure SaveConnectionStringToFile(const FileName, ConnectionString: string);
 implementation
-
+
 
 function    CommaPoint (X: String) : String;
 var iii : Integer;
@@ -201,61 +201,18 @@ begin
     end;
   end;
 end;
-function FixEncoding(const BrokenText: string): string;
+
+procedure SaveConnectionStringToFile(const FileName, ConnectionString: string);
 var
-  WideStr: WideString; // Unicode-строка
-  AnsiStr: AnsiString; // ANSI-строка
-  Bytes: array of Byte; // Массив байтов для хранения данных
-  Len: Integer;
+  FileStream: TextFile;
 begin
-  // Шаг 1: Преобразуем "испорченный" текст из ANSI (Windows-1251) в Unicode
-  SetLength(WideStr, Length(BrokenText));
-  Len := MultiByteToWideChar(
-    1251, // Кодировка Windows-1251
-    0,
-    PAnsiChar(BrokenText),
-    Length(BrokenText),
-    PWideChar(WideStr),
-    Length(WideStr)
-  );
-  if Len = 0 then
-  begin
-    Result := BrokenText; // Если преобразование не удалось, возвращаем исходный текст
-    Exit;
+  AssignFile(FileStream, FileName);
+  try
+    Rewrite(FileStream); // Открываем файл для записи
+    Writeln(FileStream, ConnectionString); // Записываем строку подключения
+  finally
+    CloseFile(FileStream); // Закрываем файл
   end;
-
-
-  Len := WideCharToMultiByte(
-    CP_UTF8, // Кодировка UTF-8
-    0,
-    PWideChar(WideStr),
-    Length(WideStr),
-    nil,
-    0,
-    nil,
-    nil
-  );
-  if Len = 0 then
-  begin
-    Result := BrokenText;
-    Exit;
-  end;
-
-
-  SetLength(AnsiStr, Len);
-  WideCharToMultiByte(
-    CP_UTF8,
-    0,
-    PWideChar(WideStr),
-    Length(WideStr),
-    PAnsiChar(AnsiStr),
-    Len,
-    nil,
-    nil
-  );
-
-
-  Result := string(AnsiStr);
 end;
-
 end.
+

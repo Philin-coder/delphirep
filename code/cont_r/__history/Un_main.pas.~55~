@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs,dateUtils, StdCtrls, Buttons, ExtCtrls, ComCtrls, Grids, DBGrids, ADODB,
+  Dialogs,dateUtils, StdCtrls, Buttons, ExtCtrls, ComCtrls, Grids, DBGrids, 
   Menus,jpeg;
 
 type
@@ -12,9 +12,11 @@ type
     ItemMenu: TMainMenu;
     spec_item: TMenuItem;
     mainImage: TImage;
+    Grup_item: TMenuItem;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure spec_itemClick(Sender: TObject);
+    procedure Grup_itemClick(Sender: TObject);
 
  private
     { Private declarations }
@@ -29,58 +31,52 @@ var
 
 implementation
 
-uses Un_func, Un_dm, Un_spec;
+uses Un_func, Un_dm, Un_spec, Un_grupp;
 
 {$R *.dfm}
-// UpdateFormProperties('Frm_main', 'Главная форма', clBtnFace, 1024, 768);
-// var
-// ins_spec:TADOStoredProc;
-//begin
-//ins_spec:=TADOStoredProc.Create(self);
-//with ins_spec do
-//begin
-//Connection:=DM.Connection;
-//ProcedureName:='ins_spec';
-//Parameters.Add;
-//Parameters.Items[0].Name:='spec_maim';
-//Parameters.ParamByName('spec_maim').Value:=LabeledEdit1.Text;
-//ExecProc;
-//Destroy;
-//end;
-//dm.testQuery.Close;
-//dm.testQuery.Open;
-
-
 procedure TFrm_main.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
  SaveFormState(Self);
  Action := caFree;
  mainImage.Picture:=nil;
-
 end;
 
 procedure TFrm_main.FormCreate(Sender: TObject);
 begin
+With Frm_main do
+begin
+Width:=1024;
+Height:=768;
+Position:=poScreenCenter;
+end;
 LoadFormState(Self);
 With mainImage do
 begin
   Stretch:=True;
   Picture.LoadFromFile('1.jpg');
   AutoSize:=True;
+end;
+end;
 
-end;
-end;
+procedure TFrm_main.Grup_itemClick(Sender: TObject);
+begin
+try
+  UpdateFormProperties('Frm_grupp', 'Форма работы с группой',clBtnFace, 1024, 768);
+  Frm_grupp.ShowModal;
+except
+  Frm_grupp.Free;
+raise;
+  end;
+  end;
 
 procedure TFrm_main.spec_itemClick(Sender: TObject);
 begin
 try
 UpdateFormProperties('frm_spec', 'Форма работы со специальностью',clBtnFace, 1024, 768);
-Frm_spec.Show;
-ShowMessage(IntToStr(Frm_spec.Height));
+Frm_spec.ShowModal;
 except
 Frm_spec.Free;
 raise;
-
 end;
 
 end;

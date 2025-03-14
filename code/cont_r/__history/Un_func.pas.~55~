@@ -1,7 +1,7 @@
 unit Un_func;
 
 interface
-uses 
+uses
 dateUtils,
 sysUtils,
 Controls,
@@ -28,9 +28,9 @@ procedure UpdateFormProperties(const FormName: string;
   NewHeight: Integer = -1);
  procedure UniformizeComponentSizes(AComponent: TComponent; AWidth, AHeight:
  Integer; AColor: TColor; AFontName: string; AFontSize: Integer);
- function FixEncoding(const BrokenText: string): string;
+ procedure SaveConnectionStringToFile(const FileName, ConnectionString: string);
 implementation
-
+
 
 function    CommaPoint (X: String) : String;
 var iii : Integer;
@@ -202,41 +202,18 @@ begin
   end;
 end;
 
-function FixEncoding(const BrokenText: string): string;
+procedure SaveConnectionStringToFile(const FileName, ConnectionString: string);
 var
-  Bytes: TBytes;
-  Encodings: array of TEncoding;
-  EncodingName: string;
-  FixedText: string;
-  i: Integer;
+  FileStream: TextFile;
 begin
-
-  Encodings := [TEncoding.UTF8, TEncoding.GetEncoding(1251), TEncoding.GetEncoding(866)];
-
-
-  for i := 0 to High(Encodings) do
-  begin
-    try
-      Bytes := Encodings[i].GetBytes(BrokenText);
-      if i = 0 then
-        FixedText := TEncoding.GetEncoding(1251).GetString(Bytes)
-      else if i = 1 then
-        FixedText := TEncoding.UTF8.GetString(Bytes)
-      else if i = 2 then
-        FixedText := TEncoding.GetEncoding(866).GetString(Bytes);
-
-
-      if Pos('?', FixedText) = 0 then
-      begin
-        Result := FixedText;
-        Exit;
-      end;
-    except
-    end;
+  AssignFile(FileStream, FileName);
+  try
+    Rewrite(FileStream);
+    Writeln(FileStream, ConnectionString);
+  finally
+    CloseFile(FileStream);
   end;
-   Result := BrokenText;
 end;
 
-
-
-end.
+end.
+
