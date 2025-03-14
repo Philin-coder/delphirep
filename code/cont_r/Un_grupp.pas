@@ -34,13 +34,12 @@ type
     Grupp_upd_btn_Box: TGroupBox;
     Grupp_upd_Btn: TButton;
     Grupp_upd_dataBox: TGroupBox;
-    delspedatacBox: TGroupBox;
-    delspeclbl: TStaticText;
-    delSpecDBL: TDBLookupComboBox;
-    dlspecbtnBox: TGroupBox;
-    delspecBtn: TButton;
-    delspecdataBox: TGroupBox;
-    delspecGrd: TDBGrid;
+    delgrdatacBox: TGroupBox;
+    delgrlbl: TStaticText;
+    delgrDBL: TDBLookupComboBox;
+    dlgrbtnBox: TGroupBox;
+    delgrBtn: TButton;
+    degrdataBox: TGroupBox;
     grupp_gr_groupradio: TRadioButton;
     fnd_naimCb: TCheckBox;
     Grupp_insGrd: TDBGrid;
@@ -55,6 +54,7 @@ type
     grupdLbl: TLabel;
     TimeTimer: TTimer;
     TimePanel: TLabel;
+    delgrgrid: TDBGrid;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -69,6 +69,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure TimeTimerTimer(Sender: TObject);
     procedure Grupp_upd_BtnClick(Sender: TObject);
+    procedure delgrBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -83,6 +84,48 @@ implementation
 uses Un_dm, Un_main, Un_func;
 
 {$R *.dfm}
+
+procedure TFrm_grupp.delgrBtnClick(Sender: TObject);
+var del_group:TADOStoredProc;
+begin
+  del_group :=nil;
+ try
+ del_group :=TADOStoredProc.Create(nil);
+ try
+ with del_group do
+ begin
+   Connection :=dm.Connection;
+   if not Connection.Connected then
+   begin
+     raise Exception.Create('Соединение с базой не установлено');
+   end;
+   ProcedureName :='del_group';
+   Parameters.Clear;
+   Parameters.CreateParameter(
+   'grup_id',
+   ftInteger,
+   pdInput,
+   0,
+   delgrDBL.KeyValue
+   );
+   ExecProc;
+   dm.GruppQuery.Close;
+   dm.gruppQuery.Open;
+   MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+ end;
+ except on E: EADOError do
+ begin
+   ShowMessage('Ошибка'+' '+e.Message);
+ end;
+ on E: Exception do
+ begin
+  ShowMessage('Ошибка'+' '+e.Message);
+ end;
+ end;
+ finally
+ FreeAndNil(del_group);
+ end;
+end;
 
 procedure TFrm_grupp.fnd_naimCbClick(Sender: TObject);
 begin
