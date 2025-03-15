@@ -19,7 +19,7 @@ object DM: TDM
     SQL.Strings = (
       'select * from spec;')
     Left = 24
-    Top = 72
+    Top = 64
   end
   object spectDS: TDataSource
     DataSet = specQuery
@@ -59,9 +59,7 @@ object DM: TDM
       '  stud.region,'
       '  stud.gorod,'
       '  stud.adr,'
-      
-        '  stud.passp_fam + '#39' '#39' + stud.passp_naim + IsNull('#39' '#39' +stud.pass' +
-        'p_otch,'#39#39') AS fio,'
+      '  stud.passp,'
       
         '  case stud.mesto_jit when  1 then '#39#1057#1098#1077#1084#39' else '#39#1054#1073#1097#1077#1078#1080#1090#1080#1077#39' end a' +
         's to_live,'

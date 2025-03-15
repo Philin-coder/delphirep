@@ -6,7 +6,6 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, StdCtrls, Grids, DBGrids, ExtCtrls, ADODB,DB, DBCtrls;
 
-
 type
   TFrm_stud = class(TForm)
     StudPage: TPageControl;
