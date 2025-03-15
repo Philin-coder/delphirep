@@ -31,6 +31,7 @@ procedure UpdateFormProperties(const FormName: string;
  procedure SaveConnectionStringToFile(const FileName, ConnectionString: string);
  function min3(a, b, c: integer): integer;
  function LeveDist(s, t: string): integer;
+ function levi_checker(Str_one,str_two:string):Boolean;
 implementation
 
 
@@ -234,6 +235,20 @@ begin
     Result := c;
 end;
 
+// реализаци€ функции в принципе соответствует описанию с одной оговоркой:
+// матрица из описани€ заменена статическим буфером, длина которого
+// равна удвоенной максимальной длине строк
+// это сделано дл€ 1) экономии пам€ти и во избежание еЄ перераспределений
+// 2) повышени€ быстродействи€ (у мен€ функци€ работает
+// в обработчике onfilterRecord)
+// таким образом, в реализации половинами буфера представлены только
+// две последние строки матрицы, которые мен€ютс€ местами каждую
+// итерацию внешнего цикла (по i)... дл€ определени€ того, кака€ из половин
+// буфера €вл€етс€ "нижней строкой", служит переменна€ flip
+// т. е. при flip = false перва€ половина буфера €вл€етс€ предпоследней
+// строкой, а втора€ - последней; при flip = true наоборот,
+// перва€ половина - последн€€ строка, втора€ половина - предпоследн€€
+
 function LeveDist(s, t: string): integer;
 var
   i, j, m, n: integer;
@@ -281,6 +296,18 @@ begin
     else
       Result := buf[n];
   end;
+end;
+function levi_checker(Str_one,str_two:string):Boolean;
+begin
+ if (Trim(Str_one) = '') or (Trim(Str_two) = '') then
+  begin
+    Result := False;
+    Exit;
+  end;
+  if LeveDist(Str_one, Str_two) = 0 then
+    Result := True
+  else
+    Result := False;
 end;
 
 end.

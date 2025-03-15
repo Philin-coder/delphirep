@@ -1,7 +1,7 @@
 USE [cont_r]
 GO
 
-/****** Object:  Table [dbo].[stud]    Script Date: 15.03.2025 13:27:59 ******/
+/****** Object:  Table [dbo].[stud]    Script Date: 15.03.2025 21:32:06 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -16,7 +16,9 @@ CREATE TABLE [dbo].[stud](
 	[region] [varchar](1000) NOT NULL,
 	[gorod] [varchar](1000) NOT NULL,
 	[adr] [varchar](1000) NOT NULL,
-	[passp] [varchar](1000) NOT NULL,
+	[passp_fam] [varchar](1000) NOT NULL,
+	[passp_naim] [varchar](1000) NOT NULL,
+	[passp_otch] [varchar](1000) NULL,
 	[mesto_jit] [int] NOT NULL,
 	[mod_t] [varchar](1000) NOT NULL,
 	[dom_t] [varchar](1000) NULL,
