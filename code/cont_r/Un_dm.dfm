@@ -24,7 +24,7 @@ object DM: TDM
   object spectDS: TDataSource
     DataSet = specQuery
     Left = 24
-    Top = 128
+    Top = 152
   end
   object GruppQuery: TADOQuery
     Connection = Connection
@@ -42,6 +42,44 @@ object DM: TDM
   object GruppDS: TDataSource
     DataSet = GruppQuery
     Left = 96
-    Top = 136
+    Top = 152
+  end
+  object StudQuery: TADOQuery
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      '  stud.stud_id,'
+      '  stud.b_data,'
+      
+        '  case stud.pol when 1 then '#39#1052#1091#1078#1089#1086#1082#1086#1081#39'  else '#39#1046#1077#1085#1089#1082#1080#1081#39' end as se' +
+        'x,'
+      '  stud.civ,'
+      '  stud.region,'
+      '  stud.gorod,'
+      '  stud.adr,'
+      '  stud.passp,'
+      
+        '  case stud.mesto_jit when  1 then '#39#1057#1098#1077#1084#39' else '#39#1054#1073#1097#1077#1078#1080#1090#1080#1077#39' end a' +
+        's to_live,'
+      '  stud.mod_t,'
+      '  stud.dom_t,'
+      '  stud.data_pr,'
+      '  gruppa.naim_grup,'
+      '  stud.st_email'
+      ' from stud '
+      ' inner join gruppa on gruppa.grup_id=stud.grup_id'
+      ' inner join spec on spec.spec_id=gruppa.spec_id'
+      '  where 1=1'
+      '  and stud.data_ot is  null'
+      '  and is_akadem=0')
+    Left = 168
+    Top = 64
+  end
+  object StuddS: TDataSource
+    DataSet = StudQuery
+    Left = 168
+    Top = 152
   end
 end

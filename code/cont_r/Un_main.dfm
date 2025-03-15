@@ -2,7 +2,7 @@ object Frm_main: TFrm_main
   Left = 0
   Top = 0
   Caption = #1043#1083#1072#1074#1085#1072#1103' '#1092#1086#1088#1084#1072
-  ClientHeight = 319
+  ClientHeight = 339
   ClientWidth = 635
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -21,7 +21,7 @@ object Frm_main: TFrm_main
     Left = 0
     Top = 0
     Width = 635
-    Height = 319
+    Height = 339
     Align = alClient
     ExplicitLeft = 280
     ExplicitTop = 112
@@ -38,6 +38,10 @@ object Frm_main: TFrm_main
     object Grup_item: TMenuItem
       Caption = '&'#1043#1088#1091#1087#1087#1072
       OnClick = Grup_itemClick
+    end
+    object Stud_Item: TMenuItem
+      Caption = '&'#1057#1090#1091#1076#1077#1085#1090
+      OnClick = Stud_ItemClick
     end
   end
 end

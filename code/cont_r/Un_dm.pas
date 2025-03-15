@@ -12,6 +12,8 @@ type
     spectDS: TDataSource;
     GruppQuery: TADOQuery;
     GruppDS: TDataSource;
+    StudQuery: TADOQuery;
+    StuddS: TDataSource;
   private
     { Private declarations }
   public

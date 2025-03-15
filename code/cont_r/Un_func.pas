@@ -29,6 +29,8 @@ procedure UpdateFormProperties(const FormName: string;
  procedure UniformizeComponentSizes(AComponent: TComponent; AWidth, AHeight:
  Integer; AColor: TColor; AFontName: string; AFontSize: Integer);
  procedure SaveConnectionStringToFile(const FileName, ConnectionString: string);
+ function min3(a, b, c: integer): integer;
+ function LeveDist(s, t: string): integer;
 implementation
 
 
@@ -211,8 +213,75 @@ begin
     Rewrite(FileStream);
     Writeln(FileStream, ConnectionString);
   finally
-    CloseFile(FileStream); 
+    CloseFile(FileStream);
   end;
 end;
+const
+ cuthalf = 100; // константа, ограничивающая макс. длину
+  // обрабатываемых строк
+
+var
+  buf: array[0..((cuthalf * 2) - 1)] of integer; // рабочий буфер, заменяет
+  // матрицу, представленную
+  // в описании
+
+function min3(a, b, c: integer): integer;
+begin
+  Result := a;
+  if b < Result then
+    Result := b;
+  if c < Result then
+    Result := c;
+end;
+
+function LeveDist(s, t: string): integer;
+var
+  i, j, m, n: integer;
+  cost: integer;
+  flip: boolean;
+begin
+  s := copy(s, 1, cuthalf - 1);
+  t := copy(t, 1, cuthalf - 1);
+  m := length(s);
+  n := length(t);
+  if m = 0 then
+    Result := n
+  else if n = 0 then
+    Result := m
+  else
+  begin
+    flip := false;
+    for i := 0 to n do
+      buf[i] := i;
+    for i := 1 to m do
+    begin
+      if flip then
+        buf[0] := i
+      else
+        buf[cuthalf] := i;
+      for j := 1 to n do
+      begin
+        if s[i] = t[j] then
+          cost := 0
+        else
+          cost := 1;
+        if flip then
+          buf[j] := min3((buf[cuthalf + j] + 1),
+            (buf[j - 1] + 1),
+            (buf[cuthalf + j - 1] + cost))
+        else
+          buf[cuthalf + j] := min3((buf[j] + 1),
+            (buf[cuthalf + j - 1] + 1),
+            (buf[j - 1] + cost));
+      end;
+      flip := not flip;
+    end;
+    if flip then
+      Result := buf[cuthalf + n]
+    else
+      Result := buf[n];
+  end;
+end;
+
 end.
 

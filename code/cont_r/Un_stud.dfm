@@ -76,7 +76,7 @@ object Frm_stud: TFrm_stud
         Align = alBottom
         TabOrder = 1
         object gruppSelBtn: TButton
-          Left = 264
+          Left = 256
           Top = 27
           Width = 305
           Height = 25
@@ -99,42 +99,13 @@ object Frm_stud: TFrm_stud
           Width = 1025
           Height = 552
           Align = alClient
-          DataSource = DM.GruppDS
+          DataSource = DM.StuddS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
           TitleFont.Height = -11
           TitleFont.Name = 'Tahoma'
           TitleFont.Style = []
-          Columns = <
-            item
-              Expanded = False
-              FieldName = 'grup_id'
-              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-              Width = 10
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'naim_grup'
-              Title.Caption = #1053#1072#1079#1074#1072#1085#1080#1077
-              Width = 500
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'kurs'
-              Title.Caption = #1050#1091#1088#1089
-              Width = 100
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'spec_maim'
-              Title.Caption = #1057#1087#1077#1094#1080#1072#1083#1100#1085#1086#1089#1090#1100
-              Width = 500
-              Visible = True
-            end>
         end
       end
       object gruppCondBox: TGroupBox

@@ -13,11 +13,13 @@ type
     spec_item: TMenuItem;
     mainImage: TImage;
     Grup_item: TMenuItem;
+    Stud_Item: TMenuItem;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure spec_itemClick(Sender: TObject);
     procedure Grup_itemClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
+    procedure Stud_ItemClick(Sender: TObject);
 
  private
     { Private declarations }
@@ -32,7 +34,7 @@ var
 
 implementation
 
-uses Un_func, Un_dm, Un_spec, Un_grupp;
+uses Un_func, Un_dm, Un_spec, Un_grupp, Un_stud;
 
 {$R *.dfm}
 const
@@ -55,11 +57,11 @@ procedure TFrm_main.FormCreate(Sender: TObject);
 begin
 With Frm_main do
 begin
-Width:=1024;
-Height:=768;
-Position:=poScreenCenter;
+  Width:=1024;
+  Height:=768;
+  Position:=poScreenCenter;
 end;
-LoadFormState(Self);
+  LoadFormState(Self);
 With mainImage do
 begin
   Stretch:=True;
@@ -71,7 +73,8 @@ end;
 procedure TFrm_main.Grup_itemClick(Sender: TObject);
 begin
 try
-  UpdateFormProperties('Frm_grupp', 'Форма работы с группой',clBtnFace, 1024, 768);
+  UpdateFormProperties('Frm_grupp', 'Форма работы с группой',
+  clBtnFace, 1024, 768);
   Frm_grupp.ShowModal;
 except
   Frm_grupp.Free;
@@ -82,12 +85,26 @@ raise;
 procedure TFrm_main.spec_itemClick(Sender: TObject);
 begin
 try
-UpdateFormProperties('frm_spec', 'Форма работы со специальностью',clBtnFace, 1024, 768);
+UpdateFormProperties('frm_spec', 'Форма работы со специальностью',
+clBtnFace, 1024, 768);
 Frm_spec.ShowModal;
 except
 Frm_spec.Free;
 raise;
 end;
+
+end;
+
+procedure TFrm_main.Stud_ItemClick(Sender: TObject);
+begin
+  try
+  UpdateFormProperties('Frm_stud', 'Форма работы  с личным  делом студента',
+  clBtnFace, 1024, 768);
+  Frm_stud.ShowModal;
+  except
+  Frm_stud.Free;
+  raise;
+  end;
 
 end;
 
