@@ -17,6 +17,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure spec_itemClick(Sender: TObject);
     procedure Grup_itemClick(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
 
  private
     { Private declarations }
@@ -34,6 +35,15 @@ implementation
 uses Un_func, Un_dm, Un_spec, Un_grupp;
 
 {$R *.dfm}
+const
+  FileName = 'connection_string.txt';
+
+procedure TFrm_main.FormActivate(Sender: TObject);
+begin
+  SaveConnectionStringToFile(FileName, dm.connection.ConnectionString);
+//ShowMessage('Строка подключения успешно сохранена в файл: ' + FileName);
+end;
+
 procedure TFrm_main.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
  SaveFormState(Self);

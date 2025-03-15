@@ -1,7 +1,7 @@
 USE [cont_r]
 GO
 
-/****** Object:  Table [dbo].[stud]    Script Date: 09.03.2025 11:17:53 ******/
+/****** Object:  Table [dbo].[stud]    Script Date: 15.03.2025 11:31:19 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -24,6 +24,7 @@ CREATE TABLE [dbo].[stud](
 	[data_ot] [date] NOT NULL,
 	[grup_id] [int] NOT NULL,
 	[st_email] [varchar](1000) NOT NULL,
+	[is_akadem] [int] NULL,
  CONSTRAINT [PK_stud] PRIMARY KEY CLUSTERED 
 (
 	[stud_id] ASC
