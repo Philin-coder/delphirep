@@ -12,6 +12,7 @@ object Frm_stud: TFrm_stud
   Font.Style = []
   OldCreateOrder = False
   OnActivate = FormActivate
+  OnClose = FormClose
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
@@ -85,6 +86,7 @@ object Frm_stud: TFrm_stud
           Align = alCustom
           Caption = #1042#1099#1073#1086#1088
           TabOrder = 0
+          OnClick = StudSelBtnClick
         end
       end
       object StudDataBox: TGroupBox

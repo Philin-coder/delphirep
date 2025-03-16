@@ -66,6 +66,7 @@ type
     procedure Stud_gr_groupradioClick(Sender: TObject);
     procedure s(Sender: TObject; var Key: Char);
     procedure Stud_fnd_adr_editKeyPress(Sender: TObject; var Key: Char);
+    procedure Studfnd_famCbClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -122,6 +123,13 @@ begin
   CbSecondnaim.Checked:=False;
   Stud_condEdit.Hint:='';
   cb_st:=0;
+end;
+
+procedure TFrm_stud.Studfnd_famCbClick(Sender: TObject);
+begin
+if Studfnd_famCb.Checked then
+
+
 end;
 
 procedure TFrm_stud.StudResetRadioClick(Sender: TObject);

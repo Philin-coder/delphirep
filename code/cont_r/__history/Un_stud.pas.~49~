@@ -172,6 +172,7 @@ if StudResetRadio.Checked then
     '  AND is_akadem = 0 ';
     cb_st:=0;
      Open;
+
      end;
     with Frm_stud do
     for j := 0 to ComponentCount - 1 do
@@ -181,7 +182,6 @@ if StudResetRadio.Checked then
         (Components[j] as TRadioButton).Checked:=False;
       end;
     end;
-     Studfnd_famCb.Checked:=False;
 end;
 
 
@@ -337,7 +337,8 @@ try
     'INNER JOIN spec ON spec.spec_id = gruppa.spec_id ' +
     'WHERE 1=1 ' +
     '  AND stud.data_ot IS NULL ' +
-    '  AND is_akadem = 0 and '+ ' '+' '+
+    '  AND is_akadem = 0 '+ ' '+' '+
+
      'stud.adr like'+
    QuotedStr(Concat(Stud_fnd_adr_edit.Text,#37));
    dm.StudQuery.close;
