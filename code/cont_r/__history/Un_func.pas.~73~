@@ -31,6 +31,11 @@ procedure UpdateFormProperties(const FormName: string;
  procedure SaveConnectionStringToFile(const FileName, ConnectionString: string);
  function min3(a, b, c: integer): integer;
  function LeveDist(s, t: string): integer;
+ function levi_checker(Str_one,str_two:string):Boolean;
+function NormalizeStringAndExtractParams2(var InputString: string;
+out p1, p2: string): Boolean;
+function NormalizeStringAndExtractParams3(var InputString: string; out p1, p2, p3:
+string): Boolean;
 implementation
 
 
@@ -234,6 +239,20 @@ begin
     Result := c;
 end;
 
+// реализаци€ функции в принципе соответствует описанию с одной оговоркой:
+// матрица из описани€ заменена статическим буфером, длина которого
+// равна удвоенной максимальной длине строк
+// это сделано дл€ 1) экономии пам€ти и во избежание еЄ перераспределений
+// 2) повышени€ быстродействи€ (у мен€ функци€ работает
+// в обработчике onfilterRecord)
+// таким образом, в реализации половинами буфера представлены только
+// две последние строки матрицы, которые мен€ютс€ местами каждую
+// итерацию внешнего цикла (по i)... дл€ определени€ того, кака€ из половин
+// буфера €вл€етс€ "нижней строкой", служит переменна€ flip
+// т. е. при flip = false перва€ половина буфера €вл€етс€ предпоследней
+// строкой, а втора€ - последней; при flip = true наоборот,
+// перва€ половина - последн€€ строка, втора€ половина - предпоследн€€
+
 function LeveDist(s, t: string): integer;
 var
   i, j, m, n: integer;
@@ -283,5 +302,109 @@ begin
   end;
 end;
 
+function levi_checker(Str_one,str_two:string):Boolean;
+begin
+ if (Trim(Str_one) = '') or (Trim(Str_two) = '') then
+  begin
+    Result := False;
+    Exit;
+  end;
+  if LeveDist(Str_one, Str_two) = 0 then
+    Result := True
+  else
+    Result := False;
+end;
+
+
+function NormalizeStringAndExtractParams2(var InputString: string; out p1, p2: string): Boolean;
+var
+  l: TStringList;
+  i: Integer;
+  NormalizedString: string;
+begin
+  Result := False;
+  if Trim(InputString) = '' then
+  begin
+    MessageDlg('—трока пуста', mtError, [mbOK], 0);
+    Exit;
+  end;
+  l := TStringList.Create;
+  try
+    l.Delimiter := ' ';
+    l.StrictDelimiter := True;
+    l.DelimitedText := InputString;
+    NormalizedString := '';
+    for i := 0 to l.Count - 1 do
+    begin
+      if Trim(l[i]) <> '' then
+        NormalizedString := NormalizedString + ' ' + Trim(l[i]);
+    end;
+    NormalizedString := Trim(NormalizedString);
+    if NormalizedString = '' then
+    begin
+      MessageDlg('—трока должна содержать минимум одно слово', mtError, [mbOK], 0);
+      Exit;
+    end;
+    l.DelimitedText := NormalizedString;
+    if l.Count >= 1 then p1 := l.Strings[0] else p1 := '';
+    if l.Count >= 2 then p2 := l.Strings[1] else p2 := '';
+    InputString := NormalizedString;
+    Result := True;
+  finally
+    FreeAndNil(l);
+  end;
+end;
+
+function NormalizeStringAndExtractParams3(var InputString: string; out p1, p2, p3:
+string): Boolean;
+var
+  l: TStringList;
+  i: Integer;
+  NormalizedString: string;
+begin
+  Result := False; // ѕо умолчанию считаем, что обработка не удалась
+
+  // ѕровер€ем, что строка не пуста€
+  if Trim(InputString) = '' then
+  begin
+    MessageDlg('—трока пуста', mtError, [mbOK], 0);
+    Exit;
+  end;
+
+
+  l := TStringList.Create;
+  try
+    l.Delimiter := ' '; // –азделитель - пробел
+    l.StrictDelimiter := True; // ”читывать только указанный разделитель
+    l.DelimitedText := InputString;
+
+
+    NormalizedString := '';
+    for i := 0 to l.Count - 1 do
+    begin
+      if Trim(l[i]) <> '' then
+        NormalizedString := NormalizedString + ' ' + Trim(l[i]);
+    end;
+    NormalizedString := Trim(NormalizedString); // ”бираем начальный пробел
+
+
+    if NormalizedString = '' then
+    begin
+      MessageDlg('—трока должна содержать минимум одно слово', mtError, [mbOK], 0);
+      Exit;
+    end;
+
+
+    l.DelimitedText := NormalizedString; // ѕерезаписываем очищенный текст
+    if l.Count >= 1 then p1 := l.Strings[0] else p1 := '';
+    if l.Count >= 2 then p2 := l.Strings[1] else p2 := '';
+    if l.Count >= 3 then p3 := l.Strings[2] else p3 := '';
+
+
+    InputString := NormalizedString;
+    Result := True;
+  finally
+    FreeAndNil(l);
+  end;
+end;
 end.
-

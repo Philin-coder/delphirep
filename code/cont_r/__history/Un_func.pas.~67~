@@ -28,12 +28,13 @@ procedure UpdateFormProperties(const FormName: string;
   NewHeight: Integer = -1);
  procedure UniformizeComponentSizes(AComponent: TComponent; AWidth, AHeight:
  Integer; AColor: TColor; AFontName: string; AFontSize: Integer);
- function FixEncoding(const BrokenText: string): string;
- procedure FixedShowMessage(const Msg: string);
- function FixedMessageDlg(const Msg: string; const DlgType: TMsgDlgType;
- const Buttons: TMsgDlgButtons; const HelpCtx: Longint): Integer;
-implementation
+ procedure SaveConnectionStringToFile(const FileName, ConnectionString: string);
+ function min3(a, b, c: integer): integer;
+ function LeveDist(s, t: string): integer;
+ function levi_checker(Str_one,str_two:string):Boolean;
 
+implementation
+
 
 function    CommaPoint (X: String) : String;
 var iii : Integer;
@@ -205,71 +206,158 @@ begin
   end;
 end;
 
-function FixEncoding(const BrokenText: string): string;
+procedure SaveConnectionStringToFile(const FileName, ConnectionString: string);
 var
-  WideStr: WideString; // Unicode-строка
-  AnsiStr: AnsiString; // ANSI-строка
-  Len: Integer;
+  FileStream: TextFile;
 begin
-
-  SetLength(WideStr, Length(BrokenText));
-  Len := MultiByteToWideChar(
-    1251,
-    0,
-    PAnsiChar(BrokenText),
-    Length(BrokenText),
-    PWideChar(WideStr),
-    Length(WideStr)
-  );
-  if Len = 0 then
-  begin
-    Result := BrokenText; // ≈сли преобразование не удалось, возвращаем исходный текст
-    Exit;
+  AssignFile(FileStream, FileName);
+  try
+    Rewrite(FileStream);
+    Writeln(FileStream, ConnectionString);
+  finally
+    CloseFile(FileStream);
   end;
+end;
+const
+ cuthalf = 100; // константа, ограничивающа€ макс. длину
+  // обрабатываемых строк
 
+var
+  buf: array[0..((cuthalf * 2) - 1)] of integer; // рабочий буфер, замен€ет
+  // матрицу, представленную
+  // в описании
 
-  Len := WideCharToMultiByte(
-    CP_UTF8,
-    0,
-    PWideChar(WideStr),
-    Length(WideStr),
-    nil,
-    0,
-    nil,
-    nil
-  );
-  if Len = 0 then
-  begin
-    Result := BrokenText;
-    Exit;
-  end;
-
-
-  SetLength(AnsiStr, Len);
-  WideCharToMultiByte(
-    CP_UTF8,
-    0,
-    PWideChar(WideStr),
-    Length(WideStr),
-    PAnsiChar(AnsiStr),
-    Len,
-    nil,
-    nil
-  );
-  Result := string(AnsiStr);
+function min3(a, b, c: integer): integer;
+begin
+  Result := a;
+  if b < Result then
+    Result := b;
+  if c < Result then
+    Result := c;
 end;
 
-    procedure FixedShowMessage(const Msg: string);
+// реализаци€ функции в принципе соответствует описанию с одной оговоркой:
+// матрица из описани€ заменена статическим буфером, длина которого
+// равна удвоенной максимальной длине строк
+// это сделано дл€ 1) экономии пам€ти и во избежание еЄ перераспределений
+// 2) повышени€ быстродействи€ (у мен€ функци€ работает
+// в обработчике onfilterRecord)
+// таким образом, в реализации половинами буфера представлены только
+// две последние строки матрицы, которые мен€ютс€ местами каждую
+// итерацию внешнего цикла (по i)... дл€ определени€ того, кака€ из половин
+// буфера €вл€етс€ "нижней строкой", служит переменна€ flip
+// т. е. при flip = false перва€ половина буфера €вл€етс€ предпоследней
+// строкой, а втора€ - последней; при flip = true наоборот,
+// перва€ половина - последн€€ строка, втора€ половина - предпоследн€€
+
+function LeveDist(s, t: string): integer;
+var
+  i, j, m, n: integer;
+  cost: integer;
+  flip: boolean;
+begin
+  s := copy(s, 1, cuthalf - 1);
+  t := copy(t, 1, cuthalf - 1);
+  m := length(s);
+  n := length(t);
+  if m = 0 then
+    Result := n
+  else if n = 0 then
+    Result := m
+  else
+  begin
+    flip := false;
+    for i := 0 to n do
+      buf[i] := i;
+    for i := 1 to m do
+    begin
+      if flip then
+        buf[0] := i
+      else
+        buf[cuthalf] := i;
+      for j := 1 to n do
+      begin
+        if s[i] = t[j] then
+          cost := 0
+        else
+          cost := 1;
+        if flip then
+          buf[j] := min3((buf[cuthalf + j] + 1),
+            (buf[j - 1] + 1),
+            (buf[cuthalf + j - 1] + cost))
+        else
+          buf[cuthalf + j] := min3((buf[j] + 1),
+            (buf[cuthalf + j - 1] + 1),
+            (buf[j - 1] + cost));
+      end;
+      flip := not flip;
+    end;
+    if flip then
+      Result := buf[cuthalf + n]
+    else
+      Result := buf[n];
+  end;
+end;
+function levi_checker(Str_one,str_two:string):Boolean;
 begin
-  ShowMessage(FixEncoding(Msg));
+ if (Trim(Str_one) = '') or (Trim(Str_two) = '') then
+  begin
+    Result := False;
+    Exit;
+  end;
+  if LeveDist(Str_one, Str_two) = 0 then
+    Result := True
+  else
+    Result := False;
 end;
 
 
-function FixedMessageDlg(const Msg: string; const DlgType: TMsgDlgType;
-const Buttons: TMsgDlgButtons; const HelpCtx: Longint): Integer;
+function ProcessStringAndGetParams(var InputString: string; out p1, p2, p3: string): Boolean;
+var
+  l: TStringList;
+  i: Integer;
 begin
-  Result := MessageDlg(FixEncoding(Msg), DlgType, Buttons, HelpCtx);
-end;
+  Result := False; // ѕо умолчанию считаем, что обработка не удалась
 
+  // ѕровер€ем, что строка не пуста€
+  if Trim(InputString) = '' then
+  begin
+    MessageDlg('—трока пуста', mtError, [mbOK], 0);
+    Exit;
+  end;
+
+  // —оздаем список дл€ разделени€ строки
+  l := TStringList.Create;
+  try
+    l.Delimiter := ' '; // –азделитель - пробел
+    l.StrictDelimiter := True; // ”читывать только указанный разделитель
+    l.DelimitedText := InputString;
+
+    // ѕровер€ем, что строка содержит хот€ бы три слова
+    if l.Count < 3 then
+    begin
+      MessageDlg('—трока должна содержать минимум три слова', mtError, [mbOK], 0);
+      Exit;
+    end;
+
+    // »звлекаем первые три слова
+    p1 := l.Strings[0];
+    p2 := l.Strings[1];
+    p3 := l.Strings[2];
+
+    // ‘ормируем новую строку без лишних пробелов
+    InputString := '';
+    for i := 0 to l.Count - 1 do
+    begin
+      if Trim(l[i]) <> '' then
+        InputString := InputString + ' ' + Trim(l[i]);
+    end;
+    InputString := Trim(InputString); // ”бираем начальный пробел
+
+    Result := True; // ќбработка завершена успешно
+  finally
+    FreeAndNil(l); // ќсвобождаем пам€ть
+  end;
+end;
 end.
 

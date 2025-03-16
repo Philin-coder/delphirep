@@ -56,11 +56,10 @@ type
     TimePanel: TLabel;
     delgrgrid: TDBGrid;
     CbSecondnaim: TCheckBox;
+    procedure CbSecondnaimClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure StudSelBtnClick(Sender: TObject);
-    procedure CbSecondnaimClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -69,7 +68,6 @@ type
 
 var
   Frm_stud: TFrm_stud;
-  var cb_st:Integer;
 
 implementation
 
@@ -80,51 +78,12 @@ uses Un_dm, Un_main,Un_func;
 
 
 procedure TFrm_stud.CbSecondnaimClick(Sender: TObject);
-begin
-if CbSecondnaim.Checked then
-  cb_st:=1 else cb_st:=0;
-end;
-
-procedure TFrm_stud.FormActivate(Sender: TObject);
-begin
-  dm.GruppQuery.Open;
-  dm.specQuery.Open;
-  dm.StudQuery.Open;
-end;
-
-procedure TFrm_stud.FormClose(Sender: TObject; var Action: TCloseAction);
-  var q:Integer;
-begin
-CbSecondnaim.Checked:=False;
-  stud_condEdit.EditLabel.Caption:='Точное совпадение по условию';
-  SaveFormState(Self);
- with dm do
- begin
-    for q := 0 to ComponentCount - 1 do
- begin
-    if(Components[q] is TADOQuery)  then
-   begin
-      (Components[q] as TADOQuery).Close;
- end;
- end;
- end;
-end;
-
-procedure TFrm_stud.FormCreate(Sender: TObject);
-begin
-  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
-  LoadFormState(Self);
-  CbSecondnaim.Checked:=False;
-  Stud_condEdit.Hint:='';
-end;
-
-procedure TFrm_stud.StudSelBtnClick(Sender: TObject);
 var
  InputString, p1, p2, p3: string;
   sel_family_and_naim: TADOStoredProc;
 begin
-case  cb_st of
-1:
+case  CbSecondnaim.Checked of
+true:
 begin
   Stud_condEdit.Hint:='Примнр Поиска по  ФИО:'+#10#13+'Рахмон Эмоммалм';
   InputString := Stud_condEdit.Text;
@@ -176,7 +135,7 @@ begin
   end;
 
   end;
-0:
+false:
 begin
     Stud_condEdit.Hint:='Примнр Поиска по  ФИО:'+#10#13+'Сухов Федор Иванович';
   InputString := Stud_condEdit.Text;
@@ -197,7 +156,38 @@ begin
   end;
 end;
 end;
+end;
+procedure TFrm_stud.FormActivate(Sender: TObject);
+begin
+  dm.GruppQuery.Open;
+  dm.specQuery.Open;
+  dm.StudQuery.Open;
+end;
 
+procedure TFrm_stud.FormClose(Sender: TObject; var Action: TCloseAction);
+  var q:Integer;
+begin
+CbSecondnaim.Checked:=False;
+  stud_condEdit.EditLabel.Caption:='Точное совпадение по условию';
+  SaveFormState(Self);
+ with dm do
+ begin
+    for q := 0 to ComponentCount - 1 do
+ begin
+    if(Components[q] is TADOQuery)  then
+   begin
+      (Components[q] as TADOQuery).Close;
+ end;
+ end;
+ end;
+end;
+
+procedure TFrm_stud.FormCreate(Sender: TObject);
+begin
+  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+  LoadFormState(Self);
+  CbSecondnaim.Checked:=False;
+  Stud_condEdit.Hint:='';
 end;
 
 end.

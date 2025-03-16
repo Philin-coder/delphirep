@@ -29,6 +29,10 @@ procedure UpdateFormProperties(const FormName: string;
  procedure UniformizeComponentSizes(AComponent: TComponent; AWidth, AHeight:
  Integer; AColor: TColor; AFontName: string; AFontSize: Integer);
  procedure SaveConnectionStringToFile(const FileName, ConnectionString: string);
+ function min3(a, b, c: integer): integer;
+ function LeveDist(s, t: string): integer;
+ function levi_checker(Str_one,str_two:string):Boolean;
+ procedure CreateParamFromStrTwo(var str: string);
 implementation
 
 
@@ -208,11 +212,153 @@ end;
 begin
   AssignFile(FileStream, FileName);
   try
-    Rewrite(FileStream); // Открываем файл для записи
-    Writeln(FileStream, ConnectionString); // Записываем строку подключения
+    Rewrite(FileStream);
+    Writeln(FileStream, ConnectionString);
   finally
-    CloseFile(FileStream); // Закрываем файл
+    CloseFile(FileStream);
   end;
 end;
+const
+ cuthalf = 100; // константа, ограничивающая макс. длину
+  // обрабатываемых строк
+
+var
+  buf: array[0..((cuthalf * 2) - 1)] of integer; // рабочий буфер, заменяет
+  // матрицу, представленную
+  // в описании
+
+function min3(a, b, c: integer): integer;
+begin
+  Result := a;
+  if b < Result then
+    Result := b;
+  if c < Result then
+    Result := c;
+end;
+
+// реализация функции в принципе соответствует описанию с одной оговоркой:
+// матрица из описания заменена статическим буфером, длина которого
+// равна удвоенной максимальной длине строк
+// это сделано для 1) экономии памяти и во избежание её перераспределений
+// 2) повышения быстродействия (у меня функция работает
+// в обработчике onfilterRecord)
+// таким образом, в реализации половинами буфера представлены только
+// две последние строки матрицы, которые меняются местами каждую
+// итерацию внешнего цикла (по i)... для определения того, какая из половин
+// буфера является "нижней строкой", служит переменная flip
+// т. е. при flip = false первая половина буфера является предпоследней
+// строкой, а вторая - последней; при flip = true наоборот,
+// первая половина - последняя строка, вторая половина - предпоследняя
+
+function LeveDist(s, t: string): integer;
+var
+  i, j, m, n: integer;
+  cost: integer;
+  flip: boolean;
+begin
+  s := copy(s, 1, cuthalf - 1);
+  t := copy(t, 1, cuthalf - 1);
+  m := length(s);
+  n := length(t);
+  if m = 0 then
+    Result := n
+  else if n = 0 then
+    Result := m
+  else
+  begin
+    flip := false;
+    for i := 0 to n do
+      buf[i] := i;
+    for i := 1 to m do
+    begin
+      if flip then
+        buf[0] := i
+      else
+        buf[cuthalf] := i;
+      for j := 1 to n do
+      begin
+        if s[i] = t[j] then
+          cost := 0
+        else
+          cost := 1;
+        if flip then
+          buf[j] := min3((buf[cuthalf + j] + 1),
+            (buf[j - 1] + 1),
+            (buf[cuthalf + j - 1] + cost))
+        else
+          buf[cuthalf + j] := min3((buf[j] + 1),
+            (buf[cuthalf + j - 1] + 1),
+            (buf[j - 1] + cost));
+      end;
+      flip := not flip;
+    end;
+    if flip then
+      Result := buf[cuthalf + n]
+    else
+      Result := buf[n];
+  end;
+end;
+function levi_checker(Str_one,str_two:string):Boolean;
+begin
+ if (Trim(Str_one) = '') or (Trim(Str_two) = '') then
+  begin
+    Result := False;
+    Exit;
+  end;
+  if LeveDist(Str_one, Str_two) = 0 then
+    Result := True
+  else
+    Result := False;
+end;
+
+procedure CreateParamFromStrTwo(var str: string);
+var
+  l: TStringList;
+  i: Integer;
+  p1, p2: string;
+begin
+  // Проверяем, что строка не пустая
+  if Trim(str) = '' then
+  begin
+    MessageDlg('Заполните строку', mtInformation, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+
+  // Создаем список для разделения строки
+  l := TStringList.Create;
+  try
+    l.Delimiter := ' '; // Разделитель - пробел
+    l.StrictDelimiter := True; // Учитывать только указанный разделитель
+    l.DelimitedText := str;
+
+    // Проверяем, что строка содержит хотя бы два слова
+    if l.Count < 2 then
+    begin
+      MessageDlg('Строка должна содержать минимум два слова', mtError, [mbOK], 0);
+      Exit;
+    end;
+
+    // Извлекаем первые два слова
+    p1 := l.Strings[0];
+    p2 := l.Strings[1];
+
+    // Выводим результаты
+    ShowMessage('Первое слово: ' + p1);
+    ShowMessage('Второе слово: ' + p2);
+
+    // Формируем новую строку без лишних пробелов
+    str := '';
+    for i := 0 to l.Count - 1 do
+    begin
+      if Trim(l[i]) <> '' then
+        str := str + ' ' + Trim(l[i]);
+    end;
+    str := Trim(str); // Убираем начальный пробел
+  finally
+    FreeAndNil(l); // Освобождаем память
+  end;
+end;
+
 end.
 

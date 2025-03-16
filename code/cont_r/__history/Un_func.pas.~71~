@@ -29,6 +29,10 @@ procedure UpdateFormProperties(const FormName: string;
  procedure UniformizeComponentSizes(AComponent: TComponent; AWidth, AHeight:
  Integer; AColor: TColor; AFontName: string; AFontSize: Integer);
  procedure SaveConnectionStringToFile(const FileName, ConnectionString: string);
+ function min3(a, b, c: integer): integer;
+ function LeveDist(s, t: string): integer;
+ function levi_checker(Str_one,str_two:string):Boolean;
+function NormalizeStringAndExtractParams(var InputString: string; out p1, p2: string): Boolean;
 implementation
 
 
@@ -214,6 +218,150 @@ begin
     CloseFile(FileStream);
   end;
 end;
+const
+ cuthalf = 100; // константа, ограничивающа€ макс. длину
+  // обрабатываемых строк
 
+var
+  buf: array[0..((cuthalf * 2) - 1)] of integer; // рабочий буфер, замен€ет
+  // матрицу, представленную
+  // в описании
+
+function min3(a, b, c: integer): integer;
+begin
+  Result := a;
+  if b < Result then
+    Result := b;
+  if c < Result then
+    Result := c;
+end;
+
+// реализаци€ функции в принципе соответствует описанию с одной оговоркой:
+// матрица из описани€ заменена статическим буфером, длина которого
+// равна удвоенной максимальной длине строк
+// это сделано дл€ 1) экономии пам€ти и во избежание еЄ перераспределений
+// 2) повышени€ быстродействи€ (у мен€ функци€ работает
+// в обработчике onfilterRecord)
+// таким образом, в реализации половинами буфера представлены только
+// две последние строки матрицы, которые мен€ютс€ местами каждую
+// итерацию внешнего цикла (по i)... дл€ определени€ того, кака€ из половин
+// буфера €вл€етс€ "нижней строкой", служит переменна€ flip
+// т. е. при flip = false перва€ половина буфера €вл€етс€ предпоследней
+// строкой, а втора€ - последней; при flip = true наоборот,
+// перва€ половина - последн€€ строка, втора€ половина - предпоследн€€
+
+function LeveDist(s, t: string): integer;
+var
+  i, j, m, n: integer;
+  cost: integer;
+  flip: boolean;
+begin
+  s := copy(s, 1, cuthalf - 1);
+  t := copy(t, 1, cuthalf - 1);
+  m := length(s);
+  n := length(t);
+  if m = 0 then
+    Result := n
+  else if n = 0 then
+    Result := m
+  else
+  begin
+    flip := false;
+    for i := 0 to n do
+      buf[i] := i;
+    for i := 1 to m do
+    begin
+      if flip then
+        buf[0] := i
+      else
+        buf[cuthalf] := i;
+      for j := 1 to n do
+      begin
+        if s[i] = t[j] then
+          cost := 0
+        else
+          cost := 1;
+        if flip then
+          buf[j] := min3((buf[cuthalf + j] + 1),
+            (buf[j - 1] + 1),
+            (buf[cuthalf + j - 1] + cost))
+        else
+          buf[cuthalf + j] := min3((buf[j] + 1),
+            (buf[cuthalf + j - 1] + 1),
+            (buf[j - 1] + cost));
+      end;
+      flip := not flip;
+    end;
+    if flip then
+      Result := buf[cuthalf + n]
+    else
+      Result := buf[n];
+  end;
+end;
+
+function levi_checker(Str_one,str_two:string):Boolean;
+begin
+ if (Trim(Str_one) = '') or (Trim(Str_two) = '') then
+  begin
+    Result := False;
+    Exit;
+  end;
+  if LeveDist(Str_one, Str_two) = 0 then
+    Result := True
+  else
+    Result := False;
+end;
+
+
+function NormalizeStringAndExtractParams(var InputString: string; out p1, p2 string): Boolean;
+var
+  l: TStringList;
+  i: Integer;
+  NormalizedString: string;
+begin
+  Result := False; // ѕо умолчанию считаем, что обработка не удалась
+
+  // ѕровер€ем, что строка не пуста€
+  if Trim(InputString) = '' then
+  begin
+    MessageDlg('—трока пуста', mtError, [mbOK], 0);
+    Exit;
+  end;
+
+  // —оздаем список дл€ разделени€ строки
+  l := TStringList.Create;
+  try
+    l.Delimiter := ' '; // –азделитель - пробел
+    l.StrictDelimiter := True; // ”читывать только указанный разделитель
+    l.DelimitedText := InputString;
+
+    // ‘ормируем новую строку без лишних пробелов
+    NormalizedString := '';
+    for i := 0 to l.Count - 1 do
+    begin
+      if Trim(l[i]) <> '' then
+        NormalizedString := NormalizedString + ' ' + Trim(l[i]);
+    end;
+    NormalizedString := Trim(NormalizedString); // ”бираем начальный пробел
+
+    // ѕровер€ем, что строка содержит хот€ бы одно слово
+    if NormalizedString = '' then
+    begin
+      MessageDlg('—трока должна содержать минимум одно слово', mtError, [mbOK], 0);
+      Exit;
+    end;
+
+    // »звлекаем первые три слова
+    l.DelimitedText := NormalizedString; // ѕерезаписываем очищенный текст
+    if l.Count >= 1 then p1 := l.Strings[0] else p1 := '';
+    if l.Count >= 2 then p2 := l.Strings[1] else p2 := '';
+
+
+    // «амен€ем исходную строку на нормализованную
+    InputString := NormalizedString;
+    Result := True; // ќбработка завершена успешно
+  finally
+    FreeAndNil(l); // ќсвобождаем пам€ть
+  end;
+end;
 end.
-

@@ -56,11 +56,10 @@ type
     TimePanel: TLabel;
     delgrgrid: TDBGrid;
     CbSecondnaim: TCheckBox;
+    procedure CbSecondnaimClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure StudSelBtnClick(Sender: TObject);
-    procedure CbSecondnaimClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -69,7 +68,6 @@ type
 
 var
   Frm_stud: TFrm_stud;
-  var cb_st:Integer;
 
 implementation
 
@@ -80,11 +78,52 @@ uses Un_dm, Un_main,Un_func;
 
 
 procedure TFrm_stud.CbSecondnaimClick(Sender: TObject);
+var
+ InputString, p1, p2, p3: string;
 begin
-if CbSecondnaim.Checked then
-  cb_st:=1 else cb_st:=0;
-end;
+case  CbSecondnaim.Checked of
+true:
+begin
+  Stud_condEdit.Hint:='Примнр Поиска по  ФИО:'+#10#13+'Рахмон Эмоммалм';
+  InputString := Stud_condEdit.Text;
+  InputString := Stud_condEdit.Text;
+  if NormalizeStringAndExtractParams2(InputString, p1, p2) then
+  begin
 
+    Stud_condEdit.Text := InputString;
+//ShowMessage('Первое слово: ' + p1);
+  //ShowMessage('Второе слово: ' + p2);
+
+  end
+  else
+  begin
+
+    Stud_condEdit.Clear;
+  end;
+
+  end;
+false:
+begin
+    Stud_condEdit.Hint:='Примнр Поиска по  ФИО:'+#10#13+'Сухов Федор Иванович';
+  InputString := Stud_condEdit.Text;
+  if NormalizeStringAndExtractParams3(InputString, p1, p2, p3) then
+  begin
+    // Обновляем текст в Stud_condEdit
+    Stud_condEdit.Text := InputString;
+
+    // Выводим результаты
+    ShowMessage('Первое слово: ' + p1);
+    ShowMessage('Второе слово: ' + p2);
+    ShowMessage('Третье слово: ' + p3);
+  end
+  else
+  begin
+    // Если обработка не удалась, очищаем поле
+    Stud_condEdit.Clear;
+  end;
+end;
+end;
+end;
 procedure TFrm_stud.FormActivate(Sender: TObject);
 begin
   dm.GruppQuery.Open;
@@ -116,88 +155,6 @@ begin
   LoadFormState(Self);
   CbSecondnaim.Checked:=False;
   Stud_condEdit.Hint:='';
-end;
-
-procedure TFrm_stud.StudSelBtnClick(Sender: TObject);
-var
- InputString, p1, p2, p3: string;
-  sel_family_and_naim: TADOStoredProc;
-begin
-case  cb_st of
-1:
-begin
-  Stud_condEdit.Hint:='Примнр Поиска по  ФИО:'+#10#13+'Рахмон Эмоммалм';
-  InputString := Stud_condEdit.Text;
-  InputString := Stud_condEdit.Text;
-  if NormalizeStringAndExtractParams2(InputString, p1, p2) then
-  begin
-
-    Stud_condEdit.Text := InputString;
-//ShowMessage('Первое слово: ' + p1);
-  //ShowMessage('Второе слово: ' + p2);
-
-
-  sel_family_and_naim := nil;
-  try
-    sel_family_and_naim := TADOStoredProc.Create(nil);
-    try
-      with sel_family_and_naim do
-      begin
-        Connection := DM.Connection;
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-        ProcedureName := 'sel_family_and_naim';
-        Parameters.Clear;
-        Parameters.CreateParameter('passp_fam', ftString,
-        pdInput, 1000,
-        P1);
-        Parameters.CreateParameter('passp_naim', ftString,
-        pdInput, 1000,
-        P2);
-        Open;
-        DM.StudQuery.Close;
-        DM.StudQuery.Recordset :=   sel_family_and_naim.Recordset;
-      end;
-    except
-      on E: EADOError do
-        ShowMessage('Ошибка ' + E.Message);
-      on E: Exception do
-        ShowMessage('Ошибка: ' + E.Message);
-    end;
-  finally
-    FreeAndNil(sel_family_and_naim);
-  end;
-
-  end
-  else
-  begin
-
-    Stud_condEdit.Clear;
-  end;
-
-  end;
-0:
-begin
-    Stud_condEdit.Hint:='Примнр Поиска по  ФИО:'+#10#13+'Сухов Федор Иванович';
-  InputString := Stud_condEdit.Text;
-  if NormalizeStringAndExtractParams3(InputString, p1, p2, p3) then
-  begin
-    // Обновляем текст в Stud_condEdit
-    Stud_condEdit.Text := InputString;
-
-    // Выводим результаты
-    ShowMessage('Первое слово: ' + p1);
-    ShowMessage('Второе слово: ' + p2);
-    ShowMessage('Третье слово: ' + p3);
-  end
-  else
-  begin
-    // Если обработка не удалась, очищаем поле
-    Stud_condEdit.Clear;
-  end;
-end;
-end;
-
 end;
 
 end.

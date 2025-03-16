@@ -31,6 +31,11 @@ procedure UpdateFormProperties(const FormName: string;
  procedure SaveConnectionStringToFile(const FileName, ConnectionString: string);
  function min3(a, b, c: integer): integer;
  function LeveDist(s, t: string): integer;
+ function levi_checker(Str_one,str_two:string):Boolean;
+function NormalizeStringAndExtractParams2(var InputString: string;
+out p1, p2: string): Boolean;
+function NormalizeStringAndExtractParams3(var InputString: string; out p1, p2, p3:
+string): Boolean;
 implementation
 
 
@@ -297,5 +302,109 @@ begin
   end;
 end;
 
+function levi_checker(Str_one,str_two:string):Boolean;
+begin
+ if (Trim(Str_one) = '') or (Trim(Str_two) = '') then
+  begin
+    Result := False;
+    Exit;
+  end;
+  if LeveDist(Str_one, Str_two) = 0 then
+    Result := True
+  else
+    Result := False;
+end;
+
+
+function NormalizeStringAndExtractParams2(var InputString: string; out p1, p2: string): Boolean;
+var
+  l: TStringList;
+  i: Integer;
+  NormalizedString: string;
+begin
+  Result := False;
+  if Trim(InputString) = '' then
+  begin
+    MessageDlg('Строка пуста', mtError, [mbOK], 0);
+    Exit;
+  end;
+  l := TStringList.Create;
+  try
+    l.Delimiter := ' ';
+    l.StrictDelimiter := True;
+    l.DelimitedText := InputString;
+    NormalizedString := '';
+    for i := 0 to l.Count - 1 do
+    begin
+      if Trim(l[i]) <> '' then
+        NormalizedString := NormalizedString + ' ' + Trim(l[i]);
+    end;
+    NormalizedString := Trim(NormalizedString);
+    if NormalizedString = '' then
+    begin
+      MessageDlg('Строка должна содержать минимум одно слово', mtError, [mbOK], 0);
+      Exit;
+    end;
+    l.DelimitedText := NormalizedString;
+    if l.Count >= 1 then p1 := l.Strings[0] else p1 := '';
+    if l.Count >= 2 then p2 := l.Strings[1] else p2 := '';
+    InputString := NormalizedString;
+    Result := True;
+  finally
+    FreeAndNil(l);
+  end;
+end;
+
+function NormalizeStringAndExtractParams3(var InputString: string; out p1, p2, p3:
+string): Boolean;
+var
+  l: TStringList;
+  i: Integer;
+  NormalizedString: string;
+begin
+  Result := False; // По умолчанию считаем, что обработка не удалась
+
+  // Проверяем, что строка не пустая
+  if Trim(InputString) = '' then
+  begin
+    MessageDlg('Строка пуста', mtError, [mbOK], 0);
+    Exit;
+  end;
+
+  // Создаем список для разделения строки
+  l := TStringList.Create;
+  try
+    l.Delimiter := ' '; // Разделитель - пробел
+    l.StrictDelimiter := True; // Учитывать только указанный разделитель
+    l.DelimitedText := InputString;
+
+    // Формируем новую строку без лишних пробелов
+    NormalizedString := '';
+    for i := 0 to l.Count - 1 do
+    begin
+      if Trim(l[i]) <> '' then
+        NormalizedString := NormalizedString + ' ' + Trim(l[i]);
+    end;
+    NormalizedString := Trim(NormalizedString); // Убираем начальный пробел
+
+    // Проверяем, что строка содержит хотя бы одно слово
+    if NormalizedString = '' then
+    begin
+      MessageDlg('Строка должна содержать минимум одно слово', mtError, [mbOK], 0);
+      Exit;
+    end;
+
+    // Извлекаем первые три слова
+    l.DelimitedText := NormalizedString; // Перезаписываем очищенный текст
+    if l.Count >= 1 then p1 := l.Strings[0] else p1 := '';
+    if l.Count >= 2 then p2 := l.Strings[1] else p2 := '';
+    if l.Count >= 3 then p3 := l.Strings[2] else p3 := '';
+
+    // Заменяем исходную строку на нормализованную
+    InputString := NormalizedString;
+    Result := True; // Обработка завершена успешно
+  finally
+    FreeAndNil(l); // Освобождаем память
+  end;
+end;
 end.
-

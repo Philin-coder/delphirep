@@ -1,7 +1,7 @@
 USE [cont_r]
 GO
 
-/****** Object:  Table [dbo].[stud]    Script Date: 15.03.2025 21:32:06 ******/
+/****** Object:  Table [dbo].[stud]    Script Date: 16.03.2025 16:44:20 ******/
 SET ANSI_NULLS ON
 GO
 

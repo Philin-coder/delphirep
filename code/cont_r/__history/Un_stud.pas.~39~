@@ -60,7 +60,6 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure StudSelBtnClick(Sender: TObject);
-    procedure CbSecondnaimClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -78,12 +77,6 @@ uses Un_dm, Un_main,Un_func;
 {$R *.dfm}
 
 
-
-procedure TFrm_stud.CbSecondnaimClick(Sender: TObject);
-begin
-if CbSecondnaim.Checked then
-  cb_st:=1 else cb_st:=0;
-end;
 
 procedure TFrm_stud.FormActivate(Sender: TObject);
 begin

@@ -6,6 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, StdCtrls, Grids, DBGrids, ExtCtrls, ADODB,DB, DBCtrls;
 
+
 type
   TFrm_stud = class(TForm)
     StudPage: TPageControl;
@@ -13,16 +14,16 @@ type
     InsTab: TTabSheet;
     UpdTab: TTabSheet;
     delTab: TTabSheet;
-    gruppgroupBox: TGroupBox;
-    gruppbtnBox: TGroupBox;
-    gruppDataBox: TGroupBox;
-    gruppSelGrid: TDBGrid;
-    gruppSelBtn: TButton;
-    gruppCondBox: TGroupBox;
-    grupp_condEdit: TLabeledEdit;
-    grupp_fnd_edit: TLabeledEdit;
-    grupp_sp_groupradio: TRadioButton;
-    gruppResetRadio: TRadioButton;
+    StudgroupBox: TGroupBox;
+    StudpbtnBox: TGroupBox;
+    StudDataBox: TGroupBox;
+    StudSelGrid: TDBGrid;
+    StudSelBtn: TButton;
+    StudCondBox: TGroupBox;
+    Stud_condEdit: TLabeledEdit;
+    Stud_fnd_edit: TLabeledEdit;
+    Stud_sp_groupradio: TRadioButton;
+    StudResetRadio: TRadioButton;
     Grupp_inpBox: TGroupBox;
     Grupp_naim_g_inp: TLabeledEdit;
     Grupp_ins_btn_Box: TGroupBox;
@@ -40,8 +41,8 @@ type
     dlgrbtnBox: TGroupBox;
     delgrBtn: TButton;
     degrdataBox: TGroupBox;
-    grupp_gr_groupradio: TRadioButton;
-    fnd_naimCb: TCheckBox;
+    Stud_gr_groupradio: TRadioButton;
+    Studfnd_naimCb: TCheckBox;
     Grupp_insGrd: TDBGrid;
     GradeUpDown: TUpDown;
     GradeEdit: TEdit;
@@ -52,9 +53,10 @@ type
     UpDown_upd_grade: TUpDown;
     gr_upd_grader: TEdit;
     grupdLbl: TLabel;
-    TimeTimer: TTimer;
     TimePanel: TLabel;
     delgrgrid: TDBGrid;
+    CbSecondnaim: TCheckBox;
+    procedure CbSecondnaimClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -66,10 +68,50 @@ var
 
 implementation
 
-uses Un_dm, Un_main, Un_func;
+uses Un_dm, Un_main,Un_func;
 
 {$R *.dfm}
 
 
+
+procedure TFrm_stud.CbSecondnaimClick(Sender: TObject);
+var
+ InputString, p1, p2, p3: string;
+begin
+case  CbSecondnaim.Checked of
+true:
+begin
+ // Получаем текст из Stud_condEdit
+  InputString := Stud_condEdit.Text;
+
+  InputString := Stud_condEdit.Text;
+
+  // Вызываем функцию
+  if NormalizeStringAndExtractParams1(InputString, p1, p2) then
+  begin
+    // Обновляем текст в Stud_condEdit
+    Stud_condEdit.Text := InputString;
+
+    // Выводим результаты
+    ShowMessage('Первое слово: ' + p1);
+    ShowMessage('Второе слово: ' + p2);
+
+  end
+  else
+  begin
+    // Если обработка не удалась, очищаем поле
+    Stud_condEdit.Clear;
+  end;
+
+  end;
+false:
+begin
+
+end;
+
+
+end;//case
+
+end;
 
 end.

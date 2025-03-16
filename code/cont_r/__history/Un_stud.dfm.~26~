@@ -1,7 +1,7 @@
 object Frm_stud: TFrm_stud
   Left = 0
   Top = 0
-  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1075#1088#1091#1087#1087#1086#1081
+  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089#1086' '#1089' '#1083#1080#1095#1085#1099#1084'  '#1076#1077#1083#1086#1084' '#1089#1090#1091#1076#1077#1085#1090#1072
   ClientHeight = 813
   ClientWidth = 1037
   Color = clBtnFace
@@ -11,9 +11,12 @@ object Frm_stud: TFrm_stud
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnActivate = FormActivate
+  OnClose = FormClose
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object grupPage: TPageControl
+  object StudPage: TPageControl
     Left = 0
     Top = 0
     Width = 1037
@@ -22,8 +25,8 @@ object Frm_stud: TFrm_stud
     Align = alClient
     TabOrder = 0
     object SelTab: TTabSheet
-      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086'  '#1075#1088#1091#1087#1087#1077
-      object gruppgroupBox: TGroupBox
+      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086'  '#1089#1090#1091#1076#1077#1085#1090#1077
+      object StudgroupBox: TGroupBox
         Left = 0
         Top = 97
         Width = 1029
@@ -31,7 +34,7 @@ object Frm_stud: TFrm_stud
         Align = alTop
         Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072
         TabOrder = 0
-        object grupp_sp_groupradio: TRadioButton
+        object Stud_sp_groupradio: TRadioButton
           Left = 56
           Top = 32
           Width = 113
@@ -40,7 +43,7 @@ object Frm_stud: TFrm_stud
           Caption = #1055#1086' '#1089#1087#1077#1094#1080#1072#1083#1100#1085#1086#1089#1090#1080
           TabOrder = 0
         end
-        object gruppResetRadio: TRadioButton
+        object StudResetRadio: TRadioButton
           Left = 432
           Top = 32
           Width = 113
@@ -48,7 +51,7 @@ object Frm_stud: TFrm_stud
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 1
         end
-        object grupp_gr_groupradio: TRadioButton
+        object Stud_gr_groupradio: TRadioButton
           Left = 256
           Top = 33
           Width = 113
@@ -57,7 +60,7 @@ object Frm_stud: TFrm_stud
           Caption = #1055#1086' '#1075#1088#1091#1087#1087#1077
           TabOrder = 2
         end
-        object fnd_naimCb: TCheckBox
+        object Studfnd_naimCb: TCheckBox
           Left = 656
           Top = 32
           Width = 209
@@ -68,15 +71,15 @@ object Frm_stud: TFrm_stud
           TabOrder = 3
         end
       end
-      object gruppbtnBox: TGroupBox
+      object StudpbtnBox: TGroupBox
         Left = 0
         Top = 730
         Width = 1029
         Height = 55
         Align = alBottom
         TabOrder = 1
-        object gruppSelBtn: TButton
-          Left = 264
+        object StudSelBtn: TButton
+          Left = 256
           Top = 27
           Width = 305
           Height = 25
@@ -85,7 +88,7 @@ object Frm_stud: TFrm_stud
           TabOrder = 0
         end
       end
-      object gruppDataBox: TGroupBox
+      object StudDataBox: TGroupBox
         Left = 0
         Top = 161
         Width = 1029
@@ -93,51 +96,22 @@ object Frm_stud: TFrm_stud
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        object gruppSelGrid: TDBGrid
+        object StudSelGrid: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
           Height = 552
           Align = alClient
-          DataSource = DM.GruppDS
+          DataSource = DM.StuddS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
           TitleFont.Height = -11
           TitleFont.Name = 'Tahoma'
           TitleFont.Style = []
-          Columns = <
-            item
-              Expanded = False
-              FieldName = 'grup_id'
-              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-              Width = 10
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'naim_grup'
-              Title.Caption = #1053#1072#1079#1074#1072#1085#1080#1077
-              Width = 500
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'kurs'
-              Title.Caption = #1050#1091#1088#1089
-              Width = 100
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'spec_maim'
-              Title.Caption = #1057#1087#1077#1094#1080#1072#1083#1100#1085#1086#1089#1090#1100
-              Width = 500
-              Visible = True
-            end>
         end
       end
-      object gruppCondBox: TGroupBox
+      object StudCondBox: TGroupBox
         Left = 0
         Top = 0
         Width = 1029
@@ -148,7 +122,7 @@ object Frm_stud: TFrm_stud
         DesignSize = (
           1029
           97)
-        object grupp_condEdit: TLabeledEdit
+        object Stud_condEdit: TLabeledEdit
           Left = 0
           Top = 29
           Width = 1026
@@ -159,7 +133,7 @@ object Frm_stud: TFrm_stud
           EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1091#1089#1083#1086#1074#1080#1102
           TabOrder = 0
         end
-        object grupp_fnd_edit: TLabeledEdit
+        object Stud_fnd_edit: TLabeledEdit
           Left = 3
           Top = 70
           Width = 1042
@@ -169,6 +143,16 @@ object Frm_stud: TFrm_stud
           EditLabel.Height = 13
           EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1089#1087#1077#1094#1080#1072#1083#1100#1085#1086#1089#1090#1080
           TabOrder = 1
+        end
+        object CbSecondnaim: TCheckBox
+          Left = 312
+          Top = 8
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Caption = #1054#1090#1095#1077#1089#1090#1074#1072' '#1085#1077#1090
+          TabOrder = 2
+          OnClick = CbSecondnaimClick
         end
       end
     end
@@ -286,7 +270,7 @@ object Frm_stud: TFrm_stud
           Left = 2
           Top = 15
           Width = 1025
-          Height = 457
+          Height = 392
           Align = alClient
           DataSource = DM.GruppDS
           TabOrder = 0
@@ -567,10 +551,5 @@ object Frm_stud: TFrm_stud
         end
       end
     end
-  end
-  object TimeTimer: TTimer
-    Enabled = False
-    Left = 768
-    Top = 32
   end
 end
