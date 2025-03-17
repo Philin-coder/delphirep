@@ -42,7 +42,7 @@ type
     delgrBtn: TButton;
     degrdataBox: TGroupBox;
     Stud_gr_groupradio: TRadioButton;
-    Studfnd_famCb: TCheckBox;
+    Studfnd_akademCb: TCheckBox;
     Grupp_insGrd: TDBGrid;
     GradeUpDown: TUpDown;
     GradeEdit: TEdit;
@@ -120,7 +120,7 @@ begin
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   LoadFormState(Self);
   CbSecondnaim.Checked:=False;
-  Stud_condEdit.Hint:='';
+  Stud_condEdit.Hint:='Примнр Поиска по  ФИО:'+#10#13+'Сухов Федор Иванович';
   cb_st:=0;
 end;
 
@@ -181,21 +181,12 @@ if StudResetRadio.Checked then
         (Components[j] as TRadioButton).Checked:=False;
       end;
     end;
-     Studfnd_famCb.Checked:=False;
+     Studfnd_akademCb.Checked:=False;
 end;
-
-
-
-
-
-
-
-
-
 procedure TFrm_stud.StudSelBtnClick(Sender: TObject);
 var
  InputString, p1, p2, p3: string;
-  sel_family_and_naim: TADOStoredProc;
+  sel_family_and_naim,sel_by_fio: TADOStoredProc;
 begin
 case  cb_st of
 1:
@@ -205,9 +196,7 @@ begin
   InputString := Stud_condEdit.Text;
   if NormalizeStringAndExtractParams2(InputString, p1, p2) then
   begin
-
     Stud_condEdit.Text := InputString;
-
   sel_family_and_naim := nil;
   try
     sel_family_and_naim := TADOStoredProc.Create(nil);
@@ -242,29 +231,86 @@ begin
   end
   else
   begin
-
     Stud_condEdit.Clear;
+         with dm.studQuery do
+     begin
+     Close;
+     sql.Clear;
+     SQL.Text:='select'+' '+
+     '  stud.passp_fam + '' '' + stud.passp_naim + ISNULL('' '' + stud.passp_otch, '''') AS fio, ' +
+    '  stud.stud_id, ' +
+    '  stud.b_data, ' +
+    '  CASE stud.pol WHEN 1 THEN ''Мужской'' ELSE ''Женский'' END AS sex, ' +
+    '  stud.civ, ' +
+    '  stud.region, ' +
+    '  stud.gorod, ' +
+    '  stud.adr, ' +
+    '  CASE stud.mesto_jit WHEN 1 THEN ''Съем'' ELSE ''Общежитие'' END AS to_live, ' +
+    '  stud.mod_t, ' +
+    '  stud.dom_t, ' +
+    '  stud.data_pr, ' +
+    '  gruppa.naim_grup, ' +
+    '  stud.st_email ' +
+    'FROM stud ' +
+    'INNER JOIN gruppa ON gruppa.grup_id = stud.grup_id ' +
+    'INNER JOIN spec ON spec.spec_id = gruppa.spec_id ' +
+    'WHERE 1=1 ' +
+    '  AND stud.data_ot IS NULL ' +
+    '  AND is_akadem = 0 ';
+    Open;
+     end;
+     MessageDlg('Cистема в исходном положении',mtInformation,[mbOK],0 );
+     p1:='';
+     p2:='';
+     p3:='';
   end;
 
   end;
 0:
 begin
-    Stud_condEdit.Hint:='Примнр Поиска по  ФИО:'+#10#13+'Сухов Федор Иванович';
+  Stud_condEdit.Hint:='Примнр Поиска по  ФИО:'+#10#13+'Сухов Федор Иванович';
   InputString := Stud_condEdit.Text;
   if NormalizeStringAndExtractParams3(InputString, p1, p2, p3) then
   begin
-    // Обновляем текст в Stud_condEdit
     Stud_condEdit.Text := InputString;
-
-    // Выводим результаты
-    ShowMessage('Первое слово: ' + p1);
-    ShowMessage('Второе слово: ' + p2);
-    ShowMessage('Третье слово: ' + p3);
+      sel_by_fio := nil;
+  try
+    sel_by_fio := TADOStoredProc.Create(nil);
+    try
+      with sel_by_fio do
+      begin
+        Connection := DM.Connection;
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+        ProcedureName := 'sel_by_fio';
+        Parameters.Clear;
+        Parameters.CreateParameter('passp_fam', ftString,
+        pdInput, 1000,
+        P1);
+        Parameters.CreateParameter('passp_naim', ftString,
+        pdInput, 1000,
+        P2);
+        Parameters.CreateParameter('passp_otch', ftString,
+        pdInput, 1000,
+        P3);
+        Open;
+        DM.StudQuery.Close;
+        DM.StudQuery.Recordset :=   sel_by_fio.Recordset;
+      end;
+    except
+      on E: EADOError do
+        ShowMessage('Ошибка ' + E.Message);
+      on E: Exception do
+        ShowMessage('Ошибка: ' + E.Message);
+    end;
+  finally
+    FreeAndNil(sel_by_fio);
+  end;
   end
   else
   begin
-    // Если обработка не удалась, очищаем поле
     Stud_condEdit.Clear;
+
   end;
 end;
 end;

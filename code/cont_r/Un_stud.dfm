@@ -72,6 +72,7 @@ object Frm_stud: TFrm_stud
           Anchors = [akLeft, akRight]
           Caption = #1054#1090#1073#1086#1088' '#1090#1077#1093', '#1082#1090#1086' '#1074' '#1072#1082#1072#1076#1077#1084'. '#1086#1090#1087#1091#1089#1082#1077' '
           TabOrder = 3
+          OnClick = Studfnd_akademCbClick
         end
       end
       object StudpbtnBox: TGroupBox

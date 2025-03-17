@@ -66,6 +66,7 @@ type
     procedure Stud_gr_groupradioClick(Sender: TObject);
     procedure s(Sender: TObject; var Key: Char);
     procedure Stud_fnd_adr_editKeyPress(Sender: TObject; var Key: Char);
+    procedure Studfnd_akademCbClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -87,7 +88,15 @@ uses Un_dm, Un_main,Un_func;
 procedure TFrm_stud.CbSecondnaimClick(Sender: TObject);
 begin
 if CbSecondnaim.Checked then
-  cb_st:=1 else cb_st:=0;
+  begin
+  cb_st:=1;
+  Stud_condEdit.Hint:='Примнр Поиска по  ФИО:'+#10#13+'Рахмон Эмоммалм';
+  end
+  else
+  begin
+   cb_st:=0;
+   Stud_condEdit.Hint:='Примнр Поиска по  ФИО:'+#10#13+'Сухов Федор Иванович';
+  end;
 end;
 
 procedure TFrm_stud.FormActivate(Sender: TObject);
@@ -120,8 +129,71 @@ begin
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   LoadFormState(Self);
   CbSecondnaim.Checked:=False;
+  Stud_condEdit.ShowHint:=True;
   Stud_condEdit.Hint:='Примнр Поиска по  ФИО:'+#10#13+'Сухов Федор Иванович';
   cb_st:=0;
+end;
+
+procedure TFrm_stud.Studfnd_akademCbClick(Sender: TObject);
+  var
+    sel_akaddem: TADOStoredProc;
+    sel_all:TADOStoredProc;
+
+begin
+case Studfnd_akademCb.Checked of
+True:
+begin
+   sel_akaddem := nil;
+  try
+    sel_akaddem := TADOStoredProc.Create(nil);
+    try
+      with sel_akaddem do
+      begin
+        Connection := DM.Connection;
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+        ProcedureName := 'sel_akaddem';
+        Open;
+        DM.StudQuery.Close;
+        DM.StudQuery.Recordset := sel_akaddem.Recordset;
+      end;
+    except
+      on E: EADOError do
+        ShowMessage('Ошибка: ' + E.Message);
+      on E: Exception do
+        ShowMessage('Ошибка: ' + E.Message);
+    end;
+  finally
+    FreeAndNil(sel_akaddem);
+  end;
+end;
+  false:
+  begin
+      sel_all := nil;
+  try
+    sel_all := TADOStoredProc.Create(nil);
+    try
+      with sel_all do
+      begin
+        Connection := DM.Connection;
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+        ProcedureName := 'sel_all';
+        Open;
+        DM.StudQuery.Close;
+        DM.StudQuery.Recordset := sel_all.Recordset;
+      end;
+    except
+      on E: EADOError do
+        ShowMessage('Ошибка: ' + E.Message);
+      on E: Exception do
+        ShowMessage('Ошибка: ' + E.Message);
+    end;
+  finally
+    FreeAndNil(sel_all);
+  end;
+  end;
+end;//case
 end;
 
 procedure TFrm_stud.StudResetRadioClick(Sender: TObject);
@@ -191,7 +263,6 @@ begin
 case  cb_st of
 1:
 begin
-  Stud_condEdit.Hint:='Примнр Поиска по  ФИО:'+#10#13+'Рахмон Эмоммалм';
   InputString := Stud_condEdit.Text;
   InputString := Stud_condEdit.Text;
   if NormalizeStringAndExtractParams2(InputString, p1, p2) then
