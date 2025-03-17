@@ -56,6 +56,7 @@ type
     TimePanel: TLabel;
     delgrgrid: TDBGrid;
     CbSecondnaim: TCheckBox;
+    DateTimePicker1: TDateTimePicker;
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);

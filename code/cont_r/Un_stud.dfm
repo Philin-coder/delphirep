@@ -332,6 +332,15 @@ object Frm_stud: TFrm_stud
           ListSource = DM.spectDS
           TabOrder = 4
         end
+        object DateTimePicker1: TDateTimePicker
+          Left = 3
+          Top = 16
+          Width = 1030
+          Height = 21
+          Date = 45733.665034201390000000
+          Time = 45733.665034201390000000
+          TabOrder = 5
+        end
       end
       object Grupp_ins_btn_Box: TGroupBox
         Left = 0

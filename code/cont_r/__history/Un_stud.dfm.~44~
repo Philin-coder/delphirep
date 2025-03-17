@@ -21,7 +21,7 @@ object Frm_stud: TFrm_stud
     Top = 0
     Width = 1037
     Height = 813
-    ActivePage = SelTab
+    ActivePage = InsTab
     Align = alClient
     TabOrder = 0
     object SelTab: TTabSheet
@@ -63,15 +63,16 @@ object Frm_stud: TFrm_stud
           TabOrder = 2
           OnClick = Stud_gr_groupradioClick
         end
-        object Studfnd_famCb: TCheckBox
-          Left = 656
-          Top = 41
-          Width = 209
+        object Studfnd_akademCb: TCheckBox
+          Left = 608
+          Top = 33
+          Width = 241
           Height = 17
           Align = alCustom
           Anchors = [akLeft, akRight]
-          Caption = #1046#1080#1074#1086#1081'  '#1087#1086#1080#1089#1082' '#1087#1086' '#1060#1072#1084#1080#1083#1080#1080
+          Caption = #1054#1090#1073#1086#1088' '#1090#1077#1093', '#1082#1090#1086' '#1074' '#1072#1082#1072#1076#1077#1084'. '#1086#1090#1087#1091#1089#1082#1077' '
           TabOrder = 3
+          OnClick = Studfnd_akademCbClick
         end
       end
       object StudpbtnBox: TGroupBox
@@ -229,9 +230,9 @@ object Frm_stud: TFrm_stud
           Width = 1042
           Height = 21
           Anchors = [akLeft, akRight]
-          EditLabel.Width = 160
+          EditLabel.Width = 120
           EditLabel.Height = 13
-          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1089#1087#1077#1094#1080#1072#1083#1100#1085#1086#1089#1090#1080
+          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1072#1076#1088#1077#1089#1091
           TabOrder = 1
           OnKeyPress = Stud_fnd_adr_editKeyPress
         end

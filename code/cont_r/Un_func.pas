@@ -36,7 +36,7 @@ procedure UpdateFormProperties(const FormName: string;
 out p1, p2: string): Boolean;
 function NormalizeStringAndExtractParams3(var InputString: string; out p1, p2, p3:
 string): Boolean;
-function capitalizer(var str:string):string;
+function Capitalizer(var str:string):string;
 implementation
 
 
@@ -120,7 +120,7 @@ begin
   begin
     if (Components[d] is TDateTimePicker ) then
     begin
-      (Components[b] as TDateTimePicker).Date:=Now;
+      (Components[d] as TDateTimePicker).Date:=Now;
     end;
 
   end;
@@ -198,6 +198,14 @@ begin
       TDBLookupComboBox(Control).Color := AColor;
       TDBLookupComboBox(Control).Font.Name := AFontName;
       TDBLookupComboBox(Control).Font.Size := AFontSize;
+    end
+    else if Control is TDateTimePicker then
+    begin
+      TDateTimePicker(Control).Width := AWidth;
+      TDateTimePicker(Control).Height := AHeight;
+      TDateTimePicker(Control).Color := AColor;
+      TDateTimePicker(Control).Font.Name := AFontName;
+      TDateTimePicker(Control).Font.Size := AFontSize;
     end;
   end;
   if AComponent is TWinControl then
@@ -408,7 +416,7 @@ begin
     FreeAndNil(l);
   end;
 end;
-function capitalizer(var str:string):string;
+function Capitalizer(var str:string):string;
 begin
   if Trim(str)='' then
   begin
