@@ -63,14 +63,14 @@ object Frm_stud: TFrm_stud
           TabOrder = 2
           OnClick = Stud_gr_groupradioClick
         end
-        object Studfnd_famCb: TCheckBox
-          Left = 656
-          Top = 41
-          Width = 209
+        object Studfnd_akademCb: TCheckBox
+          Left = 608
+          Top = 33
+          Width = 241
           Height = 17
           Align = alCustom
           Anchors = [akLeft, akRight]
-          Caption = #1046#1080#1074#1086#1081'  '#1087#1086#1080#1089#1082' '#1087#1086' '#1060#1072#1084#1080#1083#1080#1080
+          Caption = #1054#1090#1073#1086#1088' '#1090#1077#1093', '#1082#1090#1086' '#1074' '#1072#1082#1072#1076#1077#1084'. '#1086#1090#1087#1091#1089#1082#1077' '
           TabOrder = 3
         end
       end

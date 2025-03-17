@@ -120,7 +120,7 @@ begin
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   LoadFormState(Self);
   CbSecondnaim.Checked:=False;
-  Stud_condEdit.Hint:='Примнр Поиска по  ФИО:'+#10#13+'Сухов Федор Иванович';
+  Stud_condEdit.Hint:='';
   cb_st:=0;
 end;
 
@@ -265,7 +265,7 @@ begin
   end;
 0:
 begin
-  Stud_condEdit.Hint:='Примнр Поиска по  ФИО:'+#10#13+'Сухов Федор Иванович';
+    Stud_condEdit.Hint:='Примнр Поиска по  ФИО:'+#10#13+'Сухов Федор Иванович';
   InputString := Stud_condEdit.Text;
   if NormalizeStringAndExtractParams3(InputString, p1, p2, p3) then
   begin

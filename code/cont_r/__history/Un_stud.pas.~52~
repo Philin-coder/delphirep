@@ -21,8 +21,8 @@ type
     StudSelBtn: TButton;
     StudCondBox: TGroupBox;
     Stud_condEdit: TLabeledEdit;
-    Stud_fnd_edit: TLabeledEdit;
-    Stud_sp_groupradio: TRadioButton;
+    Stud_fnd_adr_edit: TLabeledEdit;
+    Stud_civ_groupradio: TRadioButton;
     StudResetRadio: TRadioButton;
     Grupp_inpBox: TGroupBox;
     Grupp_naim_g_inp: TLabeledEdit;
@@ -42,7 +42,7 @@ type
     delgrBtn: TButton;
     degrdataBox: TGroupBox;
     Stud_gr_groupradio: TRadioButton;
-    Studfnd_naimCb: TCheckBox;
+    Studfnd_famCb: TCheckBox;
     Grupp_insGrd: TDBGrid;
     GradeUpDown: TUpDown;
     GradeEdit: TEdit;
@@ -62,6 +62,10 @@ type
     procedure StudSelBtnClick(Sender: TObject);
     procedure CbSecondnaimClick(Sender: TObject);
     procedure StudResetRadioClick(Sender: TObject);
+    procedure Stud_civ_groupradioClick(Sender: TObject);
+    procedure Stud_gr_groupradioClick(Sender: TObject);
+    procedure s(Sender: TObject; var Key: Char);
+    procedure Stud_fnd_adr_editKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
   public
@@ -117,6 +121,7 @@ begin
   LoadFormState(Self);
   CbSecondnaim.Checked:=False;
   Stud_condEdit.Hint:='';
+  cb_st:=0;
 end;
 
 procedure TFrm_stud.StudResetRadioClick(Sender: TObject);
@@ -165,9 +170,7 @@ if StudResetRadio.Checked then
     'WHERE 1=1 ' +
     '  AND stud.data_ot IS NULL ' +
     '  AND is_akadem = 0 ';
-
-    ShowMessage(dm.StudQuery.SQL.Text);
-
+    cb_st:=0;
      Open;
      end;
     with Frm_stud do
@@ -178,6 +181,7 @@ if StudResetRadio.Checked then
         (Components[j] as TRadioButton).Checked:=False;
       end;
     end;
+     Studfnd_famCb.Checked:=False;
 end;
 
 
@@ -264,6 +268,167 @@ begin
   end;
 end;
 end;
+
+end;
+
+procedure TFrm_stud.Stud_civ_groupradioClick(Sender: TObject);
+begin
+if stud_civ_groupradio.Checked=true then
+  begin
+    try
+     with dm.StudQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+      'select '+
+       '  stud.passp_fam + '' '' + stud.passp_naim + ISNULL('' '' + stud.passp_otch, '''') AS fio, ' +
+    '  stud.stud_id, ' +
+    '  stud.b_data, ' +
+    '  CASE stud.pol WHEN 1 THEN ''Мужской'' ELSE ''Женский'' END AS sex, ' +
+    '  stud.civ, ' +
+    '  stud.region, ' +
+    '  stud.gorod, ' +
+    '  stud.adr, ' +
+    '  CASE stud.mesto_jit WHEN 1 THEN ''Съем'' ELSE ''Общежитие'' END AS to_live, ' +
+    '  stud.mod_t, ' +
+    '  stud.dom_t, ' +
+    '  stud.data_pr, ' +
+    '  gruppa.naim_grup, ' +
+    '  stud.st_email ' +
+    'FROM stud ' +
+    'INNER JOIN gruppa ON gruppa.grup_id = stud.grup_id ' +
+    'INNER JOIN spec ON spec.spec_id = gruppa.spec_id ' +
+    'WHERE 1=1 ' +
+    '  AND stud.data_ot IS NULL ' +
+    '  AND is_akadem = 0 '+ ' '+
+      'order by civ desc';
+      Open;
+     end;
+    except on E: EADOError do
+    begin
+      ShowMessage('ошибка'+' '+E.Message);
+    end;
+    end;
+  end;
+end;
+
+procedure TFrm_stud.Stud_fnd_adr_editKeyPress(Sender: TObject; var Key: Char);
+begin
+try
+
+   dm.studQuery.SQL.Text:='select'+' '+
+           '  stud.passp_fam + '' '' + stud.passp_naim + ISNULL('' '' + stud.passp_otch, '''') AS fio, ' +
+    '  stud.stud_id, ' +
+    '  stud.b_data, ' +
+    '  CASE stud.pol WHEN 1 THEN ''Мужской'' ELSE ''Женский'' END AS sex, ' +
+    '  stud.civ, ' +
+    '  stud.region, ' +
+    '  stud.gorod, ' +
+    '  stud.adr, ' +
+    '  CASE stud.mesto_jit WHEN 1 THEN ''Съем'' ELSE ''Общежитие'' END AS to_live, ' +
+    '  stud.mod_t, ' +
+    '  stud.dom_t, ' +
+    '  stud.data_pr, ' +
+    '  gruppa.naim_grup, ' +
+    '  stud.st_email ' +
+    'FROM stud ' +
+    'INNER JOIN gruppa ON gruppa.grup_id = stud.grup_id ' +
+    'INNER JOIN spec ON spec.spec_id = gruppa.spec_id ' +
+    'WHERE 1=1 ' +
+    '  AND stud.data_ot IS NULL ' +
+    '  AND is_akadem = 0 and '+ ' '+' '+
+     'stud.adr like'+
+   QuotedStr(Concat(Stud_fnd_adr_edit.Text,#37));
+   dm.StudQuery.close;
+   dm.StudQuery.Open;
+except on E: Exception do
+  begin
+  ShowMessage('wrong situation'+' '+E.Message);
+  end;
+  end;
+end;
+
+procedure TFrm_stud.s(Sender: TObject; var Key: Char);
+begin
+try
+
+   dm.studQuery.SQL.Text:='select'+' '+
+       '  stud.passp_fam + '' '' + stud.passp_naim + ISNULL('' '' + stud.passp_otch, '''') AS fio, ' +
+    '  stud.stud_id, ' +
+    '  stud.b_data, ' +
+    '  CASE stud.pol WHEN 1 THEN ''Мужской'' ELSE ''Женский'' END AS sex, ' +
+    '  stud.civ, ' +
+    '  stud.region, ' +
+    '  stud.gorod, ' +
+    '  stud.adr, ' +
+    '  CASE stud.mesto_jit WHEN 1 THEN ''Съем'' ELSE ''Общежитие'' END AS to_live, ' +
+    '  stud.mod_t, ' +
+    '  stud.dom_t, ' +
+    '  stud.data_pr, ' +
+    '  gruppa.naim_grup, ' +
+    '  stud.st_email ' +
+    'FROM stud ' +
+    'INNER JOIN gruppa ON gruppa.grup_id = stud.grup_id ' +
+    'INNER JOIN spec ON spec.spec_id = gruppa.spec_id ' +
+    'WHERE 1=1 ' +
+    '  AND stud.data_ot IS NULL ' +
+    '  AND is_akadem = 0 '+ ' '+' '+
+      'and stud.adr like'+
+   QuotedStr(Concat(Stud_fnd_adr_edit.Text,#37));
+   dm.StudQuery.close;
+   dm.StudQuery.Open;
+except on E: Exception do
+  begin
+  ShowMessage('wrong situation'+' '+E.Message);
+  end;
+  end;
+
+
+end;
+
+
+procedure TFrm_stud.Stud_gr_groupradioClick(Sender: TObject);
+begin
+if stud_gr_groupradio.Checked=true then
+  begin
+    try
+     with dm.StudQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+      'select '+
+       '  stud.passp_fam + '' '' + stud.passp_naim + ISNULL('' '' + stud.passp_otch, '''') AS fio, ' +
+    '  stud.stud_id, ' +
+    '  stud.b_data, ' +
+    '  CASE stud.pol WHEN 1 THEN ''Мужской'' ELSE ''Женский'' END AS sex, ' +
+    '  stud.civ, ' +
+    '  stud.region, ' +
+    '  stud.gorod, ' +
+    '  stud.adr, ' +
+    '  CASE stud.mesto_jit WHEN 1 THEN ''Съем'' ELSE ''Общежитие'' END AS to_live, ' +
+    '  stud.mod_t, ' +
+    '  stud.dom_t, ' +
+    '  stud.data_pr, ' +
+    '  gruppa.naim_grup, ' +
+    '  stud.st_email ' +
+    'FROM stud ' +
+    'INNER JOIN gruppa ON gruppa.grup_id = stud.grup_id ' +
+    'INNER JOIN spec ON spec.spec_id = gruppa.spec_id ' +
+    'WHERE 1=1 ' +
+    '  AND stud.data_ot IS NULL ' +
+    '  AND is_akadem = 0 '+ ' '+
+      'order by gruppa.naim_grup desc';
+
+      Open;
+     end;
+    except on E: EADOError do
+    begin
+      ShowMessage('ошибка'+' '+E.Message);
+    end;
+    end;
+  end;
 
 end;
 

@@ -42,7 +42,7 @@ type
     delgrBtn: TButton;
     degrdataBox: TGroupBox;
     Stud_gr_groupradio: TRadioButton;
-    Studfnd_famCb: TCheckBox;
+    Studfnd_akademCb: TCheckBox;
     Grupp_insGrd: TDBGrid;
     GradeUpDown: TUpDown;
     GradeEdit: TEdit;
@@ -64,6 +64,7 @@ type
     procedure StudResetRadioClick(Sender: TObject);
     procedure Stud_civ_groupradioClick(Sender: TObject);
     procedure Stud_gr_groupradioClick(Sender: TObject);
+    procedure s(Sender: TObject; var Key: Char);
     procedure Stud_fnd_adr_editKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
@@ -171,7 +172,6 @@ if StudResetRadio.Checked then
     '  AND is_akadem = 0 ';
     cb_st:=0;
      Open;
-
      end;
     with Frm_stud do
     for j := 0 to ComponentCount - 1 do
@@ -181,16 +181,8 @@ if StudResetRadio.Checked then
         (Components[j] as TRadioButton).Checked:=False;
       end;
     end;
+     Studfnd_akademCb.Checked:=False;
 end;
-
-
-
-
-
-
-
-
-
 procedure TFrm_stud.StudSelBtnClick(Sender: TObject);
 var
  InputString, p1, p2, p3: string;
@@ -317,6 +309,42 @@ begin
 try
 
    dm.studQuery.SQL.Text:='select'+' '+
+           '  stud.passp_fam + '' '' + stud.passp_naim + ISNULL('' '' + stud.passp_otch, '''') AS fio, ' +
+    '  stud.stud_id, ' +
+    '  stud.b_data, ' +
+    '  CASE stud.pol WHEN 1 THEN ''Мужской'' ELSE ''Женский'' END AS sex, ' +
+    '  stud.civ, ' +
+    '  stud.region, ' +
+    '  stud.gorod, ' +
+    '  stud.adr, ' +
+    '  CASE stud.mesto_jit WHEN 1 THEN ''Съем'' ELSE ''Общежитие'' END AS to_live, ' +
+    '  stud.mod_t, ' +
+    '  stud.dom_t, ' +
+    '  stud.data_pr, ' +
+    '  gruppa.naim_grup, ' +
+    '  stud.st_email ' +
+    'FROM stud ' +
+    'INNER JOIN gruppa ON gruppa.grup_id = stud.grup_id ' +
+    'INNER JOIN spec ON spec.spec_id = gruppa.spec_id ' +
+    'WHERE 1=1 ' +
+    '  AND stud.data_ot IS NULL ' +
+    '  AND is_akadem = 0 and '+ ' '+' '+
+     'stud.adr like'+
+   QuotedStr(Concat(Stud_fnd_adr_edit.Text,#37));
+   dm.StudQuery.close;
+   dm.StudQuery.Open;
+except on E: Exception do
+  begin
+  ShowMessage('wrong situation'+' '+E.Message);
+  end;
+  end;
+end;
+
+procedure TFrm_stud.s(Sender: TObject; var Key: Char);
+begin
+try
+
+   dm.studQuery.SQL.Text:='select'+' '+
        '  stud.passp_fam + '' '' + stud.passp_naim + ISNULL('' '' + stud.passp_otch, '''') AS fio, ' +
     '  stud.stud_id, ' +
     '  stud.b_data, ' +
@@ -347,27 +375,9 @@ except on E: Exception do
   end;
   end;
 
+
 end;
 
-procedure TFrm_grupp.grupp_fnd_editKeyPress(Sender: TObject; var Key: Char);
-begin
-try
-   dm.GruppQuery.SQL.Text:='select'+ ' '+
-   'gruppa.grup_id,  gruppa.naim_grup, gruppa.kurs,spec.spec_maim'+' '+
-      'from gruppa'+' '+
-      'inner join spec on  spec.spec_id=gruppa.spec_id'+' '+
-      'where 1=1'+' '+
-      'and spec_maim like'+
-   QuotedStr(Concat(grupp_fnd_edit.Text,#37));
-   dm.GruppQuery.close;
-   dm.GruppQuery.Open;
-except   on E: EADOError do
-  begin
-  ShowMessage('??????'+' '+E.Message);
-  Exit;
-  end;
-end;
-end;
 
 procedure TFrm_stud.Stud_gr_groupradioClick(Sender: TObject);
 begin
