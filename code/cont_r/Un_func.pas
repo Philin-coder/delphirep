@@ -14,6 +14,7 @@ IniFiles,
 ComCtrls,
 DBCtrls,
 Windows,
+mask,
 ExtCtrls;
 
 function  DateToStr_(Dat : TDate): String;
@@ -206,7 +207,23 @@ begin
       TDateTimePicker(Control).Color := AColor;
       TDateTimePicker(Control).Font.Name := AFontName;
       TDateTimePicker(Control).Font.Size := AFontSize;
-    end;
+    end
+     else if Control  is TDBComboBox then
+          begin
+          TDBComboBox(Control).Width := AWidth;
+          TDBComboBox(Control).Height := AHeight;
+          TDBComboBox(Control).Color := AColor;
+          TDBComboBox(Control).Font.Name := AFontName;
+          TDBComboBox(Control).Font.Size := AFontSize;
+          end
+     else if Control  is TMaskEdit then
+          begin
+          TMaskEdit(Control).Width := AWidth;
+          TMaskEdit(Control).Height := AHeight;
+          TMaskEdit(Control).Color := AColor;
+          TMaskEdit(Control).Font.Name := AFontName;
+          TMaskEdit(Control).Font.Size := AFontSize;
+     end;
   end;
   if AComponent is TWinControl then
   begin

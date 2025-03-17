@@ -22,7 +22,7 @@ object Frm_grupp: TFrm_grupp
     Top = 0
     Width = 1037
     Height = 813
-    ActivePage = SelTab
+    ActivePage = InsTab
     Align = alClient
     TabOrder = 0
     object SelTab: TTabSheet
@@ -186,10 +186,6 @@ object Frm_grupp: TFrm_grupp
     object InsTab: TTabSheet
       Caption = #1042#1074#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1075#1088#1091#1087#1087#1077
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Grupp_inpBox: TGroupBox
         Left = 0
         Top = 0
@@ -198,8 +194,6 @@ object Frm_grupp: TFrm_grupp
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        ExplicitLeft = -3
-        ExplicitTop = 32
         DesignSize = (
           1029
           321)
@@ -304,7 +298,7 @@ object Frm_grupp: TFrm_grupp
           Left = 2
           Top = 15
           Width = 1025
-          Height = 457
+          Height = 392
           Align = alClient
           DataSource = DM.GruppDS
           TabOrder = 0
@@ -348,10 +342,6 @@ object Frm_grupp: TFrm_grupp
     object UpdTab: TTabSheet
       Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1075#1088#1091#1087#1087#1077
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Grupp_upd_inp_Box: TGroupBox
         Left = 0
         Top = 0

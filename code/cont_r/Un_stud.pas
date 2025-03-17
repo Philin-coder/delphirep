@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, StdCtrls, Grids, DBGrids, ExtCtrls, ADODB,DB, DBCtrls;
+  Dialogs, ComCtrls, StdCtrls, Grids, DBGrids, ExtCtrls, ADODB,DB, DBCtrls, Mask;
 
 
 type
@@ -24,11 +24,10 @@ type
     Stud_fnd_adr_edit: TLabeledEdit;
     Stud_civ_groupradio: TRadioButton;
     StudResetRadio: TRadioButton;
-    Grupp_inpBox: TGroupBox;
-    Grupp_naim_g_inp: TLabeledEdit;
-    Grupp_ins_btn_Box: TGroupBox;
-    Grupp_insBtn: TButton;
-    Grupp_DataInsBox: TGroupBox;
+    Stud_inpBox: TGroupBox;
+    Stud_ins_btn_Box: TGroupBox;
+    Stud_insBtn: TButton;
+    Stud_DataInsBox: TGroupBox;
     Grupp_upd_inp_Box: TGroupBox;
     Grupplbl: TStaticText;
     GruppUpdDBL: TDBLookupComboBox;
@@ -43,20 +42,43 @@ type
     degrdataBox: TGroupBox;
     Stud_gr_groupradio: TRadioButton;
     Studfnd_akademCb: TCheckBox;
-    Grupp_insGrd: TDBGrid;
-    GradeUpDown: TUpDown;
-    GradeEdit: TEdit;
-    gradelbl: TStaticText;
-    SpecGrinsDBL: TDBLookupComboBox;
-    SpecGinsLbl: TLabel;
     GruppupdDataGrd: TDBGrid;
     UpDown_upd_grade: TUpDown;
     gr_upd_grader: TEdit;
     grupdLbl: TLabel;
-    TimePanel: TLabel;
     delgrgrid: TDBGrid;
     CbSecondnaim: TCheckBox;
-    DateTimePicker1: TDateTimePicker;
+    Stud_inp_page: TPageControl;
+    Stud_about_page_one: TTabSheet;
+    insstud_bdataclbl: TStaticText;
+    st_bdata_inp: TDateTimePicker;
+    St_sex_inp: TComboBox;
+    Insstudsexlbl: TStaticText;
+    civ_inp: TLabeledEdit;
+    region_inp: TLabeledEdit;
+    gorod_inp: TLabeledEdit;
+    Stud_about_page_two: TTabSheet;
+    adr_inp: TLabeledEdit;
+    fam_inp: TLabeledEdit;
+    naim_inp: TLabeledEdit;
+    otch_inp: TLabeledEdit;
+    if_not: TGroupBox;
+    secondNameCB: TCheckBox;
+    about_stud_page_three: TTabSheet;
+    StToliveLbl: TStaticText;
+    mesto_jit_inp: TComboBox;
+    Stmobphomelbl: TStaticText;
+    Modphone_inp: TMaskEdit;
+    dom_t_lbl: TStaticText;
+    dom_t_inp: TMaskEdit;
+    Stud_about_page_three: TTabSheet;
+    datepr_lbl: TStaticText;
+    datapr_inp: TDateTimePicker;
+    gr_DBL: TDBLookupComboBox;
+    Gr_lbl: TStaticText;
+    Stud_inp_datagrid: TDBGrid;
+    st_email_inp: TLabeledEdit;
+    Is_academ_cb: TCheckBox;
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -133,6 +155,8 @@ begin
   Stud_condEdit.ShowHint:=True;
   Stud_condEdit.Hint:='Примнр Поиска по  ФИО:'+#10#13+'Сухов Федор Иванович';
   cb_st:=0;
+  Modphone_inp.EditMask := '+7 \(999\) 000-00-00;1;_';
+  dom_t_inp.EditMask:='9-99-99;1;_';
 end;
 
 procedure TFrm_stud.Studfnd_akademCbClick(Sender: TObject);

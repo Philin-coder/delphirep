@@ -14,6 +14,7 @@ IniFiles,
 ComCtrls,
 DBCtrls,
 Windows,
+mask,
 ExtCtrls;
 
 function  DateToStr_(Dat : TDate): String;
@@ -32,7 +33,11 @@ procedure UpdateFormProperties(const FormName: string;
  function min3(a, b, c: integer): integer;
  function LeveDist(s, t: string): integer;
  function levi_checker(Str_one,str_two:string):Boolean;
- procedure create_param_from_str_two(str:string);
+function NormalizeStringAndExtractParams2(var InputString: string;
+out p1, p2: string): Boolean;
+function NormalizeStringAndExtractParams3(var InputString: string; out p1, p2, p3:
+string): Boolean;
+function Capitalizer(var str:string):string;
 implementation
 
 
@@ -116,7 +121,7 @@ begin
   begin
     if (Components[d] is TDateTimePicker ) then
     begin
-      (Components[b] as TDateTimePicker).Date:=Now;
+      (Components[d] as TDateTimePicker).Date:=Now;
     end;
 
   end;
@@ -194,7 +199,31 @@ begin
       TDBLookupComboBox(Control).Color := AColor;
       TDBLookupComboBox(Control).Font.Name := AFontName;
       TDBLookupComboBox(Control).Font.Size := AFontSize;
-    end;
+    end
+    else if Control is TDateTimePicker then
+    begin
+      TDateTimePicker(Control).Width := AWidth;
+      TDateTimePicker(Control).Height := AHeight;
+      TDateTimePicker(Control).Color := AColor;
+      TDateTimePicker(Control).Font.Name := AFontName;
+      TDateTimePicker(Control).Font.Size := AFontSize;
+    end
+     else if Control  is TDBComboBox then
+          begin
+          TDBComboBox(Control).Width := AWidth;
+          TDBComboBox(Control).Height := AHeight;
+          TDBComboBox(Control).Color := AColor;
+          TDBComboBox(Control).Font.Name := AFontName;
+          TDBComboBox(Control).Font.Size := AFontSize;
+          end
+     else if Control  is TMaskEdit then
+          begin
+          TMaskEdit(Control).Width := AWidth;
+          TMaskEdit(Control).Height := AHeight;
+          TMaskEdit(Control).Color := AColor;
+          TMaskEdit(Control).Font.Name := AFontName;
+          TMaskEdit(Control).Font.Size := AFontSize;
+          end;
   end;
   if AComponent is TWinControl then
   begin
@@ -298,6 +327,7 @@ begin
       Result := buf[n];
   end;
 end;
+
 function levi_checker(Str_one,str_two:string):Boolean;
 begin
  if (Trim(Str_one) = '') or (Trim(Str_two) = '') then
@@ -311,53 +341,112 @@ function levi_checker(Str_one,str_two:string):Boolean;
     Result := False;
 end;
 
-procedure CreateParamFromStrTwo(var str: string);
-var
+
+function NormalizeStringAndExtractParams2(var InputString: string; out p1, p2: string): Boolean;
+var
   l: TStringList;
   i: Integer;
-  p1, p2: string;
+  NormalizedString: string;
 begin
-  // Проверяем, что строка не пустая
-  if Trim(str) = '' then
+  Result := False;
+  if Trim(InputString) = '' then
   begin
-    MessageDlg('Заполните строку', mtInformation, [mbOK], 0);
-    Beep;
+    MessageDlg('Строка пуста', mtError, [mbOK], 0);
     Exit;
   end;
-
-  // Создаем список для разделения строки
   l := TStringList.Create;
   try
-    l.Delimiter := ' '; // Разделитель - пробел
-    l.StrictDelimiter := True; // Учитывать только указанный разделитель
-    l.DelimitedText := str;
-
-    // Проверяем, что строка содержит хотя бы два слова
-    if l.Count < 2 then
-    begin
-      MessageDlg('Строка должна содержать минимум два слова', mtError, [mbOK], 0);
-      Exit;
-    end;
-
-    // Извлекаем первые два слова
-    p1 := l.Strings[0];
-    p2 := l.Strings[1];
-
-    // Выводим результаты
-    ShowMessage('Первое слово: ' + p1);
-    ShowMessage('Второе слово: ' + p2);
-
-    // Формируем новую строку без лишних пробелов
-    str := '';
+    l.Delimiter := ' ';
+    l.StrictDelimiter := True;
+    l.DelimitedText := InputString;
+    NormalizedString := '';
     for i := 0 to l.Count - 1 do
     begin
       if Trim(l[i]) <> '' then
-        str := str + ' ' + Trim(l[i]);
+        NormalizedString := NormalizedString + ' ' + Trim(l[i]);
     end;
-    str := Trim(str); // Убираем начальный пробел
+    NormalizedString := Trim(NormalizedString);
+    if NormalizedString = '' then
+    begin
+      MessageDlg('Строка должна содержать минимум одно слово', mtError, [mbOK], 0);
+      Exit;
+    end;
+    l.DelimitedText := NormalizedString;
+    if l.Count >= 1 then p1 := l.Strings[0] else p1 := '';
+    if l.Count >= 2 then p2 := l.Strings[1] else p2 := '';
+    InputString := NormalizedString;
+    Result := True;
   finally
-    FreeAndNil(l); // Освобождаем память
+    FreeAndNil(l);
   end;
 end;
+
+function NormalizeStringAndExtractParams3(var InputString: string; out p1, p2, p3:
+string): Boolean;
+var
+  l: TStringList;
+  i: Integer;
+  NormalizedString: string;
+begin
+  Result := False;
+
+
+  if Trim(InputString) = '' then
+  begin
+    MessageDlg('Строка пуста', mtError, [mbOK], 0);
+    Exit;
+  end;
+
+
+  l := TStringList.Create;
+  try
+    l.Delimiter := ' ';
+    l.StrictDelimiter := True;
+    l.DelimitedText := InputString;
+
+
+    NormalizedString := '';
+    for i := 0 to l.Count - 1 do
+    begin
+      if Trim(l[i]) <> '' then
+        NormalizedString := NormalizedString + ' ' + Trim(l[i]);
+    end;
+    NormalizedString := Trim(NormalizedString);
+
+
+    if NormalizedString = '' then
+    begin
+      MessageDlg('Строка должна содержать минимум одно слово', mtError, [mbOK], 0);
+      Exit;
+    end;
+
+
+    l.DelimitedText := NormalizedString;
+    if l.Count >= 1 then p1 := l.Strings[0] else p1 := '';
+    if l.Count >= 2 then p2 := l.Strings[1] else p2 := '';
+    if l.Count >= 3 then p3 := l.Strings[2] else p3 := '';
+
+
+    InputString := NormalizedString;
+    Result := True;
+  finally
+    FreeAndNil(l);
+  end;
+end;
+function Capitalizer(var str:string):string;
+begin
+  if Trim(str)='' then
+  begin
+    Result:='';
+    ShowMessage('Строка пуста');
+    Exit;
+  end
+  else
+  begin
+    str:=TrimLeft(str);
+    Result:=Concat(AnsiUpperCase(str[1]),
+    AnsiLowerCase(Copy(str, 2, length(str))));
+  end;
+end;
+
 end.
-
