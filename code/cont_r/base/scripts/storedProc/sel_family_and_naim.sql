@@ -1,14 +1,14 @@
 USE [cont_r]
 GO
 
-/****** Object:  StoredProcedure [dbo].[sel_family_and_naim]    Script Date: 16.03.2025 19:11:57 ******/
+/****** Object:  StoredProcedure [dbo].[sel_family_and_naim]    Script Date: 17.03.2025 10:42:16 ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
 
-create proc [dbo].[sel_family_and_naim]
+CREATE proc [dbo].[sel_family_and_naim]
 @passp_fam varchar(1000),
 @passp_naim varchar(1000)
 as
@@ -36,6 +36,7 @@ select
   and is_akadem=0
   and  passp_fam=@passp_fam
   and passp_naim=passp_naim
+  and passp_otch is null
   end
 GO
 

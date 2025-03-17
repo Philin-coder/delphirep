@@ -259,7 +259,10 @@ begin
     '  AND is_akadem = 0 ';
     Open;
      end;
-       MessageDlg('Cистема в исходном положении',mtInformation,[mbOK],0 );
+     MessageDlg('Cистема в исходном положении',mtInformation,[mbOK],0 );
+     p1:='';
+     p2:='';
+     p3:='';
   end;
 
   end;
