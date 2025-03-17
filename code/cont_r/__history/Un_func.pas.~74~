@@ -32,7 +32,10 @@ procedure UpdateFormProperties(const FormName: string;
  function min3(a, b, c: integer): integer;
  function LeveDist(s, t: string): integer;
  function levi_checker(Str_one,str_two:string):Boolean;
- procedure CreateParamFromStrTwo(var str: string);
+function NormalizeStringAndExtractParams2(var InputString: string;
+out p1, p2: string): Boolean;
+function NormalizeStringAndExtractParams3(var InputString: string; out p1, p2, p3:
+string): Boolean;
 implementation
 
 
@@ -298,6 +301,7 @@ begin
       Result := buf[n];
   end;
 end;
+
 function levi_checker(Str_one,str_two:string):Boolean;
 begin
  if (Trim(Str_one) = '') or (Trim(Str_two) = '') then
@@ -311,54 +315,96 @@ function levi_checker(Str_one,str_two:string):Boolean;
     Result := False;
 end;
 
-procedure CreateParamFromStrTwo(var str: string);
-var
+
+function NormalizeStringAndExtractParams2(var InputString: string; out p1, p2: string): Boolean;
+var
   l: TStringList;
   i: Integer;
-  p1, p2: string;
+  NormalizedString: string;
 begin
-  // Проверяем, что строка не пустая
-  if Trim(str) = '' then
+  Result := False;
+  if Trim(InputString) = '' then
   begin
-    MessageDlg('Заполните строку', mtInformation, [mbOK], 0);
-    Beep;
+    MessageDlg('Строка пуста', mtError, [mbOK], 0);
     Exit;
   end;
-
-  // Создаем список для разделения строки
   l := TStringList.Create;
   try
-    l.Delimiter := ' '; // Разделитель - пробел
-    l.StrictDelimiter := True; // Учитывать только указанный разделитель
-    l.DelimitedText := str;
-
-    // Проверяем, что строка содержит хотя бы два слова
-    if l.Count < 2 then
-    begin
-      MessageDlg('Строка должна содержать минимум два слова', mtError, [mbOK], 0);
-      Exit;
-    end;
-
-    // Извлекаем первые два слова
-    p1 := l.Strings[0];
-    p2 := l.Strings[1];
-
-    // Выводим результаты
-    ShowMessage('Первое слово: ' + p1);
-    ShowMessage('Второе слово: ' + p2);
-
-    // Формируем новую строку без лишних пробелов
-    str := '';
+    l.Delimiter := ' ';
+    l.StrictDelimiter := True;
+    l.DelimitedText := InputString;
+    NormalizedString := '';
     for i := 0 to l.Count - 1 do
     begin
       if Trim(l[i]) <> '' then
-        str := str + ' ' + Trim(l[i]);
+        NormalizedString := NormalizedString + ' ' + Trim(l[i]);
     end;
-    str := Trim(str); // Убираем начальный пробел
+    NormalizedString := Trim(NormalizedString);
+    if NormalizedString = '' then
+    begin
+      MessageDlg('Строка должна содержать минимум одно слово', mtError, [mbOK], 0);
+      Exit;
+    end;
+    l.DelimitedText := NormalizedString;
+    if l.Count >= 1 then p1 := l.Strings[0] else p1 := '';
+    if l.Count >= 2 then p2 := l.Strings[1] else p2 := '';
+    InputString := NormalizedString;
+    Result := True;
   finally
-    FreeAndNil(l); // Освобождаем память
+    FreeAndNil(l);
   end;
 end;
 
+function NormalizeStringAndExtractParams3(var InputString: string; out p1, p2, p3:
+string): Boolean;
+var
+  l: TStringList;
+  i: Integer;
+  NormalizedString: string;
+begin
+  Result := False;
+
+
+  if Trim(InputString) = '' then
+  begin
+    MessageDlg('Строка пуста', mtError, [mbOK], 0);
+    Exit;
+  end;
+
+
+  l := TStringList.Create;
+  try
+    l.Delimiter := ' ';
+    l.StrictDelimiter := True;
+    l.DelimitedText := InputString;
+
+
+    NormalizedString := '';
+    for i := 0 to l.Count - 1 do
+    begin
+      if Trim(l[i]) <> '' then
+        NormalizedString := NormalizedString + ' ' + Trim(l[i]);
+    end;
+    NormalizedString := Trim(NormalizedString);
+
+
+    if NormalizedString = '' then
+    begin
+      MessageDlg('Строка должна содержать минимум одно слово', mtError, [mbOK], 0);
+      Exit;
+    end;
+
+
+    l.DelimitedText := NormalizedString;
+    if l.Count >= 1 then p1 := l.Strings[0] else p1 := '';
+    if l.Count >= 2 then p2 := l.Strings[1] else p2 := '';
+    if l.Count >= 3 then p3 := l.Strings[2] else p3 := '';
+
+
+    InputString := NormalizedString;
+    Result := True;
+  finally
+    FreeAndNil(l);
+  end;
+end;
 end.
-

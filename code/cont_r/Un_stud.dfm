@@ -21,7 +21,7 @@ object Frm_stud: TFrm_stud
     Top = 0
     Width = 1037
     Height = 813
-    ActivePage = SelTab
+    ActivePage = InsTab
     Align = alClient
     TabOrder = 0
     object SelTab: TTabSheet
