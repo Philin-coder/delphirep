@@ -294,6 +294,7 @@ object Frm_stud: TFrm_stud
               Date = 45733.896571354170000000
               Time = 45733.896571354170000000
               TabOrder = 1
+              OnCloseUp = st_bdata_inpCloseUp
             end
             object St_sex_inp: TComboBox
               Left = 3
@@ -304,6 +305,7 @@ object Frm_stud: TFrm_stud
               ItemHeight = 13
               TabOrder = 2
               OnChange = St_sex_inpChange
+              OnCloseUp = St_sex_inpCloseUp
               Items.Strings = (
                 #1052#1091#1078#1089#1082#1086#1081
                 #1046#1077#1085#1089#1082#1086#1081)
@@ -318,6 +320,7 @@ object Frm_stud: TFrm_stud
               EditLabel.Height = 13
               EditLabel.Caption = #1043#1088#1072#1078#1076#1072#1085#1089#1090#1074#1086
               TabOrder = 3
+              OnExit = civ_inpExit
             end
             object region_inp: TLabeledEdit
               Left = 3
@@ -329,6 +332,7 @@ object Frm_stud: TFrm_stud
               EditLabel.Height = 13
               EditLabel.Caption = #1054#1073#1083#1072#1089#1090#1100
               TabOrder = 4
+              OnExit = region_inpExit
             end
             object gorod_inp: TLabeledEdit
               Left = 3
@@ -340,6 +344,7 @@ object Frm_stud: TFrm_stud
               EditLabel.Height = 13
               EditLabel.Caption = #1043#1086#1088#1086#1076
               TabOrder = 5
+              OnExit = gorod_inpExit
             end
             object sexlbl: TStaticText
               Left = 3
@@ -692,13 +697,16 @@ object Frm_stud: TFrm_stud
               Visible = True
             end>
         end
-        object insProgres: TProgressBar
+        object insProgres_bar: TProgressBar
           Left = 2
           Top = 390
           Width = 1025
           Height = 17
           Align = alBottom
-          Max = 13
+          Min = 1
+          Max = 15
+          Position = 1
+          Step = 1
           TabOrder = 1
         end
       end

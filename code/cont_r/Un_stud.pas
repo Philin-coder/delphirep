@@ -79,7 +79,7 @@ type
     Is_academ_cb: TCheckBox;
     sexlbl: TStaticText;
     tolivelbl: TStaticText;
-    insProgres: TProgressBar;
+    insProgres_bar: TProgressBar;
     Imgsuccess: TImage;
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -98,6 +98,21 @@ type
     procedure secondNameCBClick(Sender: TObject);
     procedure Stud_insBtnClick(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure st_bdata_inpCloseUp(Sender: TObject);
+    procedure St_sex_inpCloseUp(Sender: TObject);
+    procedure civ_inpExit(Sender: TObject);
+    procedure region_inpExit(Sender: TObject);
+    procedure gorod_inpExit(Sender: TObject);
+    procedure adr_inpExit(Sender: TObject);
+    procedure fam_inpExit(Sender: TObject);
+    procedure naim_inpExit(Sender: TObject);
+    procedure otch_inpExit(Sender: TObject);
+    procedure gr_DBLCloseUp(Sender: TObject);
+    procedure mesto_jit_inpCloseUp(Sender: TObject);
+    procedure Modphone_inpExit(Sender: TObject);
+    procedure dom_t_inpExit(Sender: TObject);
+    procedure datapr_inpCloseUp(Sender: TObject);
+    procedure st_email_inpExit(Sender: TObject);
   private
     { Private declarations }
   public
@@ -117,6 +132,11 @@ uses Un_dm, Un_main,Un_func;
 
 
 
+procedure TFrm_stud.adr_inpExit(Sender: TObject);
+begin
+insProgres_bar.StepBy(1);
+end;
+
 procedure TFrm_stud.CbSecondnaimClick(Sender: TObject);
 begin
 if CbSecondnaim.Checked then
@@ -129,6 +149,27 @@ if CbSecondnaim.Checked then
    cb_st:=0;
    Stud_condEdit.Hint:='Примнр Поиска по  ФИО:'+#10#13+'Сухов Федор Иванович';
   end;
+end;
+
+procedure TFrm_stud.civ_inpExit(Sender: TObject);
+begin
+insProgres_bar.StepBy(1);
+end;
+
+procedure TFrm_stud.datapr_inpCloseUp(Sender: TObject);
+begin
+insProgres_bar.StepBy(1);
+
+end;
+
+procedure TFrm_stud.dom_t_inpExit(Sender: TObject);
+begin
+insProgres_bar.StepBy(1);
+end;
+
+procedure TFrm_stud.fam_inpExit(Sender: TObject);
+begin
+insProgres_bar.StepBy(1);
 end;
 
 procedure TFrm_stud.FormActivate(Sender: TObject);
@@ -155,6 +196,7 @@ begin
  end;
  end;
  Imgsuccess.Picture:=nil;
+   insProgres_bar.Position:=1;
 end;
 
 procedure TFrm_stud.FormCreate(Sender: TObject);
@@ -168,6 +210,7 @@ begin
   Modphone_inp.EditMask := '+7 \(999\) 000-00-00;1;_';
   dom_t_inp.EditMask:='9-99-99;1;_';
   Imgsuccess.Picture.LoadFromFile('Galka.jpg');
+  insProgres_bar.Position:=1;
 end;
 
 procedure TFrm_stud.FormKeyUp(Sender: TObject; var Key: Word;
@@ -191,6 +234,20 @@ if (key=118)and  (secondNameCB.Checked=false) then// f7
   naim_inp.Text :=Capitalizer(naim_str,0);
   otch_str:=otch_inp.Text;
   otch_inp.Text:=Capitalizer(otch_str,0);
+  if levi_checker(naim_inp.Text,otch_inp.Text) then
+begin
+  MessageDlg('Имя и отчество не могут совпадать', mtError,[mbCancel],0);
+  naim_inp.Color:=clRed;
+  otch_inp.Color:=clRed;
+  Beep;
+  exit;
+end
+else
+begin
+  naim_inp.Color:=clWindow;
+  otch_inp.Color:=clWindow;
+end;
+
   ShowMessage('Проверка звершена');
   Exit;
   end
@@ -217,14 +274,65 @@ if (key=118)and  (secondNameCB.Checked=false) then// f7
  end;
 
 
+procedure TFrm_stud.gorod_inpExit(Sender: TObject);
+begin
+insProgres_bar.StepBy(1);
+end;
+
+procedure TFrm_stud.gr_DBLCloseUp(Sender: TObject);
+begin
+insProgres_bar.StepBy(1);
+end;
+
 procedure TFrm_stud.Is_academ_cbClick(Sender: TObject);
 begin
   if Is_academ_cb.Checked then akadem_st:=1 else akadem_st:=0;
+  insProgres_bar.StepBy(1);
 end;
 
 procedure TFrm_stud.mesto_jit_inpChange(Sender: TObject);
 begin
   if mesto_jit_inp.ItemIndex=0  then m_jit:=1 else m_jit:=0;
+end;
+
+procedure TFrm_stud.mesto_jit_inpCloseUp(Sender: TObject);
+begin
+     insProgres_bar.StepBy(1);
+end;
+
+procedure TFrm_stud.Modphone_inpExit(Sender: TObject);
+begin
+insProgres_bar.StepBy(1);
+end;
+
+procedure TFrm_stud.naim_inpExit(Sender: TObject);
+begin
+insProgres_bar.StepBy(1);
+end;
+
+procedure TFrm_stud.otch_inpExit(Sender: TObject);
+begin
+insProgres_bar.StepBy(1);
+if levi_checker(naim_inp.Text,otch_inp.Text) then
+begin
+  MessageDlg('Имя и отчество не могут совпадать', mtError,[mbCancel],0);
+    naim_inp.Color:=clRed;
+     otch_inp.Color:=clRed;
+  Beep;
+  exit;
+
+end
+else
+begin
+    naim_inp.Color:=clWindow;
+     otch_inp.Color:=clWindow;
+end;
+
+end;
+
+procedure TFrm_stud.region_inpExit(Sender: TObject);
+begin
+insProgres_bar.StepBy(1);
 end;
 
 procedure TFrm_stud.Studfnd_akademCbClick(Sender: TObject);
@@ -600,7 +708,15 @@ end;
 
 procedure TFrm_stud.secondNameCBClick(Sender: TObject);
 begin
-if secondNameCB.Checked then otch_inp.Enabled:=False else otch_inp.Enabled:=True;
+if secondNameCB.Checked then
+begin
+otch_inp.Enabled:=False;
+insProgres_bar.StepBy(1);
+end else
+begin
+  otch_inp.Enabled:=True;
+end;
+
 end;
 
 procedure TFrm_stud.Stud_gr_groupradioClick(Sender: TObject);
@@ -661,9 +777,34 @@ case otch_inp.Enabled of
 end;//case
 end;
 
+procedure TFrm_stud.st_bdata_inpCloseUp(Sender: TObject);
+begin
+insProgres_bar.StepBy(1);
+end;
+
+procedure TFrm_stud.st_email_inpExit(Sender: TObject);
+begin
+  insProgres_bar.StepBy(1);
+  if (insProgres_bar.Position=15)or (insProgres_bar.Position=14)  then
+begin
+    Imgsuccess.Visible:=True;
+    insProgres_bar.Position:=0;
+end
+else
+begin
+      Imgsuccess.Visible:=False;
+end;
+
+end;
+
 procedure TFrm_stud.St_sex_inpChange(Sender: TObject);
 begin
 if St_sex_inp.ItemIndex=0 then s_val:=1 else s_val:=0;
+end;
+
+procedure TFrm_stud.St_sex_inpCloseUp(Sender: TObject);
+begin
+insProgres_bar.StepBy(1);
 end;
 
 end.

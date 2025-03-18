@@ -294,6 +294,7 @@ object Frm_stud: TFrm_stud
               Date = 45733.896571354170000000
               Time = 45733.896571354170000000
               TabOrder = 1
+              OnCloseUp = st_bdata_inpCloseUp
             end
             object St_sex_inp: TComboBox
               Left = 3
@@ -304,6 +305,7 @@ object Frm_stud: TFrm_stud
               ItemHeight = 13
               TabOrder = 2
               OnChange = St_sex_inpChange
+              OnCloseUp = St_sex_inpCloseUp
               Items.Strings = (
                 #1052#1091#1078#1089#1082#1086#1081
                 #1046#1077#1085#1089#1082#1086#1081)
@@ -318,6 +320,7 @@ object Frm_stud: TFrm_stud
               EditLabel.Height = 13
               EditLabel.Caption = #1043#1088#1072#1078#1076#1072#1085#1089#1090#1074#1086
               TabOrder = 3
+              OnExit = civ_inpExit
             end
             object region_inp: TLabeledEdit
               Left = 3
@@ -329,6 +332,7 @@ object Frm_stud: TFrm_stud
               EditLabel.Height = 13
               EditLabel.Caption = #1054#1073#1083#1072#1089#1090#1100
               TabOrder = 4
+              OnExit = region_inpExit
             end
             object gorod_inp: TLabeledEdit
               Left = 3
@@ -340,6 +344,7 @@ object Frm_stud: TFrm_stud
               EditLabel.Height = 13
               EditLabel.Caption = #1043#1086#1088#1086#1076
               TabOrder = 5
+              OnExit = gorod_inpExit
             end
             object sexlbl: TStaticText
               Left = 3
@@ -367,6 +372,7 @@ object Frm_stud: TFrm_stud
               EditLabel.Height = 13
               EditLabel.Caption = #1040#1076#1088#1077#1089' '#1087#1088#1086#1078#1080#1074#1072#1085#1080#1103
               TabOrder = 0
+              OnExit = adr_inpExit
             end
             object fam_inp: TLabeledEdit
               Left = 3
@@ -378,6 +384,7 @@ object Frm_stud: TFrm_stud
               EditLabel.Height = 13
               EditLabel.Caption = #1060#1072#1084#1080#1083#1080#1103
               TabOrder = 1
+              OnExit = fam_inpExit
             end
             object naim_inp: TLabeledEdit
               Left = 3
@@ -389,6 +396,7 @@ object Frm_stud: TFrm_stud
               EditLabel.Height = 13
               EditLabel.Caption = #1048#1084#1103
               TabOrder = 2
+              OnExit = naim_inpExit
             end
             object otch_inp: TLabeledEdit
               Left = 3
@@ -400,6 +408,7 @@ object Frm_stud: TFrm_stud
               EditLabel.Height = 13
               EditLabel.Caption = #1054#1090#1095#1077#1089#1090#1074#1086
               TabOrder = 3
+              OnExit = otch_inpExit
             end
             object if_not: TGroupBox
               Left = 0
@@ -437,6 +446,7 @@ object Frm_stud: TFrm_stud
               ItemHeight = 13
               TabOrder = 0
               OnChange = mesto_jit_inpChange
+              OnCloseUp = mesto_jit_inpCloseUp
               Items.Strings = (
                 #1057#1098#1077#1084
                 #1042' '#1086#1073#1097#1077#1078#1080#1090#1080#1080)
@@ -458,6 +468,7 @@ object Frm_stud: TFrm_stud
               Height = 21
               Anchors = [akLeft, akRight]
               TabOrder = 2
+              OnExit = Modphone_inpExit
             end
             object dom_t_lbl: TStaticText
               Left = 3
@@ -476,6 +487,7 @@ object Frm_stud: TFrm_stud
               Height = 21
               Anchors = [akLeft, akRight]
               TabOrder = 4
+              OnExit = dom_t_inpExit
             end
             object datepr_lbl: TStaticText
               Left = 3
@@ -496,6 +508,7 @@ object Frm_stud: TFrm_stud
               Date = 45733.896571354170000000
               Time = 45733.896571354170000000
               TabOrder = 6
+              OnCloseUp = datapr_inpCloseUp
             end
             object tolivelbl: TStaticText
               Left = 2
@@ -532,6 +545,7 @@ object Frm_stud: TFrm_stud
               ListField = 'naim_grup'
               ListSource = DM.GruppDS
               TabOrder = 0
+              OnCloseUp = gr_DBLCloseUp
             end
             object Gr_lbl: TStaticText
               Left = 3
@@ -551,6 +565,7 @@ object Frm_stud: TFrm_stud
               EditLabel.Height = 13
               EditLabel.Caption = 'E-mail'
               TabOrder = 2
+              OnExit = st_email_inpExit
             end
             object Is_academ_cb: TCheckBox
               Left = 3
@@ -692,13 +707,16 @@ object Frm_stud: TFrm_stud
               Visible = True
             end>
         end
-        object insProgres: TProgressBar
+        object insProgres_bar: TProgressBar
           Left = 2
           Top = 390
           Width = 1025
           Height = 17
           Align = alBottom
-          Max = 13
+          Min = 1
+          Max = 15
+          Position = 1
+          Step = 1
           TabOrder = 1
         end
       end
