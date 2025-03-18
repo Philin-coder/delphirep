@@ -126,6 +126,7 @@ object Frm_stud: TFrm_stud
               Expanded = False
               FieldName = 'b_data'
               Title.Caption = #1044#1072#1090#1072' '#1088#1086#1078#1076#1077#1085#1080#1103
+              Width = 158
               Visible = True
             end
             item
@@ -249,9 +250,9 @@ object Frm_stud: TFrm_stud
       end
     end
     object InsTab: TTabSheet
-      Caption = #1042#1074#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1075#1088#1091#1087#1087#1077
+      Caption = #1042#1074#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1089#1090#1091#1076#1077#1085#1090#1077
       ImageIndex = 1
-      object Grupp_inpBox: TGroupBox
+      object Stud_inpBox: TGroupBox
         Left = 0
         Top = 0
         Width = 1029
@@ -259,88 +260,312 @@ object Frm_stud: TFrm_stud
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        DesignSize = (
-          1029
-          321)
-        object SpecGinsLbl: TLabel
-          Left = 3
-          Top = 200
-          Width = 78
-          Height = 13
-          Caption = #1057#1087#1077#1094#1080#1072#1083#1100#1085#1086#1089#1090#1100
-        end
-        object TimePanel: TLabel
-          Left = 350
-          Top = 272
-          Width = 3
-          Height = 13
-          Align = alCustom
-          Anchors = [akLeft, akRight]
-        end
-        object Grupp_naim_g_inp: TLabeledEdit
+        object Stud_inp_page: TPageControl
           Left = 2
-          Top = 72
-          Width = 1026
-          Height = 21
-          Anchors = [akLeft, akRight]
-          EditLabel.Width = 115
-          EditLabel.Height = 13
-          EditLabel.Caption = #1042#1074#1086#1076' '#1085#1072#1079#1074#1072#1085#1080#1103' '#1075#1088#1091#1087#1087#1099
+          Top = 15
+          Width = 1025
+          Height = 304
+          ActivePage = Stud_about_page_three
+          Align = alClient
           TabOrder = 0
-        end
-        object GradeUpDown: TUpDown
-          Left = 3
-          Top = 148
-          Width = 17
-          Height = 21
-          AlignButton = udLeft
-          Anchors = [akLeft]
-          Associate = GradeEdit
-          Orientation = udHorizontal
-          TabOrder = 1
-        end
-        object GradeEdit: TEdit
-          Left = 19
-          Top = 148
-          Width = 1069
-          Height = 21
-          Cursor = crVSplit
-          Align = alCustom
-          Anchors = [akLeft, akRight]
-          Color = clWhite
-          TabOrder = 2
-          Text = '0'
-        end
-        object gradelbl: TStaticText
-          Left = 3
-          Top = 125
-          Width = 28
-          Height = 17
-          Align = alCustom
-          Caption = #1050#1091#1088#1089
-          TabOrder = 3
-        end
-        object SpecGrinsDBL: TDBLookupComboBox
-          Left = 3
-          Top = 219
-          Width = 1023
-          Height = 21
-          Align = alCustom
-          Anchors = [akLeft, akRight]
-          KeyField = 'spec_id'
-          ListField = 'spec_maim'
-          ListSource = DM.spectDS
-          TabOrder = 4
+          object Stud_about_page_one: TTabSheet
+            Caption = #1054' '#1089#1090#1091#1076#1077#1085#1090#1077
+            DesignSize = (
+              1017
+              276)
+            object insstud_bdataclbl: TStaticText
+              Left = 3
+              Top = 3
+              Width = 84
+              Height = 17
+              Align = alCustom
+              Anchors = [akLeft, akRight]
+              Caption = #1044#1072#1090#1072' '#1088#1086#1078#1076#1082#1077#1080#1103
+              TabOrder = 0
+            end
+            object st_bdata_inp: TDateTimePicker
+              Left = 3
+              Top = 26
+              Width = 998
+              Height = 21
+              Anchors = [akLeft, akRight]
+              Date = 45733.896571354170000000
+              Time = 45733.896571354170000000
+              TabOrder = 1
+            end
+            object St_sex_inp: TComboBox
+              Left = 3
+              Top = 84
+              Width = 1001
+              Height = 21
+              Anchors = [akLeft, akRight]
+              ItemHeight = 13
+              TabOrder = 2
+              OnChange = St_sex_inpChange
+              Items.Strings = (
+                #1052#1091#1078#1089#1082#1086#1081
+                #1046#1077#1085#1089#1082#1086#1081)
+            end
+            object civ_inp: TLabeledEdit
+              Left = 3
+              Top = 136
+              Width = 998
+              Height = 21
+              Anchors = [akLeft, akRight]
+              EditLabel.Width = 68
+              EditLabel.Height = 13
+              EditLabel.Caption = #1043#1088#1072#1078#1076#1072#1085#1089#1090#1074#1086
+              TabOrder = 3
+            end
+            object region_inp: TLabeledEdit
+              Left = 3
+              Top = 192
+              Width = 998
+              Height = 21
+              Anchors = [akLeft, akRight]
+              EditLabel.Width = 43
+              EditLabel.Height = 13
+              EditLabel.Caption = #1054#1073#1083#1072#1089#1090#1100
+              TabOrder = 4
+            end
+            object gorod_inp: TLabeledEdit
+              Left = 3
+              Top = 236
+              Width = 1011
+              Height = 21
+              Anchors = [akLeft, akRight]
+              EditLabel.Width = 31
+              EditLabel.Height = 13
+              EditLabel.Caption = #1043#1086#1088#1086#1076
+              TabOrder = 5
+            end
+            object sexlbl: TStaticText
+              Left = 3
+              Top = 61
+              Width = 23
+              Height = 17
+              Align = alCustom
+              Caption = #1055#1086#1083
+              TabOrder = 6
+            end
+          end
+          object Stud_about_page_two: TTabSheet
+            Caption = #1054' '#1089#1090#1091#1076#1077#1085#1090#1077
+            ImageIndex = 1
+            DesignSize = (
+              1017
+              276)
+            object adr_inp: TLabeledEdit
+              Left = 0
+              Top = 16
+              Width = 998
+              Height = 21
+              Anchors = [akLeft, akRight]
+              EditLabel.Width = 96
+              EditLabel.Height = 13
+              EditLabel.Caption = #1040#1076#1088#1077#1089' '#1087#1088#1086#1078#1080#1074#1072#1085#1080#1103
+              TabOrder = 0
+            end
+            object fam_inp: TLabeledEdit
+              Left = 3
+              Top = 72
+              Width = 998
+              Height = 21
+              Anchors = [akLeft, akRight]
+              EditLabel.Width = 44
+              EditLabel.Height = 13
+              EditLabel.Caption = #1060#1072#1084#1080#1083#1080#1103
+              TabOrder = 1
+            end
+            object naim_inp: TLabeledEdit
+              Left = 3
+              Top = 136
+              Width = 998
+              Height = 21
+              Anchors = [akLeft, akRight]
+              EditLabel.Width = 19
+              EditLabel.Height = 13
+              EditLabel.Caption = #1048#1084#1103
+              TabOrder = 2
+            end
+            object otch_inp: TLabeledEdit
+              Left = 3
+              Top = 200
+              Width = 998
+              Height = 21
+              Anchors = [akLeft, akRight]
+              EditLabel.Width = 49
+              EditLabel.Height = 13
+              EditLabel.Caption = #1054#1090#1095#1077#1089#1090#1074#1086
+              TabOrder = 3
+            end
+            object if_not: TGroupBox
+              Left = 0
+              Top = 227
+              Width = 1017
+              Height = 49
+              Align = alCustom
+              Anchors = [akLeft, akRight]
+              TabOrder = 4
+              object secondNameCB: TCheckBox
+                Left = 416
+                Top = 16
+                Width = 153
+                Height = 17
+                Align = alCustom
+                Anchors = [akLeft, akRight]
+                Caption = #1054#1090#1095#1077#1089#1090#1074#1072' '#1085#1077#1090
+                TabOrder = 0
+              end
+            end
+          end
+          object about_stud_page_three: TTabSheet
+            Caption = #1054' '#1089#1090#1091#1076#1077#1085#1090#1077
+            ImageIndex = 2
+            DesignSize = (
+              1017
+              276)
+            object mesto_jit_inp: TComboBox
+              Left = 3
+              Top = 26
+              Width = 1011
+              Height = 21
+              Anchors = [akLeft, akRight]
+              ItemHeight = 13
+              TabOrder = 0
+              OnChange = mesto_jit_inpChange
+              Items.Strings = (
+                #1057#1098#1077#1084
+                #1042' '#1086#1073#1097#1077#1078#1080#1090#1080#1080)
+            end
+            object Stmobphomelbl: TStaticText
+              Left = 0
+              Top = 75
+              Width = 113
+              Height = 17
+              Align = alCustom
+              Anchors = [akLeft, akRight]
+              Caption = #1058#1077#1083#1077#1086#1092#1086#1085' '#1084#1086#1073#1080#1083#1100#1085#1099#1081
+              TabOrder = 1
+            end
+            object Modphone_inp: TMaskEdit
+              Left = 2
+              Top = 98
+              Width = 1012
+              Height = 21
+              Anchors = [akLeft, akRight]
+              TabOrder = 2
+            end
+            object dom_t_lbl: TStaticText
+              Left = 3
+              Top = 147
+              Width = 108
+              Height = 17
+              Align = alCustom
+              Anchors = [akLeft, akRight]
+              Caption = #1058#1077#1083#1077#1086#1092#1086#1085' '#1076#1086#1084#1072#1096#1085#1080#1081
+              TabOrder = 3
+            end
+            object dom_t_inp: TMaskEdit
+              Left = 0
+              Top = 170
+              Width = 1012
+              Height = 21
+              Anchors = [akLeft, akRight]
+              TabOrder = 4
+            end
+            object datepr_lbl: TStaticText
+              Left = 3
+              Top = 211
+              Width = 69
+              Height = 17
+              Align = alCustom
+              Anchors = [akLeft, akRight]
+              Caption = #1044#1072#1090#1072' '#1087#1088#1080#1077#1084#1072
+              TabOrder = 5
+            end
+            object datapr_inp: TDateTimePicker
+              Left = 3
+              Top = 234
+              Width = 1011
+              Height = 21
+              Anchors = [akLeft, akRight]
+              Date = 45733.896571354170000000
+              Time = 45733.896571354170000000
+              TabOrder = 6
+            end
+            object tolivelbl: TStaticText
+              Left = 2
+              Top = 3
+              Width = 66
+              Height = 17
+              Align = alCustom
+              Caption = #1087#1088#1086#1078#1080#1074#1072#1085#1080#1077
+              TabOrder = 7
+            end
+          end
+          object Stud_about_page_three: TTabSheet
+            Caption = #1054' '#1089#1090#1091#1076#1077#1085#1090#1077
+            ImageIndex = 3
+            DesignSize = (
+              1017
+              276)
+            object Imgsuccess: TImage
+              Left = 0
+              Top = 147
+              Width = 1017
+              Height = 129
+              Align = alBottom
+              Stretch = True
+              Visible = False
+            end
+            object gr_DBL: TDBLookupComboBox
+              Left = -4
+              Top = 39
+              Width = 993
+              Height = 21
+              Anchors = [akLeft, akRight]
+              TabOrder = 0
+            end
+            object Gr_lbl: TStaticText
+              Left = 3
+              Top = 16
+              Width = 40
+              Height = 17
+              Caption = #1043#1088#1091#1087#1087#1072
+              TabOrder = 1
+            end
+            object st_email_inp: TLabeledEdit
+              Left = 3
+              Top = 120
+              Width = 998
+              Height = 21
+              Anchors = [akLeft, akRight]
+              EditLabel.Width = 28
+              EditLabel.Height = 13
+              EditLabel.Caption = 'E-mail'
+              TabOrder = 2
+            end
+            object Is_academ_cb: TCheckBox
+              Left = 3
+              Top = 66
+              Width = 190
+              Height = 17
+              Caption = #1042' '#1072#1082#1072#1076#1077#1084#1080#1095#1077#1089#1082#1086#1084' '#1086#1090#1087#1091#1089#1082#1077
+              TabOrder = 3
+              OnClick = Is_academ_cbClick
+            end
+          end
         end
       end
-      object Grupp_ins_btn_Box: TGroupBox
+      object Stud_ins_btn_Box: TGroupBox
         Left = 0
         Top = 730
         Width = 1029
         Height = 55
         Align = alBottom
         TabOrder = 1
-        object Grupp_insBtn: TButton
+        object Stud_insBtn: TButton
           Left = 264
           Top = 27
           Width = 305
@@ -350,7 +575,7 @@ object Frm_stud: TFrm_stud
           TabOrder = 0
         end
       end
-      object Grupp_DataInsBox: TGroupBox
+      object Stud_DataInsBox: TGroupBox
         Left = 0
         Top = 321
         Width = 1029
@@ -358,13 +583,13 @@ object Frm_stud: TFrm_stud
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        object Grupp_insGrd: TDBGrid
+        object Stud_inp_datagrid: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
-          Height = 392
+          Height = 375
           Align = alClient
-          DataSource = DM.GruppDS
+          DataSource = DM.StuddS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -374,32 +599,100 @@ object Frm_stud: TFrm_stud
           Columns = <
             item
               Expanded = False
-              FieldName = 'grup_id'
+              FieldName = 'stud_id'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-              Width = 103
+              Width = 60
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'b_data'
+              Title.Caption = #1044#1072#1090#1072' '#1088#1086#1078#1076#1077#1085#1080#1103
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'sex'
+              Title.Caption = #1055#1086#1083
+              Width = 112
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'civ'
+              Title.Caption = #1043#1088#1072#1078#1076#1072#1085#1089#1090#1074#1086
+              Width = 109
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'region'
+              Title.Caption = #1054#1073#1083#1072#1089#1090#1100' '#1087#1088#1086#1078#1080#1074#1072#1085#1080#1103
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'gorod'
+              Title.Caption = #1043#1086#1088#1086#1076
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'adr'
+              Title.Caption = #1040#1076#1088#1077#1089
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'fio'
+              Title.Caption = #1060#1048#1054
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'to_live'
+              Title.Caption = #1046#1080#1074#1077#1090
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'mod_t'
+              Title.Caption = #1052#1086#1073#1080#1083#1100#1085#1099#1081' '#1090#1077#1083#1077#1092#1086#1085
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'dom_t'
+              Title.Caption = #1044#1086#1084#1072#1096#1085#1080#1081
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'data_pr'
+              Title.Caption = #1044#1072#1090#1072' '#1087#1088#1080#1077#1084#1072
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'naim_grup'
-              Title.Caption = #1053#1072#1079#1074#1072#1085#1080#1077
-              Width = 500
+              Title.Caption = #1043#1088#1091#1087#1087#1072
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'kurs'
-              Title.Caption = #1050#1091#1088#1089
-              Width = 100
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'spec_maim'
-              Title.Caption = #1057#1087#1077#1094#1080#1072#1083#1100#1085#1086#1089#1090#1100
-              Width = 500
+              FieldName = 'st_email'
+              Title.Caption = #1045'-mail'
               Visible = True
             end>
+        end
+        object insProgres: TProgressBar
+          Left = 2
+          Top = 390
+          Width = 1025
+          Height = 17
+          Align = alBottom
+          Max = 13
+          TabOrder = 1
         end
       end
     end

@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, StdCtrls, Grids, DBGrids, ExtCtrls, ADODB,DB, DBCtrls;
+  Dialogs, ComCtrls, StdCtrls, Grids, DBGrids, ExtCtrls, ADODB,DB, DBCtrls, Mask,jpeg;
 
 
 type
@@ -24,11 +24,10 @@ type
     Stud_fnd_adr_edit: TLabeledEdit;
     Stud_civ_groupradio: TRadioButton;
     StudResetRadio: TRadioButton;
-    Grupp_inpBox: TGroupBox;
-    Grupp_naim_g_inp: TLabeledEdit;
-    Grupp_ins_btn_Box: TGroupBox;
-    Grupp_insBtn: TButton;
-    Grupp_DataInsBox: TGroupBox;
+    Stud_inpBox: TGroupBox;
+    Stud_ins_btn_Box: TGroupBox;
+    Stud_insBtn: TButton;
+    Stud_DataInsBox: TGroupBox;
     Grupp_upd_inp_Box: TGroupBox;
     Grupplbl: TStaticText;
     GruppUpdDBL: TDBLookupComboBox;
@@ -43,19 +42,45 @@ type
     degrdataBox: TGroupBox;
     Stud_gr_groupradio: TRadioButton;
     Studfnd_akademCb: TCheckBox;
-    Grupp_insGrd: TDBGrid;
-    GradeUpDown: TUpDown;
-    GradeEdit: TEdit;
-    gradelbl: TStaticText;
-    SpecGrinsDBL: TDBLookupComboBox;
-    SpecGinsLbl: TLabel;
     GruppupdDataGrd: TDBGrid;
     UpDown_upd_grade: TUpDown;
     gr_upd_grader: TEdit;
     grupdLbl: TLabel;
-    TimePanel: TLabel;
     delgrgrid: TDBGrid;
     CbSecondnaim: TCheckBox;
+    Stud_inp_page: TPageControl;
+    Stud_about_page_one: TTabSheet;
+    insstud_bdataclbl: TStaticText;
+    st_bdata_inp: TDateTimePicker;
+    St_sex_inp: TComboBox;
+    civ_inp: TLabeledEdit;
+    region_inp: TLabeledEdit;
+    gorod_inp: TLabeledEdit;
+    Stud_about_page_two: TTabSheet;
+    adr_inp: TLabeledEdit;
+    fam_inp: TLabeledEdit;
+    naim_inp: TLabeledEdit;
+    otch_inp: TLabeledEdit;
+    if_not: TGroupBox;
+    secondNameCB: TCheckBox;
+    about_stud_page_three: TTabSheet;
+    mesto_jit_inp: TComboBox;
+    Stmobphomelbl: TStaticText;
+    Modphone_inp: TMaskEdit;
+    dom_t_lbl: TStaticText;
+    dom_t_inp: TMaskEdit;
+    Stud_about_page_three: TTabSheet;
+    datepr_lbl: TStaticText;
+    datapr_inp: TDateTimePicker;
+    gr_DBL: TDBLookupComboBox;
+    Gr_lbl: TStaticText;
+    Stud_inp_datagrid: TDBGrid;
+    st_email_inp: TLabeledEdit;
+    Is_academ_cb: TCheckBox;
+    sexlbl: TStaticText;
+    tolivelbl: TStaticText;
+    insProgres: TProgressBar;
+    Imgsuccess: TImage;
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -67,6 +92,12 @@ type
     procedure s(Sender: TObject; var Key: Char);
     procedure Stud_fnd_adr_editKeyPress(Sender: TObject; var Key: Char);
     procedure Studfnd_akademCbClick(Sender: TObject);
+    procedure St_sex_inpChange(Sender: TObject);
+    procedure mesto_jit_inpChange(Sender: TObject);
+    procedure Is_academ_cbClick(Sender: TObject);
+    procedure secondNameCBClick(Sender: TObject);
+    procedure Stud_insBtnClick(Sender: TObject);
+    procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
   public
@@ -76,6 +107,7 @@ type
 var
   Frm_stud: TFrm_stud;
   var cb_st:Integer;
+  var s_val,m_jit,akadem_st:Integer;
 
 implementation
 
@@ -109,7 +141,7 @@ end;
 procedure TFrm_stud.FormClose(Sender: TObject; var Action: TCloseAction);
   var q:Integer;
 begin
-CbSecondnaim.Checked:=False;
+  CbSecondnaim.Checked:=False;
   stud_condEdit.EditLabel.Caption:='Точное совпадение по условию';
   SaveFormState(Self);
  with dm do
@@ -122,6 +154,7 @@ CbSecondnaim.Checked:=False;
  end;
  end;
  end;
+ Imgsuccess.Picture:=nil;
 end;
 
 procedure TFrm_stud.FormCreate(Sender: TObject);
@@ -132,11 +165,72 @@ begin
   Stud_condEdit.ShowHint:=True;
   Stud_condEdit.Hint:='Примнр Поиска по  ФИО:'+#10#13+'Сухов Федор Иванович';
   cb_st:=0;
+  Modphone_inp.EditMask := '+7 \(999\) 000-00-00;1;_';
+  dom_t_inp.EditMask:='9-99-99;1;_';
+  Imgsuccess.Picture.LoadFromFile('Galka.jpg');
+end;
+
+procedure TFrm_stud.FormKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+  var
+  civ_str,region_str,gorod_str,adr_str,fam_str,naim_str, otch_str:String;
+begin
+if (key=118)and  (CbSecondnaim.Checked=false) then// f7
+ begin
+  civ_str :=civ_inp.Text;
+  civ_inp.Text:=Capitalizer(civ_str);
+  region_str :=region_inp.Text;
+  region_inp.Text:=Capitalizer(region_str);
+  gorod_str :=gorod_inp.Text;
+  gorod_inp.Text:=Capitalizer(gorod_str);
+  adr_str :=adr_inp.Text;
+  adr_inp.Text :=Capitalizer(adr_str);
+  fam_str:=fam_inp.Text;
+  fam_inp.Text :=Capitalizer(fam_str);
+  naim_str:=naim_inp.Text;
+  naim_inp.Text :=Capitalizer(naim_str);
+  otch_str:=otch_inp.Text;
+  otch_inp.Text:=Capitalizer(otch_str);
+  ShowMessage('проверка зверщена');
+  Exit;
+  end
+  else  if (key=118)and (CbSecondnaim.Checked=True) then
+  begin
+     civ_str :=civ_inp.Text;
+  civ_inp.Text:=Capitalizer(civ_str);
+  region_str :=region_inp.Text;
+  region_inp.Text:=Capitalizer(region_str);
+  gorod_str :=gorod_inp.Text;
+  gorod_inp.Text:=Capitalizer(gorod_str);
+  adr_str :=adr_inp.Text;
+  adr_inp.Text :=Capitalizer(adr_str);
+  fam_str:=fam_inp.Text;
+  fam_inp.Text :=Capitalizer(fam_str);
+  naim_str:=naim_inp.Text;
+  naim_inp.Text :=Capitalizer(naim_str);
+  ShowMessage('проверка зверщена');
+  Exit;
+  end;
+
+ end;
+//ShowMessage('нажата кдавиша проверки');
+end;
+
+procedure TFrm_stud.Is_academ_cbClick(Sender: TObject);
+begin
+  if Is_academ_cb.Checked then akadem_st:=1 else akadem_st:=0;
+end;
+
+procedure TFrm_stud.mesto_jit_inpChange(Sender: TObject);
+begin
+  if mesto_jit_inp.ItemIndex=0  then m_jit:=1 else m_jit:=0;
 end;
 
 procedure TFrm_stud.Studfnd_akademCbClick(Sender: TObject);
   var
-  sel_akaddem: TADOStoredProc;
+    sel_akaddem: TADOStoredProc;
+    sel_all:TADOStoredProc;
+
 begin
 case Studfnd_akademCb.Checked of
 True:
@@ -164,11 +258,32 @@ begin
   finally
     FreeAndNil(sel_akaddem);
   end;
-
 end;
   false:
   begin
-    ShowMessage('Дописать');
+      sel_all := nil;
+  try
+    sel_all := TADOStoredProc.Create(nil);
+    try
+      with sel_all do
+      begin
+        Connection := DM.Connection;
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+        ProcedureName := 'sel_all';
+        Open;
+        DM.StudQuery.Close;
+        DM.StudQuery.Recordset := sel_all.Recordset;
+      end;
+    except
+      on E: EADOError do
+        ShowMessage('Ошибка: ' + E.Message);
+      on E: Exception do
+        ShowMessage('Ошибка: ' + E.Message);
+    end;
+  finally
+    FreeAndNil(sel_all);
+  end;
   end;
 end;//case
 end;
@@ -482,6 +597,11 @@ except on E: Exception do
 end;
 
 
+procedure TFrm_stud.secondNameCBClick(Sender: TObject);
+begin
+if secondNameCB.Checked then otch_inp.Enabled:=False else otch_inp.Enabled:=True;
+end;
+
 procedure TFrm_stud.Stud_gr_groupradioClick(Sender: TObject);
 begin
 if stud_gr_groupradio.Checked=true then
@@ -524,6 +644,25 @@ if stud_gr_groupradio.Checked=true then
     end;
   end;
 
+end;
+
+procedure TFrm_stud.Stud_insBtnClick(Sender: TObject);
+begin
+case otch_inp.Enabled of
+  True:
+  begin
+    ShowMessage('Запущен Normal');
+  end;
+  False:
+  begin
+    ShowMessage('Запущен Restrict');
+  end;
+end;//case
+end;
+
+procedure TFrm_stud.St_sex_inpChange(Sender: TObject);
+begin
+if St_sex_inp.ItemIndex=0 then s_val:=1 else s_val:=0;
 end;
 
 end.

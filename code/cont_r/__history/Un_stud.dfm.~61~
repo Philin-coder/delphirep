@@ -260,13 +260,12 @@ object Frm_stud: TFrm_stud
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        ExplicitTop = 9
         object Stud_inp_page: TPageControl
           Left = 2
           Top = 15
           Width = 1025
           Height = 304
-          ActivePage = Stud_about_page_one
+          ActivePage = Stud_about_page_two
           Align = alClient
           TabOrder = 0
           object Stud_about_page_one: TTabSheet
@@ -295,48 +294,39 @@ object Frm_stud: TFrm_stud
               TabOrder = 1
             end
             object St_sex_inp: TComboBox
-              Left = 0
-              Top = 76
+              Left = 3
+              Top = 84
               Width = 1001
               Height = 21
               Anchors = [akLeft, akRight]
               ItemHeight = 13
               TabOrder = 2
+              OnChange = St_sex_inpChange
               Items.Strings = (
                 #1052#1091#1078#1089#1082#1086#1081
                 #1046#1077#1085#1089#1082#1086#1081)
             end
-            object Insstudsexlbl: TStaticText
-              Left = 3
-              Top = 53
-              Width = 54
-              Height = 17
-              Align = alCustom
-              Anchors = [akLeft, akRight]
-              Caption = #1055#1086#1083
-              TabOrder = 3
-            end
             object civ_inp: TLabeledEdit
               Left = 3
-              Top = 120
+              Top = 136
               Width = 998
               Height = 21
               Anchors = [akLeft, akRight]
               EditLabel.Width = 68
               EditLabel.Height = 13
               EditLabel.Caption = #1043#1088#1072#1078#1076#1072#1085#1089#1090#1074#1086
-              TabOrder = 4
+              TabOrder = 3
             end
             object region_inp: TLabeledEdit
               Left = 3
-              Top = 184
+              Top = 192
               Width = 998
               Height = 21
               Anchors = [akLeft, akRight]
               EditLabel.Width = 43
               EditLabel.Height = 13
               EditLabel.Caption = #1054#1073#1083#1072#1089#1090#1100
-              TabOrder = 5
+              TabOrder = 4
             end
             object gorod_inp: TLabeledEdit
               Left = 3
@@ -347,6 +337,15 @@ object Frm_stud: TFrm_stud
               EditLabel.Width = 31
               EditLabel.Height = 13
               EditLabel.Caption = #1043#1086#1088#1086#1076
+              TabOrder = 5
+            end
+            object sexlbl: TStaticText
+              Left = 3
+              Top = 61
+              Width = 23
+              Height = 17
+              Align = alCustom
+              Caption = #1055#1086#1083
               TabOrder = 6
             end
           end
@@ -417,26 +416,16 @@ object Frm_stud: TFrm_stud
                 Anchors = [akLeft, akRight]
                 Caption = #1054#1090#1095#1077#1089#1090#1074#1072' '#1085#1077#1090
                 TabOrder = 0
+                OnClick = secondNameCBClick
               end
             end
           end
           object about_stud_page_three: TTabSheet
             Caption = #1054' '#1089#1090#1091#1076#1077#1085#1090#1077
             ImageIndex = 2
-            ExplicitLeft = 0
             DesignSize = (
               1017
               276)
-            object StToliveLbl: TStaticText
-              Left = 3
-              Top = 3
-              Width = 82
-              Height = 17
-              Align = alCustom
-              Anchors = [akLeft, akRight]
-              Caption = #1043#1076#1077' '#1087#1088#1086#1078#1090#1074#1072#1077#1090
-              TabOrder = 0
-            end
             object mesto_jit_inp: TComboBox
               Left = 3
               Top = 26
@@ -444,7 +433,8 @@ object Frm_stud: TFrm_stud
               Height = 21
               Anchors = [akLeft, akRight]
               ItemHeight = 13
-              TabOrder = 1
+              TabOrder = 0
+              OnChange = mesto_jit_inpChange
               Items.Strings = (
                 #1057#1098#1077#1084
                 #1042' '#1086#1073#1097#1077#1078#1080#1090#1080#1080)
@@ -457,7 +447,7 @@ object Frm_stud: TFrm_stud
               Align = alCustom
               Anchors = [akLeft, akRight]
               Caption = #1058#1077#1083#1077#1086#1092#1086#1085' '#1084#1086#1073#1080#1083#1100#1085#1099#1081
-              TabOrder = 2
+              TabOrder = 1
             end
             object Modphone_inp: TMaskEdit
               Left = 2
@@ -465,7 +455,7 @@ object Frm_stud: TFrm_stud
               Width = 1012
               Height = 21
               Anchors = [akLeft, akRight]
-              TabOrder = 3
+              TabOrder = 2
             end
             object dom_t_lbl: TStaticText
               Left = 3
@@ -475,7 +465,7 @@ object Frm_stud: TFrm_stud
               Align = alCustom
               Anchors = [akLeft, akRight]
               Caption = #1058#1077#1083#1077#1086#1092#1086#1085' '#1076#1086#1084#1072#1096#1085#1080#1081
-              TabOrder = 4
+              TabOrder = 3
             end
             object dom_t_inp: TMaskEdit
               Left = 0
@@ -483,7 +473,7 @@ object Frm_stud: TFrm_stud
               Width = 1012
               Height = 21
               Anchors = [akLeft, akRight]
-              TabOrder = 5
+              TabOrder = 4
             end
             object datepr_lbl: TStaticText
               Left = 3
@@ -493,7 +483,7 @@ object Frm_stud: TFrm_stud
               Align = alCustom
               Anchors = [akLeft, akRight]
               Caption = #1044#1072#1090#1072' '#1087#1088#1080#1077#1084#1072
-              TabOrder = 6
+              TabOrder = 5
             end
             object datapr_inp: TDateTimePicker
               Left = 3
@@ -503,22 +493,42 @@ object Frm_stud: TFrm_stud
               Anchors = [akLeft, akRight]
               Date = 45733.896571354170000000
               Time = 45733.896571354170000000
+              TabOrder = 6
+            end
+            object tolivelbl: TStaticText
+              Left = 2
+              Top = 3
+              Width = 66
+              Height = 17
+              Align = alCustom
+              Caption = #1087#1088#1086#1078#1080#1074#1072#1085#1080#1077
               TabOrder = 7
             end
           end
           object Stud_about_page_three: TTabSheet
             Caption = #1054' '#1089#1090#1091#1076#1077#1085#1090#1077
             ImageIndex = 3
-            ExplicitLeft = 12
             DesignSize = (
               1017
               276)
+            object Imgsuccess: TImage
+              Left = 0
+              Top = 147
+              Width = 1017
+              Height = 129
+              Align = alBottom
+              Stretch = True
+              Visible = False
+            end
             object gr_DBL: TDBLookupComboBox
               Left = -4
               Top = 39
               Width = 993
               Height = 21
               Anchors = [akLeft, akRight]
+              KeyField = 'naim_grup'
+              ListField = 'naim_grup'
+              ListSource = DM.GruppDS
               TabOrder = 0
             end
             object Gr_lbl: TStaticText
@@ -543,10 +553,11 @@ object Frm_stud: TFrm_stud
             object Is_academ_cb: TCheckBox
               Left = 3
               Top = 66
-              Width = 97
+              Width = 190
               Height = 17
               Caption = #1042' '#1072#1082#1072#1076#1077#1084#1080#1095#1077#1089#1082#1086#1084' '#1086#1090#1087#1091#1089#1082#1077
               TabOrder = 3
+              OnClick = Is_academ_cbClick
             end
           end
         end
@@ -580,7 +591,7 @@ object Frm_stud: TFrm_stud
           Left = 2
           Top = 15
           Width = 1025
-          Height = 392
+          Height = 375
           Align = alClient
           DataSource = DM.StuddS
           TabOrder = 0
@@ -677,6 +688,15 @@ object Frm_stud: TFrm_stud
               Title.Caption = #1045'-mail'
               Visible = True
             end>
+        end
+        object insProgres: TProgressBar
+          Left = 2
+          Top = 390
+          Width = 1025
+          Height = 17
+          Align = alBottom
+          Max = 13
+          TabOrder = 1
         end
       end
     end

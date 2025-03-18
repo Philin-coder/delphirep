@@ -10,10 +10,12 @@ object Frm_stud: TFrm_stud
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
+  KeyPreview = True
   OldCreateOrder = False
   OnActivate = FormActivate
   OnClose = FormClose
   OnCreate = FormCreate
+  OnKeyUp = FormKeyUp
   PixelsPerInch = 96
   TextHeight = 13
   object StudPage: TPageControl
@@ -260,13 +262,12 @@ object Frm_stud: TFrm_stud
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        ExplicitTop = 9
         object Stud_inp_page: TPageControl
           Left = 2
           Top = 15
           Width = 1025
           Height = 304
-          ActivePage = Stud_about_page_one
+          ActivePage = Stud_about_page_two
           Align = alClient
           TabOrder = 0
           object Stud_about_page_one: TTabSheet
@@ -302,6 +303,7 @@ object Frm_stud: TFrm_stud
               Anchors = [akLeft, akRight]
               ItemHeight = 13
               TabOrder = 2
+              OnChange = St_sex_inpChange
               Items.Strings = (
                 #1052#1091#1078#1089#1082#1086#1081
                 #1046#1077#1085#1089#1082#1086#1081)
@@ -416,13 +418,13 @@ object Frm_stud: TFrm_stud
                 Anchors = [akLeft, akRight]
                 Caption = #1054#1090#1095#1077#1089#1090#1074#1072' '#1085#1077#1090
                 TabOrder = 0
+                OnClick = secondNameCBClick
               end
             end
           end
           object about_stud_page_three: TTabSheet
             Caption = #1054' '#1089#1090#1091#1076#1077#1085#1090#1077
             ImageIndex = 2
-            ExplicitLeft = 0
             DesignSize = (
               1017
               276)
@@ -434,6 +436,7 @@ object Frm_stud: TFrm_stud
               Anchors = [akLeft, akRight]
               ItemHeight = 13
               TabOrder = 0
+              OnChange = mesto_jit_inpChange
               Items.Strings = (
                 #1057#1098#1077#1084
                 #1042' '#1086#1073#1097#1077#1078#1080#1090#1080#1080)
@@ -507,7 +510,6 @@ object Frm_stud: TFrm_stud
           object Stud_about_page_three: TTabSheet
             Caption = #1054' '#1089#1090#1091#1076#1077#1085#1090#1077
             ImageIndex = 3
-            ExplicitLeft = 12
             DesignSize = (
               1017
               276)
@@ -526,6 +528,9 @@ object Frm_stud: TFrm_stud
               Width = 993
               Height = 21
               Anchors = [akLeft, akRight]
+              KeyField = 'naim_grup'
+              ListField = 'naim_grup'
+              ListSource = DM.GruppDS
               TabOrder = 0
             end
             object Gr_lbl: TStaticText
@@ -554,6 +559,7 @@ object Frm_stud: TFrm_stud
               Height = 17
               Caption = #1042' '#1072#1082#1072#1076#1077#1084#1080#1095#1077#1089#1082#1086#1084' '#1086#1090#1087#1091#1089#1082#1077
               TabOrder = 3
+              OnClick = Is_academ_cbClick
             end
           end
         end
@@ -573,6 +579,7 @@ object Frm_stud: TFrm_stud
           Align = alCustom
           Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
           TabOrder = 0
+          OnClick = Stud_insBtnClick
         end
       end
       object Stud_DataInsBox: TGroupBox
@@ -693,9 +700,6 @@ object Frm_stud: TFrm_stud
           Align = alBottom
           Max = 13
           TabOrder = 1
-          ExplicitLeft = 504
-          ExplicitTop = 8
-          ExplicitWidth = 150
         end
       end
     end

@@ -92,6 +92,12 @@ type
     procedure s(Sender: TObject; var Key: Char);
     procedure Stud_fnd_adr_editKeyPress(Sender: TObject; var Key: Char);
     procedure Studfnd_akademCbClick(Sender: TObject);
+    procedure St_sex_inpChange(Sender: TObject);
+    procedure mesto_jit_inpChange(Sender: TObject);
+    procedure Is_academ_cbClick(Sender: TObject);
+    procedure secondNameCBClick(Sender: TObject);
+    procedure Stud_insBtnClick(Sender: TObject);
+    procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
   public
@@ -101,6 +107,7 @@ type
 var
   Frm_stud: TFrm_stud;
   var cb_st:Integer;
+  var s_val,m_jit,akadem_st:Integer;
 
 implementation
 
@@ -161,6 +168,61 @@ begin
   Modphone_inp.EditMask := '+7 \(999\) 000-00-00;1;_';
   dom_t_inp.EditMask:='9-99-99;1;_';
   Imgsuccess.Picture.LoadFromFile('Galka.jpg');
+end;
+
+procedure TFrm_stud.FormKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+  var
+  civ_str,region_str,gorod_str,adr_str,fam_str,naim_str, otch_str:String;
+begin
+if (key=118)and  (CbSecondnaim.Checked=false) then// f7
+ begin
+  civ_str :=civ_inp.Text;
+  civ_inp.Text:=Capitalizer(civ_str);
+  region_str :=region_inp.Text;
+  region_inp.Text:=Capitalizer(region_str);
+  gorod_str :=gorod_inp.Text;
+  gorod_inp.Text:=Capitalizer(gorod_str);
+  adr_str :=adr_inp.Text;
+  adr_inp.Text :=Capitalizer(adr_str);
+  fam_str:=fam_inp.Text;
+  fam_inp.Text :=Capitalizer(fam_str);
+  naim_str:=naim_inp.Text;
+  naim_inp.Text :=Capitalizer(naim_str);
+  otch_str:=otch_inp.Text;
+  otch_inp.Text:=Capitalizer(otch_str);
+  ShowMessage('проверка зверщена');
+  Exit;
+  end
+  else  if (key=118)and (CbSecondnaim.Checked=True) then
+  begin
+  civ_str :=civ_inp.Text;
+  civ_inp.Text:=Capitalizer(civ_str);
+  region_str :=region_inp.Text;
+  region_inp.Text:=Capitalizer(region_str);
+  gorod_str :=gorod_inp.Text;
+  gorod_inp.Text:=Capitalizer(gorod_str);
+  adr_str :=adr_inp.Text;
+  adr_inp.Text :=Capitalizer(adr_str);
+  fam_str:=fam_inp.Text;
+  fam_inp.Text :=Capitalizer(fam_str);
+  naim_str:=naim_inp.Text;
+  naim_inp.Text :=Capitalizer(naim_str);
+  ShowMessage('проверка зверщена');
+  Exit;
+  end;
+
+ end;
+
+
+procedure TFrm_stud.Is_academ_cbClick(Sender: TObject);
+begin
+  if Is_academ_cb.Checked then akadem_st:=1 else akadem_st:=0;
+end;
+
+procedure TFrm_stud.mesto_jit_inpChange(Sender: TObject);
+begin
+  if mesto_jit_inp.ItemIndex=0  then m_jit:=1 else m_jit:=0;
 end;
 
 procedure TFrm_stud.Studfnd_akademCbClick(Sender: TObject);
@@ -534,6 +596,11 @@ except on E: Exception do
 end;
 
 
+procedure TFrm_stud.secondNameCBClick(Sender: TObject);
+begin
+if secondNameCB.Checked then otch_inp.Enabled:=False else otch_inp.Enabled:=True;
+end;
+
 procedure TFrm_stud.Stud_gr_groupradioClick(Sender: TObject);
 begin
 if stud_gr_groupradio.Checked=true then
@@ -576,6 +643,25 @@ if stud_gr_groupradio.Checked=true then
     end;
   end;
 
+end;
+
+procedure TFrm_stud.Stud_insBtnClick(Sender: TObject);
+begin
+case otch_inp.Enabled of
+  True:
+  begin
+    ShowMessage('Запущен Normal');
+  end;
+  False:
+  begin
+    ShowMessage('Запущен Restrict');
+  end;
+end;//case
+end;
+
+procedure TFrm_stud.St_sex_inpChange(Sender: TObject);
+begin
+if St_sex_inp.ItemIndex=0 then s_val:=1 else s_val:=0;
 end;
 
 end.
