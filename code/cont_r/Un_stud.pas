@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, StdCtrls, Grids, DBGrids, ExtCtrls, ADODB,DB, DBCtrls, Mask;
+  Dialogs, ComCtrls, StdCtrls, Grids, DBGrids, ExtCtrls, ADODB,DB, DBCtrls, Mask,jpeg;
 
 
 type
@@ -53,7 +53,6 @@ type
     insstud_bdataclbl: TStaticText;
     st_bdata_inp: TDateTimePicker;
     St_sex_inp: TComboBox;
-    Insstudsexlbl: TStaticText;
     civ_inp: TLabeledEdit;
     region_inp: TLabeledEdit;
     gorod_inp: TLabeledEdit;
@@ -65,7 +64,6 @@ type
     if_not: TGroupBox;
     secondNameCB: TCheckBox;
     about_stud_page_three: TTabSheet;
-    StToliveLbl: TStaticText;
     mesto_jit_inp: TComboBox;
     Stmobphomelbl: TStaticText;
     Modphone_inp: TMaskEdit;
@@ -79,6 +77,10 @@ type
     Stud_inp_datagrid: TDBGrid;
     st_email_inp: TLabeledEdit;
     Is_academ_cb: TCheckBox;
+    sexlbl: TStaticText;
+    tolivelbl: TStaticText;
+    insProgres: TProgressBar;
+    Imgsuccess: TImage;
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -132,7 +134,7 @@ end;
 procedure TFrm_stud.FormClose(Sender: TObject; var Action: TCloseAction);
   var q:Integer;
 begin
-CbSecondnaim.Checked:=False;
+  CbSecondnaim.Checked:=False;
   stud_condEdit.EditLabel.Caption:='Точное совпадение по условию';
   SaveFormState(Self);
  with dm do
@@ -145,6 +147,7 @@ CbSecondnaim.Checked:=False;
  end;
  end;
  end;
+ Imgsuccess.Picture:=nil;
 end;
 
 procedure TFrm_stud.FormCreate(Sender: TObject);
@@ -157,6 +160,7 @@ begin
   cb_st:=0;
   Modphone_inp.EditMask := '+7 \(999\) 000-00-00;1;_';
   dom_t_inp.EditMask:='9-99-99;1;_';
+  Imgsuccess.Picture.LoadFromFile('Galka.jpg');
 end;
 
 procedure TFrm_stud.Studfnd_akademCbClick(Sender: TObject);

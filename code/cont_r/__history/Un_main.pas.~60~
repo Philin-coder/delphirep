@@ -51,7 +51,6 @@ begin
  SaveFormState(Self);
  Action := caFree;
  mainImage.Picture:=nil;
-
 end;
 
 procedure TFrm_main.FormCreate(Sender: TObject);
