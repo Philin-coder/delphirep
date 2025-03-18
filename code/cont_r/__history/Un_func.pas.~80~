@@ -389,8 +389,6 @@ end;
   NormalizedString: string;
 begin
   Result := False;
-
-
   if Trim(InputString) = '' then
   begin
     MessageDlg('Строка пуста', mtError, [mbOK], 0);

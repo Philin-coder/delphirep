@@ -175,40 +175,42 @@ procedure TFrm_stud.FormKeyUp(Sender: TObject; var Key: Word;
   var
   civ_str,region_str,gorod_str,adr_str,fam_str,naim_str, otch_str:String;
 begin
-if (key=118)and  (CbSecondnaim.Checked=false) then// f7
+if (key=118)and  (secondNameCB.Checked=false) then// f7
  begin
-  civ_str :=civ_inp.Text;
-  civ_inp.Text:=Capitalizer(civ_str);
-  region_str :=region_inp.Text;
-  region_inp.Text:=Capitalizer(region_str);
+    civ_str :=civ_inp.Text;
+    civ_inp.Text:=Capitalizer(civ_str,0);
+    region_str :=region_inp.Text;
+  region_inp.Text:=Capitalizer(region_str,0);
   gorod_str :=gorod_inp.Text;
-  gorod_inp.Text:=Capitalizer(gorod_str);
-  adr_str :=adr_inp.Text;
-  adr_inp.Text :=Capitalizer(adr_str);
+  gorod_inp.Text:=Capitalizer(gorod_str,0);
+    adr_str :=adr_inp.Text;
+  adr_inp.Text :=Capitalizer(adr_str,0);
   fam_str:=fam_inp.Text;
-  fam_inp.Text :=Capitalizer(fam_str);
+  fam_inp.Text :=Capitalizer(fam_str,0);
   naim_str:=naim_inp.Text;
-  naim_inp.Text :=Capitalizer(naim_str);
+  naim_inp.Text :=Capitalizer(naim_str,0);
   otch_str:=otch_inp.Text;
-  otch_inp.Text:=Capitalizer(otch_str);
-  ShowMessage('проверка зверщена');
+  otch_inp.Text:=Capitalizer(otch_str,0);
+  ShowMessage('Проверка звершена');
   Exit;
   end
-  else  if (key=118)and (CbSecondnaim.Checked=True) then
+  else  if (key=118)and (secondNameCB.Checked=True) then
   begin
   civ_str :=civ_inp.Text;
-  civ_inp.Text:=Capitalizer(civ_str);
+  civ_inp.Text:=Capitalizer(civ_str,0);
   region_str :=region_inp.Text;
-  region_inp.Text:=Capitalizer(region_str);
+  region_inp.Text:=Capitalizer(region_str,0);
   gorod_str :=gorod_inp.Text;
-  gorod_inp.Text:=Capitalizer(gorod_str);
+  gorod_inp.Text:=Capitalizer(gorod_str,0);
   adr_str :=adr_inp.Text;
-  adr_inp.Text :=Capitalizer(adr_str);
+  adr_inp.Text :=Capitalizer(adr_str,0);
   fam_str:=fam_inp.Text;
-  fam_inp.Text :=Capitalizer(fam_str);
+  fam_inp.Text :=Capitalizer(fam_str,0);
   naim_str:=naim_inp.Text;
-  naim_inp.Text :=Capitalizer(naim_str);
-  ShowMessage('проверка зверщена');
+  naim_inp.Text :=Capitalizer(naim_str,0);
+  otch_str:=otch_inp.Text;
+  otch_inp.Text:=Capitalizer(otch_str,1);
+  ShowMessage('Проверка зверщена'+#10#13+'Некоторые строки могут быть пусты');
   Exit;
   end;
 

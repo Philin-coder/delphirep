@@ -37,7 +37,7 @@ procedure UpdateFormProperties(const FormName: string;
 out p1, p2: string): Boolean;
 function NormalizeStringAndExtractParams3(var InputString: string; out p1, p2, p3:
 string): Boolean;
-function Capitalizer(var str:string):string;
+function Capitalizer(str:string; mode:integer=0):string;
 implementation
 
 
@@ -431,20 +431,30 @@ begin
     FreeAndNil(l);
   end;
 end;
-function Capitalizer(var str:string):string;
+function Capitalizer(str:string; mode:integer=0):string;
 begin
-  if Trim(str)='' then
+  if (Trim(str)='')and(mode=0) then
   begin
     Result:='';
     ShowMessage('Строка пуста');
     Exit;
-  end
-  else
-  begin
+  end;
+
+
+
+  case mode of
+   0:
+   begin
     str:=TrimLeft(str);
     Result:=Concat(AnsiUpperCase(str[1]),
     AnsiLowerCase(Copy(str, 2, length(str))));
-  end;
+   end;
+   1:
+   begin
+     Result :=str;
+     Exit;
+   end;
+  end;// case
 end;
 
 end.

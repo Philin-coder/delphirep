@@ -37,7 +37,7 @@ procedure UpdateFormProperties(const FormName: string;
 out p1, p2: string): Boolean;
 function NormalizeStringAndExtractParams3(var InputString: string; out p1, p2, p3:
 string): Boolean;
-function Capitalizer(var str:string):string;
+function Capitalizer(var str:string;var mode:integer):string;
 implementation
 
 
@@ -223,7 +223,7 @@ begin
           TMaskEdit(Control).Color := AColor;
           TMaskEdit(Control).Font.Name := AFontName;
           TMaskEdit(Control).Font.Size := AFontSize;
-          end;
+     end;
   end;
   if AComponent is TWinControl then
   begin
@@ -389,8 +389,6 @@ end;
   NormalizedString: string;
 begin
   Result := False;
-
-
   if Trim(InputString) = '' then
   begin
     MessageDlg('Строка пуста', mtError, [mbOK], 0);
@@ -433,20 +431,27 @@ begin
     FreeAndNil(l);
   end;
 end;
-function Capitalizer(var str:string):string;
+function Capitalizer(var str:string; var mode:integer):string;
 begin
   if Trim(str)='' then
   begin
     Result:='';
     ShowMessage('Строка пуста');
     Exit;
-  end
-  else
-  begin
+  end;
+  case mode of
+   0:
+   begin
     str:=TrimLeft(str);
     Result:=Concat(AnsiUpperCase(str[1]),
     AnsiLowerCase(Copy(str, 2, length(str))));
-  end;
+   end;
+   1:
+   begin
+     Result :=str;
+     Exit;
+   end;
+  end;// case
 end;
 
 end.
