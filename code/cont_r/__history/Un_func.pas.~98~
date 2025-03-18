@@ -37,7 +37,8 @@ procedure UpdateFormProperties(const FormName: string;
 out p1, p2: string): Boolean;
 function NormalizeStringAndExtractParams3(var InputString: string; out p1, p2, p3:
 string): Boolean;
-function Capitalizer(var str:string):string;
+function Capitalizer(str:string; mode:integer=0):string;
+function adr_fixer(str:string;  mode:Integer=0):string;
 implementation
 
 
@@ -431,20 +432,64 @@ begin
     FreeAndNil(l);
   end;
 end;
-function Capitalizer(var str:string):string;
+function Capitalizer(str:string; mode:integer=0):string;
 begin
-  if Trim(str)='' then
+  if (Trim(str)='')and(mode=0) then
   begin
     Result:='';
     ShowMessage('Строка пуста');
     Exit;
-  end
-  else
-  begin
+  end;
+  case mode of
+   0:
+   begin
     str:=TrimLeft(str);
     Result:=Concat(AnsiUpperCase(str[1]),
     AnsiLowerCase(Copy(str, 2, length(str))));
-  end;
+   end;
+   1:
+   begin
+     Result :=str;
+     Exit;
+   end;
+  end;// case
 end;
 
-end.
+function adr_fixer(str:string; mode:Integer=0):string;
+ var head_str:string;
+begin
+if (trim(str)='') then
+begin
+  head_str:='';
+  Result:='';
+  ShowMessage('строка пуста');
+  Exit;
+end;
+case mode  of
+0:
+begin
+  if not(trim(str)='') then
+   begin
+  head_str :=Copy(str,1, length(str));
+  str:=TrimLeft(head_str);
+  Result:=str;
+   end;
+end;
+1:
+begin
+  head_str:='Ул.';
+  result:=Concat(head_str, str);
+end;
+2:
+begin
+  head_str:='Пр.';
+  result:=Concat(head_str, str);
+end;
+3:
+begin
+head_str:='Проезд ';
+  result:=Concat(head_str, str);
+end;
+end;      //case
+end;
+end.

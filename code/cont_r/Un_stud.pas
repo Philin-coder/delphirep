@@ -4,7 +4,8 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, StdCtrls, Grids, DBGrids, ExtCtrls, ADODB,DB, DBCtrls, Mask,jpeg;
+  Dialogs, ComCtrls, StdCtrls, Grids, DBGrids, ExtCtrls, ADODB,DB, DBCtrls, Mask,jpeg,
+  Menus;
 
 
 type
@@ -81,6 +82,11 @@ type
     tolivelbl: TStaticText;
     insProgres_bar: TProgressBar;
     Imgsuccess: TImage;
+    adrMenu: TPopupMenu;
+    str_add: TMenuItem;
+    avn_add: TMenuItem;
+    proezd: TMenuItem;
+    orign_str: TMenuItem;
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -113,6 +119,10 @@ type
     procedure dom_t_inpExit(Sender: TObject);
     procedure datapr_inpCloseUp(Sender: TObject);
     procedure st_email_inpExit(Sender: TObject);
+    procedure str_addClick(Sender: TObject);
+    procedure avn_addClick(Sender: TObject);
+    procedure proezdClick(Sender: TObject);
+    procedure orign_strClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -135,6 +145,13 @@ uses Un_dm, Un_main,Un_func;
 procedure TFrm_stud.adr_inpExit(Sender: TObject);
 begin
 insProgres_bar.StepBy(1);
+end;
+
+procedure TFrm_stud.avn_addClick(Sender: TObject);
+var adr_str:string;
+begin
+adr_str:=adr_inp.Text;
+adr_inp.Text:=adr_fixer(adr_str,2);
 end;
 
 procedure TFrm_stud.CbSecondnaimClick(Sender: TObject);
@@ -310,6 +327,13 @@ begin
 insProgres_bar.StepBy(1);
 end;
 
+procedure TFrm_stud.orign_strClick(Sender: TObject);
+var adr_str:string;
+begin
+    adr_str:=adr_inp.Text;
+    adr_inp.Text:=adr_fixer(adr_str,0);
+end;
+
 procedure TFrm_stud.otch_inpExit(Sender: TObject);
 begin
 insProgres_bar.StepBy(1);
@@ -328,6 +352,13 @@ begin
      otch_inp.Color:=clWindow;
 end;
 
+end;
+
+procedure TFrm_stud.proezdClick(Sender: TObject);
+var  adr_str:string;
+begin
+  adr_str:=adr_inp.Text;
+  adr_inp.Text:=adr_fixer(adr_str,3);
 end;
 
 procedure TFrm_stud.region_inpExit(Sender: TObject);
@@ -719,6 +750,13 @@ end;
 
 end;
 
+procedure TFrm_stud.str_addClick(Sender: TObject);
+var adr_str,head_str:string;
+begin
+adr_str:=adr_inp.Text;
+adr_inp.Text:=adr_fixer(adr_str,1);
+end;
+
 procedure TFrm_stud.Stud_gr_groupradioClick(Sender: TObject);
 begin
 if stud_gr_groupradio.Checked=true then
@@ -792,7 +830,7 @@ begin
 end
 else
 begin
-      Imgsuccess.Visible:=False;
+  Imgsuccess.Visible:=False;
 end;
 
 end;

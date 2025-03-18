@@ -4,7 +4,8 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, StdCtrls, Grids, DBGrids, ExtCtrls, ADODB,DB, DBCtrls, Mask,jpeg;
+  Dialogs, ComCtrls, StdCtrls, Grids, DBGrids, ExtCtrls, ADODB,DB, DBCtrls, Mask,jpeg,
+  Menus;
 
 
 type
@@ -81,6 +82,11 @@ type
     tolivelbl: TStaticText;
     insProgres_bar: TProgressBar;
     Imgsuccess: TImage;
+    adrMenu: TPopupMenu;
+    str_add: TMenuItem;
+    avn_add: TMenuItem;
+    proezd: TMenuItem;
+    orign_str: TMenuItem;
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -107,6 +113,16 @@ type
     procedure fam_inpExit(Sender: TObject);
     procedure naim_inpExit(Sender: TObject);
     procedure otch_inpExit(Sender: TObject);
+    procedure gr_DBLCloseUp(Sender: TObject);
+    procedure mesto_jit_inpCloseUp(Sender: TObject);
+    procedure Modphone_inpExit(Sender: TObject);
+    procedure dom_t_inpExit(Sender: TObject);
+    procedure datapr_inpCloseUp(Sender: TObject);
+    procedure st_email_inpExit(Sender: TObject);
+    procedure str_addClick(Sender: TObject);
+    procedure avn_addClick(Sender: TObject);
+    procedure proezdClick(Sender: TObject);
+    procedure orign_strClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -131,6 +147,13 @@ begin
 insProgres_bar.StepBy(1);
 end;
 
+procedure TFrm_stud.avn_addClick(Sender: TObject);
+var adr_str:string;
+begin
+adr_str:=adr_inp.Text;
+adr_inp.Text:=adr_fixer(adr_str,2);
+end;
+
 procedure TFrm_stud.CbSecondnaimClick(Sender: TObject);
 begin
 if CbSecondnaim.Checked then
@@ -146,6 +169,17 @@ if CbSecondnaim.Checked then
 end;
 
 procedure TFrm_stud.civ_inpExit(Sender: TObject);
+begin
+insProgres_bar.StepBy(1);
+end;
+
+procedure TFrm_stud.datapr_inpCloseUp(Sender: TObject);
+begin
+insProgres_bar.StepBy(1);
+
+end;
+
+procedure TFrm_stud.dom_t_inpExit(Sender: TObject);
 begin
 insProgres_bar.StepBy(1);
 end;
@@ -217,6 +251,20 @@ if (key=118)and  (secondNameCB.Checked=false) then// f7
   naim_inp.Text :=Capitalizer(naim_str,0);
   otch_str:=otch_inp.Text;
   otch_inp.Text:=Capitalizer(otch_str,0);
+  if levi_checker(naim_inp.Text,otch_inp.Text) then
+begin
+  MessageDlg('Имя и отчество не могут совпадать', mtError,[mbCancel],0);
+  naim_inp.Color:=clRed;
+  otch_inp.Color:=clRed;
+  Beep;
+  exit;
+end
+else
+begin
+  naim_inp.Color:=clWindow;
+  otch_inp.Color:=clWindow;
+end;
+
   ShowMessage('Проверка звершена');
   Exit;
   end
@@ -248,9 +296,15 @@ begin
 insProgres_bar.StepBy(1);
 end;
 
+procedure TFrm_stud.gr_DBLCloseUp(Sender: TObject);
+begin
+insProgres_bar.StepBy(1);
+end;
+
 procedure TFrm_stud.Is_academ_cbClick(Sender: TObject);
 begin
   if Is_academ_cb.Checked then akadem_st:=1 else akadem_st:=0;
+  insProgres_bar.StepBy(1);
 end;
 
 procedure TFrm_stud.mesto_jit_inpChange(Sender: TObject);
@@ -258,14 +312,53 @@ begin
   if mesto_jit_inp.ItemIndex=0  then m_jit:=1 else m_jit:=0;
 end;
 
+procedure TFrm_stud.mesto_jit_inpCloseUp(Sender: TObject);
+begin
+     insProgres_bar.StepBy(1);
+end;
+
+procedure TFrm_stud.Modphone_inpExit(Sender: TObject);
+begin
+insProgres_bar.StepBy(1);
+end;
+
 procedure TFrm_stud.naim_inpExit(Sender: TObject);
 begin
 insProgres_bar.StepBy(1);
 end;
 
+procedure TFrm_stud.orign_strClick(Sender: TObject);
+var adr_str:string;
+begin
+    adr_str:=adr_inp.Text;
+    adr_inp.Text:=adr_fixer(adr_str,0);
+end;
+
 procedure TFrm_stud.otch_inpExit(Sender: TObject);
 begin
 insProgres_bar.StepBy(1);
+if levi_checker(naim_inp.Text,otch_inp.Text) then
+begin
+  MessageDlg('Имя и отчество не могут совпадать', mtError,[mbCancel],0);
+    naim_inp.Color:=clRed;
+     otch_inp.Color:=clRed;
+  Beep;
+  exit;
+
+end
+else
+begin
+    naim_inp.Color:=clWindow;
+     otch_inp.Color:=clWindow;
+end;
+
+end;
+
+procedure TFrm_stud.proezdClick(Sender: TObject);
+var  adr_str:string;
+begin
+  adr_str:=adr_inp.Text;
+  adr_inp.Text:=adr_fixer(adr_str,3);
 end;
 
 procedure TFrm_stud.region_inpExit(Sender: TObject);
@@ -646,8 +739,22 @@ end;
 
 procedure TFrm_stud.secondNameCBClick(Sender: TObject);
 begin
-if secondNameCB.Checked then otch_inp.Enabled:=False else otch_inp.Enabled:=True;
+if secondNameCB.Checked then
+begin
+otch_inp.Enabled:=False;
 insProgres_bar.StepBy(1);
+end else
+begin
+  otch_inp.Enabled:=True;
+end;
+
+end;
+
+procedure TFrm_stud.str_addClick(Sender: TObject);
+var adr_str,head_str:string;
+begin
+adr_str:=adr_inp.Text;
+adr_inp.Text:=adr_fixer(adr_str,1);
 end;
 
 procedure TFrm_stud.Stud_gr_groupradioClick(Sender: TObject);
@@ -711,6 +818,21 @@ end;
 procedure TFrm_stud.st_bdata_inpCloseUp(Sender: TObject);
 begin
 insProgres_bar.StepBy(1);
+end;
+
+procedure TFrm_stud.st_email_inpExit(Sender: TObject);
+begin
+  insProgres_bar.StepBy(1);
+  if (insProgres_bar.Position=15)or (insProgres_bar.Position=14)  then
+begin
+    Imgsuccess.Visible:=True;
+    insProgres_bar.Position:=0;
+end
+else
+begin
+      Imgsuccess.Visible:=False;
+end;
+
 end;
 
 procedure TFrm_stud.St_sex_inpChange(Sender: TObject);

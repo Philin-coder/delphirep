@@ -38,6 +38,7 @@ procedure UpdateFormProperties(const FormName: string;
 function NormalizeStringAndExtractParams3(var InputString: string; out p1, p2, p3:
 string): Boolean;
 function Capitalizer(str:string; mode:integer=0):string;
+function adr_fixer(str:string;  mode:Integer=0):string;
 implementation
 
 
@@ -433,10 +434,10 @@ begin
 end;
 function Capitalizer(str:string; mode:integer=0):string;
 begin
-  if Trim(str)='' then
+  if (Trim(str)='')and(mode=0) then
   begin
     Result:='';
-    ShowMessage('Строка пуста'+#10#13+'Заполните поля верно');
+    ShowMessage('Строка пуста');
     Exit;
   end;
   case mode of
@@ -454,4 +455,45 @@ end;
   end;// case
 end;
 
-end.
+function adr_fixer(str:string; mode:Integer=0):string;
+ var head_str:string;
+ var tmp_str:string;
+begin
+if (trim(str)='') then
+begin
+  head_str:='';
+  Result:='';
+  ShowMessage('строка пуста');
+  Exit;
+end;
+case mode  of
+0:
+begin
+  if not(trim(str)='') then
+   begin
+  tmp_str :=Copy(str,1, length(str));
+  str:=TrimLeft(tmp_str);
+  Result:=str;
+   end;
+end;
+1:
+begin
+  tmp_str :=Copy(str,1, length(str));
+  head_str:='Ул.';
+  result:=Concat(head_str, str);
+end;
+2:
+begin
+  tmp_str :=Copy(str,1, length(str));
+  head_str:='Пр.';
+  result:=Concat(head_str, str);
+end;
+3:
+begin
+  tmp_str :=Copy(str,1, length(str));
+  head_str:='Проезд ';
+  result:=Concat(head_str, str);
+end;
+end;      //case
+end;
+end.

@@ -364,13 +364,14 @@ object Frm_stud: TFrm_stud
               276)
             object adr_inp: TLabeledEdit
               Left = 0
-              Top = 16
+              Top = 24
               Width = 998
               Height = 21
               Anchors = [akLeft, akRight]
               EditLabel.Width = 96
               EditLabel.Height = 13
               EditLabel.Caption = #1040#1076#1088#1077#1089' '#1087#1088#1086#1078#1080#1074#1072#1085#1080#1103
+              PopupMenu = adrMenu
               TabOrder = 0
               OnExit = adr_inpExit
             end
@@ -960,6 +961,26 @@ object Frm_stud: TFrm_stud
             end>
         end
       end
+    end
+  end
+  object adrMenu: TPopupMenu
+    Left = 384
+    Top = 48
+    object str_add: TMenuItem
+      Caption = #1044#1086#1073#1074#1080#1090#1100' '#1091#1083#1080#1094#1091
+      OnClick = str_addClick
+    end
+    object avn_add: TMenuItem
+      Caption = #1044#1086#1073#1072#1074#1080#1090#1100' '#1087#1088#1086#1089#1087#1077#1082#1090
+      OnClick = avn_addClick
+    end
+    object proezd: TMenuItem
+      Caption = #1044#1086#1073#1072#1074#1080#1090#1100' '#1087#1088#1086#1077#1079#1076
+      OnClick = proezdClick
+    end
+    object orign_str: TMenuItem
+      Caption = #1048#1089#1093#1086#1076#1085#1086#1077' '#1089#1086#1089#1090#1086#1103#1085#1080#1077
+      OnClick = orign_strClick
     end
   end
 end

@@ -38,6 +38,7 @@ procedure UpdateFormProperties(const FormName: string;
 function NormalizeStringAndExtractParams3(var InputString: string; out p1, p2, p3:
 string): Boolean;
 function Capitalizer(str:string; mode:integer=0):string;
+function adr_fixer(str:string;  mode:Integer=0):string;
 implementation
 
 
@@ -439,9 +440,6 @@ end;
     ShowMessage('Строка пуста');
     Exit;
   end;
-
-
-
   case mode of
    0:
    begin
@@ -457,4 +455,53 @@ end;
   end;// case
 end;
 
-end.
+function adr_fixer(str:string; mode:Integer=0):string;
+ var head_str:string;
+begin
+if (trim(str)='') then
+begin
+  head_str:='';
+  Result:='';
+  ShowMessage('строка пуста');
+  Exit;
+end;
+case mode  of
+0:
+begin
+  if not(trim(str)='') then
+   begin
+    str:=Trim(str);
+      str := Trim(str);
+      if Pos('Ул.', str) = 1 then
+        Delete(str, 1, 3);
+      if Pos('Пр.', str) = 1 then
+        Delete(str, 1, 3);
+      if Pos('Проезд', str) = 1 then
+        Delete(str, 1, 6);
+      Result := Trim(str);
+   end
+   else
+   begin
+    head_str:='';
+  Result:='';
+  ShowMessage('строка пуста');
+   end;
+end;
+1:
+begin
+  head_str:='Ул.';
+  result:=Concat(head_str, str);
+end;
+2:
+begin
+  head_str:='Пр.';
+  result:=Concat(head_str, str);
+end;
+3:
+begin
+  head_str:='Проезд ';
+  result:=Concat(head_str, str);
+end;
+end;      //case
+end;
+end.
