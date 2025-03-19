@@ -802,15 +802,326 @@ if stud_gr_groupradio.Checked=true then
 end;
 
 procedure TFrm_stud.Stud_insBtnClick(Sender: TObject);
+  var
+    ins_stud_normal:TADOStoredProc;
+    ins_stud_restrict:TADOStoredProc;
 begin
 case otch_inp.Enabled of
   True:
   begin
-    ShowMessage('Запущен Normal');
+    if ((St_sex_inp.Text='')
+        and (Trim(civ_inp.Text)='') and (Trim(region_inp.Text)='')and
+        (Trim(gorod_inp.Text)='')and(Trim(adr_inp.Text)='')
+        and(Trim(fam_inp.Text)='') and (Trim(naim_inp.Text)='') and
+        (Trim(otch_inp.Text)='')and (mesto_jit_inp.Text='')and
+        (Modphone_inp.Text='') and(dom_t_inp.Text='')and
+        (Trim(st_email_inp.Text)='')) then
+  begin
+    MessageDlg('Заполните все поля', mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  ins_stud_normal := nil;
+  try
+    ins_stud_normal := TADOStoredProc.Create(nil);
+    try
+      with ins_stud_normal do
+      begin
+        Connection := DM.Connection;
+        if not Connection.Connected then
+        begin
+          raise Exception.Create('Соединение с базой не установлено');
+        end;
+        ProcedureName := 'ins_stud_normal';
+        Parameters.Clear;
+        Parameters.CreateParameter(
+          'b_data',
+          ftDate,
+          pdInput,
+          0,
+          st_bdata_inp.date
+        );
+        Parameters.CreateParameter(
+          'pol',
+          ftInteger,
+          pdInput,
+          0,
+          s_val
+        );
+          Parameters.CreateParameter(
+          'civ',
+          ftString,
+          pdInput,
+          1000,
+          civ_inp.Text
+        );
+          Parameters.CreateParameter(
+          'region',
+          ftString,
+          pdInput,
+          1000,
+          region_inp.Text
+        );
+        Parameters.CreateParameter(
+          'gorod',
+          ftString,
+          pdInput,
+          1000,
+          gorod_inp.Text
+        );
+        Parameters.CreateParameter(
+          'adr',
+          ftString,
+          pdInput,
+          1000,
+          adr_inp.Text
+        );
+        Parameters.CreateParameter(
+          'passp_fam',
+          ftString,
+          pdInput,
+          1000,
+          fam_inp.Text
+        );
+         Parameters.CreateParameter(
+          'passp_naim',
+          ftString,
+          pdInput,
+          1000,
+          fam_inp.Text
+        );
+        Parameters.CreateParameter(
+          'passp_otch',
+          ftString,
+          pdInput,
+          1000,
+          fam_inp.Text
+        );
+        Parameters.CreateParameter(
+          'mesto_jit',
+          ftInteger,
+          pdInput,
+          0,
+          m_jit
+        );
+        Parameters.CreateParameter(
+          'mod_t',
+          ftString,
+          pdInput,
+          1000,
+          Modphone_inp.Text
+        );
+        Parameters.CreateParameter(
+          'dom_t',
+          ftString,
+          pdInput,
+          1000,
+          dom_t_inp.Text
+        );
+        Parameters.CreateParameter(
+          'data_pr',
+          ftDate,
+          pdInput,
+          0,
+          datapr_inp.Date
+        );
+
+        Parameters.CreateParameter(
+          'grup_id',
+          ftInteger,
+          pdInput,
+          0,
+          gr_DBL.KeyValue
+        );
+
+        Parameters.CreateParameter(
+          'st_email',
+          ftString,
+          pdInput,
+          1000,
+          st_email_inp.Text
+        );
+
+        Parameters.CreateParameter(
+          'is_akadem',
+          ftInteger,
+          pdInput,
+          0,
+          akadem_st
+        );
+        ExecProc;
+        DM.StudQuery.Close;
+        DM.StudQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+  finally
+    FreeAndNil(ins_stud_normal);
+  end;
   end;
   False:
   begin
-    ShowMessage('Запущен Restrict');
+      if ((St_sex_inp.Text='')
+        and (Trim(civ_inp.Text)='') and (Trim(region_inp.Text)='')and
+        (Trim(gorod_inp.Text)='')and(Trim(adr_inp.Text)='')
+        and(Trim(fam_inp.Text)='') and (Trim(naim_inp.Text)='')
+        and (mesto_jit_inp.Text='')and
+        (Modphone_inp.Text='') and(dom_t_inp.Text='')and
+        (Trim(st_email_inp.Text)='')) then
+  begin
+    MessageDlg('Заполните все поля', mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  ins_stud_restrict := nil;
+  try
+   ins_stud_restrict := TADOStoredProc.Create(nil);
+    try
+      with ins_stud_restrict do
+      begin
+        Connection := DM.Connection;
+        if not Connection.Connected then
+        begin
+          raise Exception.Create('Соединение с базой не установлено');
+        end;
+        ProcedureName := 'ins_stud_restrict';
+        Parameters.Clear;
+        Parameters.CreateParameter(
+          'b_data',
+          ftDate,
+          pdInput,
+          0,
+          st_bdata_inp.date
+        );
+        Parameters.CreateParameter(
+          'pol',
+          ftInteger,
+          pdInput,
+          0,
+          s_val
+        );
+          Parameters.CreateParameter(
+          'civ',
+          ftString,
+          pdInput,
+          1000,
+          civ_inp.Text
+        );
+          Parameters.CreateParameter(
+          'region',
+          ftString,
+          pdInput,
+          1000,
+          region_inp.Text
+        );
+        Parameters.CreateParameter(
+          'gorod',
+          ftString,
+          pdInput,
+          1000,
+          gorod_inp.Text
+        );
+        Parameters.CreateParameter(
+          'adr',
+          ftString,
+          pdInput,
+          1000,
+          adr_inp.Text
+        );
+        Parameters.CreateParameter(
+          'passp_fam',
+          ftString,
+          pdInput,
+          1000,
+          fam_inp.Text
+        );
+         Parameters.CreateParameter(
+          'passp_naim',
+          ftString,
+          pdInput,
+          1000,
+          fam_inp.Text
+        );
+
+        Parameters.CreateParameter(
+          'mesto_jit',
+          ftInteger,
+          pdInput,
+          0,
+          m_jit
+        );
+        Parameters.CreateParameter(
+          'mod_t',
+          ftString,
+          pdInput,
+          1000,
+          Modphone_inp.Text
+        );
+        Parameters.CreateParameter(
+          'dom_t',
+          ftString,
+          pdInput,
+          1000,
+          dom_t_inp.Text
+        );
+        Parameters.CreateParameter(
+          'data_pr',
+          ftDate,
+          pdInput,
+          0,
+          datapr_inp.Date
+        );
+
+        Parameters.CreateParameter(
+          'grup_id',
+          ftInteger,
+          pdInput,
+          0,
+          gr_DBL.KeyValue
+        );
+
+        Parameters.CreateParameter(
+          'st_email',
+          ftString,
+          pdInput,
+          1000,
+          st_email_inp.Text
+        );
+
+        Parameters.CreateParameter(
+          'is_akadem',
+          ftInteger,
+          pdInput,
+          0,
+          akadem_st
+        );
+        ExecProc;
+        DM.StudQuery.Close;
+        DM.StudQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+  finally
+    FreeAndNil(ins_stud_restrict);
+  end;
   end;
 end;//case
 end;

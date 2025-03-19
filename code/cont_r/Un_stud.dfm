@@ -267,7 +267,7 @@ object Frm_stud: TFrm_stud
           Top = 15
           Width = 1025
           Height = 304
-          ActivePage = about_stud_page_three
+          ActivePage = Stud_about_page_three
           Align = alClient
           TabOrder = 0
           object Stud_about_page_one: TTabSheet
