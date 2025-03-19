@@ -324,6 +324,21 @@ end;
 
 procedure TFrm_stud.naim_inpExit(Sender: TObject);
 begin
+if levi_checker(naim_inp.Text,otch_inp.Text) then
+begin
+  MessageDlg('Имя и отчество не могут совпадать', mtError,[mbCancel],0);
+    naim_inp.Color:=clRed;
+     otch_inp.Color:=clRed;
+  Beep;
+  exit;
+
+end
+else
+begin
+    naim_inp.Color:=clWindow;
+     otch_inp.Color:=clWindow;
+end;
+
 insProgres_bar.StepBy(1);
 end;
 
@@ -888,14 +903,14 @@ case otch_inp.Enabled of
           ftString,
           pdInput,
           1000,
-          fam_inp.Text
+          naim_inp.Text
         );
         Parameters.CreateParameter(
           'passp_otch',
           ftString,
           pdInput,
           1000,
-          fam_inp.Text
+          otch_inp.Text
         );
         Parameters.CreateParameter(
           'mesto_jit',
@@ -1049,7 +1064,7 @@ case otch_inp.Enabled of
           ftString,
           pdInput,
           1000,
-          fam_inp.Text
+          naim_inp.Text
         );
 
         Parameters.CreateParameter(
