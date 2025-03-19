@@ -213,7 +213,7 @@ begin
  end;
  end;
  Imgsuccess.Picture:=nil;
-   insProgres_bar.Position:=1;
+ insProgres_bar.Position:=1;
 end;
 
 procedure TFrm_stud.FormCreate(Sender: TObject);
@@ -751,7 +751,7 @@ end;
 end;
 
 procedure TFrm_stud.str_addClick(Sender: TObject);
-var adr_str,head_str:string;
+var adr_str:string;
 begin
 adr_str:=adr_inp.Text;
 adr_inp.Text:=adr_fixer(adr_str,1);

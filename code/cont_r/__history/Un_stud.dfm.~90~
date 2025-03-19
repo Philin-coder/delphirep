@@ -267,7 +267,7 @@ object Frm_stud: TFrm_stud
           Top = 15
           Width = 1025
           Height = 304
-          ActivePage = Stud_about_page_one
+          ActivePage = Stud_about_page_two
           Align = alClient
           TabOrder = 0
           object Stud_about_page_one: TTabSheet
@@ -364,14 +364,16 @@ object Frm_stud: TFrm_stud
               276)
             object adr_inp: TLabeledEdit
               Left = 0
-              Top = 16
+              Top = 24
               Width = 998
               Height = 21
               Anchors = [akLeft, akRight]
               EditLabel.Width = 96
               EditLabel.Height = 13
               EditLabel.Caption = #1040#1076#1088#1077#1089' '#1087#1088#1086#1078#1080#1074#1072#1085#1080#1103
+              PopupMenu = adrMenu
               TabOrder = 0
+              OnExit = adr_inpExit
             end
             object fam_inp: TLabeledEdit
               Left = 3
@@ -383,6 +385,7 @@ object Frm_stud: TFrm_stud
               EditLabel.Height = 13
               EditLabel.Caption = #1060#1072#1084#1080#1083#1080#1103
               TabOrder = 1
+              OnExit = fam_inpExit
             end
             object naim_inp: TLabeledEdit
               Left = 3
@@ -394,6 +397,7 @@ object Frm_stud: TFrm_stud
               EditLabel.Height = 13
               EditLabel.Caption = #1048#1084#1103
               TabOrder = 2
+              OnExit = naim_inpExit
             end
             object otch_inp: TLabeledEdit
               Left = 3
@@ -405,6 +409,7 @@ object Frm_stud: TFrm_stud
               EditLabel.Height = 13
               EditLabel.Caption = #1054#1090#1095#1077#1089#1090#1074#1086
               TabOrder = 3
+              OnExit = otch_inpExit
             end
             object if_not: TGroupBox
               Left = 0
@@ -442,6 +447,7 @@ object Frm_stud: TFrm_stud
               ItemHeight = 13
               TabOrder = 0
               OnChange = mesto_jit_inpChange
+              OnCloseUp = mesto_jit_inpCloseUp
               Items.Strings = (
                 #1057#1098#1077#1084
                 #1042' '#1086#1073#1097#1077#1078#1080#1090#1080#1080)
@@ -463,6 +469,7 @@ object Frm_stud: TFrm_stud
               Height = 21
               Anchors = [akLeft, akRight]
               TabOrder = 2
+              OnExit = Modphone_inpExit
             end
             object dom_t_lbl: TStaticText
               Left = 3
@@ -481,6 +488,7 @@ object Frm_stud: TFrm_stud
               Height = 21
               Anchors = [akLeft, akRight]
               TabOrder = 4
+              OnExit = dom_t_inpExit
             end
             object datepr_lbl: TStaticText
               Left = 3
@@ -501,6 +509,7 @@ object Frm_stud: TFrm_stud
               Date = 45733.896571354170000000
               Time = 45733.896571354170000000
               TabOrder = 6
+              OnCloseUp = datapr_inpCloseUp
             end
             object tolivelbl: TStaticText
               Left = 2
@@ -537,6 +546,7 @@ object Frm_stud: TFrm_stud
               ListField = 'naim_grup'
               ListSource = DM.GruppDS
               TabOrder = 0
+              OnCloseUp = gr_DBLCloseUp
             end
             object Gr_lbl: TStaticText
               Left = 3
@@ -556,6 +566,7 @@ object Frm_stud: TFrm_stud
               EditLabel.Height = 13
               EditLabel.Caption = 'E-mail'
               TabOrder = 2
+              OnExit = st_email_inpExit
             end
             object Is_academ_cb: TCheckBox
               Left = 3
@@ -950,6 +961,26 @@ object Frm_stud: TFrm_stud
             end>
         end
       end
+    end
+  end
+  object adrMenu: TPopupMenu
+    Left = 384
+    Top = 48
+    object str_add: TMenuItem
+      Caption = #1044#1086#1073#1074#1080#1090#1100' '#1091#1083#1080#1094#1091
+      OnClick = str_addClick
+    end
+    object avn_add: TMenuItem
+      Caption = #1044#1086#1073#1072#1074#1080#1090#1100' '#1087#1088#1086#1089#1087#1077#1082#1090
+      OnClick = avn_addClick
+    end
+    object proezd: TMenuItem
+      Caption = #1044#1086#1073#1072#1074#1080#1090#1100' '#1087#1088#1086#1077#1079#1076
+      OnClick = proezdClick
+    end
+    object orign_str: TMenuItem
+      Caption = #1048#1089#1093#1086#1076#1085#1086#1077' '#1089#1086#1089#1090#1086#1103#1085#1080#1077
+      OnClick = orign_strClick
     end
   end
 end

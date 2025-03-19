@@ -267,7 +267,7 @@ object Frm_stud: TFrm_stud
           Top = 15
           Width = 1025
           Height = 304
-          ActivePage = Stud_about_page_two
+          ActivePage = about_stud_page_three
           Align = alClient
           TabOrder = 0
           object Stud_about_page_one: TTabSheet
@@ -514,10 +514,10 @@ object Frm_stud: TFrm_stud
             object tolivelbl: TStaticText
               Left = 2
               Top = 3
-              Width = 66
+              Width = 67
               Height = 17
               Align = alCustom
-              Caption = #1087#1088#1086#1078#1080#1074#1072#1085#1080#1077
+              Caption = #1055#1088#1086#1078#1080#1074#1072#1085#1080#1077
               TabOrder = 7
             end
           end
@@ -542,7 +542,7 @@ object Frm_stud: TFrm_stud
               Width = 993
               Height = 21
               Anchors = [akLeft, akRight]
-              KeyField = 'naim_grup'
+              KeyField = 'grup_id'
               ListField = 'naim_grup'
               ListSource = DM.GruppDS
               TabOrder = 0
