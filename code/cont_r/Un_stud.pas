@@ -122,6 +122,8 @@ type
     procedure avn_addClick(Sender: TObject);
     procedure proezdClick(Sender: TObject);
     procedure orign_strClick(Sender: TObject);
+    procedure StudUpdakademComboChange(Sender: TObject);
+    procedure Stud_upd_BtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -131,7 +133,7 @@ type
 var
   Frm_stud: TFrm_stud;
   var cb_st:Integer;
-  var s_val,m_jit,akadem_st:Integer;
+  var s_val,m_jit,akadem_st,go_akadem:Integer;
 
 implementation
 
@@ -227,6 +229,7 @@ begin
   dom_t_inp.EditMask:='9-99-99;1;_';
   Imgsuccess.Picture.LoadFromFile('Galka.jpg');
   insProgres_bar.Position:=1;
+  Stud_upd_Btn.Caption:='Изменение данных';
 end;
 
 procedure TFrm_stud.FormKeyUp(Sender: TObject; var Key: Word;
@@ -630,6 +633,72 @@ begin
   end;
 end;
 end;
+
+end;
+
+procedure TFrm_stud.StudUpdakademComboChange(Sender: TObject);
+var
+ sel_akaddem: TADOStoredProc;
+ sel_all:TADOStoredProc;
+
+begin
+if StudUpdakademCombo.ItemIndex=0 then go_akadem:=0 else go_akadem:=1;
+case go_akadem of
+0: //0 - не в академе
+begin
+   sel_all := nil;
+  try
+    sel_all := TADOStoredProc.Create(nil);
+    try
+      with sel_all do
+      begin
+        Connection := DM.Connection;
+        if not Connection.Connected then
+          raise Exception.Create('Соединеие с базой не установлено');
+        ProcedureName := 'sel_all';
+        Open;
+        DM.StudQuery.Close;
+        DM.StudQuery.Recordset := sel_all.Recordset;
+      end;
+    except
+      on E: EADOError do
+        ShowMessage('Ошибка: ' + E.Message);
+      on E: Exception do
+        ShowMessage('Ощибка: ' + E.Message);
+    end;
+  finally
+    FreeAndNil(sel_all);
+  end;
+  dm.StudQuery.Close;
+  dm.StudQuery.Open;
+end;
+1:
+begin
+   sel_akaddem := nil;
+  try
+    sel_akaddem := TADOStoredProc.Create(nil);
+    try
+      with sel_akaddem do
+      begin
+        Connection := DM.Connection;
+        if not Connection.Connected then
+          raise Exception.Create('Соединеие с базой не установлено');
+        ProcedureName := 'sel_akaddem';
+        Open;
+        DM.StudQuery.Close;
+        DM.StudQuery.Recordset := sel_akaddem.Recordset;
+      end;
+    except
+      on E: EADOError do
+        ShowMessage('Ошибка: ' + E.Message);
+      on E: Exception do
+        ShowMessage('Ошибка: ' + E.Message);
+    end;
+  finally
+    FreeAndNil(sel_akaddem);
+  end;
+end;
+end; //case
 
 end;
 
@@ -1137,6 +1206,99 @@ case otch_inp.Enabled of
   end;
   end;
 end;//case
+end;
+
+procedure TFrm_stud.Stud_upd_BtnClick(Sender: TObject);
+ var
+  upd_inakadem:TADOStoredProc;
+  upd_from_akadem:TADOStoredProc;
+begin
+case go_akadem of
+0:
+begin
+ upd_inakadem :=nil;
+ try
+ upd_inakadem :=TADOStoredProc.Create(nil);
+ try
+ with upd_inakadem do
+ begin
+   Connection :=dm.Connection;
+   if not Connection.Connected then
+   begin
+     raise Exception.Create('Соединение с базой не установелено');
+   end;
+   ProcedureName :='upd_inakadem';
+   Parameters.Clear;
+   Parameters.CreateParameter(
+   'stud_id',
+   ftInteger,
+   pdInput,
+   0,
+   StudUpdDBL.KeyValue
+   );
+   ExecProc;
+   dm.specQuery.Close;
+   dm.specQuery.Open;
+   MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+ end;
+ except on E: EADOError do
+ begin
+   ShowMessage('Ошибка'+' '+e.Message);
+ end;
+ on E: Exception do
+ begin
+  ShowMessage('Ошибка'+' '+e.Message);
+ end;
+ end;
+ finally
+ FreeAndNil(upd_inakadem);
+ end;
+ dm.StudQuery.Close;
+ dm.StudQuery.Open;
+end;
+1:
+begin
+ upd_from_akadem :=nil;
+ try
+ upd_from_akadem :=TADOStoredProc.Create(nil);
+ try
+ with upd_from_akadem do
+ begin
+   Connection :=dm.Connection;
+   if not Connection.Connected then
+   begin
+     raise Exception.Create('Соединение с базой не установелено');
+   end;
+   ProcedureName :='upd_from_akadem';
+   Parameters.Clear;
+   Parameters.CreateParameter(
+   'stud_id',
+   ftInteger,
+   pdInput,
+   0,
+   StudUpdDBL.KeyValue
+   );
+   ExecProc;
+   dm.specQuery.Close;
+   dm.specQuery.Open;
+   MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+ end;
+ except on E: EADOError do
+ begin
+   ShowMessage('Ошибка'+' '+e.Message);
+ end;
+ on E: Exception do
+ begin
+  ShowMessage('Ошибка'+' '+e.Message);
+ end;
+ end;
+ finally
+ FreeAndNil(upd_from_akadem);
+ end;
+ dm.StudQuery.Close;
+ dm.StudQuery.Open;
+end;
+end; //case
 end;
 
 procedure TFrm_stud.st_bdata_inpCloseUp(Sender: TObject);

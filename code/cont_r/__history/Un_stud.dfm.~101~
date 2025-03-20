@@ -23,7 +23,7 @@ object Frm_stud: TFrm_stud
     Top = 0
     Width = 1037
     Height = 813
-    ActivePage = InsTab
+    ActivePage = UpdTab
     Align = alClient
     TabOrder = 0
     object SelTab: TTabSheet
@@ -514,10 +514,10 @@ object Frm_stud: TFrm_stud
             object tolivelbl: TStaticText
               Left = 2
               Top = 3
-              Width = 66
+              Width = 67
               Height = 17
               Align = alCustom
-              Caption = #1087#1088#1086#1078#1080#1074#1072#1085#1080#1077
+              Caption = #1055#1088#1086#1078#1080#1074#1072#1085#1080#1077
               TabOrder = 7
             end
           end
@@ -542,7 +542,7 @@ object Frm_stud: TFrm_stud
               Width = 993
               Height = 21
               Anchors = [akLeft, akRight]
-              KeyField = 'naim_grup'
+              KeyField = 'grup_id'
               ListField = 'naim_grup'
               ListSource = DM.GruppDS
               TabOrder = 0
@@ -723,9 +723,9 @@ object Frm_stud: TFrm_stud
       end
     end
     object UpdTab: TTabSheet
-      Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1075#1088#1091#1087#1087#1077
+      Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1089#1090#1091#1076#1077#1085#1090#1077
       ImageIndex = 2
-      object Grupp_upd_inp_Box: TGroupBox
+      object Stud_upd_inp_Box: TGroupBox
         Left = 0
         Top = 0
         Width = 1029
@@ -733,67 +733,62 @@ object Frm_stud: TFrm_stud
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
+        ExplicitLeft = -3
+        ExplicitTop = -6
         DesignSize = (
           1029
           121)
-        object grupdLbl: TLabel
+        object StuddLbl: TLabel
           Left = 16
           Top = 55
-          Width = 24
+          Width = 38
           Height = 13
-          Caption = #1050#1091#1088#1089
+          Caption = #1040#1082#1072#1076#1077#1084
         end
-        object Grupplbl: TStaticText
+        object Studplbl: TStaticText
           Left = 16
           Top = 12
-          Width = 86
+          Width = 99
           Height = 17
           Align = alCustom
           Anchors = [akLeft, akRight]
-          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1075#1088#1091#1087#1087#1091
+          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1089#1090#1091#1076#1077#1085#1090#1072
           TabOrder = 0
         end
-        object GruppUpdDBL: TDBLookupComboBox
+        object StudUpdDBL: TDBLookupComboBox
           Left = 16
           Top = 28
           Width = 998
           Height = 21
           Align = alCustom
           Anchors = [akLeft, akRight]
-          KeyField = 'grup_id'
-          ListField = 'naim_grup'
-          ListSource = DM.GruppDS
+          KeyField = 'stud_id'
+          ListField = 'fio'
+          ListSource = DM.StuddS
           TabOrder = 1
         end
-        object UpDown_upd_grade: TUpDown
-          Left = 1001
+        object StudUpdakademCombo: TComboBox
+          Left = 15
           Top = 74
-          Width = 16
+          Width = 999
           Height = 21
-          Anchors = [akLeft]
-          Associate = gr_upd_grader
-          TabOrder = 2
-        end
-        object gr_upd_grader: TEdit
-          Left = 16
-          Top = 74
-          Width = 985
-          Height = 21
-          Cursor = crVSplit
-          Align = alCustom
           Anchors = [akLeft, akRight]
-          TabOrder = 3
-          Text = '0'
+          ItemHeight = 13
+          TabOrder = 2
+          OnChange = StudUpdakademComboChange
+          Items.Strings = (
+            #1054#1090#1087#1088#1072#1074#1080#1090#1100
+            #1042#1077#1088#1085#1091#1090#1100)
         end
       end
-      object Grupp_upd_btn_Box: TGroupBox
+      object Stud_upd_btn_Box: TGroupBox
         Left = 0
         Top = 730
         Width = 1029
         Height = 55
         Align = alBottom
         TabOrder = 1
-        object Grupp_upd_Btn: TButton
+        object Stud_upd_Btn: TButton
           Left = 296
           Top = 11
           Width = 305
@@ -803,7 +798,7 @@ object Frm_stud: TFrm_stud
           TabOrder = 0
         end
       end
-      object Grupp_upd_dataBox: TGroupBox
+      object Stud_upd_dataBox: TGroupBox
         Left = 0
         Top = 121
         Width = 1029
@@ -811,13 +806,13 @@ object Frm_stud: TFrm_stud
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        object GruppupdDataGrd: TDBGrid
+        object Stud_upd_akadenGrd: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
           Height = 592
           Align = alClient
-          DataSource = DM.GruppDS
+          DataSource = DM.StuddS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -827,30 +822,89 @@ object Frm_stud: TFrm_stud
           Columns = <
             item
               Expanded = False
-              FieldName = 'grup_id'
+              FieldName = 'stud_id'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-              Width = 103
+              Width = 60
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'b_data'
+              Title.Caption = #1044#1072#1090#1072' '#1088#1086#1078#1076#1077#1085#1080#1103
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'sex'
+              Title.Caption = #1055#1086#1083
+              Width = 112
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'civ'
+              Title.Caption = #1043#1088#1072#1078#1076#1072#1085#1089#1090#1074#1086
+              Width = 109
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'region'
+              Title.Caption = #1054#1073#1083#1072#1089#1090#1100' '#1087#1088#1086#1078#1080#1074#1072#1085#1080#1103
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'gorod'
+              Title.Caption = #1043#1086#1088#1086#1076
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'adr'
+              Title.Caption = #1040#1076#1088#1077#1089
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'fio'
+              Title.Caption = #1060#1048#1054
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'to_live'
+              Title.Caption = #1046#1080#1074#1077#1090
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'mod_t'
+              Title.Caption = #1052#1086#1073#1080#1083#1100#1085#1099#1081' '#1090#1077#1083#1077#1092#1086#1085
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'dom_t'
+              Title.Caption = #1044#1086#1084#1072#1096#1085#1080#1081
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'data_pr'
+              Title.Caption = #1044#1072#1090#1072' '#1087#1088#1080#1077#1084#1072
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'naim_grup'
-              Title.Caption = #1053#1072#1079#1074#1072#1085#1080#1077
-              Width = 500
+              Title.Caption = #1043#1088#1091#1087#1087#1072
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'kurs'
-              Title.Caption = #1050#1091#1088#1089
-              Width = 100
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'spec_maim'
-              Title.Caption = #1057#1087#1077#1094#1080#1072#1083#1100#1085#1086#1089#1090#1100
-              Width = 500
+              FieldName = 'st_email'
+              Title.Caption = #1045'-mail'
               Visible = True
             end>
         end
@@ -964,8 +1018,7 @@ object Frm_stud: TFrm_stud
     end
   end
   object adrMenu: TPopupMenu
-    Left = 384
-    Top = 48
+    Left = 776
     object str_add: TMenuItem
       Caption = #1044#1086#1073#1074#1080#1090#1100' '#1091#1083#1080#1094#1091
       OnClick = str_addClick

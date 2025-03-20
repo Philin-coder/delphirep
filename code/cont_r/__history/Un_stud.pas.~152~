@@ -29,12 +29,12 @@ type
     Stud_ins_btn_Box: TGroupBox;
     Stud_insBtn: TButton;
     Stud_DataInsBox: TGroupBox;
-    Grupp_upd_inp_Box: TGroupBox;
-    Grupplbl: TStaticText;
-    GruppUpdDBL: TDBLookupComboBox;
-    Grupp_upd_btn_Box: TGroupBox;
-    Grupp_upd_Btn: TButton;
-    Grupp_upd_dataBox: TGroupBox;
+    Stud_upd_inp_Box: TGroupBox;
+    Studplbl: TStaticText;
+    StudUpdDBL: TDBLookupComboBox;
+    Stud_upd_btn_Box: TGroupBox;
+    Stud_upd_Btn: TButton;
+    Stud_upd_dataBox: TGroupBox;
     delgrdatacBox: TGroupBox;
     delgrlbl: TStaticText;
     delgrDBL: TDBLookupComboBox;
@@ -43,10 +43,7 @@ type
     degrdataBox: TGroupBox;
     Stud_gr_groupradio: TRadioButton;
     Studfnd_akademCb: TCheckBox;
-    GruppupdDataGrd: TDBGrid;
-    UpDown_upd_grade: TUpDown;
-    gr_upd_grader: TEdit;
-    grupdLbl: TLabel;
+    StuddLbl: TLabel;
     delgrgrid: TDBGrid;
     CbSecondnaim: TCheckBox;
     Stud_inp_page: TPageControl;
@@ -87,6 +84,8 @@ type
     avn_add: TMenuItem;
     proezd: TMenuItem;
     orign_str: TMenuItem;
+    Stud_upd_akadenGrd: TDBGrid;
+    StudUpdakademCombo: TComboBox;
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -123,6 +122,7 @@ type
     procedure avn_addClick(Sender: TObject);
     procedure proezdClick(Sender: TObject);
     procedure orign_strClick(Sender: TObject);
+    procedure StudUpdakademComboChange(Sender: TObject);
   private
     { Private declarations }
   public
@@ -132,7 +132,7 @@ type
 var
   Frm_stud: TFrm_stud;
   var cb_st:Integer;
-  var s_val,m_jit,akadem_st:Integer;
+  var s_val,m_jit,akadem_st,go_akadem:Integer;
 
 implementation
 
@@ -228,6 +228,7 @@ begin
   dom_t_inp.EditMask:='9-99-99;1;_';
   Imgsuccess.Picture.LoadFromFile('Galka.jpg');
   insProgres_bar.Position:=1;
+  Stud_upd_Btn.Caption:='Изменение данных';
 end;
 
 procedure TFrm_stud.FormKeyUp(Sender: TObject; var Key: Word;
@@ -324,6 +325,20 @@ end;
 
 procedure TFrm_stud.naim_inpExit(Sender: TObject);
 begin
+if levi_checker(naim_inp.Text,otch_inp.Text) then
+begin
+  MessageDlg('Имя и отчество не могут совпадать', mtError,[mbCancel],0);
+    naim_inp.Color:=clRed;
+     otch_inp.Color:=clRed;
+  Beep;
+  exit;
+end
+else
+begin
+    naim_inp.Color:=clWindow;
+    otch_inp.Color:=clWindow;
+end;
+
 insProgres_bar.StepBy(1);
 end;
 
@@ -620,6 +635,70 @@ end;
 
 end;
 
+procedure TFrm_stud.StudUpdakademComboChange(Sender: TObject);
+var
+ sel_akaddem: TADOStoredProc;
+ sel_all:TADOStoredProc;
+
+begin
+if StudUpdakademCombo.ItemIndex=0 then go_akadem:=0 else go_akadem:=1;
+case go_akadem of
+0: //0 - не в академе
+begin
+   sel_all := nil;
+  try
+    sel_all := TADOStoredProc.Create(nil);
+    try
+      with sel_all do
+      begin
+        Connection := DM.Connection;
+        if not Connection.Connected then
+          raise Exception.Create('Соединеие с базой не установлено');
+        ProcedureName := 'sel_all';
+        Open;
+        DM.StudQuery.Close;
+        DM.StudQuery.Recordset := sel_all.Recordset;
+      end;
+    except
+      on E: EADOError do
+        ShowMessage('Ошибка: ' + E.Message);
+      on E: Exception do
+        ShowMessage('Ощибка: ' + E.Message);
+    end;
+  finally
+    FreeAndNil(sel_all);
+  end;
+end;
+1:
+begin
+   sel_akaddem := nil;
+  try
+    sel_akaddem := TADOStoredProc.Create(nil);
+    try
+      with sel_akaddem do
+      begin
+        Connection := DM.Connection;
+        if not Connection.Connected then
+          raise Exception.Create('Соединеие с базой не установлено');
+        ProcedureName := 'sel_akaddem';
+        Open;
+        DM.StudQuery.Close;
+        DM.StudQuery.Recordset := sel_akaddem.Recordset;
+      end;
+    except
+      on E: EADOError do
+        ShowMessage('Ошибка: ' + E.Message);
+      on E: Exception do
+        ShowMessage('Ошибка: ' + E.Message);
+    end;
+  finally
+    FreeAndNil(sel_akaddem);
+  end;
+end;
+end; //case
+
+end;
+
 procedure TFrm_stud.Stud_civ_groupradioClick(Sender: TObject);
 begin
 if stud_civ_groupradio.Checked=true then
@@ -888,14 +967,14 @@ case otch_inp.Enabled of
           ftString,
           pdInput,
           1000,
-          fam_inp.Text
+          naim_inp.Text
         );
         Parameters.CreateParameter(
           'passp_otch',
           ftString,
           pdInput,
           1000,
-          fam_inp.Text
+          otch_inp.Text
         );
         Parameters.CreateParameter(
           'mesto_jit',
@@ -1049,7 +1128,7 @@ case otch_inp.Enabled of
           ftString,
           pdInput,
           1000,
-          fam_inp.Text
+          naim_inp.Text
         );
 
         Parameters.CreateParameter(
