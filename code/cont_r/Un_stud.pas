@@ -29,12 +29,6 @@ type
     Stud_ins_btn_Box: TGroupBox;
     Stud_insBtn: TButton;
     Stud_DataInsBox: TGroupBox;
-    Stud_upd_inp_Box: TGroupBox;
-    Studplbl: TStaticText;
-    StudUpdDBL: TDBLookupComboBox;
-    Stud_upd_btn_Box: TGroupBox;
-    Stud_upd_Btn: TButton;
-    Stud_upd_dataBox: TGroupBox;
     delgrdatacBox: TGroupBox;
     delgrlbl: TStaticText;
     delgrDBL: TDBLookupComboBox;
@@ -43,7 +37,6 @@ type
     degrdataBox: TGroupBox;
     Stud_gr_groupradio: TRadioButton;
     Studfnd_akademCb: TCheckBox;
-    StuddLbl: TLabel;
     delgrgrid: TDBGrid;
     CbSecondnaim: TCheckBox;
     Stud_inp_page: TPageControl;
@@ -84,8 +77,27 @@ type
     avn_add: TMenuItem;
     proezd: TMenuItem;
     orign_str: TMenuItem;
-    Stud_upd_akadenGrd: TDBGrid;
+    StudupdPC: TPageControl;
+    akademTab: TTabSheet;
+    regectTab: TTabSheet;
+    Stud_upd_inp_Box: TGroupBox;
+    StuddLbl: TLabel;
+    Studplbl: TStaticText;
+    StudUpdDBL: TDBLookupComboBox;
     StudUpdakademCombo: TComboBox;
+    Stud_upd_btn_Box: TGroupBox;
+    Stud_upd_Btn: TButton;
+    Stud_upd_dataBox: TGroupBox;
+    Stud_upd_akadenGrd: TDBGrid;
+    StudrejectinpBox: TGroupBox;
+    rejectdataLbl: TLabel;
+    rejectstudlbl: TStaticText;
+    reject_studDBL: TDBLookupComboBox;
+    rejectbtnBox: TGroupBox;
+    rejectbtn: TButton;
+    rejectdataBox: TGroupBox;
+    rejectGrd: TDBGrid;
+    regetDateinp: TDateTimePicker;
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -124,6 +136,7 @@ type
     procedure orign_strClick(Sender: TObject);
     procedure StudUpdakademComboChange(Sender: TObject);
     procedure Stud_upd_BtnClick(Sender: TObject);
+    procedure rejectbtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -380,6 +393,11 @@ end;
 procedure TFrm_stud.region_inpExit(Sender: TObject);
 begin
 insProgres_bar.StepBy(1);
+end;
+
+procedure TFrm_stud.rejectbtnClick(Sender: TObject);
+begin
+  ShowMessage('twst');
 end;
 
 procedure TFrm_stud.Studfnd_akademCbClick(Sender: TObject);
