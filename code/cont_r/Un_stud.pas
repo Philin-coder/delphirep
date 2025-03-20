@@ -29,12 +29,12 @@ type
     Stud_ins_btn_Box: TGroupBox;
     Stud_insBtn: TButton;
     Stud_DataInsBox: TGroupBox;
-    Grupp_upd_inp_Box: TGroupBox;
-    Grupplbl: TStaticText;
-    GruppUpdDBL: TDBLookupComboBox;
-    Grupp_upd_btn_Box: TGroupBox;
-    Grupp_upd_Btn: TButton;
-    Grupp_upd_dataBox: TGroupBox;
+    Stud_upd_inp_Box: TGroupBox;
+    Studplbl: TStaticText;
+    StudUpdDBL: TDBLookupComboBox;
+    Stud_upd_btn_Box: TGroupBox;
+    Stud_upd_Btn: TButton;
+    Stud_upd_dataBox: TGroupBox;
     delgrdatacBox: TGroupBox;
     delgrlbl: TStaticText;
     delgrDBL: TDBLookupComboBox;
@@ -43,10 +43,7 @@ type
     degrdataBox: TGroupBox;
     Stud_gr_groupradio: TRadioButton;
     Studfnd_akademCb: TCheckBox;
-    GruppupdDataGrd: TDBGrid;
-    UpDown_upd_grade: TUpDown;
-    gr_upd_grader: TEdit;
-    grupdLbl: TLabel;
+    StuddLbl: TLabel;
     delgrgrid: TDBGrid;
     CbSecondnaim: TCheckBox;
     Stud_inp_page: TPageControl;
@@ -87,6 +84,8 @@ type
     avn_add: TMenuItem;
     proezd: TMenuItem;
     orign_str: TMenuItem;
+    Stud_upd_akadenGrd: TDBGrid;
+    StudUpdakademCombo: TComboBox;
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -331,12 +330,11 @@ begin
      otch_inp.Color:=clRed;
   Beep;
   exit;
-
 end
 else
 begin
     naim_inp.Color:=clWindow;
-     otch_inp.Color:=clWindow;
+    otch_inp.Color:=clWindow;
 end;
 
 insProgres_bar.StepBy(1);

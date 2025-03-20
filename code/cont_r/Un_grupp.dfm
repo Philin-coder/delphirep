@@ -22,11 +22,15 @@ object Frm_grupp: TFrm_grupp
     Top = 0
     Width = 1037
     Height = 813
-    ActivePage = InsTab
+    ActivePage = UpdTab
     Align = alClient
     TabOrder = 0
     object SelTab: TTabSheet
       Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086'  '#1075#1088#1091#1087#1087#1077
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object gruppgroupBox: TGroupBox
         Left = 0
         Top = 97
@@ -477,6 +481,10 @@ object Frm_grupp: TFrm_grupp
     object delTab: TTabSheet
       Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1089#1087#1077#1094#1080#1072#1083#1100#1085#1086#1089#1090#1080
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object delgrdatacBox: TGroupBox
         Left = 0
         Top = 0
