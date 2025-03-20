@@ -21,7 +21,7 @@ object Frm_spec: TFrm_spec
     Top = 0
     Width = 1037
     Height = 813
-    ActivePage = SelTab
+    ActivePage = delTab
     Align = alClient
     TabOrder = 0
     object SelTab: TTabSheet

@@ -29,15 +29,14 @@ type
     Stud_ins_btn_Box: TGroupBox;
     Stud_insBtn: TButton;
     Stud_DataInsBox: TGroupBox;
-    delgrdatacBox: TGroupBox;
-    delgrlbl: TStaticText;
-    delgrDBL: TDBLookupComboBox;
-    dlgrbtnBox: TGroupBox;
-    delgrBtn: TButton;
-    degrdataBox: TGroupBox;
+    delstdatacBox: TGroupBox;
+    delstlbl: TStaticText;
+    delstDBL: TDBLookupComboBox;
+    dlgsttnBox: TGroupBox;
+    delstBtn: TButton;
+    delstdataBox: TGroupBox;
     Stud_gr_groupradio: TRadioButton;
     Studfnd_akademCb: TCheckBox;
-    delgrgrid: TDBGrid;
     CbSecondnaim: TCheckBox;
     Stud_inp_page: TPageControl;
     Stud_about_page_one: TTabSheet;
@@ -99,6 +98,7 @@ type
     rejectGrd: TDBGrid;
     regetDateinp: TDateTimePicker;
     show_reejctCB: TCheckBox;
+    delstGrd: TDBGrid;
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -139,6 +139,7 @@ type
     procedure Stud_upd_BtnClick(Sender: TObject);
     procedure rejectbtnClick(Sender: TObject);
     procedure show_reejctCBClick(Sender: TObject);
+    procedure delstBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -192,6 +193,53 @@ end;
 procedure TFrm_stud.datapr_inpCloseUp(Sender: TObject);
 begin
 insProgres_bar.StepBy(1);
+
+end;
+
+procedure TFrm_stud.delstBtnClick(Sender: TObject);
+var
+del_stud:TADOStoredProc;
+begin
+del_stud :=nil;
+ try
+ del_stud :=TADOStoredProc.Create(nil);
+ try
+ with del_stud do
+ begin
+   Connection :=dm.Connection;
+   if not Connection.Connected then
+   begin
+     raise Exception.Create('Соединение с базаой не установлено');
+   end;
+   ProcedureName :='del_stud';
+   Parameters.Clear;
+   Parameters.CreateParameter(
+   'stud_id',
+   ftInteger,
+   pdInput,
+   0,
+   delstDBL.KeyValue
+   );
+
+   ExecProc;
+   dm.studQuery.Close;
+   dm.studQuery.Open;
+   MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+ end;
+ except on E: EADOError do
+ begin
+   ShowMessage('Ошибка'+' '+e.Message);
+ end;
+ on E: Exception do
+ begin
+  ShowMessage('Ошибка'+' '+e.Message);
+ end;
+ end;
+ finally
+ FreeAndNil(del_stud);
+ end;
+ dm.StudQuery.Close;
+ dm.StudQuery.Open;
 
 end;
 
