@@ -1,0 +1,184 @@
+unit Un_prikaz;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ComCtrls, StdCtrls, Grids, DBGrids, ExtCtrls, ADODB,DB, DBCtrls;
+
+type
+  TFrm_prikaz = class(TForm)
+    grupPage: TPageControl;
+    SelTab: TTabSheet;
+    InsTab: TTabSheet;
+    UpdTab: TTabSheet;
+    delTab: TTabSheet;
+    gruppgroupBox: TGroupBox;
+    gruppbtnBox: TGroupBox;
+    gruppDataBox: TGroupBox;
+    gruppSelGrid: TDBGrid;
+    gruppSelBtn: TButton;
+    gruppCondBox: TGroupBox;
+    grupp_condEdit: TLabeledEdit;
+    grupp_fnd_edit: TLabeledEdit;
+    grupp_sp_groupradio: TRadioButton;
+    gruppResetRadio: TRadioButton;
+    Grupp_inpBox: TGroupBox;
+    Grupp_naim_g_inp: TLabeledEdit;
+    Grupp_ins_btn_Box: TGroupBox;
+    Grupp_insBtn: TButton;
+    Grupp_DataInsBox: TGroupBox;
+    Grupp_upd_inp_Box: TGroupBox;
+    Grupplbl: TStaticText;
+    GruppUpdDBL: TDBLookupComboBox;
+    Grupp_upd_btn_Box: TGroupBox;
+    Grupp_upd_Btn: TButton;
+    Grupp_upd_dataBox: TGroupBox;
+    delgrdatacBox: TGroupBox;
+    delgrlbl: TStaticText;
+    delgrDBL: TDBLookupComboBox;
+    dlgrbtnBox: TGroupBox;
+    delgrBtn: TButton;
+    degrdataBox: TGroupBox;
+    grupp_gr_groupradio: TRadioButton;
+    fnd_naimCb: TCheckBox;
+    Grupp_insGrd: TDBGrid;
+    GradeUpDown: TUpDown;
+    GradeEdit: TEdit;
+    gradelbl: TStaticText;
+    SpecGrinsDBL: TDBLookupComboBox;
+    SpecGinsLbl: TLabel;
+    GruppupdDataGrd: TDBGrid;
+    UpDown_upd_grade: TUpDown;
+    gr_upd_grader: TEdit;
+    grupdLbl: TLabel;
+    TimeTimer: TTimer;
+    TimePanel: TLabel;
+    delgrgrid: TDBGrid;
+    procedure TimeTimerTimer(Sender: TObject);
+    procedure Grupp_upd_BtnClick(Sender: TObject);
+    procedure delgrBtnClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_prikaz: TFrm_prikaz;
+
+implementation
+
+uses Un_dm, Un_main, Un_func;
+
+{$R *.dfm}
+
+procedure TFrm_prikaz.delgrBtnClick(Sender: TObject);
+var del_group:TADOStoredProc;
+begin
+  del_group :=nil;
+ try
+ del_group :=TADOStoredProc.Create(nil);
+ try
+ with del_group do
+ begin
+   Connection :=dm.Connection;
+   if not Connection.Connected then
+   begin
+     raise Exception.Create('Соединение с базой не установлено');
+   end;
+   ProcedureName :='del_group';
+   Parameters.Clear;
+   Parameters.CreateParameter(
+   'grup_id',
+   ftInteger,
+   pdInput,
+   0,
+   delgrDBL.KeyValue
+   );
+   ExecProc;
+   dm.GruppQuery.Close;
+   dm.gruppQuery.Open;
+   MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+ end;
+ except on E: EADOError do
+ begin
+   ShowMessage('Ошибка'+' '+e.Message);
+ end;
+ on E: Exception do
+ begin
+  ShowMessage('Ошибка'+' '+e.Message);
+ end;
+ end;
+ finally
+ FreeAndNil(del_group);
+ end;
+end;
+
+end;
+
+end;
+
+procedure TFrm_prikaz.Grupp_upd_BtnClick(Sender: TObject);
+var
+  upd_grupp:TADOStoredProc;
+  begin
+   if (UpDown_upd_grade.Position=0)  then
+ begin
+  MessageDlg('Заполните все поля',mtError,[mbOK],0);
+   Beep;
+   Exit;
+ end;
+ upd_grupp :=nil;
+ try
+ upd_grupp :=TADOStoredProc.Create(nil);
+ try
+ with upd_grupp do
+ begin
+   Connection :=dm.Connection;
+   if not Connection.Connected then
+   begin
+     raise Exception.Create('Соединене с базой не установлено');
+   end;
+   ProcedureName :='upd_grupp';
+   Parameters.Clear;
+   Parameters.CreateParameter(
+   'kurs',
+   ftInteger,
+   pdInput,
+   0,
+   StrToInt(gr_upd_grader.Text)
+   );
+   Parameters.CreateParameter(
+   'grup_id',
+   ftInteger,
+   pdInput,
+   0,
+   GruppUpdDBL.KeyValue
+   );
+   ExecProc;
+   dm.GruppQuery.Close;
+   dm.GruppQuery.Open;
+  MessageDlg('Изменеия внесены', mtInformation, [mbOK], 0);
+ end;
+ except on E: EADOError do
+ begin
+   ShowMessage('Ошибка'+' '+e.Message);
+ end;
+ on E: Exception do
+ begin
+  ShowMessage('Ошибка'+' '+e.Message);
+ end;
+ end;
+ finally
+ FreeAndNil(upd_grupp);
+ end;
+
+end;
+
+procedure TFrm_prikaz.TimeTimerTimer(Sender: TObject);
+begin
+  TimePanel.Caption :=DateTimeToStr(Now);
+end;
+
+end.

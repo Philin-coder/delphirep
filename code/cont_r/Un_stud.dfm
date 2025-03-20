@@ -23,7 +23,7 @@ object Frm_stud: TFrm_stud
     Top = 0
     Width = 1037
     Height = 813
-    ActivePage = delTab
+    ActivePage = InsTab
     Align = alClient
     TabOrder = 0
     object SelTab: TTabSheet
@@ -267,7 +267,7 @@ object Frm_stud: TFrm_stud
           Top = 15
           Width = 1025
           Height = 304
-          ActivePage = Stud_about_page_two
+          ActivePage = Stud_about_page_three
           Align = alClient
           TabOrder = 0
           object Stud_about_page_one: TTabSheet
@@ -735,7 +735,6 @@ object Frm_stud: TFrm_stud
         TabOrder = 0
         object akademTab: TTabSheet
           Caption = #1040#1082#1072#1076#1077#1084#1080#1095#1077#1089#1082#1080#1081' '#1086#1090#1087#1091#1089#1082
-          ExplicitLeft = 0
           object Stud_upd_inp_Box: TGroupBox
             Left = 0
             Top = 0
@@ -744,9 +743,6 @@ object Frm_stud: TFrm_stud
             Align = alTop
             Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
             TabOrder = 0
-            ExplicitLeft = -3
-            ExplicitTop = -6
-            ExplicitWidth = 1029
             DesignSize = (
               1021
               121)
@@ -800,8 +796,6 @@ object Frm_stud: TFrm_stud
             Height = 55
             Align = alBottom
             TabOrder = 1
-            ExplicitTop = 730
-            ExplicitWidth = 1029
             object Stud_upd_Btn: TButton
               Left = 296
               Top = 11
@@ -821,8 +815,6 @@ object Frm_stud: TFrm_stud
             Align = alClient
             Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
             TabOrder = 2
-            ExplicitWidth = 1029
-            ExplicitHeight = 609
             object Stud_upd_akadenGrd: TDBGrid
               Left = 2
               Top = 15
@@ -930,8 +922,6 @@ object Frm_stud: TFrm_stud
         object regectTab: TTabSheet
           Caption = #1054#1090#1095#1080#1089#1083#1077#1085#1080#1077
           ImageIndex = 1
-          ExplicitWidth = 281
-          ExplicitHeight = 165
           object StudrejectinpBox: TGroupBox
             Left = 0
             Top = 0
@@ -940,9 +930,6 @@ object Frm_stud: TFrm_stud
             Align = alTop
             Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
             TabOrder = 0
-            ExplicitLeft = -3
-            ExplicitTop = -6
-            ExplicitWidth = 1029
             DesignSize = (
               1021
               121)
@@ -1004,8 +991,6 @@ object Frm_stud: TFrm_stud
             Height = 55
             Align = alBottom
             TabOrder = 1
-            ExplicitTop = 730
-            ExplicitWidth = 1029
             object rejectbtn: TButton
               Left = 296
               Top = 11
@@ -1025,8 +1010,6 @@ object Frm_stud: TFrm_stud
             Align = alClient
             Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
             TabOrder = 2
-            ExplicitWidth = 1029
-            ExplicitHeight = 609
             object rejectGrd: TDBGrid
               Left = 2
               Top = 15

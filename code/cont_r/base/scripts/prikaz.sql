@@ -1,7 +1,7 @@
 USE [cont_r]
 GO
 
-/****** Object:  Table [dbo].[prikaz]    Script Date: 09.03.2025 11:17:06 ******/
+/****** Object:  Table [dbo].[prikaz]    Script Date: 20.03.2025 22:26:39 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -9,11 +9,15 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE TABLE [dbo].[prikaz](
-	[pr_id] [int] NOT NULL,
+	[pr_id] [int] IDENTITY(1,1) NOT NULL,
 	[pr_nom] [varchar](50) NOT NULL,
 	[date_pr] [date] NOT NULL,
 	[tip_pr] [varchar](1000) NOT NULL,
-	[stud_id] [int] NOT NULL
+	[stud_id] [int] NOT NULL,
+ CONSTRAINT [PK_prikaz] PRIMARY KEY CLUSTERED 
+(
+	[pr_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
 

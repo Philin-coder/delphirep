@@ -77,7 +77,7 @@ object DM: TDM
       '  and stud.data_ot is  null'
       '  and is_akadem=0')
     Left = 168
-    Top = 80
+    Top = 64
   end
   object StuddS: TDataSource
     DataSet = StudQuery
@@ -103,8 +103,8 @@ object DM: TDM
       'and stud.data_ot is null'
       #9
       '')
-    Left = 224
-    Top = 80
+    Left = 232
+    Top = 64
   end
   object PrikazDS: TDataSource
     DataSet = PrikazQuery

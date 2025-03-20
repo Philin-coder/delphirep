@@ -14,14 +14,12 @@ type
     mainImage: TImage;
     Grup_item: TMenuItem;
     Stud_Item: TMenuItem;
-    Prikaz_item: TMenuItem;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure spec_itemClick(Sender: TObject);
     procedure Grup_itemClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure Stud_ItemClick(Sender: TObject);
-    procedure Prikaz_itemClick(Sender: TObject);
 
  private
     { Private declarations }
@@ -36,7 +34,7 @@ var
 
 implementation
 
-uses Un_func, Un_dm, Un_spec, Un_grupp, Un_stud, Un_prikaz;
+uses Un_func, Un_dm, Un_spec, Un_grupp, Un_stud;
 
 {$R *.dfm}
 const
@@ -84,19 +82,6 @@ except
 raise;
   end;
   end;
-
-procedure TFrm_main.Prikaz_itemClick(Sender: TObject);
-begin
-    try
-  UpdateFormProperties('Frm_prikaz', 'Форма работы с приказом',
-  clBtnFace, 1024, 768);
-  Frm_prikaz.ShowModal;
-except
-  Frm_prikaz.Free;
-raise;
-  end;
-
-end;
 
 procedure TFrm_main.spec_itemClick(Sender: TObject);
 begin

@@ -77,7 +77,7 @@ object DM: TDM
       '  and stud.data_ot is  null'
       '  and is_akadem=0')
     Left = 168
-    Top = 80
+    Top = 64
   end
   object StuddS: TDataSource
     DataSet = StudQuery
@@ -89,22 +89,9 @@ object DM: TDM
     CursorType = ctStatic
     Parameters = <>
     SQL.Strings = (
-      'select  '
-      ' prikaz.pr_id,'
-      ' prikaz.pr_nom,'
-      ' prikaz.date_pr,'
-      ' prikaz.tip_pr,'
-      
-        ' stud.passp_fam + '#39' '#39' + stud.passp_naim + IsNull('#39' '#39' +stud.passp' +
-        '_otch,'#39#39') AS fio'
-      'from prikaz'
-      'inner join stud on stud.stud_id=prikaz.stud_id'
-      'where 1=1'
-      'and stud.data_ot is null'
-      #9
-      '')
-    Left = 224
-    Top = 80
+      'select  *  from prikaz;')
+    Left = 232
+    Top = 64
   end
   object PrikazDS: TDataSource
     DataSet = PrikazQuery
