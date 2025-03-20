@@ -23,7 +23,7 @@ object Frm_stud: TFrm_stud
     Top = 0
     Width = 1037
     Height = 813
-    ActivePage = SelTab
+    ActivePage = UpdTab
     Align = alClient
     TabOrder = 0
     object SelTab: TTabSheet
@@ -943,9 +943,12 @@ object Frm_stud: TFrm_stud
             ExplicitLeft = -3
             ExplicitTop = -6
             ExplicitWidth = 1029
+            DesignSize = (
+              1021
+              121)
             object rejectdataLbl: TLabel
-              Left = 16
-              Top = 55
+              Left = 20
+              Top = 78
               Width = 88
               Height = 13
               Caption = #1044#1072#1090#1072' '#1086#1090#1095#1080#1089#1083#1077#1085#1080#1103
@@ -973,13 +976,25 @@ object Frm_stud: TFrm_stud
               TabOrder = 1
             end
             object regetDateinp: TDateTimePicker
-              Left = 16
-              Top = 74
-              Width = 998
+              Left = 20
+              Top = 97
+              Width = 989
               Height = 21
+              Anchors = [akLeft, akRight]
               Date = 45736.586464189820000000
               Time = 45736.586464189820000000
               TabOrder = 2
+            end
+            object show_reejctCB: TCheckBox
+              Left = 144
+              Top = 72
+              Width = 169
+              Height = 17
+              Align = alCustom
+              Anchors = [akLeft, akRight]
+              Caption = #1055#1086#1082#1072#1079#1072#1090#1100' '#1086#1090#1095#1080#1089#1083#1077#1085#1085#1099#1093
+              TabOrder = 3
+              OnClick = show_reejctCBClick
             end
           end
           object rejectbtnBox: TGroupBox

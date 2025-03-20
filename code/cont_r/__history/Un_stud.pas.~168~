@@ -29,12 +29,6 @@ type
     Stud_ins_btn_Box: TGroupBox;
     Stud_insBtn: TButton;
     Stud_DataInsBox: TGroupBox;
-    Stud_upd_inp_Box: TGroupBox;
-    Studplbl: TStaticText;
-    StudUpdDBL: TDBLookupComboBox;
-    Stud_upd_btn_Box: TGroupBox;
-    Stud_upd_Btn: TButton;
-    Stud_upd_dataBox: TGroupBox;
     delgrdatacBox: TGroupBox;
     delgrlbl: TStaticText;
     delgrDBL: TDBLookupComboBox;
@@ -43,7 +37,6 @@ type
     degrdataBox: TGroupBox;
     Stud_gr_groupradio: TRadioButton;
     Studfnd_akademCb: TCheckBox;
-    StuddLbl: TLabel;
     delgrgrid: TDBGrid;
     CbSecondnaim: TCheckBox;
     Stud_inp_page: TPageControl;
@@ -84,8 +77,28 @@ type
     avn_add: TMenuItem;
     proezd: TMenuItem;
     orign_str: TMenuItem;
-    Stud_upd_akadenGrd: TDBGrid;
+    StudupdPC: TPageControl;
+    akademTab: TTabSheet;
+    regectTab: TTabSheet;
+    Stud_upd_inp_Box: TGroupBox;
+    StuddLbl: TLabel;
+    Studplbl: TStaticText;
+    StudUpdDBL: TDBLookupComboBox;
     StudUpdakademCombo: TComboBox;
+    Stud_upd_btn_Box: TGroupBox;
+    Stud_upd_Btn: TButton;
+    Stud_upd_dataBox: TGroupBox;
+    Stud_upd_akadenGrd: TDBGrid;
+    StudrejectinpBox: TGroupBox;
+    rejectdataLbl: TLabel;
+    rejectstudlbl: TStaticText;
+    reject_studDBL: TDBLookupComboBox;
+    rejectbtnBox: TGroupBox;
+    rejectbtn: TButton;
+    rejectdataBox: TGroupBox;
+    rejectGrd: TDBGrid;
+    regetDateinp: TDateTimePicker;
+    show_reejctCB: TCheckBox;
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -124,6 +137,8 @@ type
     procedure orign_strClick(Sender: TObject);
     procedure StudUpdakademComboChange(Sender: TObject);
     procedure Stud_upd_BtnClick(Sender: TObject);
+    procedure rejectbtnClick(Sender: TObject);
+    procedure show_reejctCBClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -380,6 +395,12 @@ end;
 procedure TFrm_stud.region_inpExit(Sender: TObject);
 begin
 insProgres_bar.StepBy(1);
+end;
+
+procedure TFrm_stud.rejectbtnClick(Sender: TObject);
+
+begin
+    ShowMessage('test');    // 0 учатся
 end;
 
 procedure TFrm_stud.Studfnd_akademCbClick(Sender: TObject);
@@ -832,6 +853,75 @@ end;
 
 end;
 
+procedure TFrm_stud.show_reejctCBClick(Sender: TObject);
+  var
+     sel_all:TADOStoredProc;
+     sel_rejected:TADOStoredProc;
+begin
+ case show_reejctCB.Checked  of
+ TRue:
+ begin
+   // отчисденные
+  sel_rejected := nil;
+  try
+    sel_rejected := TADOStoredProc.Create(nil);
+    try
+      with sel_rejected do
+      begin
+        Connection := DM.Connection;
+        if not Connection.Connected then
+          raise Exception.Create('соединенние с базой не установлено');
+        ProcedureName := 'sel_rejected';
+        Open;
+        DM.StudQuery.Close;
+        DM.StudQuery.Recordset := sel_rejected.Recordset;
+      end;
+    except
+      on E: EADOError do
+        ShowMessage('Ошибка: ' + E.Message);
+      on E: Exception do
+        ShowMessage('Ошибка: ' + E.Message);
+    end;
+  finally
+    FreeAndNil(sel_rejected);
+  end;
+    dm.StudQuery.Close;
+    dm.studQuery.Open;
+
+ end;
+ false:
+ begin
+  sel_all := nil;
+  try
+    sel_all := TADOStoredProc.Create(nil);
+    try
+      with sel_all do
+      begin
+        Connection := DM.Connection;
+        if not Connection.Connected then
+          raise Exception.Create('соединенние с базой не установлено');
+        ProcedureName := 'sel_all';
+        Open;
+        DM.StudQuery.Close;
+        DM.StudQuery.Recordset := sel_all.Recordset;
+      end;
+    except
+      on E: EADOError do
+        ShowMessage('Ошибка: ' + E.Message);
+      on E: Exception do
+        ShowMessage('Ошибка: ' + E.Message);
+    end;
+  finally
+    FreeAndNil(sel_all);
+  end;
+    dm.StudQuery.Close;
+    dm.studQuery.Open;
+
+ end;
+
+ end; //case
+end;
+
 procedure TFrm_stud.str_addClick(Sender: TObject);
 var adr_str:string;
 begin
@@ -1211,6 +1301,7 @@ end;
 procedure TFrm_stud.Stud_upd_BtnClick(Sender: TObject);
  var
   upd_inakadem:TADOStoredProc;
+  upd_from_akadem:TADOStoredProc;
 begin
 case go_akadem of
 0:
@@ -1254,11 +1345,48 @@ begin
  end;
  dm.StudQuery.Close;
  dm.StudQuery.Open;
-
 end;
 1:
 begin
- ShowMessage(IntToStr(go_akadem));
+ upd_from_akadem :=nil;
+ try
+ upd_from_akadem :=TADOStoredProc.Create(nil);
+ try
+ with upd_from_akadem do
+ begin
+   Connection :=dm.Connection;
+   if not Connection.Connected then
+   begin
+     raise Exception.Create('Соединение с базой не установелено');
+   end;
+   ProcedureName :='upd_from_akadem';
+   Parameters.Clear;
+   Parameters.CreateParameter(
+   'stud_id',
+   ftInteger,
+   pdInput,
+   0,
+   StudUpdDBL.KeyValue
+   );
+   ExecProc;
+   dm.specQuery.Close;
+   dm.specQuery.Open;
+   MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+ end;
+ except on E: EADOError do
+ begin
+   ShowMessage('Ошибка'+' '+e.Message);
+ end;
+ on E: Exception do
+ begin
+  ShowMessage('Ошибка'+' '+e.Message);
+ end;
+ end;
+ finally
+ FreeAndNil(upd_from_akadem);
+ end;
+ dm.StudQuery.Close;
+ dm.StudQuery.Open;
 end;
 end; //case
 end;

@@ -98,6 +98,7 @@ type
     rejectdataBox: TGroupBox;
     rejectGrd: TDBGrid;
     regetDateinp: TDateTimePicker;
+    show_reejctCB: TCheckBox;
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -136,6 +137,8 @@ type
     procedure orign_strClick(Sender: TObject);
     procedure StudUpdakademComboChange(Sender: TObject);
     procedure Stud_upd_BtnClick(Sender: TObject);
+    procedure rejectbtnClick(Sender: TObject);
+    procedure show_reejctCBClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -145,7 +148,7 @@ type
 var
   Frm_stud: TFrm_stud;
   var cb_st:Integer;
-  var s_val,m_jit,akadem_st,go_akadem:Integer;
+  var s_val,m_jit,akadem_st,go_akadem,reject_st:Integer;
 
 implementation
 
@@ -392,6 +395,47 @@ end;
 procedure TFrm_stud.region_inpExit(Sender: TObject);
 begin
 insProgres_bar.StepBy(1);
+end;
+
+procedure TFrm_stud.rejectbtnClick(Sender: TObject);
+var
+sel_all:TADOStoredProc;
+begin
+  case reject_st  of
+    0:
+    begin
+      // 0 учатся
+       sel_all := nil;
+  try
+    sel_all := TADOStoredProc.Create(nil);
+    try
+      with sel_all do
+      begin
+        Connection := DM.Connection;
+        if not Connection.Connected then
+          raise Exception.Create('соединенние с базой не установлено');
+        ProcedureName := 'sel_all';
+        Open;
+        DM.StudQuery.Close;
+        DM.StudQuery.Recordset := sel_all.Recordset;
+      end;
+    except
+      on E: EADOError do
+        ShowMessage('Ошибка: ' + E.Message);
+      on E: Exception do
+        ShowMessage('Ошибка: ' + E.Message);
+    end;
+  finally
+    FreeAndNil(sel_all);
+  end;
+    dm.StudQuery.Close;
+    dm.studQuery.Open;
+    end;
+    1:
+    begin
+
+    end;
+  end;//case
 end;
 
 procedure TFrm_stud.Studfnd_akademCbClick(Sender: TObject);
@@ -842,6 +886,11 @@ begin
   otch_inp.Enabled:=True;
 end;
 
+end;
+
+procedure TFrm_stud.show_reejctCBClick(Sender: TObject);
+begin
+  if show_reejctCB.Checked then reject_st:=1 else reject_st:=0;
 end;
 
 procedure TFrm_stud.str_addClick(Sender: TObject);
