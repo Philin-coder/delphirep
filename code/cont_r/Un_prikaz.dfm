@@ -21,7 +21,7 @@ object Frm_prikaz: TFrm_prikaz
     Top = 0
     Width = 1037
     Height = 813
-    ActivePage = SelTab
+    ActivePage = InsTab
     Align = alClient
     TabOrder = 0
     object SelTab: TTabSheet
@@ -177,9 +177,9 @@ object Frm_prikaz: TFrm_prikaz
       end
     end
     object InsTab: TTabSheet
-      Caption = #1042#1074#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1075#1088#1091#1087#1087#1077
+      Caption = #1042#1074#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1088#1080#1082#1072#1079#1077
       ImageIndex = 1
-      object Grupp_inpBox: TGroupBox
+      object Prikaz_inpBox: TGroupBox
         Left = 0
         Top = 0
         Width = 1029
@@ -187,80 +187,84 @@ object Frm_prikaz: TFrm_prikaz
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
+        ExplicitLeft = 2
+        ExplicitTop = -6
         DesignSize = (
           1029
           321)
-        object SpecGinsLbl: TLabel
+        object pr_naim_inp: TLabeledEdit
           Left = 3
-          Top = 200
-          Width = 78
-          Height = 13
-          Caption = #1057#1087#1077#1094#1080#1072#1083#1100#1085#1086#1089#1090#1100
-        end
-        object Grupp_naim_g_inp: TLabeledEdit
-          Left = 2
-          Top = 72
+          Top = 40
           Width = 1026
           Height = 21
           Anchors = [akLeft, akRight]
-          EditLabel.Width = 115
+          EditLabel.Width = 108
           EditLabel.Height = 13
-          EditLabel.Caption = #1042#1074#1086#1076' '#1085#1072#1079#1074#1072#1085#1080#1103' '#1075#1088#1091#1087#1087#1099
+          EditLabel.Caption = #1042#1074#1086#1076' '#1085#1086#1084#1077#1088#1072' '#1087#1088#1080#1082#1072#1079#1072
           TabOrder = 0
         end
-        object GradeUpDown: TUpDown
+        object date_pr_lbl: TStaticText
           Left = 3
-          Top = 148
-          Width = 17
-          Height = 21
-          AlignButton = udLeft
-          Anchors = [akLeft]
-          Associate = GradeEdit
-          Orientation = udHorizontal
-          TabOrder = 1
-        end
-        object GradeEdit: TEdit
-          Left = 19
-          Top = 148
-          Width = 1069
-          Height = 21
-          Cursor = crVSplit
-          Align = alCustom
-          Anchors = [akLeft, akRight]
-          Color = clWhite
-          TabOrder = 2
-          Text = '0'
-        end
-        object gradelbl: TStaticText
-          Left = 3
-          Top = 125
-          Width = 28
+          Top = 80
+          Width = 171
           Height = 17
           Align = alCustom
-          Caption = #1050#1091#1088#1089
-          TabOrder = 3
+          Anchors = [akLeft, akRight]
+          Caption = #1044#1072#1090#1072' '#1074#1089#1090#1091#1087#1083#1077#1085#1080#1103' '#1087#1088#1080#1082#1072#1079#1072' '#1074' '#1089#1080#1083#1091
+          TabOrder = 1
         end
-        object SpecGrinsDBL: TDBLookupComboBox
+        object Datepr_inp: TDateTimePicker
           Left = 3
-          Top = 219
-          Width = 1023
+          Top = 103
+          Width = 1030
           Height = 21
           Align = alCustom
           Anchors = [akLeft, akRight]
-          KeyField = 'spec_id'
-          ListField = 'spec_maim'
-          ListSource = DM.spectDS
+          Date = 45737.696028414350000000
+          Time = 45737.696028414350000000
+          TabOrder = 2
+        end
+        object pr_type_inp: TLabeledEdit
+          Left = 0
+          Top = 176
+          Width = 1026
+          Height = 21
+          Anchors = [akLeft, akRight]
+          EditLabel.Width = 96
+          EditLabel.Height = 13
+          EditLabel.Caption = #1042#1074#1086#1076' '#1090#1080#1087#1072' '#1087#1088#1080#1082#1072#1079#1072
+          TabOrder = 3
+        end
+        object pr_stud_lbl: TStaticText
+          Left = 3
+          Top = 248
+          Width = 96
+          Height = 17
+          Align = alCustom
+          Anchors = [akLeft, akRight]
+          Caption = #1053#1072' '#1082#1086#1075#1086' '#1086#1092#1086#1088#1084#1083#1077#1085
           TabOrder = 4
         end
+        object prikaz_stDBL: TDBLookupComboBox
+          Left = 3
+          Top = 271
+          Width = 1023
+          Height = 21
+          Anchors = [akLeft, akRight]
+          KeyField = 'pr_id'
+          ListField = 'tip_pr'
+          ListSource = DM.PrikazDS
+          TabOrder = 5
+        end
       end
-      object Grupp_ins_btn_Box: TGroupBox
+      object Prikaz_ins_btn_Box: TGroupBox
         Left = 0
         Top = 730
         Width = 1029
         Height = 55
         Align = alBottom
         TabOrder = 1
-        object Grupp_insBtn: TButton
+        object Prikaz_insBtn: TButton
           Left = 264
           Top = 27
           Width = 305
@@ -270,7 +274,7 @@ object Frm_prikaz: TFrm_prikaz
           TabOrder = 0
         end
       end
-      object Grupp_DataInsBox: TGroupBox
+      object Prikaz_DataInsBox: TGroupBox
         Left = 0
         Top = 321
         Width = 1029
@@ -278,13 +282,13 @@ object Frm_prikaz: TFrm_prikaz
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        object Grupp_insGrd: TDBGrid
+        object PrikazInsGrd: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
           Height = 392
           Align = alClient
-          DataSource = DM.GruppDS
+          DataSource = DM.PrikazDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -294,30 +298,36 @@ object Frm_prikaz: TFrm_prikaz
           Columns = <
             item
               Expanded = False
-              FieldName = 'grup_id'
+              FieldName = 'pr_id'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-              Width = 103
+              Width = 92
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'naim_grup'
-              Title.Caption = #1053#1072#1079#1074#1072#1085#1080#1077
-              Width = 500
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'kurs'
-              Title.Caption = #1050#1091#1088#1089
+              FieldName = 'pr_nom'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1088#1080#1082#1072#1079#1072
               Width = 100
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'spec_maim'
-              Title.Caption = #1057#1087#1077#1094#1080#1072#1083#1100#1085#1086#1089#1090#1100
-              Width = 500
+              FieldName = 'date_pr'
+              Title.Caption = #1044#1072#1090#1072' '#1074#1089#1090#1091#1087#1083#1077#1085#1080#1103' '#1074' '#1089#1080#1083#1091
+              Width = 159
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'tip_pr'
+              Title.Caption = #1058#1080#1087' '#1087#1088#1080#1082#1072#1079#1072
+              Width = 100
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'fio'
+              Title.Caption = #1053#1072' '#1082#1086#1075#1086
               Visible = True
             end>
         end

@@ -1,7 +1,7 @@
 USE [cont_r]
 GO
 
-/****** Object:  Table [dbo].[prikaz]    Script Date: 20.03.2025 22:26:39 ******/
+/****** Object:  Table [dbo].[prikaz]    Script Date: 21.03.2025 16:34:55 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -10,7 +10,7 @@ GO
 
 CREATE TABLE [dbo].[prikaz](
 	[pr_id] [int] IDENTITY(1,1) NOT NULL,
-	[pr_nom] [varchar](50) NOT NULL,
+	[pr_nom] [varchar](1000) NOT NULL,
 	[date_pr] [date] NOT NULL,
 	[tip_pr] [varchar](1000) NOT NULL,
 	[stud_id] [int] NOT NULL,

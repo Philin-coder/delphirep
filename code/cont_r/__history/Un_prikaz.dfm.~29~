@@ -16,7 +16,7 @@ object Frm_prikaz: TFrm_prikaz
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object grupPage: TPageControl
+  object PrikazPage: TPageControl
     Left = 0
     Top = 0
     Width = 1037
@@ -25,8 +25,8 @@ object Frm_prikaz: TFrm_prikaz
     Align = alClient
     TabOrder = 0
     object SelTab: TTabSheet
-      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086'  '#1075#1088#1091#1087#1087#1077
-      object gruppgroupBox: TGroupBox
+      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086'  '#1087#1088#1080#1082#1072#1079#1077
+      object PrikazgroupBox: TGroupBox
         Left = 0
         Top = 97
         Width = 1029
@@ -34,51 +34,44 @@ object Frm_prikaz: TFrm_prikaz
         Align = alTop
         Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072
         TabOrder = 0
-        object grupp_sp_groupradio: TRadioButton
+        object prikaz_nom_groupradio: TRadioButton
           Left = 56
           Top = 32
           Width = 113
           Height = 17
           Align = alCustom
-          Caption = #1055#1086' '#1089#1087#1077#1094#1080#1072#1083#1100#1085#1086#1089#1090#1080
+          Caption = #1055#1086' '#1085#1086#1084#1077#1088#1091
           TabOrder = 0
+          OnClick = prikaz_nom_groupradioClick
         end
-        object gruppResetRadio: TRadioButton
+        object PrikazResetRadio: TRadioButton
           Left = 432
           Top = 32
           Width = 113
           Height = 17
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 1
+          OnClick = PrikazResetRadioClick
         end
-        object grupp_gr_groupradio: TRadioButton
+        object type_pr_groupradio: TRadioButton
           Left = 256
           Top = 33
           Width = 113
           Height = 17
           Align = alCustom
-          Caption = #1055#1086' '#1075#1088#1091#1087#1087#1077
+          Caption = #1055#1086' '#1090#1080#1087#1091
           TabOrder = 2
-        end
-        object fnd_naimCb: TCheckBox
-          Left = 656
-          Top = 32
-          Width = 209
-          Height = 17
-          Align = alCustom
-          Anchors = [akLeft, akRight]
-          Caption = #1046#1080#1074#1086#1081'  '#1087#1086#1080#1089#1082' '#1087#1086' '#1085#1072#1079#1074#1072#1085#1080#1102
-          TabOrder = 3
+          OnClick = type_pr_groupradioClick
         end
       end
-      object gruppbtnBox: TGroupBox
+      object PrikazbtnBox: TGroupBox
         Left = 0
         Top = 730
         Width = 1029
         Height = 55
         Align = alBottom
         TabOrder = 1
-        object gruppSelBtn: TButton
+        object PrikazSelBtn: TButton
           Left = 264
           Top = 27
           Width = 305
@@ -86,9 +79,10 @@ object Frm_prikaz: TFrm_prikaz
           Align = alCustom
           Caption = #1042#1099#1073#1086#1088
           TabOrder = 0
+          OnClick = PrikazSelBtnClick
         end
       end
-      object gruppDataBox: TGroupBox
+      object PrikazDataBox: TGroupBox
         Left = 0
         Top = 161
         Width = 1029
@@ -96,7 +90,7 @@ object Frm_prikaz: TFrm_prikaz
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        object gruppSelGrid: TDBGrid
+        object PrikazSelGrid: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
@@ -146,7 +140,7 @@ object Frm_prikaz: TFrm_prikaz
             end>
         end
       end
-      object gruppCondBox: TGroupBox
+      object PrikazCondBox: TGroupBox
         Left = 0
         Top = 0
         Width = 1029
@@ -157,27 +151,28 @@ object Frm_prikaz: TFrm_prikaz
         DesignSize = (
           1029
           97)
-        object grupp_condEdit: TLabeledEdit
+        object Prikaz_condEdit: TLabeledEdit
           Left = 0
           Top = 29
           Width = 1026
           Height = 21
           Anchors = [akLeft, akRight]
-          EditLabel.Width = 161
+          EditLabel.Width = 197
           EditLabel.Height = 13
-          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1091#1089#1083#1086#1074#1080#1102
+          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1085#1086#1084#1077#1088#1091' '#1087#1088#1080#1082#1072#1079#1072
           TabOrder = 0
         end
-        object grupp_fnd_edit: TLabeledEdit
+        object Prikaz_fnd_edit: TLabeledEdit
           Left = 3
           Top = 70
           Width = 1042
           Height = 21
           Anchors = [akLeft, akRight]
-          EditLabel.Width = 160
+          EditLabel.Width = 152
           EditLabel.Height = 13
-          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1089#1087#1077#1094#1080#1072#1083#1100#1085#1086#1089#1090#1080
+          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1090#1080#1087#1091' '#1087#1088#1080#1082#1072#1079#1072
           TabOrder = 1
+          OnKeyPress = Prikaz_fnd_editKeyPress
         end
       end
     end
@@ -201,14 +196,6 @@ object Frm_prikaz: TFrm_prikaz
           Width = 78
           Height = 13
           Caption = #1057#1087#1077#1094#1080#1072#1083#1100#1085#1086#1089#1090#1100
-        end
-        object TimePanel: TLabel
-          Left = 350
-          Top = 272
-          Width = 3
-          Height = 13
-          Align = alCustom
-          Anchors = [akLeft, akRight]
         end
         object Grupp_naim_g_inp: TLabeledEdit
           Left = 2
@@ -443,7 +430,7 @@ object Frm_prikaz: TFrm_prikaz
               Expanded = False
               FieldName = 'grup_id'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-              Width = 103
+              Width = 199
               Visible = True
             end
             item
@@ -471,7 +458,7 @@ object Frm_prikaz: TFrm_prikaz
       end
     end
     object delTab: TTabSheet
-      Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1089#1087#1077#1094#1080#1072#1083#1100#1085#1086#1089#1090#1080
+      Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1087#1088#1080#1082#1072#1079#1077
       ImageIndex = 3
       object delgrdatacBox: TGroupBox
         Left = 0
@@ -576,10 +563,5 @@ object Frm_prikaz: TFrm_prikaz
         end
       end
     end
-  end
-  object TimeTimer: TTimer
-    Enabled = False
-    Left = 768
-    Top = 32
   end
 end

@@ -23,11 +23,11 @@ type
     Prikaz_fnd_edit: TLabeledEdit;
     prikaz_nom_groupradio: TRadioButton;
     PrikazResetRadio: TRadioButton;
-    Grupp_inpBox: TGroupBox;
+    Prikaz_inpBox: TGroupBox;
     Grupp_naim_g_inp: TLabeledEdit;
-    Grupp_ins_btn_Box: TGroupBox;
-    Grupp_insBtn: TButton;
-    Grupp_DataInsBox: TGroupBox;
+    Prikaz_ins_btn_Box: TGroupBox;
+    Prikaz_insBtn: TButton;
+    Prikaz_DataInsBox: TGroupBox;
     Grupp_upd_inp_Box: TGroupBox;
     Grupplbl: TStaticText;
     GruppUpdDBL: TDBLookupComboBox;
@@ -41,9 +41,6 @@ type
     delgrBtn: TButton;
     degrdataBox: TGroupBox;
     type_pr_groupradio: TRadioButton;
-    Grupp_insGrd: TDBGrid;
-    GradeUpDown: TUpDown;
-    GradeEdit: TEdit;
     gradelbl: TStaticText;
     SpecGrinsDBL: TDBLookupComboBox;
     SpecGinsLbl: TLabel;
@@ -52,11 +49,15 @@ type
     gr_upd_grader: TEdit;
     grupdLbl: TLabel;
     delgrgrid: TDBGrid;
+    DBGrid1: TDBGrid;
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure PrikazSelBtnClick(Sender: TObject);
     procedure PrikazResetRadioClick(Sender: TObject);
+    procedure type_pr_groupradioClick(Sender: TObject);
+    procedure prikaz_nom_groupradioClick(Sender: TObject);
+    procedure Prikaz_fnd_editKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
   public
@@ -147,6 +148,13 @@ procedure TFrm_prikaz.PrikazSelBtnClick(Sender: TObject);
  var
   sel_prikaz:TADOStoredProc;
 begin
+  if (Trim(Prikaz_condEdit.Text)='')  then
+  begin
+   MessageDlg('Строка пуста',mtError,[mbOK],0);
+   Exit;
+  end
+  else
+  begin
   sel_prikaz := nil;
   try
     sel_prikaz := TADOStoredProc.Create(nil);
@@ -175,6 +183,93 @@ begin
     end;
   finally
     FreeAndNil(sel_prikaz);
+  end;
+  end;
+end;
+
+procedure TFrm_prikaz.Prikaz_fnd_editKeyPress(Sender: TObject; var Key: Char);
+begin
+try
+   dm.PrikazQuery.SQL.Text:='select'+' '+
+        'prikaz.pr_id,'+' '+
+      'prikaz.pr_nom,'+' '+
+       'prikaz.date_pr,'+
+         'prikaz.tip_pr,'+''+
+        '  stud.passp_fam + '' '' + stud.passp_naim + ISNULL('' '' + stud.passp_otch, '''') AS fio '+
+          'from prikaz'+' '+
+          'inner join stud on stud.stud_id=prikaz.stud_id'+' '+
+          'where 1=1'+' '+
+        'and stud.data_ot is null'+' '+
+        'and  prikaz.tip_pr like'+
+   QuotedStr(Concat(Prikaz_fnd_edit.Text,#37));
+   dm.PrikazQuery.close;
+   dm.PrikazQuery.Open;
+except on E: Exception do
+  begin
+  ShowMessage('Ошибка'+' '+E.Message);
+  end;
+  end;
+end;
+
+procedure TFrm_prikaz.prikaz_nom_groupradioClick(Sender: TObject);
+begin
+if prikaz_nom_groupradio.Checked=true then
+  begin
+    try
+     with dm.PrikazQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+      'select '+''+
+        'prikaz.pr_id,'+' '+
+      'prikaz.pr_nom,'+' '+
+       'prikaz.date_pr,'+
+         'prikaz.tip_pr,'+''+
+        '  stud.passp_fam + '' '' + stud.passp_naim + ISNULL('' '' + stud.passp_otch, '''') AS fio '+
+          'from prikaz'+' '+
+          'inner join stud on stud.stud_id=prikaz.stud_id'+' '+
+          'where 1=1'+' '+
+        'and stud.data_ot is null'+' '+
+      'order by pr_nom desc';
+      Open;
+     end;
+    except on E: EADOError do
+    begin
+      ShowMessage('Ошибка'+' '+E.Message);
+    end;
+    end;
+  end;
+end;
+
+procedure TFrm_prikaz.type_pr_groupradioClick(Sender: TObject);
+begin
+if type_pr_groupradio.Checked=true then
+  begin
+    try
+     with dm.PrikazQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+      'select '+''+
+        'prikaz.pr_id,'+' '+
+      'prikaz.pr_nom,'+' '+
+       'prikaz.date_pr,'+
+         'prikaz.tip_pr,'+''+
+        '  stud.passp_fam + '' '' + stud.passp_naim + ISNULL('' '' + stud.passp_otch, '''') AS fio '+
+          'from prikaz'+' '+
+          'inner join stud on stud.stud_id=prikaz.stud_id'+' '+
+          'where 1=1'+' '+
+        'and stud.data_ot is null'+' '+
+      'order by tip_pr desc';
+      Open;
+     end;
+    except on E: EADOError do
+    begin
+      ShowMessage('Ошибка'+' '+E.Message);
+    end;
+    end;
   end;
 end;
 
