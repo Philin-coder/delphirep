@@ -34,15 +34,14 @@ type
     Prikaz_upd_btn_Box: TGroupBox;
     Prikaz_upd_Btn: TButton;
     Prikaz_upd_dataBox: TGroupBox;
-    delgrdatacBox: TGroupBox;
-    delgrlbl: TStaticText;
-    delgrDBL: TDBLookupComboBox;
-    dlgrbtnBox: TGroupBox;
-    delgrBtn: TButton;
-    degrdataBox: TGroupBox;
+    delprdatacBox: TGroupBox;
+    delprlbl: TStaticText;
+    delprDBL: TDBLookupComboBox;
+    dlprbtnBox: TGroupBox;
+    delprBtn: TButton;
+    deprdataBox: TGroupBox;
     type_pr_groupradio: TRadioButton;
     PrikazDateLbl: TLabel;
-    delgrgrid: TDBGrid;
     PrikazInsGrd: TDBGrid;
     date_pr_lbl: TStaticText;
     Datepr_inp: TDateTimePicker;
@@ -51,6 +50,7 @@ type
     prikaz_stDBL: TDBLookupComboBox;
     PrikazUpdGrd: TDBGrid;
     Data_pr_inp: TDateTimePicker;
+    delprGrd: TDBGrid;
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -61,6 +61,7 @@ type
     procedure Prikaz_fnd_editKeyPress(Sender: TObject; var Key: Char);
     procedure Prikaz_insBtnClick(Sender: TObject);
     procedure Prikaz_upd_BtnClick(Sender: TObject);
+    procedure delprBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -75,6 +76,50 @@ implementation
 uses Un_dm, Un_main, Un_func;
 
 {$R *.dfm}
+
+procedure TFrm_prikaz.delprBtnClick(Sender: TObject);
+var
+  del_pr:TADOStoredProc;
+begin
+  del_pr := nil;
+  try
+    del_pr := TADOStoredProc.Create(nil);
+    try
+      with del_pr do
+      begin
+        Connection := DM.Connection;
+        if not Connection.Connected then
+        begin
+          raise Exception.Create('Соединение с базой не установленно');
+        end;
+        ProcedureName := 'del_pr';
+        Parameters.Clear;
+        Parameters.CreateParameter(
+          'pr_id',
+          ftInteger,
+          pdInput,
+          0,
+          delprDBL.KeyValue
+        );
+        ExecProc;
+        DM.prikazQuery.Close;
+        DM.prikazQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка ' + E.Message);
+      end;
+    end;
+  finally
+    FreeAndNil(del_pr);
+  end;
+end;
 
 procedure TFrm_prikaz.FormActivate(Sender: TObject);
 begin
