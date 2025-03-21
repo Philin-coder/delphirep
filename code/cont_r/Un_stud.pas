@@ -298,6 +298,7 @@ begin
   Stud_upd_Btn.Caption:='Изменение данных';
   rejectdataLbl.Caption:='Дата отчисления';
   regetDateinp.Enabled:=True;
+    rejectGrd.Columns[14].Visible:=False;
 end;
 
 procedure TFrm_stud.FormKeyUp(Sender: TObject; var Key: Word;
@@ -1036,6 +1037,7 @@ begin
   finally
     FreeAndNil(sel_rejected);
   end;
+rejectGrd.Columns[14].Visible:=true;
  end;
  false:
  begin
@@ -1066,7 +1068,7 @@ begin
   end;
     dm.StudQuery.Close;
     dm.studQuery.Open;
-
+    rejectGrd.Columns[14].Visible:=False;
  end;
 
  end; //case

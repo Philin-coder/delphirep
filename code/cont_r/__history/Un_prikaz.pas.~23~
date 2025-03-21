@@ -56,7 +56,6 @@ type
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure PrikazSelBtnClick(Sender: TObject);
-    procedure PrikazResetRadioClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -100,47 +99,6 @@ procedure TFrm_prikaz.FormCreate(Sender: TObject);
 begin
  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
  LoadFormState(Self);
-end;
-
-procedure TFrm_prikaz.PrikazResetRadioClick(Sender: TObject);
-var i,j:Integer;
-begin
-if prikazResetRadio.Checked=True then
-begin
-  with Frm_prikaz do
-    for I := 0 to ComponentCount - 1 do
-     begin
-       if (Components[i] is TLabeledEdit)  then
-        begin
-          (Components[i] as TLabeledEdit).Clear;
-        end;
-     end;
-     with dm.PrikazQuery do
-     begin
-     Close;
-     sql.Clear;
-     SQL.Text:=
-     'select '+' '+
-      'prikaz.pr_id,'+' '+
-      'prikaz.pr_nom,'+' '+
-       'prikaz.date_pr,'+
-         'prikaz.tip_pr,'+''+
-        '  stud.passp_fam + '' '' + stud.passp_naim + ISNULL('' '' + stud.passp_otch, '''') AS fio '+
-          'from prikaz'+' '+
-          'inner join stud on stud.stud_id=prikaz.stud_id'+' '+
-          'where 1=1'+' '+
-        'and stud.data_ot is null';
-     Open;
-     end;
-    with Frm_prikaz do
-    for j := 0 to ComponentCount - 1 do
-    begin
-      if(Components[j] is TRadioButton)  then
-      begin
-        (Components[j] as TRadioButton).Checked:=False;
-      end;
-    end;
-end;
 end;
 
 procedure TFrm_prikaz.PrikazSelBtnClick(Sender: TObject);

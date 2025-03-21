@@ -120,16 +120,18 @@ begin
      Close;
      sql.Clear;
      SQL.Text:=
-     'select '+' '+
+     'select '+
       'prikaz.pr_id,'+' '+
       'prikaz.pr_nom,'+' '+
        'prikaz.date_pr,'+
          'prikaz.tip_pr,'+''+
-        '  stud.passp_fam + '' '' + stud.passp_naim + ISNULL('' '' + stud.passp_otch, '''') AS fio '+
-          'from prikaz'+' '+
-          'inner join stud on stud.stud_id=prikaz.stud_id'+' '+
-          'where 1=1'+' '+
-        'and stud.data_ot is null';
+ '  stud.passp_fam + '' '' + stud.passp_naim + ISNULL('' '' + stud.passp_otch, '''') AS fio, '+
+'from prikaz'+''+
+'inner join stud on stud.stud_id=prikaz.stud_id'+' '+
+'where 1=1'+''+
+'and stud.data_ot is null';
+
+
      Open;
      end;
     with Frm_prikaz do

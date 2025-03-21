@@ -130,6 +130,9 @@ begin
           'inner join stud on stud.stud_id=prikaz.stud_id'+' '+
           'where 1=1'+' '+
         'and stud.data_ot is null';
+
+
+
      Open;
      end;
     with Frm_prikaz do

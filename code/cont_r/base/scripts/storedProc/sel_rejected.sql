@@ -1,14 +1,14 @@
 USE [cont_r]
 GO
 
-/****** Object:  StoredProcedure [dbo].[sel_rejected]    Script Date: 20.03.2025 15:41:38 ******/
+/****** Object:  StoredProcedure [dbo].[sel_rejected]    Script Date: 21.03.2025 13:42:55 ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
 
-create proc [dbo].[sel_rejected]
+CREATE proc [dbo].[sel_rejected]
 as
 begin
 select 
@@ -25,7 +25,8 @@ select
   stud.dom_t,
   stud.data_pr,
   gruppa.naim_grup,
-  stud.st_email
+  stud.st_email,
+  stud.data_ot
  from stud 
  inner join gruppa on gruppa.grup_id=stud.grup_id
  inner join spec on spec.spec_id=gruppa.spec_id

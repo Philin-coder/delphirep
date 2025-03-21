@@ -21,7 +21,7 @@ object Frm_prikaz: TFrm_prikaz
     Top = 0
     Width = 1037
     Height = 813
-    ActivePage = delTab
+    ActivePage = SelTab
     Align = alClient
     TabOrder = 0
     object SelTab: TTabSheet
@@ -50,6 +50,7 @@ object Frm_prikaz: TFrm_prikaz
           Height = 17
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 1
+          OnClick = PrikazResetRadioClick
         end
         object type_pr_groupradio: TRadioButton
           Left = 256
@@ -76,6 +77,7 @@ object Frm_prikaz: TFrm_prikaz
           Align = alCustom
           Caption = #1042#1099#1073#1086#1088
           TabOrder = 0
+          OnClick = PrikazSelBtnClick
         end
       end
       object PrikazDataBox: TGroupBox
