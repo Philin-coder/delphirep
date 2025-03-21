@@ -150,13 +150,6 @@ procedure TFrm_prikaz.PrikazSelBtnClick(Sender: TObject);
  var
   sel_prikaz:TADOStoredProc;
 begin
-  if (Trim(Prikaz_condEdit.Text)='')  then
-  begin
-   MessageDlg('Строка пуста',mtError,[mbOK],0);
-   Exit;
-  end
-  else
-  begin
   sel_prikaz := nil;
   try
     sel_prikaz := TADOStoredProc.Create(nil);
@@ -186,12 +179,12 @@ begin
   finally
     FreeAndNil(sel_prikaz);
   end;
-  end;
 end;
 
 procedure TFrm_prikaz.Prikaz_fnd_editKeyPress(Sender: TObject; var Key: Char);
 begin
 try
+
    dm.PrikazQuery.SQL.Text:='select'+' '+
         'prikaz.pr_id,'+' '+
       'prikaz.pr_nom,'+' '+

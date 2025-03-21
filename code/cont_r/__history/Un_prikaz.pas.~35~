@@ -191,6 +191,7 @@ end;
 
 procedure TFrm_prikaz.Prikaz_fnd_editKeyPress(Sender: TObject; var Key: Char);
 begin
+
 try
    dm.PrikazQuery.SQL.Text:='select'+' '+
         'prikaz.pr_id,'+' '+

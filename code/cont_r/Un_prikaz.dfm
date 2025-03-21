@@ -42,6 +42,7 @@ object Frm_prikaz: TFrm_prikaz
           Align = alCustom
           Caption = #1055#1086' '#1085#1086#1084#1077#1088#1091
           TabOrder = 0
+          OnClick = prikaz_nom_groupradioClick
         end
         object PrikazResetRadio: TRadioButton
           Left = 432
@@ -60,6 +61,7 @@ object Frm_prikaz: TFrm_prikaz
           Align = alCustom
           Caption = #1055#1086' '#1090#1080#1087#1091
           TabOrder = 2
+          OnClick = type_pr_groupradioClick
         end
       end
       object PrikazbtnBox: TGroupBox
@@ -170,6 +172,7 @@ object Frm_prikaz: TFrm_prikaz
           EditLabel.Height = 13
           EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1090#1080#1087#1091' '#1087#1088#1080#1082#1072#1079#1072
           TabOrder = 1
+          OnKeyPress = Prikaz_fnd_editKeyPress
         end
       end
     end
