@@ -21,7 +21,7 @@ object Frm_spec: TFrm_spec
     Top = 0
     Width = 1037
     Height = 813
-    ActivePage = delTab
+    ActivePage = SelTab
     Align = alClient
     TabOrder = 0
     object SelTab: TTabSheet
@@ -45,8 +45,8 @@ object Frm_spec: TFrm_spec
           OnClick = Spec_groupradioClick
         end
         object SpecResetRadio: TRadioButton
-          Left = 472
-          Top = 24
+          Left = 480
+          Top = 32
           Width = 113
           Height = 17
           Caption = #1057#1073#1088#1086#1089
