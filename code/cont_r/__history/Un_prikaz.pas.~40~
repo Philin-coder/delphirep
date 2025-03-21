@@ -340,13 +340,6 @@ begin
           0,
           Data_pr_inp.Date
         );
-        Parameters.CreateParameter(
-          'pr_id',
-          ftInteger,
-          pdInput,
-          0,
-          PrikazUpdDBL.KeyValue
-        );
         ExecProc;
         DM.PrikazQuery.Close;
         DM.PrikazQuery.Open;
