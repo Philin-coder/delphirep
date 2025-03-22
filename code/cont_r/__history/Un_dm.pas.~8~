@@ -16,8 +16,6 @@ type
     StuddS: TDataSource;
     PrikazQuery: TADOQuery;
     PrikazDS: TDataSource;
-    reportQuery: TADOQuery;
-    reprortDS: TDataSource;
   private
     { Private declarations }
   public
@@ -29,7 +27,7 @@ var
 
 implementation
 
-uses Un_main, Un_func, Un_spec, Un_grupp, Un_prikaz, Un_reports;
+uses Un_main, Un_func, Un_spec, Un_grupp, Un_prikaz;
 
 {$R *.dfm}
 

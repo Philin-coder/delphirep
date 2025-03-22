@@ -21,7 +21,7 @@ object Frm_prikaz: TFrm_prikaz
     Top = 0
     Width = 1037
     Height = 813
-    ActivePage = delTab
+    ActivePage = SelTab
     Align = alClient
     TabOrder = 0
     object SelTab: TTabSheet
@@ -187,8 +187,6 @@ object Frm_prikaz: TFrm_prikaz
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        ExplicitLeft = 2
-        ExplicitTop = -6
         DesignSize = (
           1029
           321)

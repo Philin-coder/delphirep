@@ -1,7 +1,7 @@
 object DM: TDM
   OldCreateOrder = False
   Height = 225
-  Width = 543
+  Width = 358
   object Connection: TADOConnection
     Connected = True
     ConnectionString = 
@@ -109,33 +109,6 @@ object DM: TDM
   object PrikazDS: TDataSource
     DataSet = PrikazQuery
     Left = 232
-    Top = 152
-  end
-  object reportQuery: TADOQuery
-    Connection = Connection
-    CursorType = ctStatic
-    Parameters = <>
-    SQL.Strings = (
-      'select  '
-      ' prikaz.pr_id,'
-      ' prikaz.pr_nom,'
-      ' prikaz.date_pr,'
-      ' prikaz.tip_pr,'
-      
-        ' stud.passp_fam + '#39' '#39' + stud.passp_naim + IsNull('#39' '#39' +stud.passp' +
-        '_otch,'#39#39') AS fio'
-      'from prikaz'
-      'inner join stud on stud.stud_id=prikaz.stud_id'
-      'where 1=1'
-      'and stud.data_ot is null'
-      #9
-      '')
-    Left = 288
-    Top = 80
-  end
-  object reprortDS: TDataSource
-    DataSet = reportQuery
-    Left = 296
     Top = 152
   end
 end

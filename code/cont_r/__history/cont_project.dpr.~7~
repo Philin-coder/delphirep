@@ -8,8 +8,7 @@ uses
   Un_prikaz in 'Un_prikaz.pas' {Frm_prikaz},
   Un_spec in 'Un_spec.pas' {Frm_spec},
   Un_stud in 'Un_stud.pas' {Frm_stud},
-  Un_grupp in 'Un_grupp.pas' {Frm_grupp},
-  Un_reports in 'Un_reports.pas' {Frm_reports};
+  Un_grupp in 'Un_grupp.pas' {Frm_grupp};
 
 {$R *.res}
 
@@ -21,6 +20,5 @@ begin
   Application.CreateForm(TFrm_spec, Frm_spec);
   Application.CreateForm(TFrm_stud, Frm_stud);
   Application.CreateForm(TFrm_grupp, Frm_grupp);
-  Application.CreateForm(TFrm_reports, Frm_reports);
   Application.Run;
 end.
