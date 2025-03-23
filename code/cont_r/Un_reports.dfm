@@ -21,7 +21,7 @@ object Frm_reports: TFrm_reports
     Top = 0
     Width = 1037
     Height = 813
-    ActivePage = perosnalcaseTab
+    ActivePage = Studlisttab
     Align = alClient
     TabOrder = 0
     OnChange = reprotPCChange
@@ -261,9 +261,83 @@ object Frm_reports: TFrm_reports
         end
       end
     end
-    object TabSheet1: TTabSheet
-      Caption = 'TabSheet1'
+    object Studlisttab: TTabSheet
+      Caption = #1057#1087#1080#1089#1086#1082' '#1089#1090#1091#1076#1077#1085#1090#1086#1074' '#1075#1088#1091#1087#1087#1099'  '#1082#1091#1088#1089' '#1085#1072' '#1076#1072#1090#1091
       ImageIndex = 1
+      object Secondreport_groupBox: TGroupBox
+        Left = 0
+        Top = 81
+        Width = 1029
+        Height = 152
+        Align = alTop
+        Caption = #1055#1086#1082#1072#1079#1072#1090#1100' '#1074' '#1086#1090#1095#1077#1090#1077
+        TabOrder = 0
+        object r2cbId: TCheckBox
+          Left = 15
+          Top = 17
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Anchors = [akLeft, akRight]
+          Caption = 'Id'
+          TabOrder = 0
+        end
+        object CheckBox1: TCheckBox
+          Left = 15
+          Top = 49
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Anchors = [akLeft, akRight]
+          Caption = 'Id'
+          TabOrder = 1
+        end
+        object CheckBox2: TCheckBox
+          Left = 15
+          Top = 89
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Anchors = [akLeft, akRight]
+          Caption = 'Id'
+          TabOrder = 2
+        end
+        object CheckBox3: TCheckBox
+          Left = 15
+          Top = 132
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Anchors = [akLeft, akRight]
+          Caption = 'Id'
+          TabOrder = 3
+        end
+      end
+      object Secondreport_data_inp: TGroupBox
+        Left = 0
+        Top = 0
+        Width = 1029
+        Height = 81
+        Align = alTop
+        Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 1
+      end
+      object SecondReportbtnBox: TGroupBox
+        Left = 0
+        Top = 704
+        Width = 1029
+        Height = 81
+        Align = alBottom
+        TabOrder = 2
+        object seconreportBtn: TButton
+          Left = 456
+          Top = 32
+          Width = 75
+          Height = 25
+          Caption = #1042#1099#1074#1086#1076
+          TabOrder = 0
+        end
+      end
     end
   end
 end

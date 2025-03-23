@@ -32,7 +32,15 @@ type
     stud_repprt1_lbl: TStaticText;
     Stud_report1DBL: TDBLookupComboBox;
     Stud_report1Btn: TButton;
-    TabSheet1: TTabSheet;
+    Studlisttab: TTabSheet;
+    Secondreport_groupBox: TGroupBox;
+    Secondreport_data_inp: TGroupBox;
+    SecondReportbtnBox: TGroupBox;
+    seconreportBtn: TButton;
+    r2cbId: TCheckBox;
+    CheckBox1: TCheckBox;
+    CheckBox2: TCheckBox;
+    CheckBox3: TCheckBox;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -261,7 +269,7 @@ end;
 procedure TFrm_reports.stud_idCBClick(Sender: TObject);
 begin
 Stud_report1Grid.Columns[0].Visible := stud_idCB.Checked;
-if regionCB.Checked then
+if stud_idCB.Checked then
   Stud_report1Grid.Columns[0].Title.Caption := 'Номер порядковый';
 end;
 
