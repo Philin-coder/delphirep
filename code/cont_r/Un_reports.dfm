@@ -21,7 +21,7 @@ object Frm_reports: TFrm_reports
     Top = 0
     Width = 1037
     Height = 813
-    ActivePage = Studlisttab
+    ActivePage = studlistin
     Align = alClient
     TabOrder = 0
     OnChange = reprotPCChange
@@ -272,7 +272,6 @@ object Frm_reports: TFrm_reports
         Align = alTop
         Caption = #1055#1086#1082#1072#1079#1072#1090#1100' '#1074' '#1086#1090#1095#1077#1090#1077
         TabOrder = 0
-        ExplicitTop = 81
         object r2cbId: TCheckBox
           Left = 15
           Top = 17
@@ -447,11 +446,10 @@ object Frm_reports: TFrm_reports
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
-        ExplicitLeft = 3
         object grouplbl: TStaticText
           Left = 14
           Top = 27
-          Width = 195
+          Width = 40
           Height = 17
           Align = alCustom
           Anchors = [akLeft]
@@ -473,7 +471,7 @@ object Frm_reports: TFrm_reports
         object report2_datalbl: TStaticText
           Left = 15
           Top = 107
-          Width = 194
+          Width = 30
           Height = 17
           Align = alCustom
           Anchors = [akLeft]
@@ -517,14 +515,127 @@ object Frm_reports: TFrm_reports
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 3
-        ExplicitLeft = -3
-        ExplicitTop = 239
-        ExplicitHeight = 81
         object secondrepotGrid: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
           Height = 364
+          Align = alClient
+          DataSource = DM.reprortDS
+          TabOrder = 0
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWindowText
+          TitleFont.Height = -11
+          TitleFont.Name = 'Tahoma'
+          TitleFont.Style = []
+        end
+      end
+    end
+    object studlistin: TTabSheet
+      Caption = #1057#1087#1080#1089#1086#1082' '#1089#1090#1091#1076#1077#1085#1090#1086#1074', '#1087#1088#1080#1085#1103#1090#1099#1093' '#1074' '#1090#1077#1093#1085#1080#1082#1091#1084' '#1079#1072' '#1087#1077#1088#1080#1086#1076' '
+      ImageIndex = 2
+      object thirdreportinpBox: TGroupBox
+        Left = 0
+        Top = 0
+        Width = 1029
+        Height = 233
+        Align = alTop
+        Caption = #1042#1074#1086#1076'  '#1076#1072#1085#1085#1099#1093
+        TabOrder = 0
+        object b_data_lbl: TStaticText
+          Left = 22
+          Top = 16
+          Width = 115
+          Height = 17
+          Caption = #1044#1072#1090#1072' '#1085#1072#1095#1072#1083#1072' '#1087#1077#1088#1080#1086#1076#1072
+          TabOrder = 0
+        end
+        object edatalbl: TStaticText
+          Left = 22
+          Top = 120
+          Width = 109
+          Height = 17
+          Caption = #1044#1072#1090#1072' '#1082#1086#1085#1094#1072' '#1087#1077#1088#1080#1086#1076#1072
+          TabOrder = 1
+        end
+        object b_data_inp: TDateTimePicker
+          Left = 22
+          Top = 58
+          Width = 971
+          Height = 21
+          Align = alCustom
+          Anchors = [akLeft, akRight]
+          Date = 45739.921269259260000000
+          Time = 45739.921269259260000000
+          TabOrder = 2
+        end
+        object Edatainp: TDateTimePicker
+          Left = 22
+          Top = 157
+          Width = 971
+          Height = 21
+          Align = alCustom
+          Anchors = [akLeft, akRight]
+          Date = 45739.921269259260000000
+          Time = 45739.921269259260000000
+          TabOrder = 3
+        end
+      end
+      object thrdrepbtnBox: TGroupBox
+        Left = 0
+        Top = 680
+        Width = 1029
+        Height = 105
+        Align = alBottom
+        TabOrder = 1
+        ExplicitLeft = 528
+        ExplicitTop = 368
+        ExplicitWidth = 185
+        object thrdrepBtn: TButton
+          Left = 488
+          Top = 48
+          Width = 75
+          Height = 25
+          Caption = #1042#1099#1074#1086#1076
+          TabOrder = 0
+        end
+      end
+      object thrdrepBoxgruper: TGroupBox
+        Left = 0
+        Top = 233
+        Width = 1029
+        Height = 136
+        Align = alTop
+        Caption = 'GroupBox1'
+        TabOrder = 2
+        ExplicitTop = 105
+        object CheckBox1: TCheckBox
+          Left = 40
+          Top = 32
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Caption = 'CheckBox1'
+          TabOrder = 0
+        end
+      end
+      object thrdrepdataBox: TGroupBox
+        Left = 0
+        Top = 369
+        Width = 1029
+        Height = 311
+        Align = alClient
+        Caption = #1042#1099#1074#1086#1076
+        TabOrder = 3
+        ExplicitLeft = 560
+        ExplicitTop = 664
+        ExplicitWidth = 185
+        ExplicitHeight = 105
+        object thrdrepGrid: TDBGrid
+          Left = 2
+          Top = 15
+          Width = 1025
+          Height = 294
           Align = alClient
           DataSource = DM.reprortDS
           TabOrder = 0

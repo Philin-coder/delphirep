@@ -58,6 +58,18 @@ type
     r2groupDBL: TDBLookupComboBox;
     report2_datalbl: TStaticText;
     r2_date_inp: TDateTimePicker;
+    studlistin: TTabSheet;
+    thirdreportinpBox: TGroupBox;
+    thrdrepbtnBox: TGroupBox;
+    thrdrepBoxgruper: TGroupBox;
+    thrdrepdataBox: TGroupBox;
+    thrdrepGrid: TDBGrid;
+    thrdrepBtn: TButton;
+    b_data_lbl: TStaticText;
+    edatalbl: TStaticText;
+    b_data_inp: TDateTimePicker;
+    Edatainp: TDateTimePicker;
+    CheckBox1: TCheckBox;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
