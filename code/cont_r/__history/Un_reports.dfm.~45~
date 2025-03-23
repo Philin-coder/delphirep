@@ -21,9 +21,10 @@ object Frm_reports: TFrm_reports
     Top = 0
     Width = 1037
     Height = 813
-    ActivePage = perosnalcaseTab
+    ActivePage = Studlisttab
     Align = alClient
     TabOrder = 0
+    OnChange = reprotPCChange
     object perosnalcaseTab: TTabSheet
       Caption = #1054#1073#1088#1072#1073#1086#1090#1082#1072' '#1087#1077#1088#1089#1086#1085#1072#1083#1100#1085#1099#1093' '#1076#1072#1085#1085#1099#1093' '#1089#1090#1091#1076#1077#1085#1090#1072' ('#1051#1080#1095#1085#1086#1077' '#1076#1077#1083#1086' '#1089#1090#1091#1076#1077#1085#1090#1072' '#8470')'
       object Stud_report1_inpBox: TGroupBox
@@ -260,9 +261,260 @@ object Frm_reports: TFrm_reports
         end
       end
     end
-    object TabSheet1: TTabSheet
-      Caption = 'TabSheet1'
+    object Studlisttab: TTabSheet
+      Caption = #1057#1087#1080#1089#1086#1082' '#1089#1090#1091#1076#1077#1085#1090#1086#1074' '#1075#1088#1091#1087#1087#1099'  '#1082#1091#1088#1089' '#1085#1072' '#1076#1072#1090#1091
       ImageIndex = 1
+      object Secondreport_groupBox: TGroupBox
+        Left = 0
+        Top = 171
+        Width = 1029
+        Height = 152
+        Align = alTop
+        Caption = #1055#1086#1082#1072#1079#1072#1090#1100' '#1074' '#1086#1090#1095#1077#1090#1077
+        TabOrder = 0
+        ExplicitTop = 81
+        object r2cbId: TCheckBox
+          Left = 15
+          Top = 17
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Anchors = [akLeft, akRight]
+          Caption = 'Id'
+          TabOrder = 0
+        end
+        object CheckBox1: TCheckBox
+          Left = 15
+          Top = 49
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Anchors = [akLeft, akRight]
+          Caption = 'Id'
+          TabOrder = 1
+        end
+        object CheckBox2: TCheckBox
+          Left = 15
+          Top = 89
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Anchors = [akLeft, akRight]
+          Caption = 'Id'
+          TabOrder = 2
+        end
+        object CheckBox3: TCheckBox
+          Left = 15
+          Top = 132
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Anchors = [akLeft, akRight]
+          Caption = 'Id'
+          TabOrder = 3
+        end
+        object CheckBox4: TCheckBox
+          Left = 159
+          Top = 17
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Anchors = [akLeft, akRight]
+          Caption = 'Id'
+          TabOrder = 4
+        end
+        object CheckBox5: TCheckBox
+          Left = 159
+          Top = 49
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Anchors = [akLeft, akRight]
+          Caption = 'Id'
+          TabOrder = 5
+        end
+        object CheckBox6: TCheckBox
+          Left = 159
+          Top = 89
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Anchors = [akLeft, akRight]
+          Caption = 'Id'
+          TabOrder = 6
+        end
+        object CheckBox7: TCheckBox
+          Left = 159
+          Top = 127
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Anchors = [akLeft, akRight]
+          Caption = 'Id'
+          TabOrder = 7
+        end
+        object CheckBox8: TCheckBox
+          Left = 351
+          Top = 17
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Anchors = [akLeft, akRight]
+          Caption = 'Id'
+          TabOrder = 8
+        end
+        object CheckBox9: TCheckBox
+          Left = 351
+          Top = 49
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Anchors = [akLeft, akRight]
+          Caption = 'Id'
+          TabOrder = 9
+        end
+        object CheckBox10: TCheckBox
+          Left = 351
+          Top = 89
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Anchors = [akLeft, akRight]
+          Caption = 'Id'
+          TabOrder = 10
+        end
+        object CheckBox11: TCheckBox
+          Left = 351
+          Top = 127
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Anchors = [akLeft, akRight]
+          Caption = 'Id'
+          TabOrder = 11
+        end
+        object CheckBox12: TCheckBox
+          Left = 543
+          Top = 17
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Anchors = [akLeft, akRight]
+          Caption = 'Id'
+          TabOrder = 12
+        end
+        object CheckBox13: TCheckBox
+          Left = 543
+          Top = 49
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Anchors = [akLeft, akRight]
+          Caption = 'Id'
+          TabOrder = 13
+        end
+        object CheckBox14: TCheckBox
+          Left = 543
+          Top = 89
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Anchors = [akLeft, akRight]
+          Caption = 'Id'
+          TabOrder = 14
+        end
+      end
+      object Secondreport_data_inp: TGroupBox
+        Left = 0
+        Top = 0
+        Width = 1029
+        Height = 171
+        Align = alTop
+        Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 1
+        ExplicitLeft = 3
+        object grouplbl: TStaticText
+          Left = 14
+          Top = 27
+          Width = 195
+          Height = 17
+          Align = alCustom
+          Anchors = [akLeft]
+          Caption = #1043#1088#1091#1087#1087#1072
+          TabOrder = 0
+        end
+        object DBLookupComboBox1: TDBLookupComboBox
+          Left = 15
+          Top = 64
+          Width = 969
+          Height = 21
+          Align = alCustom
+          Anchors = [akLeft, akRight]
+          TabOrder = 1
+        end
+        object report2_datalbl: TStaticText
+          Left = 15
+          Top = 107
+          Width = 194
+          Height = 17
+          Align = alCustom
+          Anchors = [akLeft]
+          Caption = #1044#1072#1090#1072
+          TabOrder = 2
+        end
+        object DateTimePicker1: TDateTimePicker
+          Left = 15
+          Top = 130
+          Width = 969
+          Height = 21
+          Align = alCustom
+          Anchors = [akLeft, akRight]
+          Date = 45739.481301261570000000
+          Time = 45739.481301261570000000
+          TabOrder = 3
+        end
+      end
+      object SecondReportbtnBox: TGroupBox
+        Left = 0
+        Top = 704
+        Width = 1029
+        Height = 81
+        Align = alBottom
+        TabOrder = 2
+        object seconreportBtn: TButton
+          Left = 456
+          Top = 32
+          Width = 75
+          Height = 25
+          Caption = #1042#1099#1074#1086#1076
+          TabOrder = 0
+        end
+      end
+      object secondreport_databox: TGroupBox
+        Left = 0
+        Top = 323
+        Width = 1029
+        Height = 381
+        Align = alClient
+        Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 3
+        ExplicitLeft = -3
+        ExplicitTop = 239
+        ExplicitHeight = 81
+        object secondrepotGrid: TDBGrid
+          Left = 2
+          Top = 15
+          Width = 1025
+          Height = 364
+          Align = alClient
+          TabOrder = 0
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWindowText
+          TitleFont.Height = -11
+          TitleFont.Name = 'Tahoma'
+          TitleFont.Style = []
+        end
+      end
     end
   end
 end

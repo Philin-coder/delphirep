@@ -21,7 +21,7 @@ object Frm_reports: TFrm_reports
     Top = 0
     Width = 1037
     Height = 813
-    ActivePage = perosnalcaseTab
+    ActivePage = Studlisttab
     Align = alClient
     TabOrder = 0
     OnChange = reprotPCChange
