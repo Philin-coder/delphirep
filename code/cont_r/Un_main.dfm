@@ -2,7 +2,7 @@ object Frm_main: TFrm_main
   Left = 0
   Top = 0
   Caption = #1043#1083#1072#1074#1085#1072#1103' '#1092#1086#1088#1084#1072
-  ClientHeight = 419
+  ClientHeight = 439
   ClientWidth = 635
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -21,7 +21,7 @@ object Frm_main: TFrm_main
     Left = 0
     Top = 0
     Width = 635
-    Height = 419
+    Height = 439
     Align = alClient
     ExplicitLeft = 280
     ExplicitTop = 112
@@ -49,7 +49,10 @@ object Frm_main: TFrm_main
     end
     object report_itrem: TMenuItem
       Caption = '&'#1054#1090#1095#1077#1090#1085#1086#1089#1090#1100
-      OnClick = report_itremClick
+      object first_report: TMenuItem
+        Caption = #1054#1073#1088#1072#1073#1086#1090#1082#1072' '#1087#1077#1088#1089#1086#1085#1072#1083#1100#1085#1099#1093' '#1076#1072#1085#1085#1099#1093' '#1089#1090#1091#1076#1077#1085#1090#1072' ('#1051#1080#1095#1085#1086#1077' '#1076#1077#1083#1086' '#1089#1090#1091#1076#1077#1085#1090#1072' '#8470')'
+        OnClick = first_reportClick
+      end
     end
   end
 end

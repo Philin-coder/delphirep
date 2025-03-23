@@ -16,7 +16,6 @@ type
     Stud_Item: TMenuItem;
     Prikaz_item: TMenuItem;
     report_itrem: TMenuItem;
-    first_report: TMenuItem;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure spec_itemClick(Sender: TObject);
@@ -24,7 +23,7 @@ type
     procedure FormActivate(Sender: TObject);
     procedure Stud_ItemClick(Sender: TObject);
     procedure Prikaz_itemClick(Sender: TObject);
-    procedure first_reportClick(Sender: TObject);
+    procedure report_itremClick(Sender: TObject);
 
  private
     { Private declarations }
@@ -101,6 +100,19 @@ raise;
 
 end;
 
+procedure TFrm_main.report_itremClick(Sender: TObject);
+begin
+  try
+UpdateFormProperties('Frm_reports', 'Форма работы с отчетносьтю',
+clBtnFace, 1024, 768);
+Frm_reports.ShowModal;
+except
+Frm_reports.Free;
+raise;
+end;
+
+end;
+
 procedure TFrm_main.spec_itemClick(Sender: TObject);
 begin
 try
@@ -124,19 +136,6 @@ begin
   Frm_stud.Free;
   raise;
   end;
-
-end;
-
-procedure TFrm_main.first_reportClick(Sender: TObject);
-begin
-  try
-UpdateFormProperties('Frm_reports', 'Форма работы с отчетносьтю',
-clBtnFace, 1024, 768);
-Frm_reports.ShowModal;
-except
-Frm_reports.Free;
-raise;
-end;
 
 end;
 

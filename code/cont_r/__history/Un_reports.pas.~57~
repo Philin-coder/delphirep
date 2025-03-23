@@ -32,6 +32,7 @@ type
     stud_repprt1_lbl: TStaticText;
     Stud_report1DBL: TDBLookupComboBox;
     Stud_report1Btn: TButton;
+    TabSheet1: TTabSheet;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -45,6 +46,12 @@ type
     procedure adrCBClick(Sender: TObject);
     procedure fioCBClick(Sender: TObject);
     procedure to_liveCBClick(Sender: TObject);
+    procedure mod_tCBClick(Sender: TObject);
+    procedure dom_tCBClick(Sender: TObject);
+    procedure data_prCBClick(Sender: TObject);
+    procedure naim_grupCBClick(Sender: TObject);
+    procedure st_emailCBClick(Sender: TObject);
+    procedure reprotPCChange(Sender: TObject);
   private
     { Private declarations }
   public
@@ -80,6 +87,19 @@ begin
   Stud_report1Grid.Columns[3].Title.Caption:='Гражданство';
 end;
 
+procedure TFrm_reports.data_prCBClick(Sender: TObject);
+begin
+Stud_report1Grid.Columns[11].Visible:=data_prCB.Checked;
+if data_prCB.Checked then
+  Stud_report1Grid.Columns[11].Title.Caption:='Дата приема';
+end;
+
+procedure TFrm_reports.dom_tCBClick(Sender: TObject);
+begin
+Stud_report1Grid.Columns[10].Visible:=dom_tCB.Checked;
+if dom_tCB.Checked then Stud_report1Grid.Columns[10].Title.Caption:='Домашний';
+end;
+
 procedure TFrm_reports.fioCBClick(Sender: TObject);
 begin
 Stud_report1Grid.Columns[7].Visible:=fioCB.Checked;
@@ -88,6 +108,7 @@ end;
 
 procedure TFrm_reports.FormActivate(Sender: TObject);
 begin
+
 dm.reportQuery.SQL.Text:= 'select '+
  '  stud.stud_id, ' +
     '  stud.b_data, ' +
@@ -109,6 +130,9 @@ dm.reportQuery.SQL.Text:= 'select '+
     'WHERE 1=1 ' +
     '  AND stud.data_ot IS NULL ' +
     '  AND is_akadem = 0 ';
+    dm.reportQuery.SQL.Clear;
+   dm.reportQuery.SQL.Text:='select * from stud';
+   ShowMessage(dm.reportQuery.SQL.Text);
    dm.reportQuery.Open;
   dm.StudQuery.Open;
   dm.PrikazQuery.Open;
@@ -158,10 +182,71 @@ if gorodCB.Checked then
   Stud_report1Grid.Columns[5].Title.Caption:='Город';
 end;
 
+procedure TFrm_reports.mod_tCBClick(Sender: TObject);
+begin
+Stud_report1Grid.Columns[9].Visible:=mod_tCB.Checked;
+if mod_tCB.Checked then Stud_report1Grid.Columns[9].Title.Caption:='мобильный';
+end;
+
+procedure TFrm_reports.naim_grupCBClick(Sender: TObject);
+begin
+ Stud_report1Grid.Columns[12].Visible:=naim_grupCB.Checked;
+if naim_grupCB.Checked
+then  Stud_report1Grid.Columns[12].Title.Caption:='Группа';
+//if naim_grupCB then
+//begin
+//Stud_report1Grid.Columns[12].Visible;
+//Stud_report1Grid.Columns[12].Caption:='Группа';
+//end
+//else
+//begin
+//Stud_report1Grid.Columns[12].Visible:=false
+//end;
+end;
+
 procedure TFrm_reports.regionCBClick(Sender: TObject);
 begin
   Stud_report1Grid.Columns[4].Visible:=regionCB.Checked;
 if regionCB.Checked then Stud_report1Grid.Columns[4].Title.Caption:='Регион';
+end;
+
+procedure TFrm_reports.reprotPCChange(Sender: TObject);
+begin
+ case reprotPC.TabIndex of
+ 0:
+ begin
+dm.reportQuery.SQL.Text:= 'select '+
+ '  stud.stud_id, ' +
+    '  stud.b_data, ' +
+    '  CASE stud.pol WHEN 1 THEN ''Мужской'' ELSE ''Женский'' END AS sex, ' +
+    '  stud.civ, ' +
+    '  stud.region, ' +
+    '  stud.gorod, ' +
+    '  stud.adr, ' +
+    '  stud.passp_fam + '' '' + stud.passp_naim + ISNULL('' '' + stud.passp_otch, '''') AS fio, ' +
+ '  CASE stud.mesto_jit WHEN 1 THEN ''Съем'' ELSE ''Общежитие'' END AS to_live, ' +
+    '  stud.mod_t, ' +
+    '  stud.dom_t, ' +
+    '  stud.data_pr, ' +
+    '  gruppa.naim_grup, ' +
+    '  stud.st_email ' +
+    'FROM stud ' +
+    'INNER JOIN gruppa ON gruppa.grup_id = stud.grup_id ' +
+    'INNER JOIN spec ON spec.spec_id = gruppa.spec_id ' +
+    'WHERE 1=1 ' +
+    '  AND stud.data_ot IS NULL ' +
+    '  AND is_akadem = 0 ';
+ShowMessage(IntToStr(reprotPC.TabIndex));
+ end;
+ 1:
+begin
+    dm.reportQuery.SQL.Clear;
+   dm.reportQuery.SQL.Text:='select * from stud';
+   ShowMessage(dm.reportQuery.SQL.Text);
+end;
+
+ end; //case
+
 end;
 
 procedure TFrm_reports.SexCBClick(Sender: TObject);
@@ -226,6 +311,13 @@ begin
  [mbOK],0);
 end;
 
+
+procedure TFrm_reports.st_emailCBClick(Sender: TObject);
+begin
+Stud_report1Grid.Columns[13].Visible:=st_emailCB.Checked;
+  if st_emailCB.Checked then
+  Stud_report1Grid.Columns[13].Title.Caption:='email';
+end;
 
 procedure TFrm_reports.to_liveCBClick(Sender: TObject);
 begin

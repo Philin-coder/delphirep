@@ -24,12 +24,9 @@ object Frm_reports: TFrm_reports
     ActivePage = perosnalcaseTab
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 825
-    ExplicitHeight = 520
+    OnChange = reprotPCChange
     object perosnalcaseTab: TTabSheet
       Caption = #1054#1073#1088#1072#1073#1086#1090#1082#1072' '#1087#1077#1088#1089#1086#1085#1072#1083#1100#1085#1099#1093' '#1076#1072#1085#1085#1099#1093' '#1089#1090#1091#1076#1077#1085#1090#1072' ('#1051#1080#1095#1085#1086#1077' '#1076#1077#1083#1086' '#1089#1090#1091#1076#1077#1085#1090#1072' '#8470')'
-      ExplicitWidth = 817
-      ExplicitHeight = 492
       object Stud_report1_inpBox: TGroupBox
         Left = 0
         Top = 0
@@ -38,9 +35,6 @@ object Frm_reports: TFrm_reports
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        ExplicitLeft = 352
-        ExplicitTop = 112
-        ExplicitWidth = 185
         object stud_repprt1_lbl: TStaticText
           Left = 3
           Top = 33
@@ -71,8 +65,6 @@ object Frm_reports: TFrm_reports
         Align = alTop
         Caption = #1055#1086#1082#1072#1079#1072#1090#1100' '#1074' '#1086#1090#1095#1077#1090#1077
         TabOrder = 1
-        ExplicitLeft = 3
-        ExplicitTop = 137
         object stud_idCB: TCheckBox
           Left = 0
           Top = 24
@@ -235,9 +227,6 @@ object Frm_reports: TFrm_reports
         Height = 105
         Align = alBottom
         TabOrder = 2
-        ExplicitLeft = 368
-        ExplicitTop = 128
-        ExplicitWidth = 185
         object Stud_report1Btn: TButton
           Left = 376
           Top = 40
@@ -256,9 +245,6 @@ object Frm_reports: TFrm_reports
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 3
-        ExplicitLeft = -4
-        ExplicitTop = 111
-        ExplicitHeight = 176
         object Stud_report1Grid: TDBGrid
           Left = 2
           Top = 15
@@ -274,6 +260,10 @@ object Frm_reports: TFrm_reports
           TitleFont.Style = []
         end
       end
+    end
+    object TabSheet1: TTabSheet
+      Caption = 'TabSheet1'
+      ImageIndex = 1
     end
   end
 end
