@@ -80,6 +80,13 @@ type
     procedure seconreportBtnClick(Sender: TObject);
     procedure r2cbIdClick(Sender: TObject);
     procedure r2b_dataCBClick(Sender: TObject);
+    procedure r2sexcbClick(Sender: TObject);
+    procedure r2civCBClick(Sender: TObject);
+    procedure r2regionCBClick(Sender: TObject);
+    procedure r2gorodCBClick(Sender: TObject);
+    procedure r2adrCBClick(Sender: TObject);
+    procedure r2fioCBClick(Sender: TObject);
+    procedure r2kursCBClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -135,9 +142,8 @@ Stud_report1Grid.Columns[7].Visible:=fioCB.Checked;
 end;
 
 procedure TFrm_reports.FormActivate(Sender: TObject);
-
+var cb:Integer;
 begin
-
   dm.reportQuery.SQL.Clear;
   dm.reportQuery.SQL.Text:= 'select '+
  '  stud.stud_id, ' +
@@ -179,6 +185,17 @@ begin
   Stud_report1Grid.Columns[11].Title.Caption:='Дата приема';
   Stud_report1Grid.Columns[12].Title.Caption:='Группа';
   Stud_report1Grid.Columns[13].Title.Caption:='Email';
+  with Frm_reports do
+ begin
+    for cb := 0 to ComponentCount - 1 do
+ begin
+    if(Components[cb] is TCheckBox)  then
+   begin
+      (Components[cb] as TCheckBox).Enabled:=false;
+ end;
+ end;
+ end;
+
 end;
 
 procedure TFrm_reports.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -245,12 +262,18 @@ then  Stud_report1Grid.Columns[12].Title.Caption:='Группа';
 //end;
 end;
 
+procedure TFrm_reports.r2adrCBClick(Sender: TObject);
+begin
+secondrepotGrid.Columns[6].Visible:=r2adrCB.Checked;
+if r2adrCB.Checked then secondrepotGrid.Columns[6].Title.Caption:='Адрес';
+
+end;
+
 procedure TFrm_reports.r2b_dataCBClick(Sender: TObject);
 begin
 secondrepotGrid.Columns[1].Visible:=r2b_dataCB.Checked;
 if r2b_dataCB.Checked then
-secondrepotGrid.Columns[1].Title.Caption:='Дата рождения' 
-
+secondrepotGrid.Columns[1].Title.Caption:='Дата рождения'
 end;
 
 procedure TFrm_reports.r2cbIdClick(Sender: TObject);
@@ -260,6 +283,42 @@ if r2cbId.Checked then
 secondrepotGrid.Columns[0].Title.Caption:='Номер прядковый';
 end;
 
+procedure TFrm_reports.r2civCBClick(Sender: TObject);
+begin
+secondrepotGrid.Columns[3].Visible:=r2civCB.Checked;
+if r2civCB.Checked then  secondrepotGrid.Columns[3].Title.Caption:='Гражданство';
+end;
+
+procedure TFrm_reports.r2fioCBClick(Sender: TObject);
+begin
+secondrepotGrid.Columns[7].Visible:=r2fioCB.Checked;
+if r2fioCB.Checked then secondrepotGrid.Columns[7].Title.Caption:='ФИО';
+end;
+
+procedure TFrm_reports.r2gorodCBClick(Sender: TObject);
+begin
+secondrepotGrid.Columns[5].Visible:=r2gorodCB.Checked;
+if r2gorodCB.Checked then secondrepotGrid.Columns[5].Title.Caption:='Город';
+end;
+
+procedure TFrm_reports.r2kursCBClick(Sender: TObject);
+begin
+secondrepotGrid.Columns[8].Visible:=r2kursCB.Checked;
+if r2kursCB.Checked then secondrepotGrid.Columns[8].Title.Caption:='Курс';
+end;
+
+procedure TFrm_reports.r2regionCBClick(Sender: TObject);
+begin
+secondrepotGrid.Columns[4].Visible:=r2regionCB.Checked;
+if r2regionCB.Checked then secondrepotGrid.Columns[4].Title.Caption:='Регион';
+end;
+
+procedure TFrm_reports.r2sexcbClick(Sender: TObject);
+begin
+    secondrepotGrid.Columns[2].Visible:=r2sexcb.Checked;
+    if r2sexcb.Checked then secondrepotGrid.Columns[2].Title.Caption:='Пол';
+end;
+
 procedure TFrm_reports.regionCBClick(Sender: TObject);
 begin
   Stud_report1Grid.Columns[4].Visible:=regionCB.Checked;
@@ -267,6 +326,7 @@ if regionCB.Checked then Stud_report1Grid.Columns[4].Title.Caption:='Регион';
 end;
 
 procedure TFrm_reports.reprotPCChange(Sender: TObject);
+var cbe:Integer;
 begin
  case reprotPC.TabIndex of
  0:
@@ -344,17 +404,35 @@ begin
     Open;
     secondrepotGrid.Columns[0].Title.Caption:='Номер прядковый';
     secondrepotGrid.Columns[1].Title.Caption:='Дата рождения';
+    secondrepotGrid.Columns[2].Title.Caption:='Пол';
+    secondrepotGrid.Columns[3].Title.Caption:='Гражданство';
+    secondrepotGrid.Columns[4].Title.Caption:='Регион';
+    secondrepotGrid.Columns[5].Title.Caption:='Город';
+    secondrepotGrid.Columns[6].Title.Caption:='Адрес';
+    secondrepotGrid.Columns[7].Title.Caption:='ФИО';
+    secondrepotGrid.Columns[8].Title.Caption:='Курс';
 end;
 end;
 
  end; //case
+
+ with Frm_reports do
+ begin
+    for cbe := 0 to ComponentCount - 1 do
+ begin
+    if(Components[cbe] is TCheckBox)  then
+   begin
+      (Components[cbe] as TCheckBox).Checked:=False;
+ end;
+ end;
+ end;
 
 end;
 
 procedure TFrm_reports.seconreportBtnClick(Sender: TObject);
    var
    second_report:TADOStoredProc;
-   I:Integer;
+   I,cbe:Integer;
 
 begin
   second_report := nil;
@@ -402,7 +480,18 @@ begin
          Columns[i].Visible:=False;
        end;
    end;
-    MessageDlg('Таблица скрыта,отчет формирутеся динамически',mtInformation,
+
+ with Frm_reports do
+ begin
+    for cbe := 0 to ComponentCount - 1 do
+ begin
+    if(Components[cbe] is TCheckBox)  then
+   begin
+      (Components[cbe] as TCheckBox).Enabled:=true;
+ end;
+ end;
+ end;
+  MessageDlg('Таблица скрыта,отчет формирутеся динамически',mtInformation,
  [mbOK],0);
 end;
 
@@ -423,7 +512,7 @@ end;
 procedure TFrm_reports.Stud_report1BtnClick(Sender: TObject);
 var
  frist_report:TADOStoredProc;
-  i:Integer;
+  i,cb,cbe:Integer;
 begin
     frist_report := nil;
   try
@@ -462,10 +551,32 @@ begin
   begin
     Columns[i].Visible:=False;
   end;
-
- end;
+  end;
  MessageDlg('Таблица скрыта,отчет формирутеся динамически',mtInformation,
  [mbOK],0);
+ with Frm_reports do
+ begin
+    for cb := 0 to ComponentCount - 1 do
+ begin
+    if(Components[cb] is TCheckBox)  then
+   begin
+      (Components[cb] as TCheckBox).Checked:=False;
+ end;
+ end;
+ end;
+   with Frm_reports do
+ begin
+    for cbe := 0 to ComponentCount - 1 do
+ begin
+    if(Components[cbe] is TCheckBox)  then
+   begin
+      (Components[cbe] as TCheckBox).Enabled:=true;
+ end;
+ end;
+ end;
+
+
+
 end;
 
 

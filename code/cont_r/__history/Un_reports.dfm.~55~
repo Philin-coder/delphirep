@@ -21,7 +21,7 @@ object Frm_reports: TFrm_reports
     Top = 0
     Width = 1037
     Height = 813
-    ActivePage = Studlisttab
+    ActivePage = perosnalcaseTab
     Align = alClient
     TabOrder = 0
     OnChange = reprotPCChange
@@ -293,6 +293,7 @@ object Frm_reports: TFrm_reports
           Anchors = [akLeft, akRight]
           Caption = #1044#1072#1090#1072' '#1088#1086#1078#1076#1077#1085#1080#1103
           TabOrder = 1
+          OnClick = r2b_dataCBClick
         end
         object r2sexcb: TCheckBox
           Left = 15

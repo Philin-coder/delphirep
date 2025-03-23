@@ -79,6 +79,10 @@ type
     procedure reprotPCChange(Sender: TObject);
     procedure seconreportBtnClick(Sender: TObject);
     procedure r2cbIdClick(Sender: TObject);
+    procedure r2b_dataCBClick(Sender: TObject);
+    procedure r2sexcbClick(Sender: TObject);
+    procedure r2civCBClick(Sender: TObject);
+    procedure r2regionCBClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -134,11 +138,8 @@ Stud_report1Grid.Columns[7].Visible:=fioCB.Checked;
 end;
 
 procedure TFrm_reports.FormActivate(Sender: TObject);
-var i:Integer;
+var cb:Integer;
 begin
- case reprotPC.TabIndex of
-  0:
-  begin
   dm.reportQuery.SQL.Clear;
   dm.reportQuery.SQL.Text:= 'select '+
  '  stud.stud_id, ' +
@@ -180,41 +181,21 @@ begin
   Stud_report1Grid.Columns[11].Title.Caption:='Дата приема';
   Stud_report1Grid.Columns[12].Title.Caption:='Группа';
   Stud_report1Grid.Columns[13].Title.Caption:='Email';
-  end;
-  1:
-  begin
+  with Frm_reports do
+ begin
+    for cb := 0 to ComponentCount - 1 do
+ begin
+    if(Components[cb] is TCheckBox)  then
+   begin
+      (Components[cb] as TCheckBox).Enabled:=false;
+ end;
+ end;
+ end;
 
-//     dm.reportQuery.SQL.Clear;
-//     dm.reportQuery.SQL.Text:= 'select '+
-// '  stud.stud_id, ' +
-//    '  stud.b_data, ' +
-//    '  CASE stud.pol WHEN 1 THEN ''Мужской'' ELSE ''Женский'' END AS sex, ' +
-//    '  stud.civ, ' +
-//    '  stud.region, ' +
-//    '  stud.gorod, ' +
-//    '  stud.adr, ' +
-//    '  stud.passp_fam + '' '' + stud.passp_naim + ISNULL('' '' + stud.passp_otch, '''') AS fio, ' +
-// '  CASE stud.mesto_jit WHEN 1 THEN ''Съем'' ELSE ''Общежитие'' END AS to_live, ' +
-//    '  stud.mod_t, ' +
-//    '  stud.dom_t, ' +
-//    '  stud.data_pr, ' +
-//    '  gruppa.naim_grup, ' +
-//    '  stud.st_email ' +
-//    'FROM stud ' +
-//    'INNER JOIN gruppa ON gruppa.grup_id = stud.grup_id ' +
-//    'INNER JOIN spec ON spec.spec_id = gruppa.spec_id ' +
-//    'WHERE 1=1 ' +
-//    '  AND stud.data_ot IS NULL ' +
-//    '  AND stud.is_akadem = 0 ';
-//       secondrepotGrid.Columns[0].Title.Caption:='';
-//  secondrepotGrid.Columns[0].Title.Caption:='Номер прядковый';
-//  ShowMessage(dm.reportQuery.SQL.Text);
-  end;
- end;//case
 end;
 
 procedure TFrm_reports.FormClose(Sender: TObject; var Action: TCloseAction);
-var q:Integer;
+var q,cb:Integer;
 begin
  SaveFormState(Self);
  with dm do
@@ -224,6 +205,16 @@ begin
     if(Components[q] is TADOQuery)  then
    begin
       (Components[q] as TADOQuery).Close;
+ end;
+ end;
+ end;
+ with Frm_reports do
+ begin
+    for cb := 0 to ComponentCount - 1 do
+ begin
+    if(Components[cb] is TCheckBox)  then
+   begin
+      (Components[cb] as TCheckBox).Checked:=False;
  end;
  end;
  end;
@@ -277,11 +268,37 @@ then  Stud_report1Grid.Columns[12].Title.Caption:='Группа';
 //end;
 end;
 
+procedure TFrm_reports.r2b_dataCBClick(Sender: TObject);
+begin
+secondrepotGrid.Columns[1].Visible:=r2b_dataCB.Checked;
+if r2b_dataCB.Checked then
+secondrepotGrid.Columns[1].Title.Caption:='Дата рождения'
+
+end;
+
 procedure TFrm_reports.r2cbIdClick(Sender: TObject);
 begin
   secondrepotGrid.Columns[0].Visible:=r2cbId.Checked;
 if r2cbId.Checked then
 secondrepotGrid.Columns[0].Title.Caption:='Номер прядковый';
+end;
+
+procedure TFrm_reports.r2civCBClick(Sender: TObject);
+begin
+secondrepotGrid.Columns[3].Visible:=r2civCB.Checked;
+if r2civCB.Checked then  secondrepotGrid.Columns[3].Title.Caption:='Гражданство';
+end;
+
+procedure TFrm_reports.r2regionCBClick(Sender: TObject);
+begin
+secondrepotGrid.Columns[4].Visible:=r2regionCB.Checked;
+if r2regionCB.Checked then secondrepotGrid.Columns[4].Title.Caption:='Регион';
+end;
+
+procedure TFrm_reports.r2sexcbClick(Sender: TObject);
+begin
+    secondrepotGrid.Columns[2].Visible:=r2sexcb.Checked;
+    if r2sexcb.Checked then secondrepotGrid.Columns[2].Title.Caption:='Пол';
 end;
 
 procedure TFrm_reports.regionCBClick(Sender: TObject);
@@ -321,6 +338,20 @@ begin
     '  AND is_akadem = 0 ';
        Close;
        Open;
+       Stud_report1Grid.Columns[0].Title.Caption := 'Номер порядковый';
+  Stud_report1Grid.Columns[1].Title.Caption:='Дата рождения';
+  Stud_report1Grid.Columns[2].Title.Caption:='Пол';
+  Stud_report1Grid.Columns[3].Title.Caption:='Гражданство';
+  Stud_report1Grid.Columns[4].Title.Caption:='Регион';
+  Stud_report1Grid.Columns[5].Title.Caption:='Город';
+  Stud_report1Grid.Columns[6].Title.Caption:='Адрес';
+  Stud_report1Grid.Columns[7].Title.Caption:='ФИО';
+  Stud_report1Grid.Columns[8].Title.Caption:='Проживание';
+  Stud_report1Grid.Columns[9].Title.Caption:='Мобильный';
+  Stud_report1Grid.Columns[10].Title.Caption:='Домашний';
+  Stud_report1Grid.Columns[11].Title.Caption:='Дата приема';
+  Stud_report1Grid.Columns[12].Title.Caption:='Группа';
+  Stud_report1Grid.Columns[13].Title.Caption:='Email';
  end;
  end;
  1:
@@ -352,7 +383,11 @@ begin
     '  AND is_akadem = 0 ';
     Close;
     Open;
-
+    secondrepotGrid.Columns[0].Title.Caption:='Номер прядковый';
+    secondrepotGrid.Columns[1].Title.Caption:='Дата рождения';
+    secondrepotGrid.Columns[2].Title.Caption:='Пол';
+    secondrepotGrid.Columns[3].Title.Caption:='Гражданство';
+    secondrepotGrid.Columns[4].Title.Caption:='Регион';
 end;
 end;
 
@@ -363,7 +398,7 @@ end;
 procedure TFrm_reports.seconreportBtnClick(Sender: TObject);
    var
    second_report:TADOStoredProc;
-   I:Integer;
+   I,cb,cbe:Integer;
 
 begin
   second_report := nil;
@@ -411,8 +446,17 @@ begin
          Columns[i].Visible:=False;
        end;
    end;
-    MessageDlg('Таблица скрыта,отчет формирутеся динамически',mtInformation,
- [mbOK],0);
+
+ with Frm_reports do
+ begin
+    for cbe := 0 to ComponentCount - 1 do
+ begin
+    if(Components[cbe] is TCheckBox)  then
+   begin
+      (Components[cbe] as TCheckBox).Enabled:=true;
+ end;
+ end;
+ end;
 end;
 
 procedure TFrm_reports.SexCBClick(Sender: TObject);
@@ -432,7 +476,7 @@ end;
 procedure TFrm_reports.Stud_report1BtnClick(Sender: TObject);
 var
  frist_report:TADOStoredProc;
-  i:Integer;
+  i,cb,cbe:Integer;
 begin
     frist_report := nil;
   try
@@ -471,10 +515,32 @@ begin
   begin
     Columns[i].Visible:=False;
   end;
-
- end;
+  end;
  MessageDlg('Таблица скрыта,отчет формирутеся динамически',mtInformation,
  [mbOK],0);
+ with Frm_reports do
+ begin
+    for cb := 0 to ComponentCount - 1 do
+ begin
+    if(Components[cb] is TCheckBox)  then
+   begin
+      (Components[cb] as TCheckBox).Checked:=False;
+ end;
+ end;
+ end;
+   with Frm_reports do
+ begin
+    for cbe := 0 to ComponentCount - 1 do
+ begin
+    if(Components[cbe] is TCheckBox)  then
+   begin
+      (Components[cbe] as TCheckBox).Enabled:=true;
+ end;
+ end;
+ end;
+
+
+
 end;
 
 

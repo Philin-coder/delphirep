@@ -293,6 +293,7 @@ object Frm_reports: TFrm_reports
           Anchors = [akLeft, akRight]
           Caption = #1044#1072#1090#1072' '#1088#1086#1078#1076#1077#1085#1080#1103
           TabOrder = 1
+          OnClick = r2b_dataCBClick
         end
         object r2sexcb: TCheckBox
           Left = 15
@@ -303,6 +304,7 @@ object Frm_reports: TFrm_reports
           Anchors = [akLeft, akRight]
           Caption = #1055#1086#1083
           TabOrder = 2
+          OnClick = r2sexcbClick
         end
         object r2civCB: TCheckBox
           Left = 15
@@ -313,6 +315,7 @@ object Frm_reports: TFrm_reports
           Anchors = [akLeft, akRight]
           Caption = #1043#1088#1072#1078#1076#1072#1085#1089#1090#1074#1086
           TabOrder = 3
+          OnClick = r2civCBClick
         end
         object r2regionCB: TCheckBox
           Left = 191
@@ -323,6 +326,7 @@ object Frm_reports: TFrm_reports
           Anchors = [akLeft, akRight]
           Caption = #1056#1077#1075#1080#1086#1085
           TabOrder = 4
+          OnClick = r2regionCBClick
         end
         object r2gorodCB: TCheckBox
           Left = 191
