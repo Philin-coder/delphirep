@@ -558,7 +558,7 @@ object Frm_reports: TFrm_reports
           Caption = #1044#1072#1090#1072' '#1082#1086#1085#1094#1072' '#1087#1077#1088#1080#1086#1076#1072
           TabOrder = 1
         end
-        object b_data_inp: TDateTimePicker
+        object r3begin_data_inp: TDateTimePicker
           Left = 22
           Top = 58
           Width = 971
@@ -569,7 +569,7 @@ object Frm_reports: TFrm_reports
           Time = 45739.921269259260000000
           TabOrder = 2
         end
-        object Edatainp: TDateTimePicker
+        object r3Enddatainp: TDateTimePicker
           Left = 22
           Top = 157
           Width = 971

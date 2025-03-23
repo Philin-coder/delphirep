@@ -67,8 +67,8 @@ type
     thrdrepBtn: TButton;
     b_data_lbl: TStaticText;
     edatalbl: TStaticText;
-    b_data_inp: TDateTimePicker;
-    Edatainp: TDateTimePicker;
+    r3begin_data_inp: TDateTimePicker;
+    r3Enddatainp: TDateTimePicker;
     r3Idcb: TCheckBox;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
