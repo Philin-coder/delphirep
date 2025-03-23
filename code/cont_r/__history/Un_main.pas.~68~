@@ -13,11 +13,18 @@ type
     spec_item: TMenuItem;
     mainImage: TImage;
     Grup_item: TMenuItem;
+    Stud_Item: TMenuItem;
+    Prikaz_item: TMenuItem;
+    report_itrem: TMenuItem;
+    first_report: TMenuItem;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure spec_itemClick(Sender: TObject);
     procedure Grup_itemClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
+    procedure Stud_ItemClick(Sender: TObject);
+    procedure Prikaz_itemClick(Sender: TObject);
+    procedure first_reportClick(Sender: TObject);
 
  private
     { Private declarations }
@@ -32,7 +39,7 @@ var
 
 implementation
 
-uses Un_func, Un_dm, Un_spec, Un_grupp;
+uses Un_func, Un_dm, Un_spec, Un_grupp, Un_stud, Un_prikaz, Un_reports;
 
 {$R *.dfm}
 const
@@ -49,17 +56,18 @@ begin
  SaveFormState(Self);
  Action := caFree;
  mainImage.Picture:=nil;
+
 end;
 
 procedure TFrm_main.FormCreate(Sender: TObject);
 begin
 With Frm_main do
 begin
-Width:=1024;
-Height:=768;
-Position:=poScreenCenter;
+  Width:=1024;
+  Height:=768;
+  Position:=poScreenCenter;
 end;
-LoadFormState(Self);
+  LoadFormState(Self);
 With mainImage do
 begin
   Stretch:=True;
@@ -71,7 +79,8 @@ end;
 procedure TFrm_main.Grup_itemClick(Sender: TObject);
 begin
 try
-  UpdateFormProperties('Frm_grupp', 'Форма работы с группой',clBtnFace, 1024, 768);
+  UpdateFormProperties('Frm_grupp', 'Форма работы с группой',
+  clBtnFace, 1024, 768);
   Frm_grupp.ShowModal;
 except
   Frm_grupp.Free;
@@ -79,13 +88,53 @@ raise;
   end;
   end;
 
+procedure TFrm_main.Prikaz_itemClick(Sender: TObject);
+begin
+    try
+  UpdateFormProperties('Frm_prikaz', 'Форма работы с приказом',
+  clBtnFace, 1024, 768);
+  Frm_prikaz.ShowModal;
+except
+  Frm_prikaz.Free;
+raise;
+  end;
+
+end;
+
 procedure TFrm_main.spec_itemClick(Sender: TObject);
 begin
 try
-UpdateFormProperties('frm_spec', 'Форма работы со специальностью',clBtnFace, 1024, 768);
+UpdateFormProperties('frm_spec', 'Форма работы со специальностью',
+clBtnFace, 1024, 768);
 Frm_spec.ShowModal;
 except
 Frm_spec.Free;
+raise;
+end;
+
+end;
+
+procedure TFrm_main.Stud_ItemClick(Sender: TObject);
+begin
+  try
+  UpdateFormProperties('Frm_stud', 'Форма работы  с личным  делом студента',
+  clBtnFace, 1024, 768);
+  Frm_stud.ShowModal;
+  except
+  Frm_stud.Free;
+  raise;
+  end;
+
+end;
+
+procedure TFrm_main.first_reportClick(Sender: TObject);
+begin
+  try
+UpdateFormProperties('Frm_reports', 'Форма работы с отчетносьтю',
+clBtnFace, 1024, 768);
+Frm_reports.ShowModal;
+except
+Frm_reports.Free;
 raise;
 end;
 

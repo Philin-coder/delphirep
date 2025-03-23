@@ -26,6 +26,10 @@ object Frm_spec: TFrm_spec
     TabOrder = 0
     object SelTab: TTabSheet
       Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086'  '#1089#1087#1077#1094#1080#1072#1083#1100#1085#1086#1089#1090#1080
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object SpecgroupBox: TGroupBox
         Left = 0
         Top = 97

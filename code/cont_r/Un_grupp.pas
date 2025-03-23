@@ -186,6 +186,7 @@ begin
 
 procedure TFrm_grupp.FormCreate(Sender: TObject);
 begin
+  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
   fnd_naimCb.Enabled:=True;
   Grupp_condEdit.EditLabel.Caption:='Точное совпадение условию';
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);

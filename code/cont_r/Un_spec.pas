@@ -193,6 +193,7 @@ end;
 procedure TFrm_spec.FormCreate(Sender: TObject);
 
 begin
+  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   LoadFormState(Self);
 end;

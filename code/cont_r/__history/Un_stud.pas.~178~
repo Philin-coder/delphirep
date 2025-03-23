@@ -29,15 +29,14 @@ type
     Stud_ins_btn_Box: TGroupBox;
     Stud_insBtn: TButton;
     Stud_DataInsBox: TGroupBox;
-    delgrdatacBox: TGroupBox;
-    delgrlbl: TStaticText;
-    delgrDBL: TDBLookupComboBox;
-    dlgrbtnBox: TGroupBox;
-    delgrBtn: TButton;
-    degrdataBox: TGroupBox;
+    delstdatacBox: TGroupBox;
+    delstlbl: TStaticText;
+    delstDBL: TDBLookupComboBox;
+    dlgsttnBox: TGroupBox;
+    delstBtn: TButton;
+    delstdataBox: TGroupBox;
     Stud_gr_groupradio: TRadioButton;
     Studfnd_akademCb: TCheckBox;
-    delgrgrid: TDBGrid;
     CbSecondnaim: TCheckBox;
     Stud_inp_page: TPageControl;
     Stud_about_page_one: TTabSheet;
@@ -99,6 +98,7 @@ type
     rejectGrd: TDBGrid;
     regetDateinp: TDateTimePicker;
     show_reejctCB: TCheckBox;
+    delstGrd: TDBGrid;
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -139,6 +139,7 @@ type
     procedure Stud_upd_BtnClick(Sender: TObject);
     procedure rejectbtnClick(Sender: TObject);
     procedure show_reejctCBClick(Sender: TObject);
+    procedure delstBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -195,6 +196,53 @@ insProgres_bar.StepBy(1);
 
 end;
 
+procedure TFrm_stud.delstBtnClick(Sender: TObject);
+var
+del_stud:TADOStoredProc;
+begin
+del_stud :=nil;
+ try
+ del_stud :=TADOStoredProc.Create(nil);
+ try
+ with del_stud do
+ begin
+   Connection :=dm.Connection;
+   if not Connection.Connected then
+   begin
+     raise Exception.Create('Соединение с базаой не установлено');
+   end;
+   ProcedureName :='del_stud';
+   Parameters.Clear;
+   Parameters.CreateParameter(
+   'stud_id',
+   ftInteger,
+   pdInput,
+   0,
+   delstDBL.KeyValue
+   );
+
+   ExecProc;
+   dm.studQuery.Close;
+   dm.studQuery.Open;
+   MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+ end;
+ except on E: EADOError do
+ begin
+   ShowMessage('Ошибка'+' '+e.Message);
+ end;
+ on E: Exception do
+ begin
+  ShowMessage('Ошибка'+' '+e.Message);
+ end;
+ end;
+ finally
+ FreeAndNil(del_stud);
+ end;
+ dm.StudQuery.Close;
+ dm.StudQuery.Open;
+
+end;
+
 procedure TFrm_stud.dom_t_inpExit(Sender: TObject);
 begin
 insProgres_bar.StepBy(1);
@@ -230,6 +278,9 @@ begin
  end;
  Imgsuccess.Picture:=nil;
  insProgres_bar.Position:=1;
+ rejectdataLbl.Caption:='Дата отчисления';
+    regetDateinp.Enabled:=true;
+
 end;
 
 procedure TFrm_stud.FormCreate(Sender: TObject);
@@ -245,6 +296,9 @@ begin
   Imgsuccess.Picture.LoadFromFile('Galka.jpg');
   insProgres_bar.Position:=1;
   Stud_upd_Btn.Caption:='Изменение данных';
+  rejectdataLbl.Caption:='Дата отчисления';
+  regetDateinp.Enabled:=True;
+    rejectGrd.Columns[14].Visible:=False;
 end;
 
 procedure TFrm_stud.FormKeyUp(Sender: TObject; var Key: Word;
@@ -398,9 +452,105 @@ insProgres_bar.StepBy(1);
 end;
 
 procedure TFrm_stud.rejectbtnClick(Sender: TObject);
-
+   var
+    upd_rejected_stud_back:TADOStoredProc;
+    upd_reject_stud:TADOStoredProc;
 begin
-    ShowMessage('test');    // 0 учатся
+   if show_reejctCB.Checked=true then
+   begin
+    upd_rejected_stud_back :=nil;
+ try
+ upd_rejected_stud_back :=TADOStoredProc.Create(nil);
+ try
+ with upd_rejected_stud_back do
+ begin
+   Connection :=dm.Connection;
+   if not Connection.Connected then
+   begin
+     raise Exception.Create('Соединение с базаой не установлено');
+   end;
+   ProcedureName :='upd_rejected_stud_back';
+   Parameters.Clear;
+   Parameters.CreateParameter(
+   'stud_id',
+   ftInteger,
+   pdInput,
+   0,
+   reject_studDBL.KeyValue
+   );
+   ExecProc;
+   dm.studQuery.Close;
+   dm.studQuery.Open;
+   MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+ end;
+ except on E: EADOError do
+ begin
+   ShowMessage('Ошибка'+' '+e.Message);
+ end;
+ on E: Exception do
+ begin
+  ShowMessage('Ошибка'+' '+e.Message);
+ end;
+ end;
+ finally
+ FreeAndNil(upd_rejected_stud_back);
+ end;
+ dm.StudQuery.Close;
+ dm.StudQuery.Open;
+   end
+   else
+   begin
+   rejectdataLbl.Caption:='Дата отчисления';
+   upd_reject_stud :=nil;
+ try
+ upd_reject_stud :=TADOStoredProc.Create(nil);
+ try
+ with upd_reject_stud do
+ begin
+   Connection :=dm.Connection;
+   if not Connection.Connected then
+   begin
+     raise Exception.Create('Соединение с базаой не установлено');
+   end;
+   ProcedureName :='upd_reject_stud';
+   Parameters.Clear;
+   Parameters.CreateParameter(
+   'stud_id',
+   ftInteger,
+   pdInput,
+   0,
+   reject_studDBL.KeyValue
+   );
+   Parameters.CreateParameter(
+   'reject_date',
+   ftDate,
+   pdInput,
+   0,
+   regetDateinp.Date
+   );
+   ExecProc;
+   dm.studQuery.Close;
+   dm.studQuery.Open;
+   MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+ end;
+ except on E: EADOError do
+ begin
+   ShowMessage('Ошибка'+' '+e.Message);
+ end;
+ on E: Exception do
+ begin
+  ShowMessage('Ошибка'+' '+e.Message);
+ end;
+ end;
+ finally
+ FreeAndNil(upd_reject_stud);
+ end;
+ dm.StudQuery.Close;
+ dm.StudQuery.Open;
+
+   end;
+
+
 end;
 
 procedure TFrm_stud.Studfnd_akademCbClick(Sender: TObject);
@@ -861,7 +1011,9 @@ begin
  case show_reejctCB.Checked  of
  TRue:
  begin
-   // отчисденные
+    rejectdataLbl.Caption:='';
+    regetDateinp.Enabled:=false;
+  // отчисденные
   sel_rejected := nil;
   try
     sel_rejected := TADOStoredProc.Create(nil);
@@ -885,12 +1037,12 @@ begin
   finally
     FreeAndNil(sel_rejected);
   end;
-    dm.StudQuery.Close;
-    dm.studQuery.Open;
-
+rejectGrd.Columns[14].Visible:=true;
  end;
  false:
  begin
+     rejectdataLbl.Caption:='Дата отчисления';
+    regetDateinp.Enabled:=true;
   sel_all := nil;
   try
     sel_all := TADOStoredProc.Create(nil);
@@ -916,7 +1068,7 @@ begin
   end;
     dm.StudQuery.Close;
     dm.studQuery.Open;
-
+    rejectGrd.Columns[14].Visible:=False;
  end;
 
  end; //case

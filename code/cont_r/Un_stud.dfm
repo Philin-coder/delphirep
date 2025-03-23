@@ -28,6 +28,10 @@ object Frm_stud: TFrm_stud
     TabOrder = 0
     object SelTab: TTabSheet
       Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086'  '#1089#1090#1091#1076#1077#1085#1090#1077
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object StudgroupBox: TGroupBox
         Left = 0
         Top = 97
@@ -254,6 +258,10 @@ object Frm_stud: TFrm_stud
     object InsTab: TTabSheet
       Caption = #1042#1074#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1089#1090#1091#1076#1077#1085#1090#1077
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Stud_inpBox: TGroupBox
         Left = 0
         Top = 0
@@ -272,6 +280,10 @@ object Frm_stud: TFrm_stud
           TabOrder = 0
           object Stud_about_page_one: TTabSheet
             Caption = #1054' '#1089#1090#1091#1076#1077#1085#1090#1077
+            ExplicitLeft = 0
+            ExplicitTop = 0
+            ExplicitWidth = 0
+            ExplicitHeight = 0
             DesignSize = (
               1017
               276)
@@ -302,7 +314,7 @@ object Frm_stud: TFrm_stud
               Width = 1001
               Height = 21
               Anchors = [akLeft, akRight]
-              ItemHeight = 13
+              ItemHeight = 0
               TabOrder = 2
               OnChange = St_sex_inpChange
               OnCloseUp = St_sex_inpCloseUp
@@ -359,6 +371,10 @@ object Frm_stud: TFrm_stud
           object Stud_about_page_two: TTabSheet
             Caption = #1054' '#1089#1090#1091#1076#1077#1085#1090#1077
             ImageIndex = 1
+            ExplicitLeft = 0
+            ExplicitTop = 0
+            ExplicitWidth = 0
+            ExplicitHeight = 0
             DesignSize = (
               1017
               276)
@@ -435,6 +451,10 @@ object Frm_stud: TFrm_stud
           object about_stud_page_three: TTabSheet
             Caption = #1054' '#1089#1090#1091#1076#1077#1085#1090#1077
             ImageIndex = 2
+            ExplicitLeft = 0
+            ExplicitTop = 0
+            ExplicitWidth = 0
+            ExplicitHeight = 0
             DesignSize = (
               1017
               276)
@@ -444,7 +464,7 @@ object Frm_stud: TFrm_stud
               Width = 1011
               Height = 21
               Anchors = [akLeft, akRight]
-              ItemHeight = 13
+              ItemHeight = 0
               TabOrder = 0
               OnChange = mesto_jit_inpChange
               OnCloseUp = mesto_jit_inpCloseUp
@@ -524,6 +544,10 @@ object Frm_stud: TFrm_stud
           object Stud_about_page_three: TTabSheet
             Caption = #1054' '#1089#1090#1091#1076#1077#1085#1090#1077
             ImageIndex = 3
+            ExplicitLeft = 0
+            ExplicitTop = 0
+            ExplicitWidth = 0
+            ExplicitHeight = 0
             DesignSize = (
               1017
               276)
@@ -735,6 +759,10 @@ object Frm_stud: TFrm_stud
         TabOrder = 0
         object akademTab: TTabSheet
           Caption = #1040#1082#1072#1076#1077#1084#1080#1095#1077#1089#1082#1080#1081' '#1086#1090#1087#1091#1089#1082
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
           object Stud_upd_inp_Box: TGroupBox
             Left = 0
             Top = 0
@@ -781,7 +809,7 @@ object Frm_stud: TFrm_stud
               Width = 999
               Height = 21
               Anchors = [akLeft, akRight]
-              ItemHeight = 13
+              ItemHeight = 0
               TabOrder = 2
               OnChange = StudUpdakademComboChange
               Items.Strings = (
@@ -1126,6 +1154,10 @@ object Frm_stud: TFrm_stud
     object delTab: TTabSheet
       Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1089#1090#1091#1076#1077#1085#1090#1077
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object delstdatacBox: TGroupBox
         Left = 0
         Top = 0

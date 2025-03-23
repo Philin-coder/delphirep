@@ -224,6 +224,7 @@ end;
 procedure TFrm_reports.FormCreate(Sender: TObject);
   var cb:Integer;
 begin
+    UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
  LoadFormState(Self);
   with Frm_reports do

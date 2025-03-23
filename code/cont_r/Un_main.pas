@@ -132,6 +132,7 @@ begin
   try
 UpdateFormProperties('Frm_reports', 'Форма работы с отчетносьтю',
 clBtnFace, 1024, 768);
+
 Frm_reports.ShowModal;
 except
 Frm_reports.Free;

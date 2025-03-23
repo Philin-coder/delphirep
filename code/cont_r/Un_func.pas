@@ -15,6 +15,7 @@ ComCtrls,
 DBCtrls,
 Windows,
 mask,
+dbgrids,
 ExtCtrls;
 
 function  DateToStr_(Dat : TDate): String;
@@ -39,6 +40,8 @@ procedure UpdateFormProperties(const FormName: string;
 string): Boolean;
 function Capitalizer(str:string; mode:integer=0):string;
 function adr_fixer(str:string;  mode:Integer=0):string;
+procedure UniformizeDBGrids(AForm: TForm; const FontName: string;
+FontSize: Integer; FontColor: TColor; BkColor: TColor);
 implementation
 
 
@@ -504,4 +507,29 @@ begin
 end;
 end;      //case
 end;
+procedure UniformizeDBGrids(AForm: TForm; const FontName: string;
+FontSize: Integer; FontColor: TColor; BkColor: TColor);
+var
+  i: Integer;
+  DBGrid: TDBGrid;
+begin
+  for i := 0 to AForm.ComponentCount - 1 do
+  begin
+    if AForm.Components[i] is TDBGrid then
+    begin
+      DBGrid := TDBGrid(AForm.Components[i]);
+      DBGrid.Font.Name := FontName;
+      DBGrid.Font.Size := FontSize;
+      DBGrid.Font.Color := FontColor;
+      DBGrid.Color := BkColor;
+      DBGrid.Options := DBGrid.Options +
+      [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs];
+      DBGrid.DefaultDrawing := True;
+      DBGrid.ReadOnly := True;
+      DBGrid.Refresh;
+    end;
+  end;
+end;
+
+
 end.
