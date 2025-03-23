@@ -606,16 +606,16 @@ object Frm_reports: TFrm_reports
         Width = 1029
         Height = 136
         Align = alTop
-        Caption = 'GroupBox1'
+        Caption = #1055#1086#1082#1072#1079#1072#1090#1100'  '#1074' '#1086#1090#1095#1077#1090#1077
         TabOrder = 2
         ExplicitTop = 105
-        object CheckBox1: TCheckBox
+        object r3Idcb: TCheckBox
           Left = 40
           Top = 32
           Width = 97
           Height = 17
           Align = alCustom
-          Caption = 'CheckBox1'
+          Caption = 'Id'
           TabOrder = 0
         end
       end

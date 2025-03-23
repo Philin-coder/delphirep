@@ -69,7 +69,7 @@ type
     edatalbl: TStaticText;
     b_data_inp: TDateTimePicker;
     Edatainp: TDateTimePicker;
-    CheckBox1: TCheckBox;
+    r3Idcb: TCheckBox;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
