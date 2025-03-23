@@ -212,8 +212,10 @@ begin
  case reprotPC.TabIndex of
  0:
  begin
- dm.reportQuery.SQL.Clear;
-dm.reportQuery.SQL.Text:= 'select '+
+ with dm.reportQuery do
+ begin
+  SQL.Clear;
+  SQL.Text:= 'select '+
  '  stud.stud_id, ' +
     '  stud.b_data, ' +
     '  CASE stud.pol WHEN 1 THEN ''Мужской'' ELSE ''Женский'' END AS sex, ' +
@@ -234,8 +236,9 @@ dm.reportQuery.SQL.Text:= 'select '+
     'WHERE 1=1 ' +
     '  AND stud.data_ot IS NULL ' +
     '  AND is_akadem = 0 ';
-       dm.reportQuery.Close;
-       dm.reportQuery.Open;
+       Close;
+       Open;
+ end;
  end;
  1:
 begin

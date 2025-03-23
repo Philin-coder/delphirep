@@ -32,6 +32,7 @@ type
     stud_repprt1_lbl: TStaticText;
     Stud_report1DBL: TDBLookupComboBox;
     Stud_report1Btn: TButton;
+    TabSheet1: TTabSheet;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -50,6 +51,7 @@ type
     procedure data_prCBClick(Sender: TObject);
     procedure naim_grupCBClick(Sender: TObject);
     procedure st_emailCBClick(Sender: TObject);
+    procedure reprotPCChange(Sender: TObject);
   private
     { Private declarations }
   public
@@ -106,6 +108,7 @@ end;
 
 procedure TFrm_reports.FormActivate(Sender: TObject);
 begin
+
 dm.reportQuery.SQL.Text:= 'select '+
  '  stud.stud_id, ' +
     '  stud.b_data, ' +
@@ -202,6 +205,47 @@ procedure TFrm_reports.regionCBClick(Sender: TObject);
 begin
   Stud_report1Grid.Columns[4].Visible:=regionCB.Checked;
 if regionCB.Checked then Stud_report1Grid.Columns[4].Title.Caption:='Регион';
+end;
+
+procedure TFrm_reports.reprotPCChange(Sender: TObject);
+begin
+ case reprotPC.TabIndex of
+ 0:
+ begin
+ dm.reportQuery.SQL.Clear;
+dm.reportQuery.SQL.Text:= 'select '+
+ '  stud.stud_id, ' +
+    '  stud.b_data, ' +
+    '  CASE stud.pol WHEN 1 THEN ''Мужской'' ELSE ''Женский'' END AS sex, ' +
+    '  stud.civ, ' +
+    '  stud.region, ' +
+    '  stud.gorod, ' +
+    '  stud.adr, ' +
+    '  stud.passp_fam + '' '' + stud.passp_naim + ISNULL('' '' + stud.passp_otch, '''') AS fio, ' +
+ '  CASE stud.mesto_jit WHEN 1 THEN ''Съем'' ELSE ''Общежитие'' END AS to_live, ' +
+    '  stud.mod_t, ' +
+    '  stud.dom_t, ' +
+    '  stud.data_pr, ' +
+    '  gruppa.naim_grup, ' +
+    '  stud.st_email ' +
+    'FROM stud ' +
+    'INNER JOIN gruppa ON gruppa.grup_id = stud.grup_id ' +
+    'INNER JOIN spec ON spec.spec_id = gruppa.spec_id ' +
+    'WHERE 1=1 ' +
+    '  AND stud.data_ot IS NULL ' +
+    '  AND is_akadem = 0 ';
+       dm.reportQuery.Close;
+       dm.reportQuery.Open;
+ end;
+ 1:
+begin
+    dm.reportQuery.SQL.Clear;
+   dm.reportQuery.SQL.Text:='select * from stud';
+   ShowMessage(dm.reportQuery.SQL.Text);
+end;
+
+ end; //case
+
 end;
 
 procedure TFrm_reports.SexCBClick(Sender: TObject);
