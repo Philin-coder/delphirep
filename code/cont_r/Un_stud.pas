@@ -1167,8 +1167,6 @@ begin
     Beep;
     Exit;
   end;
-
-  // Вызов хранимой процедуры для случая, когда отчества нет
   ins_stud_restrict := nil;
   try
     ins_stud_restrict := TADOStoredProc.Create(nil);

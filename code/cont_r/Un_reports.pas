@@ -70,6 +70,19 @@ type
     r3begin_data_inp: TDateTimePicker;
     r3Enddatainp: TDateTimePicker;
     r3Idcb: TCheckBox;
+    r3b_data: TCheckBox;
+    r3_sexcb: TCheckBox;
+    r3civcb: TCheckBox;
+    r3regioncb: TCheckBox;
+    r3gorod: TCheckBox;
+    r3adrcb: TCheckBox;
+    r3fiocb: TCheckBox;
+    r3to_livecb: TCheckBox;
+    r3mod_tcb: TCheckBox;
+    r3dom_tcb: TCheckBox;
+    r3data_prcb: TCheckBox;
+    r3naim_grupcb: TCheckBox;
+    r3st_emailcb: TCheckBox;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -105,6 +118,7 @@ type
     procedure r2dpCBClick(Sender: TObject);
     procedure r2naim_grupCBClick(Sender: TObject);
     procedure r2st_emailCBClick(Sender: TObject);
+    procedure thrdrepBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -479,6 +493,37 @@ begin
     secondrepotGrid.Columns[14].Title.Caption:='Email';
 end;
 end;
+2:
+begin
+with dm.reportQuery do
+begin
+  SQL.Clear;
+  SQL.Text:='select '+
+    '  stud.stud_id, ' +
+    '  stud.b_data, ' +
+    '  CASE stud.pol WHEN 1 THEN ''Мужской'' ELSE ''Женский'' END AS sex, ' +
+    '  stud.civ, ' +
+    '  stud.region, ' +
+    '  stud.gorod, ' +
+    '  stud.adr, ' +
+    '  stud.passp_fam + '' '' + stud.passp_naim + ISNULL('' '' + stud.passp_otch, '''') AS fio, ' +
+    ' gruppa.kurs,'+
+ '  CASE stud.mesto_jit WHEN 1 THEN ''Съем'' ELSE ''Общежитие'' END AS to_live, ' +
+    '  stud.mod_t, ' +
+    '  stud.dom_t, ' +
+    '  stud.data_pr, ' +
+    '  gruppa.naim_grup, ' +
+    '  stud.st_email ' +
+    'FROM stud ' +
+    'INNER JOIN gruppa ON gruppa.grup_id = stud.grup_id ' +
+    'INNER JOIN spec ON spec.spec_id = gruppa.spec_id ' +
+    'WHERE 1=1 ' +
+    '  AND stud.data_ot IS NULL '+
+    '  AND is_akadem = 0 ';
+    close;
+    Open;
+end;
+end;
 
  end; //case
 
@@ -651,6 +696,71 @@ begin
 Stud_report1Grid.Columns[13].Visible:=st_emailCB.Checked;
   if st_emailCB.Checked then
   Stud_report1Grid.Columns[13].Title.Caption:='Email';
+end;
+
+procedure TFrm_reports.thrdrepBtnClick(Sender: TObject);
+ var
+   third_report:TADOStoredProc;
+   I,cbe:Integer;
+begin
+   third_report := nil;
+  try
+    third_report := TADOStoredProc.Create(nil);
+    try
+      with third_report do
+      begin
+        Connection := DM.Connection;
+        if not Connection.Connected then
+          raise Exception.Create('Cоединение с базой не установлено');
+        ProcedureName := 'third_report';
+        Parameters.Clear;
+        Parameters.CreateParameter(
+        'd1',
+        ftDate,
+        pdInput,
+        0,
+        r3begin_data_inp.Date
+        );
+        Parameters.CreateParameter(
+        'd2',
+        ftDate,
+        pdInput,
+        0,
+        r3Enddatainp.Date
+        );
+        Open;
+        DM.reportQuery.Close;
+        DM.reportQuery.Recordset := third_report.Recordset;
+      end;
+    except
+      on E: EADOError do
+        ShowMessage('Ошибка: ' + E.Message);
+      on E: Exception do
+        ShowMessage('Ошибка: ' + E.Message);
+    end;
+  finally
+    FreeAndNil(third_report);
+  end;
+   with thrdrepGrid do
+   begin
+     for I := 0 to columns.Count - 1 do
+       begin
+         Columns[i].Visible:=False;
+       end;
+   end;
+
+ with Frm_reports do
+ begin
+    for cbe := 0 to ComponentCount - 1 do
+ begin
+    if(Components[cbe] is TCheckBox)  then
+   begin
+      (Components[cbe] as TCheckBox).Enabled:=true;
+ end;
+ end;
+ end;
+  MessageDlg('Таблица скрыта,отчет формирутеся динамически'
+  ,mtInformation,[mbOK],0);
 end;
 
 procedure TFrm_reports.to_liveCBClick(Sender: TObject);
