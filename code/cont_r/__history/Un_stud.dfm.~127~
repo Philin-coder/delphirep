@@ -146,7 +146,7 @@ object Frm_stud: TFrm_stud
             item
               Expanded = False
               FieldName = 'region'
-              Title.Caption = #1054#1073#1083#1072#1089#1090#1100' '#1087#1088#1086#1078#1080#1074#1072#1085#1080#1103
+              Title.Caption = #1056#1077#1075#1080#1086#1085' '#1087#1088#1086#1078#1080#1074#1072#1085#1080#1103
               Visible = True
             end
             item
@@ -267,7 +267,7 @@ object Frm_stud: TFrm_stud
           Top = 15
           Width = 1025
           Height = 304
-          ActivePage = Stud_about_page_three
+          ActivePage = Stud_about_page_two
           Align = alClient
           TabOrder = 0
           object Stud_about_page_one: TTabSheet
@@ -328,9 +328,9 @@ object Frm_stud: TFrm_stud
               Width = 998
               Height = 21
               Anchors = [akLeft, akRight]
-              EditLabel.Width = 43
+              EditLabel.Width = 100
               EditLabel.Height = 13
-              EditLabel.Caption = #1054#1073#1083#1072#1089#1090#1100
+              EditLabel.Caption = #1056#1077#1075#1080#1086#1085' '#1087#1088#1086#1078#1080#1074#1072#1085#1080#1103
               TabOrder = 4
               OnExit = region_inpExit
             end
@@ -650,7 +650,7 @@ object Frm_stud: TFrm_stud
             item
               Expanded = False
               FieldName = 'region'
-              Title.Caption = #1054#1073#1083#1072#1089#1090#1100' '#1087#1088#1086#1078#1080#1074#1072#1085#1080#1103
+              Title.Caption = #1056#1077#1075#1080#1086#1085' '#1087#1088#1086#1078#1080#1074#1072#1085#1080#1103
               Visible = True
             end
             item
@@ -1054,7 +1054,7 @@ object Frm_stud: TFrm_stud
                 item
                   Expanded = False
                   FieldName = 'region'
-                  Title.Caption = #1054#1073#1083#1072#1089#1090#1100' '#1087#1088#1086#1078#1080#1074#1072#1085#1080#1103
+                  Title.Caption = #1056#1077#1075#1080#1086#1085' '#1087#1088#1086#1078#1080#1074#1072#1085#1080#1103
                   Visible = True
                 end
                 item
@@ -1109,6 +1109,13 @@ object Frm_stud: TFrm_stud
                   Expanded = False
                   FieldName = 'st_email'
                   Title.Caption = #1045'-mail'
+                  Visible = True
+                end
+                item
+                  Expanded = False
+                  FieldName = 'data_ot'
+                  Title.Caption = #1044#1072#1090#1072' '#1086#1090#1095#1080#1089#1083#1077#1085#1080#1103
+                  Width = 83
                   Visible = True
                 end>
             end
@@ -1222,7 +1229,7 @@ object Frm_stud: TFrm_stud
             item
               Expanded = False
               FieldName = 'region'
-              Title.Caption = #1054#1073#1083#1072#1089#1090#1100' '#1087#1088#1086#1078#1080#1074#1072#1085#1080#1103
+              Title.Caption = #1056#1077#1075#1080#1086#1085' '#1087#1088#1086#1078#1080#1074#1072#1085#1080#1103
               Visible = True
             end
             item

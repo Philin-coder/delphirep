@@ -311,11 +311,19 @@ if Spec_groupradio.Checked=true then
 end;
 
 procedure TFrm_spec.Spec_insBtnClick(Sender: TObject);
-var ins_spec:TADOStoredProc;
+const
+  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  ins_spec:TADOStoredProc;
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
 begin
-  if Trim(spec_inp.Text) = '' then
+  AreFieldsEmpty := (Trim(spec_inp.Text) = '');
+  AreFieldsValid :=ValidateComponentText(spec_inp,AllowedChars);
+  if AreFieldsEmpty or not AreFieldsValid then
   begin
-    MessageDlg('Заполните все поля', mtError, [mbOK], 0);
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку',
+    mtError, [mbOK], 0);
     Beep;
     Exit;
   end;

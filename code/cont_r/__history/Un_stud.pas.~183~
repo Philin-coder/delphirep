@@ -285,6 +285,7 @@ end;
 
 procedure TFrm_stud.FormCreate(Sender: TObject);
 begin
+  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   LoadFormState(Self);
   CbSecondnaim.Checked:=False;
@@ -1126,25 +1127,48 @@ if stud_gr_groupradio.Checked=true then
 end;
 
 procedure TFrm_stud.Stud_insBtnClick(Sender: TObject);
+const
+  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
   var
     ins_stud_normal:TADOStoredProc;
     ins_stud_restrict:TADOStoredProc;
+     AreFieldsEmpty: Boolean;
+    AreFieldsValid: Boolean;
+
 begin
 case otch_inp.Enabled of
   True:
   begin
-    if ((St_sex_inp.Text='')
-        and (Trim(civ_inp.Text)='') and (Trim(region_inp.Text)='')and
-        (Trim(gorod_inp.Text)='')and(Trim(adr_inp.Text)='')
-        and(Trim(fam_inp.Text)='') and (Trim(naim_inp.Text)='') and
-        (Trim(otch_inp.Text)='')and (mesto_jit_inp.Text='')and
-        (Modphone_inp.Text='') and(dom_t_inp.Text='')and
-        (Trim(st_email_inp.Text)='')) then
+    AreFieldsEmpty:=
+    (St_sex_inp.Text='')or
+    (Trim(civ_inp.Text)='')or
+    (Trim(region_inp.Text)='')or
+    (Trim(gorod_inp.Text)='')or
+    (Trim(adr_inp.Text)='')or
+    (Trim(fam_inp.Text)='') or
+    (Trim(naim_inp.Text)='') or
+    (Trim(otch_inp.Text)='')or
+    (mesto_jit_inp.Text='')or
+    (Modphone_inp.Text='') or
+    (dom_t_inp.Text='')or
+    (Trim(st_email_inp.Text)='');
+    areFieldsValid :=
+    ValidateComponentText(civ_inp, AllowedChars) and
+    ValidateComponentText(region_inp, AllowedChars) and
+    ValidateComponentText(gorod_inp, AllowedChars) and
+    ValidateComponentText(adr_inp, AllowedChars) and
+    ValidateComponentText(fam_inp, AllowedChars) and
+    ValidateComponentText(naim_inp, AllowedChars) and
+    ValidateComponentText(otch_inp, AllowedChars);
+    if AreFieldsEmpty or not AreFieldsValid then
   begin
-    MessageDlg('Заполните все поля', mtError, [mbOK], 0);
+    MessageDlg('Ошибка: одно из полей пустое или содержит недопустимые символы',
+      mtError, [mbOK], 0);
     Beep;
     Exit;
-  end;
+  end
+ else
+  begin
   ins_stud_normal := nil;
   try
     ins_stud_normal := TADOStoredProc.Create(nil);
@@ -1290,6 +1314,7 @@ case otch_inp.Enabled of
     end;
   finally
     FreeAndNil(ins_stud_normal);
+  end;
   end;
   end;
   False:

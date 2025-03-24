@@ -29,15 +29,14 @@ type
     Stud_ins_btn_Box: TGroupBox;
     Stud_insBtn: TButton;
     Stud_DataInsBox: TGroupBox;
-    delgrdatacBox: TGroupBox;
-    delgrlbl: TStaticText;
-    delgrDBL: TDBLookupComboBox;
-    dlgrbtnBox: TGroupBox;
-    delgrBtn: TButton;
-    degrdataBox: TGroupBox;
+    delstdatacBox: TGroupBox;
+    delstlbl: TStaticText;
+    delstDBL: TDBLookupComboBox;
+    dlgsttnBox: TGroupBox;
+    delstBtn: TButton;
+    delstdataBox: TGroupBox;
     Stud_gr_groupradio: TRadioButton;
     Studfnd_akademCb: TCheckBox;
-    delgrgrid: TDBGrid;
     CbSecondnaim: TCheckBox;
     Stud_inp_page: TPageControl;
     Stud_about_page_one: TTabSheet;
@@ -99,6 +98,7 @@ type
     rejectGrd: TDBGrid;
     regetDateinp: TDateTimePicker;
     show_reejctCB: TCheckBox;
+    delstGrd: TDBGrid;
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -139,6 +139,7 @@ type
     procedure Stud_upd_BtnClick(Sender: TObject);
     procedure rejectbtnClick(Sender: TObject);
     procedure show_reejctCBClick(Sender: TObject);
+    procedure delstBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -195,6 +196,53 @@ insProgres_bar.StepBy(1);
 
 end;
 
+procedure TFrm_stud.delstBtnClick(Sender: TObject);
+var
+del_stud:TADOStoredProc;
+begin
+del_stud :=nil;
+ try
+ del_stud :=TADOStoredProc.Create(nil);
+ try
+ with del_stud do
+ begin
+   Connection :=dm.Connection;
+   if not Connection.Connected then
+   begin
+     raise Exception.Create('Соединение с базаой не установлено');
+   end;
+   ProcedureName :='del_stud';
+   Parameters.Clear;
+   Parameters.CreateParameter(
+   'stud_id',
+   ftInteger,
+   pdInput,
+   0,
+   delstDBL.KeyValue
+   );
+
+   ExecProc;
+   dm.studQuery.Close;
+   dm.studQuery.Open;
+   MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+ end;
+ except on E: EADOError do
+ begin
+   ShowMessage('Ошибка'+' '+e.Message);
+ end;
+ on E: Exception do
+ begin
+  ShowMessage('Ошибка'+' '+e.Message);
+ end;
+ end;
+ finally
+ FreeAndNil(del_stud);
+ end;
+ dm.StudQuery.Close;
+ dm.StudQuery.Open;
+
+end;
+
 procedure TFrm_stud.dom_t_inpExit(Sender: TObject);
 begin
 insProgres_bar.StepBy(1);
@@ -230,10 +278,14 @@ begin
  end;
  Imgsuccess.Picture:=nil;
  insProgres_bar.Position:=1;
+ rejectdataLbl.Caption:='Дата отчисления';
+    regetDateinp.Enabled:=true;
+
 end;
 
 procedure TFrm_stud.FormCreate(Sender: TObject);
 begin
+  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   LoadFormState(Self);
   CbSecondnaim.Checked:=False;
@@ -245,6 +297,9 @@ begin
   Imgsuccess.Picture.LoadFromFile('Galka.jpg');
   insProgres_bar.Position:=1;
   Stud_upd_Btn.Caption:='Изменение данных';
+  rejectdataLbl.Caption:='Дата отчисления';
+  regetDateinp.Enabled:=True;
+    rejectGrd.Columns[14].Visible:=False;
 end;
 
 procedure TFrm_stud.FormKeyUp(Sender: TObject; var Key: Word;
@@ -398,9 +453,105 @@ insProgres_bar.StepBy(1);
 end;
 
 procedure TFrm_stud.rejectbtnClick(Sender: TObject);
-
+   var
+    upd_rejected_stud_back:TADOStoredProc;
+    upd_reject_stud:TADOStoredProc;
 begin
-    ShowMessage('test');    // 0 учатся
+   if show_reejctCB.Checked=true then
+   begin
+    upd_rejected_stud_back :=nil;
+ try
+ upd_rejected_stud_back :=TADOStoredProc.Create(nil);
+ try
+ with upd_rejected_stud_back do
+ begin
+   Connection :=dm.Connection;
+   if not Connection.Connected then
+   begin
+     raise Exception.Create('Соединение с базаой не установлено');
+   end;
+   ProcedureName :='upd_rejected_stud_back';
+   Parameters.Clear;
+   Parameters.CreateParameter(
+   'stud_id',
+   ftInteger,
+   pdInput,
+   0,
+   reject_studDBL.KeyValue
+   );
+   ExecProc;
+   dm.studQuery.Close;
+   dm.studQuery.Open;
+   MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+ end;
+ except on E: EADOError do
+ begin
+   ShowMessage('Ошибка'+' '+e.Message);
+ end;
+ on E: Exception do
+ begin
+  ShowMessage('Ошибка'+' '+e.Message);
+ end;
+ end;
+ finally
+ FreeAndNil(upd_rejected_stud_back);
+ end;
+ dm.StudQuery.Close;
+ dm.StudQuery.Open;
+   end
+   else
+   begin
+   rejectdataLbl.Caption:='Дата отчисления';
+   upd_reject_stud :=nil;
+ try
+ upd_reject_stud :=TADOStoredProc.Create(nil);
+ try
+ with upd_reject_stud do
+ begin
+   Connection :=dm.Connection;
+   if not Connection.Connected then
+   begin
+     raise Exception.Create('Соединение с базаой не установлено');
+   end;
+   ProcedureName :='upd_reject_stud';
+   Parameters.Clear;
+   Parameters.CreateParameter(
+   'stud_id',
+   ftInteger,
+   pdInput,
+   0,
+   reject_studDBL.KeyValue
+   );
+   Parameters.CreateParameter(
+   'reject_date',
+   ftDate,
+   pdInput,
+   0,
+   regetDateinp.Date
+   );
+   ExecProc;
+   dm.studQuery.Close;
+   dm.studQuery.Open;
+   MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+ end;
+ except on E: EADOError do
+ begin
+   ShowMessage('Ошибка'+' '+e.Message);
+ end;
+ on E: Exception do
+ begin
+  ShowMessage('Ошибка'+' '+e.Message);
+ end;
+ end;
+ finally
+ FreeAndNil(upd_reject_stud);
+ end;
+ dm.StudQuery.Close;
+ dm.StudQuery.Open;
+
+   end;
+
+
 end;
 
 procedure TFrm_stud.Studfnd_akademCbClick(Sender: TObject);
@@ -861,7 +1012,9 @@ begin
  case show_reejctCB.Checked  of
  TRue:
  begin
-
+    rejectdataLbl.Caption:='';
+    regetDateinp.Enabled:=false;
+  // отчисденные
   sel_rejected := nil;
   try
     sel_rejected := TADOStoredProc.Create(nil);
@@ -885,12 +1038,12 @@ begin
   finally
     FreeAndNil(sel_rejected);
   end;
-    dm.StudQuery.Close;
-    dm.studQuery.Open;
-
+rejectGrd.Columns[14].Visible:=true;
  end;
  false:
  begin
+     rejectdataLbl.Caption:='Дата отчисления';
+    regetDateinp.Enabled:=true;
   sel_all := nil;
   try
     sel_all := TADOStoredProc.Create(nil);
@@ -916,7 +1069,7 @@ begin
   end;
     dm.StudQuery.Close;
     dm.studQuery.Open;
-
+    rejectGrd.Columns[14].Visible:=False;
  end;
 
  end; //case
@@ -974,25 +1127,49 @@ if stud_gr_groupradio.Checked=true then
 end;
 
 procedure TFrm_stud.Stud_insBtnClick(Sender: TObject);
+const
+  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
   var
     ins_stud_normal:TADOStoredProc;
     ins_stud_restrict:TADOStoredProc;
+    AreFieldsEmpty: Boolean;
+    AreFieldsValid: Boolean;
+    AreFieldsEmpty_r: Boolean;
+    AreFieldsValid_r: Boolean;
+
 begin
 case otch_inp.Enabled of
   True:
   begin
-    if ((St_sex_inp.Text='')
-        and (Trim(civ_inp.Text)='') and (Trim(region_inp.Text)='')and
-        (Trim(gorod_inp.Text)='')and(Trim(adr_inp.Text)='')
-        and(Trim(fam_inp.Text)='') and (Trim(naim_inp.Text)='') and
-        (Trim(otch_inp.Text)='')and (mesto_jit_inp.Text='')and
-        (Modphone_inp.Text='') and(dom_t_inp.Text='')and
-        (Trim(st_email_inp.Text)='')) then
+    AreFieldsEmpty:=
+    (St_sex_inp.Text='')or
+    (Trim(civ_inp.Text)='')or
+    (Trim(region_inp.Text)='')or
+    (Trim(gorod_inp.Text)='')or
+    (Trim(adr_inp.Text)='')or
+    (Trim(fam_inp.Text)='') or
+    (Trim(naim_inp.Text)='') or
+    (Trim(otch_inp.Text)='')or
+    (mesto_jit_inp.Text='')or
+    (Modphone_inp.Text='') or
+    (dom_t_inp.Text='')or
+    (Trim(st_email_inp.Text)='');
+    areFieldsValid :=
+    ValidateComponentText(civ_inp, AllowedChars) and
+    ValidateComponentText(region_inp, AllowedChars) and
+    ValidateComponentText(gorod_inp, AllowedChars) and
+    ValidateComponentText(fam_inp, AllowedChars) and
+    ValidateComponentText(naim_inp, AllowedChars) and
+    ValidateComponentText(otch_inp, AllowedChars);
+    if AreFieldsEmpty or not AreFieldsValid then
   begin
-    MessageDlg('Заполните все поля', mtError, [mbOK], 0);
+    MessageDlg('Ошибка: одно из полей пустое или содержит недопустимые символы',
+      mtError, [mbOK], 0);
     Beep;
     Exit;
-  end;
+  end
+ else
+  begin
   ins_stud_normal := nil;
   try
     ins_stud_normal := TADOStoredProc.Create(nil);
@@ -1140,15 +1317,24 @@ case otch_inp.Enabled of
     FreeAndNil(ins_stud_normal);
   end;
   end;
+  end;
   False:
   begin
-      if ((St_sex_inp.Text='')
-        and (Trim(civ_inp.Text)='') and (Trim(region_inp.Text)='')and
-        (Trim(gorod_inp.Text)='')and(Trim(adr_inp.Text)='')
-        and(Trim(fam_inp.Text)='') and (Trim(naim_inp.Text)='')
-        and (mesto_jit_inp.Text='')and
-        (Modphone_inp.Text='') and(dom_t_inp.Text='')and
-        (Trim(st_email_inp.Text)='')) then
+      AreFieldsEmpty_r:=
+      (St_sex_inp.Text='')or
+         (Trim(civ_inp.Text)='') or
+         (Trim(region_inp.Text)='')or
+        (Trim(gorod_inp.Text)='')or
+        (Trim(adr_inp.Text)='')or
+        (Trim(fam_inp.Text)='') or
+        (Trim(naim_inp.Text)='');
+        AreFieldsEmpty_r:=
+        (ValidateComponentText(civ_inp,AllowedChars) and
+         (ValidateComponentText(region_inp,AllowedChars)and
+        (ValidateComponentText(gorod_inp,AllowedChars)and
+        (ValidateComponentText(fam_inp,AllowedChars) and
+        (ValidateComponentText(naim_inp,AllowedChars);
+         if AreFieldsEmpty_r or not AreFieldsValid_r then
   begin
     MessageDlg('Заполните все поля', mtError, [mbOK], 0);
     Beep;

@@ -348,11 +348,19 @@ if grupp_gr_groupradio.Checked=true then
 end;
 
 procedure TFrm_grupp.Grupp_insBtnClick(Sender: TObject);
-var ins_grupp:TADOStoredProc;
+const
+  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  ins_grupp:TADOStoredProc;
+    AreFieldsEmpty: Boolean;
+    AreFieldsValid: Boolean;
 begin
-     if (Trim(Grupp_naim_g_inp.Text) = '')and (GradeUpDown.Position=0) then
+     AreFieldsEmpty:= ((Trim(Grupp_naim_g_inp.Text) = ''));
+     AreFieldsValid:=ValidateComponentText(Grupp_naim_g_inp,AllowedChars);
+     if AreFieldsEmpty or not  AreFieldsValid then
   begin
-    MessageDlg('Заполните все поля', mtError, [mbOK], 0);
+    MessageDlg('Ошибка: одно из полей пустое или содержит недопустимые символы',
+    mtError, [mbOK], 0);
     Beep;
     Exit;
   end;

@@ -261,12 +261,20 @@ except on E: Exception do
 end;
 
 procedure TFrm_prikaz.Prikaz_insBtnClick(Sender: TObject);
+const
+  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
 var
   ins_prikaz:TADOStoredProc;
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
 begin
-if ((Trim(pr_nom_inp.Text) = '') or(Trim(pr_type_inp.Text)='')) then
+ AreFieldsEmpty:=((Trim(pr_nom_inp.Text) = '')or
+ (Trim(pr_type_inp.Text)=''));
+ AreFieldsValid:=ValidateComponentText(pr_type_inp,AllowedChars);
+  if AreFieldsEmpty or not AreFieldsValid then
   begin
-    MessageDlg('Заполните все поля', mtError, [mbOK], 0);
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку',
+    mtError, [mbOK], 0);
     Beep;
     Exit;
   end;

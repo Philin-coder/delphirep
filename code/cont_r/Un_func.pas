@@ -17,6 +17,8 @@ Windows,
 mask,
 dbgrids,
 ExtCtrls;
+type
+  TSysCharSet = set of Char;
 
 function  DateToStr_(Dat : TDate): String;
 function  CommaPoint (X: String) : String;
@@ -42,6 +44,8 @@ procedure UpdateFormProperties(const FormName: string;
 function adr_fixer(str:string;  mode:Integer=0):string;
 procedure UniformizeDBGrids(AForm: TForm; const FontName: string;
 FontSize: Integer; FontColor: TColor; BkColor: TColor);
+function ValidateComponentText(AComponent: TWinControl;
+ const AllowedChars: TSysCharSet): Boolean;
 implementation
 
 
@@ -527,6 +531,29 @@ begin
       DBGrid.DefaultDrawing := True;
       DBGrid.ReadOnly := True;
       DBGrid.Refresh;
+    end;
+  end;
+end;
+function ValidateComponentText(AComponent: TWinControl;
+ const AllowedChars: TSysCharSet): Boolean;
+var
+  Text: string;
+  i: Integer;
+  CharIsValid: Boolean;
+begin
+  Result := True;
+  if AComponent is TLabeledEdit then
+    Text := TLabeledEdit(AComponent).Text
+  else if AComponent is TEdit then
+    Text := TEdit(AComponent).Text;
+  for i := 1 to Length(Text) do
+  begin
+    CharIsValid := Text[i] in AllowedChars;
+    if not CharIsValid then
+    begin
+      ShowMessage('Недопустимый символ в компоненте: ' + AComponent.Name);
+      Result := False;
+      Exit;
     end;
   end;
 end;
