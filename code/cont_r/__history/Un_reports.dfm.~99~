@@ -21,7 +21,7 @@ object Frm_reports: TFrm_reports
     Top = 0
     Width = 1037
     Height = 813
-    ActivePage = studlistin
+    ActivePage = studlstout
     Align = alClient
     TabOrder = 0
     OnChange = reprotPCChange
@@ -674,6 +674,7 @@ object Frm_reports: TFrm_reports
           Align = alCustom
           Caption = #1040#1076#1088#1077#1089
           TabOrder = 6
+          OnClick = r3adrcbClick
         end
         object r3fiocb: TCheckBox
           Left = 368
@@ -683,60 +684,77 @@ object Frm_reports: TFrm_reports
           Align = alCustom
           Caption = #1060#1048#1054
           TabOrder = 7
+          OnClick = r3fiocbClick
         end
         object r3to_livecb: TCheckBox
-          Left = 368
-          Top = 96
+          Left = 488
+          Top = 24
           Width = 97
           Height = 17
           Align = alCustom
           Caption = #1055#1088#1086#1078#1080#1074#1072#1085#1080#1077
           TabOrder = 8
+          OnClick = r3to_livecbClick
         end
         object r3mod_tcb: TCheckBox
           Left = 488
-          Top = 24
+          Top = 47
           Width = 97
           Height = 17
           Align = alCustom
           Caption = #1052#1086#1073#1080#1083#1100#1085#1099#1081
           TabOrder = 9
+          OnClick = r3mod_tcbClick
         end
         object r3dom_tcb: TCheckBox
           Left = 488
-          Top = 56
+          Top = 96
           Width = 97
           Height = 17
           Align = alCustom
           Caption = #1044#1086#1084#1072#1096#1085#1080#1081
           TabOrder = 10
+          OnClick = r3dom_tcbClick
         end
         object r3data_prcb: TCheckBox
-          Left = 488
-          Top = 88
+          Left = 656
+          Top = 25
           Width = 97
           Height = 17
           Align = alCustom
           Caption = #1044#1072#1090#1072' '#1087#1088#1080#1077#1084#1072
           TabOrder = 11
+          OnClick = r3data_prcbClick
         end
         object r3naim_grupcb: TCheckBox
-          Left = 616
-          Top = 24
+          Left = 656
+          Top = 64
           Width = 97
           Height = 17
           Align = alCustom
           Caption = #1043#1088#1091#1087#1087#1072
           TabOrder = 12
+          OnClick = r3naim_grupcbClick
         end
         object r3st_emailcb: TCheckBox
-          Left = 616
-          Top = 56
+          Left = 656
+          Top = 103
           Width = 97
           Height = 17
           Align = alCustom
           Caption = 'Email'
           TabOrder = 13
+          OnClick = r3st_emailcbClick
+        end
+        object r3kurscb: TCheckBox
+          Left = 368
+          Top = 96
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Caption = #1050#1091#1088#1089
+          TabOrder = 14
+          OnClick = r3kurscbClick
         end
       end
       object thrdrepdataBox: TGroupBox
@@ -760,6 +778,274 @@ object Frm_reports: TFrm_reports
           TitleFont.Height = -11
           TitleFont.Name = 'Tahoma'
           TitleFont.Style = []
+        end
+      end
+    end
+    object studlstout: TTabSheet
+      Caption = #1057#1087#1080#1089#1086#1082' '#1089#1090#1091#1076#1077#1085#1090#1086#1074', '#1074#1099#1073#1099#1074#1096#1080#1093' '#1080#1079' '#1090#1077#1093#1085#1080#1082#1091#1084#1072' '#1079#1072' '#1087#1077#1088#1080#1086#1076' '#1089
+      ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 28
+      object r4datainpBox: TGroupBox
+        Left = 0
+        Top = 0
+        Width = 1029
+        Height = 169
+        Align = alTop
+        Caption = #1042#1074#1086#1076'  '#1076#1072#1085#1085#1099#1093
+        TabOrder = 0
+        object r4begindatelbl: TStaticText
+          Left = 24
+          Top = 23
+          Width = 115
+          Height = 17
+          Align = alCustom
+          Anchors = [akLeft]
+          Caption = #1044#1072#1090#1072' '#1085#1072#1095#1072#1083#1072' '#1087#1077#1088#1080#1086#1076#1072
+          TabOrder = 0
+        end
+        object r4enddatelbl: TStaticText
+          Left = 24
+          Top = 84
+          Width = 109
+          Height = 17
+          Align = alCustom
+          Caption = #1044#1072#1090#1072' '#1082#1086#1085#1094#1072' '#1087#1077#1088#1080#1086#1076#1072
+          TabOrder = 1
+        end
+        object r4begindateinp: TDateTimePicker
+          Left = 24
+          Top = 46
+          Width = 993
+          Height = 21
+          Align = alCustom
+          Anchors = [akLeft, akRight]
+          Date = 45741.672027083330000000
+          Time = 45741.672027083330000000
+          TabOrder = 2
+        end
+        object r4enddateinp: TDateTimePicker
+          Left = 24
+          Top = 107
+          Width = 993
+          Height = 21
+          Align = alCustom
+          Anchors = [akLeft, akRight]
+          Date = 45741.672027083330000000
+          Time = 45741.672027083330000000
+          TabOrder = 3
+        end
+      end
+      object r4grouperBox: TGroupBox
+        Left = 0
+        Top = 169
+        Width = 1029
+        Height = 250
+        Align = alTop
+        Caption = #1055#1086#1082#1072#1079#1072#1090#1100' '#1074' '#1086#1090#1095#1077#1090#1077
+        TabOrder = 1
+        ExplicitTop = 111
+        object r4idCB: TCheckBox
+          Left = 24
+          Top = 32
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Caption = 'id'
+          TabOrder = 0
+          OnClick = r4idCBClick
+        end
+        object r4b_dataCB: TCheckBox
+          Left = 24
+          Top = 80
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Caption = #1044#1072#1090#1072' '#1088#1086#1078#1076#1077#1085#1080#1103
+          TabOrder = 1
+          OnClick = r4b_dataCBClick
+        end
+        object r4sexCB: TCheckBox
+          Left = 24
+          Top = 120
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Caption = #1055#1086#1083
+          TabOrder = 2
+          OnClick = r4sexCBClick
+        end
+        object r4civCB: TCheckBox
+          Left = 24
+          Top = 168
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Caption = #1043#1088#1072#1078#1076#1072#1085#1089#1090#1074#1086
+          TabOrder = 3
+          OnClick = r4civCBClick
+        end
+        object r4regionCB: TCheckBox
+          Left = 200
+          Top = 32
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Caption = #1056#1077#1075#1080#1086#1085
+          TabOrder = 4
+          OnClick = r4regionCBClick
+        end
+        object r4gorodCB: TCheckBox
+          Left = 200
+          Top = 80
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Caption = #1043#1086#1088#1086#1076
+          TabOrder = 5
+          OnClick = r4gorodCBClick
+        end
+        object r4adrCB: TCheckBox
+          Left = 200
+          Top = 120
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Caption = #1040#1076#1088#1077#1089
+          TabOrder = 6
+          OnClick = r4adrCBClick
+        end
+        object r4fioCB: TCheckBox
+          Left = 200
+          Top = 168
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Caption = #1060#1048#1054
+          TabOrder = 7
+          OnClick = r4fioCBClick
+        end
+        object r4kursCB: TCheckBox
+          Left = 378
+          Top = 32
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Caption = #1050#1091#1088#1089
+          TabOrder = 8
+          OnClick = r4kursCBClick
+        end
+        object r4to_liveCB: TCheckBox
+          Left = 378
+          Top = 80
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Caption = #1055#1088#1086#1078#1080#1074#1072#1085#1080#1077
+          TabOrder = 9
+          OnClick = r4to_liveCBClick
+        end
+        object r4mod_tCB: TCheckBox
+          Left = 378
+          Top = 120
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Caption = #1052#1086#1073#1084#1083#1100#1085#1099#1081
+          TabOrder = 10
+          OnClick = r4mod_tCBClick
+        end
+        object r4dom_tCB: TCheckBox
+          Left = 378
+          Top = 168
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Caption = #1044#1086#1084#1072#1096#1085#1084#1081
+          TabOrder = 11
+        end
+        object r4data_prCB: TCheckBox
+          Left = 568
+          Top = 32
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Caption = #1044#1072#1090#1072' '#1087#1088#1080#1077#1084#1072
+          TabOrder = 12
+        end
+        object r4data_otCB: TCheckBox
+          Left = 568
+          Top = 80
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Caption = #1044#1072#1090#1072' '#1086#1090#1095#1080#1089#1083#1077#1085#1080#1103
+          TabOrder = 13
+        end
+        object r4naim_grupCB: TCheckBox
+          Left = 568
+          Top = 120
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Caption = #1043#1088#1091#1087#1087#1072
+          TabOrder = 14
+        end
+        object r4st_emailCB: TCheckBox
+          Left = 568
+          Top = 168
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Caption = 'Email'
+          TabOrder = 15
+        end
+      end
+      object r4dataBox: TGroupBox
+        Left = 0
+        Top = 419
+        Width = 1029
+        Height = 261
+        Align = alClient
+        Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 2
+        ExplicitLeft = 528
+        ExplicitTop = 528
+        ExplicitWidth = 185
+        ExplicitHeight = 105
+        object r4repgrid: TDBGrid
+          Left = 2
+          Top = 15
+          Width = 1025
+          Height = 244
+          Align = alClient
+          DataSource = DM.reprortDS
+          TabOrder = 0
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWindowText
+          TitleFont.Height = -11
+          TitleFont.Name = 'Tahoma'
+          TitleFont.Style = []
+        end
+      end
+      object r4btnBox: TGroupBox
+        Left = 0
+        Top = 680
+        Width = 1029
+        Height = 105
+        Align = alBottom
+        TabOrder = 3
+        ExplicitLeft = 704
+        ExplicitTop = 328
+        ExplicitWidth = 185
+        object r4Btn: TButton
+          Left = 400
+          Top = 40
+          Width = 75
+          Height = 25
+          Caption = #1042#1099#1074#1086#1076
+          TabOrder = 0
+          OnClick = r4BtnClick
         end
       end
     end
