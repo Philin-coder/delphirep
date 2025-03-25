@@ -21,7 +21,7 @@ object Frm_reports: TFrm_reports
     Top = 0
     Width = 1037
     Height = 813
-    ActivePage = r5_tab
+    ActivePage = r6tab
     Align = alClient
     TabOrder = 0
     OnChange = reprotPCChange
@@ -1124,7 +1124,7 @@ object Frm_reports: TFrm_reports
           Width = 177
           Height = 17
           Align = alCustom
-          Anchors = [akLeft, akRight]
+          Anchors = [akLeft]
           Caption = #1053#1072#1095#1072#1083#1086' '#1087#1077#1088#1080#1086#1076#1072
           TabOrder = 0
         end
@@ -1134,7 +1134,7 @@ object Frm_reports: TFrm_reports
           Width = 105
           Height = 17
           Align = alCustom
-          Anchors = [akLeft, akRight]
+          Anchors = [akLeft]
           Caption = #1050#1086#1085#1077#1094' '#1087#1077#1088#1080#1086#1076#1072
           TabOrder = 1
         end
@@ -1157,6 +1157,106 @@ object Frm_reports: TFrm_reports
           Date = 45741.902252557870000000
           Time = 45741.902252557870000000
           TabOrder = 3
+        end
+      end
+    end
+    object r6tab: TTabSheet
+      Caption = #1057#1074#1086#1076#1085#1099#1081' '#1086#1090#1095#1077#1090' '#1087#1086' '#1074#1099#1073#1099#1074#1096#1080#1084' '#1089#1090#1091#1076#1077#1085#1090#1072#1084' '#1079#1072' '#1087#1077#1088#1080#1086#1076' '
+      ImageIndex = 5
+      object R6inpBox: TGroupBox
+        Left = 0
+        Top = 0
+        Width = 1029
+        Height = 137
+        Align = alTop
+        Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 0
+        ExplicitTop = 9
+        DesignSize = (
+          1029
+          137)
+        object r6begindatelbl: TStaticText
+          Left = 3
+          Top = 20
+          Width = 87
+          Height = 17
+          Align = alCustom
+          Anchors = [akLeft]
+          Caption = #1053#1072#1095#1072#1083#1086' '#1087#1077#1088#1080#1086#1076#1072
+          TabOrder = 0
+        end
+        object r6beginDateinp: TDateTimePicker
+          Left = 3
+          Top = 43
+          Width = 1023
+          Height = 21
+          Anchors = [akLeft, akRight]
+          Date = 45741.944558229170000000
+          Time = 45741.944558229170000000
+          TabOrder = 1
+        end
+        object r6enddatalbl: TStaticText
+          Left = 3
+          Top = 87
+          Width = 81
+          Height = 17
+          Align = alCustom
+          Anchors = [akLeft]
+          Caption = #1050#1086#1085#1077#1094' '#1087#1077#1088#1080#1086#1076#1072
+          TabOrder = 2
+        end
+        object r6Dateendinp: TDateTimePicker
+          Left = 3
+          Top = 110
+          Width = 1023
+          Height = 21
+          Anchors = [akLeft, akRight]
+          Date = 45741.944558229170000000
+          Time = 45741.944558229170000000
+          TabOrder = 3
+        end
+      end
+      object r6dataBox: TGroupBox
+        Left = 0
+        Top = 137
+        Width = 1029
+        Height = 575
+        Align = alClient
+        TabOrder = 1
+        ExplicitLeft = 456
+        ExplicitTop = 376
+        ExplicitWidth = 185
+        ExplicitHeight = 105
+        object r6Grid: TDBGrid
+          Left = 2
+          Top = 15
+          Width = 1025
+          Height = 558
+          Align = alClient
+          DataSource = DM.reprortDS
+          TabOrder = 0
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWindowText
+          TitleFont.Height = -11
+          TitleFont.Name = 'Tahoma'
+          TitleFont.Style = []
+        end
+      end
+      object r6btnBox: TGroupBox
+        Left = 0
+        Top = 712
+        Width = 1029
+        Height = 73
+        Align = alBottom
+        TabOrder = 2
+        object r6Btn: TButton
+          Left = 520
+          Top = 32
+          Width = 75
+          Height = 25
+          Caption = #1042#1099#1074#1086#1076
+          TabOrder = 0
+          OnClick = r6BtnClick
         end
       end
     end

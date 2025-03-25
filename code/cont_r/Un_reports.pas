@@ -121,6 +121,16 @@ type
     r5endlbl: TStaticText;
     r5beginDate_inp: TDateTimePicker;
     r5endDateinp: TDateTimePicker;
+    r6tab: TTabSheet;
+    R6inpBox: TGroupBox;
+    r6dataBox: TGroupBox;
+    r6btnBox: TGroupBox;
+    r6Btn: TButton;
+    r6Grid: TDBGrid;
+    r6begindatelbl: TStaticText;
+    r6beginDateinp: TDateTimePicker;
+    r6enddatalbl: TStaticText;
+    r6Dateendinp: TDateTimePicker;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -190,6 +200,7 @@ type
     procedure r4naim_grupCBClick(Sender: TObject);
     procedure r4st_emailCBClick(Sender: TObject);
     procedure r5BtnClick(Sender: TObject);
+    procedure r6BtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -768,7 +779,48 @@ begin
 end;
 
 
-
+procedure TFrm_reports.r6BtnClick(Sender: TObject);
+var last_report:TADOStoredProc;
+begin
+    last_report := nil;
+  try
+    last_report := TADOStoredProc.Create(nil);
+    try
+      with last_report do
+      begin
+        Connection := DM.Connection;
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+        ProcedureName := 'last_report';
+        Parameters.Clear;
+        Parameters.CreateParameter(
+        'd1',
+        ftDate,
+        pdInput,
+        0,
+        r6beginDateinp.Date
+        );
+        Parameters.CreateParameter(
+        'd2',
+        ftDate,
+        pdInput,
+        0,
+        r6Dateendinp.Date
+        );
+        Open;
+        DM.reportQuery.Close;
+        DM.reportQuery.Recordset := last_report.Recordset;
+      end;
+    except
+      on E: EADOError do
+        ShowMessage('Ошибка: ' + E.Message);
+      on E: Exception do
+        ShowMessage('Ошибка: ' + E.Message);
+    end;
+  finally
+    FreeAndNil(last_report);
+  end;
+end;
 
 procedure TFrm_reports.regionCBClick(Sender: TObject);
 begin

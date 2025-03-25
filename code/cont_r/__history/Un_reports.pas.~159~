@@ -111,6 +111,26 @@ type
     r4data_otCB: TCheckBox;
     r4naim_grupCB: TCheckBox;
     r4st_emailCB: TCheckBox;
+    r5_tab: TTabSheet;
+    r5dataBox: TGroupBox;
+    r5btnbox: TGroupBox;
+    R5_inpBox: TGroupBox;
+    r5repGrid: TDBGrid;
+    r5Btn: TButton;
+    r5begin_lbl: TStaticText;
+    r5endlbl: TStaticText;
+    r5beginDate_inp: TDateTimePicker;
+    r5endDateinp: TDateTimePicker;
+    r6tab: TTabSheet;
+    R6inpBox: TGroupBox;
+    r6dataBox: TGroupBox;
+    r6btnBox: TGroupBox;
+    r6Btn: TButton;
+    r6Grid: TDBGrid;
+    r6begindatelbl: TStaticText;
+    r6beginDateinp: TDateTimePicker;
+    r6enddatalbl: TStaticText;
+    r6Dateendinp: TDateTimePicker;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -169,6 +189,18 @@ type
     procedure r4civCBClick(Sender: TObject);
     procedure r4regionCBClick(Sender: TObject);
     procedure r4gorodCBClick(Sender: TObject);
+    procedure r4adrCBClick(Sender: TObject);
+    procedure r4fioCBClick(Sender: TObject);
+    procedure r4kursCBClick(Sender: TObject);
+    procedure r4to_liveCBClick(Sender: TObject);
+    procedure r4mod_tCBClick(Sender: TObject);
+    procedure r4dom_tCBClick(Sender: TObject);
+    procedure r4data_prCBClick(Sender: TObject);
+    procedure r4data_otCBClick(Sender: TObject);
+    procedure r4naim_grupCBClick(Sender: TObject);
+    procedure r4st_emailCBClick(Sender: TObject);
+    procedure r5BtnClick(Sender: TObject);
+    procedure r6BtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -538,6 +570,12 @@ thrdrepGrid.Columns[2].Visible:=r3_sexcb.Checked;
 if r3_sexcb.Checked then thrdrepGrid.Columns[2].Title.Caption:='Пол';
 end;
 
+procedure TFrm_reports.r4adrCBClick(Sender: TObject);
+begin
+r4repgrid.Columns[6].Visible:=r4adrCB.Checked;
+if r4adrCB.Checked then r4repgrid.Columns[6].Title.Caption:='Адрес';
+end;
+
 procedure TFrm_reports.r4BtnClick(Sender: TObject);
 var
     thorh_report:TADOStoredProc;
@@ -615,16 +653,61 @@ r4repgrid.Columns[3].Visible:=r4civcb.Checked;
 if r4civCB.Checked then r4repgrid.Columns[3].Title.Caption:='Гражданство';
 end;
 
+procedure TFrm_reports.r4data_otCBClick(Sender: TObject);
+begin
+r4repgrid.Columns[13].Visible:=r4data_otCB.Checked;
+if r4data_otCB.Checked then
+    r4repgrid.Columns[13].Title.Caption:='Дата отчисления';
+
+end;
+
+procedure TFrm_reports.r4data_prCBClick(Sender: TObject);
+begin
+r4repgrid.Columns[12].Visible:=r4data_prCB.Checked;
+if r4data_prCB.Checked then r4repgrid.Columns[12].Title.Caption:='Дата приема';
+end;
+
+procedure TFrm_reports.r4dom_tCBClick(Sender: TObject);
+begin
+r4repgrid.Columns[11].Visible:=r4dom_tCB.Checked;
+if r4dom_tCB.Checked then r4repgrid.Columns[11].Title.Caption:='Домашний';
+end;
+
+procedure TFrm_reports.r4fioCBClick(Sender: TObject);
+begin
+r4repgrid.Columns[7].Visible:=r4fioCB.Checked;
+if r4fioCB.Checked then r4repgrid.Columns[7].Title.Caption:='ФИО';
+end;
+
 procedure TFrm_reports.r4gorodCBClick(Sender: TObject);
 begin
 r4repgrid.Columns[5].Visible:=r4gorodCB.Checked;
-
+if r4gorodCB.Checked then r4repgrid.Columns[5].Title.Caption:='Город';
 end;
 
 procedure TFrm_reports.r4idCBClick(Sender: TObject);
 begin
 r4repgrid.Columns[0].Visible:=r4idCB.Checked;
 if r4idCB.Checked then r4repgrid.Columns[0].Title.Caption:='Номер порядковый';
+end;
+
+procedure TFrm_reports.r4kursCBClick(Sender: TObject);
+begin
+r4repgrid.Columns[8].Visible:=r4kursCB.Checked;
+if r4kursCB.Checked then r4repgrid.Columns[8].Title.Caption:='Курс';
+
+end;
+
+procedure TFrm_reports.r4mod_tCBClick(Sender: TObject);
+begin
+r4repgrid.Columns[10].Visible:=r4mod_tCB.Checked;
+if r4mod_tCB.Checked then r4repgrid.Columns[10].Title.Caption:='Мобильный';
+end;
+
+procedure TFrm_reports.r4naim_grupCBClick(Sender: TObject);
+begin
+r4repgrid.Columns[14].Visible:=r4naim_grupCB.Checked;
+if r4naim_grupCB.Checked then r4repgrid.Columns[14].Title.Caption:='Группа';
 end;
 
 procedure TFrm_reports.r4regionCBClick(Sender: TObject);
@@ -637,6 +720,109 @@ procedure TFrm_reports.r4sexCBClick(Sender: TObject);
 begin
     r4repgrid.Columns[2].Visible:=r4sexCB.Checked;
     if r4sexCB.Checked then    r4repgrid.Columns[2].Title.Caption:='Пол';
+end;
+
+procedure TFrm_reports.r4st_emailCBClick(Sender: TObject);
+begin
+r4repgrid.Columns[15].Visible:=r4st_emailCB.Checked;
+if r4st_emailCB.Checked then r4repgrid.Columns[15].Title.Caption:='Email';
+end;
+
+procedure TFrm_reports.r4to_liveCBClick(Sender: TObject);
+begin
+r4repgrid.Columns[9].Visible:=r4to_liveCB.Checked;
+if r4to_liveCB.Checked then r4repgrid.Columns[9].Title.Caption:='Проживание';
+end;
+
+procedure TFrm_reports.r5BtnClick(Sender: TObject);
+
+var  thith_report:TADOStoredProc;
+begin
+    thith_report := nil;
+  try
+    thith_report := TADOStoredProc.Create(nil);
+    try
+      with thith_report do
+      begin
+        Connection := DM.Connection;
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+        ProcedureName := 'thith_report';
+        Parameters.Clear;
+        Parameters.CreateParameter(
+        'd1',
+        ftDate,
+        pdInput,
+        0,
+        r5beginDate_inp.Date
+        );
+        Parameters.CreateParameter(
+        'd2',
+        ftDate,
+        pdInput,
+        0,
+        r5endDateinp.Date
+        );
+        Open;
+        DM.reportQuery.Close;
+        DM.reportQuery.Recordset := thith_report.Recordset;
+      end;
+    except
+      on E: EADOError do
+        ShowMessage('Ошибка: ' + E.Message);
+      on E: Exception do
+        ShowMessage('Ошибка: ' + E.Message);
+    end;
+  finally
+    FreeAndNil(thith_report);
+  end;
+end;
+
+
+
+
+procedure TFrm_reports.r6BtnClick(Sender: TObject);
+var last_report:TADOStoredProc;
+begin
+    last_report := nil;
+  try
+    last_report := TADOStoredProc.Create(nil);
+    try
+      with last_report do
+      begin
+        Connection := DM.Connection;
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+        ProcedureName := 'last_report';
+        Parameters.Clear;
+        Parameters.CreateParameter(
+        'd1',
+        ftDate,
+        pdInput,
+        0,
+        r5beginDate_inp.Date
+        );
+        Parameters.CreateParameter(
+        'd2',
+        ftDate,
+        pdInput,
+        0,
+        r5endDateinp.Date
+        );
+        Open;
+        DM.reportQuery.Close;
+        DM.reportQuery.Recordset := last_report.Recordset;
+      end;
+    except
+      on E: EADOError do
+        ShowMessage('Ошибка: ' + E.Message);
+      on E: Exception do
+        ShowMessage('Ошибка: ' + E.Message);
+    end;
+  finally
+    FreeAndNil(last_report);
+  end;
+
 end;
 
 procedure TFrm_reports.regionCBClick(Sender: TObject);
@@ -819,9 +1005,16 @@ begin
     r4repgrid.Columns[2].Title.Caption:='Пол';
     r4repgrid.Columns[3].Title.Caption:='Гражданство';
     r4repgrid.Columns[4].Title.Caption:='Регион';
-
-
-
+    r4repgrid.Columns[5].Title.Caption:='Город';
+    r4repgrid.Columns[6].Title.Caption:='Адрес';
+    r4repgrid.Columns[7].Title.Caption:='ФИО';
+    r4repgrid.Columns[8].Title.Caption:='Проживание';
+    r4repgrid.Columns[9].Title.Caption:='Мобильный';
+    r4repgrid.Columns[10].Title.Caption:='Домашний';
+    r4repgrid.Columns[11].Title.Caption:='Дата приема';
+    r4repgrid.Columns[12].Title.Caption:='Дата отчисления';
+    r4repgrid.Columns[13].Title.Caption:='Группа';
+    r4repgrid.Columns[14].Title.Caption:='Email';
     end;
 end;
 
