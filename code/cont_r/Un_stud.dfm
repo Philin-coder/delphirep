@@ -267,7 +267,7 @@ object Frm_stud: TFrm_stud
           Top = 15
           Width = 1025
           Height = 304
-          ActivePage = about_stud_page_three
+          ActivePage = Stud_about_page_three
           Align = alClient
           TabOrder = 0
           object Stud_about_page_one: TTabSheet
@@ -576,6 +576,16 @@ object Frm_stud: TFrm_stud
               Caption = #1042' '#1072#1082#1072#1076#1077#1084#1080#1095#1077#1089#1082#1086#1084' '#1086#1090#1087#1091#1089#1082#1077
               TabOrder = 3
               OnClick = Is_academ_cbClick
+            end
+            object CheckemailkBox: TCheckBox
+              Left = 272
+              Top = 97
+              Width = 97
+              Height = 17
+              Align = alCustom
+              Caption = #1055#1088#1086#1074#1077#1088#1080#1090#1100' email'
+              TabOrder = 4
+              OnClick = CheckemailkBoxClick
             end
           end
         end

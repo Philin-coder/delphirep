@@ -15,7 +15,10 @@ ComCtrls,
 DBCtrls,
 Windows,
 mask,
+dbgrids,
 ExtCtrls;
+type
+  TSysCharSet = set of Char;
 
 function  DateToStr_(Dat : TDate): String;
 function  CommaPoint (X: String) : String;
@@ -39,6 +42,10 @@ procedure UpdateFormProperties(const FormName: string;
 string): Boolean;
 function Capitalizer(str:string; mode:integer=0):string;
 function adr_fixer(str:string;  mode:Integer=0):string;
+procedure UniformizeDBGrids(AForm: TForm; const FontName: string;
+FontSize: Integer; FontColor: TColor; BkColor: TColor);
+function ValidateComponentText(AComponent: TWinControl;
+ const AllowedChars: TSysCharSet): Boolean;
 implementation
 
 
@@ -504,4 +511,86 @@ begin
 end;
 end;      //case
 end;
+procedure UniformizeDBGrids(AForm: TForm; const FontName: string;
+FontSize: Integer; FontColor: TColor; BkColor: TColor);
+var
+  i: Integer;
+  DBGrid: TDBGrid;
+begin
+  for i := 0 to AForm.ComponentCount - 1 do
+  begin
+    if AForm.Components[i] is TDBGrid then
+    begin
+      DBGrid := TDBGrid(AForm.Components[i]);
+      DBGrid.Font.Name := FontName;
+      DBGrid.Font.Size := FontSize;
+      DBGrid.Font.Color := FontColor;
+      DBGrid.Color := BkColor;
+      DBGrid.Options := DBGrid.Options +
+      [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs];
+      DBGrid.DefaultDrawing := True;
+      DBGrid.ReadOnly := True;
+      DBGrid.Refresh;
+    end;
+  end;
+end;
+function ValidateComponentText(AComponent: TWinControl;
+ const AllowedChars: TSysCharSet): Boolean;
+var
+  Text: string;
+  i: Integer;
+  CharIsValid: Boolean;
+begin
+  Result := True;
+  if AComponent is TLabeledEdit then
+    Text := TLabeledEdit(AComponent).Text
+  else if AComponent is TEdit then
+    Text := TEdit(AComponent).Text;
+  for i := 1 to Length(Text) do
+  begin
+    CharIsValid := Text[i] in AllowedChars;
+    if not CharIsValid then
+    begin
+      ShowMessage('Недопустимый символ в компоненте: ' + AComponent.Name);
+      Result := False;
+      Exit;
+    end;
+  end;
+end;
+
+Function IsValidEmail(const Email: string): Boolean;
+var
+AtPos, DotPos: Integer;
+begin
+Result := False;
+if not IsEnglishText(Email) then
+begin
+ShowMessage('Ошибка: текст должен быть на английском языке');
+Exit;
+end;
+AtPos := Pos('@', Email);
+if AtPos = 0 then
+begin
+ShowMessage('Ошибка: отсутствует символ "@"');
+Exit;
+end;
+if (AtPos = 1) or (AtPos = Length(Email)) then
+begin
+ShowMessage('Ошибка: символ "@" находится в неправильной позиции');
+Exit;
+end;
+DotPos := PosEx('.', Email, AtPos);
+if DotPos = 0 then
+begin
+ShowMessage('Ошибка: отсутствует точка после "@"');
+Exit;
+end;
+if DotPos = Length(Email) then
+begin
+ShowMessage('Ошибка: точка находится в конце строки');
+Exit;
+end;
+Result := True;
+end;
+
 end.

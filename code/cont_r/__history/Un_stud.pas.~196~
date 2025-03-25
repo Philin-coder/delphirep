@@ -99,6 +99,7 @@ type
     regetDateinp: TDateTimePicker;
     show_reejctCB: TCheckBox;
     delstGrd: TDBGrid;
+    CheckemailkBox: TCheckBox;
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -140,6 +141,7 @@ type
     procedure rejectbtnClick(Sender: TObject);
     procedure show_reejctCBClick(Sender: TObject);
     procedure delstBtnClick(Sender: TObject);
+    procedure CheckemailkBoxClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -183,6 +185,11 @@ if CbSecondnaim.Checked then
    cb_st:=0;
    Stud_condEdit.Hint:='Примнр Поиска по  ФИО:'+#10#13+'Сухов Федор Иванович';
   end;
+end;
+
+procedure TFrm_stud.CheckemailkBoxClick(Sender: TObject);
+begin
+  ShowMessage('test');
 end;
 
 procedure TFrm_stud.civ_inpExit(Sender: TObject);
@@ -1138,9 +1145,8 @@ const
     AreFieldsValid_r: Boolean;
 
 begin
-if secondNameCB.Checked then // Предполагается, что chkNoMiddleName — это чекбокс "отчества нет"
+if secondNameCB.Checked then
 begin
-  // Логика для случая, когда отчества нет
   AreFieldsEmpty_r :=
     (St_sex_inp.Text='') or
     (Trim(civ_inp.Text)='') or
@@ -1168,8 +1174,6 @@ begin
     Beep;
     Exit;
   end;
-
-  // Вызов хранимой процедуры для случая, когда отчества нет
   ins_stud_restrict := nil;
   try
     ins_stud_restrict := TADOStoredProc.Create(nil);
@@ -1290,12 +1294,10 @@ begin
           0,
           akadem_st
         );
+
         ExecProc;
         DM.StudQuery.Close;
         DM.StudQuery.Open;
-
-
-        ExecProc;
         MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
       end;
     except
@@ -1338,8 +1340,6 @@ begin
     Beep;
     Exit;
   end;
-
-  // Вызов хранимой процедуры для случая, когда отчество есть
   ins_stud_normal := nil;
   try
     ins_stud_normal := TADOStoredProc.Create(nil);
@@ -1351,9 +1351,123 @@ begin
           raise Exception.Create('Соединение с базой не установлено');
         ProcedureName := 'ins_stud_normal';
         Parameters.Clear;
-        Parameters.CreateParameter('passp_otch', ftString, pdInput, 1000, otch_inp.Text); // Отчество указано
-        // Остальные параметры...
+        Parameters.CreateParameter(
+          'b_data',
+          ftDate,
+          pdInput,
+          0,
+          st_bdata_inp.date
+        );
+        Parameters.CreateParameter(
+          'pol',
+          ftInteger,
+          pdInput,
+          0,
+          s_val
+        );
+          Parameters.CreateParameter(
+          'civ',
+          ftString,
+          pdInput,
+          1000,
+          civ_inp.Text
+        );
+          Parameters.CreateParameter(
+          'region',
+          ftString,
+          pdInput,
+          1000,
+          region_inp.Text
+        );
+        Parameters.CreateParameter(
+          'gorod',
+          ftString,
+          pdInput,
+          1000,
+          gorod_inp.Text
+        );
+        Parameters.CreateParameter(
+          'adr',
+          ftString,
+          pdInput,
+          1000,
+          adr_inp.Text
+        );
+        Parameters.CreateParameter(
+          'passp_fam',
+          ftString,
+          pdInput,
+          1000,
+          fam_inp.Text
+        );
+         Parameters.CreateParameter(
+          'passp_naim',
+          ftString,
+          pdInput,
+          1000,
+          naim_inp.Text
+        );
+        Parameters.CreateParameter(
+          'passp_otch',
+          ftString,
+          pdInput,
+          1000,
+          otch_inp.Text
+        );
+        Parameters.CreateParameter(
+          'mesto_jit',
+          ftInteger,
+          pdInput,
+          0,
+          m_jit
+        );
+        Parameters.CreateParameter(
+          'mod_t',
+          ftString,
+          pdInput,
+          1000,
+          Modphone_inp.Text
+        );
+        Parameters.CreateParameter(
+          'dom_t',
+          ftString,
+          pdInput,
+          1000,
+          dom_t_inp.Text
+        );
+        Parameters.CreateParameter(
+          'data_pr',
+          ftDate,
+          pdInput,
+          0,
+          datapr_inp.Date
+        );
+
+        Parameters.CreateParameter(
+          'grup_id',
+          ftInteger,
+          pdInput,
+          0,
+          gr_DBL.KeyValue
+        );
+
+        Parameters.CreateParameter(
+          'st_email',
+          ftString,
+          pdInput,
+          1000,
+          st_email_inp.Text
+        );
+        Parameters.CreateParameter(
+          'is_akadem',
+          ftInteger,
+          pdInput,
+          0,
+          akadem_st
+        );
         ExecProc;
+        DM.StudQuery.Close;
+        DM.StudQuery.Open;
         MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
       end;
     except

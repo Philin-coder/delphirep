@@ -15,7 +15,10 @@ ComCtrls,
 DBCtrls,
 Windows,
 mask,
+dbgrids,
 ExtCtrls;
+type
+  TSysCharSet = set of Char;
 
 function  DateToStr_(Dat : TDate): String;
 function  CommaPoint (X: String) : String;
@@ -39,6 +42,10 @@ procedure UpdateFormProperties(const FormName: string;
 string): Boolean;
 function Capitalizer(str:string; mode:integer=0):string;
 function adr_fixer(str:string;  mode:Integer=0):string;
+procedure UniformizeDBGrids(AForm: TForm; const FontName: string;
+FontSize: Integer; FontColor: TColor; BkColor: TColor);
+function ValidateComponentText(AComponent: TWinControl;
+ const AllowedChars: TSysCharSet): Boolean;
 implementation
 
 
@@ -457,7 +464,6 @@ end;
 
 function adr_fixer(str:string; mode:Integer=0):string;
  var head_str:string;
- var tmp_str:string;
 begin
 if (trim(str)='') then
 begin
@@ -490,22 +496,67 @@ begin
 end;
 1:
 begin
-  tmp_str :=Copy(str,1, length(str));
   head_str:='Ул.';
   result:=Concat(head_str, str);
 end;
 2:
 begin
-  tmp_str :=Copy(str,1, length(str));
   head_str:='Пр.';
   result:=Concat(head_str, str);
 end;
 3:
 begin
-  tmp_str :=Copy(str,1, length(str));
   head_str:='Проезд ';
   result:=Concat(head_str, str);
 end;
 end;      //case
 end;
+procedure UniformizeDBGrids(AForm: TForm; const FontName: string;
+FontSize: Integer; FontColor: TColor; BkColor: TColor);
+var
+  i: Integer;
+  DBGrid: TDBGrid;
+begin
+  for i := 0 to AForm.ComponentCount - 1 do
+  begin
+    if AForm.Components[i] is TDBGrid then
+    begin
+      DBGrid := TDBGrid(AForm.Components[i]);
+      DBGrid.Font.Name := FontName;
+      DBGrid.Font.Size := FontSize;
+      DBGrid.Font.Color := FontColor;
+      DBGrid.Color := BkColor;
+      DBGrid.Options := DBGrid.Options +
+      [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs];
+      DBGrid.DefaultDrawing := True;
+      DBGrid.ReadOnly := True;
+      DBGrid.Refresh;
+    end;
+  end;
+end;
+function ValidateComponentText(AComponent: TWinControl;
+ const AllowedChars: TSysCharSet): Boolean;
+var
+  Text: string;
+  i: Integer;
+  CharIsValid: Boolean;
+begin
+  Result := True;
+  if AComponent is TLabeledEdit then
+    Text := TLabeledEdit(AComponent).Text
+  else if AComponent is TEdit then
+    Text := TEdit(AComponent).Text;
+  for i := 1 to Length(Text) do
+  begin
+    CharIsValid := Text[i] in AllowedChars;
+    if not CharIsValid then
+    begin
+      ShowMessage('Недопустимый символ в компоненте: ' + AComponent.Name);
+      Result := False;
+      Exit;
+    end;
+  end;
+end;
+
+
 end.

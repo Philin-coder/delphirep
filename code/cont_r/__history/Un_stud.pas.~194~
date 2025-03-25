@@ -1138,219 +1138,44 @@ const
     AreFieldsValid_r: Boolean;
 
 begin
-case otch_inp.Enabled of
-  True:
-  begin
-    AreFieldsEmpty:=
-    (St_sex_inp.Text='')or
-    (Trim(civ_inp.Text)='')or
-    (Trim(region_inp.Text)='')or
-    (Trim(gorod_inp.Text)='')or
-    (Trim(adr_inp.Text)='')or
+if secondNameCB.Checked then
+begin
+  AreFieldsEmpty_r :=
+    (St_sex_inp.Text='') or
+    (Trim(civ_inp.Text)='') or
+    (Trim(region_inp.Text)='') or
+    (Trim(gorod_inp.Text)='') or
+    (Trim(adr_inp.Text)='') or
     (Trim(fam_inp.Text)='') or
     (Trim(naim_inp.Text)='') or
-    (Trim(otch_inp.Text)='')or
-    (mesto_jit_inp.Text='')or
+    (mesto_jit_inp.Text='') or
     (Modphone_inp.Text='') or
-    (dom_t_inp.Text='')or
+    (dom_t_inp.Text='') or
     (Trim(st_email_inp.Text)='');
-    areFieldsValid :=
+
+  AreFieldsValid_r :=
     ValidateComponentText(civ_inp, AllowedChars) and
     ValidateComponentText(region_inp, AllowedChars) and
     ValidateComponentText(gorod_inp, AllowedChars) and
     ValidateComponentText(fam_inp, AllowedChars) and
-    ValidateComponentText(naim_inp, AllowedChars) and
-    ValidateComponentText(otch_inp, AllowedChars);
-    if AreFieldsEmpty or not AreFieldsValid then
+    ValidateComponentText(naim_inp, AllowedChars);
+
+  if AreFieldsEmpty_r or not AreFieldsValid_r then
   begin
     MessageDlg('Ошибка: одно из полей пустое или содержит недопустимые символы',
       mtError, [mbOK], 0);
     Beep;
     Exit;
-  end
- else
-  begin
-  ins_stud_normal := nil;
-  try
-    ins_stud_normal := TADOStoredProc.Create(nil);
-    try
-      with ins_stud_normal do
-      begin
-        Connection := DM.Connection;
-        if not Connection.Connected then
-        begin
-          raise Exception.Create('Соединение с базой не установлено');
-        end;
-        ProcedureName := 'ins_stud_normal';
-        Parameters.Clear;
-        Parameters.CreateParameter(
-          'b_data',
-          ftDate,
-          pdInput,
-          0,
-          st_bdata_inp.date
-        );
-        Parameters.CreateParameter(
-          'pol',
-          ftInteger,
-          pdInput,
-          0,
-          s_val
-        );
-          Parameters.CreateParameter(
-          'civ',
-          ftString,
-          pdInput,
-          1000,
-          civ_inp.Text
-        );
-          Parameters.CreateParameter(
-          'region',
-          ftString,
-          pdInput,
-          1000,
-          region_inp.Text
-        );
-        Parameters.CreateParameter(
-          'gorod',
-          ftString,
-          pdInput,
-          1000,
-          gorod_inp.Text
-        );
-        Parameters.CreateParameter(
-          'adr',
-          ftString,
-          pdInput,
-          1000,
-          adr_inp.Text
-        );
-        Parameters.CreateParameter(
-          'passp_fam',
-          ftString,
-          pdInput,
-          1000,
-          fam_inp.Text
-        );
-         Parameters.CreateParameter(
-          'passp_naim',
-          ftString,
-          pdInput,
-          1000,
-          naim_inp.Text
-        );
-        Parameters.CreateParameter(
-          'passp_otch',
-          ftString,
-          pdInput,
-          1000,
-          otch_inp.Text
-        );
-        Parameters.CreateParameter(
-          'mesto_jit',
-          ftInteger,
-          pdInput,
-          0,
-          m_jit
-        );
-        Parameters.CreateParameter(
-          'mod_t',
-          ftString,
-          pdInput,
-          1000,
-          Modphone_inp.Text
-        );
-        Parameters.CreateParameter(
-          'dom_t',
-          ftString,
-          pdInput,
-          1000,
-          dom_t_inp.Text
-        );
-        Parameters.CreateParameter(
-          'data_pr',
-          ftDate,
-          pdInput,
-          0,
-          datapr_inp.Date
-        );
-
-        Parameters.CreateParameter(
-          'grup_id',
-          ftInteger,
-          pdInput,
-          0,
-          gr_DBL.KeyValue
-        );
-
-        Parameters.CreateParameter(
-          'st_email',
-          ftString,
-          pdInput,
-          1000,
-          st_email_inp.Text
-        );
-
-        Parameters.CreateParameter(
-          'is_akadem',
-          ftInteger,
-          pdInput,
-          0,
-          akadem_st
-        );
-        ExecProc;
-        DM.StudQuery.Close;
-        DM.StudQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-    end;
-  finally
-    FreeAndNil(ins_stud_normal);
-  end;
-  end;
-  end;
-  False:
-  begin
-      AreFieldsEmpty_r:=
-      (St_sex_inp.Text='')or
-         (Trim(civ_inp.Text)='') or
-         (Trim(region_inp.Text)='')or
-        (Trim(gorod_inp.Text)='')or
-        (Trim(adr_inp.Text)='')or
-        (Trim(fam_inp.Text)='') or
-        (Trim(naim_inp.Text)='');
-        AreFieldsEmpty_r:=
-        (ValidateComponentText(civ_inp,AllowedChars) and
-         (ValidateComponentText(region_inp,AllowedChars)and
-        (ValidateComponentText(gorod_inp,AllowedChars)and
-        (ValidateComponentText(fam_inp,AllowedChars) and
-        (ValidateComponentText(naim_inp,AllowedChars);
-         if AreFieldsEmpty_r or not AreFieldsValid_r then
-  begin
-    MessageDlg('Заполните все поля', mtError, [mbOK], 0);
-    Beep;
-    Exit;
   end;
   ins_stud_restrict := nil;
   try
-   ins_stud_restrict := TADOStoredProc.Create(nil);
+    ins_stud_restrict := TADOStoredProc.Create(nil);
     try
       with ins_stud_restrict do
       begin
         Connection := DM.Connection;
         if not Connection.Connected then
-        begin
           raise Exception.Create('Соединение с базой не установлено');
-        end;
         ProcedureName := 'ins_stud_restrict';
         Parameters.Clear;
         Parameters.CreateParameter(
@@ -1462,26 +1287,191 @@ case otch_inp.Enabled of
           0,
           akadem_st
         );
+
         ExecProc;
         DM.StudQuery.Close;
         DM.StudQuery.Open;
         MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
       end;
     except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
       on E: Exception do
-      begin
         ShowMessage('Ошибка: ' + E.Message);
-      end;
     end;
   finally
     FreeAndNil(ins_stud_restrict);
   end;
+end
+else
+begin
+  // Логика для случая, когда отчество есть
+  AreFieldsEmpty :=
+    (St_sex_inp.Text='') or
+    (Trim(civ_inp.Text)='') or
+    (Trim(region_inp.Text)='') or
+    (Trim(gorod_inp.Text)='') or
+    (Trim(adr_inp.Text)='') or
+    (Trim(fam_inp.Text)='') or
+    (Trim(naim_inp.Text)='') or
+    (Trim(otch_inp.Text)='') or
+    (mesto_jit_inp.Text='') or
+    (Modphone_inp.Text='') or
+    (dom_t_inp.Text='') or
+    (Trim(st_email_inp.Text)='');
+
+  AreFieldsValid :=
+    ValidateComponentText(civ_inp, AllowedChars) and
+    ValidateComponentText(region_inp, AllowedChars) and
+    ValidateComponentText(gorod_inp, AllowedChars) and
+    ValidateComponentText(fam_inp, AllowedChars) and
+    ValidateComponentText(naim_inp, AllowedChars) and
+    ValidateComponentText(otch_inp, AllowedChars);
+
+  if AreFieldsEmpty or not AreFieldsValid then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или содержит недопустимые символы',
+      mtError, [mbOK], 0);
+    Beep;
+    Exit;
   end;
-end;//case
+  ins_stud_normal := nil;
+  try
+    ins_stud_normal := TADOStoredProc.Create(nil);
+    try
+      with ins_stud_normal do
+      begin
+        Connection := DM.Connection;
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+        ProcedureName := 'ins_stud_normal';
+        Parameters.Clear;
+        Parameters.CreateParameter(
+          'b_data',
+          ftDate,
+          pdInput,
+          0,
+          st_bdata_inp.date
+        );
+        Parameters.CreateParameter(
+          'pol',
+          ftInteger,
+          pdInput,
+          0,
+          s_val
+        );
+          Parameters.CreateParameter(
+          'civ',
+          ftString,
+          pdInput,
+          1000,
+          civ_inp.Text
+        );
+          Parameters.CreateParameter(
+          'region',
+          ftString,
+          pdInput,
+          1000,
+          region_inp.Text
+        );
+        Parameters.CreateParameter(
+          'gorod',
+          ftString,
+          pdInput,
+          1000,
+          gorod_inp.Text
+        );
+        Parameters.CreateParameter(
+          'adr',
+          ftString,
+          pdInput,
+          1000,
+          adr_inp.Text
+        );
+        Parameters.CreateParameter(
+          'passp_fam',
+          ftString,
+          pdInput,
+          1000,
+          fam_inp.Text
+        );
+         Parameters.CreateParameter(
+          'passp_naim',
+          ftString,
+          pdInput,
+          1000,
+          naim_inp.Text
+        );
+        Parameters.CreateParameter(
+          'passp_otch',
+          ftString,
+          pdInput,
+          1000,
+          otch_inp.Text
+        );
+        Parameters.CreateParameter(
+          'mesto_jit',
+          ftInteger,
+          pdInput,
+          0,
+          m_jit
+        );
+        Parameters.CreateParameter(
+          'mod_t',
+          ftString,
+          pdInput,
+          1000,
+          Modphone_inp.Text
+        );
+        Parameters.CreateParameter(
+          'dom_t',
+          ftString,
+          pdInput,
+          1000,
+          dom_t_inp.Text
+        );
+        Parameters.CreateParameter(
+          'data_pr',
+          ftDate,
+          pdInput,
+          0,
+          datapr_inp.Date
+        );
+
+        Parameters.CreateParameter(
+          'grup_id',
+          ftInteger,
+          pdInput,
+          0,
+          gr_DBL.KeyValue
+        );
+
+        Parameters.CreateParameter(
+          'st_email',
+          ftString,
+          pdInput,
+          1000,
+          st_email_inp.Text
+        );
+        Parameters.CreateParameter(
+          'is_akadem',
+          ftInteger,
+          pdInput,
+          0,
+          akadem_st
+        );
+        ExecProc;
+        DM.StudQuery.Close;
+        DM.StudQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: Exception do
+        ShowMessage('Ошибка: ' + E.Message);
+    end;
+  finally
+    FreeAndNil(ins_stud_normal);
+  end;
+end;
+
 end;
 
 procedure TFrm_stud.Stud_upd_BtnClick(Sender: TObject);

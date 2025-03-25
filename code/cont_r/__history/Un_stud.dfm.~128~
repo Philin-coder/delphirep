@@ -23,7 +23,7 @@ object Frm_stud: TFrm_stud
     Top = 0
     Width = 1037
     Height = 813
-    ActivePage = SelTab
+    ActivePage = InsTab
     Align = alClient
     TabOrder = 0
     object SelTab: TTabSheet
@@ -267,7 +267,7 @@ object Frm_stud: TFrm_stud
           Top = 15
           Width = 1025
           Height = 304
-          ActivePage = Stud_about_page_one
+          ActivePage = about_stud_page_three
           Align = alClient
           TabOrder = 0
           object Stud_about_page_one: TTabSheet
@@ -1109,6 +1109,13 @@ object Frm_stud: TFrm_stud
                   Expanded = False
                   FieldName = 'st_email'
                   Title.Caption = #1045'-mail'
+                  Visible = True
+                end
+                item
+                  Expanded = False
+                  FieldName = 'data_ot'
+                  Title.Caption = #1044#1072#1090#1072' '#1086#1090#1095#1080#1089#1083#1077#1085#1080#1103
+                  Width = 83
                   Visible = True
                 end>
             end

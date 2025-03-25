@@ -16,6 +16,7 @@ DBCtrls,
 Windows,
 mask,
 dbgrids,
+StrUtils,
 ExtCtrls;
 type
   TSysCharSet = set of Char;
@@ -46,6 +47,8 @@ procedure UpdateFormProperties(const FormName: string;
 FontSize: Integer; FontColor: TColor; BkColor: TColor);
 function ValidateComponentText(AComponent: TWinControl;
  const AllowedChars: TSysCharSet): Boolean;
+ function IsEnglishText(const Text: string): Boolean;
+ Function IsValidEmail(const Email: string): Boolean;
 implementation
 
 
@@ -557,6 +560,54 @@ begin
     end;
   end;
 end;
+function IsEnglishText(const Text: string): Boolean;
+var
+  i: Integer;
+begin
+  Result := True;
 
+  for i := 1 to Length(Text) do
+  begin
+    if not (Text[i] in ['a'..'z', 'A'..'Z', '0'..'9', '@', '.', '_', '-']) then
+    begin
+      Result := False;
+      Exit;
+    end;
+  end;
+end;
+Function IsValidEmail(const Email: string): Boolean;
+var
+AtPos, DotPos: Integer;
+begin
+Result := False;
+if not IsEnglishText(Email) then
+begin
+ShowMessage('Ошибка: текст должен быть на английском языке');
+Exit;
+end;
+AtPos := Pos('@', Email);
+if AtPos = 0 then
+begin
+ShowMessage('Ошибка: отсутствует символ "@"');
+Exit;
+end;
+if (AtPos = 1) or (AtPos = Length(Email)) then
+begin
+ShowMessage('Ошибка: символ "@" находится в неправильной позиции');
+Exit;
+end;
+DotPos := PosEx('.', Email, AtPos);
+if DotPos = 0 then
+begin
+ShowMessage('Ошибка: отсутствует точка после "@"');
+Exit;
+end;
+if DotPos = Length(Email) then
+begin
+ShowMessage('Ошибка: точка находится в конце строки');
+Exit;
+end;
+Result := True;
+end;
 
 end.
