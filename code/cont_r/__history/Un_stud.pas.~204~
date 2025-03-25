@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, StdCtrls, Grids, DBGrids, ExtCtrls, ADODB,DB, DBCtrls, Mask,jpeg,
-  Menus;
+  Menus,StrUtils;
 
 
 type
@@ -188,8 +188,15 @@ if CbSecondnaim.Checked then
 end;
 
 procedure TFrm_stud.CheckemailkBoxClick(Sender: TObject);
+var
+  is_email_empty:Boolean;
 begin
-  ShowMessage('test');
+  is_email_empty:=(Trim(st_email_inp.Text)='');
+  if not is_email_empty then
+  begin
+  ShowMessage(IfThen(IsValidEmail(st_email_inp.Text),
+  'Email корректный','Email некорректный'));
+  end;
 end;
 
 procedure TFrm_stud.civ_inpExit(Sender: TObject);
@@ -200,7 +207,6 @@ end;
 procedure TFrm_stud.datapr_inpCloseUp(Sender: TObject);
 begin
 insProgres_bar.StepBy(1);
-
 end;
 
 procedure TFrm_stud.delstBtnClick(Sender: TObject);

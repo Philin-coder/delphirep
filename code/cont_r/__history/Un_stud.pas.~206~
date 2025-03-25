@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, StdCtrls, Grids, DBGrids, ExtCtrls, ADODB,DB, DBCtrls, Mask,jpeg,
-  Menus;
+  Menus,StrUtils;
 
 
 type
@@ -99,6 +99,7 @@ type
     regetDateinp: TDateTimePicker;
     show_reejctCB: TCheckBox;
     delstGrd: TDBGrid;
+    CheckemailkBox: TCheckBox;
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -140,6 +141,7 @@ type
     procedure rejectbtnClick(Sender: TObject);
     procedure show_reejctCBClick(Sender: TObject);
     procedure delstBtnClick(Sender: TObject);
+    procedure CheckemailkBoxClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -185,6 +187,18 @@ if CbSecondnaim.Checked then
   end;
 end;
 
+procedure TFrm_stud.CheckemailkBoxClick(Sender: TObject);
+var
+  is_email_empty:Boolean;
+begin
+  is_email_empty:=(Trim(st_email_inp.Text)='');
+  if not is_email_empty then
+  begin
+  ShowMessage(IfThen(IsValidEmail(st_email_inp.Text),
+  'Email корректный','Email некорректный'));
+  end;
+end;
+
 procedure TFrm_stud.civ_inpExit(Sender: TObject);
 begin
 insProgres_bar.StepBy(1);
@@ -193,7 +207,6 @@ end;
 procedure TFrm_stud.datapr_inpCloseUp(Sender: TObject);
 begin
 insProgres_bar.StepBy(1);
-
 end;
 
 procedure TFrm_stud.delstBtnClick(Sender: TObject);

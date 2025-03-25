@@ -1316,7 +1316,6 @@ begin
 end
 else
 begin
-  // Логика для случая, когда отчество есть
   AreFieldsEmpty :=
     (St_sex_inp.Text='') or
     (Trim(civ_inp.Text)='') or

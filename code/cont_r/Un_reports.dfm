@@ -606,7 +606,6 @@ object Frm_reports: TFrm_reports
         Align = alTop
         Caption = #1055#1086#1082#1072#1079#1072#1090#1100'  '#1074' '#1086#1090#1095#1077#1090#1077
         TabOrder = 2
-        ExplicitTop = 227
         object r3Idcb: TCheckBox
           Left = 40
           Top = 32
@@ -615,6 +614,7 @@ object Frm_reports: TFrm_reports
           Align = alCustom
           Caption = 'Id'
           TabOrder = 0
+          OnClick = r3IdcbClick
         end
         object r3b_data: TCheckBox
           Left = 40
@@ -624,6 +624,7 @@ object Frm_reports: TFrm_reports
           Align = alCustom
           Caption = #1044#1072#1090#1072' '#1088#1086#1078#1076#1077#1085#1080#1103
           TabOrder = 1
+          OnClick = r3b_dataClick
         end
         object r3_sexcb: TCheckBox
           Left = 40
@@ -633,6 +634,7 @@ object Frm_reports: TFrm_reports
           Align = alCustom
           Caption = #1055#1086#1083
           TabOrder = 2
+          OnClick = r3_sexcbClick
         end
         object r3civcb: TCheckBox
           Left = 168
@@ -642,6 +644,7 @@ object Frm_reports: TFrm_reports
           Align = alCustom
           Caption = #1043#1088#1072#1078#1076#1072#1085#1089#1090#1074#1086
           TabOrder = 3
+          OnClick = r3civcbClick
         end
         object r3regioncb: TCheckBox
           Left = 168
@@ -651,6 +654,7 @@ object Frm_reports: TFrm_reports
           Align = alCustom
           Caption = #1056#1077#1075#1080#1086#1085
           TabOrder = 4
+          OnClick = r3regioncbClick
         end
         object r3gorod: TCheckBox
           Left = 168
@@ -660,6 +664,7 @@ object Frm_reports: TFrm_reports
           Align = alCustom
           Caption = #1043#1086#1088#1086#1076
           TabOrder = 5
+          OnClick = r3gorodClick
         end
         object r3adrcb: TCheckBox
           Left = 368
@@ -669,6 +674,7 @@ object Frm_reports: TFrm_reports
           Align = alCustom
           Caption = #1040#1076#1088#1077#1089
           TabOrder = 6
+          OnClick = r3adrcbClick
         end
         object r3fiocb: TCheckBox
           Left = 368
@@ -678,60 +684,77 @@ object Frm_reports: TFrm_reports
           Align = alCustom
           Caption = #1060#1048#1054
           TabOrder = 7
+          OnClick = r3fiocbClick
         end
         object r3to_livecb: TCheckBox
-          Left = 368
-          Top = 96
+          Left = 488
+          Top = 24
           Width = 97
           Height = 17
           Align = alCustom
           Caption = #1055#1088#1086#1078#1080#1074#1072#1085#1080#1077
           TabOrder = 8
+          OnClick = r3to_livecbClick
         end
         object r3mod_tcb: TCheckBox
           Left = 488
-          Top = 24
+          Top = 47
           Width = 97
           Height = 17
           Align = alCustom
           Caption = #1052#1086#1073#1080#1083#1100#1085#1099#1081
           TabOrder = 9
+          OnClick = r3mod_tcbClick
         end
         object r3dom_tcb: TCheckBox
           Left = 488
-          Top = 56
+          Top = 96
           Width = 97
           Height = 17
           Align = alCustom
           Caption = #1044#1086#1084#1072#1096#1085#1080#1081
           TabOrder = 10
+          OnClick = r3dom_tcbClick
         end
         object r3data_prcb: TCheckBox
-          Left = 488
-          Top = 88
+          Left = 656
+          Top = 25
           Width = 97
           Height = 17
           Align = alCustom
           Caption = #1044#1072#1090#1072' '#1087#1088#1080#1077#1084#1072
           TabOrder = 11
+          OnClick = r3data_prcbClick
         end
         object r3naim_grupcb: TCheckBox
-          Left = 616
-          Top = 24
+          Left = 656
+          Top = 64
           Width = 97
           Height = 17
           Align = alCustom
           Caption = #1043#1088#1091#1087#1087#1072
           TabOrder = 12
+          OnClick = r3naim_grupcbClick
         end
         object r3st_emailcb: TCheckBox
-          Left = 616
-          Top = 56
+          Left = 656
+          Top = 103
           Width = 97
           Height = 17
           Align = alCustom
           Caption = 'Email'
           TabOrder = 13
+          OnClick = r3st_emailcbClick
+        end
+        object r3kurscb: TCheckBox
+          Left = 368
+          Top = 96
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Caption = #1050#1091#1088#1089
+          TabOrder = 14
+          OnClick = r3kurscbClick
         end
       end
       object thrdrepdataBox: TGroupBox

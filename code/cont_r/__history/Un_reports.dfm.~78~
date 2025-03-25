@@ -21,7 +21,7 @@ object Frm_reports: TFrm_reports
     Top = 0
     Width = 1037
     Height = 813
-    ActivePage = Studlisttab
+    ActivePage = studlistin
     Align = alClient
     TabOrder = 0
     OnChange = reprotPCChange
@@ -595,6 +595,7 @@ object Frm_reports: TFrm_reports
           Height = 25
           Caption = #1042#1099#1074#1086#1076
           TabOrder = 0
+          OnClick = thrdrepBtnClick
         end
       end
       object thrdrepBoxgruper: TGroupBox
@@ -613,6 +614,130 @@ object Frm_reports: TFrm_reports
           Align = alCustom
           Caption = 'Id'
           TabOrder = 0
+          OnClick = r3IdcbClick
+        end
+        object r3b_data: TCheckBox
+          Left = 40
+          Top = 64
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Caption = #1044#1072#1090#1072' '#1088#1086#1078#1076#1077#1085#1080#1103
+          TabOrder = 1
+          OnClick = r3b_dataClick
+        end
+        object r3_sexcb: TCheckBox
+          Left = 40
+          Top = 96
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Caption = #1055#1086#1083
+          TabOrder = 2
+          OnClick = r3_sexcbClick
+        end
+        object r3civcb: TCheckBox
+          Left = 168
+          Top = 32
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Caption = #1043#1088#1072#1078#1076#1072#1085#1089#1090#1074#1086
+          TabOrder = 3
+          OnClick = r3civcbClick
+        end
+        object r3regioncb: TCheckBox
+          Left = 168
+          Top = 64
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Caption = #1056#1077#1075#1080#1086#1085
+          TabOrder = 4
+          OnClick = r3regioncbClick
+        end
+        object r3gorod: TCheckBox
+          Left = 168
+          Top = 96
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Caption = #1043#1086#1088#1086#1076
+          TabOrder = 5
+          OnClick = r3gorodClick
+        end
+        object r3adrcb: TCheckBox
+          Left = 368
+          Top = 32
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Caption = #1040#1076#1088#1077#1089
+          TabOrder = 6
+          OnClick = r3adrcbClick
+        end
+        object r3fiocb: TCheckBox
+          Left = 368
+          Top = 64
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Caption = #1060#1048#1054
+          TabOrder = 7
+        end
+        object r3to_livecb: TCheckBox
+          Left = 368
+          Top = 96
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Caption = #1055#1088#1086#1078#1080#1074#1072#1085#1080#1077
+          TabOrder = 8
+        end
+        object r3mod_tcb: TCheckBox
+          Left = 488
+          Top = 24
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Caption = #1052#1086#1073#1080#1083#1100#1085#1099#1081
+          TabOrder = 9
+        end
+        object r3dom_tcb: TCheckBox
+          Left = 488
+          Top = 56
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Caption = #1044#1086#1084#1072#1096#1085#1080#1081
+          TabOrder = 10
+        end
+        object r3data_prcb: TCheckBox
+          Left = 488
+          Top = 88
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Caption = #1044#1072#1090#1072' '#1087#1088#1080#1077#1084#1072
+          TabOrder = 11
+        end
+        object r3naim_grupcb: TCheckBox
+          Left = 616
+          Top = 24
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Caption = #1043#1088#1091#1087#1087#1072
+          TabOrder = 12
+        end
+        object r3st_emailcb: TCheckBox
+          Left = 616
+          Top = 56
+          Width = 97
+          Height = 17
+          Align = alCustom
+          Caption = 'Email'
+          TabOrder = 13
         end
       end
       object thrdrepdataBox: TGroupBox

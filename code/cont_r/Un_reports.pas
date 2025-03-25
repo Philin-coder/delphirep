@@ -83,6 +83,7 @@ type
     r3data_prcb: TCheckBox;
     r3naim_grupcb: TCheckBox;
     r3st_emailcb: TCheckBox;
+    r3kurscb: TCheckBox;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -119,6 +120,21 @@ type
     procedure r2naim_grupCBClick(Sender: TObject);
     procedure r2st_emailCBClick(Sender: TObject);
     procedure thrdrepBtnClick(Sender: TObject);
+    procedure r3IdcbClick(Sender: TObject);
+    procedure r3b_dataClick(Sender: TObject);
+    procedure r3_sexcbClick(Sender: TObject);
+    procedure r3civcbClick(Sender: TObject);
+    procedure r3regioncbClick(Sender: TObject);
+    procedure r3gorodClick(Sender: TObject);
+    procedure r3adrcbClick(Sender: TObject);
+    procedure r3fiocbClick(Sender: TObject);
+    procedure r3kurscbClick(Sender: TObject);
+    procedure r3to_livecbClick(Sender: TObject);
+    procedure r3mod_tcbClick(Sender: TObject);
+    procedure r3dom_tcbClick(Sender: TObject);
+    procedure r3data_prcbClick(Sender: TObject);
+    procedure r3naim_grupcbClick(Sender: TObject);
+    procedure r3st_emailcbClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -393,6 +409,101 @@ if r2to_liveCB.Checked then
 secondrepotGrid.Columns[9].Title.Caption:='Проживание';
 end;
 
+procedure TFrm_reports.r3adrcbClick(Sender: TObject);
+begin
+thrdrepGrid.Columns[6].Visible:=r3adrcb.Checked;
+if r3adrcb.Checked then
+    thrdrepGrid.Columns[6].Title.Caption:='Адрес проживания';
+end;
+
+procedure TFrm_reports.r3b_dataClick(Sender: TObject);
+begin
+thrdrepGrid.Columns[1].Visible:=r3b_data.Checked;
+if r3b_data.Checked then
+    thrdrepGrid.Columns[1].Title.Caption:='Дата рождения';
+end;
+
+procedure TFrm_reports.r3civcbClick(Sender: TObject);
+begin
+thrdrepGrid.Columns[3].Visible:=r3civcb.Checked;
+if r3civcb.Checked then thrdrepGrid.Columns[3].Title.Caption:='Гражданство';
+end;
+
+procedure TFrm_reports.r3data_prcbClick(Sender: TObject);
+begin
+thrdrepGrid.Columns[12].Visible:=r3data_prcb.Checked;
+if r3data_prcb.Checked then thrdrepGrid.Columns[12].Title.Caption:='Дата приема';
+end;
+
+procedure TFrm_reports.r3dom_tcbClick(Sender: TObject);
+begin
+thrdrepGrid.Columns[11].Visible:=r3dom_tcb.Checked;
+if r3dom_tcb.Checked  then thrdrepGrid.Columns[11].Title.Caption:='Домашний';
+end;
+
+procedure TFrm_reports.r3fiocbClick(Sender: TObject);
+begin
+thrdrepGrid.Columns[7].Visible:=r3fiocb.Checked;
+if r3fiocb.Checked then
+    thrdrepGrid.Columns[7].Title.Caption:='ФИО';
+end;
+
+procedure TFrm_reports.r3gorodClick(Sender: TObject);
+begin
+thrdrepGrid.Columns[5].Visible:=r3gorod.Checked;
+if r3gorod.Checked  then thrdrepGrid.Columns[5].Title.Caption:='Город';
+end;
+
+procedure TFrm_reports.r3IdcbClick(Sender: TObject);
+begin
+thrdrepGrid.Columns[0].Visible :=r3Idcb.Checked;
+if r3Idcb.Checked then
+    thrdrepGrid.Columns[0].Title.Caption :='Номер порядковый';
+end;
+
+procedure TFrm_reports.r3kurscbClick(Sender: TObject);
+begin
+thrdrepGrid.Columns[8].Visible:=r3kurscb.Checked;
+if r3kurscb.Checked then thrdrepGrid.Columns[8].Title.Caption:='Курс';
+end;
+
+procedure TFrm_reports.r3mod_tcbClick(Sender: TObject);
+begin
+thrdrepGrid.Columns[10].Visible:=r3mod_tcb.Checked;
+if r3mod_tcb.Checked then thrdrepGrid.Columns[10].Title.Caption:='Мобильный';
+end;
+
+procedure TFrm_reports.r3naim_grupcbClick(Sender: TObject);
+begin
+thrdrepGrid.Columns[13].Visible:=r3naim_grupcb.Checked;
+if r3naim_grupcb.Checked  then thrdrepGrid.Columns[13].Title.Caption:='Группа';
+end;
+
+procedure TFrm_reports.r3regioncbClick(Sender: TObject);
+begin
+thrdrepGrid.Columns[4].Visible:=r3regioncb.Checked;
+if r3regioncb.Checked then
+    thrdrepGrid.Columns[4].Title.Caption:='Регион проживания';
+end;
+
+procedure TFrm_reports.r3st_emailcbClick(Sender: TObject);
+begin
+thrdrepGrid.Columns[14].Visible:=r3st_emailcb.Checked;
+if r3st_emailcb.Checked then thrdrepGrid.Columns[14].Title.Caption:='Email';
+end;
+
+procedure TFrm_reports.r3to_livecbClick(Sender: TObject);
+begin
+thrdrepGrid.Columns[9].Visible:=r3to_livecb.Checked;
+if r3to_livecb.Checked then thrdrepGrid.Columns[9].Title.Caption:='Проживание';
+end;
+
+procedure TFrm_reports.r3_sexcbClick(Sender: TObject);
+begin
+thrdrepGrid.Columns[2].Visible:=r3_sexcb.Checked;
+if r3_sexcb.Checked then thrdrepGrid.Columns[2].Title.Caption:='Пол';
+end;
+
 procedure TFrm_reports.regionCBClick(Sender: TObject);
 begin
   Stud_report1Grid.Columns[4].Visible:=regionCB.Checked;
@@ -431,20 +542,20 @@ begin
     '  AND is_akadem = 0 ';
        Close;
        Open;
-       Stud_report1Grid.Columns[0].Title.Caption := 'Номер порядковый';
-  Stud_report1Grid.Columns[1].Title.Caption:='Дата рождения';
-  Stud_report1Grid.Columns[2].Title.Caption:='Пол';
-  Stud_report1Grid.Columns[3].Title.Caption:='Гражданство';
-  Stud_report1Grid.Columns[4].Title.Caption:='Регион';
-  Stud_report1Grid.Columns[5].Title.Caption:='Город';
-  Stud_report1Grid.Columns[6].Title.Caption:='Адрес';
-  Stud_report1Grid.Columns[7].Title.Caption:='ФИО';
-  Stud_report1Grid.Columns[8].Title.Caption:='Проживание';
-  Stud_report1Grid.Columns[9].Title.Caption:='Мобильный';
-  Stud_report1Grid.Columns[10].Title.Caption:='Домашний';
-  Stud_report1Grid.Columns[11].Title.Caption:='Дата приема';
-  Stud_report1Grid.Columns[12].Title.Caption:='Группа';
-  Stud_report1Grid.Columns[13].Title.Caption:='Email';
+        Stud_report1Grid.Columns[0].Title.Caption := 'Номер порядковый';
+        Stud_report1Grid.Columns[1].Title.Caption:='Дата рождения';
+        Stud_report1Grid.Columns[2].Title.Caption:='Пол';
+        Stud_report1Grid.Columns[3].Title.Caption:='Гражданство';
+        Stud_report1Grid.Columns[4].Title.Caption:='Регион';
+        Stud_report1Grid.Columns[5].Title.Caption:='Город';
+        Stud_report1Grid.Columns[6].Title.Caption:='Адрес';
+        Stud_report1Grid.Columns[7].Title.Caption:='ФИО';
+        Stud_report1Grid.Columns[8].Title.Caption:='Проживание';
+        Stud_report1Grid.Columns[9].Title.Caption:='Мобильный';
+        Stud_report1Grid.Columns[10].Title.Caption:='Домашний';
+        Stud_report1Grid.Columns[11].Title.Caption:='Дата приема';
+        Stud_report1Grid.Columns[12].Title.Caption:='Группа';
+        Stud_report1Grid.Columns[13].Title.Caption:='Email';
  end;
  end;
  1:
@@ -522,6 +633,21 @@ begin
     '  AND is_akadem = 0 ';
     close;
     Open;
+    thrdrepGrid.Columns[0].Title.Caption :='Номер порядковый';
+    thrdrepGrid.Columns[1].Title.Caption:='Дата рождения';
+    thrdrepGrid.Columns[2].Title.Caption:='Пол';
+    thrdrepGrid.Columns[3].Title.Caption:='Гражданство';
+    thrdrepGrid.Columns[4].Title.Caption:='Регион проживания';
+    thrdrepGrid.Columns[5].Title.Caption:='Город';
+    thrdrepGrid.Columns[6].Title.Caption:='Адрес проживания';
+    thrdrepGrid.Columns[7].Title.Caption:='ФИО';
+    thrdrepGrid.Columns[8].Title.Caption:='Курс';
+	thrdrepGrid.Columns[9].Title.Caption:='Проживание';
+    thrdrepGrid.Columns[10].Title.Caption:='Мобильный';
+    thrdrepGrid.Columns[11].Title.Caption:='Домашний';
+    thrdrepGrid.Columns[12].Title.Caption:='Дата приема';
+    thrdrepGrid.Columns[13].Title.Caption:='Группа';
+    thrdrepGrid.Columns[14].Title.Caption:='Email';
 end;
 end;
 

@@ -1,14 +1,14 @@
 USE [cont_r]
 GO
 
-/****** Object:  StoredProcedure [dbo].[third_report]    Script Date: 23.03.2025 21:32:45 ******/
+/****** Object:  StoredProcedure [dbo].[third_report]    Script Date: 25.03.2025 12:31:12 ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
 
-create proc [dbo].[third_report]
+CREATE proc [dbo].[third_report]
   /*Список студентов, принятых в техникум за период */
   @d1 date,
   @d2 date
@@ -23,6 +23,7 @@ create proc [dbo].[third_report]
   stud.gorod,
   stud.adr,
   stud.passp_fam + ' ' + stud.passp_naim + IsNull(' ' +stud.passp_otch,'') AS fio,
+  gruppa.kurs,
   case stud.mesto_jit when  1 then 'Съем' else 'Общежитие' end as to_live,
   stud.mod_t,
   stud.dom_t,
