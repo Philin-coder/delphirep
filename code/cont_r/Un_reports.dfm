@@ -21,7 +21,7 @@ object Frm_reports: TFrm_reports
     Top = 0
     Width = 1037
     Height = 813
-    ActivePage = studlstout
+    ActivePage = r5_tab
     Align = alClient
     TabOrder = 0
     OnChange = reprotPCChange
@@ -1051,6 +1051,112 @@ object Frm_reports: TFrm_reports
           Caption = #1042#1099#1074#1086#1076
           TabOrder = 0
           OnClick = r4BtnClick
+        end
+      end
+    end
+    object r5_tab: TTabSheet
+      Caption = 
+        #1057#1074#1086#1076#1085#1099#1081' '#1086#1090#1095#1077#1090' '#1086' '#1076#1074#1080#1078#1077#1085#1080#1080' '#1082#1086#1085#1090#1080#1085#1075#1077#1085#1090#1072' '#1087#1086' '#1089#1087#1077#1094#1080#1072#1083#1100#1085#1086#1089#1090#1103#1084'  '#1079#1072' '#1087#1077#1088#1080#1086 +
+        #1076' '
+      ImageIndex = 4
+      object r5dataBox: TGroupBox
+        Left = 0
+        Top = 169
+        Width = 1029
+        Height = 511
+        Align = alClient
+        Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 0
+        ExplicitLeft = 424
+        ExplicitTop = 344
+        ExplicitWidth = 185
+        ExplicitHeight = 105
+        object r5repGrid: TDBGrid
+          Left = 2
+          Top = 15
+          Width = 1025
+          Height = 494
+          Align = alClient
+          DataSource = DM.reprortDS
+          TabOrder = 0
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWindowText
+          TitleFont.Height = -11
+          TitleFont.Name = 'Tahoma'
+          TitleFont.Style = []
+        end
+      end
+      object r5btnbox: TGroupBox
+        Left = 0
+        Top = 680
+        Width = 1029
+        Height = 105
+        Align = alBottom
+        TabOrder = 1
+        ExplicitLeft = 432
+        ExplicitTop = 352
+        ExplicitWidth = 185
+        object r5Btn: TButton
+          Left = 400
+          Top = 48
+          Width = 75
+          Height = 25
+          Caption = #1042#1099#1074#1086#1076
+          TabOrder = 0
+          OnClick = r5BtnClick
+        end
+      end
+      object R5_inpBox: TGroupBox
+        Left = 0
+        Top = 0
+        Width = 1029
+        Height = 169
+        Align = alTop
+        Anchors = [akLeft, akRight]
+        Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 2
+        DesignSize = (
+          1029
+          169)
+        object r5begin_lbl: TStaticText
+          Left = 16
+          Top = 23
+          Width = 177
+          Height = 17
+          Align = alCustom
+          Anchors = [akLeft, akRight]
+          Caption = #1053#1072#1095#1072#1083#1086' '#1087#1077#1088#1080#1086#1076#1072
+          TabOrder = 0
+        end
+        object r5endlbl: TStaticText
+          Left = 16
+          Top = 98
+          Width = 105
+          Height = 17
+          Align = alCustom
+          Anchors = [akLeft, akRight]
+          Caption = #1050#1086#1085#1077#1094' '#1087#1077#1088#1080#1086#1076#1072
+          TabOrder = 1
+        end
+        object r5beginDate_inp: TDateTimePicker
+          Left = 16
+          Top = 54
+          Width = 937
+          Height = 21
+          Anchors = [akLeft, akRight]
+          Date = 45741.902252557870000000
+          Time = 45741.902252557870000000
+          TabOrder = 2
+        end
+        object r5endDateinp: TDateTimePicker
+          Left = 16
+          Top = 121
+          Width = 937
+          Height = 21
+          Anchors = [akLeft, akRight]
+          Date = 45741.902252557870000000
+          Time = 45741.902252557870000000
+          TabOrder = 3
         end
       end
     end

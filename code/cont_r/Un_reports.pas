@@ -111,6 +111,16 @@ type
     r4data_otCB: TCheckBox;
     r4naim_grupCB: TCheckBox;
     r4st_emailCB: TCheckBox;
+    r5_tab: TTabSheet;
+    r5dataBox: TGroupBox;
+    r5btnbox: TGroupBox;
+    R5_inpBox: TGroupBox;
+    r5repGrid: TDBGrid;
+    r5Btn: TButton;
+    r5begin_lbl: TStaticText;
+    r5endlbl: TStaticText;
+    r5beginDate_inp: TDateTimePicker;
+    r5endDateinp: TDateTimePicker;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -179,6 +189,7 @@ type
     procedure r4data_otCBClick(Sender: TObject);
     procedure r4naim_grupCBClick(Sender: TObject);
     procedure r4st_emailCBClick(Sender: TObject);
+    procedure r5BtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -711,6 +722,53 @@ begin
 r4repgrid.Columns[9].Visible:=r4to_liveCB.Checked;
 if r4to_liveCB.Checked then r4repgrid.Columns[9].Title.Caption:='Проживание';
 end;
+
+procedure TFrm_reports.r5BtnClick(Sender: TObject);
+
+var  thith_report:TADOStoredProc;
+begin
+    thith_report := nil;
+  try
+    thith_report := TADOStoredProc.Create(nil);
+    try
+      with thith_report do
+      begin
+        Connection := DM.Connection;
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+        ProcedureName := 'thith_report';
+        Parameters.Clear;
+        Parameters.CreateParameter(
+        'd1',
+        ftDate,
+        pdInput,
+        0,
+        r5beginDate_inp.Date
+        );
+        Parameters.CreateParameter(
+        'd2',
+        ftDate,
+        pdInput,
+        0,
+        r5endDateinp.Date
+        );
+        Open;
+        DM.reportQuery.Close;
+        DM.reportQuery.Recordset := thith_report.Recordset;
+      end;
+    except
+      on E: EADOError do
+        ShowMessage('Ошибка: ' + E.Message);
+      on E: Exception do
+        ShowMessage('Ошибка: ' + E.Message);
+    end;
+  finally
+    FreeAndNil(thith_report);
+  end;
+end;
+
+
+
 
 procedure TFrm_reports.regionCBClick(Sender: TObject);
 begin

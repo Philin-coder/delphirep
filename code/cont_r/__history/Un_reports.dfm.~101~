@@ -863,6 +863,7 @@ object Frm_reports: TFrm_reports
           Align = alCustom
           Caption = #1044#1072#1090#1072' '#1088#1086#1078#1076#1077#1085#1080#1103
           TabOrder = 1
+          OnClick = r4b_dataCBClick
         end
         object r4sexCB: TCheckBox
           Left = 24
@@ -872,6 +873,7 @@ object Frm_reports: TFrm_reports
           Align = alCustom
           Caption = #1055#1086#1083
           TabOrder = 2
+          OnClick = r4sexCBClick
         end
         object r4civCB: TCheckBox
           Left = 24
@@ -881,6 +883,7 @@ object Frm_reports: TFrm_reports
           Align = alCustom
           Caption = #1043#1088#1072#1078#1076#1072#1085#1089#1090#1074#1086
           TabOrder = 3
+          OnClick = r4civCBClick
         end
         object r4regionCB: TCheckBox
           Left = 200
@@ -890,6 +893,7 @@ object Frm_reports: TFrm_reports
           Align = alCustom
           Caption = #1056#1077#1075#1080#1086#1085
           TabOrder = 4
+          OnClick = r4regionCBClick
         end
         object r4gorodCB: TCheckBox
           Left = 200
@@ -899,6 +903,7 @@ object Frm_reports: TFrm_reports
           Align = alCustom
           Caption = #1043#1086#1088#1086#1076
           TabOrder = 5
+          OnClick = r4gorodCBClick
         end
         object r4adrCB: TCheckBox
           Left = 200
@@ -908,6 +913,7 @@ object Frm_reports: TFrm_reports
           Align = alCustom
           Caption = #1040#1076#1088#1077#1089
           TabOrder = 6
+          OnClick = r4adrCBClick
         end
         object r4fioCB: TCheckBox
           Left = 200
@@ -917,6 +923,7 @@ object Frm_reports: TFrm_reports
           Align = alCustom
           Caption = #1060#1048#1054
           TabOrder = 7
+          OnClick = r4fioCBClick
         end
         object r4kursCB: TCheckBox
           Left = 378
@@ -926,6 +933,7 @@ object Frm_reports: TFrm_reports
           Align = alCustom
           Caption = #1050#1091#1088#1089
           TabOrder = 8
+          OnClick = r4kursCBClick
         end
         object r4to_liveCB: TCheckBox
           Left = 378
@@ -935,6 +943,7 @@ object Frm_reports: TFrm_reports
           Align = alCustom
           Caption = #1055#1088#1086#1078#1080#1074#1072#1085#1080#1077
           TabOrder = 9
+          OnClick = r4to_liveCBClick
         end
         object r4mod_tCB: TCheckBox
           Left = 378
@@ -944,6 +953,7 @@ object Frm_reports: TFrm_reports
           Align = alCustom
           Caption = #1052#1086#1073#1084#1083#1100#1085#1099#1081
           TabOrder = 10
+          OnClick = r4mod_tCBClick
         end
         object r4dom_tCB: TCheckBox
           Left = 378
@@ -953,6 +963,7 @@ object Frm_reports: TFrm_reports
           Align = alCustom
           Caption = #1044#1086#1084#1072#1096#1085#1084#1081
           TabOrder = 11
+          OnClick = r4dom_tCBClick
         end
         object r4data_prCB: TCheckBox
           Left = 568
@@ -962,6 +973,7 @@ object Frm_reports: TFrm_reports
           Align = alCustom
           Caption = #1044#1072#1090#1072' '#1087#1088#1080#1077#1084#1072
           TabOrder = 12
+          OnClick = r4data_prCBClick
         end
         object r4data_otCB: TCheckBox
           Left = 568
@@ -971,6 +983,7 @@ object Frm_reports: TFrm_reports
           Align = alCustom
           Caption = #1044#1072#1090#1072' '#1086#1090#1095#1080#1089#1083#1077#1085#1080#1103
           TabOrder = 13
+          OnClick = r4data_otCBClick
         end
         object r4naim_grupCB: TCheckBox
           Left = 568
@@ -980,6 +993,7 @@ object Frm_reports: TFrm_reports
           Align = alCustom
           Caption = #1043#1088#1091#1087#1087#1072
           TabOrder = 14
+          OnClick = r4naim_grupCBClick
         end
         object r4st_emailCB: TCheckBox
           Left = 568
@@ -989,6 +1003,7 @@ object Frm_reports: TFrm_reports
           Align = alCustom
           Caption = 'Email'
           TabOrder = 15
+          OnClick = r4st_emailCBClick
         end
       end
       object r4dataBox: TGroupBox
