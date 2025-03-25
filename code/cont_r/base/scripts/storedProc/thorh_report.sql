@@ -1,14 +1,14 @@
 USE [cont_r]
 GO
 
-/****** Object:  StoredProcedure [dbo].[thorh_report]    Script Date: 25.03.2025 14:40:27 ******/
+/****** Object:  StoredProcedure [dbo].[thorh_report]    Script Date: 25.03.2025 14:58:40 ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
 
-create proc [dbo].[thorh_report]
+CREATE proc [dbo].[thorh_report]
   /*Список студентов, выбывших из техникума за период с*/
   @d1 date,
   @d2 date
@@ -28,6 +28,7 @@ create proc [dbo].[thorh_report]
   stud.mod_t,
   stud.dom_t,
   stud.data_pr,
+  stud.data_ot,
   gruppa.naim_grup,
   stud.st_email
  from stud 
