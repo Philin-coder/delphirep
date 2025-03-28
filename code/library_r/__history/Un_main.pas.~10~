@@ -10,7 +10,6 @@ type
   TFrm_main = class(TForm)
     mainImage: TImage;
     procedure FormCreate(Sender: TObject);
-    procedure FormActivate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -28,25 +27,8 @@ uses Un_func, Un_dm;
 const
   FileName = 'connection_string.txt';
 
-procedure TFrm_main.FormActivate(Sender: TObject);
-begin
-SaveConnectionStringToFile(FileName, dm.connection.ConnectionString);
-//ShowMessage('Строка подключения успешно сохранена в файл: ' + FileName);
-end;
-
 procedure TFrm_main.FormCreate(Sender: TObject);
 begin
-LoadIconFromResource('MAIN_ICON');
-try
-  HandleAnimatedCursor(0, 'my_cur.ani');
-//  ShowMessage('Курсор успешно загружен и установлен');
-except
-  on E: Exception do
-    ShowMessage('Ошибка: ' + E.Message);
-end;
-HandleAnimatedCursor(1);
-//HandleAnimatedCursor(2);
-LoadImageFromResource('BACKGROUND_IMAGE',mainImage);
     with Frm_main do
     begin
         width:=1024;
@@ -60,7 +42,6 @@ LoadImageFromResource('BACKGROUND_IMAGE',mainImage);
         Stretch:=True;
         AutoSize:=True;
     end;
-
 end;
 
 end.

@@ -35,18 +35,14 @@ SaveConnectionStringToFile(FileName, dm.connection.ConnectionString);
 end;
 
 procedure TFrm_main.FormCreate(Sender: TObject);
+    var
+         RS: TResourceStream;
+        JPEG: TJPEGImage;
 begin
-LoadIconFromResource('MAIN_ICON');
-try
-  HandleAnimatedCursor(0, 'my_cur.ani');
-//  ShowMessage('Курсор успешно загружен и установлен');
-except
-  on E: Exception do
-    ShowMessage('Ошибка: ' + E.Message);
-end;
-HandleAnimatedCursor(1);
-//HandleAnimatedCursor(2);
-LoadImageFromResource('BACKGROUND_IMAGE',mainImage);
+     LoadIconFromResource('MAIN_ICON');
+
+
+
     with Frm_main do
     begin
         width:=1024;

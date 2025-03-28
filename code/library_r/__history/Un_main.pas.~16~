@@ -36,7 +36,7 @@ end;
 
 procedure TFrm_main.FormCreate(Sender: TObject);
 begin
-LoadIconFromResource('MAIN_ICON');
+     LoadIconFromResource('MAIN_ICON');
 try
   HandleAnimatedCursor(0, 'my_cur.ani');
 //  ShowMessage('Курсор успешно загружен и установлен');
@@ -44,9 +44,14 @@ except
   on E: Exception do
     ShowMessage('Ошибка: ' + E.Message);
 end;
+
+
 HandleAnimatedCursor(1);
 //HandleAnimatedCursor(2);
 LoadImageFromResource('BACKGROUND_IMAGE',mainImage);
+
+
+
     with Frm_main do
     begin
         width:=1024;

@@ -35,18 +35,27 @@ SaveConnectionStringToFile(FileName, dm.connection.ConnectionString);
 end;
 
 procedure TFrm_main.FormCreate(Sender: TObject);
+    var
+         RS: TResourceStream;
+        JPEG: TJPEGImage;
 begin
-LoadIconFromResource('MAIN_ICON');
+     LoadIconFromResource('MAIN_ICON');
 try
   HandleAnimatedCursor(0, 'my_cur.ani');
-//  ShowMessage('Курсор успешно загружен и установлен');
+  ShowMessage('Курсор успешно загружен и установлен');
 except
   on E: Exception do
     ShowMessage('Ошибка: ' + E.Message);
 end;
+
+// 2. Установить загруженный курсор (если уже загружен)
 HandleAnimatedCursor(1);
-//HandleAnimatedCursor(2);
-LoadImageFromResource('BACKGROUND_IMAGE',mainImage);
+
+// 3. Восстановить стандартный курсор
+HandleAnimatedCursor(2);
+
+
+
     with Frm_main do
     begin
         width:=1024;

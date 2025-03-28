@@ -1,18 +1,14 @@
 program library_project;
 
 uses
-  Windows,
   Forms,
   Un_main in 'Un_main.pas' {Form2},
-  Un_func in 'Un_func.pas',
-  Un_dm in 'Un_dm.pas' {DM: TDataModule};
+  Un_func in 'Un_func.pas';
 
 {$R *.res}
-{$R resources.res} 
 
 begin
   Application.Initialize;
   Application.CreateForm(TFrm_main, Frm_main);
-  Application.CreateForm(TDM, DM);
   Application.Run;
 end.
