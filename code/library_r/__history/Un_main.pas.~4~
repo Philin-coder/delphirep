@@ -1,0 +1,53 @@
+unit Un_main;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls;
+
+type
+  TFrm_main = class(TForm)
+    main_image: TImage;
+    procedure FormActivate(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_main: TFrm_main;
+
+implementation
+
+uses Un_func, Un_dm;
+
+{$R *.dfm}
+const
+  FileName = 'connection_string.txt';
+
+procedure TFrm_main.FormActivate(Sender: TObject);
+begin
+    SaveConnectionStringToFile(FileName, dm.connection.ConnectionString);
+   // ShowMessage('Строка подключения успешно сохранена в файл: ' + FileName);
+end;
+
+procedure TFrm_main.FormCreate(Sender: TObject);
+begin
+With Frm_main do
+begin
+  Width:=1024;
+  Height:=768;
+  Position:=poScreenCenter;
+end;
+  LoadFormState(Self);
+With main_Image do
+begin
+  Stretch:=True;
+  AutoSize:=True;
+end;
+end;
+
+end.
