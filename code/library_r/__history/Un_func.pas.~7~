@@ -702,8 +702,4 @@ begin
       RS.Free;
   end;
 end;
-initialization
-finalization
-if hAniCursor <> 0 then
-    DestroyCursor(hAniCursor);
 end.
