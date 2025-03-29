@@ -54,14 +54,6 @@ begin
   Width:=1024;
   Height:=768;
   Position:=poScreenCenter;
-  LoadIconFromResource('ADD_ICON',1,iconImageList);
-  LoadIconFromResource('DELETE_ICON',1,iconImageList);
-  LoadIconFromResource('EDIT_ICON',1,iconImageList);
-  LoadIconFromResource('SELECT_ICON',1,iconImageList);
-
-
-
-
 end;
 LoadIconFromResource('MAIN_ICON',0);
 try

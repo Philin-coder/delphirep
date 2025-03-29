@@ -4,16 +4,11 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ExtCtrls, StdCtrls, ImgList, Menus;
+  Dialogs, ExtCtrls;
 
 type
   TFrm_main = class(TForm)
     main_image: TImage;
-    iconImageList: TImageList;
-    Button1: TButton;
-    Image1: TImage;
-    PopupMenu1: TPopupMenu;
-    N11: TMenuItem;
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -54,16 +49,8 @@ begin
   Width:=1024;
   Height:=768;
   Position:=poScreenCenter;
-  LoadIconFromResource('ADD_ICON',1,iconImageList);
-  LoadIconFromResource('DELETE_ICON',1,iconImageList);
-  LoadIconFromResource('EDIT_ICON',1,iconImageList);
-  LoadIconFromResource('SELECT_ICON',1,iconImageList);
-
-
-
-
 end;
-LoadIconFromResource('MAIN_ICON',0);
+LoadIconFromResource('MAIN_ICON');
 try
   HandleAnimatedCursor(0, 'my_cur.ani');
 //  ShowMessage('Курсор успешно загружен и установлен');
