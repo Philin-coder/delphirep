@@ -37,9 +37,9 @@ end;
 
 procedure TFrm_main.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-   SaveFormState(Self);
-   Action := caFree;
-  main_Image.Picture:=nil;
+    SaveFormState(Self);
+    Action := caFree;
+ main_Image.Picture:=nil;
 end;
 
 procedure TFrm_main.FormCreate(Sender: TObject);
