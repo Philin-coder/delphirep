@@ -1,7 +1,7 @@
-object Frm_main: TFrm_main
+object Frm_author: TFrm_author
   Left = 0
   Top = 0
-  Caption = #1043#1083#1072#1074#1085#1072#1103' '#1092#1086#1088#1084#1072
+  Caption = #1040#1074#1090#1086#1088#1080#1079#1072#1094#1080#1103
   ClientHeight = 299
   ClientWidth = 635
   Color = clBtnFace
@@ -11,19 +11,22 @@ object Frm_main: TFrm_main
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
-  OnActivate = FormActivate
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object main_image: TImage
+  object authorImage: TImage
     Left = 0
     Top = 0
     Width = 635
     Height = 299
     Align = alClient
-    ExplicitLeft = 184
-    ExplicitTop = 96
+    ExplicitLeft = 272
+    ExplicitTop = 48
     ExplicitWidth = 105
     ExplicitHeight = 105
+  end
+  object dayImageList: TImageList
+    Left = 392
+    Top = 152
   end
 end

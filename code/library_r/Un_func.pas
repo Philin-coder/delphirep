@@ -58,7 +58,9 @@ procedure UpdateFormProperties(const FormName: string;
  Action: Integer; ImageList: TImageList = nil);
  procedure HandleAnimatedCursor(Action: Integer; const FileName: string = '');
  procedure LoadImageFromResource(const ResourceName: string; Image: TImage);
- procedure CreateToolBarWithButtons(Form: TForm; ImageList: TImageList);
+procedure CreateToolBarWithButtons(Form: TForm; ImageList: TImageList;
+const ButtonCaptions: array of string; const ButtonClicks: array of TNotifyEvent);
+
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -728,7 +730,8 @@ begin
       JPEG.Free;
   end;
 end;
-procedure CreateToolBarWithButtons(Form: TForm; ImageList: TImageList);
+procedure CreateToolBarWithButtons(Form: TForm; ImageList: TImageList;
+  const ButtonCaptions: array of string; const ButtonClicks: array of TNotifyEvent);
 var
   ToolBar: TToolBar;
   Button: TToolButton;
@@ -742,23 +745,29 @@ begin
 
   // Создание TToolBar
   ToolBar := TToolBar.Create(Form);
-  ToolBar.Parent := Form; // Установка родителя
-  ToolBar.Align := alTop; // Выравнивание по верху формы
-  ToolBar.ShowCaptions := True; // Отображение подписей (если нужно)
-  ToolBar.Images := ImageList; // Привязка ImageList к ToolBar
+  ToolBar.Parent := Form;
+  ToolBar.Align := alTop;
+  ToolBar.ShowCaptions := True;
+  ToolBar.Images := ImageList;
 
-  // Создание четырёх кнопок
-  for i := 0 to 3 do
+  // Создание кнопок
+  for i := 0 to High(ButtonCaptions) do
   begin
     Button := TToolButton.Create(ToolBar);
-    Button.Parent := ToolBar; // Установка родителя
+    Button.Parent := ToolBar;
     Button.ImageIndex := i; // Назначение индекса картинки из ImageList
-    Button.Hint := Format('Кнопка %d', [i + 1]); // Подсказка для кнопки
+    Button.Caption := ButtonCaptions[i]; // Установка подписи кнопки
+    Button.Hint := ButtonCaptions[i]; // Подсказка для кнопки
     Button.ShowHint := True; // Включение подсказок
-    Button.Caption := Format('Кнопка %d', [i + 1]); // Текст на кнопке (если нужно)
+    Button.Tag := i; // Уникальный идентификатор кнопки
+
+    // Назначение обработчика события
+    if i <= High(ButtonClicks) then
+      Button.OnClick := ButtonClicks[i]
+    else
+      Button.OnClick := nil; // Если обработчик не задан
   end;
 end;
-
 initialization
 finalization
 if hAniCursor <> 0 then

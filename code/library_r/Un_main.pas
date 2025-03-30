@@ -13,6 +13,7 @@ type
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormShow(Sender: TObject);
   private
   procedure ChangeFormColor(Sender: TObject);
 var
@@ -25,7 +26,7 @@ var
 
 implementation
 
-uses Un_func, Un_dm;
+uses Un_func, Un_dm, Un_autorize;
 
 {$R *.dfm}
 const
@@ -76,7 +77,7 @@ begin
   LoadIconFromResource('DELETE_ICON',1,iconImageList);
   LoadIconFromResource('EDIT_ICON',1,iconImageList);
   LoadIconFromResource('SELECT_ICON',1,iconImageList);
- ShowMessage(IntToStr(iconImageList.Count));
+// ShowMessage(IntToStr(iconImageList.Count));
    SetLength(ButtonClicks, 4);
   ButtonClicks[0] := ChangeFormColor; // Обработчик для кнопки "Красный"
   ButtonClicks[1] := ChangeFormColor; // Обработчик для кнопки "Зелёный"
@@ -107,6 +108,11 @@ begin
   Stretch:=True;
   AutoSize:=True;
 end;
+end;
+
+procedure TFrm_main.FormShow(Sender: TObject);
+begin
+Frm_author.ShowModal;
 end;
 
 end.
