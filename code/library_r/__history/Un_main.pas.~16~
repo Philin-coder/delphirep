@@ -4,13 +4,16 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ExtCtrls;
+  Dialogs, ExtCtrls, StdCtrls, ImgList, Menus;
 
 type
   TFrm_main = class(TForm)
     main_image: TImage;
+    iconImageList: TImageList;
+    Button1: TButton;
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
   public
@@ -34,6 +37,13 @@ begin
    // ShowMessage('Строка подключения успешно сохранена в файл: ' + FileName);
 end;
 
+procedure TFrm_main.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+   SaveFormState(Self);
+   Action := caFree;
+  main_Image.Picture:=nil;
+end;
+
 procedure TFrm_main.FormCreate(Sender: TObject);
 begin
 With Frm_main do
@@ -41,8 +51,23 @@ begin
   Width:=1024;
   Height:=768;
   Position:=poScreenCenter;
+  iconImageList.Clear;
+  LoadIconFromResource('ADD_ICON',1,iconImageList);
+  LoadIconFromResource('DELETE_ICON',1,iconImageList);
+  LoadIconFromResource('EDIT_ICON',1,iconImageList);
+  LoadIconFromResource('SELECT_ICON',1,iconImageList);
+  ShowMessage(IntToStr(iconImageList.Count));
+
+
+
+
+
+
+
+
+
 end;
-LoadIconFromResource('MAIN_ICON');
+LoadIconFromResource('MAIN_ICON',0);
 try
   HandleAnimatedCursor(0, 'my_cur.ani');
 //  ShowMessage('Курсор успешно загружен и установлен');
@@ -52,9 +77,9 @@ except
 end;
 HandleAnimatedCursor(1);
 //HandleAnimatedCursor(2);
-LoadImageFromResource('BACKGROUND_IMAGE',mainImage);
+LoadImageFromResource('BACKGROUND_IMAGE',main_Image);
 
-  LoadFormState(Self);
+LoadFormState(Self);
 With main_Image do
 begin
   Stretch:=True;

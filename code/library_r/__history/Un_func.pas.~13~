@@ -673,18 +673,18 @@ var
 begin
   Icon := TIcon.Create;
   try
-
+    // Создание потока для чтения ресурса
     RS := TResourceStream.Create(HInstance, ResourceName, RT_RCDATA);
     try
-
+      // Загрузка иконки из потока
       Icon.LoadFromStream(RS);
 
-
+      // Выбор действия в зависимости от значения параметра Action
       case Action of
-        0:
+        0: // Установка иконки приложения
           Application.Icon := Icon;
 
-        1:
+        1: // Добавление иконки в ImageList
           if Assigned(ImageList) then
             ImageList.AddIcon(Icon)
           else
@@ -705,22 +705,32 @@ var
   RS: TResourceStream;
   JPEG: TJPEGImage;
 begin
+  // Проверка входных параметров
   if not Assigned(Image) then
     raise Exception.Create('Ошибка: Компонент TImage не назначен.');
+
   RS := nil;
   JPEG := nil;
+
   try
+    // Создание потока для чтения ресурса
     RS := TResourceStream.Create(HInstance, ResourceName, RT_RCDATA);
+
+    // Создание объекта для работы с JPEG
     JPEG := TJPEGImage.Create;
+
     try
+      // Загрузка изображения из потока
       JPEG.LoadFromStream(RS);
+
+      // Назначение изображения компоненту TImage
       Image.Picture.Assign(JPEG);
     except
       on E: Exception do
         raise Exception.CreateFmt('Ошибка загрузки изображения "%s": %s', [ResourceName, E.Message]);
     end;
   finally
-
+    // Освобождение ресурсов
     if Assigned(RS) then
       RS.Free;
     if Assigned(JPEG) then

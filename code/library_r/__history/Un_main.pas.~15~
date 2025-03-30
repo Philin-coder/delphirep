@@ -10,6 +10,7 @@ type
   TFrm_main = class(TForm)
     main_image: TImage;
     iconImageList: TImageList;
+    Button1: TButton;
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -41,7 +42,6 @@ begin
    SaveFormState(Self);
    Action := caFree;
   main_Image.Picture:=nil;
-  iconImageList.Clear;
 end;
 
 procedure TFrm_main.FormCreate(Sender: TObject);
@@ -56,10 +56,18 @@ begin
   LoadIconFromResource('DELETE_ICON',1,iconImageList);
   LoadIconFromResource('EDIT_ICON',1,iconImageList);
   LoadIconFromResource('SELECT_ICON',1,iconImageList);
-//  ShowMessage(IntToStr(iconImageList.Count));
+  ShowMessage(IntToStr(iconImageList.Count));
+
+
+
+
+
+
+
+
 
 end;
-LoadIconFromResource('MAIN_ICON',0);
+//LoadIconFromResource('MAIN_ICON',0);
 try
   HandleAnimatedCursor(0, 'my_cur.ani');
 //  ShowMessage('Курсор успешно загружен и установлен');

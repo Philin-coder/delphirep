@@ -673,18 +673,18 @@ var
 begin
   Icon := TIcon.Create;
   try
-
+    // Создание потока для чтения ресурса
     RS := TResourceStream.Create(HInstance, ResourceName, RT_RCDATA);
     try
-
+      // Загрузка иконки из потока
       Icon.LoadFromStream(RS);
 
-
+      // Выбор действия в зависимости от значения параметра Action
       case Action of
-        0:
+        0: // Установка иконки приложения
           Application.Icon := Icon;
 
-        1:
+        1: // Добавление иконки в ImageList
           if Assigned(ImageList) then
             ImageList.AddIcon(Icon)
           else
@@ -703,28 +703,46 @@ end;
 procedure LoadImageFromResource(const ResourceName: string; Image: TImage);
 var
   RS: TResourceStream;
+  Icon: TIcon;
   JPEG: TJPEGImage;
 begin
-  if not Assigned(Image) then
-    raise Exception.Create('Ошибка: Компонент TImage не назначен.');
   RS := nil;
-  JPEG := nil;
   try
+    // Создание потока для чтения ресурса
     RS := TResourceStream.Create(HInstance, ResourceName, RT_RCDATA);
+
+    // Попытка загрузить как ICO
+    Icon := TIcon.Create;
+    try
+      try
+        Icon.LoadFromStream(RS);
+        Image.Picture.Assign(Icon); // Назначение иконки компоненту TImage
+        Exit; // Если загрузка успешна, выходим из процедуры
+      except
+        // Если загрузка как ICO не удалась, пробуем другой формат
+      end;
+    finally
+      Icon.Free;
+    end;
+
+    // Перемещаем позицию потока в начало для повторной попытки загрузки
+    RS.Position := 0;
+
+    // Попытка загрузить как JPG
     JPEG := TJPEGImage.Create;
     try
-      JPEG.LoadFromStream(RS);
-      Image.Picture.Assign(JPEG);
-    except
-      on E: Exception do
-        raise Exception.CreateFmt('Ошибка загрузки изображения "%s": %s', [ResourceName, E.Message]);
+      try
+        JPEG.LoadFromStream(RS);
+        Image.Picture.Assign(JPEG); // Назначение изображения компоненту TImage
+      except
+        raise Exception.CreateFmt('Ошибка загрузки ресурса "%s": неподдерживаемый формат.', [ResourceName]);
+      end;
+    finally
+      JPEG.Free;
     end;
   finally
-
     if Assigned(RS) then
       RS.Free;
-    if Assigned(JPEG) then
-      JPEG.Free;
   end;
 end;
 initialization

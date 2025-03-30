@@ -17,7 +17,12 @@ Windows,
 mask,
 dbgrids,
 StrUtils,
+variants,
+JPEG,
+ImgList,
 ExtCtrls;
+const
+  crMyAnimatedCursor = 1;
 type
   TSysCharSet = set of Char;
 
@@ -49,8 +54,13 @@ procedure UpdateFormProperties(const FormName: string;
  const AllowedChars: TSysCharSet): Boolean;
  function IsEnglishText(const Text: string): Boolean;
  Function IsValidEmail(const Email: string): Boolean;
+ procedure LoadIconFromResource(const ResourceName: string; Action:
+ Integer; ImageList: TImageList = nil);
+ procedure HandleAnimatedCursor(Action: Integer; const FileName: string = '');
+ procedure LoadImageFromResource(const ResourceName: string; Image: TImage);
 implementation
-
+ var
+  hAniCursor: HCURSOR = 0;
 
 function    CommaPoint (X: String) : String;
 var iii : Integer;
@@ -609,5 +619,133 @@ Exit;
 end;
 Result := True;
 end;
+procedure LoadIconFromResource(const ResourceName: string; Action: Integer; ImageList: TImageList = nil);
+var
+  RS: TResourceStream;
+  Icon: TIcon;
+begin
+  Icon := TIcon.Create;
+  try
+    // Создание потока для чтения ресурса
+    RS := TResourceStream.Create(HInstance, ResourceName, RT_RCDATA);
+    try
+      // Загрузка иконки из потока
+      Icon.LoadFromStream(RS);
 
+      // Выбор действия в зависимости от значения параметра Action
+      case Action of
+        0: // Установка иконки приложения
+          Application.Icon := Icon;
+
+        1: // Добавление иконки в ImageList
+          if Assigned(ImageList) then
+            ImageList.AddIcon(Icon)
+          else
+            raise Exception.Create('Ошибка: ImageList не назначен.');
+
+        else
+          raise Exception.Create('Ошибка: Неизвестное действие.');
+      end;
+    finally
+      RS.Free;
+    end;
+  finally
+    Icon.Free;
+  end;
+end;
+procedure HandleAnimatedCursor(Action: Integer; const FileName: string = '');
+begin
+  case Action of
+    0:
+    begin
+
+      if not FileExists(FileName) then
+        raise Exception.Create('Файл курсора не найден: ' + FileName);
+      if hAniCursor <> 0 then
+      begin
+        DestroyCursor(hAniCursor);
+        hAniCursor := 0;
+      end;
+      hAniCursor := LoadImage(
+        0,
+        PChar(FileName),
+        IMAGE_CURSOR,
+        0,
+        0,
+        LR_LOADFROMFILE or LR_DEFAULTSIZE or LR_SHARED
+      );
+
+      if hAniCursor = 0 then
+        raise Exception.Create('Ошибка загрузки курсора');
+      Screen.Cursors[crMyAnimatedCursor] := hAniCursor;
+      Screen.Cursor := crMyAnimatedCursor;
+    end;
+    1:
+    begin
+      if hAniCursor = 0 then
+        raise Exception.Create('Курсор не загружен');
+      Screen.Cursor := crMyAnimatedCursor;
+    end;
+    2:
+    begin
+      Screen.Cursor := crDefault;
+    end;
+    3:
+    begin
+      if hAniCursor <> 0 then
+        DestroyCursor(hAniCursor);
+      hAniCursor := 0;
+      Screen.Cursor := crDefault;
+    end;
+  end;
+end;
+procedure LoadImageFromResource(const ResourceName: string; Image: TImage);
+var
+  RS: TResourceStream;
+  Icon: TIcon;
+  JPEG: TJPEGImage;
+begin
+  RS := nil;
+  try
+    // Создание потока для чтения ресурса
+    RS := TResourceStream.Create(HInstance, ResourceName, RT_RCDATA);
+
+    // Попытка загрузить как ICO
+    Icon := TIcon.Create;
+    try
+      try
+        Icon.LoadFromStream(RS);
+        Image.Picture.Assign(Icon); // Назначение иконки компоненту TImage
+        Exit; // Если загрузка успешна, выходим из процедуры
+      except
+        // Если загрузка как ICO не удалась, пробуем другой формат
+      end;
+    finally
+      Icon.Free;
+    end;
+
+    // Перемещаем позицию потока в начало для повторной попытки загрузки
+    RS.Position := 0;
+
+    // Попытка загрузить как JPG
+    JPEG := TJPEGImage.Create;
+    try
+      try
+        JPEG.LoadFromStream(RS);
+        Image.Picture.Assign(JPEG); // Назначение изображения компоненту TImage
+      except
+        raise Exception.CreateFmt('Ошибка загрузки ресурса "%s": неподдерживаемый формат.', [ResourceName]);
+      end;
+    finally
+      JPEG.Free;
+    end;
+  finally
+    if Assigned(RS) then
+      RS.Free;
+  end;
+end;
+initialization
+finalization
+if hAniCursor <> 0 then
+    DestroyCursor(hAniCursor);
 end.
