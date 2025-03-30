@@ -14,7 +14,8 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
-    { Private declarations }
+  procedure ChangeFormColor(Sender: TObject);
+var
   public
     { Public declarations }
   end;
@@ -29,17 +30,19 @@ uses Un_func, Un_dm;
 {$R *.dfm}
 const
   FileName = 'connection_string.txt';
-procedure TFrm_mAIN.ToolBarButtonClick(Sender: TObject);
-var
-  Button: TToolButton;
+  procedure TFrm_main.ChangeFormColor(Sender: TObject);
 begin
-  // Убедитесь, что отправитель является кнопкой
   if Sender is TToolButton then
   begin
-    Button := TToolButton(Sender);
-
-    // Определите, какая кнопка была нажата, по её Caption или Tag
-    ShowMessage('Нажата кнопка: ' + Button.Caption + ' (Tag = ' + IntToStr(Button.Tag) + ')');
+    // Определяем, какая кнопка была нажата, по её Tag или Caption
+    case TToolButton(Sender).Tag of
+      0: Self.Color := clRed;       // Кнопка 1
+      1: Self.Color := clGreen;     // Кнопка 2
+      2: Self.Color := clBlue;      // Кнопка 3
+      3: Self.Color := clYellow;    // Кнопка 4
+    else
+      Self.Color := clWhite;        // Цвет по умолчанию
+    end;
   end;
 end;
 procedure TFrm_main.FormActivate(Sender: TObject);
@@ -60,6 +63,8 @@ procedure TFrm_main.FormCreate(Sender: TObject);
 const
   ButtonNames: array[0..3] of string = ('Добавить', 'Удалить',
   'Редактировать', 'Выбрать');
+  var
+  ButtonClicks: array of TNotifyEvent;
 begin
 With Frm_main do
 begin
@@ -72,7 +77,14 @@ begin
   LoadIconFromResource('EDIT_ICON',1,iconImageList);
   LoadIconFromResource('SELECT_ICON',1,iconImageList);
  ShowMessage(IntToStr(iconImageList.Count));
+   SetLength(ButtonClicks, 4);
+  ButtonClicks[0] := ChangeFormColor; // Обработчик для кнопки "Красный"
+  ButtonClicks[1] := ChangeFormColor; // Обработчик для кнопки "Зелёный"
+  ButtonClicks[2] := ChangeFormColor; // Обработчик для кнопки "Синий"
+  ButtonClicks[3] := ChangeFormColor; // Обработчик для кнопки "Жёлтый"
 
+  // Создание ToolBar с кнопками
+  CreateToolBarWithButtons(Self, iconImageList, ButtonNames, ButtonClicks);
 
 
 
