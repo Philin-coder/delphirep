@@ -60,7 +60,7 @@ procedure UpdateFormProperties(const FormName: string;
  procedure LoadImageFromResource(const ResourceName: string; Image: TImage);
 procedure CreateToolBarWithButtons(Form: TForm; ImageList: TImageList;
 const ButtonCaptions: array of string; const ButtonClicks: array of TNotifyEvent);
-
+function GetTimeOfDay: string;
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -767,6 +767,25 @@ begin
     else
       Button.OnClick := nil; // Если обработчик не задан
   end;
+end;
+function GetTimeOfDay: string;
+var
+  CurrentHour: Word;
+  CurrentMinute: Word;
+  CurrentSecond: Word;
+begin
+  // Получаем текущее системное время
+  DecodeTime(Now, CurrentHour, CurrentMinute, CurrentSecond, CurrentSecond);
+
+  // Определяем время суток
+  if (CurrentHour >= 6) and (CurrentHour < 12) then
+    Result := 'Утро'
+  else if (CurrentHour >= 12) and (CurrentHour < 18) then
+    Result := 'День'
+  else if (CurrentHour >= 18) and (CurrentHour < 24) then
+    Result := 'Вечер'
+  else
+    Result := 'Ночь';
 end;
 initialization
 finalization

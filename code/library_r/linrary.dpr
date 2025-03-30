@@ -9,6 +9,8 @@ uses
 
 {$R *.res}
 {$R resources.res}
+{$R autor_res.RES}
+
 
 begin
   Application.Initialize;

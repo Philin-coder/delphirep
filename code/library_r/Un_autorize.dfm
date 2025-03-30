@@ -25,8 +25,4 @@ object Frm_author: TFrm_author
     ExplicitWidth = 105
     ExplicitHeight = 105
   end
-  object dayImageList: TImageList
-    Left = 392
-    Top = 152
-  end
 end
