@@ -58,6 +58,7 @@ procedure UpdateFormProperties(const FormName: string;
  Action: Integer; ImageList: TImageList = nil);
  procedure HandleAnimatedCursor(Action: Integer; const FileName: string = '');
  procedure LoadImageFromResource(const ResourceName: string; Image: TImage);
+ procedure CreateToolBarWithButtons(Form: TForm; ImageList: TImageList);
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -727,6 +728,37 @@ begin
       JPEG.Free;
   end;
 end;
+procedure CreateToolBarWithButtons(Form: TForm; ImageList: TImageList);
+var
+  ToolBar: TToolBar;
+  Button: TToolButton;
+  i: Integer;
+begin
+  // Проверка входных параметров
+  if not Assigned(Form) then
+    raise Exception.Create('Ошибка: Форма не назначена.');
+  if not Assigned(ImageList) then
+    raise Exception.Create('Ошибка: ImageList не назначен.');
+
+  // Создание TToolBar
+  ToolBar := TToolBar.Create(Form);
+  ToolBar.Parent := Form; // Установка родителя
+  ToolBar.Align := alTop; // Выравнивание по верху формы
+  ToolBar.ShowCaptions := True; // Отображение подписей (если нужно)
+  ToolBar.Images := ImageList; // Привязка ImageList к ToolBar
+
+  // Создание четырёх кнопок
+  for i := 0 to 3 do
+  begin
+    Button := TToolButton.Create(ToolBar);
+    Button.Parent := ToolBar; // Установка родителя
+    Button.ImageIndex := i; // Назначение индекса картинки из ImageList
+    Button.Hint := Format('Кнопка %d', [i + 1]); // Подсказка для кнопки
+    Button.ShowHint := True; // Включение подсказок
+    Button.Caption := Format('Кнопка %d', [i + 1]); // Текст на кнопке (если нужно)
+  end;
+end;
+
 initialization
 finalization
 if hAniCursor <> 0 then

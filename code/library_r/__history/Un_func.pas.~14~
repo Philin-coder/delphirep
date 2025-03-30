@@ -19,7 +19,10 @@ dbgrids,
 StrUtils,
 variants,
 JPEG,
+ImgList,
 ExtCtrls;
+const
+  crMyAnimatedCursor = 1;
 type
   TSysCharSet = set of Char;
 
@@ -51,10 +54,13 @@ procedure UpdateFormProperties(const FormName: string;
  const AllowedChars: TSysCharSet): Boolean;
  function IsEnglishText(const Text: string): Boolean;
  Function IsValidEmail(const Email: string): Boolean;
- procedure LoadIconFromResource(const ResourceName: string);
+ procedure LoadIconFromResource(const ResourceName: string;
+ Action: Integer; ImageList: TImageList = nil);
  procedure HandleAnimatedCursor(Action: Integer; const FileName: string = '');
+ procedure LoadImageFromResource(const ResourceName: string; Image: TImage);
 implementation
-
+ var
+  hAniCursor: HCURSOR = 0;
 
 function    CommaPoint (X: String) : String;
 var iii : Integer;
@@ -613,26 +619,7 @@ Exit;
 end;
 Result := True;
 end;
-procedure LoadIconFromResource(const ResourceName: string);
-var
-  RS: TResourceStream;
-  Icon: TIcon;
-begin
-  Icon := TIcon.Create;
-  try
-    RS := TResourceStream.Create(HInstance, ResourceName, RT_RCDATA);
-    try
-      Icon.LoadFromStream(RS);
-      Application.Icon := Icon; // Установка иконки приложения
-    finally
-      RS.Free;
-    end;
-  finally
-    Icon.Free;
-  end;
-end;
-
-procedure HandleAnimatedCursor(Action: Integer; const FileName: string = '');
+procedure HandleAnimatedCursor(Action: Integer; const FileName: string = '');
 begin
   case Action of
     0:
@@ -678,25 +665,70 @@ begin
     end;
   end;
 end;
+
+procedure LoadIconFromResource(const ResourceName: string; Action: Integer; ImageList: TImageList = nil);
+var
+  RS: TResourceStream;
+  Icon: TIcon;
+begin
+  Icon := TIcon.Create;
+  try
+
+    RS := TResourceStream.Create(HInstance, ResourceName, RT_RCDATA);
+    try
+
+      Icon.LoadFromStream(RS);
+
+
+      case Action of
+        0:
+          Application.Icon := Icon;
+
+        1:
+          if Assigned(ImageList) then
+            ImageList.AddIcon(Icon)
+          else
+            raise Exception.Create('Ошибка: ImageList не назначен.');
+
+        else
+          raise Exception.Create('Ошибка: Неизвестное действие.');
+      end;
+    finally
+      RS.Free;
+    end;
+  finally
+    Icon.Free;
+  end;
+end;
 procedure LoadImageFromResource(const ResourceName: string; Image: TImage);
 var
   RS: TResourceStream;
   JPEG: TJPEGImage;
 begin
+  if not Assigned(Image) then
+    raise Exception.Create('Ошибка: Компонент TImage не назначен.');
   RS := nil;
+  JPEG := nil;
   try
     RS := TResourceStream.Create(HInstance, ResourceName, RT_RCDATA);
     JPEG := TJPEGImage.Create;
     try
       JPEG.LoadFromStream(RS);
       Image.Picture.Assign(JPEG);
-    finally
-      JPEG.Free;
+    except
+      on E: Exception do
+        raise Exception.CreateFmt('Ошибка загрузки изображения "%s": %s', [ResourceName, E.Message]);
     end;
   finally
+
     if Assigned(RS) then
       RS.Free;
+    if Assigned(JPEG) then
+      JPEG.Free;
   end;
 end;
-
+initialization
+finalization
+if hAniCursor <> 0 then
+    DestroyCursor(hAniCursor);
 end.

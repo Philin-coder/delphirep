@@ -4,11 +4,12 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ExtCtrls;
+  Dialogs, ExtCtrls, StdCtrls, ImgList, Menus;
 
 type
   TFrm_main = class(TForm)
     main_image: TImage;
+    iconImageList: TImageList;
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -40,6 +41,7 @@ begin
    SaveFormState(Self);
    Action := caFree;
   main_Image.Picture:=nil;
+  iconImageList.Clear;
 end;
 
 procedure TFrm_main.FormCreate(Sender: TObject);
@@ -49,8 +51,15 @@ begin
   Width:=1024;
   Height:=768;
   Position:=poScreenCenter;
+  iconImageList.Clear;
+  LoadIconFromResource('ADD_ICON',1,iconImageList);
+  LoadIconFromResource('DELETE_ICON',1,iconImageList);
+  LoadIconFromResource('EDIT_ICON',1,iconImageList);
+  LoadIconFromResource('SELECT_ICON',1,iconImageList);
+//  ShowMessage(IntToStr(iconImageList.Count));
+
 end;
-LoadIconFromResource('MAIN_ICON');
+LoadIconFromResource('MAIN_ICON',0);
 try
   HandleAnimatedCursor(0, 'my_cur.ani');
 //  ShowMessage('Курсор успешно загружен и установлен');

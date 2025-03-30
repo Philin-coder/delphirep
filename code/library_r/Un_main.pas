@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ExtCtrls, StdCtrls, ImgList, Menus;
+  Dialogs, ExtCtrls, StdCtrls, ImgList, Menus, ComCtrls, ToolWin;
 
 type
   TFrm_main = class(TForm)
@@ -29,7 +29,19 @@ uses Un_func, Un_dm;
 {$R *.dfm}
 const
   FileName = 'connection_string.txt';
+procedure TFrm_mAIN.ToolBarButtonClick(Sender: TObject);
+var
+  Button: TToolButton;
+begin
+  // Убедитесь, что отправитель является кнопкой
+  if Sender is TToolButton then
+  begin
+    Button := TToolButton(Sender);
 
+    // Определите, какая кнопка была нажата, по её Caption или Tag
+    ShowMessage('Нажата кнопка: ' + Button.Caption + ' (Tag = ' + IntToStr(Button.Tag) + ')');
+  end;
+end;
 procedure TFrm_main.FormActivate(Sender: TObject);
 begin
     SaveConnectionStringToFile(FileName, dm.connection.ConnectionString);
@@ -45,6 +57,9 @@ begin
 end;
 
 procedure TFrm_main.FormCreate(Sender: TObject);
+const
+  ButtonNames: array[0..3] of string = ('Добавить', 'Удалить',
+  'Редактировать', 'Выбрать');
 begin
 With Frm_main do
 begin
@@ -56,7 +71,10 @@ begin
   LoadIconFromResource('DELETE_ICON',1,iconImageList);
   LoadIconFromResource('EDIT_ICON',1,iconImageList);
   LoadIconFromResource('SELECT_ICON',1,iconImageList);
-//  ShowMessage(IntToStr(iconImageList.Count));
+ ShowMessage(IntToStr(iconImageList.Count));
+
+
+
 
 end;
 LoadIconFromResource('MAIN_ICON',0);

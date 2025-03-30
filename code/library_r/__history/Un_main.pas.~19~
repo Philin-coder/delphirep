@@ -4,18 +4,15 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ExtCtrls, StdCtrls, ImgList;
+  Dialogs, ExtCtrls, StdCtrls, ImgList, Menus, ComCtrls, ToolWin;
 
 type
   TFrm_main = class(TForm)
     main_image: TImage;
     iconImageList: TImageList;
-    Button1: TButton;
-    Image1: TImage;
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -33,12 +30,6 @@ uses Un_func, Un_dm;
 const
   FileName = 'connection_string.txt';
 
-procedure TFrm_main.Button1Click(Sender: TObject);
-begin
-//LoadImageFromResource('BACKGROUND_IMAGE',Image1);
-LoadImageFromResource('SELECT_ICON',Image1);
-end;
-
 procedure TFrm_main.FormActivate(Sender: TObject);
 begin
     SaveConnectionStringToFile(FileName, dm.connection.ConnectionString);
@@ -50,6 +41,7 @@ begin
    SaveFormState(Self);
    Action := caFree;
   main_Image.Picture:=nil;
+  iconImageList.Clear;
 end;
 
 procedure TFrm_main.FormCreate(Sender: TObject);
@@ -59,8 +51,15 @@ begin
   Width:=1024;
   Height:=768;
   Position:=poScreenCenter;
+  iconImageList.Clear;
+  LoadIconFromResource('ADD_ICON',1,iconImageList);
+  LoadIconFromResource('DELETE_ICON',1,iconImageList);
+  LoadIconFromResource('EDIT_ICON',1,iconImageList);
+  LoadIconFromResource('SELECT_ICON',1,iconImageList);
+//  ShowMessage(IntToStr(iconImageList.Count));
+
 end;
-LoadIconFromResource('MAIN_ICON');
+LoadIconFromResource('MAIN_ICON',0);
 try
   HandleAnimatedCursor(0, 'my_cur.ani');
 //  ShowMessage('Курсор успешно загружен и установлен');
