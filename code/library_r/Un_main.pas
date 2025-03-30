@@ -112,7 +112,15 @@ end;
 
 procedure TFrm_main.FormShow(Sender: TObject);
 begin
+try
+UpdateFormProperties('frm_author', 'Форма авторизации',
+clBtnFace, 1024, 768);
 Frm_author.ShowModal;
+except
+Frm_author.Free;
+raise;
+end;
+
 end;
 
 end.

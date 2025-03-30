@@ -1,0 +1,104 @@
+unit Un_autorize;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs,jpeg, ImgList, ExtCtrls, StdCtrls, ToolWin, ComCtrls;
+
+type
+  TFrm_author = class(TForm)
+    authorImage: TImage;
+    Log_pass_dataBox: TGroupBox;
+    login_inp: TLabeledEdit;
+    paswd_inp: TLabeledEdit;
+    passwd_btnBox: TGroupBox;
+    passwd_inp_Btn: TButton;
+    passwdImage: TImage;
+    Pwd_cb: TCheckBox;
+    pwdtb: TToolBar;
+    TBbtn: TToolButton;
+    AUTORImageList: TImageList;
+    procedure FormCreate(Sender: TObject);
+    procedure passwd_inp_BtnClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_author: TFrm_author;
+
+implementation
+
+uses Un_func, Un_main;
+
+{$R *.dfm}
+
+procedure TFrm_author.FormCreate(Sender: TObject);
+var Time_today:String;
+begin
+passwdImage.Visible:=False;
+passwdImage.AutoSize:=true;
+passwdImage.Stretch:=true;
+With Frm_author do
+begin
+login_inp.PasswordChar:='*';
+paswd_inp.PasswordChar:='*';
+  Position:=poScreenCenter;
+    Time_today:=GetTimeOfDay;
+      if Time_today = 'Утро' then
+        LoadImageFromResource('MORING_IMAGE',authorImage)
+  else if Time_today = 'День' then
+    LoadImageFromResource('DAY_IMAGE',authorImage)
+  else if Time_today = 'Вечер' then
+        LoadImageFromResource('EVENING_IMAGE',authorImage)
+  else if time_today = 'Ночь' then
+  LoadImageFromResource('NIGHT_IMAGE',authorImage);
+  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+     LoadIconFromResource('IYE',1,AUTORImageList);
+     TBbtn.ImageIndex:=0;
+
+
+
+
+end;
+with authorImage do
+begin
+ //AutoSize:=True;
+// Stretch:=true;
+end;
+end;
+
+procedure TFrm_author.passwd_inp_BtnClick(Sender: TObject);
+var
+  is_pas_empty:Boolean;
+  is_pas_valid:Boolean;
+begin
+is_pas_empty:=(Trim(login_inp.Text) = '')or(Trim(paswd_inp.Text) = '');
+is_pas_valid:=(login_inp.Text='Логин')and(paswd_inp.Text='Пароль');
+if  is_pas_empty then
+    begin
+MessageDlg('Пустые поля, или недопустииые значения',mtError, [mbOK], 0);
+    Beep;
+end
+else if not is_pas_valid then
+begin
+MessageDlg('Введен невернеый пароль',mtError, [mbOK], 0);
+    passwdImage.Visible:=True;
+
+    LoadImageFromResource('BAD_PASS',passwdImage);
+    Beep;
+end
+else
+begin
+passwdImage.Visible:=True;
+LoadImageFromResource('GOOD_PASS',passwdImage);
+Frm_main.Show;
+
+end;
+
+end;
+
+end.
