@@ -58,6 +58,11 @@ procedure UpdateFormProperties(const FormName: string;
  Action: Integer; ImageList: TImageList = nil);
  procedure HandleAnimatedCursor(Action: Integer; const FileName: string = '');
  procedure LoadImageFromResource(const ResourceName: string; Image: TImage);
+procedure CreateToolBarWithButtons(Form: TForm; ImageList: TImageList;
+const ButtonCaptions: array of string; const ButtonClicks: array of TNotifyEvent);
+function GetTimeOfDay: string;
+procedure ExtractResFile(const ResFileName: string);
+
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -725,6 +730,98 @@ begin
       RS.Free;
     if Assigned(JPEG) then
       JPEG.Free;
+  end;
+end;
+procedure CreateToolBarWithButtons(Form: TForm; ImageList: TImageList;
+  const ButtonCaptions: array of string; const ButtonClicks: array of TNotifyEvent);
+var
+  ToolBar: TToolBar;
+  Button: TToolButton;
+  i: Integer;
+begin
+  // Проверка входных параметров
+  if not Assigned(Form) then
+    raise Exception.Create('Ошибка: Форма не назначена.');
+  if not Assigned(ImageList) then
+    raise Exception.Create('Ошибка: ImageList не назначен.');
+
+  // Создание TToolBar
+  ToolBar := TToolBar.Create(Form);
+  ToolBar.Parent := Form;
+  ToolBar.Align := alTop;
+  ToolBar.ShowCaptions := True;
+  ToolBar.Images := ImageList;
+
+  // Создание кнопок
+  for i := 0 to High(ButtonCaptions) do
+  begin
+    Button := TToolButton.Create(ToolBar);
+    Button.Parent := ToolBar;
+    Button.ImageIndex := i; // Назначение индекса картинки из ImageList
+    Button.Caption := ButtonCaptions[i]; // Установка подписи кнопки
+    Button.Hint := ButtonCaptions[i]; // Подсказка для кнопки
+    Button.ShowHint := True; // Включение подсказок
+    Button.Tag := i; // Уникальный идентификатор кнопки
+
+    // Назначение обработчика события
+    if i <= High(ButtonClicks) then
+      Button.OnClick := ButtonClicks[i]
+    else
+      Button.OnClick := nil; // Если обработчик не задан
+  end;
+end;
+function GetTimeOfDay: string;
+var
+  CurrentHour: Word;
+  CurrentMinute: Word;
+  CurrentSecond: Word;
+begin
+  // Получаем текущее системное время
+  DecodeTime(Now, CurrentHour, CurrentMinute, CurrentSecond, CurrentSecond);
+
+  // Определяем время суток
+  if (CurrentHour >= 6) and (CurrentHour < 12) then
+    Result := 'Утро'
+  else if (CurrentHour >= 12) and (CurrentHour < 18) then
+    Result := 'День'
+  else if (CurrentHour >= 18) and (CurrentHour < 24) then
+    Result := 'Вечер'
+  else
+    Result := 'Ночь';
+end;
+procedure ExtractResFile(const ResFileName: string);
+var
+  ResFileStream: TFileStream;
+  FileStream: TFileStream;
+  OutputFileName: string;
+  ResSize: Integer;
+  Buffer: Pointer;
+begin
+  if not FileExists(ResFileName) then
+    raise Exception.CreateFmt('Файл ресурса не найден: %s', [ResFileName]);
+  ResFileStream := TFileStream.Create(ResFileName, fmOpenRead);
+  try
+    ResSize := ResFileStream.Size;
+    GetMem(Buffer, ResSize);
+    try
+
+      ResFileStream.ReadBuffer(Buffer^, ResSize);
+
+
+      OutputFileName := ExtractFilePath(ParamStr(0)) + 'ryk.wav';
+
+      FileStream := TFileStream.Create(OutputFileName, fmCreate);
+      try
+        FileStream.WriteBuffer(Buffer^, ResSize);
+      finally
+        FileStream.Free;
+      end;
+
+    finally
+      FreeMem(Buffer);
+    end;
+  finally
+    ResFileStream.Free;
   end;
 end;
 initialization

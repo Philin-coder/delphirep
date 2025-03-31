@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs,jpeg, ImgList, ExtCtrls, StdCtrls, ToolWin, ComCtrls;
+  Dialogs,jpeg, ImgList, ExtCtrls, StdCtrls, ToolWin, ComCtrls, MPlayer;
 
 type
   TFrm_author = class(TForm)
@@ -19,6 +19,7 @@ type
     TBbtn: TToolButton;
     AUTORImageList: TImageList;
     TButn_hide: TToolButton;
+    autorMediaPlayer: TMediaPlayer;
     procedure FormCreate(Sender: TObject);
     procedure passwd_inp_BtnClick(Sender: TObject);
     procedure TBbtnClick(Sender: TObject);
@@ -77,6 +78,7 @@ procedure TFrm_author.passwd_inp_BtnClick(Sender: TObject);
 var
   is_pas_empty:Boolean;
   is_pas_valid:Boolean;
+  filename:String;
 begin
 is_pas_empty:=(Trim(login_inp.Text) = '')or(Trim(paswd_inp.Text) = '');
 is_pas_valid:=(login_inp.Text='Логин')and(paswd_inp.Text='Пароль');
@@ -92,7 +94,21 @@ MessageDlg('Введен невернеый пароль',mtError, [mbOK], 0);
     LoadImageFromResource('BAD_PASS',passwdImage);
     Beep;
     ExtractResFile('sound_res.RES');
-    ShowMessage('Файл успешно извлечен!');
+//    ShowMessage('Файл успешно извлечен!');
+    filename:=FileExistsInAppDirectory('ryk.wav');
+      if FileName <> '' then
+      begin
+      //ShowMessage(filename);
+//    ShowMessage('Файл найден: ' + FileName);
+       with autorMediaPlayer do
+       begin
+
+       end;
+      end
+  else
+    ShowMessage('Файл не найден');
+
+
 end
 else
 begin

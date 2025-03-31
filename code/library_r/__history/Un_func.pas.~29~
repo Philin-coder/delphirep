@@ -42,15 +42,15 @@ procedure UpdateFormProperties(const FormName: string;
  function min3(a, b, c: integer): integer;
  function LeveDist(s, t: string): integer;
  function levi_checker(Str_one,str_two:string):Boolean;
-function NormalizeStringAndExtractParams2(var InputString: string;
-out p1, p2: string): Boolean;
-function NormalizeStringAndExtractParams3(var InputString: string; out p1, p2, p3:
-string): Boolean;
-function Capitalizer(str:string; mode:integer=0):string;
-function adr_fixer(str:string;  mode:Integer=0):string;
-procedure UniformizeDBGrids(AForm: TForm; const FontName: string;
-FontSize: Integer; FontColor: TColor; BkColor: TColor);
-function ValidateComponentText(AComponent: TWinControl;
+ function NormalizeStringAndExtractParams2(var InputString: string;
+ out p1, p2: string): Boolean;
+ function NormalizeStringAndExtractParams3(var InputString: string; out p1, p2, p3:
+ string): Boolean;
+ function Capitalizer(str:string; mode:integer=0):string;
+ function adr_fixer(str:string;  mode:Integer=0):string;
+ procedure UniformizeDBGrids(AForm: TForm; const FontName: string;
+ FontSize: Integer; FontColor: TColor; BkColor: TColor);
+ function ValidateComponentText(AComponent: TWinControl;
  const AllowedChars: TSysCharSet): Boolean;
  function IsEnglishText(const Text: string): Boolean;
  Function IsValidEmail(const Email: string): Boolean;
@@ -58,7 +58,11 @@ procedure UpdateFormProperties(const FormName: string;
  Action: Integer; ImageList: TImageList = nil);
  procedure HandleAnimatedCursor(Action: Integer; const FileName: string = '');
  procedure LoadImageFromResource(const ResourceName: string; Image: TImage);
- procedure CreateToolBarWithButtons(Form: TForm; ImageList: TImageList);
+ procedure CreateToolBarWithButtons(Form: TForm; ImageList: TImageList;
+ const ButtonCaptions: array of string; const ButtonClicks: array of TNotifyEvent);
+ function GetTimeOfDay: string;
+ procedure ExtractResFile(const ResFileName: string);
+
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -728,7 +732,8 @@ begin
       JPEG.Free;
   end;
 end;
-procedure CreateToolBarWithButtons(Form: TForm; ImageList: TImageList);
+procedure CreateToolBarWithButtons(Form: TForm; ImageList: TImageList;
+  const ButtonCaptions: array of string; const ButtonClicks: array of TNotifyEvent);
 var
   ToolBar: TToolBar;
   Button: TToolButton;
@@ -742,23 +747,101 @@ begin
 
   // Создание TToolBar
   ToolBar := TToolBar.Create(Form);
-  ToolBar.Parent := Form; // Установка родителя
-  ToolBar.Align := alTop; // Выравнивание по верху формы
-  ToolBar.ShowCaptions := True; // Отображение подписей (если нужно)
-  ToolBar.Images := ImageList; // Привязка ImageList к ToolBar
+  ToolBar.Parent := Form;
+  ToolBar.Align := alTop;
+  ToolBar.ShowCaptions := True;
+  ToolBar.Images := ImageList;
 
-  // Создание четырёх кнопок
-  for i := 0 to 3 do
+  // Создание кнопок
+  for i := 0 to High(ButtonCaptions) do
   begin
     Button := TToolButton.Create(ToolBar);
-    Button.Parent := ToolBar; // Установка родителя
+    Button.Parent := ToolBar;
     Button.ImageIndex := i; // Назначение индекса картинки из ImageList
-    Button.Hint := Format('Кнопка %d', [i + 1]); // Подсказка для кнопки
+    Button.Caption := ButtonCaptions[i]; // Установка подписи кнопки
+    Button.Hint := ButtonCaptions[i]; // Подсказка для кнопки
     Button.ShowHint := True; // Включение подсказок
-    Button.Caption := Format('Кнопка %d', [i + 1]); // Текст на кнопке (если нужно)
+    Button.Tag := i; // Уникальный идентификатор кнопки
+
+    // Назначение обработчика события
+    if i <= High(ButtonClicks) then
+      Button.OnClick := ButtonClicks[i]
+    else
+      Button.OnClick := nil; // Если обработчик не задан
+  end;
+end;
+function GetTimeOfDay: string;
+var
+  CurrentHour: Word;
+  CurrentMinute: Word;
+  CurrentSecond: Word;
+begin
+  // Получаем текущее системное время
+  DecodeTime(Now, CurrentHour, CurrentMinute, CurrentSecond, CurrentSecond);
+
+  // Определяем время суток
+  if (CurrentHour >= 6) and (CurrentHour < 12) then
+    Result := 'Утро'
+  else if (CurrentHour >= 12) and (CurrentHour < 18) then
+    Result := 'День'
+  else if (CurrentHour >= 18) and (CurrentHour < 24) then
+    Result := 'Вечер'
+  else
+    Result := 'Ночь';
+end;
+procedure ExtractResFile(const ResFileName: string);
+var
+  ResFileStream: TFileStream;
+  FileStream: TFileStream;
+  OutputFileName: string;
+  ResSize: Integer;
+  Buffer: Pointer;
+begin
+  if not FileExists(ResFileName) then
+    raise Exception.CreateFmt('Файл ресурса не найден: %s', [ResFileName]);
+  ResFileStream := TFileStream.Create(ResFileName, fmOpenRead);
+  try
+    ResSize := ResFileStream.Size;
+    GetMem(Buffer, ResSize);
+    try
+
+      ResFileStream.ReadBuffer(Buffer^, ResSize);
+
+
+      OutputFileName := ExtractFilePath(ParamStr(0)) + 'ryk.wav';
+
+      FileStream := TFileStream.Create(OutputFileName, fmCreate);
+      try
+        FileStream.WriteBuffer(Buffer^, ResSize);
+      finally
+        FileStream.Free;
+      end;
+
+    finally
+      FreeMem(Buffer);
+    end;
+  finally
+    ResFileStream.Free;
   end;
 end;
 
+function FindFirstWavFile: string;
+var
+  SearchRec: TSearchRec;
+begin
+  Result := ''; // Инициализация результата
+
+  // Ищем первый файл с расширением .wav в текущей директории
+  if FindFirst(ExtractFilePath(ParamStr(0)) + '*.wav', faAnyFile, SearchRec) = 0 then
+  begin
+    Result := SearchRec.Name; // Возвращаем имя первого найденного файла
+    FindClose(SearchRec);     // Закрываем поиск
+  end
+  else
+  begin
+    FindClose(SearchRec);     // Закрываем поиск, если файлы не найдены
+  end;
+end;
 initialization
 finalization
 if hAniCursor <> 0 then

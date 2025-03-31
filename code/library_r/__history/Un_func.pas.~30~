@@ -42,15 +42,15 @@ procedure UpdateFormProperties(const FormName: string;
  function min3(a, b, c: integer): integer;
  function LeveDist(s, t: string): integer;
  function levi_checker(Str_one,str_two:string):Boolean;
-function NormalizeStringAndExtractParams2(var InputString: string;
-out p1, p2: string): Boolean;
-function NormalizeStringAndExtractParams3(var InputString: string; out p1, p2, p3:
-string): Boolean;
-function Capitalizer(str:string; mode:integer=0):string;
-function adr_fixer(str:string;  mode:Integer=0):string;
-procedure UniformizeDBGrids(AForm: TForm; const FontName: string;
-FontSize: Integer; FontColor: TColor; BkColor: TColor);
-function ValidateComponentText(AComponent: TWinControl;
+ function NormalizeStringAndExtractParams2(var InputString: string;
+ out p1, p2: string): Boolean;
+ function NormalizeStringAndExtractParams3(var InputString: string; out p1, p2, p3:
+ string): Boolean;
+ function Capitalizer(str:string; mode:integer=0):string;
+ function adr_fixer(str:string;  mode:Integer=0):string;
+ procedure UniformizeDBGrids(AForm: TForm; const FontName: string;
+ FontSize: Integer; FontColor: TColor; BkColor: TColor);
+ function ValidateComponentText(AComponent: TWinControl;
  const AllowedChars: TSysCharSet): Boolean;
  function IsEnglishText(const Text: string): Boolean;
  Function IsValidEmail(const Email: string): Boolean;
@@ -58,8 +58,10 @@ procedure UpdateFormProperties(const FormName: string;
  Action: Integer; ImageList: TImageList = nil);
  procedure HandleAnimatedCursor(Action: Integer; const FileName: string = '');
  procedure LoadImageFromResource(const ResourceName: string; Image: TImage);
-procedure CreateToolBarWithButtons(Form: TForm; ImageList: TImageList;
-const ButtonCaptions: array of string; const ButtonClicks: array of TNotifyEvent);
+ procedure CreateToolBarWithButtons(Form: TForm; ImageList: TImageList;
+ const ButtonCaptions: array of string; const ButtonClicks: array of TNotifyEvent);
+ function GetTimeOfDay: string;
+ procedure ExtractResFile(const ResFileName: string);
 
 implementation
  var
@@ -786,6 +788,58 @@ begin
     Result := 'Вечер'
   else
     Result := 'Ночь';
+end;
+procedure ExtractResFile(const ResFileName: string);
+var
+  ResFileStream: TFileStream;
+  FileStream: TFileStream;
+  OutputFileName: string;
+  ResSize: Integer;
+  Buffer: Pointer;
+begin
+  if not FileExists(ResFileName) then
+    raise Exception.CreateFmt('Файл ресурса не найден: %s', [ResFileName]);
+  ResFileStream := TFileStream.Create(ResFileName, fmOpenRead);
+  try
+    ResSize := ResFileStream.Size;
+    GetMem(Buffer, ResSize);
+    try
+
+      ResFileStream.ReadBuffer(Buffer^, ResSize);
+
+
+      OutputFileName := ExtractFilePath(ParamStr(0)) + 'ryk.wav';
+
+      FileStream := TFileStream.Create(OutputFileName, fmCreate);
+      try
+        FileStream.WriteBuffer(Buffer^, ResSize);
+      finally
+        FileStream.Free;
+      end;
+
+    finally
+      FreeMem(Buffer);
+    end;
+  finally
+    ResFileStream.Free;
+  end;
+end;
+  function FindFirstWavFile(const Directory: string): string;
+var
+  SearchRec: TSearchRec;
+begin
+  Result := ''; // Инициализация результата
+
+  // Ищем первый файл с расширением .wav в указанной директории
+  if FindFirst(Directory + '*.wav', faAnyFile, SearchRec) = 0 then
+  begin
+    Result := SearchRec.Name; // Возвращаем имя первого найденного файла
+    FindClose(SearchRec);     // Закрываем поиск
+  end
+  else
+  begin
+    FindClose(SearchRec);     // Закрываем поиск, если файлы не найдены
+  end;
 end;
 initialization
 finalization

@@ -110,14 +110,6 @@ object Frm_author: TFrm_author
       OnClick = passwd_inp_BtnClick
     end
   end
-  object autorMediaPlayer: TMediaPlayer
-    Left = 664
-    Top = 304
-    Width = 253
-    Height = 30
-    Visible = False
-    TabOrder = 2
-  end
   object AUTORImageList: TImageList
     Left = 528
     Top = 232

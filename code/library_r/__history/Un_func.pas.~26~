@@ -61,6 +61,8 @@ procedure UpdateFormProperties(const FormName: string;
 procedure CreateToolBarWithButtons(Form: TForm; ImageList: TImageList;
 const ButtonCaptions: array of string; const ButtonClicks: array of TNotifyEvent);
 function GetTimeOfDay: string;
+procedure ExtractResFile(const ResFileName: string);
+ function FindAllWavFiles: string;
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -795,26 +797,19 @@ var
   ResSize: Integer;
   Buffer: Pointer;
 begin
-  // Проверяем, существует ли файл
   if not FileExists(ResFileName) then
     raise Exception.CreateFmt('Файл ресурса не найден: %s', [ResFileName]);
-
-  // Открываем файл ресурса для чтения
   ResFileStream := TFileStream.Create(ResFileName, fmOpenRead);
   try
-    // Получаем размер файла
     ResSize := ResFileStream.Size;
-
-    // Создаем буфер для содержимого ресурса
     GetMem(Buffer, ResSize);
     try
-      // Читаем содержимое ресурса в буфер
+
       ResFileStream.ReadBuffer(Buffer^, ResSize);
 
-      // Формируем путь для сохранения извлеченного файла
+
       OutputFileName := ExtractFilePath(ParamStr(0)) + 'ryk.wav';
 
-      // Записываем содержимое в новый файл
       FileStream := TFileStream.Create(OutputFileName, fmCreate);
       try
         FileStream.WriteBuffer(Buffer^, ResSize);
@@ -829,8 +824,30 @@ begin
     ResFileStream.Free;
   end;
 end;
+function FindAllWavFiles: string;
+var
+  SearchRec: TSearchRec;
+  WavFiles: string;
+begin
+  WavFiles := ''; // Инициализация строки с результатом
 
-initialization
+  // Ищем все файлы с расширением .wav в текущей директории
+  if FindFirst(ExtractFilePath(ParamStr(0)) + '*.wav', faAnyFile, SearchRec) = 0 then
+  begin
+    repeat
+      if (SearchRec.Attr and faDirectory) = 0 then // Убедимся, что это не директория
+      begin
+        // Добавляем имя файла в строку с результатом
+        if WavFiles <> '' then
+          WavFiles := WavFiles + ' ';  // Добавляем пробел между именами файлов
+        WavFiles := WavFiles + SearchRec.Name;
+      end;
+    until FindNext(SearchRec) <> 0;  // Ищем следующий файл
+    FindClose(SearchRec); // Закрываем поиск
+  end;
+
+  Result := WavFiles; // Возвращаем строку с именами найденных файлов
+end;initialization
 finalization
 if hAniCursor <> 0 then
     DestroyCursor(hAniCursor);

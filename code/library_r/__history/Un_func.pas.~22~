@@ -58,6 +58,10 @@ procedure UpdateFormProperties(const FormName: string;
  Action: Integer; ImageList: TImageList = nil);
  procedure HandleAnimatedCursor(Action: Integer; const FileName: string = '');
  procedure LoadImageFromResource(const ResourceName: string; Image: TImage);
+procedure CreateToolBarWithButtons(Form: TForm; ImageList: TImageList;
+const ButtonCaptions: array of string; const ButtonClicks: array of TNotifyEvent);
+function GetTimeOfDay: string;
+procedure ExtractResFile(const ResFileName: string);
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -673,18 +677,18 @@ var
 begin
   Icon := TIcon.Create;
   try
-    // Создание потока для чтения ресурса
+
     RS := TResourceStream.Create(HInstance, ResourceName, RT_RCDATA);
     try
-      // Загрузка иконки из потока
+
       Icon.LoadFromStream(RS);
 
-      // Выбор действия в зависимости от значения параметра Action
+
       case Action of
-        0: // Установка иконки приложения
+        0:
           Application.Icon := Icon;
 
-        1: // Добавление иконки в ImageList
+        1:
           if Assigned(ImageList) then
             ImageList.AddIcon(Icon)
           else
@@ -705,38 +709,148 @@ var
   RS: TResourceStream;
   JPEG: TJPEGImage;
 begin
-  // Проверка входных параметров
   if not Assigned(Image) then
     raise Exception.Create('Ошибка: Компонент TImage не назначен.');
-
   RS := nil;
   JPEG := nil;
-
   try
-    // Создание потока для чтения ресурса
     RS := TResourceStream.Create(HInstance, ResourceName, RT_RCDATA);
-
-    // Создание объекта для работы с JPEG
     JPEG := TJPEGImage.Create;
-
     try
-      // Загрузка изображения из потока
       JPEG.LoadFromStream(RS);
-
-      // Назначение изображения компоненту TImage
       Image.Picture.Assign(JPEG);
     except
       on E: Exception do
         raise Exception.CreateFmt('Ошибка загрузки изображения "%s": %s', [ResourceName, E.Message]);
     end;
   finally
-    // Освобождение ресурсов
+
     if Assigned(RS) then
       RS.Free;
     if Assigned(JPEG) then
       JPEG.Free;
   end;
 end;
+procedure CreateToolBarWithButtons(Form: TForm; ImageList: TImageList;
+  const ButtonCaptions: array of string; const ButtonClicks: array of TNotifyEvent);
+var
+  ToolBar: TToolBar;
+  Button: TToolButton;
+  i: Integer;
+begin
+  // Проверка входных параметров
+  if not Assigned(Form) then
+    raise Exception.Create('Ошибка: Форма не назначена.');
+  if not Assigned(ImageList) then
+    raise Exception.Create('Ошибка: ImageList не назначен.');
+
+  // Создание TToolBar
+  ToolBar := TToolBar.Create(Form);
+  ToolBar.Parent := Form;
+  ToolBar.Align := alTop;
+  ToolBar.ShowCaptions := True;
+  ToolBar.Images := ImageList;
+
+  // Создание кнопок
+  for i := 0 to High(ButtonCaptions) do
+  begin
+    Button := TToolButton.Create(ToolBar);
+    Button.Parent := ToolBar;
+    Button.ImageIndex := i; // Назначение индекса картинки из ImageList
+    Button.Caption := ButtonCaptions[i]; // Установка подписи кнопки
+    Button.Hint := ButtonCaptions[i]; // Подсказка для кнопки
+    Button.ShowHint := True; // Включение подсказок
+    Button.Tag := i; // Уникальный идентификатор кнопки
+
+    // Назначение обработчика события
+    if i <= High(ButtonClicks) then
+      Button.OnClick := ButtonClicks[i]
+    else
+      Button.OnClick := nil; // Если обработчик не задан
+  end;
+end;
+function GetTimeOfDay: string;
+var
+  CurrentHour: Word;
+  CurrentMinute: Word;
+  CurrentSecond: Word;
+begin
+  // Получаем текущее системное время
+  DecodeTime(Now, CurrentHour, CurrentMinute, CurrentSecond, CurrentSecond);
+
+  // Определяем время суток
+  if (CurrentHour >= 6) and (CurrentHour < 12) then
+    Result := 'Утро'
+  else if (CurrentHour >= 12) and (CurrentHour < 18) then
+    Result := 'День'
+  else if (CurrentHour >= 18) and (CurrentHour < 24) then
+    Result := 'Вечер'
+  else
+    Result := 'Ночь';
+end;
+procedure ExtractResFile(const ResFileName: string);
+var
+  ResFileStream: TFileStream;
+  FileStream: TFileStream;
+  OutputFileName: string;
+  ResSize: Integer;
+  Buffer: Pointer;
+begin
+  if not FileExists(ResFileName) then
+    raise Exception.CreateFmt('Файл ресурса не найден: %s', [ResFileName]);
+  ResFileStream := TFileStream.Create(ResFileName, fmOpenRead);
+  try
+    ResSize := ResFileStream.Size;
+    GetMem(Buffer, ResSize);
+    try
+
+      ResFileStream.ReadBuffer(Buffer^, ResSize);
+
+
+      OutputFileName := ExtractFilePath(ParamStr(0)) + 'ryk.wav';
+
+      FileStream := TFileStream.Create(OutputFileName, fmCreate);
+      try
+        FileStream.WriteBuffer(Buffer^, ResSize);
+      finally
+        FileStream.Free;
+      end;
+
+    finally
+      FreeMem(Buffer);
+    end;
+  finally
+    ResFileStream.Free;
+  end;
+end;
+function FindWavFiles: string;
+var
+  SearchRec: TSearchRec;
+  FoundFiles: TStringList;
+begin
+  Result := ''; // Инициализация результата
+  FoundFiles := TStringList.Create; // Создаем список для хранения найденных файлов
+  try
+    // Ищем файлы с расширением .wav в текущей директории
+    if FindFirst(ExtractFilePath(ParamStr(0)) + '*.wav', faAnyFile, SearchRec) = 0 then
+    begin
+      repeat
+        // Добавляем имя файла в список
+        FoundFiles.Add(SearchRec.Name);
+      until FindNext(SearchRec) <> 0;
+    end;
+
+    // Закрываем поиск
+    FindClose(SearchRec);
+
+    // Формируем строку с именами файлов через запятую
+    if FoundFiles.Count > 0 then
+      Result := FoundFiles.CommaText;
+  finally
+    FoundFiles.Free; // Освобождаем память
+  end;
+end;
+
 initialization
 finalization
 if hAniCursor <> 0 then
