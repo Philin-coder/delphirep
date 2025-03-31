@@ -62,7 +62,7 @@ procedure UpdateFormProperties(const FormName: string;
  procedure CreateToolBarWithButtons(Form: TForm; ImageList: TImageList;
  const ButtonCaptions: array of string; const ButtonClicks: array of TNotifyEvent);
  function GetTimeOfDay: string;
- procedure ExtractResFile(const ResFileName: string);
+ procedure ExtractResFile;
 function FileExistsInAppDirectory(const FileName: string): string;
 
 implementation
@@ -791,39 +791,31 @@ begin
   else
     Result := 'Ночь';
 end;
-procedure ExtractResFile(const ResFileName: string);
+procedure ExtractResFile;
 var
-  ResFileStream: TFileStream;
+  ResHandle: HRSRC;
+  ResGlobal: HGLOBAL;
+  ResPtr: Pointer;
+  ResSize: DWORD;
   FileStream: TFileStream;
   OutputFileName: string;
-  ResSize: Integer;
-  Buffer: Pointer;
 begin
-  if not FileExists(ResFileName) then
-    raise Exception.CreateFmt('Файл ресурса не найден: %s', [ResFileName]);
-  ResFileStream := TFileStream.Create(ResFileName, fmOpenRead);
+  ResHandle := FindResource(HInstance, 'RYK', RT_RCDATA);
+  if ResHandle = 0 then
+    raise Exception.Create('Ресурс не найден');
+  ResGlobal := LoadResource(HInstance, ResHandle);
+  if ResGlobal = 0 then
+    raise Exception.Create('Ошибка загрузки ресурса');
+  ResPtr := LockResource(ResGlobal);
+  ResSize := SizeofResource(HInstance, ResHandle);
+  if (ResPtr = nil) or (ResSize = 0) then
+    raise Exception.Create('Ошибка доступа к данным ресурса');
+  OutputFileName := ExtractFilePath(ParamStr(0)) + 'ryk.wav';
+  FileStream := TFileStream.Create(OutputFileName, fmCreate);
   try
-    ResSize := ResFileStream.Size;
-    GetMem(Buffer, ResSize);
-    try
-
-      ResFileStream.ReadBuffer(Buffer^, ResSize);
-
-
-      OutputFileName := ExtractFilePath(ParamStr(0)) + 'ryk.wav';
-
-      FileStream := TFileStream.Create(OutputFileName, fmCreate);
-      try
-        FileStream.WriteBuffer(Buffer^, ResSize);
-      finally
-        FileStream.Free;
-      end;
-
-    finally
-      FreeMem(Buffer);
-    end;
+    FileStream.WriteBuffer(ResPtr^, ResSize);
   finally
-    ResFileStream.Free;
+    FileStream.Free;
   end;
 end;
 
@@ -834,13 +826,10 @@ var
 begin
   Result := '';  // Если файл не найден, возвращаем пустую строку
 
-  // Пытаемся найти файл с заданным именем в текущей директории
-  FindResult := FindFirst(ExtractFilePath(ParamStr(0)) + FileName, faAnyFile, SearchRec);
 
-  // Проверяем, был ли найден файл
+  FindResult := FindFirst(ExtractFilePath(ParamStr(0)) + FileName, faAnyFile, SearchRec);
   if FindResult = 0 then
   begin
-    // Если файл найден, возвращаем его имя
     if (SearchRec.Attr and faDirectory = 0) then
       Result := SearchRec.Name;
   end;

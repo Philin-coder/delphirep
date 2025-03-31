@@ -93,22 +93,19 @@ MessageDlg('Введен невернеый пароль',mtError, [mbOK], 0);
     passwdImage.Visible:=True;
     LoadImageFromResource('BAD_PASS',passwdImage);
     Beep;
-    ExtractResFile('sound_res.RES');
-//    ShowMessage('Файл успешно извлечен!');
+    ExtractResFile;
     filename:=FileExistsInAppDirectory('ryk.wav');
       if FileName <> '' then
       begin
-      //ShowMessage(filename);
-//    ShowMessage('Файл найден: ' + FileName);
        with autorMediaPlayer do
        begin
-
+            FileName := ExtractFilePath(ParamStr(0)) + 'ryk.wav';
+            Open;
+            Play;
        end;
       end
   else
     ShowMessage('Файл не найден');
-
-
 end
 else
 begin
