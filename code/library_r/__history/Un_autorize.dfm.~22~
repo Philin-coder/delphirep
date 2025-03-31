@@ -1,6 +1,7 @@
 object Frm_author: TFrm_author
   Left = 0
   Top = 0
+  BorderIcons = []
   Caption = #1040#1074#1090#1086#1088#1080#1079#1072#1094#1080#1103
   ClientHeight = 538
   ClientWidth = 1027
@@ -11,6 +12,7 @@ object Frm_author: TFrm_author
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
@@ -43,7 +45,6 @@ object Frm_author: TFrm_author
     Align = alTop
     Caption = #1042#1074#1077#1076#1080#1090#1077' '#1087#1072#1088#1086#1083#1100' '#1080' '#1076#1083#1075#1080#1085
     TabOrder = 0
-    ExplicitLeft = -8
     DesignSize = (
       1027
       129)
@@ -69,31 +70,28 @@ object Frm_author: TFrm_author
       EditLabel.Caption = #1055#1072#1088#1086#1083#1100
       TabOrder = 1
     end
-    object Pwd_cb: TCheckBox
-      Left = 264
-      Top = 64
-      Width = 193
-      Height = 17
-      Align = alCustom
-      Anchors = [akLeft, akRight]
-      Caption = #1055#1086#1089#1084#1086#1090#1088#1077#1090#1100' '#1074#1074#1086#1076
-      TabOrder = 2
-    end
     object pwdtb: TToolBar
       Left = 480
       Top = 59
-      Width = 41
+      Width = 89
       Height = 22
       Align = alCustom
       ButtonWidth = 41
       DisabledImages = AUTORImageList
       Images = AUTORImageList
-      TabOrder = 3
+      TabOrder = 2
       object TBbtn: TToolButton
         Left = 0
         Top = 0
         Caption = 'TBbtn'
         ImageIndex = 0
+        OnClick = TBbtnClick
+      end
+      object TButn_hide: TToolButton
+        Left = 41
+        Top = 0
+        ImageIndex = 1
+        OnClick = TButn_hideClick
       end
     end
   end
@@ -113,6 +111,14 @@ object Frm_author: TFrm_author
       TabOrder = 0
       OnClick = passwd_inp_BtnClick
     end
+  end
+  object autorMediaPlayer: TMediaPlayer
+    Left = 664
+    Top = 304
+    Width = 253
+    Height = 30
+    Visible = False
+    TabOrder = 2
   end
   object AUTORImageList: TImageList
     Left = 528

@@ -1,6 +1,7 @@
 object Frm_author: TFrm_author
   Left = 0
   Top = 0
+  BorderIcons = [biSystemMenu, biMinimize, biMaximize, biHelp]
   Caption = #1040#1074#1090#1086#1088#1080#1079#1072#1094#1080#1103
   ClientHeight = 538
   ClientWidth = 1027
@@ -11,7 +12,9 @@ object Frm_author: TFrm_author
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object authorImage: TImage

@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs,jpeg, ImgList, ExtCtrls, StdCtrls, ToolWin, ComCtrls;
+  Dialogs,jpeg, ImgList, ExtCtrls, StdCtrls, ToolWin, ComCtrls, MPlayer;
 
 type
   TFrm_author = class(TForm)
@@ -19,6 +19,7 @@ type
     TBbtn: TToolButton;
     AUTORImageList: TImageList;
     TButn_hide: TToolButton;
+    autorMediaPlayer: TMediaPlayer;
     procedure FormCreate(Sender: TObject);
     procedure passwd_inp_BtnClick(Sender: TObject);
     procedure TBbtnClick(Sender: TObject);
@@ -68,8 +69,8 @@ paswd_inp.PasswordChar:='*';
 end;
 with authorImage do
 begin
- //AutoSize:=True;
-// Stretch:=true;
+ AutoSize:=True;
+ Stretch:=true;
 end;
 end;
 
@@ -77,22 +78,55 @@ procedure TFrm_author.passwd_inp_BtnClick(Sender: TObject);
 var
   is_pas_empty:Boolean;
   is_pas_valid:Boolean;
+  filename:String;
+  Attemts:Integer;
 begin
+    Attemts := 0;
 is_pas_empty:=(Trim(login_inp.Text) = '')or(Trim(paswd_inp.Text) = '');
 is_pas_valid:=(login_inp.Text='Логин')and(paswd_inp.Text='Пароль');
 if  is_pas_empty then
-    begin
-MessageDlg('Пустые поля, или недопустииые значения',mtError, [mbOK], 0);
-    Beep;
-end
-else if not is_pas_valid then
 begin
-MessageDlg('Введен невернеый пароль',mtError, [mbOK], 0);
+    MessageDlg('Пустые поля, или недопустииые значения',mtError, [mbOK], 0);
+    Beep;
+    Exit;
+end;
+if not is_pas_valid then
+begin
+    Inc(Attemts);
+    MessageDlg('Введен невернеый пароль',mtError, [mbOK], 0);
     passwdImage.Visible:=True;
-
     LoadImageFromResource('BAD_PASS',passwdImage);
     Beep;
+    ExtractResFile;
+    filename:=FileExistsInAppDirectory('ryk.wav');
+      if FileName <> '' then
+      begin
+       with autorMediaPlayer do
+       begin
+            FileName := ExtractFilePath(ParamStr(0)) + 'ryk.wav';
+            Open;
+            Play;
+
+       end;
+      end
+  else
+    ShowMessage('Файл не найден');
+    if Attemts >= 3 then
+    begin
+      ShowMessage('Количество попыток превышено. Программа будет закрыта.');
+
+      // Освобождение ресурсов медиаплеера
+      if autorMediaPlayer.FileName <> '' then
+      begin
+        autorMediaPlayer.Close;
+        autorMediaPlayer.FileName := '';
+      end;
+
+      // Закрытие программы
+      Application.Terminate;
+    end;
 end
+
 else
 begin
 passwdImage.Visible:=True;

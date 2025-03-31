@@ -24,6 +24,17 @@ object Frm_author: TFrm_author
     ExplicitWidth = 932
     ExplicitHeight = 204
   end
+  object passwdImage: TImage
+    Left = 0
+    Top = 129
+    Width = 1027
+    Height = 343
+    Align = alClient
+    ExplicitLeft = 312
+    ExplicitTop = 248
+    ExplicitWidth = 105
+    ExplicitHeight = 105
+  end
   object Log_pass_dataBox: TGroupBox
     Left = 0
     Top = 0
@@ -32,7 +43,6 @@ object Frm_author: TFrm_author
     Align = alTop
     Caption = #1042#1074#1077#1076#1080#1090#1077' '#1087#1072#1088#1086#1083#1100' '#1080' '#1076#1083#1075#1080#1085
     TabOrder = 0
-    ExplicitWidth = 932
     DesignSize = (
       1027
       129)
@@ -58,6 +68,30 @@ object Frm_author: TFrm_author
       EditLabel.Caption = #1055#1072#1088#1086#1083#1100
       TabOrder = 1
     end
+    object pwdtb: TToolBar
+      Left = 480
+      Top = 59
+      Width = 89
+      Height = 22
+      Align = alCustom
+      ButtonWidth = 41
+      DisabledImages = AUTORImageList
+      Images = AUTORImageList
+      TabOrder = 2
+      object TBbtn: TToolButton
+        Left = 0
+        Top = 0
+        Caption = 'TBbtn'
+        ImageIndex = 0
+        OnClick = TBbtnClick
+      end
+      object TButn_hide: TToolButton
+        Left = 41
+        Top = 0
+        ImageIndex = 1
+        OnClick = TButn_hideClick
+      end
+    end
   end
   object passwd_btnBox: TGroupBox
     Left = 0
@@ -75,5 +109,23 @@ object Frm_author: TFrm_author
       TabOrder = 0
       OnClick = passwd_inp_BtnClick
     end
+  end
+  object autorMediaPlayer: TMediaPlayer
+    Left = 664
+    Top = 304
+    Width = 253
+    Height = 30
+    Visible = False
+    TabOrder = 2
+  end
+  object AUTORImageList: TImageList
+    Left = 528
+    Top = 232
+  end
+  object AuthorTimer: TTimer
+    Enabled = False
+    Interval = 11000
+    Left = 488
+    Top = 304
   end
 end

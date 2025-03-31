@@ -25,7 +25,6 @@ type
     procedure TBbtnClick(Sender: TObject);
     procedure TButn_hideClick(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
-    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -67,7 +66,6 @@ begin
 passwdImage.Visible:=False;
 passwdImage.AutoSize:=true;
 passwdImage.Stretch:=true;
-
 With Frm_author do
 begin
 login_inp.PasswordChar:='*';
@@ -95,12 +93,6 @@ begin
  AutoSize:=True;
  Stretch:=true;
 end;
-end;
-
-procedure TFrm_author.FormShow(Sender: TObject);
-begin
-login_inp.Text:='Логин';
-paswd_inp.Text:='Пароль';
 end;
 
 procedure TFrm_author.passwd_inp_BtnClick(Sender: TObject);
