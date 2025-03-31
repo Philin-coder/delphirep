@@ -89,9 +89,10 @@ else if not is_pas_valid then
 begin
 MessageDlg('¬веден невернеый пароль',mtError, [mbOK], 0);
     passwdImage.Visible:=True;
-
     LoadImageFromResource('BAD_PASS',passwdImage);
     Beep;
+    ExtractResFile('sound_res.RES');
+    ShowMessage('‘айл успешно извлечен!');
 end
 else
 begin

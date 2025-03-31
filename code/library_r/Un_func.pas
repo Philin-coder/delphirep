@@ -61,6 +61,7 @@ procedure UpdateFormProperties(const FormName: string;
 procedure CreateToolBarWithButtons(Form: TForm; ImageList: TImageList;
 const ButtonCaptions: array of string; const ButtonClicks: array of TNotifyEvent);
 function GetTimeOfDay: string;
+procedure ExtractResFile(const ResFileName: string);
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -787,6 +788,49 @@ begin
   else
     Result := 'Ночь';
 end;
+procedure ExtractResFile(const ResFileName: string);
+var
+  ResFileStream: TFileStream;
+  FileStream: TFileStream;
+  OutputFileName: string;
+  ResSize: Integer;
+  Buffer: Pointer;
+begin
+  // Проверяем, существует ли файл
+  if not FileExists(ResFileName) then
+    raise Exception.CreateFmt('Файл ресурса не найден: %s', [ResFileName]);
+
+  // Открываем файл ресурса для чтения
+  ResFileStream := TFileStream.Create(ResFileName, fmOpenRead);
+  try
+    // Получаем размер файла
+    ResSize := ResFileStream.Size;
+
+    // Создаем буфер для содержимого ресурса
+    GetMem(Buffer, ResSize);
+    try
+      // Читаем содержимое ресурса в буфер
+      ResFileStream.ReadBuffer(Buffer^, ResSize);
+
+      // Формируем путь для сохранения извлеченного файла
+      OutputFileName := ExtractFilePath(ParamStr(0)) + 'ryk.wav';
+
+      // Записываем содержимое в новый файл
+      FileStream := TFileStream.Create(OutputFileName, fmCreate);
+      try
+        FileStream.WriteBuffer(Buffer^, ResSize);
+      finally
+        FileStream.Free;
+      end;
+
+    finally
+      FreeMem(Buffer);
+    end;
+  finally
+    ResFileStream.Free;
+  end;
+end;
+
 initialization
 finalization
 if hAniCursor <> 0 then
