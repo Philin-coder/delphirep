@@ -43,7 +43,6 @@ object Frm_author: TFrm_author
     Align = alTop
     Caption = #1042#1074#1077#1076#1080#1090#1077' '#1087#1072#1088#1086#1083#1100' '#1080' '#1076#1083#1075#1080#1085
     TabOrder = 0
-    ExplicitLeft = -8
     DesignSize = (
       1027
       129)

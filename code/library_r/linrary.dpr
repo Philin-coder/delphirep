@@ -10,6 +10,7 @@ uses
 {$R *.res}
 {$R resources.res}
 {$R autor_res.RES}
+{$R sound_res.RES}
 
 
 begin

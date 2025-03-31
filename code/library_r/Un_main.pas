@@ -105,8 +105,8 @@ LoadImageFromResource('BACKGROUND_IMAGE',main_Image);
 LoadFormState(Self);
 With main_Image do
 begin
-  Stretch:=True;
-  AutoSize:=True;
+ Stretch:=True;
+ AutoSize:=True;
 end;
 end;
 

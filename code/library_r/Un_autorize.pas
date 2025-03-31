@@ -68,8 +68,8 @@ paswd_inp.PasswordChar:='*';
 end;
 with authorImage do
 begin
- //AutoSize:=True;
-// Stretch:=true;
+ AutoSize:=True;
+ Stretch:=true;
 end;
 end;
 
