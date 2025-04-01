@@ -160,8 +160,8 @@ else
 begin
 passwdImage.Visible:=True;
 LoadImageFromResource('GOOD_PASS',passwdImage);
+Frm_author.Close;
 Frm_main.Show;
-
 end;
 
 end;
