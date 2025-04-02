@@ -827,8 +827,6 @@ var
   FindResult: Integer;
 begin
   Result := '';  // Если файл не найден, возвращаем пустую строку
-
-
   FindResult := FindFirst(ExtractFilePath(ParamStr(0)) + FileName, faAnyFile, SearchRec);
   if FindResult = 0 then
   begin

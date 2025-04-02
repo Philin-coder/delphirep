@@ -10,7 +10,7 @@ type
     Connection: TADOConnection;
     AutQuery: TADOQuery;
     autDS: TDataSource;
-    ADOStoredProc1: TADOStoredProc;
+    Sel_autor_by_name: TADOStoredProc;
   private
     { Private declarations }
   public

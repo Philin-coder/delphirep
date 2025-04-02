@@ -1,7 +1,7 @@
 object DM: TDM
   OldCreateOrder = False
   Height = 311
-  Width = 215
+  Width = 811
   object Connection: TADOConnection
     Connected = True
     ConnectionString = 
@@ -28,8 +28,22 @@ object DM: TDM
     Left = 56
     Top = 112
   end
-  object ADOStoredProc1: TADOStoredProc
-    Parameters = <>
+  object Sel_autor_by_name: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_autor_by_name;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@Name_A'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 50
+      end>
     Left = 56
     Top = 176
   end

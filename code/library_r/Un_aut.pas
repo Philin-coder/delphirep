@@ -33,6 +33,10 @@ type
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
+    procedure autorBtnClick(Sender: TObject);
+    procedure reset_RadioClick(Sender: TObject);
+    procedure Autor_fnddEditKeyPress(Sender: TObject; var Key: Char);
+    procedure fioRadio_grupperClick(Sender: TObject);
   private
     procedure ChangeFormColor(Sender: TObject);
   public
@@ -47,6 +51,46 @@ implementation
 uses Un_dm, Un_func, Un_main;
 
 {$R *.dfm}
+procedure Tfrm_aut.autorBtnClick(Sender: TObject);
+begin
+ try
+    if not DM.Connection.Connected then
+      raise Exception.Create('Соединение с базой не установлено');
+
+    with DM.Sel_autor_by_name do
+    begin
+      Close;
+           Parameters.ParamByName('@Name_A').Value := condedit_inp.Text;
+      Open;
+       DM.AutQuery.Recordset:=dm.Sel_autor_by_name.Recordset;
+    end;
+  except
+    on E: EDatabaseError do
+      ShowMessage('Ошибка БД: ' + E.Message);
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
+end;
+
+procedure Tfrm_aut.Autor_fnddEditKeyPress(Sender: TObject; var Key: Char);
+begin
+try
+   dm.AutQuery.SQL.Text:='select '+
+    'Author.ID_Author,'+' '+
+    'Author.Name_A'+' '+
+    'from Author'+' '+
+    'where 1=1'+' '+
+     'and author.Name_A like'+
+   QuotedStr(Concat(Autor_fnddEdit.Text,#37));
+   dm.AutQuery.close;
+   dm.AutQuery.Open;
+except on E: Exception do
+  begin
+  ShowMessage('wrong situation'+' '+E.Message);
+  end;
+  end;
+end;
+
 procedure TFrm_aut.ChangeFormColor(Sender: TObject);
 begin
   if Sender is TToolButton then
@@ -64,6 +108,27 @@ begin
   end;
 end;
 
+
+procedure Tfrm_aut.fioRadio_grupperClick(Sender: TObject);
+begin
+      if fioRadio_grupper.Checked=true then
+  begin
+    try
+     with dm.AutQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+     ''
+      Open;
+     end;
+    except on E: EADOError do
+    begin
+      ShowMessage('??????'+' '+E.Message);
+    end;
+    end;
+  end;
+end;
 
 procedure Tfrm_aut.FormActivate(Sender: TObject);
 begin
@@ -112,6 +177,49 @@ begin
   ButtonClicks[3] := ChangeFormColor; // Обработчик для кнопки "Жёлтый"
   // Создание ToolBar с кнопками
   CreateToolBarWithButtons(Self, autorImageList, ButtonNames, ButtonClicks);
+end;
+
+procedure Tfrm_aut.reset_RadioClick(Sender: TObject);
+var
+ i,j,c:Integer;
+begin
+   if reset_Radio.Checked then
+  with Frm_aut do
+    for I := 0 to ComponentCount - 1 do
+     begin
+       if (Components[i] is TLabeledEdit)  then
+        begin
+          (Components[i] as TLabeledEdit).Clear;
+        end;
+     end;
+       with Frm_aut do
+    for c := 0 to ComponentCount - 1 do
+     begin
+       if (Components[c] is TCheckBox)  then
+        begin
+          (Components[c] as TCheckBox).Checked:=False;
+        end;
+     end;
+     with dm.AutQuery do
+     begin
+     Close;
+     sql.Clear;
+     SQL.Text:='select '+
+    'Author.ID_Author,'+' '+
+    'Author.Name_A'+' '+
+    'from Author'+' '+
+    'where 1=1';
+     Open;
+     end;
+    with frm_aut do
+    for j := 0 to ComponentCount - 1 do
+    begin
+      if(Components[j] is TRadioButton)  then
+      begin
+        (Components[j] as TRadioButton).Checked:=False;
+      end;
+    end;
+
 end;
 
 end.

@@ -94,6 +94,7 @@ object frm_aut: Tfrm_aut
           EditLabel.Height = 13
           EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1072#1074#1090#1086#1088#1091
           TabOrder = 1
+          OnKeyPress = Autor_fnddEditKeyPress
         end
       end
       object autorbtnBox: TGroupBox
@@ -108,8 +109,9 @@ object frm_aut: Tfrm_aut
           Top = 32
           Width = 273
           Height = 25
-          Caption = #1042#1074#1086#1076
+          Caption = #1054#1090#1073#1086#1088' '#1087#1086' '#1091#1089#1083#1086#1074#1080#1102
           TabOrder = 0
+          OnClick = autorBtnClick
         end
       end
       object Autor_grupperBox: TGroupBox
@@ -127,6 +129,7 @@ object frm_aut: Tfrm_aut
           Align = alCustom
           Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1092#1072#1084#1080#1083#1080#1080
           TabOrder = 0
+          OnClick = fioRadio_grupperClick
         end
         object reset_Radio: TRadioButton
           Left = 640
@@ -136,6 +139,7 @@ object frm_aut: Tfrm_aut
           Align = alCustom
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 1
+          OnClick = reset_RadioClick
         end
       end
       object Author_data_Box: TGroupBox
