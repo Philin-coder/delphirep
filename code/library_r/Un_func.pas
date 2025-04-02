@@ -674,7 +674,8 @@ begin
   end;
 end;
 
-procedure LoadIconFromResource(const ResourceName: string; Action: Integer; ImageList: TImageList = nil);
+procedure LoadIconFromResource(const ResourceName: string;
+Action: Integer; ImageList: TImageList = nil);
 var
   RS: TResourceStream;
   Icon: TIcon;
@@ -843,15 +844,11 @@ begin
   for i := 0 to AWinControl.ControlCount - 1 do
   begin
     Control := AWinControl.Controls[i];
-
-    // Если это кнопка, меняем размер
     if Control is TButton then
     begin
       TButton(Control).Width := AWidth;
       TButton(Control).Height := AHeight;
     end;
-
-    // Если компонент является контейнером, вызываем рекурсивно
     if Control is TWinControl then
       UniformizeButtonsSize(TWinControl(Control), AWidth, AHeight);
   end;

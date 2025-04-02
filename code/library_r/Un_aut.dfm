@@ -156,6 +156,7 @@ object frm_aut: Tfrm_aut
           Width = 1025
           Height = 174
           Align = alClient
+          DataSource = DM.autDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText

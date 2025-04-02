@@ -94,17 +94,18 @@ const
   var
   ButtonClicks: array of TNotifyEvent;
 begin
-UniformizeButtonsSize(Self,  273, 25);
+ frm_aut.ShowHint:=true;
+ UniformizeButtonsSize(Self,  273, 25);
  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
-  LoadFormState(Self);
+ LoadFormState(Self);
   autorImageList.Clear;
-    LoadIconFromResource('DELETE_ICON',1,autorImageList);
-    LoadIconFromResource('EDIT_ICON',1,autorImageList);
-    LoadIconFromResource('ADD_ICON',1,autorImageList);
-    LoadIconFromResource('SELECT_ICON',1,autorImageList);
+  LoadIconFromResource('DELETE_ICON',1,autorImageList);
+  LoadIconFromResource('EDIT_ICON',1,autorImageList);
+  LoadIconFromResource('ADD_ICON',1,autorImageList);
+  LoadIconFromResource('SELECT_ICON',1,autorImageList);
 // ShowMessage(IntToStr(iconImageList.Count));
-   SetLength(ButtonClicks, 4);
+  SetLength(ButtonClicks, 4);
   ButtonClicks[0] := ChangeFormColor; // Обработчик для кнопки "Красный"
   ButtonClicks[1] := ChangeFormColor; // Обработчик для кнопки "Зелёный"
   ButtonClicks[2] := ChangeFormColor; // Обработчик для кнопки "Синий"
