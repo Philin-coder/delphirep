@@ -10,10 +10,12 @@ type
   TFrm_main = class(TForm)
     main_image: TImage;
     iconImageList: TImageList;
+    cursorTimer: TTimer;
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
+    procedure cursorTimerTimer(Sender: TObject);
   private
   procedure ChangeFormColor(Sender: TObject);
 var
@@ -46,6 +48,12 @@ begin
     end;
   end;
 end;
+procedure TFrm_main.cursorTimerTimer(Sender: TObject);
+begin
+if Screen.Cursor <> crMyAnimatedCursor then
+    HandleAnimatedCursor(1)
+end;
+
 procedure TFrm_main.FormActivate(Sender: TObject);
 begin
     SaveConnectionStringToFile(FileName, dm.connection.ConnectionString);
@@ -58,6 +66,7 @@ begin
    Action := caFree;
   main_Image.Picture:=nil;
   iconImageList.Clear;
+  cursorTimer.Enabled:=False;
 end;
 
 procedure TFrm_main.FormCreate(Sender: TObject);
@@ -67,6 +76,7 @@ const
   var
   ButtonClicks: array of TNotifyEvent;
 begin
+cursorTimer.Enabled:=true;
 With Frm_main do
 begin
   Width:=1024;

@@ -33,4 +33,11 @@ object Frm_main: TFrm_main
     Left = 288
     Top = 40
   end
+  object cursorTimer: TTimer
+    Enabled = False
+    Interval = 500
+    OnTimer = cursorTimerTimer
+    Left = 344
+    Top = 128
+  end
 end
