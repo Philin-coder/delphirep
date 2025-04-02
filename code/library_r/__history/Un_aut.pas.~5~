@@ -1,0 +1,80 @@
+unit Un_aut;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, ImgList, ComCtrls, ToolWin,ADODB,db;
+
+type
+  Tfrm_aut = class(TForm)
+    ToolBar1: TToolBar;
+    autselToolButton: TToolButton;
+    autinsToolButton: TToolButton;
+    autupdToolButton: TToolButton;
+    autdelToolButton: TToolButton;
+    autorImageList: TImageList;
+    procedure FormActivate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+  private
+procedure ChangeFormColor(Sender: TObject);
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_aut: Tfrm_aut;
+
+implementation
+
+uses Un_dm, Un_func, Un_main;
+
+{$R *.dfm}
+procedure TFrm_aut.ChangeFormColor(Sender: TObject);
+begin
+  if Sender is TToolButton then
+  begin
+    // ќпредел€ем, кака€ кнопка была нажата, по еЄ Tag или Caption
+    case TToolButton(Sender).Tag of
+      0: Self.Color := clRed;       //  нопка 1
+      1: Self.Color := clGreen;     //  нопка 2
+      2: Self.Color := clBlue;      //  нопка 3
+      3: Self.Color := clYellow;    //  нопка 4
+    else
+      Self.Color := clWhite;        // ÷вет по умолчанию
+    end;
+  end;
+end;
+
+
+procedure Tfrm_aut.FormActivate(Sender: TObject);
+begin
+  dm.autQuery.Open;
+end;
+
+procedure Tfrm_aut.FormClose(Sender: TObject; var Action: TCloseAction);
+var
+ q:Integer;
+begin
+  SaveFormState(Self);
+   with dm do
+ begin
+    for q := 0 to ComponentCount - 1 do
+ begin
+    if(Components[q] is TADOQuery)  then
+   begin
+      (Components[q] as TADOQuery).Close;
+ end;
+ end;
+ end;
+end;
+
+procedure Tfrm_aut.FormCreate(Sender: TObject);
+begin
+ UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+  LoadFormState(Self);
+end;
+
+end.

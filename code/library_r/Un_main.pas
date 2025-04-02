@@ -11,11 +11,14 @@ type
     main_image: TImage;
     iconImageList: TImageList;
     cursorTimer: TTimer;
+    ItemnMenu: TMainMenu;
+    autor_item: TMenuItem;
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure cursorTimerTimer(Sender: TObject);
+    procedure autor_itemClick(Sender: TObject);
   private
   procedure ChangeFormColor(Sender: TObject);
 var
@@ -28,12 +31,24 @@ var
 
 implementation
 
-uses Un_func, Un_dm, Un_autorize;
+uses Un_func, Un_dm, Un_autorize, Un_aut;
 
 {$R *.dfm}
 const
   FileName = 'connection_string.txt';
-  procedure TFrm_main.ChangeFormColor(Sender: TObject);
+  procedure TFrm_main.autor_itemClick(Sender: TObject);
+begin
+try
+UpdateFormProperties('frm_aut', 'Форма Работы с автором',
+clBtnFace, 1024, 768);
+Frm_aut.ShowModal;
+except
+Frm_aut.Free;
+raise;
+end;
+end;
+
+procedure TFrm_main.ChangeFormColor(Sender: TObject);
 begin
   if Sender is TToolButton then
   begin
@@ -95,7 +110,7 @@ begin
   ButtonClicks[3] := ChangeFormColor; // Обработчик для кнопки "Жёлтый"
 
   // Создание ToolBar с кнопками
-  CreateToolBarWithButtons(Self, iconImageList, ButtonNames, ButtonClicks);
+//  CreateToolBarWithButtons(Self, iconImageList, ButtonNames, ButtonClicks);
 
 
 

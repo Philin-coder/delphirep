@@ -11,6 +11,7 @@ object Frm_main: TFrm_main
   Font.Name = 'Tahoma'
   Font.Style = []
   KeyPreview = True
+  Menu = ItemnMenu
   OldCreateOrder = False
   OnActivate = FormActivate
   OnClose = FormClose
@@ -39,5 +40,13 @@ object Frm_main: TFrm_main
     OnTimer = cursorTimerTimer
     Left = 344
     Top = 128
+  end
+  object ItemnMenu: TMainMenu
+    Left = 248
+    Top = 128
+    object autor_item: TMenuItem
+      Caption = '&'#1040#1074#1090#1086#1088
+      OnClick = autor_itemClick
+    end
   end
 end

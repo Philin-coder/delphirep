@@ -8,6 +8,9 @@ uses
 type
   TDM = class(TDataModule)
     Connection: TADOConnection;
+    AutQuery: TADOQuery;
+    autDS: TDataSource;
+    ADOStoredProc1: TADOStoredProc;
   private
     { Private declarations }
   public

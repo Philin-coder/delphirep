@@ -1,14 +1,36 @@
 object DM: TDM
   OldCreateOrder = False
-  Height = 150
+  Height = 311
   Width = 215
   object Connection: TADOConnection
+    Connected = True
     ConnectionString = 
       'Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security In' +
       'fo=False;Initial Catalog=library_r'
     LoginPrompt = False
     Provider = 'SQLOLEDB.1'
-    Left = 88
-    Top = 32
+    Left = 16
+  end
+  object AutQuery: TADOQuery
+    Connection = Connection
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      'Author.ID_Author,'
+      'Author.Name_A'
+      'from Author'
+      'where 1=1')
+    Left = 56
+    Top = 56
+  end
+  object autDS: TDataSource
+    DataSet = AutQuery
+    Left = 56
+    Top = 112
+  end
+  object ADOStoredProc1: TADOStoredProc
+    Parameters = <>
+    Left = 56
+    Top = 176
   end
 end

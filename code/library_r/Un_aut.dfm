@@ -1,0 +1,86 @@
+object frm_aut: Tfrm_aut
+  Left = 0
+  Top = 0
+  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1072#1074#1090#1086#1088#1086#1084
+  ClientHeight = 495
+  ClientWidth = 873
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  OnActivate = FormActivate
+  OnClose = FormClose
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object autorToolBar: TToolBar
+    Left = 0
+    Top = 0
+    Width = 873
+    Height = 29
+    Caption = 'autorToolBar'
+    TabOrder = 0
+    ExplicitLeft = 248
+    ExplicitTop = 152
+    ExplicitWidth = 150
+    object autselToolButton: TToolButton
+      Left = 0
+      Top = 0
+      ImageIndex = 0
+    end
+    object autinsToolButton: TToolButton
+      Left = 23
+      Top = 0
+      ImageIndex = 1
+    end
+    object autupdToolButton: TToolButton
+      Left = 46
+      Top = 0
+      Caption = 'autupdToolButton'
+      ImageIndex = 2
+    end
+    object autdelToolButton: TToolButton
+      Left = 69
+      Top = 0
+      Caption = 'autdelToolButton'
+      ImageIndex = 3
+    end
+  end
+  object autorPC: TPageControl
+    Left = 0
+    Top = 29
+    Width = 873
+    Height = 466
+    ActivePage = updTab
+    Align = alClient
+    TabOrder = 1
+    object sel_tab: TTabSheet
+      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1072#1074#1090#1086#1088#1077
+      ExplicitWidth = 627
+      ExplicitHeight = 242
+    end
+    object ins_tab: TTabSheet
+      Caption = #1044#1086#1073#1072#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1072#1074#1090#1086#1088#1077
+      ImageIndex = 1
+      ExplicitLeft = 8
+    end
+    object updTab: TTabSheet
+      Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1072#1074#1090#1086#1088#1077
+      ImageIndex = 2
+      ExplicitWidth = 627
+      ExplicitHeight = 242
+    end
+    object delTab: TTabSheet
+      Caption = ' '#1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1072#1074#1090#1086#1088#1077
+      ImageIndex = 3
+      ExplicitWidth = 627
+      ExplicitHeight = 242
+    end
+  end
+  object autorImageList: TImageList
+    Left = 256
+  end
+end

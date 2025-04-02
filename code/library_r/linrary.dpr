@@ -5,7 +5,8 @@ uses
   Un_main in 'Un_main.pas' {Frm_main},
   Un_func in 'Un_func.pas',
   Un_dm in 'Un_dm.pas' {DM: TDataModule},
-  Un_autorize in 'Un_autorize.pas' {Frm_author};
+  Un_autorize in 'Un_autorize.pas' {Frm_author},
+  Un_aut in 'Un_aut.pas' {frm_aut};
 
 {$R *.res}
 {$R resources.res}
@@ -18,5 +19,6 @@ begin
   Application.CreateForm(TFrm_main, Frm_main);
   Application.CreateForm(TDM, DM);
   Application.CreateForm(TFrm_author, Frm_author);
+  Application.CreateForm(Tfrm_aut, frm_aut);
   Application.Run;
 end.
