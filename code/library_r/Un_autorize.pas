@@ -67,7 +67,7 @@ begin
 passwdImage.Visible:=False;
 passwdImage.AutoSize:=true;
 passwdImage.Stretch:=true;
-
+UniformizeButtonsSize(Self,  75, 25);
 With Frm_author do
 begin
 login_inp.PasswordChar:='*';

@@ -64,6 +64,7 @@ procedure UpdateFormProperties(const FormName: string;
  function GetTimeOfDay: string;
  procedure ExtractResFile;
 function FileExistsInAppDirectory(const FileName: string): string;
+procedure UniformizeButtonsSize(AWinControl: TWinControl; AWidth, AHeight: Integer);
 
 implementation
  var
@@ -834,7 +835,27 @@ begin
       Result := SearchRec.Name;
   end;
 end;
+procedure UniformizeButtonsSize(AWinControl: TWinControl; AWidth, AHeight: Integer);
+var
+  i: Integer;
+  Control: TControl;
+begin
+  for i := 0 to AWinControl.ControlCount - 1 do
+  begin
+    Control := AWinControl.Controls[i];
 
+    // Если это кнопка, меняем размер
+    if Control is TButton then
+    begin
+      TButton(Control).Width := AWidth;
+      TButton(Control).Height := AHeight;
+    end;
+
+    // Если компонент является контейнером, вызываем рекурсивно
+    if Control is TWinControl then
+      UniformizeButtonsSize(TWinControl(Control), AWidth, AHeight);
+  end;
+end;
 initialization
 finalization
 if hAniCursor <> 0 then

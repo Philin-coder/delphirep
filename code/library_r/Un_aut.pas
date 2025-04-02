@@ -4,7 +4,8 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ExtCtrls, ImgList, ComCtrls, ToolWin,ADODB,db;
+  Dialogs, ExtCtrls, ImgList, ComCtrls, ToolWin,ADODB,db, StdCtrls, Grids,
+  DBGrids;
 
 type
   Tfrm_aut = class(TForm)
@@ -19,6 +20,16 @@ type
     ins_tab: TTabSheet;
     updTab: TTabSheet;
     delTab: TTabSheet;
+    Autor_condBox: TGroupBox;
+    autorbtnBox: TGroupBox;
+    Autor_grupperBox: TGroupBox;
+    condedit_inp: TLabeledEdit;
+    Autor_fnddEdit: TLabeledEdit;
+    autorBtn: TButton;
+    Author_data_Box: TGroupBox;
+    fioRadio_grupper: TRadioButton;
+    reset_Radio: TRadioButton;
+    AutorGrid: TDBGrid;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -82,8 +93,8 @@ const
   'Добавить','Выбрать');
   var
   ButtonClicks: array of TNotifyEvent;
-
 begin
+UniformizeButtonsSize(Self,  273, 25);
  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   LoadFormState(Self);
