@@ -43,6 +43,7 @@ type
     procedure reset_RadioClick(Sender: TObject);
     procedure Autor_fnddEditKeyPress(Sender: TObject; var Key: Char);
     procedure fioRadio_grupperClick(Sender: TObject);
+    procedure aut_insBonClick(Sender: TObject);
   private
     procedure ChangeFormColor(Sender: TObject);
   public
@@ -96,6 +97,47 @@ except on E: Exception do
   end;
   end;
 end;
+
+procedure Tfrm_aut.aut_insBonClick(Sender: TObject);
+const
+AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+begin
+  AreFieldsEmpty:=((Trim(autor_inp.Text) = ''));
+  AreFieldsValid:=ValidateComponentText(autor_inp,AllowedChars);
+  if AreFieldsEmpty or not AreFieldsValid then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.ins_autor do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@Name_A').Value :=Autor_inp.Text;
+           ExecProc;
+           dm.AutQuery.Close;
+           dm.AutQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+end;
+
+
 
 procedure TFrm_aut.ChangeFormColor(Sender: TObject);
 begin

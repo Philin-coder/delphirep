@@ -213,6 +213,7 @@ object frm_aut: Tfrm_aut
           Height = 25
           Caption = #1042#1074#1086#1076
           TabOrder = 0
+          OnClick = aut_insBonClick
         end
       end
       object Aut_inp_dataBox: TGroupBox

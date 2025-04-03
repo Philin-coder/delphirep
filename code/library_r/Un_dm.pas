@@ -11,6 +11,7 @@ type
     AutQuery: TADOQuery;
     autDS: TDataSource;
     Sel_autor_by_name: TADOStoredProc;
+    ins_autor: TADOStoredProc;
   private
     { Private declarations }
   public
