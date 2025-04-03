@@ -44,6 +44,13 @@ type
     upd_aut_btn_box: TGroupBox;
     uat_upd_Btn: TButton;
     Aut_upd_Grid: TDBGrid;
+    Aut_del_inp_Box: TGroupBox;
+    aut_delLbl: TLabel;
+    aut_delDBL: TDBLookupComboBox;
+    aut_del_btn_Box: TGroupBox;
+    aut_del_btn: TButton;
+    aut_del_data_Box: TGroupBox;
+    Aut_delGrid: TDBGrid;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -53,6 +60,7 @@ type
     procedure fioRadio_grupperClick(Sender: TObject);
     procedure aut_insBonClick(Sender: TObject);
     procedure uat_upd_BtnClick(Sender: TObject);
+    procedure aut_del_btnClick(Sender: TObject);
   private
     procedure ChangeFormColor(Sender: TObject);
   public
@@ -105,6 +113,43 @@ except on E: Exception do
   ShowMessage('wrong situation'+' '+E.Message);
   end;
   end;
+end;
+
+procedure Tfrm_aut.aut_del_btnClick(Sender: TObject);
+var
+AreFieldsEmpty: Boolean;
+begin
+AreFieldsEmpty:=(aut_delDBL.Text='');
+if  AreFieldsEmpty then
+begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+
+  try
+      with dm.del_autor do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@ID_Author').Value :=
+           dm.AutQuery.FieldByName('ID_Author').AsString;
+           ExecProc;
+           dm.AutQuery.Close;
+           dm.AutQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+     end;
 end;
 
 procedure Tfrm_aut.aut_insBonClick(Sender: TObject);

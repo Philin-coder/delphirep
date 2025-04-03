@@ -13,6 +13,7 @@ type
     Sel_autor_by_name: TADOStoredProc;
     ins_autor: TADOStoredProc;
     upd_autor: TADOStoredProc;
+    del_autor: TADOStoredProc;
   private
     { Private declarations }
   public

@@ -51,7 +51,7 @@ object frm_aut: Tfrm_aut
     Top = 29
     Width = 1037
     Height = 466
-    ActivePage = updTab
+    ActivePage = delTab
     Align = alClient
     TabOrder = 1
     object sel_tab: TTabSheet
@@ -365,6 +365,93 @@ object frm_aut: Tfrm_aut
     object delTab: TTabSheet
       Caption = ' '#1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1072#1074#1090#1086#1088#1077
       ImageIndex = 3
+      object Aut_del_inp_Box: TGroupBox
+        Left = 0
+        Top = 0
+        Width = 1029
+        Height = 105
+        Align = alTop
+        Caption = #1042#1074#1086#1076'  '#1076#1072#1085#1085#1099#1093
+        TabOrder = 0
+        object aut_delLbl: TLabel
+          Left = 3
+          Top = 29
+          Width = 83
+          Height = 13
+          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1072#1074#1090#1086#1088#1072
+        end
+        object aut_delDBL: TDBLookupComboBox
+          Left = 9
+          Top = 58
+          Width = 1017
+          Height = 21
+          Align = alCustom
+          Anchors = [akLeft, akRight]
+          KeyField = 'ID_Author'
+          ListField = 'Name_A'
+          ListSource = DM.autDS
+          TabOrder = 0
+        end
+      end
+      object aut_del_btn_Box: TGroupBox
+        Left = 0
+        Top = 368
+        Width = 1029
+        Height = 70
+        Align = alBottom
+        TabOrder = 1
+        object aut_del_btn: TButton
+          Left = 464
+          Top = 24
+          Width = 75
+          Height = 25
+          Caption = #1059#1076#1072#1083#1080#1090#1100
+          TabOrder = 0
+          OnClick = aut_del_btnClick
+        end
+      end
+      object aut_del_data_Box: TGroupBox
+        Left = 0
+        Top = 105
+        Width = 1029
+        Height = 263
+        Align = alClient
+        Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 2
+        ExplicitLeft = 296
+        ExplicitTop = 128
+        ExplicitWidth = 185
+        ExplicitHeight = 105
+        object Aut_delGrid: TDBGrid
+          Left = 2
+          Top = 15
+          Width = 1025
+          Height = 246
+          Align = alClient
+          DataSource = DM.autDS
+          TabOrder = 0
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWindowText
+          TitleFont.Height = -11
+          TitleFont.Name = 'Tahoma'
+          TitleFont.Style = []
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'ID_Author'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Width = 111
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'Name_A'
+              Title.Caption = #1060#1048#1054' '#1072#1074#1090#1086#1088#1072
+              Width = 91
+              Visible = True
+            end>
+        end
+      end
     end
   end
   object autorImageList: TImageList
