@@ -31,23 +31,23 @@ type
     gen_inp_dataBox: TGroupBox;
     genre_inp: TLabeledEdit;
     gen_insBon: TButton;
-    aut_upd_inp_box: TGroupBox;
-    Upd_aut_data_Box: TGroupBox;
-    Upd_aut_naim_inp: TLabeledEdit;
-    aut_upd_lbl: TLabel;
-    autor_updDBL: TDBLookupComboBox;
-    upd_aut_btn_box: TGroupBox;
-    uat_upd_Btn: TButton;
-    Aut_upd_Grid: TDBGrid;
-    Aut_del_inp_Box: TGroupBox;
-    aut_delLbl: TLabel;
-    aut_delDBL: TDBLookupComboBox;
-    aut_del_btn_Box: TGroupBox;
-    aut_del_btn: TButton;
-    aut_del_data_Box: TGroupBox;
-    Aut_delGrid: TDBGrid;
+    gen_upd_inp_box: TGroupBox;
+    Upd_gen_data_Box: TGroupBox;
+    Upd_gen_naim_inp: TLabeledEdit;
+    gen_upd_lbl: TLabel;
+    gen_updDBL: TDBLookupComboBox;
+    upd_gen_btn_box: TGroupBox;
+    upd_gen_Btn: TButton;
+    gen_del_inp_Box: TGroupBox;
+    gen_delLbl: TLabel;
+    gen_delDBL: TDBLookupComboBox;
+    gen_del_btn_Box: TGroupBox;
+    gen_del_btn: TButton;
+    gen_del_data_Box: TGroupBox;
     gen_ins_dataBox: TGroupBox;
     gen_insGrid: TDBGrid;
+    gen_updGrid: TDBGrid;
+    gendelGrid: TDBGrid;
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -56,6 +56,8 @@ type
     procedure GenrenaimRadio_grupperClick(Sender: TObject);
     procedure Genre_reset_RadioClick(Sender: TObject);
     procedure gen_insBonClick(Sender: TObject);
+    procedure upd_gen_BtnClick(Sender: TObject);
+    procedure gen_del_btnClick(Sender: TObject);
   private
   procedure ChangeFormColor(Sender: TObject);
   public
@@ -246,6 +248,42 @@ if Genre_reset_Radio.Checked then
 
 end;
 
+procedure Tfrm_genre.gen_del_btnClick(Sender: TObject);
+var
+     AreFieldsEmpty: Boolean;
+begin
+AreFieldsEmpty:=(gen_delDBL.Text = '');
+if AreFieldsEmpty  then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.del_genre do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@ID_Genre').Value :=
+           dm.GenreQuery.FieldByName('ID_Genre').AsString;
+           ExecProc;
+           dm.GenreQuery.Close;
+           dm.GenreQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+end;
+
 procedure Tfrm_genre.gen_insBonClick(Sender: TObject);
 const
     AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
@@ -271,6 +309,50 @@ begin
            ExecProc;
            dm.GenreQuery.Close;
            dm.genreQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+
+end;
+
+procedure Tfrm_genre.upd_gen_BtnClick(Sender: TObject);
+const
+AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+ AreFieldsEmpty: Boolean;
+ AreFieldsValid: Boolean;
+begin
+ AreFieldsEmpty:=(
+ (Trim(Upd_gen_naim_inp.Text) = '')or
+ (gen_updDBL.Text=''));
+ AreFieldsValid:=ValidateComponentText(Upd_gen_naim_inp,AllowedChars);
+ if AreFieldsEmpty or not AreFieldsValid then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.upd_genre do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+          Parameters.ParamByName('@ID_Genre').Value:=dm.GenreQuery.
+          FieldByName('ID_Genre').AsString;
+           Parameters.ParamByName('@Name_G').Value :=Upd_gen_naim_inp.Text;
+           ExecProc;
+           dm.GenreQuery.Close;
+           dm.GenreQuery.Open;
         MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
       end;
     except

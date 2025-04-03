@@ -28,7 +28,7 @@ object frm_genre: Tfrm_genre
     Top = 47
     Width = 1037
     Height = 448
-    ActivePage = ins_tab
+    ActivePage = delTab
     Align = alClient
     TabOrder = 1
     object sel_tab: TTabSheet
@@ -248,9 +248,9 @@ object frm_genre: Tfrm_genre
       end
     end
     object updTab: TTabSheet
-      Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1072#1074#1090#1086#1088#1077
+      Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1078#1072#1085#1088#1077
       ImageIndex = 2
-      object aut_upd_inp_box: TGroupBox
+      object gen_upd_inp_box: TGroupBox
         Left = 0
         Top = 0
         Width = 1029
@@ -261,38 +261,38 @@ object frm_genre: Tfrm_genre
         DesignSize = (
           1029
           137)
-        object aut_upd_lbl: TLabel
+        object gen_upd_lbl: TLabel
           Left = 3
           Top = 29
-          Width = 83
+          Width = 73
           Height = 13
-          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1072#1074#1090#1086#1088#1072
+          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1078#1072#1085#1088
         end
-        object Upd_aut_naim_inp: TLabeledEdit
+        object Upd_gen_naim_inp: TLabeledEdit
           Left = 3
           Top = 97
           Width = 1014
           Height = 21
           Anchors = [akLeft, akRight]
-          EditLabel.Width = 108
+          EditLabel.Width = 158
           EditLabel.Height = 13
-          EditLabel.Caption = #1048#1079#1084#1077#1085#1080#1090#1100' '#1080#1084#1103' '#1072#1074#1090#1086#1088#1072
+          EditLabel.Caption = #1048#1079#1084#1077#1085#1080#1090#1100' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077' '#1078#1072#1085#1088#1072
           TabOrder = 0
         end
-        object autor_updDBL: TDBLookupComboBox
+        object gen_updDBL: TDBLookupComboBox
           Left = 0
           Top = 48
           Width = 1017
           Height = 21
           Align = alCustom
           Anchors = [akLeft, akRight]
-          KeyField = 'ID_Author'
-          ListField = 'Name_A'
-          ListSource = DM.autDS
+          KeyField = 'Name_G'
+          ListField = 'Name_G'
+          ListSource = DM.GenreDS
           TabOrder = 1
         end
       end
-      object Upd_aut_data_Box: TGroupBox
+      object Upd_gen_data_Box: TGroupBox
         Left = 0
         Top = 137
         Width = 1029
@@ -300,13 +300,13 @@ object frm_genre: Tfrm_genre
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
-        object Aut_upd_Grid: TDBGrid
+        object gen_updGrid: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
           Height = 196
           Align = alClient
-          DataSource = DM.autDS
+          DataSource = DM.GenreDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -316,41 +316,42 @@ object frm_genre: Tfrm_genre
           Columns = <
             item
               Expanded = False
-              FieldName = 'ID_Author'
+              FieldName = 'ID_Genre'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-              Width = 111
+              Width = 94
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'Name_A'
-              Title.Caption = #1060#1048#1054' '#1072#1074#1090#1086#1088#1072
-              Width = 91
+              FieldName = 'Name_G'
+              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077' '#1078#1072#1085#1088#1072
+              Width = 122
               Visible = True
             end>
         end
       end
-      object upd_aut_btn_box: TGroupBox
+      object upd_gen_btn_box: TGroupBox
         Left = 0
         Top = 350
         Width = 1029
         Height = 70
         Align = alBottom
         TabOrder = 2
-        object uat_upd_Btn: TButton
+        object upd_gen_Btn: TButton
           Left = 464
           Top = 24
           Width = 75
           Height = 25
           Caption = #1048#1079#1084#1077#1085#1080#1090#1100
           TabOrder = 0
+          OnClick = upd_gen_BtnClick
         end
       end
     end
     object delTab: TTabSheet
-      Caption = ' '#1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1072#1074#1090#1086#1088#1077
+      Caption = ' '#1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1078#1072#1085#1088#1077
       ImageIndex = 3
-      object Aut_del_inp_Box: TGroupBox
+      object gen_del_inp_Box: TGroupBox
         Left = 0
         Top = 0
         Width = 1029
@@ -358,43 +359,44 @@ object frm_genre: Tfrm_genre
         Align = alTop
         Caption = #1042#1074#1086#1076'  '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object aut_delLbl: TLabel
+        object gen_delLbl: TLabel
           Left = 3
           Top = 29
-          Width = 83
+          Width = 73
           Height = 13
-          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1072#1074#1090#1086#1088#1072
+          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1078#1072#1085#1088
         end
-        object aut_delDBL: TDBLookupComboBox
+        object gen_delDBL: TDBLookupComboBox
           Left = 9
           Top = 58
           Width = 1017
           Height = 21
           Align = alCustom
           Anchors = [akLeft, akRight]
-          KeyField = 'ID_Author'
-          ListField = 'Name_A'
-          ListSource = DM.autDS
+          KeyField = 'ID_Genre'
+          ListField = 'Name_G'
+          ListSource = DM.GenreDS
           TabOrder = 0
         end
       end
-      object aut_del_btn_Box: TGroupBox
+      object gen_del_btn_Box: TGroupBox
         Left = 0
         Top = 350
         Width = 1029
         Height = 70
         Align = alBottom
         TabOrder = 1
-        object aut_del_btn: TButton
+        object gen_del_btn: TButton
           Left = 464
           Top = 24
           Width = 75
           Height = 25
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
+          OnClick = gen_del_btnClick
         end
       end
-      object aut_del_data_Box: TGroupBox
+      object gen_del_data_Box: TGroupBox
         Left = 0
         Top = 105
         Width = 1029
@@ -402,13 +404,13 @@ object frm_genre: Tfrm_genre
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        object Aut_delGrid: TDBGrid
+        object gendelGrid: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
           Height = 228
           Align = alClient
-          DataSource = DM.autDS
+          DataSource = DM.GenreDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -418,16 +420,16 @@ object frm_genre: Tfrm_genre
           Columns = <
             item
               Expanded = False
-              FieldName = 'ID_Author'
+              FieldName = 'ID_Genre'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-              Width = 111
+              Width = 94
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'Name_A'
-              Title.Caption = #1060#1048#1054' '#1072#1074#1090#1086#1088#1072
-              Width = 91
+              FieldName = 'Name_G'
+              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077' '#1078#1072#1085#1088#1072
+              Width = 122
               Visible = True
             end>
         end
