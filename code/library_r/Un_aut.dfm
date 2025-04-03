@@ -51,7 +51,7 @@ object frm_aut: Tfrm_aut
     Top = 29
     Width = 1037
     Height = 466
-    ActivePage = ins_tab
+    ActivePage = updTab
     Align = alClient
     TabOrder = 1
     object sel_tab: TTabSheet
@@ -259,6 +259,108 @@ object frm_aut: Tfrm_aut
     object updTab: TTabSheet
       Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1072#1074#1090#1086#1088#1077
       ImageIndex = 2
+      object aut_upd_inp_box: TGroupBox
+        Left = 0
+        Top = 0
+        Width = 1029
+        Height = 137
+        Align = alTop
+        Caption = #1042#1074#1086#1076'  '#1076#1072#1085#1085#1099#1093
+        TabOrder = 0
+        DesignSize = (
+          1029
+          137)
+        object aut_upd_lbl: TLabel
+          Left = 3
+          Top = 29
+          Width = 83
+          Height = 13
+          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1072#1074#1090#1086#1088#1072
+        end
+        object Upd_aut_naim_inp: TLabeledEdit
+          Left = 3
+          Top = 97
+          Width = 1014
+          Height = 21
+          Anchors = [akLeft, akRight]
+          EditLabel.Width = 108
+          EditLabel.Height = 13
+          EditLabel.Caption = #1048#1079#1084#1077#1085#1080#1090#1100' '#1080#1084#1103' '#1072#1074#1090#1086#1088#1072
+          TabOrder = 0
+          ExplicitTop = 72
+        end
+        object autor_updDBL: TDBLookupComboBox
+          Left = 0
+          Top = 48
+          Width = 1017
+          Height = 21
+          Align = alCustom
+          Anchors = [akLeft, akRight]
+          KeyField = 'ID_Author'
+          ListField = 'Name_A'
+          ListSource = DM.autDS
+          TabOrder = 1
+        end
+      end
+      object Upd_aut_data_Box: TGroupBox
+        Left = 0
+        Top = 137
+        Width = 1029
+        Height = 231
+        Align = alClient
+        Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 1
+        ExplicitLeft = 592
+        ExplicitTop = 208
+        ExplicitWidth = 185
+        ExplicitHeight = 105
+        object Aut_upd_Grid: TDBGrid
+          Left = 2
+          Top = 15
+          Width = 1025
+          Height = 214
+          Align = alClient
+          DataSource = DM.autDS
+          TabOrder = 0
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWindowText
+          TitleFont.Height = -11
+          TitleFont.Name = 'Tahoma'
+          TitleFont.Style = []
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'ID_Author'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Width = 111
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'Name_A'
+              Title.Caption = #1060#1048#1054' '#1072#1074#1090#1086#1088#1072
+              Width = 91
+              Visible = True
+            end>
+        end
+      end
+      object upd_aut_btn_box: TGroupBox
+        Left = 0
+        Top = 368
+        Width = 1029
+        Height = 70
+        Align = alBottom
+        TabOrder = 2
+        object uat_upd_Btn: TButton
+          Left = 464
+          Top = 24
+          Width = 75
+          Height = 25
+          Caption = #1048#1079#1084#1077#1085#1080#1090#1100
+          TabOrder = 0
+          OnClick = uat_upd_BtnClick
+        end
+      end
     end
     object delTab: TTabSheet
       Caption = ' '#1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1072#1074#1090#1086#1088#1077

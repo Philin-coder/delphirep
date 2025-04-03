@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, ImgList, ComCtrls, ToolWin,ADODB,db, StdCtrls, Grids,
-  DBGrids;
+  DBGrids, DBCtrls;
 
 type
   Tfrm_aut = class(TForm)
@@ -36,6 +36,14 @@ type
     Autor_inp: TLabeledEdit;
     aut_insBon: TButton;
     Aut_inp_data_Grid: TDBGrid;
+    aut_upd_inp_box: TGroupBox;
+    Upd_aut_data_Box: TGroupBox;
+    Upd_aut_naim_inp: TLabeledEdit;
+    aut_upd_lbl: TLabel;
+    autor_updDBL: TDBLookupComboBox;
+    upd_aut_btn_box: TGroupBox;
+    uat_upd_Btn: TButton;
+    Aut_upd_Grid: TDBGrid;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -44,6 +52,7 @@ type
     procedure Autor_fnddEditKeyPress(Sender: TObject; var Key: Char);
     procedure fioRadio_grupperClick(Sender: TObject);
     procedure aut_insBonClick(Sender: TObject);
+    procedure uat_upd_BtnClick(Sender: TObject);
   private
     procedure ChangeFormColor(Sender: TObject);
   public
@@ -273,6 +282,50 @@ begin
       end;
     end;
 
+end;
+
+procedure Tfrm_aut.uat_upd_BtnClick(Sender: TObject);
+const
+ AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+  var
+     AreFieldsEmpty:Boolean;
+     AreFieldsValid:Boolean;
+begin
+   AreFieldsEmpty:=
+   (Trim(Upd_aut_naim_inp.Text) = '')
+   or(autor_updDBL.Text='');
+
+   AreFieldsValid:=ValidateComponentText(Upd_aut_naim_inp,AllowedChars);
+   if AreFieldsEmpty or not AreFieldsValid then
+   begin
+     MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку',
+     mtError, [mbOK], 0);
+     Beep;
+     Exit;
+   end;
+   try
+       with dm.upd_autor do
+       begin
+         if not Connection.Connected then
+           raise Exception.Create('Соединение с базой не установлено');
+            Parameters.ParamByName('@ID_Author').Value :=
+            dm.AutQuery.FieldByName('ID_Author').AsString;
+            Parameters.ParamByName('@Name_A').Value:=Upd_aut_naim_inp.Text;
+            ExecProc;
+            dm.AutQuery.Close;
+            dm.AutQuery.Open;
+         MessageDlg('Изменнеия внесены', mtInformation, [mbOK], 0);
+       end;
+     except
+       on E: EADOError do
+       begin
+         ShowMessage('Ошибка: ' + E.Message);
+       end;
+       on E: Exception do
+       begin
+         ShowMessage('Ошибка: ' + E.Message);
+       end;
+     end;
 end;
 
 end.
