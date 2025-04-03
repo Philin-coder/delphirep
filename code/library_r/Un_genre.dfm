@@ -20,15 +20,15 @@ object frm_genre: Tfrm_genre
     Left = 0
     Top = 0
     Width = 1037
-    Height = 29
+    Height = 47
     TabOrder = 0
   end
   object GenrePC: TPageControl
     Left = 0
-    Top = 29
+    Top = 47
     Width = 1037
-    Height = 466
-    ActivePage = sel_tab
+    Height = 448
+    ActivePage = ins_tab
     Align = alClient
     TabOrder = 1
     object sel_tab: TTabSheet
@@ -70,7 +70,7 @@ object frm_genre: Tfrm_genre
       end
       object genrebtnBox: TGroupBox
         Left = 0
-        Top = 368
+        Top = 350
         Width = 1029
         Height = 70
         Align = alBottom
@@ -117,15 +117,16 @@ object frm_genre: Tfrm_genre
         Left = 0
         Top = 177
         Width = 1029
-        Height = 191
+        Height = 173
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 3
+        ExplicitTop = 183
         object GenreGrid: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
-          Height = 174
+          Height = 156
           Align = alClient
           DataSource = DM.GenreDS
           TabOrder = 0
@@ -153,9 +154,9 @@ object frm_genre: Tfrm_genre
       end
     end
     object ins_tab: TTabSheet
-      Caption = #1044#1086#1073#1072#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1072#1074#1090#1086#1088#1077
+      Caption = #1044#1086#1073#1072#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1078#1072#1085#1088#1077
       ImageIndex = 1
-      object aut_inpBox: TGroupBox
+      object gen_inpBox: TGroupBox
         Left = 0
         Top = 0
         Width = 1029
@@ -166,67 +167,83 @@ object frm_genre: Tfrm_genre
         DesignSize = (
           1029
           81)
-        object Autor_inp: TLabeledEdit
+        object genre_inp: TLabeledEdit
           Left = 3
           Top = 40
           Width = 1014
           Height = 21
           Anchors = [akLeft, akRight]
-          EditLabel.Width = 97
+          EditLabel.Width = 135
           EditLabel.Height = 13
-          EditLabel.Caption = #1042#1074#1086#1076' '#1080#1084#1077#1085#1080' '#1072#1074#1090#1086#1088#1072
+          EditLabel.Caption = #1042#1074#1086#1076' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1103' '#1078#1072#1085#1088#1072
           TabOrder = 0
         end
       end
-      object Aut_inp_btnBox: TGroupBox
+      object Gen_inp_btnBox: TGroupBox
         Left = 0
-        Top = 376
+        Top = 358
         Width = 1029
         Height = 62
         Align = alBottom
         TabOrder = 1
-        object aut_insBon: TButton
+        object gen_insBon: TButton
           Left = 456
           Top = 24
           Width = 75
           Height = 25
           Caption = #1042#1074#1086#1076
           TabOrder = 0
+          OnClick = gen_insBonClick
         end
       end
-      object Aut_inp_dataBox: TGroupBox
+      object gen_inp_dataBox: TGroupBox
         Left = 0
         Top = 81
         Width = 1029
-        Height = 295
+        Height = 277
         Align = alClient
         TabOrder = 2
-        object Aut_inp_data_Grid: TDBGrid
+        object gen_ins_dataBox: TGroupBox
           Left = 2
           Top = 15
           Width = 1025
-          Height = 278
+          Height = 260
           Align = alClient
-          DataSource = DM.autDS
+          Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
           TabOrder = 0
-          TitleFont.Charset = DEFAULT_CHARSET
-          TitleFont.Color = clWindowText
-          TitleFont.Height = -11
-          TitleFont.Name = 'Tahoma'
-          TitleFont.Style = []
-          Columns = <
-            item
-              Expanded = False
-              FieldName = 'ID_Author'
-              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'Name_A'
-              Title.Caption = #1060#1048#1054' '#1072#1074#1090#1086#1088#1072
-              Visible = True
-            end>
+          ExplicitLeft = 368
+          ExplicitTop = 24
+          ExplicitWidth = 185
+          ExplicitHeight = 105
+          object gen_insGrid: TDBGrid
+            Left = 2
+            Top = 15
+            Width = 1021
+            Height = 243
+            Align = alClient
+            DataSource = DM.GenreDS
+            TabOrder = 0
+            TitleFont.Charset = DEFAULT_CHARSET
+            TitleFont.Color = clWindowText
+            TitleFont.Height = -11
+            TitleFont.Name = 'Tahoma'
+            TitleFont.Style = []
+            Columns = <
+              item
+                Expanded = False
+                FieldName = 'ID_Genre'
+                Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+                Width = 94
+                Visible = True
+              end
+              item
+                Expanded = False
+                FieldName = 'Name_G'
+                Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077' '#1078#1072#1085#1088#1072
+                Width = 122
+                Visible = True
+              end>
+          end
         end
       end
     end
@@ -279,7 +296,7 @@ object frm_genre: Tfrm_genre
         Left = 0
         Top = 137
         Width = 1029
-        Height = 231
+        Height = 213
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
@@ -287,7 +304,7 @@ object frm_genre: Tfrm_genre
           Left = 2
           Top = 15
           Width = 1025
-          Height = 214
+          Height = 196
           Align = alClient
           DataSource = DM.autDS
           TabOrder = 0
@@ -315,7 +332,7 @@ object frm_genre: Tfrm_genre
       end
       object upd_aut_btn_box: TGroupBox
         Left = 0
-        Top = 368
+        Top = 350
         Width = 1029
         Height = 70
         Align = alBottom
@@ -363,7 +380,7 @@ object frm_genre: Tfrm_genre
       end
       object aut_del_btn_Box: TGroupBox
         Left = 0
-        Top = 368
+        Top = 350
         Width = 1029
         Height = 70
         Align = alBottom
@@ -381,7 +398,7 @@ object frm_genre: Tfrm_genre
         Left = 0
         Top = 105
         Width = 1029
-        Height = 263
+        Height = 245
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
@@ -389,7 +406,7 @@ object frm_genre: Tfrm_genre
           Left = 2
           Top = 15
           Width = 1025
-          Height = 246
+          Height = 228
           Align = alClient
           DataSource = DM.autDS
           TabOrder = 0

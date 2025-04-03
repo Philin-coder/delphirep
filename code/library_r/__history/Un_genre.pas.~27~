@@ -26,11 +26,12 @@ type
     GenrenaimRadio_grupper: TRadioButton;
     Genre_reset_Radio: TRadioButton;
     GenreGrid: TDBGrid;
-    gen_inpBox: TGroupBox;
-    Gen_inp_btnBox: TGroupBox;
-    gen_inp_dataBox: TGroupBox;
-    genre_inp: TLabeledEdit;
-    gen_insBon: TButton;
+    aut_inpBox: TGroupBox;
+    Aut_inp_btnBox: TGroupBox;
+    Aut_inp_dataBox: TGroupBox;
+    Autor_inp: TLabeledEdit;
+    aut_insBon: TButton;
+    Aut_inp_data_Grid: TDBGrid;
     aut_upd_inp_box: TGroupBox;
     Upd_aut_data_Box: TGroupBox;
     Upd_aut_naim_inp: TLabeledEdit;
@@ -46,8 +47,6 @@ type
     aut_del_btn: TButton;
     aut_del_data_Box: TGroupBox;
     Aut_delGrid: TDBGrid;
-    gen_ins_dataBox: TGroupBox;
-    gen_insGrid: TDBGrid;
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -55,7 +54,6 @@ type
     procedure Genre_fnddEditKeyPress(Sender: TObject; var Key: Char);
     procedure GenrenaimRadio_grupperClick(Sender: TObject);
     procedure Genre_reset_RadioClick(Sender: TObject);
-    procedure gen_insBonClick(Sender: TObject);
   private
   procedure ChangeFormColor(Sender: TObject);
   public
@@ -241,46 +239,6 @@ if Genre_reset_Radio.Checked then
       if(Components[j] is TRadioButton)  then
       begin
         (Components[j] as TRadioButton).Checked:=False;
-      end;
-    end;
-
-end;
-
-procedure Tfrm_genre.gen_insBonClick(Sender: TObject);
-const
-    AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
-    var
-    AreFieldsEmpty: Boolean;
-    AreFieldsValid: Boolean;
-begin
-  AreFieldsEmpty:=((Trim(genre_inp.Text) = ''));
-  AreFieldsValid:=ValidateComponentText(genre_inp,AllowedChars);
-  if AreFieldsEmpty or not AreFieldsValid then
-  begin
-    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-    try
-      with dm.ins_genre do
-      begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@Name_G').Value :=genre_inp.Text;
-           ExecProc;
-           dm.GenreQuery.Close;
-           dm.genreQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
       end;
     end;
 
