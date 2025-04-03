@@ -147,14 +147,12 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@Name_G'
         Attributes = [paNullable]
         DataType = ftString
         Size = 50
-        Value = Null
       end>
     Left = 136
     Top = 176
@@ -168,14 +166,12 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@Name_G'
         Attributes = [paNullable]
         DataType = ftString
         Size = 50
-        Value = Null
       end>
     Left = 152
     Top = 240
@@ -189,21 +185,18 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@ID_Genre'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
-        Value = Null
       end
       item
         Name = '@Name_G'
         Attributes = [paNullable]
         DataType = ftString
         Size = 50
-        Value = Null
       end>
     Left = 152
     Top = 288
@@ -211,19 +204,7 @@ object DM: TDM
   object del_genre: TADOStoredProc
     Connection = Connection
     ProcedureName = 'del_genre;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@ID_Genre'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-      end>
+    Parameters = <>
     Left = 152
     Top = 344
   end
