@@ -23,28 +23,6 @@ object frm_aut: Tfrm_aut
     Height = 29
     Caption = 'autorToolBar'
     TabOrder = 0
-    object autselToolButton: TToolButton
-      Left = 0
-      Top = 0
-      ImageIndex = 0
-    end
-    object autinsToolButton: TToolButton
-      Left = 23
-      Top = 0
-      ImageIndex = 1
-    end
-    object autupdToolButton: TToolButton
-      Left = 46
-      Top = 0
-      Caption = 'autupdToolButton'
-      ImageIndex = 2
-    end
-    object autdelToolButton: TToolButton
-      Left = 69
-      Top = 0
-      Caption = 'autdelToolButton'
-      ImageIndex = 3
-    end
   end
   object autorPC: TPageControl
     Left = 0
@@ -223,10 +201,6 @@ object frm_aut: Tfrm_aut
         Height = 295
         Align = alClient
         TabOrder = 2
-        ExplicitLeft = 536
-        ExplicitTop = 192
-        ExplicitWidth = 185
-        ExplicitHeight = 105
         object Aut_inp_data_Grid: TDBGrid
           Left = 2
           Top = 15
@@ -287,7 +261,6 @@ object frm_aut: Tfrm_aut
           EditLabel.Height = 13
           EditLabel.Caption = #1048#1079#1084#1077#1085#1080#1090#1100' '#1080#1084#1103' '#1072#1074#1090#1086#1088#1072
           TabOrder = 0
-          ExplicitTop = 72
         end
         object autor_updDBL: TDBLookupComboBox
           Left = 0
@@ -310,10 +283,6 @@ object frm_aut: Tfrm_aut
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
-        ExplicitLeft = 592
-        ExplicitTop = 208
-        ExplicitWidth = 185
-        ExplicitHeight = 105
         object Aut_upd_Grid: TDBGrid
           Left = 2
           Top = 15
@@ -418,10 +387,6 @@ object frm_aut: Tfrm_aut
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        ExplicitLeft = 296
-        ExplicitTop = 128
-        ExplicitWidth = 185
-        ExplicitHeight = 105
         object Aut_delGrid: TDBGrid
           Left = 2
           Top = 15

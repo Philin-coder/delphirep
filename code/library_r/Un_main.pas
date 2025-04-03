@@ -13,12 +13,14 @@ type
     cursorTimer: TTimer;
     ItemnMenu: TMainMenu;
     autor_item: TMenuItem;
+    genre_item: TMenuItem;
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure cursorTimerTimer(Sender: TObject);
     procedure autor_itemClick(Sender: TObject);
+    procedure genre_itemClick(Sender: TObject);
   private
   procedure ChangeFormColor(Sender: TObject);
 var
@@ -31,7 +33,7 @@ var
 
 implementation
 
-uses Un_func, Un_dm, Un_autorize, Un_aut;
+uses Un_func, Un_dm, Un_autorize, Un_aut, Un_genre;
 
 {$R *.dfm}
 const
@@ -146,6 +148,18 @@ Frm_author.Free;
 raise;
 end;
 
+end;
+
+procedure TFrm_main.genre_itemClick(Sender: TObject);
+begin
+ try
+UpdateFormProperties('frm_genre', 'Форма работы с жанром',
+clBtnFace, 1024, 768);
+Frm_genre.ShowModal;
+except
+Frm_genre.Free;
+raise;
+end;
 end;
 
 end.

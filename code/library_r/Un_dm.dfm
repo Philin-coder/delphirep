@@ -59,12 +59,14 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@Name_A'
         Attributes = [paNullable]
         DataType = ftString
         Size = 50
+        Value = Null
       end>
     Left = 56
     Top = 232
@@ -78,18 +80,21 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@ID_Author'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
+        Value = Null
       end
       item
         Name = '@Name_A'
         Attributes = [paNullable]
         DataType = ftString
         Size = 50
+        Value = Null
       end>
     Left = 64
     Top = 288
@@ -103,14 +108,104 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@ID_Author'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
+        Value = Null
       end>
-    Left = 64
-    Top = 360
+    Left = 56
+    Top = 344
+  end
+  object GenreQuery: TADOQuery
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      'Genre.ID_Genre,'
+      'Genre.Name_G'
+      ' from Genre'
+      ' where 1=1')
+    Left = 120
+    Top = 56
+  end
+  object GenreDS: TDataSource
+    DataSet = GenreQuery
+    Left = 136
+    Top = 112
+  end
+  object sel_genre: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_genre;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@Name_G'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 50
+      end>
+    Left = 136
+    Top = 176
+  end
+  object ins_genre: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'ins_genre;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@Name_G'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 50
+      end>
+    Left = 152
+    Top = 240
+  end
+  object upd_genre: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_genre;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@ID_Genre'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+      end
+      item
+        Name = '@Name_G'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 50
+      end>
+    Left = 152
+    Top = 288
+  end
+  object del_genre: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'del_genre;1'
+    Parameters = <>
+    Left = 152
+    Top = 344
   end
 end

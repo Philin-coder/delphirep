@@ -1,0 +1,71 @@
+unit Un_genre;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, ImgList, ComCtrls, ToolWin,ADODB,db, StdCtrls, Grids,
+  DBGrids, DBCtrls;
+
+type
+  Tfrm_genre = class(TForm)
+    GenreToolBar: TToolBar;
+    genselToolButton: TToolButton;
+    geninsToolButton: TToolButton;
+    genupdToolButton: TToolButton;
+    GendelToolButton: TToolButton;
+    GenreImageList: TImageList;
+    GenrePC: TPageControl;
+    sel_tab: TTabSheet;
+    ins_tab: TTabSheet;
+    updTab: TTabSheet;
+    delTab: TTabSheet;
+    Genre_condBox: TGroupBox;
+    genrebtnBox: TGroupBox;
+    Genre_grupperBox: TGroupBox;
+    Genrecondedit_inp: TLabeledEdit;
+    Genre_fnddEdit: TLabeledEdit;
+    genreselBtn: TButton;
+    genre_data_Box: TGroupBox;
+    GenrenaimRadio_grupper: TRadioButton;
+    Genre_reset_Radio: TRadioButton;
+    GenreGrid: TDBGrid;
+    aut_inpBox: TGroupBox;
+    Aut_inp_btnBox: TGroupBox;
+    Aut_inp_dataBox: TGroupBox;
+    Autor_inp: TLabeledEdit;
+    aut_insBon: TButton;
+    Aut_inp_data_Grid: TDBGrid;
+    aut_upd_inp_box: TGroupBox;
+    Upd_aut_data_Box: TGroupBox;
+    Upd_aut_naim_inp: TLabeledEdit;
+    aut_upd_lbl: TLabel;
+    autor_updDBL: TDBLookupComboBox;
+    upd_aut_btn_box: TGroupBox;
+    uat_upd_Btn: TButton;
+    Aut_upd_Grid: TDBGrid;
+    Aut_del_inp_Box: TGroupBox;
+    aut_delLbl: TLabel;
+    aut_delDBL: TDBLookupComboBox;
+    aut_del_btn_Box: TGroupBox;
+    aut_del_btn: TButton;
+    aut_del_data_Box: TGroupBox;
+    Aut_delGrid: TDBGrid;
+  private
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_genre: Tfrm_genre;
+
+implementation
+
+uses Un_dm, Un_func, Un_main;
+
+{$R *.dfm}
+
+
+
+
+end.

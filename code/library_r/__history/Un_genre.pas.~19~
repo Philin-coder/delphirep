@@ -1,0 +1,116 @@
+unit Un_genre;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, ImgList, ComCtrls, ToolWin,ADODB,db, StdCtrls, Grids,
+  DBGrids, DBCtrls;
+
+type
+  Tfrm_genre = class(TForm)
+    GenreToolBar: TToolBar;
+    genselToolButton: TToolButton;
+    geninsToolButton: TToolButton;
+    genupdToolButton: TToolButton;
+    GendelToolButton: TToolButton;
+    GenreImageList: TImageList;
+    GenrePC: TPageControl;
+    sel_tab: TTabSheet;
+    ins_tab: TTabSheet;
+    updTab: TTabSheet;
+    delTab: TTabSheet;
+    Genre_condBox: TGroupBox;
+    genrebtnBox: TGroupBox;
+    Genre_grupperBox: TGroupBox;
+    Genrecondedit_inp: TLabeledEdit;
+    Genre_fnddEdit: TLabeledEdit;
+    genreselBtn: TButton;
+    genre_data_Box: TGroupBox;
+    GenrenaimRadio_grupper: TRadioButton;
+    Genre_reset_Radio: TRadioButton;
+    GenreGrid: TDBGrid;
+    aut_inpBox: TGroupBox;
+    Aut_inp_btnBox: TGroupBox;
+    Aut_inp_dataBox: TGroupBox;
+    Autor_inp: TLabeledEdit;
+    aut_insBon: TButton;
+    Aut_inp_data_Grid: TDBGrid;
+    aut_upd_inp_box: TGroupBox;
+    Upd_aut_data_Box: TGroupBox;
+    Upd_aut_naim_inp: TLabeledEdit;
+    aut_upd_lbl: TLabel;
+    autor_updDBL: TDBLookupComboBox;
+    upd_aut_btn_box: TGroupBox;
+    uat_upd_Btn: TButton;
+    Aut_upd_Grid: TDBGrid;
+    Aut_del_inp_Box: TGroupBox;
+    aut_delLbl: TLabel;
+    aut_delDBL: TDBLookupComboBox;
+    aut_del_btn_Box: TGroupBox;
+    aut_del_btn: TButton;
+    aut_del_data_Box: TGroupBox;
+    Aut_delGrid: TDBGrid;
+    procedure FormCreate(Sender: TObject);
+  private
+  procedure ChangeFormColor(Sender: TObject);
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_genre: Tfrm_genre;
+
+implementation
+
+uses Un_dm, Un_func, Un_main;
+
+{$R *.dfm}
+
+procedure TFrm_genre.ChangeFormColor(Sender: TObject);
+begin
+  if Sender is TToolButton then
+  begin
+
+    case TToolButton(Sender).Tag of
+      0:genrePC.ActivePage:=delTab;  //Self.Color := clRed;
+      1:genrePC.ActivePage:=Updtab; //Self.Color := clGreen;
+      2:genrePC.ActivePage:=ins_Tab;//Self.Color := clBlue;
+      3:genrePC.ActivePage:=sel_Tab; //Self.Color := clYellow;
+    else
+        genrePC.ActivePage:=sel_tab;
+      //Self.Color := clWhite;
+    end;
+  end;
+end;
+
+
+
+
+procedure Tfrm_genre.FormCreate(Sender: TObject);
+const
+  ButtonNames: array[0..3] of string = ('Удалить','Изменить',
+  'Добавить','Выбрать');
+   var
+    ButtonClicks: array of TNotifyEvent;
+begin
+frm_genre.ShowHint:=true;
+ UniformizeButtonsSize(Self,  273, 25);
+ UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+ LoadFormState(Self);
+  GenreImageList.Clear;
+  LoadIconFromResource('DELETE_ICON',1,GenreImageList);
+  LoadIconFromResource('EDIT_ICON',1,GenreImageList);
+  LoadIconFromResource('ADD_ICON',1,GenreImageList);
+  LoadIconFromResource('SELECT_ICON',1,GenreImageList);
+// ShowMessage(IntToStr(iconImageList.Count));
+  SetLength(ButtonClicks, 4);
+  ButtonClicks[0] := ChangeFormColor;
+  ButtonClicks[1] := ChangeFormColor;
+  ButtonClicks[2] := ChangeFormColor;
+  ButtonClicks[3] := ChangeFormColor;
+  CreateToolBarWithButtons(Self, GenreImageList, ButtonNames, ButtonClicks);
+end;
+
+end.

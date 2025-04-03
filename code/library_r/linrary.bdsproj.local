@@ -10,5 +10,9 @@
     <Transaction>2025.03.30 16:07:53.442.dfm,F:\code\Result\delphi\code\library_r\Unit1.dfm=F:\code\Result\delphi\code\library_r\Un_autorize.dfm</Transaction>
     <Transaction>2025.04.02 10:45:23.073.pas,F:\code\Result\delphi\code\library_r\Unit1.pas=F:\code\Result\delphi\code\library_r\Un_aut.pas</Transaction>
     <Transaction>2025.04.02 10:45:23.073.dfm,F:\code\Result\delphi\code\library_r\Unit1.dfm=F:\code\Result\delphi\code\library_r\Un_aut.dfm</Transaction>
+    <Transaction>2025.04.03 16:20:54.775.pas,F:\code\Result\delphi\code\library_r\Un_aut.pas=F:\code\Result\delphi\code\library_r\Un_genre.pas</Transaction>
+    <Transaction>2025.04.03 16:20:54.775.dfm,F:\code\Result\delphi\code\library_r\Un_aut.dfm=F:\code\Result\delphi\code\library_r\Un_genre.dfm</Transaction>
+    <Transaction>2025.04.03 16:22:59.009.pas,F:\code\Result\delphi\code\library_r\Un_aut.pas=</Transaction>
+    <Transaction>2025.04.03 16:22:59.009.dfm,F:\code\Result\delphi\code\library_r\Un_aut.dfm=</Transaction>
   </Transactions>
 </BorlandProject>

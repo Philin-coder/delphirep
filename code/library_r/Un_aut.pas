@@ -10,10 +10,6 @@ uses
 type
   Tfrm_aut = class(TForm)
     autorToolBar: TToolBar;
-    autselToolButton: TToolButton;
-    autinsToolButton: TToolButton;
-    autupdToolButton: TToolButton;
-    autdelToolButton: TToolButton;
     autorImageList: TImageList;
     autorPC: TPageControl;
     sel_tab: TTabSheet;
