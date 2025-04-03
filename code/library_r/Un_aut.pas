@@ -25,15 +25,21 @@ type
     Autor_grupperBox: TGroupBox;
     condedit_inp: TLabeledEdit;
     Autor_fnddEdit: TLabeledEdit;
-    autorBtn: TButton;
+    autorselBtn: TButton;
     Author_data_Box: TGroupBox;
     fioRadio_grupper: TRadioButton;
     reset_Radio: TRadioButton;
     AutorGrid: TDBGrid;
+    aut_inpBox: TGroupBox;
+    Aut_inp_btnBox: TGroupBox;
+    Aut_inp_dataBox: TGroupBox;
+    Autor_inp: TLabeledEdit;
+    aut_insBon: TButton;
+    Aut_inp_data_Grid: TDBGrid;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
-    procedure autorBtnClick(Sender: TObject);
+    procedure autorselBtnClick(Sender: TObject);
     procedure reset_RadioClick(Sender: TObject);
     procedure Autor_fnddEditKeyPress(Sender: TObject; var Key: Char);
     procedure fioRadio_grupperClick(Sender: TObject);
@@ -51,7 +57,7 @@ implementation
 uses Un_dm, Un_func, Un_main;
 
 {$R *.dfm}
-procedure Tfrm_aut.autorBtnClick(Sender: TObject);
+procedure Tfrm_aut.autorselBtnClick(Sender: TObject);
 begin
  try
     if not DM.Connection.Connected then
@@ -119,12 +125,17 @@ begin
       close;
       sql.Clear;
       sql.Text:=
-     ''
+     'select '+
+    'Author.ID_Author,'+' '+
+    'Author.Name_A'+' '+
+    'from Author'+' '+
+    'where 1=1'+
+    'Order by Author.Name_A asc';
       Open;
      end;
     except on E: EADOError do
     begin
-      ShowMessage('??????'+' '+E.Message);
+      ShowMessage('Ошибка'+' '+E.Message);
     end;
     end;
   end;

@@ -13,6 +13,7 @@ object DM: TDM
   end
   object AutQuery: TADOQuery
     Connection = Connection
+    CursorType = ctStatic
     Parameters = <>
     SQL.Strings = (
       'select '

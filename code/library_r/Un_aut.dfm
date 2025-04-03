@@ -23,9 +23,6 @@ object frm_aut: Tfrm_aut
     Height = 29
     Caption = 'autorToolBar'
     TabOrder = 0
-    ExplicitLeft = 248
-    ExplicitTop = 152
-    ExplicitWidth = 150
     object autselToolButton: TToolButton
       Left = 0
       Top = 0
@@ -54,14 +51,11 @@ object frm_aut: Tfrm_aut
     Top = 29
     Width = 1037
     Height = 466
-    ActivePage = sel_tab
+    ActivePage = ins_tab
     Align = alClient
     TabOrder = 1
-    ExplicitWidth = 873
     object sel_tab: TTabSheet
       Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1072#1074#1090#1086#1088#1077
-      ExplicitWidth = 627
-      ExplicitHeight = 242
       object Autor_condBox: TGroupBox
         Left = 0
         Top = 0
@@ -104,14 +98,14 @@ object frm_aut: Tfrm_aut
         Height = 70
         Align = alBottom
         TabOrder = 1
-        object autorBtn: TButton
+        object autorselBtn: TButton
           Left = 336
           Top = 32
           Width = 273
           Height = 25
           Caption = #1054#1090#1073#1086#1088' '#1087#1086' '#1091#1089#1083#1086#1074#1080#1102
           TabOrder = 0
-          OnClick = autorBtnClick
+          OnClick = autorselBtnClick
         end
       end
       object Autor_grupperBox: TGroupBox
@@ -150,10 +144,6 @@ object frm_aut: Tfrm_aut
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 3
-        ExplicitLeft = 584
-        ExplicitTop = 152
-        ExplicitWidth = 185
-        ExplicitHeight = 105
         object AutorGrid: TDBGrid
           Left = 2
           Top = 15
@@ -167,26 +157,111 @@ object frm_aut: Tfrm_aut
           TitleFont.Height = -11
           TitleFont.Name = 'Tahoma'
           TitleFont.Style = []
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'ID_Author'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'Name_A'
+              Title.Caption = #1060#1048#1054' '#1072#1074#1090#1086#1088#1072
+              Visible = True
+            end>
         end
       end
     end
     object ins_tab: TTabSheet
       Caption = #1044#1086#1073#1072#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1072#1074#1090#1086#1088#1077
       ImageIndex = 1
-      ExplicitLeft = 8
-      ExplicitWidth = 865
+      object aut_inpBox: TGroupBox
+        Left = 0
+        Top = 0
+        Width = 1029
+        Height = 81
+        Align = alTop
+        Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 0
+        DesignSize = (
+          1029
+          81)
+        object Autor_inp: TLabeledEdit
+          Left = 3
+          Top = 40
+          Width = 1014
+          Height = 21
+          Anchors = [akLeft, akRight]
+          EditLabel.Width = 97
+          EditLabel.Height = 13
+          EditLabel.Caption = #1042#1074#1086#1076' '#1080#1084#1077#1085#1080' '#1072#1074#1090#1086#1088#1072
+          TabOrder = 0
+        end
+      end
+      object Aut_inp_btnBox: TGroupBox
+        Left = 0
+        Top = 376
+        Width = 1029
+        Height = 62
+        Align = alBottom
+        TabOrder = 1
+        object aut_insBon: TButton
+          Left = 456
+          Top = 24
+          Width = 75
+          Height = 25
+          Caption = #1042#1074#1086#1076
+          TabOrder = 0
+        end
+      end
+      object Aut_inp_dataBox: TGroupBox
+        Left = 0
+        Top = 81
+        Width = 1029
+        Height = 295
+        Align = alClient
+        TabOrder = 2
+        ExplicitLeft = 536
+        ExplicitTop = 192
+        ExplicitWidth = 185
+        ExplicitHeight = 105
+        object Aut_inp_data_Grid: TDBGrid
+          Left = 2
+          Top = 15
+          Width = 1025
+          Height = 278
+          Align = alClient
+          DataSource = DM.autDS
+          TabOrder = 0
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWindowText
+          TitleFont.Height = -11
+          TitleFont.Name = 'Tahoma'
+          TitleFont.Style = []
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'ID_Author'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'Name_A'
+              Title.Caption = #1060#1048#1054' '#1072#1074#1090#1086#1088#1072
+              Visible = True
+            end>
+        end
+      end
     end
     object updTab: TTabSheet
       Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1072#1074#1090#1086#1088#1077
       ImageIndex = 2
-      ExplicitWidth = 627
-      ExplicitHeight = 242
     end
     object delTab: TTabSheet
       Caption = ' '#1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1072#1074#1090#1086#1088#1077
       ImageIndex = 3
-      ExplicitWidth = 627
-      ExplicitHeight = 242
     end
   end
   object autorImageList: TImageList
