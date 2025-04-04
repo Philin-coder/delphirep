@@ -20,6 +20,12 @@ type
     ins_genre: TADOStoredProc;
     upd_genre: TADOStoredProc;
     del_genre: TADOStoredProc;
+    bookQuery: TADOQuery;
+    bookDS: TDataSource;
+    sel_book: TADOStoredProc;
+    ADOStoredProc2: TADOStoredProc;
+    ADOStoredProc3: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public

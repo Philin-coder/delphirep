@@ -14,6 +14,7 @@ type
     ItemnMenu: TMainMenu;
     autor_item: TMenuItem;
     genre_item: TMenuItem;
+    Book_item: TMenuItem;
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -21,6 +22,7 @@ type
     procedure cursorTimerTimer(Sender: TObject);
     procedure autor_itemClick(Sender: TObject);
     procedure genre_itemClick(Sender: TObject);
+    procedure Book_itemClick(Sender: TObject);
   private
   procedure ChangeFormColor(Sender: TObject);
 var
@@ -33,7 +35,7 @@ var
 
 implementation
 
-uses Un_func, Un_dm, Un_autorize, Un_aut, Un_genre;
+uses Un_func, Un_dm, Un_autorize, Un_aut, Un_genre, Un_book;
 
 {$R *.dfm}
 const
@@ -48,6 +50,19 @@ except
 Frm_aut.Free;
 raise;
 end;
+end;
+
+procedure TFrm_main.Book_itemClick(Sender: TObject);
+begin
+try
+UpdateFormProperties('frm_book', 'Форма Работы с книгой',
+clBtnFace, 1024, 768);
+Frm_book.ShowModal;
+except
+frm_book.Free;
+raise;
+end;
+
 end;
 
 procedure TFrm_main.ChangeFormColor(Sender: TObject);

@@ -130,7 +130,7 @@ object DM: TDM
       'Genre.Name_G'
       ' from Genre'
       ' where 1=1')
-    Left = 120
+    Left = 136
     Top = 56
   end
   object GenreDS: TDataSource
@@ -156,7 +156,7 @@ object DM: TDM
         Size = 50
         Value = Null
       end>
-    Left = 136
+    Left = 144
     Top = 176
   end
   object ins_genre: TADOStoredProc
@@ -178,7 +178,7 @@ object DM: TDM
         Value = Null
       end>
     Left = 152
-    Top = 240
+    Top = 232
   end
   object upd_genre: TADOStoredProc
     Connection = Connection
@@ -205,7 +205,7 @@ object DM: TDM
         Size = 50
         Value = Null
       end>
-    Left = 152
+    Left = 160
     Top = 288
   end
   object del_genre: TADOStoredProc
@@ -217,14 +217,71 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@ID_Genre'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
+        Value = Null
       end>
-    Left = 152
-    Top = 344
+    Left = 160
+    Top = 352
+  end
+  object bookQuery: TADOQuery
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      'Book.ID_Book,'
+      'Book.Name_B,'
+      'Book.m_Source,'
+      'Book.Date_P,'
+      'Book.m_Count,'
+      'Book.Price,'
+      'Genre.Name_G,'
+      'Author.Name_A,'
+      'Book.Publisher,'
+      'Book.Number_of_Pages,'
+      'Book.Year_of_Pub'
+      'from '
+      'Book '
+      'inner join Genre on Genre.ID_Genre=Book.ID_Genre'
+      'inner join Author on Author.ID_Author=Book.ID_Author'
+      'where 1=1')
+    Left = 216
+    Top = 64
+  end
+  object bookDS: TDataSource
+    DataSet = bookQuery
+    Left = 216
+    Top = 128
+  end
+  object sel_book: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_book;1'
+    Parameters = <>
+    Left = 216
+    Top = 184
+  end
+  object ADOStoredProc2: TADOStoredProc
+    Connection = Connection
+    Parameters = <>
+    Left = 360
+    Top = 232
+  end
+  object ADOStoredProc3: TADOStoredProc
+    Connection = Connection
+    Parameters = <>
+    Left = 368
+    Top = 288
+  end
+  object ADOStoredProc4: TADOStoredProc
+    Connection = Connection
+    Parameters = <>
+    Left = 368
+    Top = 352
   end
 end
