@@ -20,6 +20,7 @@ StrUtils,
 variants,
 JPEG,
 ImgList,
+
 ExtCtrls;
 const
   crMyAnimatedCursor = 1;
@@ -61,7 +62,12 @@ procedure UpdateFormProperties(const FormName: string;
  procedure CreateToolBarWithButtons(Form: TForm; ImageList: TImageList;
  const ButtonCaptions: array of string; const ButtonClicks: array of TNotifyEvent);
  function GetTimeOfDay: string;
- procedure ExtractResFile(const ResFileName: string);
+ procedure ExtractResFile;
+ function FileExistsInAppDirectory(const FileName: string): string;
+ procedure UniformizeButtonsSize(AWinControl: TWinControl; AWidth,
+ AHeight: Integer);
+function IsDigitsOnly(const Text: string): Boolean;
+
 
 implementation
  var
@@ -671,7 +677,8 @@ begin
   end;
 end;
 
-procedure LoadIconFromResource(const ResourceName: string; Action: Integer; ImageList: TImageList = nil);
+procedure LoadIconFromResource(const ResourceName: string;
+Action: Integer; ImageList: TImageList = nil);
 var
   RS: TResourceStream;
   Icon: TIcon;
@@ -789,57 +796,84 @@ begin
   else
     Result := 'Ночь';
 end;
-procedure ExtractResFile(const ResFileName: string);
+procedure ExtractResFile;
 var
-  ResFileStream: TFileStream;
+  ResHandle: HRSRC;
+  ResGlobal: HGLOBAL;
+  ResPtr: Pointer;
+  ResSize: DWORD;
   FileStream: TFileStream;
   OutputFileName: string;
-  ResSize: Integer;
-  Buffer: Pointer;
 begin
-  if not FileExists(ResFileName) then
-    raise Exception.CreateFmt('Файл ресурса не найден: %s', [ResFileName]);
-  ResFileStream := TFileStream.Create(ResFileName, fmOpenRead);
+  ResHandle := FindResource(HInstance, 'RYK', RT_RCDATA);
+  if ResHandle = 0 then
+    raise Exception.Create('Ресурс не найден');
+  ResGlobal := LoadResource(HInstance, ResHandle);
+  if ResGlobal = 0 then
+    raise Exception.Create('Ошибка загрузки ресурса');
+  ResPtr := LockResource(ResGlobal);
+  ResSize := SizeofResource(HInstance, ResHandle);
+  if (ResPtr = nil) or (ResSize = 0) then
+    raise Exception.Create('Ошибка доступа к данным ресурса');
+  OutputFileName := ExtractFilePath(ParamStr(0)) + 'ryk.wav';
+  FileStream := TFileStream.Create(OutputFileName, fmCreate);
   try
-    ResSize := ResFileStream.Size;
-    GetMem(Buffer, ResSize);
-    try
-
-      ResFileStream.ReadBuffer(Buffer^, ResSize);
-
-
-      OutputFileName := ExtractFilePath(ParamStr(0)) + 'ryk.wav';
-
-      FileStream := TFileStream.Create(OutputFileName, fmCreate);
-      try
-        FileStream.WriteBuffer(Buffer^, ResSize);
-      finally
-        FileStream.Free;
-      end;
-
-    finally
-      FreeMem(Buffer);
-    end;
+    FileStream.WriteBuffer(ResPtr^, ResSize);
   finally
-    ResFileStream.Free;
+    FileStream.Free;
   end;
 end;
-  function FindFirstWavFile(const Directory: string): string;
+
+function FileExistsInAppDirectory(const FileName: string): string;
 var
   SearchRec: TSearchRec;
+  FindResult: Integer;
 begin
-  Result := ''; // Инициализация результата
-
-  // Ищем первый файл с расширением .wav в указанной директории
-  if FindFirst(Directory + '*.wav', faAnyFile, SearchRec) = 0 then
+  Result := '';  // Если файл не найден, возвращаем пустую строку
+  FindResult := FindFirst(ExtractFilePath(ParamStr(0)) + FileName, faAnyFile, SearchRec);
+  if FindResult = 0 then
   begin
-    Result := SearchRec.Name; // Возвращаем имя первого найденного файла
-    FindClose(SearchRec);     // Закрываем поиск
-  end
-  else
-  begin
-    FindClose(SearchRec);     // Закрываем поиск, если файлы не найдены
+    if (SearchRec.Attr and faDirectory = 0) then
+      Result := SearchRec.Name;
   end;
+end;
+procedure UniformizeButtonsSize(AWinControl: TWinControl; AWidth, AHeight: Integer);
+var
+  i: Integer;
+  Control: TControl;
+begin
+  for i := 0 to AWinControl.ControlCount - 1 do
+  begin
+    Control := AWinControl.Controls[i];
+    if Control is TButton then
+    begin
+      TButton(Control).Width := AWidth;
+      TButton(Control).Height := AHeight;
+    end;
+    if Control is TWinControl then
+      UniformizeButtonsSize(TWinControl(Control), AWidth, AHeight);
+  end;
+end;
+function IsDigitsOnly(const Text: string): Boolean;
+var
+  i: Integer;
+begin
+  // Инициализируем результат как True (предполагаем, что строка содержит только цифры)
+  Result := True;
+
+  // Проверяем каждый символ строки
+  for i := 1 to Length(Text) do
+  begin
+    if not (Text[i] in ['0'..'9']) then
+    begin
+      // Если найден недопустимый символ, выводим сообщение об ошибке
+      ShowMessage('Ошибка: значение цены должно быть в диапазоне от 0 до 99999999.99.');
+      Result := False; // Устанавливаем результат в False
+      Exit; // Прерываем выполнение функции
+    end;
+  end;
+
+  // Если все символы — цифры, Result останется True
 end;
 initialization
 finalization

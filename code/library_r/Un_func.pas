@@ -851,6 +851,29 @@ begin
       UniformizeButtonsSize(TWinControl(Control), AWidth, AHeight);
   end;
 end;
+
+function IsDigitsOnly(const Text: string): Boolean;
+var
+  i: Integer;
+begin
+  // Инициализируем результат как True (предполагаем, что строка содержит только цифры)
+  Result := True;
+
+  // Проверяем каждый символ строки
+  for i := 1 to Length(Text) do
+  begin
+    if not (Text[i] in ['0'..'9']) then
+    begin
+      // Если найден недопустимый символ, выводим сообщение об ошибке
+      ShowMessage('Ошибка: значение  должно быть в диапазоне от 0 до 99999999.99.');
+      Result := False; // Устанавливаем результат в False
+      Exit; // Прерываем выполнение функции
+    end;
+  end;
+
+  // Если все символы — цифры, Result останется True
+end;
+
 initialization
 finalization
 if hAniCursor <> 0 then
