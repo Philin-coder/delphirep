@@ -472,7 +472,21 @@ object DM: TDM
     Top = 288
   end
   object del_book: TADOStoredProc
-    Parameters = <>
+    Connection = Connection
+    ProcedureName = 'del_book;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@id_book'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+      end>
     Left = 232
     Top = 356
   end

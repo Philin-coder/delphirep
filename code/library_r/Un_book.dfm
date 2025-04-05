@@ -28,7 +28,7 @@ object frm_book: Tfrm_book
     Top = 47
     Width = 1037
     Height = 568
-    ActivePage = updTab
+    ActivePage = delTab
     Align = alClient
     TabOrder = 1
     object sel_tab: TTabSheet
@@ -212,7 +212,7 @@ object frm_book: Tfrm_book
         Top = 0
         Width = 1029
         Height = 540
-        ActivePage = about_book_yab_two
+        ActivePage = about_bookTab_one
         Align = alClient
         TabOrder = 0
         object about_bookTab_one: TTabSheet
@@ -292,6 +292,7 @@ object frm_book: Tfrm_book
             Top = 323
             Width = 982
             Height = 21
+            Hint = #1062#1077#1085#1072' '#1082#1085#1080#1075#1080' '#1076#1086' 1000'
             Anchors = [akLeft, akRight]
             EditLabel.Width = 26
             EditLabel.Height = 13
@@ -658,21 +659,21 @@ object frm_book: Tfrm_book
         Height = 70
         Align = alBottom
         TabOrder = 2
-        object upd_gen_Btn: TButton
+        object upd_book_Btn: TButton
           Left = 464
           Top = 24
           Width = 75
           Height = 25
           Caption = #1048#1079#1084#1077#1085#1080#1090#1100
           TabOrder = 0
-          OnClick = upd_gen_BtnClick
+          OnClick = upd_book_BtnClick
         end
       end
     end
     object delTab: TTabSheet
-      Caption = ' '#1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1078#1072#1085#1088#1077
+      Caption = ' '#1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1082#1085#1080#1075#1077
       ImageIndex = 3
-      object gen_del_inp_Box: TGroupBox
+      object book_del_inp_Box: TGroupBox
         Left = 0
         Top = 0
         Width = 1029
@@ -680,43 +681,44 @@ object frm_book: Tfrm_book
         Align = alTop
         Caption = #1042#1074#1086#1076'  '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object gen_delLbl: TLabel
+        object book_delLbl: TLabel
           Left = 3
           Top = 29
-          Width = 73
+          Width = 76
           Height = 13
-          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1078#1072#1085#1088
+          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1082#1085#1080#1075#1091
         end
-        object gen_delDBL: TDBLookupComboBox
+        object book_delDBL: TDBLookupComboBox
           Left = 9
           Top = 58
           Width = 1017
           Height = 21
           Align = alCustom
           Anchors = [akLeft, akRight]
-          KeyField = 'ID_Genre'
-          ListField = 'Name_G'
-          ListSource = DM.GenreDS
+          KeyField = 'ID_Book'
+          ListField = 'Name_B'
+          ListSource = DM.bookDS
           TabOrder = 0
         end
       end
-      object gen_del_btn_Box: TGroupBox
+      object book_del_btn_Box: TGroupBox
         Left = 0
         Top = 470
         Width = 1029
         Height = 70
         Align = alBottom
         TabOrder = 1
-        object gen_del_btn: TButton
+        object book_del_btn: TButton
           Left = 464
           Top = 24
           Width = 75
           Height = 25
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
+          OnClick = book_del_btnClick
         end
       end
-      object gen_del_data_Box: TGroupBox
+      object book_del_data_Box: TGroupBox
         Left = 0
         Top = 105
         Width = 1029
@@ -724,13 +726,13 @@ object frm_book: Tfrm_book
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        object gendelGrid: TDBGrid
+        object book_del_Grid: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
           Height = 348
           Align = alClient
-          DataSource = DM.GenreDS
+          DataSource = DM.bookDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -740,16 +742,68 @@ object frm_book: Tfrm_book
           Columns = <
             item
               Expanded = False
-              FieldName = 'ID_Genre'
-              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-              Width = 94
+              FieldName = 'ID_Book'
+              Title.Caption = #1053#1086#1084#1077#1088'  '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'Name_B'
+              Title.Caption = #1053#1072#1079#1074#1072#1085#1080#1077
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'm_Source'
+              Title.Caption = #1048#1089#1090#1086#1095#1085#1080#1077' '#1087#1086#1083#1091#1095#1077#1085#1080#1103
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'Date_P'
+              Title.Caption = #1044#1072#1090#1072' '#1087#1086#1089#1090#1091#1087#1083#1077#1085#1080#1103
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'm_Count'
+              Title.Caption = #1050#1086#1083#1080#1095#1077#1089#1090#1074#1086' '#1101#1082#1079#1077#1084#1087#1083#1103#1088#1086#1074
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'Price'
+              Title.Caption = #1062#1077#1085#1072
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'Name_G'
-              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077' '#1078#1072#1085#1088#1072
-              Width = 122
+              Title.Caption = #1046#1072#1085#1088
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'Name_A'
+              Title.Caption = #1040#1074#1090#1086#1088
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'Publisher'
+              Title.Caption = #1048#1079#1076#1072#1090#1077#1083#1100#1089#1090#1074#1086
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'Number_of_Pages'
+              Title.Caption = #1050#1086#1083#1080#1095#1077#1089#1090#1074#1086' '#1089#1090#1088#1072#1085#1080#1094
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'Year_of_Pub'
+              Title.Caption = #1043#1086#1076' '#1080#1079#1076#1072#1085#1080#1103
               Visible = True
             end>
         end

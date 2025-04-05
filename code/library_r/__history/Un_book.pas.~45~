@@ -1,0 +1,547 @@
+unit Un_book;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, ImgList, ComCtrls, ToolWin,ADODB,db, StdCtrls, Grids,
+  DBGrids, DBCtrls;
+
+type
+  Tfrm_book = class(TForm)
+    BookToolBar: TToolBar;
+    BookImageList: TImageList;
+    BookPC: TPageControl;
+    sel_tab: TTabSheet;
+    ins_tab: TTabSheet;
+    updTab: TTabSheet;
+    delTab: TTabSheet;
+    bookbtnBox: TGroupBox;
+    book_grupperBox: TGroupBox;
+    bookselBtn: TButton;
+    book_data_Box: TGroupBox;
+    booknaimRadio_grupper: TRadioButton;
+    book_reset_Radio: TRadioButton;
+    bookGrid: TDBGrid;
+    book_upd_inp_box: TGroupBox;
+    Upd_book_data_Box: TGroupBox;
+    Upd_book_naim_inp: TLabeledEdit;
+    book_upd_lbl: TLabel;
+    book_updDBL: TDBLookupComboBox;
+    upd_book_btn_box: TGroupBox;
+    upd_book_Btn: TButton;
+    book_del_inp_Box: TGroupBox;
+    book_delLbl: TLabel;
+    book_delDBL: TDBLookupComboBox;
+    book_del_btn_Box: TGroupBox;
+    book_del_btn: TButton;
+    book_del_data_Box: TGroupBox;
+    book_condBox: TGroupBox;
+    bookcondedit_inp: TLabeledEdit;
+    book_fnddEdit: TLabeledEdit;
+    aboutbookPC: TPageControl;
+    about_bookTab_one: TTabSheet;
+    about_book_yab_two: TTabSheet;
+    naim_b_inp: TLabeledEdit;
+    m_source_inp: TLabeledEdit;
+    ins_book_date_p_lbl: TStaticText;
+    datep_inp: TDateTimePicker;
+    m_count_grader: TUpDown;
+    m_count_inp: TLabeledEdit;
+    price_inp: TLabeledEdit;
+    doc_count: TLabeledEdit;
+    ins_book_data_Box: TGroupBox;
+    genre_lbl: TStaticText;
+    Ins_book_genre_DBL: TDBLookupComboBox;
+    ins_book_autor_lbl: TStaticText;
+    ins_book_autorDBL: TDBLookupComboBox;
+    publisher_inp: TLabeledEdit;
+    numebr_of_pages_inp: TLabeledEdit;
+    Year_of_pub_inp: TLabeledEdit;
+    ins_book_btn_Box: TGroupBox;
+    Ins_book_insBtn: TButton;
+    Ins_book_dataBox: TGroupBox;
+    ins_book_DataGrid: TDBGrid;
+    docCB: TCheckBox;
+    Upd_book_Grid: TDBGrid;
+    book_del_Grid: TDBGrid;
+    procedure FormActivate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure bookselBtnClick(Sender: TObject);
+    procedure book_fnddEditKeyPress(Sender: TObject; var Key: Char);
+    procedure booknaimRadio_grupperClick(Sender: TObject);
+    procedure book_reset_RadioClick(Sender: TObject);
+    procedure Ins_book_insBtnClick(Sender: TObject);
+    procedure upd_book_BtnClick(Sender: TObject);
+    procedure book_del_btnClick(Sender: TObject);
+  private
+  procedure ChangeFormColor(Sender: TObject);
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_book: Tfrm_book;
+
+implementation
+
+uses Un_dm, Un_func, Un_main;
+
+{$R *.dfm}
+
+procedure Tfrm_book.booknaimRadio_grupperClick(Sender: TObject);
+begin
+ if booknaimRadio_grupper.Checked=true then
+  begin
+    try
+     with dm.bookQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+      'select'+' '+
+    'Book.ID_Book,'+' '+
+    'Book.Name_B,'+' '+
+    'Book.m_Source,'+' '+
+    'Book.Date_P,'+' '+
+    'Book.m_Count,'+' '+
+    'Book.Price,'+
+    'Genre.Name_G,'+' '+
+    'Author.Name_A,'+' '+
+    'Book.Publisher,'+' '+
+    'Book.Number_of_Pages,'+' '+
+    'Book.Year_of_Pub'+' '+
+    'from'+' '+
+    'Book'+' '+
+    'inner join Genre on Genre.ID_Genre=Book.ID_Genre'+' '+
+    'inner join Author on Author.ID_Author=Book.ID_Author'+' '+
+    'where 1=1'+' '+
+    'Order by Book.Name_B asc';
+      Open;
+     end;
+    except on E: EADOError do
+    begin
+      ShowMessage('Ошибка'+' '+E.Message);
+    end;
+    end;
+  end;
+end;
+
+procedure Tfrm_book.bookselBtnClick(Sender: TObject);
+begin
+try
+    if not DM.Connection.Connected then
+      raise Exception.Create('Соединение с базой не установлено');
+
+    with DM.sel_book do
+    begin
+      Close;
+      Parameters.ParamByName('@Name_B').Value:=bookcondedit_inp.Text;
+      Open;
+       DM.bookQuery.Recordset:=dm.sel_book.Recordset;
+    end;
+  except
+    on E: EDatabaseError do
+      ShowMessage('Ошибка БД: ' + E.Message);
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
+end;
+
+procedure Tfrm_book.book_del_btnClick(Sender: TObject);
+var arefiledempty:boolean;
+begin
+   arefiledempty:=(
+   (book_delDBL.Text='')
+   );
+   if arefiledempty then
+   begin
+   MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+   end;
+   try
+      with dm.del_book do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@id_book').Value:=
+           dm.bookQuery.FieldByName('ID_Book').AsString;
+           ExecProc;
+           dm.bookQuery.Close;
+           dm.bookQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+
+
+end;
+
+procedure Tfrm_book.book_fnddEditKeyPress(Sender: TObject; var Key: Char);
+begin
+try
+   dm.bookQuery.SQL.Text:=
+    'select'+' '+
+    'Book.ID_Book,'+' '+
+    'Book.Name_B,'+' '+
+    'Book.m_Source,'+' '+
+    'Book.Date_P,'+' '+
+    'Book.m_Count,'+' '+
+    'Book.Price,'+
+    'Genre.Name_G,'+' '+
+    'Author.Name_A,'+' '+
+    'Book.Publisher,'+' '+
+    'Book.Number_of_Pages,'+' '+
+    'Book.Year_of_Pub'+' '+
+    'from'+' '+
+    'Book'+' '+
+    'inner join Genre on Genre.ID_Genre=Book.ID_Genre'+' '+
+    'inner join Author on Author.ID_Author=Book.ID_Author'+' '+
+    'where 1=1'+' '+
+    'and Book.Name_B like'+
+   QuotedStr(Concat(book_fnddEdit.Text,#37));
+   dm.bookQuery.close;
+   dm.bookQuery.Open;
+except on E: Exception do
+  begin
+  ShowMessage('wrong situation'+' '+E.Message);
+  end;
+  end;
+end;
+
+procedure Tfrm_book.book_reset_RadioClick(Sender: TObject);
+var i,j,c:Integer;
+begin
+    if book_reset_Radio.Checked then
+  with frm_book do
+    for I := 0 to ComponentCount - 1 do
+     begin
+       if (Components[i] is TLabeledEdit)  then
+        begin
+          (Components[i] as TLabeledEdit).Clear;
+        end;
+     end;
+       with frm_book do
+    for c := 0 to ComponentCount - 1 do
+     begin
+       if (Components[c] is TCheckBox)  then
+        begin
+          (Components[c] as TCheckBox).Checked:=False;
+        end;
+     end;
+     with dm.bookQuery do
+     begin
+     Close;
+     sql.Clear;
+     SQL.Text:=
+     'select'+' '+
+    'Book.ID_Book,'+' '+
+    'Book.Name_B,'+' '+
+    'Book.m_Source,'+' '+
+    'Book.Date_P,'+' '+
+    'Book.m_Count,'+' '+
+    'Book.Price,'+
+    'Genre.Name_G,'+' '+
+    'Author.Name_A,'+' '+
+    'Book.Publisher,'+' '+
+    'Book.Number_of_Pages,'+' '+
+    'Book.Year_of_Pub'+' '+
+    'from'+' '+
+    'Book'+' '+
+    'inner join Genre on Genre.ID_Genre=Book.ID_Genre'+' '+
+    'inner join Author on Author.ID_Author=Book.ID_Author'+' '+
+    'where 1=1';
+     Open;
+     end;
+    with frm_book do
+    for j := 0 to ComponentCount - 1 do
+    begin
+      if(Components[j] is TRadioButton)  then
+      begin
+        (Components[j] as TRadioButton).Checked:=False;
+      end;
+    end;
+end;
+
+procedure Tfrm_book.ChangeFormColor(Sender: TObject);
+begin
+  if Sender is TToolButton then
+  begin
+    case TToolButton(Sender).Tag of
+      0:bookPC.ActivePage:=delTab;
+      1:BookPC.ActivePage:=Updtab;
+      2:BookPC.ActivePage:=ins_Tab;
+      3:BookPC.ActivePage:=sel_Tab;
+    else
+        BookPC.ActivePage:=sel_tab;
+    end;
+  end;
+end;
+
+
+
+
+procedure Tfrm_book.FormActivate(Sender: TObject);
+begin
+dm.bookQuery.Open;
+dm.AutQuery.Open;
+dm.GenreQuery.Open;
+end;
+
+procedure Tfrm_book.FormClose(Sender: TObject; var Action: TCloseAction);
+var q:Integer;
+begin
+SaveFormState(Self);
+   with dm do
+ begin
+    for q := 0 to ComponentCount - 1 do
+ begin
+    if(Components[q] is TADOQuery)  then
+   begin
+      (Components[q] as TADOQuery).Close;
+ end;
+ end;
+ end;
+end;
+
+procedure Tfrm_book.FormCreate(Sender: TObject);
+const
+  ButtonNames: array[0..3] of string = ('Удалить','Изменить',
+  'Добавить','Выбрать');
+ var
+    ButtonClicks: array of TNotifyEvent;
+begin
+ frm_book.ShowHint:=true;
+ UniformizeButtonsSize(Self,  273, 25);
+ UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+ LoadFormState(Self);
+  BookImageList.Clear;
+  LoadIconFromResource('DELETE_ICON',1,BookImageList);
+  LoadIconFromResource('EDIT_ICON',1,BookImageList);
+  LoadIconFromResource('ADD_ICON',1,BookImageList);
+  LoadIconFromResource('SELECT_ICON',1,BookImageList);
+// ShowMessage(IntToStr(iconImageList.Count));
+  SetLength(ButtonClicks, 4);
+  ButtonClicks[0] := ChangeFormColor;
+  ButtonClicks[1] := ChangeFormColor;
+  ButtonClicks[2] := ChangeFormColor;
+  ButtonClicks[3] := ChangeFormColor;
+  CreateToolBarWithButtons(Self, BookImageList, ButtonNames, ButtonClicks);
+end;
+
+procedure Tfrm_book.Ins_book_insBtnClick(Sender: TObject);
+const
+     AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+  PriceText: string;
+  PriceValue: Int64;
+  id_instance,count_doc, k,i:Integer;
+begin
+PriceText:=price_inp.Text;
+case docCB.Checked of
+True:
+begin
+AreFieldsEmpty:=
+(
+(Trim(naim_b_inp.Text) = '')or
+(Trim(m_source_inp.Text) = '') or
+(m_count_grader.Position=0)or
+(Trim(price_inp.Text) = '')or
+(Trim(doc_count.Text)='')or
+(Ins_book_genre_DBL.Text='')or
+(ins_book_autorDBL.Text='')or
+(Trim(publisher_inp.Text) = '')or
+(Trim(numebr_of_pages_inp.Text) = '')or
+(Trim(Year_of_pub_inp.Text) = '')
+);
+AreFieldsValid:=(
+ValidateComponentText(naim_b_inp,AllowedChars)and
+ValidateComponentText(m_source_inp,AllowedChars)and
+IsDigitsOnly(price_inp.Text)and
+IsDigitsOnly(doc_count.Text)and
+ValidateComponentText(publisher_inp,AllowedChars)and
+IsDigitsOnly(numebr_of_pages_inp.Text)and
+IsDigitsOnly(Year_of_pub_inp.Text)
+);
+if AreFieldsEmpty or not AreFieldsValid then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.INS_BOOK do
+      begin
+        PriceValue:=StrToInt64(price_inp.Text);
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@NAME_B').Value:=naim_b_inp.Text;
+           Parameters.ParamByName('@m_SOURCE').Value:=m_source_inp.Text;
+           Parameters.ParamByName('@DATE_P').Value:=DateToStr_(datep_inp.Date);
+           Parameters.ParamByName('@m_COUNT').Value:=StrToInt(m_count_inp.Text);
+           Parameters.ParamByName('@PRICE').Value:=PriceValue;
+           Parameters.ParamByName('@ID_GENRE').Value:=
+           dm.GenreQuery.FieldByName('ID_GENRE').AsString;
+           Parameters.ParamByName('@ID_AUTHOR').Value:=
+           dm.AutQuery.FieldByName('ID_AUTHOR').AsString;
+           Parameters.ParamByName('@PUBLISHER').Value:=publisher_inp.Text;
+           Parameters.ParamByName('@NAMBER_PAGES').
+           Value:=StrToInt(numebr_of_pages_inp.Text);
+           Parameters.ParamByName('@YEAR_PUB').Value:=StrToInt(Year_of_pub_inp.Text);
+           ExecProc;
+           id_instance:=Parameters.ParamByName('@id').Value;
+           dm.bookQuery.Close;
+           dm.bookQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+        ShowMessage('Изменения внесены  ID='+IntToStr(id_instance) );
+        count_doc:=StrToInt(doc_count.Text);
+        k:=0;
+        for I := 1 to count_doc do
+            begin
+                ShowMessage('t');
+                Inc(k);
+            end;
+
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+end;
+false:
+begin
+AreFieldsEmpty:=
+(
+(Trim(naim_b_inp.Text) = '')or
+(Trim(m_source_inp.Text) = '') or
+(m_count_grader.Position=0)or
+(Trim(price_inp.Text) = '')or
+(Ins_book_genre_DBL.Text='')or
+(ins_book_autorDBL.Text='')or
+(Trim(publisher_inp.Text) = '')or
+(Trim(numebr_of_pages_inp.Text) = '')or
+(Trim(Year_of_pub_inp.Text) = '')
+);
+AreFieldsValid:=(
+ValidateComponentText(naim_b_inp,AllowedChars)and
+ValidateComponentText(m_source_inp,AllowedChars)and
+IsDigitsOnly(price_inp.Text)and
+ValidateComponentText(publisher_inp,AllowedChars)and
+IsDigitsOnly(numebr_of_pages_inp.Text)and
+IsDigitsOnly(Year_of_pub_inp.Text)
+);
+if AreFieldsEmpty or not AreFieldsValid then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.INS_BOOK_normal do
+      begin
+      PriceValue:=StrToInt64(price_inp.Text);
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@NAME_B').Value:=naim_b_inp.Text;
+           Parameters.ParamByName('@m_SOURCE').Value:=m_source_inp.Text;
+           Parameters.ParamByName('@DATE_P').Value:=DateToStr_(datep_inp.Date);
+           Parameters.ParamByName('@m_COUNT').Value:=StrToInt(m_count_inp.Text);
+           Parameters.ParamByName('@PRICE').Value:=PriceValue;
+           Parameters.ParamByName('@ID_GENRE').Value:=
+           dm.GenreQuery.FieldByName('ID_GENRE').AsString;
+           Parameters.ParamByName('@ID_AUTHOR').Value:=
+           dm.AutQuery.FieldByName('ID_AUTHOR').AsString;
+           Parameters.ParamByName('@PUBLISHER').Value:=publisher_inp.Text;
+           Parameters.ParamByName('@NAMBER_PAGES').
+           Value:=StrToInt(numebr_of_pages_inp.Text);
+           Parameters.ParamByName('@YEAR_PUB').Value:=StrToInt(Year_of_pub_inp.Text);
+           ExecProc;
+           dm.bookQuery.Close;
+           dm.bookQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+end;
+end;//case
+end;
+
+procedure Tfrm_book.upd_book_BtnClick(Sender: TObject);
+ const
+  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+  var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+begin
+AreFieldsEmpty:=(
+ (book_updDBL.Text='')or
+ (Trim(Upd_book_naim_inp.Text)='')
+);
+AreFieldsValid:=(
+(ValidateComponentText(book_upd_inp_box,AllowedChars))
+);
+  if AreFieldsEmpty or not AreFieldsValid then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.upd_book do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@id_book').Value:=
+           dm.bookQuery.FieldByName('id_book').AsString;
+           Parameters.ParamByName('@name_b').Value:=Upd_book_naim_inp.Text;
+           ExecProc;
+           dm.bookQuery.Close;
+           dm.bookQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+
+
+end;
+
+end.
