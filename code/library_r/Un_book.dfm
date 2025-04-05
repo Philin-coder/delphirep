@@ -2,7 +2,7 @@ object frm_book: Tfrm_book
   Left = 0
   Top = 0
   Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1082#1085#1080#1075#1086#1081
-  ClientHeight = 495
+  ClientHeight = 615
   ClientWidth = 1037
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -27,54 +27,22 @@ object frm_book: Tfrm_book
     Left = 0
     Top = 47
     Width = 1037
-    Height = 448
-    ActivePage = sel_tab
+    Height = 568
+    ActivePage = ins_tab
     Align = alClient
     TabOrder = 1
+    ExplicitHeight = 448
     object sel_tab: TTabSheet
       Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1082#1085#1080#1075#1077
-      object book_condBox: TGroupBox
-        Left = 0
-        Top = 0
-        Width = 1029
-        Height = 113
-        Align = alTop
-        Caption = #1055#1086#1080#1089#1082' '#1087#1086
-        TabOrder = 0
-        DesignSize = (
-          1029
-          113)
-        object bookcondedit_inp: TLabeledEdit
-          Left = 19
-          Top = 34
-          Width = 966
-          Height = 21
-          Anchors = [akLeft, akRight]
-          EditLabel.Width = 199
-          EditLabel.Height = 13
-          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1085#1072#1079#1074#1072#1085#1080#1102' '#1082#1085#1080#1075#1080
-          TabOrder = 0
-        end
-        object book_fnddEdit: TLabeledEdit
-          Left = 19
-          Top = 81
-          Width = 966
-          Height = 21
-          Anchors = [akLeft, akRight]
-          EditLabel.Width = 166
-          EditLabel.Height = 13
-          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1085#1072#1079#1074#1072#1085#1080#1102' '#1082#1085#1080#1075#1080
-          TabOrder = 1
-          OnKeyPress = book_fnddEditKeyPress
-        end
-      end
+      ExplicitHeight = 420
       object bookbtnBox: TGroupBox
         Left = 0
-        Top = 350
+        Top = 470
         Width = 1029
         Height = 70
         Align = alBottom
-        TabOrder = 1
+        TabOrder = 0
+        ExplicitTop = 350
         object bookselBtn: TButton
           Left = 336
           Top = 32
@@ -91,7 +59,7 @@ object frm_book: Tfrm_book
         Width = 1029
         Height = 64
         Align = alTop
-        TabOrder = 2
+        TabOrder = 1
         object booknaimRadio_grupper: TRadioButton
           Left = 65
           Top = 22
@@ -117,15 +85,16 @@ object frm_book: Tfrm_book
         Left = 0
         Top = 177
         Width = 1029
-        Height = 173
+        Height = 293
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
-        TabOrder = 3
+        TabOrder = 2
+        ExplicitHeight = 173
         object bookGrid: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
-          Height = 156
+          Height = 276
           Align = alClient
           DataSource = DM.bookDS
           TabOrder = 0
@@ -203,92 +172,363 @@ object frm_book: Tfrm_book
             end>
         end
       end
-    end
-    object ins_tab: TTabSheet
-      Caption = #1044#1086#1073#1072#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1078#1072#1085#1088#1077
-      ImageIndex = 1
-      object gen_inpBox: TGroupBox
+      object book_condBox: TGroupBox
         Left = 0
         Top = 0
         Width = 1029
-        Height = 81
+        Height = 113
         Align = alTop
-        Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
-        TabOrder = 0
+        Caption = #1055#1086#1080#1089#1082' '#1087#1086
+        TabOrder = 3
         DesignSize = (
           1029
-          81)
-        object genre_inp: TLabeledEdit
-          Left = 3
-          Top = 40
-          Width = 1014
+          113)
+        object bookcondedit_inp: TLabeledEdit
+          Left = 19
+          Top = 34
+          Width = 966
           Height = 21
           Anchors = [akLeft, akRight]
-          EditLabel.Width = 135
+          EditLabel.Width = 199
           EditLabel.Height = 13
-          EditLabel.Caption = #1042#1074#1086#1076' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1103' '#1078#1072#1085#1088#1072
+          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1085#1072#1079#1074#1072#1085#1080#1102' '#1082#1085#1080#1075#1080
           TabOrder = 0
         end
-      end
-      object Gen_inp_btnBox: TGroupBox
-        Left = 0
-        Top = 358
-        Width = 1029
-        Height = 62
-        Align = alBottom
-        TabOrder = 1
-        object gen_insBon: TButton
-          Left = 456
-          Top = 24
-          Width = 75
-          Height = 25
-          Caption = #1042#1074#1086#1076
-          TabOrder = 0
+        object book_fnddEdit: TLabeledEdit
+          Left = 19
+          Top = 81
+          Width = 966
+          Height = 21
+          Anchors = [akLeft, akRight]
+          EditLabel.Width = 166
+          EditLabel.Height = 13
+          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1085#1072#1079#1074#1072#1085#1080#1102' '#1082#1085#1080#1075#1080
+          TabOrder = 1
+          OnKeyPress = book_fnddEditKeyPress
         end
       end
-      object gen_inp_dataBox: TGroupBox
+    end
+    object ins_tab: TTabSheet
+      Caption = #1044#1086#1073#1072#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1082#1085#1080#1075#1077
+      ImageIndex = 1
+      ExplicitHeight = 420
+      object aboutbookPC: TPageControl
         Left = 0
-        Top = 81
+        Top = 0
         Width = 1029
-        Height = 277
+        Height = 540
+        ActivePage = about_book_yab_two
         Align = alClient
-        TabOrder = 2
-        object gen_ins_dataBox: TGroupBox
-          Left = 2
-          Top = 15
-          Width = 1025
-          Height = 260
-          Align = alClient
-          Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
-          TabOrder = 0
-          object gen_insGrid: TDBGrid
-            Left = 2
-            Top = 15
-            Width = 1021
-            Height = 243
-            Align = alClient
-            DataSource = DM.GenreDS
+        TabOrder = 0
+        ExplicitHeight = 420
+        object about_bookTab_one: TTabSheet
+          Caption = #1054' '#1082#1085#1080#1075#1077
+          ExplicitLeft = 0
+          ExplicitTop = 16
+          ExplicitHeight = 392
+          DesignSize = (
+            1021
+            512)
+          object naim_b_inp: TLabeledEdit
+            Left = 19
+            Top = 47
+            Width = 966
+            Height = 21
+            Anchors = [akLeft, akRight]
+            EditLabel.Width = 48
+            EditLabel.Height = 13
+            EditLabel.Caption = #1053#1072#1079#1074#1072#1085#1080#1077
             TabOrder = 0
-            TitleFont.Charset = DEFAULT_CHARSET
-            TitleFont.Color = clWindowText
-            TitleFont.Height = -11
-            TitleFont.Name = 'Tahoma'
-            TitleFont.Style = []
-            Columns = <
-              item
-                Expanded = False
-                FieldName = 'ID_Genre'
-                Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-                Width = 94
-                Visible = True
-              end
-              item
-                Expanded = False
-                FieldName = 'Name_G'
-                Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077' '#1078#1072#1085#1088#1072
-                Width = 122
-                Visible = True
-              end>
+            ExplicitTop = 34
+          end
+          object m_source_inp: TLabeledEdit
+            Left = 19
+            Top = 121
+            Width = 966
+            Height = 21
+            Anchors = [akLeft, akRight]
+            EditLabel.Width = 105
+            EditLabel.Height = 13
+            EditLabel.Caption = #1048#1089#1090#1086#1095#1085#1080#1082' '#1087#1086#1083#1091#1095#1077#1085#1080#1103
+            TabOrder = 1
+            ExplicitTop = 90
+          end
+          object ins_book_date_p_lbl: TStaticText
+            Left = 19
+            Top = 166
+            Width = 92
+            Height = 17
+            Align = alCustom
+            Anchors = []
+            Caption = #1044#1072#1090#1072' '#1087#1086#1089#1090#1091#1087#1083#1077#1080#1103
+            TabOrder = 2
+            ExplicitTop = 125
+          end
+          object datep_inp: TDateTimePicker
+            Left = 19
+            Top = 196
+            Width = 966
+            Height = 21
+            Align = alCustom
+            Anchors = [akLeft, akRight]
+            Date = 45752.429875972220000000
+            Time = 45752.429875972220000000
+            TabOrder = 3
+            ExplicitTop = 148
+          end
+          object m_count_grader: TUpDown
+            AlignWithMargins = True
+            Left = 3
+            Top = 305
+            Width = 21
+            Height = 21
+            Cursor = crVSplit
+            AlignButton = udLeft
+            Anchors = []
+            Associate = m_count_inp
+            TabOrder = 4
+            ExplicitTop = 231
+          end
+          object m_count_inp: TLabeledEdit
+            Left = 19
+            Top = 305
+            Width = 966
+            Height = 21
+            Anchors = [akLeft, akRight]
+            EditLabel.Width = 127
+            EditLabel.Height = 13
+            EditLabel.Caption = #1050#1086#1083#1080#1095#1077#1089#1090#1074#1086' '#1101#1082#1079#1077#1084#1087#1083#1103#1088#1086#1074
+            TabOrder = 5
+            Text = '0'
+            ExplicitTop = 231
+          end
+          object price_inp: TLabeledEdit
+            Left = 3
+            Top = 371
+            Width = 966
+            Height = 21
+            Anchors = [akLeft, akRight]
+            EditLabel.Width = 26
+            EditLabel.Height = 13
+            EditLabel.Caption = #1062#1077#1085#1072
+            TabOrder = 6
+            ExplicitTop = 282
+          end
+          object doc_count: TLabeledEdit
+            Left = 3
+            Top = 442
+            Width = 966
+            Height = 21
+            Anchors = [akLeft, akRight]
+            EditLabel.Width = 124
+            EditLabel.Height = 13
+            EditLabel.Caption = #1050#1086#1083#1080#1095#1077#1089#1090#1074#1086' '#1076#1086#1082#1091#1084#1077#1085#1090#1086#1074
+            TabOrder = 7
+            ExplicitTop = 336
+          end
+        end
+        object about_book_yab_two: TTabSheet
+          Caption = #1054' '#1082#1085#1080#1075#1077
+          ImageIndex = 1
+          ExplicitLeft = 0
+          ExplicitHeight = 392
+          object ins_book_data_Box: TGroupBox
+            Left = 0
+            Top = 0
+            Width = 1021
+            Height = 305
+            Align = alTop
+            Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+            TabOrder = 0
+            DesignSize = (
+              1021
+              305)
+            object genre_lbl: TStaticText
+              Left = 3
+              Top = 18
+              Width = 32
+              Height = 17
+              Caption = #1046#1072#1085#1088
+              TabOrder = 0
+            end
+            object Ins_book_genre_DBL: TDBLookupComboBox
+              Left = 1
+              Top = 43
+              Width = 1017
+              Height = 21
+              Align = alCustom
+              Anchors = [akLeft, akRight]
+              KeyField = 'ID_Genre'
+              ListField = 'Name_G'
+              ListSource = DM.GenreDS
+              TabOrder = 1
+              ExplicitTop = 26
+            end
+            object ins_book_autor_lbl: TStaticText
+              Left = 3
+              Top = 85
+              Width = 35
+              Height = 17
+              Align = alCustom
+              Caption = #1040#1074#1090#1086#1088
+              TabOrder = 2
+            end
+            object ins_book_autorDBL: TDBLookupComboBox
+              Left = 3
+              Top = 102
+              Width = 1018
+              Height = 21
+              Align = alCustom
+              Anchors = [akLeft, akRight]
+              KeyField = 'Name_A'
+              ListField = 'Name_A'
+              ListSource = DM.autDS
+              TabOrder = 3
+              ExplicitTop = 108
+            end
+            object publisher_inp: TLabeledEdit
+              Left = 0
+              Top = 150
+              Width = 1050
+              Height = 21
+              Anchors = [akLeft, akRight]
+              EditLabel.Width = 49
+              EditLabel.Height = 13
+              EditLabel.Caption = #1048#1079#1076#1072#1090#1077#1083#1100
+              TabOrder = 4
+              ExplicitTop = 146
+            end
+            object numebr_of_pages_inp: TLabeledEdit
+              Left = 3
+              Top = 257
+              Width = 1018
+              Height = 21
+              Anchors = [akLeft, akRight]
+              EditLabel.Width = 104
+              EditLabel.Height = 13
+              EditLabel.Caption = #1050#1086#1083#1080#1095#1077#1089#1090#1074#1086' '#1089#1090#1088#1072#1085#1080#1094
+              TabOrder = 5
+              ExplicitTop = 250
+            end
+            object Year_of_pub_inp: TLabeledEdit
+              Left = 3
+              Top = 204
+              Width = 1018
+              Height = 21
+              Anchors = [akLeft, akRight]
+              EditLabel.Width = 64
+              EditLabel.Height = 13
+              EditLabel.Caption = #1043#1086#1076' '#1080#1079#1076#1072#1085#1080#1103
+              TabOrder = 6
+              ExplicitTop = 198
+            end
+          end
+          object ins_book_btn_Box: TGroupBox
+            Left = 0
+            Top = 448
+            Width = 1021
+            Height = 64
+            Align = alBottom
+            TabOrder = 1
+            object Ins_book_insBtn: TButton
+              Left = 272
+              Top = 36
+              Width = 75
+              Height = 25
+              Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+              TabOrder = 0
+            end
+          end
+          object Ins_book_dataBox: TGroupBox
+            Left = 0
+            Top = 305
+            Width = 1021
+            Height = 143
+            Align = alClient
+            TabOrder = 2
+            ExplicitTop = 448
+            ExplicitHeight = 64
+            object ins_book_DataGrid: TDBGrid
+              Left = 2
+              Top = 15
+              Width = 1017
+              Height = 126
+              Align = alClient
+              DataSource = DM.bookDS
+              TabOrder = 0
+              TitleFont.Charset = DEFAULT_CHARSET
+              TitleFont.Color = clWindowText
+              TitleFont.Height = -11
+              TitleFont.Name = 'Tahoma'
+              TitleFont.Style = []
+              Columns = <
+                item
+                  Expanded = False
+                  FieldName = 'ID_Book'
+                  Title.Caption = #1053#1086#1084#1077#1088'  '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+                  Visible = True
+                end
+                item
+                  Expanded = False
+                  FieldName = 'Name_B'
+                  Title.Caption = #1053#1072#1079#1074#1072#1085#1080#1077
+                  Visible = True
+                end
+                item
+                  Expanded = False
+                  FieldName = 'm_Source'
+                  Title.Caption = #1048#1089#1090#1086#1095#1085#1080#1077' '#1087#1086#1083#1091#1095#1077#1085#1080#1103
+                  Visible = True
+                end
+                item
+                  Expanded = False
+                  FieldName = 'Date_P'
+                  Title.Caption = #1044#1072#1090#1072' '#1087#1086#1089#1090#1091#1087#1083#1077#1085#1080#1103
+                  Visible = True
+                end
+                item
+                  Expanded = False
+                  FieldName = 'm_Count'
+                  Title.Caption = #1050#1086#1083#1080#1095#1077#1089#1090#1074#1086' '#1101#1082#1079#1077#1084#1087#1083#1103#1088#1086#1074
+                  Visible = True
+                end
+                item
+                  Expanded = False
+                  FieldName = 'Price'
+                  Title.Caption = #1062#1077#1085#1072
+                  Visible = True
+                end
+                item
+                  Expanded = False
+                  FieldName = 'Name_G'
+                  Title.Caption = #1046#1072#1085#1088
+                  Visible = True
+                end
+                item
+                  Expanded = False
+                  FieldName = 'Name_A'
+                  Title.Caption = #1040#1074#1090#1086#1088
+                  Visible = True
+                end
+                item
+                  Expanded = False
+                  FieldName = 'Publisher'
+                  Title.Caption = #1048#1079#1076#1072#1090#1077#1083#1100#1089#1090#1074#1086
+                  Visible = True
+                end
+                item
+                  Expanded = False
+                  FieldName = 'Number_of_Pages'
+                  Title.Caption = #1050#1086#1083#1080#1095#1077#1089#1090#1074#1086' '#1089#1090#1088#1072#1085#1080#1094
+                  Visible = True
+                end
+                item
+                  Expanded = False
+                  FieldName = 'Year_of_Pub'
+                  Title.Caption = #1043#1086#1076' '#1080#1079#1076#1072#1085#1080#1103
+                  Visible = True
+                end>
+            end
           end
         end
       end
@@ -296,6 +536,7 @@ object frm_book: Tfrm_book
     object updTab: TTabSheet
       Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1078#1072#1085#1088#1077
       ImageIndex = 2
+      ExplicitHeight = 420
       object gen_upd_inp_box: TGroupBox
         Left = 0
         Top = 0
@@ -342,15 +583,16 @@ object frm_book: Tfrm_book
         Left = 0
         Top = 137
         Width = 1029
-        Height = 213
+        Height = 333
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
+        ExplicitHeight = 213
         object gen_updGrid: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
-          Height = 196
+          Height = 316
           Align = alClient
           DataSource = DM.GenreDS
           TabOrder = 0
@@ -378,11 +620,12 @@ object frm_book: Tfrm_book
       end
       object upd_gen_btn_box: TGroupBox
         Left = 0
-        Top = 350
+        Top = 470
         Width = 1029
         Height = 70
         Align = alBottom
         TabOrder = 2
+        ExplicitTop = 350
         object upd_gen_Btn: TButton
           Left = 464
           Top = 24
@@ -396,6 +639,7 @@ object frm_book: Tfrm_book
     object delTab: TTabSheet
       Caption = ' '#1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1078#1072#1085#1088#1077
       ImageIndex = 3
+      ExplicitHeight = 420
       object gen_del_inp_Box: TGroupBox
         Left = 0
         Top = 0
@@ -426,11 +670,12 @@ object frm_book: Tfrm_book
       end
       object gen_del_btn_Box: TGroupBox
         Left = 0
-        Top = 350
+        Top = 470
         Width = 1029
         Height = 70
         Align = alBottom
         TabOrder = 1
+        ExplicitTop = 350
         object gen_del_btn: TButton
           Left = 464
           Top = 24
@@ -444,15 +689,16 @@ object frm_book: Tfrm_book
         Left = 0
         Top = 105
         Width = 1029
-        Height = 245
+        Height = 365
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
+        ExplicitHeight = 245
         object gendelGrid: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
-          Height = 228
+          Height = 348
           Align = alClient
           DataSource = DM.GenreDS
           TabOrder = 0

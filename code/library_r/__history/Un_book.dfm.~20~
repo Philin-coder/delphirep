@@ -65,6 +65,7 @@ object frm_book: Tfrm_book
           EditLabel.Height = 13
           EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1085#1072#1079#1074#1072#1085#1080#1102' '#1082#1085#1080#1075#1080
           TabOrder = 1
+          OnKeyPress = book_fnddEditKeyPress
         end
       end
       object bookbtnBox: TGroupBox
@@ -99,6 +100,7 @@ object frm_book: Tfrm_book
           Align = alCustom
           Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1102' '#1082#1085#1080#1075#1080
           TabOrder = 0
+          OnClick = booknaimRadio_grupperClick
         end
         object book_reset_Radio: TRadioButton
           Left = 640
@@ -108,6 +110,7 @@ object frm_book: Tfrm_book
           Align = alCustom
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 1
+          OnClick = book_reset_RadioClick
         end
       end
       object book_data_Box: TGroupBox
