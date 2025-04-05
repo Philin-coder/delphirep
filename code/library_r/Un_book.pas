@@ -23,12 +23,12 @@ type
     booknaimRadio_grupper: TRadioButton;
     book_reset_Radio: TRadioButton;
     bookGrid: TDBGrid;
-    gen_upd_inp_box: TGroupBox;
-    Upd_gen_data_Box: TGroupBox;
-    Upd_gen_naim_inp: TLabeledEdit;
-    gen_upd_lbl: TLabel;
-    gen_updDBL: TDBLookupComboBox;
-    upd_gen_btn_box: TGroupBox;
+    book_upd_inp_box: TGroupBox;
+    Upd_book_data_Box: TGroupBox;
+    Upd_book_naim_inp: TLabeledEdit;
+    book_upd_lbl: TLabel;
+    book_updDBL: TDBLookupComboBox;
+    upd_book_btn_box: TGroupBox;
     upd_gen_Btn: TButton;
     gen_del_inp_Box: TGroupBox;
     gen_delLbl: TLabel;
@@ -36,7 +36,6 @@ type
     gen_del_btn_Box: TGroupBox;
     gen_del_btn: TButton;
     gen_del_data_Box: TGroupBox;
-    gen_updGrid: TDBGrid;
     gendelGrid: TDBGrid;
     book_condBox: TGroupBox;
     bookcondedit_inp: TLabeledEdit;
@@ -65,6 +64,7 @@ type
     Ins_book_dataBox: TGroupBox;
     ins_book_DataGrid: TDBGrid;
     docCB: TCheckBox;
+    Upd_book_Grid: TDBGrid;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -73,6 +73,7 @@ type
     procedure booknaimRadio_grupperClick(Sender: TObject);
     procedure book_reset_RadioClick(Sender: TObject);
     procedure Ins_book_insBtnClick(Sender: TObject);
+    procedure upd_gen_BtnClick(Sender: TObject);
   private
   procedure ChangeFormColor(Sender: TObject);
   public
@@ -310,7 +311,7 @@ var
   PriceValue: Int64;
   id_instance,count_doc, k,i:Integer;
 begin
-price_str:=price_inp.Text;
+PriceText:=price_inp.Text;
 case docCB.Checked of
 True:
 begin
@@ -346,13 +347,14 @@ if AreFieldsEmpty or not AreFieldsValid then
   try
       with dm.INS_BOOK do
       begin
+        PriceValue:=StrToInt64(price_inp.Text);
         if not Connection.Connected then
           raise Exception.Create('Соединение с базой не установлено');
            Parameters.ParamByName('@NAME_B').Value:=naim_b_inp.Text;
            Parameters.ParamByName('@m_SOURCE').Value:=m_source_inp.Text;
            Parameters.ParamByName('@DATE_P').Value:=DateToStr_(datep_inp.Date);
            Parameters.ParamByName('@m_COUNT').Value:=StrToInt(m_count_inp.Text);
-           Parameters.ParamByName('@PRICE').Value:=StrToFloat(price_inp.Text);
+           Parameters.ParamByName('@PRICE').Value:=PriceValue;
            Parameters.ParamByName('@ID_GENRE').Value:=
            dm.GenreQuery.FieldByName('ID_GENRE').AsString;
            Parameters.ParamByName('@ID_AUTHOR').Value:=
@@ -419,13 +421,14 @@ if AreFieldsEmpty or not AreFieldsValid then
   try
       with dm.INS_BOOK_normal do
       begin
+      PriceValue:=StrToInt64(price_inp.Text);
         if not Connection.Connected then
           raise Exception.Create('Соединение с базой не установлено');
            Parameters.ParamByName('@NAME_B').Value:=naim_b_inp.Text;
            Parameters.ParamByName('@m_SOURCE').Value:=m_source_inp.Text;
            Parameters.ParamByName('@DATE_P').Value:=DateToStr_(datep_inp.Date);
            Parameters.ParamByName('@m_COUNT').Value:=StrToInt(m_count_inp.Text);
-           Parameters.ParamByName('@PRICE').Value:=StrToFloat(price_inp.Text);
+           Parameters.ParamByName('@PRICE').Value:=PriceValue;
            Parameters.ParamByName('@ID_GENRE').Value:=
            dm.GenreQuery.FieldByName('ID_GENRE').AsString;
            Parameters.ParamByName('@ID_AUTHOR').Value:=
@@ -451,6 +454,54 @@ if AreFieldsEmpty or not AreFieldsValid then
     end;
 end;
 end;//case
+end;
+
+procedure Tfrm_book.upd_gen_BtnClick(Sender: TObject);
+ const
+  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+  var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+begin
+AreFieldsEmpty:=(
+ (book_updDBL.Text='')or
+ (Trim(Upd_book_naim_inp.Text)='')
+);
+AreFieldsValid:=(
+(ValidateComponentText(book_upd_inp_box,AllowedChars))
+);
+  if AreFieldsEmpty or not AreFieldsValid then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.upd_book do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@id_book').Value:=
+           dm.bookQuery.FieldByName('id_book').AsString;
+           Parameters.ParamByName('@name_b').Value:=Upd_book_naim_inp.Text;
+           ExecProc;
+           dm.bookQuery.Close;
+           dm.bookQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+
+
 end;
 
 end.

@@ -443,7 +443,37 @@ object DM: TDM
         Direction = pdOutput
         Precision = 10
       end>
-    Left = 216
+    Left = 320
+    Top = 232
+  end
+  object upd_book: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_book;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@id_book'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+      end
+      item
+        Name = '@name_b'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 50
+      end>
+    Left = 224
     Top = 288
+  end
+  object del_book: TADOStoredProc
+    Parameters = <>
+    Left = 232
+    Top = 356
   end
 end
