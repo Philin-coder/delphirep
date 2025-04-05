@@ -268,21 +268,91 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@Name_B'
         Attributes = [paNullable]
         DataType = ftString
         Size = 50
+        Value = Null
       end>
     Left = 216
     Top = 184
   end
-  object ADOStoredProc2: TADOStoredProc
+  object INS_BOOK_normal: TADOStoredProc
     Connection = Connection
-    Parameters = <>
-    Left = 360
-    Top = 232
+    ProcedureName = 'INS_BOOK_normal;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@NAME_B'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 150
+      end
+      item
+        Name = '@m_SOURCE'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 70
+      end
+      item
+        Name = '@DATE_P'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 10
+      end
+      item
+        Name = '@m_COUNT'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+      end
+      item
+        Name = '@PRICE'
+        Attributes = [paNullable]
+        DataType = ftBCD
+        NumericScale = 2
+        Precision = 5
+      end
+      item
+        Name = '@ID_GENRE'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+      end
+      item
+        Name = '@ID_AUTHOR'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+      end
+      item
+        Name = '@PUBLISHER'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 50
+      end
+      item
+        Name = '@NAMBER_PAGES'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+      end
+      item
+        Name = '@YEAR_PUB'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+      end>
+    Left = 224
+    Top = 240
   end
   object ADOStoredProc3: TADOStoredProc
     Connection = Connection

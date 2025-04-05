@@ -23,7 +23,7 @@ type
     bookQuery: TADOQuery;
     bookDS: TDataSource;
     sel_book: TADOStoredProc;
-    ADOStoredProc2: TADOStoredProc;
+    INS_BOOK_normal: TADOStoredProc;
     ADOStoredProc3: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;
   private

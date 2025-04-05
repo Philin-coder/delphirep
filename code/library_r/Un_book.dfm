@@ -217,7 +217,7 @@ object frm_book: Tfrm_book
         Top = 0
         Width = 1029
         Height = 540
-        ActivePage = about_book_yab_two
+        ActivePage = about_bookTab_one
         Align = alClient
         TabOrder = 0
         ExplicitHeight = 420

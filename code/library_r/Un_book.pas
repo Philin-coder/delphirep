@@ -301,7 +301,14 @@ frm_book.ShowHint:=true;
 end;
 
 procedure Tfrm_book.Ins_book_insBtnClick(Sender: TObject);
+const
+     AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+  price_str:String;
 begin
+price_str:=price_inp.Text;
 case docCB.Checked of
 True:
 begin
@@ -309,7 +316,69 @@ begin
 end;
 false:
 begin
-    ShowMessage('Не нажат');
+AreFieldsEmpty:=
+(
+(Trim(naim_b_inp.Text) = '')or
+(Trim(m_source_inp.Text) = '') or
+(m_count_grader.Position=0)or
+(Trim(price_inp.Text) = '')or
+(Ins_book_genre_DBL.Text='')or
+(ins_book_autorDBL.Text='')or
+(Trim(publisher_inp.Text) = '')or
+(Trim(numebr_of_pages_inp.Text) = '')or
+(Trim(Year_of_pub_inp.Text) = '')
+);
+AreFieldsValid:=(
+ValidateComponentText(naim_b_inp,AllowedChars)and
+ValidateComponentText(m_source_inp,AllowedChars)and
+IsDigitsOnly(price_inp.Text)and
+ValidateComponentText(publisher_inp,AllowedChars)and
+IsDigitsOnly(numebr_of_pages_inp.Text)and
+IsDigitsOnly(Year_of_pub_inp.Text)
+);
+if AreFieldsEmpty or not AreFieldsValid then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.INS_BOOK_normal do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@NAME_B').Value:=naim_b_inp.Text;
+           Parameters.ParamByName('@m_SOURCE').Value:=m_source_inp.Text;
+           Parameters.ParamByName('@DATE_P').Value:=DateToStr_(datep_inp.Date);
+           Parameters.ParamByName('@m_COUNT').Value:=StrToInt(m_count_inp.Text);
+           Parameters.ParamByName('@PRICE').Value:=StrToFloat(price_inp.Text);
+           Parameters.ParamByName('@ID_GENRE').Value:=
+           dm.GenreQuery.FieldByName('ID_GENRE').AsString;
+           Parameters.ParamByName('@ID_AUTHOR').Value:=
+           dm.AutQuery.FieldByName('ID_AUTHOR').AsString;
+           Parameters.ParamByName('@PUBLISHER').Value:=publisher_inp.Text;
+           Parameters.ParamByName('@NAMBER_PAGES').
+           Value:=StrToInt(numebr_of_pages_inp.Text);
+           Parameters.ParamByName('@YEAR_PUB').Value:=StrToInt(Year_of_pub_inp.Text);
+           ExecProc;
+           dm.bookQuery.Close;
+           dm.bookQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+
+
+
 end;
 end;//case
 end;
