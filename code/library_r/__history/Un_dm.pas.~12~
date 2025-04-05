@@ -25,6 +25,7 @@ type
     sel_book: TADOStoredProc;
     INS_BOOK_normal: TADOStoredProc;
     ins_book: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public

@@ -853,17 +853,46 @@ begin
       UniformizeButtonsSize(TWinControl(Control), AWidth, AHeight);
   end;
 end;
-
 function IsDigitsOnly(const Text: string): Boolean;
 var
   i: Integer;
+  NumberValue: Int64; // Для больших чисел (до 18 цифр)
 begin
   Result := True;
+
+  // Проверяем каждый символ
   for i := 1 to Length(Text) do
   begin
-    if not (Text[i] in ['0'..'9']) then
+    if not (Text[i] in ['0'..'9']) then // Разрешены только цифры
     begin
-      ShowMessage('Ошибка: значение  должно быть в диапазоне от 0 до 99999999.99.');
+      ShowMessage('Ошибка: значение должно содержать только цифры.');
+      Result := False;
+      Exit;
+    end;
+  end;
+
+  // Проверяем, что строка не пустая
+  if Text = '' then
+  begin
+    ShowMessage('Ошибка: введите корректное число.');
+    Result := False;
+    Exit;
+  end;
+
+  // Преобразуем строку в целое число
+  try
+    NumberValue := StrToInt64(Text); // Для поддержки 18-значных чисел
+    // Проверка диапазона (если нужно)
+    if (NumberValue < 0) or (NumberValue > 999999999999999999) then // 10^18 - 1
+    begin
+      ShowMessage('Ошибка: значение должно быть в диапазоне от 0 до 999999999999999999.');
+      Result := False;
+      Exit;
+    end;
+  except
+    on E: EConvertError do
+    begin
+      ShowMessage('Ошибка: неверный формат числа.');
       Result := False;
       Exit;
     end;

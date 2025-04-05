@@ -64,6 +64,9 @@ procedure UpdateFormProperties(const FormName: string;
  function GetTimeOfDay: string;
  procedure ExtractResFile;
 function FileExistsInAppDirectory(const FileName: string): string;
+procedure UniformizeButtonsSize(AWinControl: TWinControl; AWidth,
+AHeight: Integer);
+function IsDigitsOnly(const Text: string): Boolean;
 
 implementation
  var
@@ -673,7 +676,8 @@ begin
   end;
 end;
 
-procedure LoadIconFromResource(const ResourceName: string; Action: Integer; ImageList: TImageList = nil);
+procedure LoadIconFromResource(const ResourceName: string;
+Action: Integer; ImageList: TImageList = nil);
 var
   RS: TResourceStream;
   Icon: TIcon;
@@ -825,13 +829,44 @@ var
   FindResult: Integer;
 begin
   Result := '';  // Если файл не найден, возвращаем пустую строку
-
-
   FindResult := FindFirst(ExtractFilePath(ParamStr(0)) + FileName, faAnyFile, SearchRec);
   if FindResult = 0 then
   begin
     if (SearchRec.Attr and faDirectory = 0) then
       Result := SearchRec.Name;
+  end;
+end;
+procedure UniformizeButtonsSize(AWinControl: TWinControl; AWidth, AHeight: Integer);
+var
+  i: Integer;
+  Control: TControl;
+begin
+  for i := 0 to AWinControl.ControlCount - 1 do
+  begin
+    Control := AWinControl.Controls[i];
+    if Control is TButton then
+    begin
+      TButton(Control).Width := AWidth;
+      TButton(Control).Height := AHeight;
+    end;
+    if Control is TWinControl then
+      UniformizeButtonsSize(TWinControl(Control), AWidth, AHeight);
+  end;
+end;
+
+function IsDigitsOnly(const Text: string): Boolean;
+var
+  i: Integer;
+begin
+  Result := True;
+  for i := 1 to Length(Text) do
+  begin
+    if not (Text[i] in ['0'..'9']) then
+    begin
+      ShowMessage('Ошибка: значение  должно быть в диапазоне от 0 до 99999999.99.');
+      Result := False;
+      Exit;
+    end;
   end;
 end;
 

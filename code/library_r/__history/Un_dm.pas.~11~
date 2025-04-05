@@ -24,7 +24,8 @@ type
     bookDS: TDataSource;
     sel_book: TADOStoredProc;
     INS_BOOK_normal: TADOStoredProc;
-    ins_book: TADOStoredProc;
+    ADOStoredProc3: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public

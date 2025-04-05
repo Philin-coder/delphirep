@@ -367,83 +367,14 @@ object DM: TDM
   end
   object ins_book: TADOStoredProc
     Connection = Connection
-    ProcedureName = 'INS_BOOK;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@NAME_B'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 150
-      end
-      item
-        Name = '@m_SOURCE'
-        Attributes = [paNullable]
-        DataType = ftString
-        Size = 70
-      end
-      item
-        Name = '@DATE_P'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 10
-      end
-      item
-        Name = '@m_COUNT'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-      end
-      item
-        Name = '@PRICE'
-        Attributes = [paNullable]
-        DataType = ftBCD
-        NumericScale = 2
-        Precision = 5
-      end
-      item
-        Name = '@ID_GENRE'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-      end
-      item
-        Name = '@ID_AUTHOR'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-      end
-      item
-        Name = '@PUBLISHER'
-        Attributes = [paNullable]
-        DataType = ftString
-        Size = 50
-      end
-      item
-        Name = '@NAMBER_PAGES'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-      end
-      item
-        Name = '@YEAR_PUB'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-      end
-      item
-        Name = '@Id'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Direction = pdOutput
-        Precision = 10
-      end>
-    Left = 216
-    Top = 288
+    Parameters = <>
+    Left = 224
+    Top = 296
+  end
+  object ADOStoredProc4: TADOStoredProc
+    Connection = Connection
+    Parameters = <>
+    Left = 368
+    Top = 352
   end
 end

@@ -64,7 +64,9 @@ procedure UpdateFormProperties(const FormName: string;
  function GetTimeOfDay: string;
  procedure ExtractResFile;
 function FileExistsInAppDirectory(const FileName: string): string;
-procedure UniformizeButtonsSize(AForm: TForm; AWidth, AHeight: Integer);
+procedure UniformizeButtonsSize(AWinControl: TWinControl; AWidth,
+AHeight: Integer);
+function IsDigitsOnly(const Text: string): Boolean;
 
 implementation
  var
@@ -674,7 +676,8 @@ begin
   end;
 end;
 
-procedure LoadIconFromResource(const ResourceName: string; Action: Integer; ImageList: TImageList = nil);
+procedure LoadIconFromResource(const ResourceName: string;
+Action: Integer; ImageList: TImageList = nil);
 var
   RS: TResourceStream;
   Icon: TIcon;
@@ -826,8 +829,6 @@ var
   FindResult: Integer;
 begin
   Result := '';  // Если файл не найден, возвращаем пустую строку
-
-
   FindResult := FindFirst(ExtractFilePath(ParamStr(0)) + FileName, faAnyFile, SearchRec);
   if FindResult = 0 then
   begin
@@ -835,22 +836,84 @@ begin
       Result := SearchRec.Name;
   end;
 end;
-procedure UniformizeButtonsSize(AForm: TForm; AWidth, AHeight: Integer);
+procedure UniformizeButtonsSize(AWinControl: TWinControl; AWidth, AHeight: Integer);
 var
   i: Integer;
   Control: TControl;
 begin
-  for i := 0 to AForm.ControlCount - 1 do
+  for i := 0 to AWinControl.ControlCount - 1 do
   begin
-    Control := AForm.Controls[i];
+    Control := AWinControl.Controls[i];
     if Control is TButton then
     begin
       TButton(Control).Width := AWidth;
       TButton(Control).Height := AHeight;
     end;
+    if Control is TWinControl then
+      UniformizeButtonsSize(TWinControl(Control), AWidth, AHeight);
   end;
 end;
 
+
+function IsDigitsOnly(const Text: string): Boolean;
+var
+  i: Integer;
+  DecimalSeparatorFound: Boolean;
+  NumberValue: Double;
+begin
+  Result := True;
+  DecimalSeparatorFound := False;
+
+  // Проверяем каждый символ
+  for i := 1 to Length(Text) do
+  begin
+    if not (Text[i] in ['0'..'9', '.', ',']) then
+    begin
+      ShowMessage('Ошибка: значение должно содержать только цифры и один десятичный разделитель.');
+      Result := False;
+      Exit;
+    end;
+
+    // Проверяем, что разделитель встречается только один раз
+    if (Text[i] = '.') or (Text[i] = ',') then
+    begin
+      if DecimalSeparatorFound then
+      begin
+        ShowMessage('Ошибка: слишком много десятичных разделителей.');
+        Result := False;
+        Exit;
+      end;
+      DecimalSeparatorFound := True;
+    end;
+  end;
+
+  // Проверяем, что строка не пустая и не состоит только из разделителя
+  if (Length(Text) = 0) or 
+     ((Length(Text) = 1) and (Text[1] in ['.', ','])) then
+  begin
+    ShowMessage('Ошибка: введите корректное число.');
+    Result := False;
+    Exit;
+  end;
+
+  // Преобразуем строку в число и проверяем диапазон
+  try
+    NumberValue := StrToFloat(CommaPoint(Text)); // Заменяем запятую на точку
+    if (NumberValue < 0) or (NumberValue > 99999999.99) then
+    begin
+      ShowMessage('Ошибка: значение должно быть в диапазоне от 0 до 99999999.99.');
+      Result := False;
+      Exit;
+    end;
+  except
+    on E: EConvertError do
+    begin
+      ShowMessage('Ошибка: неверный формат числа.');
+      Result := False;
+      Exit;
+    end;
+  end;
+end;
 initialization
 finalization
 if hAniCursor <> 0 then
