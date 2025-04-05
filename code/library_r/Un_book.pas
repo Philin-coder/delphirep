@@ -64,6 +64,7 @@ type
     Ins_book_insBtn: TButton;
     Ins_book_dataBox: TGroupBox;
     ins_book_DataGrid: TDBGrid;
+    docCB: TCheckBox;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -71,6 +72,7 @@ type
     procedure book_fnddEditKeyPress(Sender: TObject; var Key: Char);
     procedure booknaimRadio_grupperClick(Sender: TObject);
     procedure book_reset_RadioClick(Sender: TObject);
+    procedure Ins_book_insBtnClick(Sender: TObject);
   private
   procedure ChangeFormColor(Sender: TObject);
   public
@@ -296,6 +298,20 @@ frm_book.ShowHint:=true;
   ButtonClicks[2] := ChangeFormColor;
   ButtonClicks[3] := ChangeFormColor;
   CreateToolBarWithButtons(Self, BookImageList, ButtonNames, ButtonClicks);
+end;
+
+procedure Tfrm_book.Ins_book_insBtnClick(Sender: TObject);
+begin
+case docCB.Checked of
+True:
+begin
+   ShowMessage('Нажат');
+end;
+false:
+begin
+    ShowMessage('Не нажат');
+end;
+end;//case
 end;
 
 end.

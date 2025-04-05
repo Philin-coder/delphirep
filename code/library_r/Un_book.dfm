@@ -305,26 +305,32 @@ object frm_book: Tfrm_book
           object price_inp: TLabeledEdit
             Left = 3
             Top = 371
-            Width = 966
+            Width = 982
             Height = 21
             Anchors = [akLeft, akRight]
             EditLabel.Width = 26
             EditLabel.Height = 13
             EditLabel.Caption = #1062#1077#1085#1072
             TabOrder = 6
-            ExplicitTop = 282
           end
           object doc_count: TLabeledEdit
             Left = 3
             Top = 442
-            Width = 966
+            Width = 982
             Height = 21
             Anchors = [akLeft, akRight]
             EditLabel.Width = 124
             EditLabel.Height = 13
             EditLabel.Caption = #1050#1086#1083#1080#1095#1077#1089#1090#1074#1086' '#1076#1086#1082#1091#1084#1077#1085#1090#1086#1074
             TabOrder = 7
-            ExplicitTop = 336
+          end
+          object docCB: TCheckBox
+            Left = 336
+            Top = 24
+            Width = 225
+            Height = 17
+            Caption = #1059#1095#1080#1090#1099#1074#1072#1090#1100' '#1082#1086#1083#1080#1095#1077#1089#1090#1074#1086' '#1076#1086#1082#1091#1084#1077#1085#1090#1086#1074
+            TabOrder = 8
           end
         end
         object about_book_yab_two: TTabSheet
@@ -437,6 +443,7 @@ object frm_book: Tfrm_book
               Height = 25
               Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
               TabOrder = 0
+              OnClick = Ins_book_insBtnClick
             end
           end
           object Ins_book_dataBox: TGroupBox
