@@ -262,7 +262,19 @@ object DM: TDM
   object sel_book: TADOStoredProc
     Connection = Connection
     ProcedureName = 'sel_book;1'
-    Parameters = <>
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@Name_B'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 50
+      end>
     Left = 216
     Top = 184
   end

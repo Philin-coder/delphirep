@@ -117,7 +117,7 @@ try
     with DM.sel_book do
     begin
       Close;
-           Parameters.ParamByName('@Name_B').Value := bookcondedit_inp.Text;
+      Parameters.ParamByName('@Name_B').Value:=bookcondedit_inp.Text;
       Open;
        DM.bookQuery.Recordset:=dm.sel_book.Recordset;
     end;
@@ -236,6 +236,8 @@ end;
 procedure Tfrm_book.FormActivate(Sender: TObject);
 begin
 dm.bookQuery.Open;
+dm.AutQuery.Open;
+dm.GenreQuery.Open;
 end;
 
 procedure Tfrm_book.FormClose(Sender: TObject; var Action: TCloseAction);
