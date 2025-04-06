@@ -1,7 +1,7 @@
 object frm_doc: Tfrm_doc
   Left = 0
   Top = 0
-  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1082#1085#1080#1075#1086#1081
+  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1076#1086#1082#1091#1084#1077#1085#1090#1086#1084
   ClientHeight = 615
   ClientWidth = 1037
   Color = clBtnFace
@@ -11,25 +11,28 @@ object frm_doc: Tfrm_doc
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnActivate = FormActivate
+  OnClose = FormClose
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object BookToolBar: TToolBar
+  object docToolBar: TToolBar
     Left = 0
     Top = 0
     Width = 1037
     Height = 47
     TabOrder = 0
   end
-  object BookPC: TPageControl
+  object docPC: TPageControl
     Left = 0
     Top = 47
     Width = 1037
     Height = 568
-    ActivePage = ins_tab
+    ActivePage = sel_tab
     Align = alClient
     TabOrder = 1
     object sel_tab: TTabSheet
-      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1082#1085#1080#1075#1077
+      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1076#1086#1082#1091#1084#1077#1085#1090#1077
       object bookbtnBox: TGroupBox
         Left = 0
         Top = 470
@@ -46,7 +49,7 @@ object frm_doc: Tfrm_doc
           TabOrder = 0
         end
       end
-      object book_grupperBox: TGroupBox
+      object doc_grupperBox: TGroupBox
         Left = 0
         Top = 113
         Width = 1029
@@ -72,7 +75,7 @@ object frm_doc: Tfrm_doc
           TabOrder = 1
         end
       end
-      object book_data_Box: TGroupBox
+      object doc_data_Box: TGroupBox
         Left = 0
         Top = 177
         Width = 1029
@@ -162,7 +165,7 @@ object frm_doc: Tfrm_doc
             end>
         end
       end
-      object book_condBox: TGroupBox
+      object doc_condBox: TGroupBox
         Left = 0
         Top = 0
         Width = 1029
@@ -810,7 +813,7 @@ object frm_doc: Tfrm_doc
       end
     end
   end
-  object BookImageList: TImageList
+  object docImageList: TImageList
     Left = 256
   end
 end

@@ -314,6 +314,7 @@ begin
 dm.bookQuery.Open;
 dm.AutQuery.Open;
 dm.GenreQuery.Open;
+dm.docQuery.Open;
 end;
 
 procedure Tfrm_book.FormClose(Sender: TObject; var Action: TCloseAction);

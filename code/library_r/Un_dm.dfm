@@ -374,30 +374,35 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@NAME_B'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 150
+        Value = Null
       end
       item
         Name = '@m_SOURCE'
         Attributes = [paNullable]
         DataType = ftString
         Size = 70
+        Value = Null
       end
       item
         Name = '@DATE_P'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 10
+        Value = Null
       end
       item
         Name = '@m_COUNT'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
+        Value = Null
       end
       item
         Name = '@PRICE'
@@ -405,36 +410,42 @@ object DM: TDM
         DataType = ftBCD
         NumericScale = 2
         Precision = 5
+        Value = Null
       end
       item
         Name = '@ID_GENRE'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
+        Value = Null
       end
       item
         Name = '@ID_AUTHOR'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
+        Value = Null
       end
       item
         Name = '@PUBLISHER'
         Attributes = [paNullable]
         DataType = ftString
         Size = 50
+        Value = Null
       end
       item
         Name = '@NAMBER_PAGES'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
+        Value = Null
       end
       item
         Name = '@YEAR_PUB'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
+        Value = Null
       end
       item
         Name = '@Id'
@@ -442,6 +453,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdOutput
         Precision = 10
+        Value = Null
       end>
     Left = 320
     Top = 232
@@ -455,18 +467,21 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@id_book'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
+        Value = Null
       end
       item
         Name = '@name_b'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 50
+        Value = Null
       end>
     Left = 224
     Top = 288
@@ -480,14 +495,56 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@id_book'
         Attributes = [paNullable]
         DataType = ftInteger
         Precision = 10
+        Value = Null
       end>
     Left = 232
     Top = 356
+  end
+  object docQuery: TADOQuery
+    Connection = Connection
+    Parameters = <>
+    SQL.Strings = (
+      'select Doc.ID_Doc, '
+      'Book.Name_B,'
+      
+        'case Doc.m_Status when 0 then '#39#1042' '#1085#1072#1083#1080#1095#1080#1080#39' else '#39#1042#1099#1076#1072#1085#39' end as bo' +
+        'ok_state'
+      'from Doc '
+      'inner join Book on Book.ID_Book=Doc.ID_Book'
+      'where 1=1')
+    Left = 456
+    Top = 80
+  end
+  object docDS: TDataSource
+    DataSet = docQuery
+    Left = 472
+    Top = 152
+  end
+  object ADOStoredProc1: TADOStoredProc
+    Parameters = <>
+    Left = 504
+    Top = 232
+  end
+  object ADOStoredProc2: TADOStoredProc
+    Parameters = <>
+    Left = 512
+    Top = 288
+  end
+  object ADOStoredProc3: TADOStoredProc
+    Parameters = <>
+    Left = 512
+    Top = 344
+  end
+  object ADOStoredProc4: TADOStoredProc
+    Parameters = <>
+    Left = 512
+    Top = 384
   end
 end

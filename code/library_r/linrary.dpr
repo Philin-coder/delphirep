@@ -8,6 +8,7 @@ uses
   Un_autorize in 'Un_autorize.pas' {Frm_author},
   Un_genre in 'Un_genre.pas' {frm_genre},
   Un_aut in 'Un_aut.pas' {frm_aut},
+  Un_doc in 'Un_doc.pas' {frm_doc},
   Un_book in 'Un_book.pas' {frm_book};
 
 {$R *.res}
@@ -23,6 +24,7 @@ begin
   Application.CreateForm(TFrm_author, Frm_author);
   Application.CreateForm(Tfrm_genre, frm_genre);
   Application.CreateForm(Tfrm_aut, frm_aut);
+  Application.CreateForm(Tfrm_doc, frm_doc);
   Application.CreateForm(Tfrm_book, frm_book);
   Application.Run;
 end.

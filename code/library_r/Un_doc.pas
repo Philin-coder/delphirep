@@ -9,17 +9,17 @@ uses
 
 type
   Tfrm_doc = class(TForm)
-    BookToolBar: TToolBar;
-    BookImageList: TImageList;
-    BookPC: TPageControl;
+    docToolBar: TToolBar;
+    docImageList: TImageList;
+    docPC: TPageControl;
     sel_tab: TTabSheet;
     ins_tab: TTabSheet;
     updTab: TTabSheet;
     delTab: TTabSheet;
     bookbtnBox: TGroupBox;
-    book_grupperBox: TGroupBox;
+    doc_grupperBox: TGroupBox;
     bookselBtn: TButton;
-    book_data_Box: TGroupBox;
+    doc_data_Box: TGroupBox;
     booknaimRadio_grupper: TRadioButton;
     book_reset_Radio: TRadioButton;
     bookGrid: TDBGrid;
@@ -36,7 +36,7 @@ type
     book_del_btn_Box: TGroupBox;
     book_del_btn: TButton;
     book_del_data_Box: TGroupBox;
-    book_condBox: TGroupBox;
+    doc_condBox: TGroupBox;
     bookcondedit_inp: TLabeledEdit;
     book_fnddEdit: TLabeledEdit;
     aboutbookPC: TPageControl;
@@ -66,6 +66,9 @@ type
     Upd_book_Grid: TDBGrid;
     book_del_Grid: TDBGrid;
     costCB: TCheckBox;
+    procedure FormActivate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
   private
   procedure ChangeFormColor(Sender: TObject);
   public
@@ -86,17 +89,67 @@ begin
   if Sender is TToolButton then
   begin
     case TToolButton(Sender).Tag of
-      0:bookPC.ActivePage:=delTab;
-      1:BookPC.ActivePage:=Updtab;
-      2:BookPC.ActivePage:=ins_Tab;
-      3:BookPC.ActivePage:=sel_Tab;
+      0:docPC.ActivePage:=delTab;
+      1:docPC.ActivePage:=Updtab;
+      2:docPC.ActivePage:=ins_Tab;
+      3:docPC.ActivePage:=sel_Tab;
     else
-        BookPC.ActivePage:=sel_tab;
+        docPC.ActivePage:=sel_tab;
     end;
   end;
 end;
 
 
 
+
+procedure Tfrm_doc.FormActivate(Sender: TObject);
+begin
+dm.AutQuery.Open;
+dm.GenreQuery.Open;
+dm.bookQuery.Open;
+dm.docQuery.Open;
+end;
+
+procedure Tfrm_doc.FormClose(Sender: TObject; var Action: TCloseAction);
+var
+ q:Integer;
+begin
+ SaveFormState(Self);
+   with dm do
+ begin
+    for q := 0 to ComponentCount - 1 do
+ begin
+    if(Components[q] is TADOQuery)  then
+   begin
+      (Components[q] as TADOQuery).Close;
+ end;
+ end;
+ end;
+end;
+
+procedure Tfrm_doc.FormCreate(Sender: TObject);
+const
+  ButtonNames: array[0..3] of string = ('Удалить','Изменить',
+  'Добавить','Выбрать');
+  var
+  ButtonClicks: array of TNotifyEvent;
+begin
+ frm_doc.ShowHint:=true;
+ UniformizeButtonsSize(Self,  273, 25);
+ UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+ LoadFormState(Self);
+  docImageList.Clear;
+  LoadIconFromResource('DELETE_ICON',1,docImageList);
+  LoadIconFromResource('EDIT_ICON',1,docImageList);
+  LoadIconFromResource('ADD_ICON',1,docImageList);
+  LoadIconFromResource('SELECT_ICON',1,docImageList);
+  SetLength(ButtonClicks, 4);
+  ButtonClicks[0] := ChangeFormColor;
+  ButtonClicks[1] := ChangeFormColor;
+  ButtonClicks[2] := ChangeFormColor;
+  ButtonClicks[3] := ChangeFormColor;
+  CreateToolBarWithButtons(Self, docImageList, ButtonNames, ButtonClicks);
+end;
 
 end.

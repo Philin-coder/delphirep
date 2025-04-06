@@ -33,6 +33,10 @@ object frm_book: Tfrm_book
     TabOrder = 1
     object sel_tab: TTabSheet
       Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1082#1085#1080#1075#1077
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object bookbtnBox: TGroupBox
         Left = 0
         Top = 470
@@ -335,6 +339,10 @@ object frm_book: Tfrm_book
         object about_book_yab_two: TTabSheet
           Caption = #1054' '#1082#1085#1080#1075#1077
           ImageIndex = 1
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
           object ins_book_data_Box: TGroupBox
             Left = 0
             Top = 0
@@ -533,6 +541,10 @@ object frm_book: Tfrm_book
     object updTab: TTabSheet
       Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1082#1085#1080#1075#1077
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object book_upd_inp_box: TGroupBox
         Left = 0
         Top = 0
@@ -686,6 +698,10 @@ object frm_book: Tfrm_book
     object delTab: TTabSheet
       Caption = ' '#1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1082#1085#1080#1075#1077
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object book_del_inp_Box: TGroupBox
         Left = 0
         Top = 0

@@ -24,6 +24,7 @@ type
     procedure autor_itemClick(Sender: TObject);
     procedure genre_itemClick(Sender: TObject);
     procedure Book_itemClick(Sender: TObject);
+    procedure doc_itemClick(Sender: TObject);
   private
   procedure ChangeFormColor(Sender: TObject);
 var
@@ -36,7 +37,7 @@ var
 
 implementation
 
-uses Un_func, Un_dm, Un_autorize, Un_aut, Un_genre, Un_book;
+uses Un_func, Un_dm, Un_autorize, Un_aut, Un_genre, Un_book, Un_doc;
 
 {$R *.dfm}
 const
@@ -85,6 +86,18 @@ procedure TFrm_main.cursorTimerTimer(Sender: TObject);
 begin
 if Screen.Cursor <> crMyAnimatedCursor then
     HandleAnimatedCursor(1)
+end;
+
+procedure TFrm_main.doc_itemClick(Sender: TObject);
+begin
+try
+UpdateFormProperties('frm_doc', 'Форма Работы с документом',
+clBtnFace, 1024, 768);
+frm_doc.ShowModal;
+except
+Frm_doc.Free;
+raise;
+end;
 end;
 
 procedure TFrm_main.FormActivate(Sender: TObject);
