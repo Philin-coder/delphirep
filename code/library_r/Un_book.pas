@@ -431,9 +431,20 @@ if AreFieldsEmpty or not AreFieldsValid then
         k:=0;
         for I := 1 to count_doc do
             begin
-                ShowMessage('t');
+              with dm.INS_DOC do
+              begin
+              if not Connection.Connected then
+              raise Exception.Create('Соединение с базой не установлено');
+              Parameters.ParamByName('@ID_Book').Value :=id_instance;
+              Parameters.ParamByName('@Status').Value:=0;;
+           ExecProc;
+           dm.docQuery.Close;
+           dm.docQuery.Open;
+              end;
                 Inc(k);
             end;
+             MessageDlg('Добавлено документов: ' + IntToStr(k),
+              mtInformation, [mbOK], 0);
 
       end;
     except

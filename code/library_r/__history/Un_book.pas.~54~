@@ -65,6 +65,7 @@ type
     docCB: TCheckBox;
     Upd_book_Grid: TDBGrid;
     book_del_Grid: TDBGrid;
+    costCB: TCheckBox;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -75,6 +76,7 @@ type
     procedure Ins_book_insBtnClick(Sender: TObject);
     procedure upd_book_BtnClick(Sender: TObject);
     procedure book_del_btnClick(Sender: TObject);
+    procedure costCBClick(Sender: TObject);
   private
   procedure ChangeFormColor(Sender: TObject);
   public
@@ -167,8 +169,8 @@ begin
       begin
         if not Connection.Connected then
           raise Exception.Create('Соединение с базой не установлено');
-          Parameters.ParamByName('@id_book').Value:=
-          DM.bookQuery.FieldByName('ID_Book').AsString;
+           Parameters.ParamByName('@id_book').Value:=
+           dm.bookQuery.FieldByName('ID_Book').AsString;
            ExecProc;
            dm.bookQuery.Close;
            dm.bookQuery.Open;
@@ -292,11 +294,27 @@ end;
 
 
 
+procedure Tfrm_book.costCBClick(Sender: TObject);
+var cost_str:String;
+begin
+ if costCB.Checked then
+ begin
+  cost_str:=price_inp.Text;
+  if not is_cost_correct(cost_str) then
+  begin
+      price_inp.Clear;
+      Exit;
+  end
+
+ end;
+end;
+
 procedure Tfrm_book.FormActivate(Sender: TObject);
 begin
 dm.bookQuery.Open;
 dm.AutQuery.Open;
 dm.GenreQuery.Open;
+dm.docQuery.Open;
 end;
 
 procedure Tfrm_book.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -413,7 +431,19 @@ if AreFieldsEmpty or not AreFieldsValid then
         k:=0;
         for I := 1 to count_doc do
             begin
-                ShowMessage('t');
+              with dm.INS_DOC do
+              begin
+              if not Connection.Connected then
+              raise Exception.Create('Соединение с базой не установлено');
+              Parameters.ParamByName('@ID_Book').Value :=id_instance;
+              Parameters.ParamByName('@Status').Value:=0;;
+           ExecProc;
+
+
+           dm.docQuery.Close;
+           dm.docQuery.Open;
+            MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+              end;
                 Inc(k);
             end;
 
