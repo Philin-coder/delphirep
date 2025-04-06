@@ -29,7 +29,7 @@ object frm_aut: Tfrm_aut
     Top = 29
     Width = 1037
     Height = 466
-    ActivePage = delTab
+    ActivePage = sel_tab
     Align = alClient
     TabOrder = 1
     object sel_tab: TTabSheet

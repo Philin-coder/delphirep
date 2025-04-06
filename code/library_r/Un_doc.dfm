@@ -33,20 +33,21 @@ object frm_doc: Tfrm_doc
     TabOrder = 1
     object sel_tab: TTabSheet
       Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1076#1086#1082#1091#1084#1077#1085#1090#1077
-      object bookbtnBox: TGroupBox
+      object docbtnBox: TGroupBox
         Left = 0
         Top = 470
         Width = 1029
         Height = 70
         Align = alBottom
         TabOrder = 0
-        object bookselBtn: TButton
+        object dockselBtn: TButton
           Left = 336
           Top = 32
           Width = 273
           Height = 25
           Caption = #1054#1090#1073#1086#1088' '#1087#1086' '#1091#1089#1083#1086#1074#1080#1102
           TabOrder = 0
+          OnClick = dockselBtnClick
         end
       end
       object doc_grupperBox: TGroupBox
@@ -56,23 +57,47 @@ object frm_doc: Tfrm_doc
         Height = 64
         Align = alTop
         TabOrder = 1
-        object booknaimRadio_grupper: TRadioButton
-          Left = 65
-          Top = 22
-          Width = 232
+        object docknaimRadio_grupper: TRadioButton
+          Left = 19
+          Top = 14
+          Width = 278
           Height = 17
           Align = alCustom
-          Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1102' '#1082#1085#1080#1075#1080
+          Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1102' '#1082#1085#1080#1075#1080' '#1074' '#1085#1072#1083#1080#1095#1080#1080
           TabOrder = 0
+          OnClick = docknaimRadio_grupperClick
         end
-        object book_reset_Radio: TRadioButton
-          Left = 640
-          Top = 24
+        object doc_reset_Radio: TRadioButton
+          Left = 616
+          Top = 18
           Width = 113
           Height = 17
           Align = alCustom
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 1
+          OnClick = doc_reset_RadioClick
+        end
+        object all_inCB: TCheckBox
+          Left = 19
+          Top = 44
+          Width = 169
+          Height = 17
+          Align = alCustom
+          Anchors = [akLeft]
+          Caption = #1055#1086#1089#1084#1086#1090#1088#1077#1090#1100' '#1095#1090#1086' '#1074' '#1085#1072#1083#1080#1095#1080#1080
+          TabOrder = 2
+          OnClick = all_inCBClick
+        end
+        object CB_all_out: TCheckBox
+          Left = 584
+          Top = 41
+          Width = 169
+          Height = 17
+          Align = alCustom
+          Anchors = [akLeft]
+          Caption = #1055#1086#1089#1084#1086#1090#1088#1077#1090#1100' '#1095#1090#1086' '#1074#1099#1076#1072#1085#1086
+          TabOrder = 3
+          OnClick = CB_all_outClick
         end
       end
       object doc_data_Box: TGroupBox
@@ -83,13 +108,13 @@ object frm_doc: Tfrm_doc
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        object bookGrid: TDBGrid
+        object docGrid: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
           Height = 276
           Align = alClient
-          DataSource = DM.bookDS
+          DataSource = DM.docDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -99,68 +124,20 @@ object frm_doc: Tfrm_doc
           Columns = <
             item
               Expanded = False
-              FieldName = 'ID_Book'
-              Title.Caption = #1053#1086#1084#1077#1088'  '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              FieldName = 'ID_Doc'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'Name_B'
-              Title.Caption = #1053#1072#1079#1074#1072#1085#1080#1077
+              Title.Caption = #1050#1085#1080#1075#1072
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'm_Source'
-              Title.Caption = #1048#1089#1090#1086#1095#1085#1080#1077' '#1087#1086#1083#1091#1095#1077#1085#1080#1103
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'Date_P'
-              Title.Caption = #1044#1072#1090#1072' '#1087#1086#1089#1090#1091#1087#1083#1077#1085#1080#1103
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'm_Count'
-              Title.Caption = #1050#1086#1083#1080#1095#1077#1089#1090#1074#1086' '#1101#1082#1079#1077#1084#1087#1083#1103#1088#1086#1074
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'Price'
-              Title.Caption = #1062#1077#1085#1072
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'Name_G'
-              Title.Caption = #1046#1072#1085#1088
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'Name_A'
-              Title.Caption = #1040#1074#1090#1086#1088
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'Publisher'
-              Title.Caption = #1048#1079#1076#1072#1090#1077#1083#1100#1089#1090#1074#1086
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'Number_of_Pages'
-              Title.Caption = #1050#1086#1083#1080#1095#1077#1089#1090#1074#1086' '#1089#1090#1088#1072#1085#1080#1094
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'Year_of_Pub'
-              Title.Caption = #1043#1086#1076' '#1080#1079#1076#1072#1085#1080#1103
+              FieldName = 'book_state'
+              Title.Caption = #1057#1086#1089#1090#1086#1103#1085#1080#1077
               Visible = True
             end>
         end
@@ -176,18 +153,18 @@ object frm_doc: Tfrm_doc
         DesignSize = (
           1029
           113)
-        object bookcondedit_inp: TLabeledEdit
+        object doccondedit_inp: TLabeledEdit
           Left = 19
           Top = 34
           Width = 966
           Height = 21
           Anchors = [akLeft, akRight]
-          EditLabel.Width = 199
+          EditLabel.Width = 282
           EditLabel.Height = 13
-          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1085#1072#1079#1074#1072#1085#1080#1102' '#1082#1085#1080#1075#1080
+          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1085#1072#1079#1074#1072#1085#1080#1102' '#1076#1086#1082#1091#1084#1077#1085#1090#1072'  '#1074' '#1085#1072#1083#1080#1095#1080#1080
           TabOrder = 0
         end
-        object book_fnddEdit: TLabeledEdit
+        object doc_fnddEdit: TLabeledEdit
           Left = 19
           Top = 81
           Width = 966
@@ -197,6 +174,7 @@ object frm_doc: Tfrm_doc
           EditLabel.Height = 13
           EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1085#1072#1079#1074#1072#1085#1080#1102' '#1082#1085#1080#1075#1080
           TabOrder = 1
+          OnKeyPress = doc_fnddEditKeyPress
         end
       end
     end

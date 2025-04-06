@@ -1,0 +1,224 @@
+unit Un_doc;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, ImgList, ComCtrls, ToolWin,ADODB,db, StdCtrls, Grids,
+  DBGrids, DBCtrls;
+
+type
+  Tfrm_doc = class(TForm)
+    docToolBar: TToolBar;
+    docImageList: TImageList;
+    docPC: TPageControl;
+    sel_tab: TTabSheet;
+    ins_tab: TTabSheet;
+    updTab: TTabSheet;
+    delTab: TTabSheet;
+    docbtnBox: TGroupBox;
+    doc_grupperBox: TGroupBox;
+    dockselBtn: TButton;
+    doc_data_Box: TGroupBox;
+    docknaimRadio_grupper: TRadioButton;
+    doc_reset_Radio: TRadioButton;
+    docGrid: TDBGrid;
+    book_upd_inp_box: TGroupBox;
+    Upd_book_data_Box: TGroupBox;
+    Upd_book_naim_inp: TLabeledEdit;
+    book_upd_lbl: TLabel;
+    book_updDBL: TDBLookupComboBox;
+    upd_book_btn_box: TGroupBox;
+    upd_book_Btn: TButton;
+    book_del_inp_Box: TGroupBox;
+    book_delLbl: TLabel;
+    book_delDBL: TDBLookupComboBox;
+    book_del_btn_Box: TGroupBox;
+    book_del_btn: TButton;
+    book_del_data_Box: TGroupBox;
+    doc_condBox: TGroupBox;
+    doccondedit_inp: TLabeledEdit;
+    doc_fnddEdit: TLabeledEdit;
+    aboutbookPC: TPageControl;
+    about_bookTab_one: TTabSheet;
+    about_book_yab_two: TTabSheet;
+    naim_b_inp: TLabeledEdit;
+    m_source_inp: TLabeledEdit;
+    ins_book_date_p_lbl: TStaticText;
+    datep_inp: TDateTimePicker;
+    m_count_grader: TUpDown;
+    m_count_inp: TLabeledEdit;
+    price_inp: TLabeledEdit;
+    doc_count: TLabeledEdit;
+    ins_book_data_Box: TGroupBox;
+    genre_lbl: TStaticText;
+    Ins_book_genre_DBL: TDBLookupComboBox;
+    ins_book_autor_lbl: TStaticText;
+    ins_book_autorDBL: TDBLookupComboBox;
+    publisher_inp: TLabeledEdit;
+    numebr_of_pages_inp: TLabeledEdit;
+    Year_of_pub_inp: TLabeledEdit;
+    ins_book_btn_Box: TGroupBox;
+    Ins_book_insBtn: TButton;
+    Ins_book_dataBox: TGroupBox;
+    ins_book_DataGrid: TDBGrid;
+    docCB: TCheckBox;
+    Upd_book_Grid: TDBGrid;
+    book_del_Grid: TDBGrid;
+    costCB: TCheckBox;
+    all_inCB: TCheckBox;
+    procedure FormActivate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure dockselBtnClick(Sender: TObject);
+    procedure all_inCBClick(Sender: TObject);
+  private
+  procedure ChangeFormColor(Sender: TObject);
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_doc: Tfrm_doc;
+
+implementation
+
+uses Un_dm, Un_func, Un_main;
+
+{$R *.dfm}
+
+procedure Tfrm_doc.all_inCBClick(Sender: TObject);
+begin
+case all_incb.Checked of
+True:
+begin
+try
+    if not DM.Connection.Connected then
+      raise Exception.Create('Соединение с базой не установлено');
+
+    with DM.sel_doc_all_in do
+    begin
+      Close;
+        ExecProc;
+      Open;
+       DM.docQuery.Recordset:=dm.sel_doc_all_in.Recordset;
+    end;
+  except
+    on E: EDatabaseError do
+      ShowMessage('Ошибка БД: ' + E.Message);
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
+end;
+false:
+begin
+  with dm.docQuery do
+     begin
+     Close;
+     sql.Clear;
+     SQL.Text:=
+     'select Doc.ID_Doc,'+' '+
+     'Book.Name_B,'+' '+
+     'case Doc.m_Status when 0 then ''В наличии'' else ''Выдан'' end as book_state '+''+
+    'from Doc'+' '+
+    'inner join Book on Book.ID_Book=Doc.ID_Book'+' '+
+    'where 1=1';
+     Open;
+     ShowMessage(dm.docQuery.SQL.Text);
+     end;
+end;
+
+end;//case
+
+end;
+
+procedure Tfrm_doc.ChangeFormColor(Sender: TObject);
+begin
+  if Sender is TToolButton then
+  begin
+    case TToolButton(Sender).Tag of
+      0:docPC.ActivePage:=delTab;
+      1:docPC.ActivePage:=Updtab;
+      2:docPC.ActivePage:=ins_Tab;
+      3:docPC.ActivePage:=sel_Tab;
+    else
+        docPC.ActivePage:=sel_tab;
+    end;
+  end;
+end;
+
+
+
+
+procedure Tfrm_doc.dockselBtnClick(Sender: TObject);
+begin
+try
+    if not DM.Connection.Connected then
+      raise Exception.Create('Соединение с базой не установлено');
+
+    with DM.sel_doc_in do
+    begin
+      Close;
+      Parameters.ParamByName('@name_b').Value := doccondedit_inp.Text;
+      Open;
+       DM.docQuery.Recordset:=dm.Sel_doc_in.Recordset;
+    end;
+  except
+    on E: EDatabaseError do
+      ShowMessage('Ошибка БД: ' + E.Message);
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
+end;
+
+procedure Tfrm_doc.FormActivate(Sender: TObject);
+begin
+dm.AutQuery.Open;
+dm.GenreQuery.Open;
+dm.bookQuery.Open;
+dm.docQuery.Open;
+end;
+
+procedure Tfrm_doc.FormClose(Sender: TObject; var Action: TCloseAction);
+var
+ q:Integer;
+begin
+ SaveFormState(Self);
+   with dm do
+ begin
+    for q := 0 to ComponentCount - 1 do
+ begin
+    if(Components[q] is TADOQuery)  then
+   begin
+      (Components[q] as TADOQuery).Close;
+ end;
+ end;
+ end;
+end;
+
+procedure Tfrm_doc.FormCreate(Sender: TObject);
+const
+  ButtonNames: array[0..3] of string = ('Удалить','Изменить',
+  'Добавить','Выбрать');
+  var
+  ButtonClicks: array of TNotifyEvent;
+begin
+ frm_doc.ShowHint:=true;
+ UniformizeButtonsSize(Self,  273, 25);
+ UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+ LoadFormState(Self);
+  docImageList.Clear;
+  LoadIconFromResource('DELETE_ICON',1,docImageList);
+  LoadIconFromResource('EDIT_ICON',1,docImageList);
+  LoadIconFromResource('ADD_ICON',1,docImageList);
+  LoadIconFromResource('SELECT_ICON',1,docImageList);
+  SetLength(ButtonClicks, 4);
+  ButtonClicks[0] := ChangeFormColor;
+  ButtonClicks[1] := ChangeFormColor;
+  ButtonClicks[2] := ChangeFormColor;
+  ButtonClicks[3] := ChangeFormColor;
+  CreateToolBarWithButtons(Self, docImageList, ButtonNames, ButtonClicks);
+end;
+
+end.

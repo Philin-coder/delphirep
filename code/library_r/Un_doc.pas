@@ -16,13 +16,13 @@ type
     ins_tab: TTabSheet;
     updTab: TTabSheet;
     delTab: TTabSheet;
-    bookbtnBox: TGroupBox;
+    docbtnBox: TGroupBox;
     doc_grupperBox: TGroupBox;
-    bookselBtn: TButton;
+    dockselBtn: TButton;
     doc_data_Box: TGroupBox;
-    booknaimRadio_grupper: TRadioButton;
-    book_reset_Radio: TRadioButton;
-    bookGrid: TDBGrid;
+    docknaimRadio_grupper: TRadioButton;
+    doc_reset_Radio: TRadioButton;
+    docGrid: TDBGrid;
     book_upd_inp_box: TGroupBox;
     Upd_book_data_Box: TGroupBox;
     Upd_book_naim_inp: TLabeledEdit;
@@ -37,8 +37,8 @@ type
     book_del_btn: TButton;
     book_del_data_Box: TGroupBox;
     doc_condBox: TGroupBox;
-    bookcondedit_inp: TLabeledEdit;
-    book_fnddEdit: TLabeledEdit;
+    doccondedit_inp: TLabeledEdit;
+    doc_fnddEdit: TLabeledEdit;
     aboutbookPC: TPageControl;
     about_bookTab_one: TTabSheet;
     about_book_yab_two: TTabSheet;
@@ -66,9 +66,17 @@ type
     Upd_book_Grid: TDBGrid;
     book_del_Grid: TDBGrid;
     costCB: TCheckBox;
+    all_inCB: TCheckBox;
+    CB_all_out: TCheckBox;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
+    procedure dockselBtnClick(Sender: TObject);
+    procedure all_inCBClick(Sender: TObject);
+    procedure CB_all_outClick(Sender: TObject);
+    procedure doc_reset_RadioClick(Sender: TObject);
+    procedure docknaimRadio_grupperClick(Sender: TObject);
+    procedure doc_fnddEditKeyPress(Sender: TObject; var Key: Char);
   private
   procedure ChangeFormColor(Sender: TObject);
   public
@@ -83,6 +91,96 @@ implementation
 uses Un_dm, Un_func, Un_main;
 
 {$R *.dfm}
+
+procedure Tfrm_doc.all_inCBClick(Sender: TObject);
+begin
+case all_incb.Checked of
+True:
+begin
+CB_all_out.Checked:=False;
+try
+    if not DM.Connection.Connected then
+      raise Exception.Create('Соединение с базой не установлено');
+
+    with DM.sel_doc_all_in do
+    begin
+      Close;
+        ExecProc;
+      Open;
+       DM.docQuery.Recordset:=dm.sel_doc_all_in.Recordset;
+    end;
+  except
+    on E: EDatabaseError do
+      ShowMessage('Ошибка БД: ' + E.Message);
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
+end;
+false:
+begin
+  with dm.docQuery do
+     begin
+     Close;
+     sql.Clear;
+     SQL.Text:=
+     'select Doc.ID_Doc,'+' '+
+     'Book.Name_B,'+' '+
+     'case Doc.m_Status when 0 then ''В наличии'' else ''Выдан'' end as book_state '+''+
+    'from Doc'+' '+
+    'inner join Book on Book.ID_Book=Doc.ID_Book'+' '+
+    'where 1=1';
+     Open;
+     end;
+end;
+end;//case
+
+end;
+
+procedure Tfrm_doc.CB_all_outClick(Sender: TObject);
+begin
+case CB_all_out.Checked of
+true:
+begin
+all_inCB.Checked:=False;
+ try
+    if not DM.Connection.Connected then
+      raise Exception.Create('Соединение с базой не установлено');
+
+    with DM.sel_doc_all_out do
+    begin
+      Close;
+        ExecProc;
+      Open;
+       DM.docQuery.Recordset:=dm.sel_doc_all_out.Recordset;
+    end;
+  except
+    on E: EDatabaseError do
+      ShowMessage('Ошибка БД: ' + E.Message);
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
+
+end;
+false:
+begin
+   with dm.docQuery do
+     begin
+     Close;
+     sql.Clear;
+     SQL.Text:=
+     'select Doc.ID_Doc,'+' '+
+     'Book.Name_B,'+' '+
+     'case Doc.m_Status when 0 then ''В наличии'' else ''Выдан'' end as book_state '+''+
+    'from Doc'+' '+
+    'inner join Book on Book.ID_Book=Doc.ID_Book'+' '+
+    'where 1=1';
+     Open;
+     end;
+
+end;
+
+end; //case
+end;
 
 procedure Tfrm_doc.ChangeFormColor(Sender: TObject);
 begin
@@ -101,6 +199,118 @@ end;
 
 
 
+
+procedure Tfrm_doc.docknaimRadio_grupperClick(Sender: TObject);
+begin
+  if docknaimRadio_grupper.Checked=true then
+  begin
+    try
+     with dm.docQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+       'select Doc.ID_Doc,'+' '+
+     'Book.Name_B,'+' '+
+     'case Doc.m_Status when 0 then ''В наличии'' else ''Выдан'' end as book_state '+''+
+    'from Doc'+' '+
+    'inner join Book on Book.ID_Book=Doc.ID_Book'+' '+
+    'where 1=1'+''+
+    'order by Book.Name_B asc';
+      Open;
+     end;
+    except on E: EADOError do
+    begin
+      ShowMessage('Ошибка'+' '+E.Message);
+    end;
+    end;
+  end;
+end;
+
+procedure Tfrm_doc.dockselBtnClick(Sender: TObject);
+begin
+try
+    if not DM.Connection.Connected then
+      raise Exception.Create('Соединение с базой не установлено');
+
+    with DM.sel_doc_in do
+    begin
+      Close;
+      Parameters.ParamByName('@name_b').Value := doccondedit_inp.Text;
+      Open;
+       DM.docQuery.Recordset:=dm.Sel_doc_in.Recordset;
+    end;
+  except
+    on E: EDatabaseError do
+      ShowMessage('Ошибка БД: ' + E.Message);
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
+end;
+
+procedure Tfrm_doc.doc_fnddEditKeyPress(Sender: TObject; var Key: Char);
+begin
+try
+   dm.docQuery.SQL.Text:=
+    'select Doc.ID_Doc,'+' '+
+     'Book.Name_B,'+' '+
+     'case Doc.m_Status when 0 then ''В наличии'' else ''Выдан'' end as book_state '+''+
+    'from Doc'+' '+
+    'inner join Book on Book.ID_Book=Doc.ID_Book'+' '+
+    'where 1=1'+''+
+     'and Book.Name_B like'+
+   QuotedStr(Concat(doc_fnddEdit.Text,#37));
+   dm.docQuery.close;
+   dm.docQuery.Open;
+except on E: Exception do
+  begin
+  ShowMessage('wrong situation'+' '+E.Message);
+  end;
+  end;
+end;
+
+procedure Tfrm_doc.doc_reset_RadioClick(Sender: TObject);
+var i,j,c:Integer;
+begin
+if doc_reset_Radio.Checked then
+  with Frm_doc do
+    for I := 0 to ComponentCount - 1 do
+     begin
+       if (Components[i] is TLabeledEdit)  then
+        begin
+          (Components[i] as TLabeledEdit).Clear;
+        end;
+     end;
+       with frm_doc do
+    for c := 0 to ComponentCount - 1 do
+     begin
+       if (Components[c] is TCheckBox)  then
+        begin
+          (Components[c] as TCheckBox).Checked:=False;
+        end;
+     end;
+     with dm.docQuery do
+     begin
+     Close;
+     sql.Clear;
+     SQL.Text:=
+      'select Doc.ID_Doc,'+' '+
+     'Book.Name_B,'+' '+
+     'case Doc.m_Status when 0 then ''В наличии'' else ''Выдан'' end as book_state '+''+
+    'from Doc'+' '+
+    'inner join Book on Book.ID_Book=Doc.ID_Book'+' '+
+    'where 1=1';
+     Open;
+     end;
+    with frm_doc do
+    for j := 0 to ComponentCount - 1 do
+    begin
+      if(Components[j] is TRadioButton)  then
+      begin
+        (Components[j] as TRadioButton).Checked:=False;
+      end;
+    end;
+end;
 
 procedure Tfrm_doc.FormActivate(Sender: TObject);
 begin

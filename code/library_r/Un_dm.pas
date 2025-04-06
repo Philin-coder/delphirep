@@ -29,8 +29,8 @@ type
     del_book: TADOStoredProc;
     docQuery: TADOQuery;
     docDS: TDataSource;
-    ADOStoredProc1: TADOStoredProc;
-    ADOStoredProc2: TADOStoredProc;
+    sel_doc_in: TADOStoredProc;
+    sel_doc_all_in: TADOStoredProc;
     ADOStoredProc3: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;
   private

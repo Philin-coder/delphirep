@@ -455,7 +455,7 @@ object DM: TDM
         Precision = 10
         Value = Null
       end>
-    Left = 320
+    Left = 296
     Top = 232
   end
   object upd_book: TADOStoredProc
@@ -509,6 +509,7 @@ object DM: TDM
   end
   object docQuery: TADOQuery
     Connection = Connection
+    CursorType = ctStatic
     Parameters = <>
     SQL.Strings = (
       'select Doc.ID_Doc, '
@@ -519,23 +520,40 @@ object DM: TDM
       'from Doc '
       'inner join Book on Book.ID_Book=Doc.ID_Book'
       'where 1=1')
-    Left = 456
-    Top = 80
+    Left = 344
+    Top = 72
   end
   object docDS: TDataSource
+    AutoEdit = False
     DataSet = docQuery
-    Left = 472
-    Top = 152
+    Left = 352
+    Top = 128
   end
-  object ADOStoredProc1: TADOStoredProc
+  object sel_doc_in: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_doc_in;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@name_b'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 50
+      end>
+    Left = 352
+    Top = 184
+  end
+  object sel_doc_all_in: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_doc_all_in;1'
     Parameters = <>
-    Left = 504
+    Left = 360
     Top = 232
-  end
-  object ADOStoredProc2: TADOStoredProc
-    Parameters = <>
-    Left = 512
-    Top = 288
   end
   object ADOStoredProc3: TADOStoredProc
     Parameters = <>
