@@ -326,6 +326,8 @@ object frm_book: Tfrm_book
             Align = alCustom
             Anchors = [akLeft]
             Caption = #1055#1088#1086#1074#1077#1088#1082#1072' '#1094#1077#1085#1099' '#1085#1072' '#1082#1086#1088#1088#1077#1082#1090#1085#1086#1089#1090#1100
+            Checked = True
+            State = cbChecked
             TabOrder = 9
             OnClick = costCBClick
           end
