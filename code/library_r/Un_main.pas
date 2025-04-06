@@ -15,6 +15,7 @@ type
     autor_item: TMenuItem;
     genre_item: TMenuItem;
     Book_item: TMenuItem;
+    doc_item: TMenuItem;
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);

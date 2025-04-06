@@ -300,16 +300,12 @@ begin
  if costCB.Checked then
  begin
   cost_str:=price_inp.Text;
-  if  is_cost_correct(cost_str) then
+  if not is_cost_correct(cost_str) then
   begin
-      ShowMessage('Цена корретна');
+      price_inp.Clear;
+      Exit;
   end
-  else
-  begin
-    ShowMessage('Цена некорретна');
-    price_inp.Clear;
-    Exit;
-  end;
+
  end;
 end;
 
