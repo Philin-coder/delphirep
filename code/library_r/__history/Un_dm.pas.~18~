@@ -33,8 +33,6 @@ type
     sel_doc_all_in: TADOStoredProc;
     sel_doc_all_out: TADOStoredProc;
     INS_DOC: TADOStoredProc;
-    upd_doc: TADOStoredProc;
-    ADOStoredProc2: TADOStoredProc;
   private
     { Private declarations }
   public

@@ -23,13 +23,12 @@ type
     docknaimRadio_grupper: TRadioButton;
     doc_reset_Radio: TRadioButton;
     docGrid: TDBGrid;
-    book_upd_inp_box: TGroupBox;
-    Upd_book_data_Box: TGroupBox;
-    Upd_book_naim_inp: TLabeledEdit;
-    book_upd_lbl: TLabel;
-    book_updDBL: TDBLookupComboBox;
-    upd_book_btn_box: TGroupBox;
-    upd_book_Btn: TButton;
+    doc_upd_inp_box: TGroupBox;
+    Upd_doc_data_Box: TGroupBox;
+    doc_upd_lbl: TLabel;
+    doc_updDBL: TDBLookupComboBox;
+    upd_doc_btn_box: TGroupBox;
+    upd_doc_Btn: TButton;
     book_del_inp_Box: TGroupBox;
     book_delLbl: TLabel;
     book_delDBL: TDBLookupComboBox;
@@ -40,7 +39,6 @@ type
     doccondedit_inp: TLabeledEdit;
     doc_fnddEdit: TLabeledEdit;
     aboutdocPC: TPageControl;
-    Upd_book_Grid: TDBGrid;
     book_del_Grid: TDBGrid;
     all_inCB: TCheckBox;
     CB_all_out: TCheckBox;
@@ -53,6 +51,9 @@ type
     Ins_book_insBtn: TButton;
     doc_statusCombo: TComboBox;
     ins_doc_Grid: TDBGrid;
+    upd_datadocGrid: TDBGrid;
+    upd_doc_lbl: TStaticText;
+    upd_docCombo: TComboBox;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -64,6 +65,8 @@ type
     procedure doc_fnddEditKeyPress(Sender: TObject; var Key: Char);
     procedure doc_statusComboChange(Sender: TObject);
     procedure Ins_book_insBtnClick(Sender: TObject);
+    procedure upd_docComboChange(Sender: TObject);
+    procedure upd_doc_BtnClick(Sender: TObject);
   private
   procedure ChangeFormColor(Sender: TObject);
   public
@@ -73,6 +76,7 @@ type
 var
   frm_doc: Tfrm_doc;
   var stat_s:Integer;
+  var upd_stat_s:integer;
 
 implementation
 
@@ -320,6 +324,7 @@ var
  q:Integer;
 begin
 stat_s:=0;
+upd_stat_s:=0;
  SaveFormState(Self);
    with dm do
  begin
@@ -341,6 +346,7 @@ const
   ButtonClicks: array of TNotifyEvent;
 begin
 stat_s:=0;
+upd_stat_s:=0;
  frm_doc.ShowHint:=true;
  UniformizeButtonsSize(Self,  273, 25);
  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
@@ -381,6 +387,52 @@ if AreFieldsEmpty then
            Parameters.ParamByName('@ID_Book').Value :=
            dm.bookQuery.FieldByName('ID_Book').AsString;
            Parameters.ParamByName('@Status').Value:=stat_s;
+           ExecProc;
+           dm.docQuery.Close;
+           dm.docQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+end;
+
+procedure Tfrm_doc.upd_docComboChange(Sender: TObject);
+begin
+if upd_docCombo.ItemIndex=0 then upd_stat_s:=0
+  else if upd_docCombo.ItemIndex=1 then upd_stat_s:=1;
+end;
+
+procedure Tfrm_doc.upd_doc_BtnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+begin
+AreFieldsEmpty:=(
+(doc_updDBL.Text='')or
+(upd_docCombo.Text='')
+);
+if AreFieldsEmpty then
+begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+end;
+try
+      with dm.upd_doc do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@status').Value :=upd_stat_s;
+           Parameters.ParamByName('@ID_Doc').Value :=
+           DM.docQuery.FieldByName('ID_Doc').AsString;
            ExecProc;
            dm.docQuery.Close;
            dm.docQuery.Open;

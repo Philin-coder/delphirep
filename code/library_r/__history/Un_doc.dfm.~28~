@@ -358,7 +358,7 @@ object frm_doc: Tfrm_doc
           Anchors = [akLeft, akRight]
           ItemHeight = 13
           TabOrder = 2
-          OnChange = upd_docComboChange
+          Text = 'upd_docCombo'
           Items.Strings = (
             #1042' '#1085#1072#1083#1080#1095#1080#1080#1080
             #1053#1072' '#1088#1091#1082#1072#1093)
@@ -420,7 +420,6 @@ object frm_doc: Tfrm_doc
           Height = 25
           Caption = #1048#1079#1084#1077#1085#1080#1090#1100
           TabOrder = 0
-          OnClick = upd_doc_BtnClick
         end
       end
     end
