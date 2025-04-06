@@ -49,10 +49,10 @@ type
     Ins_doc_book_DBL: TDBLookupComboBox;
     ins_doc_stat_lbl: TStaticText;
     Ins_book_dataBox: TGroupBox;
-    ins_book_DataGrid: TDBGrid;
     ins_book_btn_Box: TGroupBox;
     Ins_book_insBtn: TButton;
     doc_statusCombo: TComboBox;
+    ins_doc_Grid: TDBGrid;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -63,6 +63,7 @@ type
     procedure docknaimRadio_grupperClick(Sender: TObject);
     procedure doc_fnddEditKeyPress(Sender: TObject; var Key: Char);
     procedure doc_statusComboChange(Sender: TObject);
+    procedure Ins_book_insBtnClick(Sender: TObject);
   private
   procedure ChangeFormColor(Sender: TObject);
   public
@@ -356,6 +357,48 @@ stat_s:=0;
   ButtonClicks[2] := ChangeFormColor;
   ButtonClicks[3] := ChangeFormColor;
   CreateToolBarWithButtons(Self, docImageList, ButtonNames, ButtonClicks);
+end;
+
+procedure Tfrm_doc.Ins_book_insBtnClick(Sender: TObject);
+var AreFieldsEmpty: Boolean;
+begin
+AreFieldsEmpty:=(
+(Ins_doc_book_DBL.Text='')or
+(doc_statusCombo.Text='')
+);
+if AreFieldsEmpty then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.ins_doc do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@ID_Book').Value :=
+           dm.bookQuery.FieldByName('ID_Book').AsString;
+           Parameters.ParamByName('@Status').Value:=stat_s;
+           ExecProc;
+           dm.docQuery.Close;
+           dm.docQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+
+
+
 end;
 
 end.

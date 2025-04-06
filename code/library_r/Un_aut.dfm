@@ -29,7 +29,7 @@ object frm_aut: Tfrm_aut
     Top = 29
     Width = 1037
     Height = 466
-    ActivePage = sel_tab
+    ActivePage = updTab
     Align = alClient
     TabOrder = 1
     object sel_tab: TTabSheet
@@ -334,6 +334,10 @@ object frm_aut: Tfrm_aut
     object delTab: TTabSheet
       Caption = ' '#1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1072#1074#1090#1086#1088#1077
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Aut_del_inp_Box: TGroupBox
         Left = 0
         Top = 0

@@ -208,8 +208,8 @@ object frm_doc: Tfrm_doc
           TabOrder = 0
         end
         object Ins_doc_book_DBL: TDBLookupComboBox
-          Left = 1
-          Top = 21
+          Left = 3
+          Top = 41
           Width = 1017
           Height = 21
           Align = alCustom
@@ -218,11 +218,10 @@ object frm_doc: Tfrm_doc
           ListField = 'Name_B'
           ListSource = DM.bookDS
           TabOrder = 1
-          ExplicitTop = 43
         end
         object ins_doc_stat_lbl: TStaticText
           Left = 3
-          Top = 101
+          Top = 100
           Width = 40
           Height = 17
           Align = alCustom
@@ -230,9 +229,9 @@ object frm_doc: Tfrm_doc
           TabOrder = 2
         end
         object doc_statusCombo: TComboBox
-          Left = 3
-          Top = 124
-          Width = 1016
+          Left = 2
+          Top = 123
+          Width = 1010
           Height = 21
           Align = alCustom
           Anchors = [akLeft, akRight]
@@ -254,13 +253,13 @@ object frm_doc: Tfrm_doc
         ExplicitTop = 305
         ExplicitWidth = 1021
         ExplicitHeight = 143
-        object ins_book_DataGrid: TDBGrid
+        object ins_doc_Grid: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
           Height = 282
           Align = alClient
-          DataSource = DM.bookDS
+          DataSource = DM.docDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -270,68 +269,20 @@ object frm_doc: Tfrm_doc
           Columns = <
             item
               Expanded = False
-              FieldName = 'ID_Book'
-              Title.Caption = #1053#1086#1084#1077#1088'  '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              FieldName = 'ID_Doc'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'Name_B'
-              Title.Caption = #1053#1072#1079#1074#1072#1085#1080#1077
+              Title.Caption = #1050#1085#1080#1075#1072
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'm_Source'
-              Title.Caption = #1048#1089#1090#1086#1095#1085#1080#1077' '#1087#1086#1083#1091#1095#1077#1085#1080#1103
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'Date_P'
-              Title.Caption = #1044#1072#1090#1072' '#1087#1086#1089#1090#1091#1087#1083#1077#1085#1080#1103
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'm_Count'
-              Title.Caption = #1050#1086#1083#1080#1095#1077#1089#1090#1074#1086' '#1101#1082#1079#1077#1084#1087#1083#1103#1088#1086#1074
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'Price'
-              Title.Caption = #1062#1077#1085#1072
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'Name_G'
-              Title.Caption = #1046#1072#1085#1088
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'Name_A'
-              Title.Caption = #1040#1074#1090#1086#1088
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'Publisher'
-              Title.Caption = #1048#1079#1076#1072#1090#1077#1083#1100#1089#1090#1074#1086
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'Number_of_Pages'
-              Title.Caption = #1050#1086#1083#1080#1095#1077#1089#1090#1074#1086' '#1089#1090#1088#1072#1085#1080#1094
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'Year_of_Pub'
-              Title.Caption = #1043#1086#1076' '#1080#1079#1076#1072#1085#1080#1103
+              FieldName = 'book_state'
+              Title.Caption = #1057#1086#1089#1090#1086#1103#1085#1080#1077
               Visible = True
             end>
         end
@@ -352,6 +303,7 @@ object frm_doc: Tfrm_doc
           Height = 25
           Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
           TabOrder = 0
+          OnClick = Ins_book_insBtnClick
         end
       end
     end

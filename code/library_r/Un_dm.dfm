@@ -562,9 +562,31 @@ object DM: TDM
     Left = 368
     Top = 296
   end
-  object ADOStoredProc4: TADOStoredProc
-    Parameters = <>
-    Left = 512
-    Top = 384
+  object INS_DOC: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'INS_DOC;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@ID_Book'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@Status'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 360
+    Top = 352
   end
 end

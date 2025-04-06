@@ -254,7 +254,15 @@ begin
           TMaskEdit(Control).Color := AColor;
           TMaskEdit(Control).Font.Name := AFontName;
           TMaskEdit(Control).Font.Size := AFontSize;
-     end;
+     end
+     else if Control  is TComboBox then
+          begin
+          TComboBox(Control).Width := AWidth;
+          TComboBox(Control).Height := AHeight;
+          TComboBox(Control).Color := AColor;
+          TComboBox(Control).Font.Name := AFontName;
+          TComboBox(Control).Font.Size := AFontSize;
+          end;
   end;
   if AComponent is TWinControl then
   begin
