@@ -555,10 +555,12 @@ object DM: TDM
     Left = 360
     Top = 232
   end
-  object ADOStoredProc3: TADOStoredProc
+  object sel_doc_all_out: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_doc_all_out;1'
     Parameters = <>
-    Left = 512
-    Top = 344
+    Left = 368
+    Top = 296
   end
   object ADOStoredProc4: TADOStoredProc
     Parameters = <>

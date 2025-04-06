@@ -283,20 +283,286 @@ object DM: TDM
   object INS_BOOK_normal: TADOStoredProc
     Connection = Connection
     ProcedureName = 'INS_BOOK_normal;1'
-    Parameters = <>
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@NAME_B'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 150
+        Value = Null
+      end
+      item
+        Name = '@m_SOURCE'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 70
+        Value = Null
+      end
+      item
+        Name = '@DATE_P'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 10
+        Value = Null
+      end
+      item
+        Name = '@m_COUNT'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@PRICE'
+        Attributes = [paNullable]
+        DataType = ftBCD
+        NumericScale = 2
+        Precision = 5
+        Value = Null
+      end
+      item
+        Name = '@ID_GENRE'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@ID_AUTHOR'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@PUBLISHER'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 50
+        Value = Null
+      end
+      item
+        Name = '@NAMBER_PAGES'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@YEAR_PUB'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end>
     Left = 224
     Top = 240
   end
-  object ADOStoredProc3: TADOStoredProc
+  object ins_book: TADOStoredProc
     Connection = Connection
-    Parameters = <>
-    Left = 368
+    ProcedureName = 'INS_BOOK;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@NAME_B'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 150
+        Value = Null
+      end
+      item
+        Name = '@m_SOURCE'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 70
+        Value = Null
+      end
+      item
+        Name = '@DATE_P'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 10
+        Value = Null
+      end
+      item
+        Name = '@m_COUNT'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@PRICE'
+        Attributes = [paNullable]
+        DataType = ftBCD
+        NumericScale = 2
+        Precision = 5
+        Value = Null
+      end
+      item
+        Name = '@ID_GENRE'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@ID_AUTHOR'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@PUBLISHER'
+        Attributes = [paNullable]
+        DataType = ftString
+        Size = 50
+        Value = Null
+      end
+      item
+        Name = '@NAMBER_PAGES'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@YEAR_PUB'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@Id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Direction = pdOutput
+        Precision = 10
+        Value = Null
+      end>
+    Left = 296
+    Top = 232
+  end
+  object upd_book: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_book;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@id_book'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@name_b'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 50
+        Value = Null
+      end>
+    Left = 224
     Top = 288
   end
-  object ADOStoredProc4: TADOStoredProc
+  object del_book: TADOStoredProc
     Connection = Connection
+    ProcedureName = 'del_book;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@id_book'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = Null
+      end>
+    Left = 232
+    Top = 356
+  end
+  object docQuery: TADOQuery
+    Connection = Connection
+    CursorType = ctStatic
     Parameters = <>
-    Left = 368
-    Top = 352
+    SQL.Strings = (
+      'select Doc.ID_Doc, '
+      'Book.Name_B,'
+      
+        'case Doc.m_Status when 0 then '#39#1042' '#1085#1072#1083#1080#1095#1080#1080#39' else '#39#1042#1099#1076#1072#1085#39' end as bo' +
+        'ok_state'
+      'from Doc '
+      'inner join Book on Book.ID_Book=Doc.ID_Book'
+      'where 1=1')
+    Left = 344
+    Top = 72
+  end
+  object docDS: TDataSource
+    AutoEdit = False
+    DataSet = docQuery
+    Left = 352
+    Top = 128
+  end
+  object sel_doc_in: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_doc_in;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@name_b'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 50
+      end>
+    Left = 352
+    Top = 184
+  end
+  object sel_doc_all_in: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_doc_all_in;1'
+    Parameters = <>
+    Left = 360
+    Top = 232
+  end
+  object ADOStoredProc3: TADOStoredProc
+    Parameters = <>
+    Left = 512
+    Top = 344
+  end
+  object ADOStoredProc4: TADOStoredProc
+    Parameters = <>
+    Left = 512
+    Top = 384
   end
 end

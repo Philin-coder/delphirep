@@ -31,7 +31,7 @@ type
     docDS: TDataSource;
     sel_doc_in: TADOStoredProc;
     sel_doc_all_in: TADOStoredProc;
-    sel_doc_all_out: TADOStoredProc;
+    ADOStoredProc3: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }

@@ -52,7 +52,7 @@ type
     ins_book_DataGrid: TDBGrid;
     ins_book_btn_Box: TGroupBox;
     Ins_book_insBtn: TButton;
-    doc_statusCombo: TComboBox;
+    ComboBox1: TComboBox;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -62,7 +62,6 @@ type
     procedure doc_reset_RadioClick(Sender: TObject);
     procedure docknaimRadio_grupperClick(Sender: TObject);
     procedure doc_fnddEditKeyPress(Sender: TObject; var Key: Char);
-    procedure doc_statusComboChange(Sender: TObject);
   private
   procedure ChangeFormColor(Sender: TObject);
   public
@@ -71,7 +70,6 @@ type
 
 var
   frm_doc: Tfrm_doc;
-  var stat_s:Integer;
 
 implementation
 
@@ -300,12 +298,6 @@ if doc_reset_Radio.Checked then
     end;
 end;
 
-procedure Tfrm_doc.doc_statusComboChange(Sender: TObject);
-begin
-if doc_statusCombo.ItemIndex=0 then stat_s:=0
-  else if doc_statusCombo.ItemIndex=1 then stat_s:=1;
-end;
-
 procedure Tfrm_doc.FormActivate(Sender: TObject);
 begin
 dm.AutQuery.Open;
@@ -318,7 +310,6 @@ procedure Tfrm_doc.FormClose(Sender: TObject; var Action: TCloseAction);
 var
  q:Integer;
 begin
-stat_s:=0;
  SaveFormState(Self);
    with dm do
  begin
@@ -339,7 +330,6 @@ const
   var
   ButtonClicks: array of TNotifyEvent;
 begin
-stat_s:=0;
  frm_doc.ShowHint:=true;
  UniformizeButtonsSize(Self,  273, 25);
  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);

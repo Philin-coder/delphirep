@@ -28,7 +28,7 @@ object frm_doc: Tfrm_doc
     Top = 47
     Width = 1037
     Height = 568
-    ActivePage = sel_tab
+    ActivePage = ins_tab
     Align = alClient
     TabOrder = 1
     object sel_tab: TTabSheet
@@ -58,22 +58,46 @@ object frm_doc: Tfrm_doc
         Align = alTop
         TabOrder = 1
         object docknaimRadio_grupper: TRadioButton
-          Left = 65
-          Top = 22
-          Width = 232
+          Left = 19
+          Top = 14
+          Width = 278
           Height = 17
           Align = alCustom
-          Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1102' '#1082#1085#1080#1075#1080
+          Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1102' '#1082#1085#1080#1075#1080' '#1074' '#1085#1072#1083#1080#1095#1080#1080
           TabOrder = 0
+          OnClick = docknaimRadio_grupperClick
         end
         object doc_reset_Radio: TRadioButton
-          Left = 640
-          Top = 24
+          Left = 616
+          Top = 18
           Width = 113
           Height = 17
           Align = alCustom
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 1
+          OnClick = doc_reset_RadioClick
+        end
+        object all_inCB: TCheckBox
+          Left = 19
+          Top = 44
+          Width = 169
+          Height = 17
+          Align = alCustom
+          Anchors = [akLeft]
+          Caption = #1055#1086#1089#1084#1086#1090#1088#1077#1090#1100' '#1095#1090#1086' '#1074' '#1085#1072#1083#1080#1095#1080#1080
+          TabOrder = 2
+          OnClick = all_inCBClick
+        end
+        object CB_all_out: TCheckBox
+          Left = 584
+          Top = 41
+          Width = 169
+          Height = 17
+          Align = alCustom
+          Anchors = [akLeft]
+          Caption = #1055#1086#1089#1084#1086#1090#1088#1077#1090#1100' '#1095#1090#1086' '#1074#1099#1076#1072#1085#1086
+          TabOrder = 3
+          OnClick = CB_all_outClick
         end
       end
       object doc_data_Box: TGroupBox
@@ -135,9 +159,9 @@ object frm_doc: Tfrm_doc
           Width = 966
           Height = 21
           Anchors = [akLeft, akRight]
-          EditLabel.Width = 199
+          EditLabel.Width = 282
           EditLabel.Height = 13
-          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1085#1072#1079#1074#1072#1085#1080#1102' '#1082#1085#1080#1075#1080
+          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1085#1072#1079#1074#1072#1085#1080#1102' '#1076#1086#1082#1091#1084#1077#1085#1090#1072'  '#1074' '#1085#1072#1083#1080#1095#1080#1080
           TabOrder = 0
         end
         object doc_fnddEdit: TLabeledEdit
@@ -146,10 +170,11 @@ object frm_doc: Tfrm_doc
           Width = 966
           Height = 21
           Anchors = [akLeft, akRight]
-          EditLabel.Width = 166
+          EditLabel.Width = 220
           EditLabel.Height = 13
-          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1085#1072#1079#1074#1072#1085#1080#1102' '#1082#1085#1080#1075#1080
+          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1085#1072#1079#1074#1072#1085#1080#1102' '#1082#1085#1080#1075#1080' '#1074' '#1085#1072#1083#1080#1095#1080#1080
           TabOrder = 1
+          OnKeyPress = doc_fnddEditKeyPress
         end
       end
     end
@@ -161,7 +186,7 @@ object frm_doc: Tfrm_doc
         Top = 0
         Width = 1029
         Height = 540
-        ActivePage = about_book_yab_two
+        ActivePage = about_bookTab_one
         Align = alClient
         TabOrder = 0
         object about_bookTab_one: TTabSheet
