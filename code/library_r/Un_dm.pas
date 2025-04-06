@@ -34,7 +34,7 @@ type
     sel_doc_all_out: TADOStoredProc;
     INS_DOC: TADOStoredProc;
     upd_doc: TADOStoredProc;
-    ADOStoredProc2: TADOStoredProc;
+    del_doc: TADOStoredProc;
   private
     { Private declarations }
   public

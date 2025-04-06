@@ -29,17 +29,16 @@ type
     doc_updDBL: TDBLookupComboBox;
     upd_doc_btn_box: TGroupBox;
     upd_doc_Btn: TButton;
-    book_del_inp_Box: TGroupBox;
-    book_delLbl: TLabel;
-    book_delDBL: TDBLookupComboBox;
-    book_del_btn_Box: TGroupBox;
-    book_del_btn: TButton;
-    book_del_data_Box: TGroupBox;
+    doc_del_inp_Box: TGroupBox;
+    doc_delLbl: TLabel;
+    doc_delDBL: TDBLookupComboBox;
+    doc_del_btn_Box: TGroupBox;
+    doc_del_btn: TButton;
+    doc_del_data_Box: TGroupBox;
     doc_condBox: TGroupBox;
     doccondedit_inp: TLabeledEdit;
     doc_fnddEdit: TLabeledEdit;
     aboutdocPC: TPageControl;
-    book_del_Grid: TDBGrid;
     all_inCB: TCheckBox;
     CB_all_out: TCheckBox;
     ins_book_data_Box: TGroupBox;
@@ -54,6 +53,7 @@ type
     upd_datadocGrid: TDBGrid;
     upd_doc_lbl: TStaticText;
     upd_docCombo: TComboBox;
+    DocdelGrid: TDBGrid;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -67,6 +67,7 @@ type
     procedure Ins_book_insBtnClick(Sender: TObject);
     procedure upd_docComboChange(Sender: TObject);
     procedure upd_doc_BtnClick(Sender: TObject);
+    procedure doc_del_btnClick(Sender: TObject);
   private
   procedure ChangeFormColor(Sender: TObject);
   public
@@ -238,6 +239,47 @@ try
     on E: Exception do
       ShowMessage('Ошибка: ' + E.Message);
   end;
+end;
+
+procedure Tfrm_doc.doc_del_btnClick(Sender: TObject);
+var
+AreFieldsEmpty: Boolean;
+begin
+    AreFieldsEmpty:=(
+    (doc_delDBL.Text='')
+    );
+    if AreFieldsEmpty then
+    begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+    end;
+    try
+      with dm.del_doc do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@id_doc').Value :=
+           dm.docQuery.FieldByName('id_doc').AsString;
+           ExecProc;
+           dm.docQuery.Close;
+           dm.docQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+
+
+
 end;
 
 procedure Tfrm_doc.doc_fnddEditKeyPress(Sender: TObject; var Key: Char);
