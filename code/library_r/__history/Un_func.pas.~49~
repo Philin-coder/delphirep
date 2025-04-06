@@ -63,12 +63,11 @@ procedure UpdateFormProperties(const FormName: string;
  const ButtonCaptions: array of string; const ButtonClicks: array of TNotifyEvent);
  function GetTimeOfDay: string;
  procedure ExtractResFile;
- function FileExistsInAppDirectory(const FileName: string): string;
- procedure UniformizeButtonsSize(AWinControl: TWinControl; AWidth,
- AHeight: Integer);
+function FileExistsInAppDirectory(const FileName: string): string;
+procedure UniformizeButtonsSize(AWinControl: TWinControl; AWidth,
+AHeight: Integer);
 function IsDigitsOnly(const Text: string): Boolean;
-
-
+function is_cost_correct(var str: string): Boolean;
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -857,23 +856,83 @@ end;
 function IsDigitsOnly(const Text: string): Boolean;
 var
   i: Integer;
+  NumberValue: Int64; // Для больших чисел (до 18 цифр)
 begin
-  // Инициализируем результат как True (предполагаем, что строка содержит только цифры)
   Result := True;
 
-  // Проверяем каждый символ строки
+  // Проверяем каждый символ
   for i := 1 to Length(Text) do
   begin
-    if not (Text[i] in ['0'..'9']) then
+    if not (Text[i] in ['0'..'9']) then // Разрешены только цифры
     begin
-      // Если найден недопустимый символ, выводим сообщение об ошибке
-      ShowMessage('Ошибка: значение цены должно быть в диапазоне от 0 до 99999999.99.');
-      Result := False; // Устанавливаем результат в False
-      Exit; // Прерываем выполнение функции
+      ShowMessage('Ошибка: значение должно содержать только цифры.');
+      Result := False;
+      Exit;
     end;
   end;
 
-  // Если все символы — цифры, Result останется True
+  // Проверяем, что строка не пустая
+  if Text = '' then
+  begin
+    ShowMessage('Ошибка: введите корректное число.');
+    Result := False;
+    Exit;
+  end;
+
+  // Преобразуем строку в целое число
+  try
+    NumberValue := StrToInt64(Text); // Для поддержки 18-значных чисел
+    // Проверка диапазона (если нужно)
+    if (NumberValue < 0) or (NumberValue > 999999999999999999) then // 10^18 - 1
+    begin
+      ShowMessage('Ошибка: значение должно быть в диапазоне от 0 до 999999999999999999.');
+      Result := False;
+      Exit;
+    end;
+  except
+    on E: EConvertError do
+    begin
+      ShowMessage('Ошибка: неверный формат числа.');
+      Result := False;
+      Exit;
+    end;
+  end;
+end;
+function is_cost_correct(var str: string): Boolean;
+var
+  i: Integer;
+begin
+  Result := False;
+  str := Trim(str);
+  
+  // Проверка на пустую строку
+  if str = '' then
+  begin
+    ShowMessage('Строка пуста');
+    Exit;
+  end;
+  
+  // Проверка длины строки (не более 3 символов)
+  if Length(str) > 3 then
+  begin
+    ShowMessage('Ошибка: число должно быть не более трёхзначным');
+    Exit;
+  end;
+  
+  // Проверка, что все символы — цифры
+  for i := 1 to Length(str) do
+  begin
+    if not (str[i] in ['0'..'9']) then
+    begin
+      ShowMessage('Разрешён ввод только цифр');
+      Beep;
+      Exit;
+    end;
+  end;
+  
+  // Если все проверки пройдены
+  ShowMessage('Цена корректна');
+  Result := True;
 end;
 initialization
 finalization

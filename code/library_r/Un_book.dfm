@@ -28,7 +28,7 @@ object frm_book: Tfrm_book
     Top = 47
     Width = 1037
     Height = 568
-    ActivePage = delTab
+    ActivePage = ins_tab
     Align = alClient
     TabOrder = 1
     object sel_tab: TTabSheet
@@ -317,6 +317,17 @@ object frm_book: Tfrm_book
             Height = 17
             Caption = #1059#1095#1080#1090#1099#1074#1072#1090#1100' '#1082#1086#1083#1080#1095#1077#1089#1090#1074#1086' '#1076#1086#1082#1091#1084#1077#1085#1090#1086#1074
             TabOrder = 8
+          end
+          object costCB: TCheckBox
+            Left = 254
+            Top = 470
+            Width = 97
+            Height = 17
+            Align = alCustom
+            Anchors = [akLeft]
+            Caption = #1055#1088#1086#1074#1077#1088#1082#1072' '#1094#1077#1085#1099' '#1085#1072' '#1082#1086#1088#1088#1077#1082#1090#1085#1086#1089#1090#1100
+            TabOrder = 9
+            OnClick = costCBClick
           end
         end
         object about_book_yab_two: TTabSheet

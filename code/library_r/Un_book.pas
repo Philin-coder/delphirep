@@ -65,6 +65,7 @@ type
     docCB: TCheckBox;
     Upd_book_Grid: TDBGrid;
     book_del_Grid: TDBGrid;
+    costCB: TCheckBox;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -75,6 +76,7 @@ type
     procedure Ins_book_insBtnClick(Sender: TObject);
     procedure upd_book_BtnClick(Sender: TObject);
     procedure book_del_btnClick(Sender: TObject);
+    procedure costCBClick(Sender: TObject);
   private
   procedure ChangeFormColor(Sender: TObject);
   public
@@ -291,6 +293,25 @@ end;
 
 
 
+
+procedure Tfrm_book.costCBClick(Sender: TObject);
+var cost_str:String;
+begin
+ if costCB.Checked then
+ begin
+  cost_str:=price_inp.Text;
+  if  is_cost_correct(cost_str) then
+  begin
+      ShowMessage('Цена корретна');
+  end
+  else
+  begin
+    ShowMessage('Цена некорретна');
+    price_inp.Clear;
+    Exit;
+  end;
+ end;
+end;
 
 procedure Tfrm_book.FormActivate(Sender: TObject);
 begin

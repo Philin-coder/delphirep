@@ -67,7 +67,7 @@ procedure UpdateFormProperties(const FormName: string;
 procedure UniformizeButtonsSize(AWinControl: TWinControl; AWidth,
 AHeight: Integer);
 function IsDigitsOnly(const Text: string): Boolean;
-
+function is_cost_correct(var str: string): Boolean;
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -898,7 +898,47 @@ begin
     end;
   end;
 end;
-
+function is_cost_correct(var str: string): Boolean;
+var
+  i: Integer;
+begin
+  Result := False;
+  str := Trim(str);
+  
+  // Проверка на пустую строку
+  if str = '' then
+  begin
+    ShowMessage('Строка пуста');
+    Exit;
+  end;
+  
+  // Проверка, что все символы — цифры
+  for i := 1 to Length(str) do
+  begin
+    if not (str[i] in ['0'..'9']) then
+    begin
+      ShowMessage('Разрешён ввод только цифр');
+      {$IFDEF MSWINDOWS}
+      Windows.Beep(500, 100);
+      {$ENDIF}
+      Exit;
+    end;
+  end;
+  
+  // Проверка на длину числа (не более 3 знаков)
+  if Length(str) >= 4 then  // Изменено условие с = на >=
+  begin
+    ShowMessage('Ошибка: число не должно содержать четыре и более цифр');  // Обновлено сообщение
+    {$IFDEF MSWINDOWS}
+    Windows.Beep(500, 100);
+    {$ENDIF}
+    Exit;
+  end;
+  
+  // Если все проверки пройдены
+  ShowMessage('Цена корректна');
+  Result := True;
+end;
 initialization
 finalization
 if hAniCursor <> 0 then

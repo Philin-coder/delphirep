@@ -29,14 +29,13 @@ type
     book_upd_lbl: TLabel;
     book_updDBL: TDBLookupComboBox;
     upd_book_btn_box: TGroupBox;
-    upd_gen_Btn: TButton;
-    gen_del_inp_Box: TGroupBox;
-    gen_delLbl: TLabel;
-    gen_delDBL: TDBLookupComboBox;
-    gen_del_btn_Box: TGroupBox;
-    gen_del_btn: TButton;
-    gen_del_data_Box: TGroupBox;
-    gendelGrid: TDBGrid;
+    upd_book_Btn: TButton;
+    book_del_inp_Box: TGroupBox;
+    book_delLbl: TLabel;
+    book_delDBL: TDBLookupComboBox;
+    book_del_btn_Box: TGroupBox;
+    book_del_btn: TButton;
+    book_del_data_Box: TGroupBox;
     book_condBox: TGroupBox;
     bookcondedit_inp: TLabeledEdit;
     book_fnddEdit: TLabeledEdit;
@@ -65,6 +64,8 @@ type
     ins_book_DataGrid: TDBGrid;
     docCB: TCheckBox;
     Upd_book_Grid: TDBGrid;
+    book_del_Grid: TDBGrid;
+    costCB: TCheckBox;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -73,6 +74,9 @@ type
     procedure booknaimRadio_grupperClick(Sender: TObject);
     procedure book_reset_RadioClick(Sender: TObject);
     procedure Ins_book_insBtnClick(Sender: TObject);
+    procedure upd_book_BtnClick(Sender: TObject);
+    procedure book_del_btnClick(Sender: TObject);
+    procedure costCBClick(Sender: TObject);
   private
   procedure ChangeFormColor(Sender: TObject);
   public
@@ -145,6 +149,45 @@ try
     on E: Exception do
       ShowMessage('Ошибка: ' + E.Message);
   end;
+end;
+
+procedure Tfrm_book.book_del_btnClick(Sender: TObject);
+var arefiledempty:boolean;
+begin
+   arefiledempty:=(
+   (book_delDBL.Text='')
+   );
+   if arefiledempty then
+   begin
+   MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+   end;
+   try
+      with dm.del_book do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@id_book').Value:=
+           dm.bookQuery.FieldByName('ID_Book').AsString;
+           ExecProc;
+           dm.bookQuery.Close;
+           dm.bookQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+
+
 end;
 
 procedure Tfrm_book.book_fnddEditKeyPress(Sender: TObject; var Key: Char);
@@ -251,6 +294,14 @@ end;
 
 
 
+procedure Tfrm_book.costCBClick(Sender: TObject);
+begin
+ if costCB.Checked then
+ begin
+     ShowMessage('test');
+ end;
+end;
+
 procedure Tfrm_book.FormActivate(Sender: TObject);
 begin
 dm.bookQuery.Open;
@@ -281,7 +332,7 @@ const
  var
     ButtonClicks: array of TNotifyEvent;
 begin
-frm_book.ShowHint:=true;
+ frm_book.ShowHint:=true;
  UniformizeButtonsSize(Self,  273, 25);
  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
@@ -453,6 +504,54 @@ if AreFieldsEmpty or not AreFieldsValid then
     end;
 end;
 end;//case
+end;
+
+procedure Tfrm_book.upd_book_BtnClick(Sender: TObject);
+ const
+  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+  var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+begin
+AreFieldsEmpty:=(
+ (book_updDBL.Text='')or
+ (Trim(Upd_book_naim_inp.Text)='')
+);
+AreFieldsValid:=(
+(ValidateComponentText(book_upd_inp_box,AllowedChars))
+);
+  if AreFieldsEmpty or not AreFieldsValid then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.upd_book do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@id_book').Value:=
+           dm.bookQuery.FieldByName('id_book').AsString;
+           Parameters.ParamByName('@name_b').Value:=Upd_book_naim_inp.Text;
+           ExecProc;
+           dm.bookQuery.Close;
+           dm.bookQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+
+
 end;
 
 end.
