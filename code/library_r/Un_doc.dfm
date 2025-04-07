@@ -28,7 +28,7 @@ object frm_doc: Tfrm_doc
     Top = 47
     Width = 1037
     Height = 568
-    ActivePage = updTab
+    ActivePage = ins_tab
     Align = alClient
     TabOrder = 1
     object sel_tab: TTabSheet
@@ -188,8 +188,6 @@ object frm_doc: Tfrm_doc
         Height = 299
         Align = alClient
         TabOrder = 0
-        ExplicitTop = 0
-        ExplicitHeight = 540
       end
       object ins_book_data_Box: TGroupBox
         Left = 0
@@ -202,9 +200,9 @@ object frm_doc: Tfrm_doc
         object doc_lbl: TStaticText
           Left = 3
           Top = 18
-          Width = 34
+          Width = 54
           Height = 17
-          Caption = #1050#1085#1080#1075#1072
+          Caption = #1044#1086#1082#1091#1084#1077#1085#1090
           TabOrder = 0
         end
         object Ins_doc_book_DBL: TDBLookupComboBox
@@ -250,9 +248,6 @@ object frm_doc: Tfrm_doc
         Height = 299
         Align = alClient
         TabOrder = 2
-        ExplicitTop = 305
-        ExplicitWidth = 1021
-        ExplicitHeight = 143
         object ins_doc_Grid: TDBGrid
           Left = 2
           Top = 15
@@ -294,8 +289,6 @@ object frm_doc: Tfrm_doc
         Height = 64
         Align = alBottom
         TabOrder = 3
-        ExplicitTop = 448
-        ExplicitWidth = 1021
         object Ins_book_insBtn: TButton
           Left = 272
           Top = 36
