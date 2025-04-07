@@ -62,6 +62,7 @@ object Frm_main: TFrm_main
     end
     object reader_item: TMenuItem
       Caption = '&'#1063#1080#1090#1072#1090#1077#1083#1100
+      OnClick = reader_itemClick
     end
   end
 end

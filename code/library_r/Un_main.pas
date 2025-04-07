@@ -26,6 +26,7 @@ type
     procedure genre_itemClick(Sender: TObject);
     procedure Book_itemClick(Sender: TObject);
     procedure doc_itemClick(Sender: TObject);
+    procedure reader_itemClick(Sender: TObject);
   private
   procedure ChangeFormColor(Sender: TObject);
 var
@@ -38,7 +39,7 @@ var
 
 implementation
 
-uses Un_func, Un_dm, Un_autorize, Un_aut, Un_genre, Un_book, Un_doc;
+uses Un_func, Un_dm, Un_autorize, Un_aut, Un_genre, Un_book, Un_doc, Un_reader;
 
 {$R *.dfm}
 const
@@ -188,6 +189,18 @@ clBtnFace, 1024, 768);
 Frm_genre.ShowModal;
 except
 Frm_genre.Free;
+raise;
+end;
+end;
+
+procedure TFrm_main.reader_itemClick(Sender: TObject);
+begin
+    try
+UpdateFormProperties('frm_reader', 'Форма работы с читателем',
+clBtnFace, 1024, 768);
+frm_reader.ShowModal;
+except
+frm_reader.Free;
 raise;
 end;
 end;

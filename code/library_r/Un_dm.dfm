@@ -1,6 +1,6 @@
 object DM: TDM
   OldCreateOrder = False
-  Height = 432
+  Height = 535
   Width = 811
   object Connection: TADOConnection
     Connected = True
@@ -538,12 +538,14 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@name_b'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 50
+        Value = Null
       end>
     Left = 352
     Top = 184
@@ -571,6 +573,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@ID_Book'
@@ -598,6 +601,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@status'
@@ -613,8 +617,8 @@ object DM: TDM
         Precision = 10
         Value = 0
       end>
-    Left = 432
-    Top = 80
+    Left = 360
+    Top = 400
   end
   object del_doc: TADOStoredProc
     Connection = Connection
@@ -625,6 +629,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@id_doc'
@@ -633,7 +638,49 @@ object DM: TDM
         Precision = 10
         Value = 0
       end>
-    Left = 448
-    Top = 172
+    Left = 368
+    Top = 452
+  end
+  object readerQuery: TADOQuery
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select  '
+      'Reader.ID_Reader,'
+      'Reader.Name_R,'
+      'Reader.Date_B,'
+      'Reader.Adres,'
+      'Reader.Tel,'
+      'Reader.Date_R'
+      'from Reader'
+      'where 1=1')
+    Left = 536
+    Top = 72
+  end
+  object readerDS: TDataSource
+    DataSet = readerQuery
+    Left = 536
+    Top = 128
+  end
+  object ADOStoredProc1: TADOStoredProc
+    Parameters = <>
+    Left = 544
+    Top = 184
+  end
+  object ADOStoredProc2: TADOStoredProc
+    Parameters = <>
+    Left = 552
+    Top = 232
+  end
+  object ADOStoredProc3: TADOStoredProc
+    Parameters = <>
+    Left = 552
+    Top = 288
+  end
+  object ADOStoredProc4: TADOStoredProc
+    Parameters = <>
+    Left = 552
+    Top = 336
   end
 end

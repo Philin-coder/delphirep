@@ -35,6 +35,12 @@ type
     INS_DOC: TADOStoredProc;
     upd_doc: TADOStoredProc;
     del_doc: TADOStoredProc;
+    readerQuery: TADOQuery;
+    readerDS: TDataSource;
+    ADOStoredProc1: TADOStoredProc;
+    ADOStoredProc2: TADOStoredProc;
+    ADOStoredProc3: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public
