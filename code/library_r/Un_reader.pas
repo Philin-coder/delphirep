@@ -57,6 +57,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormActivate(Sender: TObject);
+    procedure readerselBtnClick(Sender: TObject);
 
   private
   procedure ChangeFormColor(Sender: TObject);
@@ -87,7 +88,7 @@ begin
 end;
 procedure Tfrm_reader.FormActivate(Sender: TObject);
 begin
-dm.readerQuery.Open;
+    dm.readerQuery.Open;
 end;
 
 procedure Tfrm_reader.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -130,6 +131,27 @@ begin
   ButtonClicks[2] := ChangeFormColor;
   ButtonClicks[3] := ChangeFormColor;
   CreateToolBarWithButtons(Self, readerImageList, ButtonNames, ButtonClicks);
+end;
+
+procedure Tfrm_reader.readerselBtnClick(Sender: TObject);
+begin
+try
+    if not DM.Connection.Connected then
+      raise Exception.Create('Соединение с базой не установлено');
+
+    with DM.sel_reader do
+    begin
+      Close;
+      Parameters.ParamByName('@Name_R').Value :=readercondedit_inp.Text;
+      Open;
+       DM.readerQuery.Recordset:=dm.sel_reader.Recordset;
+    end;
+  except
+    on E: EDatabaseError do
+      ShowMessage('Ошибка: ' + E.Message);
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
 end;
 
 end.

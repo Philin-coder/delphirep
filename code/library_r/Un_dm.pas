@@ -37,10 +37,13 @@ type
     del_doc: TADOStoredProc;
     readerQuery: TADOQuery;
     readerDS: TDataSource;
-    ADOStoredProc1: TADOStoredProc;
+    sel_reader: TADOStoredProc;
     ADOStoredProc2: TADOStoredProc;
     ADOStoredProc3: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;
+    ADOStoredProc5: TADOStoredProc;
+    ADOStoredProc6: TADOStoredProc;
+    ADOStoredProc7: TADOStoredProc;
   private
     { Private declarations }
   public

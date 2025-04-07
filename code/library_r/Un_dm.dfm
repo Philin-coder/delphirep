@@ -663,8 +663,22 @@ object DM: TDM
     Left = 536
     Top = 128
   end
-  object ADOStoredProc1: TADOStoredProc
-    Parameters = <>
+  object sel_reader: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_reader;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@Name_R'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 50
+      end>
     Left = 544
     Top = 184
   end
@@ -682,5 +696,20 @@ object DM: TDM
     Parameters = <>
     Left = 552
     Top = 336
+  end
+  object ADOStoredProc5: TADOStoredProc
+    Parameters = <>
+    Left = 552
+    Top = 392
+  end
+  object ADOStoredProc6: TADOStoredProc
+    Parameters = <>
+    Left = 560
+    Top = 456
+  end
+  object ADOStoredProc7: TADOStoredProc
+    Parameters = <>
+    Left = 632
+    Top = 456
   end
 end

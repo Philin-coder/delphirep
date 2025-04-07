@@ -47,6 +47,7 @@ object frm_reader: Tfrm_reader
           Height = 25
           Caption = #1054#1090#1073#1086#1088' '#1087#1086' '#1091#1089#1083#1086#1074#1080#1102
           TabOrder = 0
+          OnClick = readerselBtnClick
         end
       end
       object reader_grupperBox: TGroupBox
@@ -177,9 +178,9 @@ object frm_reader: Tfrm_reader
           Width = 966
           Height = 21
           Anchors = [akLeft, akRight]
-          EditLabel.Width = 282
+          EditLabel.Width = 191
           EditLabel.Height = 13
-          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1085#1072#1079#1074#1072#1085#1080#1102' '#1076#1086#1082#1091#1084#1077#1085#1090#1072'  '#1074' '#1085#1072#1083#1080#1095#1080#1080
+          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1060#1048#1054' '#1095#1080#1090#1072#1090#1077#1083#1103
           TabOrder = 0
         end
         object reader_fnddEdit: TLabeledEdit
@@ -188,9 +189,9 @@ object frm_reader: Tfrm_reader
           Width = 966
           Height = 21
           Anchors = [akLeft, akRight]
-          EditLabel.Width = 220
+          EditLabel.Width = 185
           EditLabel.Height = 13
-          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1085#1072#1079#1074#1072#1085#1080#1102' '#1082#1085#1080#1075#1080' '#1074' '#1085#1072#1083#1080#1095#1080#1080
+          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1072#1076#1088#1077#1089#1091' '#1087#1088#1086#1078#1080#1074#1072#1085#1080#1103
           TabOrder = 1
         end
       end
