@@ -28,7 +28,7 @@ object frm_reader: Tfrm_reader
     Top = 47
     Width = 1037
     Height = 692
-    ActivePage = updTab
+    ActivePage = delTab
     Align = alClient
     TabOrder = 1
     object sel_tab: TTabSheet
@@ -542,10 +542,10 @@ object frm_reader: Tfrm_reader
       end
     end
     object delTab: TTabSheet
-      Caption = ' '#1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1076#1086#1082#1091#1084#1077#1085#1090#1077
+      Caption = ' '#1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1095#1080#1090#1072#1090#1077#1083#1077
       ImageIndex = 3
       ExplicitHeight = 540
-      object doc_del_inp_Box: TGroupBox
+      object rd_del_inp_Box: TGroupBox
         Left = 0
         Top = 0
         Width = 1029
@@ -553,27 +553,27 @@ object frm_reader: Tfrm_reader
         Align = alTop
         Caption = #1042#1074#1086#1076'  '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object doc_delLbl: TLabel
+        object rd_delLbl: TLabel
           Left = 3
           Top = 29
-          Width = 96
+          Width = 95
           Height = 13
-          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1076#1086#1082#1091#1084#1077#1085#1090
+          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1095#1080#1090#1072#1090#1077#1083#1103
         end
-        object doc_delDBL: TDBLookupComboBox
+        object rd_delDBL: TDBLookupComboBox
           Left = 9
           Top = 58
           Width = 1017
           Height = 21
           Align = alCustom
           Anchors = [akLeft, akRight]
-          KeyField = 'ID_Doc'
-          ListField = 'Name_B'
-          ListSource = DM.docDS
+          KeyField = 'ID_Reader'
+          ListField = 'Name_R'
+          ListSource = DM.readerDS
           TabOrder = 0
         end
       end
-      object doc_del_btn_Box: TGroupBox
+      object rd_del_btn_Box: TGroupBox
         Left = 0
         Top = 594
         Width = 1029
@@ -581,16 +581,17 @@ object frm_reader: Tfrm_reader
         Align = alBottom
         TabOrder = 1
         ExplicitTop = 470
-        object doc_del_btn: TButton
+        object rd_del_btn: TButton
           Left = 464
           Top = 24
           Width = 75
           Height = 25
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
+          OnClick = rd_del_btnClick
         end
       end
-      object doc_del_data_Box: TGroupBox
+      object rd_del_data_Box: TGroupBox
         Left = 0
         Top = 105
         Width = 1029
@@ -599,13 +600,13 @@ object frm_reader: Tfrm_reader
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
         ExplicitHeight = 365
-        object DocdelGrid: TDBGrid
+        object rd_delGrid: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
           Height = 472
           Align = alClient
-          DataSource = DM.docDS
+          DataSource = DM.readerDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -615,20 +616,43 @@ object frm_reader: Tfrm_reader
           Columns = <
             item
               Expanded = False
-              FieldName = 'ID_Doc'
+              FieldName = 'ID_Reader'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Width = 82
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'Name_B'
-              Title.Caption = #1050#1085#1080#1075#1072
+              FieldName = 'Name_R'
+              Title.Caption = #1060#1048#1054' '#1095#1080#1090#1072#1090#1077#1083#1103
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'book_state'
-              Title.Caption = #1057#1086#1089#1090#1086#1103#1085#1080#1077
+              FieldName = 'Date_B'
+              Title.Caption = #1044#1072#1090#1072' '#1088#1086#1078#1076#1077#1085#1080#1103' '#1095#1080#1090#1072#1090#1077#1083#1103
+              Width = 144
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'Adres'
+              Title.Caption = #1040#1076#1088#1077#1089' '#1095#1080#1090#1072#1090#1077#1083#1103
+              Width = 91
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'Tel'
+              Title.Caption = #1058#1077#1083#1077#1092#1086#1085' '#1095#1080#1090#1072#1090#1077#1083#1103
+              Width = 121
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'Date_R'
+              Title.Caption = #1044#1072#1090#1072' '#1088#1077#1075#1080#1089#1090#1088#1072#1094#1080#1080' '#1095#1080#1090#1072#1090#1077#1083#1103
+              Width = 156
               Visible = True
             end>
         end

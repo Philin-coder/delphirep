@@ -29,12 +29,12 @@ type
     rd_updDBL: TDBLookupComboBox;
     upd_rd_btn_box: TGroupBox;
     upd_rd_Btn: TButton;
-    doc_del_inp_Box: TGroupBox;
-    doc_delLbl: TLabel;
-    doc_delDBL: TDBLookupComboBox;
-    doc_del_btn_Box: TGroupBox;
-    doc_del_btn: TButton;
-    doc_del_data_Box: TGroupBox;
+    rd_del_inp_Box: TGroupBox;
+    rd_delLbl: TLabel;
+    rd_delDBL: TDBLookupComboBox;
+    rd_del_btn_Box: TGroupBox;
+    rd_del_btn: TButton;
+    rd_del_data_Box: TGroupBox;
     reader_condBox: TGroupBox;
     readercondedit_inp: TLabeledEdit;
     reader_fnddEdit: TLabeledEdit;
@@ -44,7 +44,6 @@ type
     Ins_rd_dataBox: TGroupBox;
     ins_reader_btn_Box: TGroupBox;
     Ins_book_insBtn: TButton;
-    DocdelGrid: TDBGrid;
     reader_datar_CB: TCheckBox;
     Name_r_inp: TLabeledEdit;
     date_b_lbl: TStaticText;
@@ -58,6 +57,7 @@ type
     reader_updDBGrid: TDBGrid;
     upd_tel_lbl: TStaticText;
     upd_tel_inp: TMaskEdit;
+    rd_delGrid: TDBGrid;
     procedure FormCreate(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormActivate(Sender: TObject);
@@ -72,6 +72,7 @@ type
     procedure adr_r_inpExit(Sender: TObject);
     procedure upd_tel_inpExit(Sender: TObject);
     procedure upd_rd_BtnClick(Sender: TObject);
+    procedure rd_del_btnClick(Sender: TObject);
 
   private
   procedure ChangeFormColor(Sender: TObject);
@@ -186,6 +187,46 @@ try
            Parameters.ParamByName('@Adres').Value:=adr_r_inp.Text;
            Parameters.ParamByName('@Tel').Value:=tel_inp.Text;
            Parameters.ParamByName('@Date_R').Value:=DateToStr(Date_r_inp.Date);
+           ExecProc;
+           dm.readerQuery.Close;
+           dm.readerQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+
+
+
+end;
+
+procedure Tfrm_reader.rd_del_btnClick(Sender: TObject);
+var AreFieldEmty:boolean;
+begin
+AreFieldEmty:=(
+(rd_delDBL.Text='')
+);
+if AreFieldEmty then
+begin
+MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+end;
+try
+      with dm.del_reader do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@ID_Reader').Value :=
+           dm.readerQuery.FieldByName('ID_Reader').AsString;
            ExecProc;
            dm.readerQuery.Close;
            dm.readerQuery.Open;
