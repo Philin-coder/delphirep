@@ -459,7 +459,7 @@ begin
 AreFieldsEmpty:=(
 (doc_updDBL.Text='')or
 (upd_docCombo.Text='')
-);
+);   //test
 if AreFieldsEmpty then
 begin
     MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку',

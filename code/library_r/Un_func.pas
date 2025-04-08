@@ -68,6 +68,7 @@ procedure UpdateFormProperties(const FormName: string;
 function IsDigitsOnly(const Text: string): Boolean;
 function is_cost_correct(var str: string): Boolean;
 function GetCurrentDateTime: TDateTime;
+function IsMaskEditEmpty(MaskEdit: TMaskEdit): Boolean;
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -950,6 +951,45 @@ end;
 function GetCurrentDateTime: TDateTime;
 begin
   Result := Now; // Возвращает дату и время
+end;
+function GetDefaultMaskText(EditMask: string): string;
+var
+  i: Integer;
+  InEscape: Boolean;
+begin
+  Result := '';
+  InEscape := False;
+  for i := 1 to Length(EditMask) do
+  begin
+    if InEscape then
+    begin
+      Result := Result + EditMask[i];
+      InEscape := False;
+    end
+    else
+    begin
+      case EditMask[i] of
+        '\': InEscape := True; // Экранированные символы
+        '9', '0', 'L', 'A', 'a', 'C', 'c': Result := Result + ' '; // Заполнители
+        else
+          Result := Result + EditMask[i]; // Статические символы
+      end;
+    end;
+  end;
+end;
+function IsMaskEditEmpty(MaskEdit: TMaskEdit): Boolean;
+var
+  CleanText: string;
+begin
+  // Удаляем статические символы и заполнители
+  CleanText := MaskEdit.Text;
+  CleanText := StringReplace(CleanText, '_', '', [rfReplaceAll]);
+  CleanText := StringReplace(CleanText, '+7', '', [rfReplaceAll]);
+  CleanText := StringReplace(CleanText, '(', '', [rfReplaceAll]);
+  CleanText := StringReplace(CleanText, ')', '', [rfReplaceAll]);
+  CleanText := StringReplace(CleanText, '-', '', [rfReplaceAll]);
+  CleanText := StringReplace(CleanText, ' ', '', [rfReplaceAll]);
+  Result := Trim(CleanText) = '';
 end;
 initialization
 finalization

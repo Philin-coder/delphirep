@@ -655,12 +655,12 @@ object DM: TDM
       'Reader.Date_R'
       'from Reader'
       'where 1=1')
-    Left = 536
-    Top = 72
+    Left = 448
+    Top = 64
   end
   object readerDS: TDataSource
     DataSet = readerQuery
-    Left = 536
+    Left = 456
     Top = 128
   end
   object sel_reader: TADOStoredProc
@@ -681,8 +681,8 @@ object DM: TDM
         Size = 50
         Value = Null
       end>
-    Left = 544
-    Top = 184
+    Left = 464
+    Top = 192
   end
   object sel_reader_by_age: TADOStoredProc
     Connection = Connection
@@ -700,8 +700,8 @@ object DM: TDM
         DataType = ftDateTime
         Size = 10
       end>
-    Left = 552
-    Top = 232
+    Left = 480
+    Top = 256
   end
   object sel_reader_by_data_r: TADOStoredProc
     Connection = Connection
@@ -719,27 +719,81 @@ object DM: TDM
         DataType = ftDateTime
         Size = 10
       end>
-    Left = 552
-    Top = 288
+    Left = 496
+    Top = 320
   end
-  object ADOStoredProc4: TADOStoredProc
-    Parameters = <>
-    Left = 552
-    Top = 336
+  object INS_Reader: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'INS_Reader;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@Name_R'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = '@Date_B'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end
+      item
+        Name = '@Adres'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 70
+      end
+      item
+        Name = '@Tel'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 15
+      end
+      item
+        Name = '@Date_R'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end>
+    Left = 496
+    Top = 376
   end
-  object ADOStoredProc5: TADOStoredProc
-    Parameters = <>
-    Left = 552
-    Top = 392
+  object upd_reader: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_reader;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@tel'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = '@id_reader'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 496
+    Top = 424
   end
   object ADOStoredProc6: TADOStoredProc
     Parameters = <>
     Left = 560
-    Top = 456
-  end
-  object ADOStoredProc7: TADOStoredProc
-    Parameters = <>
-    Left = 632
     Top = 456
   end
 end

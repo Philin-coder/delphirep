@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, ImgList, ComCtrls, ToolWin,ADODB,db, StdCtrls, Grids,
-  DBGrids, DBCtrls;
+  DBGrids, DBCtrls, Mask;
 
 type
   Tfrm_reader = class(TForm)
@@ -23,12 +23,12 @@ type
     readernaimRadio_grupper: TRadioButton;
     reader_reset_Radio: TRadioButton;
     readerGrid: TDBGrid;
-    doc_upd_inp_box: TGroupBox;
-    Upd_doc_data_Box: TGroupBox;
-    doc_upd_lbl: TLabel;
-    doc_updDBL: TDBLookupComboBox;
-    upd_doc_btn_box: TGroupBox;
-    upd_doc_Btn: TButton;
+    rd_upd_inp_box: TGroupBox;
+    Upd_rd_data_Box: TGroupBox;
+    rd_upd_lbl: TLabel;
+    rd_updDBL: TDBLookupComboBox;
+    upd_rd_btn_box: TGroupBox;
+    upd_rd_Btn: TButton;
     doc_del_inp_Box: TGroupBox;
     doc_delLbl: TLabel;
     doc_delDBL: TDBLookupComboBox;
@@ -41,12 +41,9 @@ type
     aboutreaderPC: TPageControl;
     readerteansCB: TCheckBox;
     ins_r_data_Box: TGroupBox;
-    Ins_book_dataBox: TGroupBox;
+    Ins_rd_dataBox: TGroupBox;
     ins_reader_btn_Box: TGroupBox;
     Ins_book_insBtn: TButton;
-    upd_datadocGrid: TDBGrid;
-    upd_doc_lbl: TStaticText;
-    upd_docCombo: TComboBox;
     DocdelGrid: TDBGrid;
     reader_datar_CB: TCheckBox;
     Name_r_inp: TLabeledEdit;
@@ -54,9 +51,13 @@ type
     ins_r_Grid: TDBGrid;
     Date_B_inp: TDateTimePicker;
     adr_r_inp: TLabeledEdit;
-    Tel_inp: TLabeledEdit;
-    DateTimePicker1: TDateTimePicker;
-    StaticText1: TStaticText;
+    Date_r_inp: TDateTimePicker;
+    data_r_lbl: TStaticText;
+    Tel_lbl: TStaticText;
+    tel_inp: TMaskEdit;
+    reader_updDBGrid: TDBGrid;
+    upd_tel_lbl: TStaticText;
+    upd_tel_inp: TMaskEdit;
     procedure FormCreate(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormActivate(Sender: TObject);
@@ -66,6 +67,11 @@ type
     procedure reader_reset_RadioClick(Sender: TObject);
     procedure readerteansCBClick(Sender: TObject);
     procedure reader_datar_CBClick(Sender: TObject);
+    procedure Ins_book_insBtnClick(Sender: TObject);
+    procedure tel_inpExit(Sender: TObject);
+    procedure adr_r_inpExit(Sender: TObject);
+    procedure upd_tel_inpExit(Sender: TObject);
+    procedure upd_rd_BtnClick(Sender: TObject);
 
   private
   procedure ChangeFormColor(Sender: TObject);
@@ -80,6 +86,11 @@ implementation
 uses Un_dm, Un_func, Un_main;
 
 {$R *.dfm}
+procedure Tfrm_reader.adr_r_inpExit(Sender: TObject);
+begin
+tel_inp.SetFocus;
+end;
+
 procedure Tfrm_reader.ChangeFormColor(Sender: TObject);
 begin
   if Sender is TToolButton then
@@ -123,6 +134,8 @@ const
   var
     ButtonClicks: array of TNotifyEvent;
 begin
+ tel_inp.EditMask := '!+7 \(999\) 000-00-00;1;_';
+ upd_tel_inp.EditMask := '!+7 \(999\) 000-00-00;1;_';
  frm_reader.ShowHint:=true;
  UniformizeButtonsSize(Self,  273, 25);
  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
@@ -139,6 +152,58 @@ begin
   ButtonClicks[2] := ChangeFormColor;
   ButtonClicks[3] := ChangeFormColor;
   CreateToolBarWithButtons(Self, readerImageList, ButtonNames, ButtonClicks);
+end;
+
+procedure Tfrm_reader.Ins_book_insBtnClick(Sender: TObject);
+  const
+  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+begin
+AreFieldsEmpty :=(
+(Trim(Name_r_inp.Text) = '')or
+(Trim(adr_r_inp.Text) = '')
+);
+AreFieldsValid :=(
+ ValidateComponentText(Name_r_inp,AllowedChars)and
+ ValidateComponentText(adr_r_inp,AllowedChars)
+);
+if AreFieldsEmpty or not AreFieldsValid then
+begin
+     MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+end;
+try
+      with dm.INS_Reader do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@Name_R').Value :=Name_r_inp.Text;
+           Parameters.ParamByName('@Date_B').Value:=DateToStr( Date_B_inp.Date);
+           Parameters.ParamByName('@Adres').Value:=adr_r_inp.Text;
+           Parameters.ParamByName('@Tel').Value:=tel_inp.Text;
+           Parameters.ParamByName('@Date_R').Value:=DateToStr(Date_r_inp.Date);
+           ExecProc;
+           dm.readerQuery.Close;
+           dm.readerQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+
+
+
 end;
 
 procedure Tfrm_reader.readernaimRadio_grupperClick(Sender: TObject);
@@ -358,5 +423,68 @@ begin
 end;
 end;
 
+
+procedure Tfrm_reader.tel_inpExit(Sender: TObject);
+begin
+     if IsMaskEditEmpty(tel_inp) then
+  begin
+    tel_inp.Color := clRed; // Красный фон
+    ShowMessage('Поле телефона обязательно для заполнения!');
+    tel_inp.SetFocus;
+  end
+  else
+    tel_inp.Color := clWindow; // Сброс цвета
+end;
+
+procedure Tfrm_reader.upd_rd_BtnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (rd_updDBL.Text='')
+  );
+  if AreFieldsEmpty then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.upd_reader do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@tel').Value :=upd_tel_inp.Text;
+           Parameters.ParamByName('@id_reader').Value:=
+           dm.readerQuery.FieldByName('id_reader').AsString;
+           ExecProc;
+           dm.readerQuery.Close;
+           dm.readerQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+end;
+
+procedure Tfrm_reader.upd_tel_inpExit(Sender: TObject);
+begin
+     if IsMaskEditEmpty(upd_tel_inp) then
+  begin
+    upd_tel_inp.Color := clRed;
+    ShowMessage('Поле телефона обязательно для заполнения!');
+    upd_tel_inp.SetFocus;
+  end
+  else
+    upd_tel_inp.Color := clWindow;
+end;
 
 end.

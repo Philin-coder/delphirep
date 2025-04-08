@@ -40,10 +40,9 @@ type
     sel_reader: TADOStoredProc;
     sel_reader_by_age: TADOStoredProc;
     sel_reader_by_data_r: TADOStoredProc;
-    ADOStoredProc4: TADOStoredProc;
-    ADOStoredProc5: TADOStoredProc;
+    INS_Reader: TADOStoredProc;
+    upd_reader: TADOStoredProc;
     ADOStoredProc6: TADOStoredProc;
-    ADOStoredProc7: TADOStoredProc;
   private
     { Private declarations }
   public
