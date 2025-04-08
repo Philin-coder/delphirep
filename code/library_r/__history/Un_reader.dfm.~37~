@@ -28,7 +28,7 @@ object frm_reader: Tfrm_reader
     Top = 47
     Width = 1037
     Height = 568
-    ActivePage = sel_tab
+    ActivePage = ins_tab
     Align = alClient
     TabOrder = 1
     object sel_tab: TTabSheet
@@ -65,6 +65,7 @@ object frm_reader: Tfrm_reader
           Align = alCustom
           Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1060#1048#1054
           TabOrder = 0
+          OnClick = readernaimRadio_grupperClick
         end
         object reader_reset_Radio: TRadioButton
           Left = 624
@@ -74,6 +75,7 @@ object frm_reader: Tfrm_reader
           Align = alCustom
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 1
+          OnClick = reader_reset_RadioClick
         end
         object readerteansCB: TCheckBox
           Left = 19
@@ -84,6 +86,7 @@ object frm_reader: Tfrm_reader
           Anchors = [akLeft]
           Caption = #1054#1090#1086#1073#1088#1072#1090#1100' '#1090#1077#1093', '#1082#1086#1084#1091' '#1084#1077#1085#1100#1096#1077' 18'
           TabOrder = 2
+          OnClick = readerteansCBClick
         end
         object reader_datar_CB: TCheckBox
           Left = 624
@@ -94,6 +97,7 @@ object frm_reader: Tfrm_reader
           Anchors = [akLeft]
           Caption = #1054#1090#1086#1073#1088#1072#1090#1100' '#1090#1077#1093', '#1091' '#1082#1086#1075#1086' '#1089' '#1076#1072#1090#1099' '#1088#1077#1075#1080#1089#1090#1072#1088#1072#1094#1080#1080' '#1087#1088#1086#1096#1083#1086' '#1073#1086#1083#1100#1096#1077' 5 '#1083#1077#1090
           TabOrder = 3
+          OnClick = reader_datar_CBClick
         end
       end
       object reader_data_Box: TGroupBox
@@ -135,7 +139,7 @@ object frm_reader: Tfrm_reader
               Expanded = False
               FieldName = 'Date_B'
               Title.Caption = #1044#1072#1090#1072' '#1088#1086#1078#1076#1077#1085#1080#1103' '#1095#1080#1090#1072#1090#1077#1083#1103
-              Width = 89
+              Width = 144
               Visible = True
             end
             item
@@ -193,85 +197,95 @@ object frm_reader: Tfrm_reader
           EditLabel.Height = 13
           EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1072#1076#1088#1077#1089#1091' '#1087#1088#1086#1078#1080#1074#1072#1085#1080#1103
           TabOrder = 1
+          OnKeyPress = reader_fnddEditKeyPress
         end
       end
     end
     object ins_tab: TTabSheet
-      Caption = #1044#1086#1073#1072#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1076#1086#1082#1091#1084#1077#1085#1090#1077
+      Caption = #1044#1086#1073#1072#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1095#1080#1090#1072#1090#1077#1083#1077
       ImageIndex = 1
-      object aboutdocPC: TPageControl
+      object aboutreaderPC: TPageControl
         Left = 0
-        Top = 177
+        Top = 193
         Width = 1029
-        Height = 299
+        Height = 283
         Align = alClient
         TabOrder = 0
+        ExplicitTop = 177
+        ExplicitHeight = 299
       end
-      object ins_book_data_Box: TGroupBox
+      object ins_r_data_Box: TGroupBox
         Left = 0
         Top = 0
         Width = 1029
-        Height = 177
+        Height = 193
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
-        object doc_lbl: TStaticText
-          Left = 3
-          Top = 18
-          Width = 54
-          Height = 17
-          Caption = #1044#1086#1082#1091#1084#1077#1085#1090
-          TabOrder = 0
-        end
-        object Ins_doc_book_DBL: TDBLookupComboBox
-          Left = 3
-          Top = 41
-          Width = 1017
+        ExplicitTop = 9
+        DesignSize = (
+          1029
+          193)
+        object Name_r_inp: TLabeledEdit
+          Left = 19
+          Top = 38
+          Width = 966
           Height = 21
-          Align = alCustom
           Anchors = [akLeft, akRight]
-          KeyField = 'ID_Book'
-          ListField = 'Name_B'
-          ListSource = DM.bookDS
+          EditLabel.Width = 77
+          EditLabel.Height = 13
+          EditLabel.Caption = ' '#1060#1048#1054' '#1095#1080#1090#1072#1090#1077#1083#1103
+          TabOrder = 0
+          ExplicitTop = 34
+        end
+        object date_b_lbl: TStaticText
+          Left = 19
+          Top = 65
+          Width = 141
+          Height = 17
+          Align = alCustom
+          Anchors = [akLeft]
+          Caption = #1044#1072#1090#1072' '#1088#1086#1078#1076#1077#1085#1080#1103' '#1095#1080#1090#1072#1077#1090#1077#1083#1103
           TabOrder = 1
         end
-        object ins_doc_stat_lbl: TStaticText
-          Left = 3
-          Top = 100
-          Width = 40
-          Height = 17
-          Align = alCustom
-          Caption = #1057#1090#1072#1090#1091#1089
+        object Date_B_inp: TDateTimePicker
+          Left = 19
+          Top = 88
+          Width = 966
+          Height = 21
+          Anchors = [akLeft, akRight]
+          Date = 45755.684260115740000000
+          Time = 45755.684260115740000000
           TabOrder = 2
         end
-        object doc_statusCombo: TComboBox
-          Left = 2
-          Top = 123
-          Width = 1010
+        object LabeledEdit1: TLabeledEdit
+          Left = 19
+          Top = 142
+          Width = 966
           Height = 21
-          Align = alCustom
           Anchors = [akLeft, akRight]
-          ItemHeight = 13
+          EditLabel.Width = 82
+          EditLabel.Height = 13
+          EditLabel.Caption = #1040#1076#1088#1077#1089' '#1095#1080#1090#1072#1090#1077#1083#1103
           TabOrder = 3
-          Items.Strings = (
-            #1042' '#1085#1072#1083#1080#1095#1080#1080
-            #1042#1099#1076#1072#1085)
         end
       end
       object Ins_book_dataBox: TGroupBox
         Left = 0
-        Top = 177
+        Top = 193
         Width = 1029
-        Height = 299
+        Height = 283
         Align = alClient
         TabOrder = 2
-        object ins_doc_Grid: TDBGrid
+        ExplicitTop = 177
+        ExplicitHeight = 299
+        object DBGrid1: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
-          Height = 282
+          Height = 266
           Align = alClient
-          DataSource = DM.docDS
+          DataSource = DM.readerDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -281,25 +295,48 @@ object frm_reader: Tfrm_reader
           Columns = <
             item
               Expanded = False
-              FieldName = 'ID_Doc'
+              FieldName = 'ID_Reader'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Width = 82
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'Name_B'
-              Title.Caption = #1050#1085#1080#1075#1072
+              FieldName = 'Name_R'
+              Title.Caption = #1060#1048#1054' '#1095#1080#1090#1072#1090#1077#1083#1103
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'book_state'
-              Title.Caption = #1057#1086#1089#1090#1086#1103#1085#1080#1077
+              FieldName = 'Date_B'
+              Title.Caption = #1044#1072#1090#1072' '#1088#1086#1078#1076#1077#1085#1080#1103' '#1095#1080#1090#1072#1090#1077#1083#1103
+              Width = 144
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'Adres'
+              Title.Caption = #1040#1076#1088#1077#1089' '#1095#1080#1090#1072#1090#1077#1083#1103
+              Width = 91
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'Tel'
+              Title.Caption = #1058#1077#1083#1077#1092#1086#1085' '#1095#1080#1090#1072#1090#1077#1083#1103
+              Width = 121
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'Date_R'
+              Title.Caption = #1044#1072#1090#1072' '#1088#1077#1075#1080#1089#1090#1088#1072#1094#1080#1080' '#1095#1080#1090#1072#1090#1077#1083#1103
+              Width = 156
               Visible = True
             end>
         end
       end
-      object ins_book_btn_Box: TGroupBox
+      object ins_reader_btn_Box: TGroupBox
         Left = 0
         Top = 476
         Width = 1029
