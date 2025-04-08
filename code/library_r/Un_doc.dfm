@@ -28,7 +28,7 @@ object frm_doc: Tfrm_doc
     Top = 47
     Width = 1037
     Height = 568
-    ActivePage = sel_tab
+    ActivePage = ins_tab
     Align = alClient
     TabOrder = 1
     object sel_tab: TTabSheet
@@ -189,7 +189,7 @@ object frm_doc: Tfrm_doc
         Align = alClient
         TabOrder = 0
       end
-      object ins_book_data_Box: TGroupBox
+      object ins_d_data_Box: TGroupBox
         Left = 0
         Top = 0
         Width = 1029
@@ -241,12 +241,13 @@ object frm_doc: Tfrm_doc
             #1042#1099#1076#1072#1085)
         end
       end
-      object Ins_book_dataBox: TGroupBox
+      object Ins_doc_dataBox: TGroupBox
         Left = 0
         Top = 177
         Width = 1029
         Height = 299
         Align = alClient
+        Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
         object ins_doc_Grid: TDBGrid
           Left = 2
@@ -282,31 +283,27 @@ object frm_doc: Tfrm_doc
             end>
         end
       end
-      object ins_book_btn_Box: TGroupBox
+      object ins_doc_btn_Box: TGroupBox
         Left = 0
         Top = 476
         Width = 1029
         Height = 64
         Align = alBottom
         TabOrder = 3
-        object Ins_book_insBtn: TButton
+        object Ins_d_insBtn: TButton
           Left = 272
           Top = 36
           Width = 75
           Height = 25
           Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
           TabOrder = 0
-          OnClick = Ins_book_insBtnClick
+          OnClick = Ins_d_insBtnClick
         end
       end
     end
     object updTab: TTabSheet
       Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1076#1086#1082#1091#1084#1077#1085#1090#1077
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object doc_upd_inp_box: TGroupBox
         Left = 0
         Top = 0
@@ -353,7 +350,7 @@ object frm_doc: Tfrm_doc
           Height = 21
           Align = alCustom
           Anchors = [akLeft, akRight]
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 2
           OnChange = upd_docComboChange
           Items.Strings = (
@@ -424,10 +421,6 @@ object frm_doc: Tfrm_doc
     object delTab: TTabSheet
       Caption = ' '#1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1076#1086#1082#1091#1084#1077#1085#1090#1077
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object doc_del_inp_Box: TGroupBox
         Left = 0
         Top = 0

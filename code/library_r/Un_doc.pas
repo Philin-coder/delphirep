@@ -41,19 +41,19 @@ type
     aboutdocPC: TPageControl;
     all_inCB: TCheckBox;
     CB_all_out: TCheckBox;
-    ins_book_data_Box: TGroupBox;
+    ins_d_data_Box: TGroupBox;
     doc_lbl: TStaticText;
     Ins_doc_book_DBL: TDBLookupComboBox;
     ins_doc_stat_lbl: TStaticText;
-    Ins_book_dataBox: TGroupBox;
-    ins_book_btn_Box: TGroupBox;
-    Ins_book_insBtn: TButton;
+    Ins_doc_dataBox: TGroupBox;
+    ins_doc_btn_Box: TGroupBox;
+    Ins_d_insBtn: TButton;
     doc_statusCombo: TComboBox;
-    ins_doc_Grid: TDBGrid;
     upd_datadocGrid: TDBGrid;
     upd_doc_lbl: TStaticText;
     upd_docCombo: TComboBox;
     DocdelGrid: TDBGrid;
+    ins_doc_Grid: TDBGrid;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -64,7 +64,7 @@ type
     procedure docknaimRadio_grupperClick(Sender: TObject);
     procedure doc_fnddEditKeyPress(Sender: TObject; var Key: Char);
     procedure doc_statusComboChange(Sender: TObject);
-    procedure Ins_book_insBtnClick(Sender: TObject);
+    procedure Ins_d_insBtnClick(Sender: TObject);
     procedure upd_docComboChange(Sender: TObject);
     procedure upd_doc_BtnClick(Sender: TObject);
     procedure doc_del_btnClick(Sender: TObject);
@@ -407,7 +407,7 @@ upd_stat_s:=0;
   CreateToolBarWithButtons(Self, docImageList, ButtonNames, ButtonClicks);
 end;
 
-procedure Tfrm_doc.Ins_book_insBtnClick(Sender: TObject);
+procedure Tfrm_doc.Ins_d_insBtnClick(Sender: TObject);
 var AreFieldsEmpty: Boolean;
 begin
 AreFieldsEmpty:=(

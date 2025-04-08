@@ -28,7 +28,7 @@ object frm_reader: Tfrm_reader
     Top = 47
     Width = 1037
     Height = 568
-    ActivePage = sel_tab
+    ActivePage = ins_tab
     Align = alClient
     TabOrder = 1
     object sel_tab: TTabSheet
