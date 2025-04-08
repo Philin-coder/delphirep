@@ -672,23 +672,53 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@Name_R'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 50
+        Value = Null
       end>
     Left = 544
     Top = 184
   end
-  object ADOStoredProc2: TADOStoredProc
-    Parameters = <>
+  object sel_reader_by_age: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_reader_by_age;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@check_date'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end>
     Left = 552
     Top = 232
   end
-  object ADOStoredProc3: TADOStoredProc
-    Parameters = <>
+  object sel_reader_by_data_r: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_reader_by_data_r;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@check_date'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end>
     Left = 552
     Top = 288
   end

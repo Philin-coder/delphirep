@@ -58,6 +58,11 @@ type
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormActivate(Sender: TObject);
     procedure readerselBtnClick(Sender: TObject);
+    procedure reader_fnddEditKeyPress(Sender: TObject; var Key: Char);
+    procedure readernaimRadio_grupperClick(Sender: TObject);
+    procedure reader_reset_RadioClick(Sender: TObject);
+    procedure readerteansCBClick(Sender: TObject);
+    procedure reader_datar_CBClick(Sender: TObject);
 
   private
   procedure ChangeFormColor(Sender: TObject);
@@ -133,16 +138,45 @@ begin
   CreateToolBarWithButtons(Self, readerImageList, ButtonNames, ButtonClicks);
 end;
 
+procedure Tfrm_reader.readernaimRadio_grupperClick(Sender: TObject);
+begin
+ if readernaimRadio_grupper.Checked=true then
+  begin
+    try
+     with dm.readerQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+      'select'+' '+
+      'reader.ID_Reader,'+' '+
+      'Reader.Name_R,'+' '+
+      'Reader.Date_B,'+' '+
+      'Reader.Adres,'+' '+
+      'Reader.Tel,'+' '+
+      'Reader.Date_R'+' '+
+      'from Reader where 1=1'+' '+
+      'order by Reader.Name_R asc';
+      Open;
+     end;
+    except on E: EADOError do
+    begin
+      ShowMessage('Ошибка'+' '+E.Message);
+    end;
+    end;
+  end;
+end;
+
 procedure Tfrm_reader.readerselBtnClick(Sender: TObject);
 begin
 try
     if not DM.Connection.Connected then
       raise Exception.Create('Соединение с базой не установлено');
-
     with DM.sel_reader do
     begin
       Close;
-      Parameters.ParamByName('@Name_R').Value :=readercondedit_inp.Text;
+      Parameters.ParamByName('@Name_R').Value :=
+      readercondedit_inp.Text;
       Open;
        DM.readerQuery.Recordset:=dm.sel_reader.Recordset;
     end;
@@ -153,5 +187,173 @@ try
       ShowMessage('Ошибка: ' + E.Message);
   end;
 end;
+
+procedure Tfrm_reader.readerteansCBClick(Sender: TObject);
+var
+  CurDate:TDateTime;
+begin
+CurDate:=GetCurrentDateTime;
+case readerteansCB.Checked of
+true:
+begin
+try
+    if not DM.Connection.Connected then
+      raise Exception.Create('Соединение с базой не установлено');
+
+    with DM.sel_reader_by_age do
+    begin
+
+      Close;
+           Parameters.ParamByName('@check_date').Value :=DateToStr_(CurDate);
+      Open;
+       DM.readerQuery.Recordset:=dm.sel_reader_by_age.Recordset;
+    end;
+  except
+    on E: EDatabaseError do
+      ShowMessage('Ошибка БД: ' + E.Message);
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
+end;
+false:
+begin
+try
+   dm.readerQuery.SQL.Text:=
+    'select'+' '+
+     'reader.ID_Reader,'+' '+
+     'Reader.Name_R,'+' '+
+     'Reader.Date_B,'+' '+
+     'Reader.Adres,'+' '+
+     'Reader.Tel,'+' '+
+     'Reader.Date_R'+' '+
+     'from Reader where 1=1';
+   dm.readerQuery.close;
+   dm.readerQuery.Open;
+except on E: Exception do
+  begin
+  ShowMessage('wrong situation'+' '+E.Message);
+  end;
+  end;
+end;
+end;//case
+end;
+
+procedure Tfrm_reader.reader_datar_CBClick(Sender: TObject);
+var
+  cur_date:TDateTime;
+begin
+ cur_date:=GetCurrentDateTime;
+ case reader_datar_CB.Checked of
+ True:
+ begin
+    try
+    if not DM.Connection.Connected then
+      raise Exception.Create('Соединение с базой не установлено');
+    with DM.sel_reader_by_data_r do
+    begin
+      Close;
+           Parameters.ParamByName('@check_date').Value :=DateToStr_(cur_date);
+      Open;
+       DM.readerQuery.Recordset:=dm.sel_reader_by_data_r.Recordset;
+    end;
+  except
+    on E: EDatabaseError do
+      ShowMessage('Ошибка БД: ' + E.Message);
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
+
+ end;
+ false:
+ begin
+   try
+   dm.readerQuery.SQL.Text:=
+    'select'+' '+
+     'reader.ID_Reader,'+' '+
+     'Reader.Name_R,'+' '+
+     'Reader.Date_B,'+' '+
+     'Reader.Adres,'+' '+
+     'Reader.Tel,'+' '+
+     'Reader.Date_R'+' '+
+     'from Reader where 1=1';
+   dm.readerQuery.close;
+   dm.readerQuery.Open;
+except on E: Exception do
+  begin
+  ShowMessage('wrong situation'+' '+E.Message);
+  end;
+  end;
+ end;
+ end; //case
+end;
+
+procedure Tfrm_reader.reader_fnddEditKeyPress(Sender: TObject; var Key: Char);
+begin
+try
+   dm.readerQuery.SQL.Text:=
+    'select'+' '+
+     'reader.ID_Reader,'+' '+
+     'Reader.Name_R,'+' '+
+     'Reader.Date_B,'+' '+
+     'Reader.Adres,'+' '+
+     'Reader.Tel,'+' '+
+     'Reader.Date_R'+' '+
+     'from Reader where 1=1'+' '+
+     'and Reader.Adres like'+
+    QuotedStr(Concat(reader_fnddEdit.Text,#37));
+   dm.readerQuery.close;
+   dm.readerQuery.Open;
+except on E: Exception do
+  begin
+  ShowMessage('wrong situation'+' '+E.Message);
+  end;
+  end;
+end;
+
+procedure Tfrm_reader.reader_reset_RadioClick(Sender: TObject);
+var i,j,c:Integer;
+begin
+     if reader_reset_Radio.Checked then
+  with frm_reader do
+    for I := 0 to ComponentCount - 1 do
+     begin
+       if (Components[i] is TLabeledEdit)  then
+        begin
+          (Components[i] as TLabeledEdit).Clear;
+        end;
+     end;
+       with frm_reader do
+    for c := 0 to ComponentCount - 1 do
+     begin
+       if (Components[c] is TCheckBox)  then
+        begin
+          (Components[c] as TCheckBox).Checked:=False;
+        end;
+     end;
+     with dm.readerQuery do
+     begin
+     Close;
+     sql.Clear;
+     SQL.Text:=
+    'select'+' '+
+    'reader.ID_Reader,'+' '+
+    'Reader.Name_R,'+' '+
+    'Reader.Date_B,'+' '+
+    'Reader.Adres,'+''+
+    'Reader.Tel,'+' '+
+    'Reader.Date_R'+' '+
+    'from Reader where 1=1';
+     Open;
+     end;
+    with frm_reader do
+    for j := 0 to ComponentCount - 1 do
+    begin
+      if(Components[j] is TRadioButton)  then
+      begin
+        (Components[j] as TRadioButton).Checked:=False;
+      end;
+end;
+end;
+
 
 end.

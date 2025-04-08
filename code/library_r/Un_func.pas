@@ -26,7 +26,6 @@ const
   crMyAnimatedCursor = 1;
 type
   TSysCharSet = set of Char;
-
 function  DateToStr_(Dat : TDate): String;
 function  CommaPoint (X: String) : String;
 function  FindFormByName(const AName: string): TForm;
@@ -68,6 +67,7 @@ procedure UpdateFormProperties(const FormName: string;
 AHeight: Integer);
 function IsDigitsOnly(const Text: string): Boolean;
 function is_cost_correct(var str: string): Boolean;
+function GetCurrentDateTime: TDateTime;
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -946,6 +946,10 @@ begin
   // Если все проверки пройдены
   ShowMessage('Цена корректна');
   Result := True;
+end;
+function GetCurrentDateTime: TDateTime;
+begin
+  Result := Now; // Возвращает дату и время
 end;
 initialization
 finalization

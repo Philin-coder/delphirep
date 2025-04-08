@@ -1,0 +1,958 @@
+unit Un_func;
+
+interface
+uses
+dateUtils,
+sysUtils,
+Controls,
+Classes,
+Graphics,
+Dialogs,
+Forms,
+StdCtrls,
+IniFiles,
+ComCtrls,
+DBCtrls,
+Windows,
+mask,
+dbgrids,
+StrUtils,
+variants,
+JPEG,
+ImgList,
+
+ExtCtrls;
+const
+  crMyAnimatedCursor = 1;
+type
+  TSysCharSet = set of Char;
+
+function  DateToStr_(Dat : TDate): String;
+function  CommaPoint (X: String) : String;
+function  FindFormByName(const AName: string): TForm;
+procedure SaveFormState(AForm: TForm);
+procedure LoadFormState(AForm: TForm);
+procedure UpdateFormProperties(const FormName: string;
+  NewCaption: string = '';
+  NewColor: TColor = clNone;
+  NewWidth: Integer = -1;
+  NewHeight: Integer = -1);
+ procedure UniformizeComponentSizes(AComponent: TComponent; AWidth, AHeight:
+ Integer; AColor: TColor; AFontName: string; AFontSize: Integer);
+ procedure SaveConnectionStringToFile(const FileName, ConnectionString: string);
+ function min3(a, b, c: integer): integer;
+ function LeveDist(s, t: string): integer;
+ function levi_checker(Str_one,str_two:string):Boolean;
+ function NormalizeStringAndExtractParams2(var InputString: string;
+ out p1, p2: string): Boolean;
+ function NormalizeStringAndExtractParams3(var InputString: string; out p1, p2, p3:
+ string): Boolean;
+ function Capitalizer(str:string; mode:integer=0):string;
+ function adr_fixer(str:string;  mode:Integer=0):string;
+ procedure UniformizeDBGrids(AForm: TForm; const FontName: string;
+ FontSize: Integer; FontColor: TColor; BkColor: TColor);
+ function ValidateComponentText(AComponent: TWinControl;
+ const AllowedChars: TSysCharSet): Boolean;
+ function IsEnglishText(const Text: string): Boolean;
+ Function IsValidEmail(const Email: string): Boolean;
+ procedure LoadIconFromResource(const ResourceName: string;
+ Action: Integer; ImageList: TImageList = nil);
+ procedure HandleAnimatedCursor(Action: Integer; const FileName: string = '');
+ procedure LoadImageFromResource(const ResourceName: string; Image: TImage);
+ procedure CreateToolBarWithButtons(Form: TForm; ImageList: TImageList;
+ const ButtonCaptions: array of string; const ButtonClicks: array of TNotifyEvent);
+ function GetTimeOfDay: string;
+ procedure ExtractResFile;
+function FileExistsInAppDirectory(const FileName: string): string;
+procedure UniformizeButtonsSize(AWinControl: TWinControl; AWidth,
+AHeight: Integer);
+function IsDigitsOnly(const Text: string): Boolean;
+function is_cost_correct(var str: string): Boolean;
+implementation
+ var
+  hAniCursor: HCURSOR = 0;
+
+function    CommaPoint (X: String) : String;
+var iii : Integer;
+begin
+ iii:=pos(',',X) ;
+ if iii<>0 then
+ Result:=copy(X,1,iii-1)+'.'+copy(X,iii+1,5)
+ else
+ Result:=x;
+end;
+
+function DateToStr_(Dat : TDate): String;
+begin
+  Result:= IntToStr(MonthOf(Dat))+'.'
+  +IntToStr(DayOf(Dat))+'.'
+  +IntToStr(YearOf(Dat));
+end;
+
+function FindFormByName(const AName: string): TForm;
+var
+  i: Integer;
+begin
+  Result := nil;
+  for i := 0 to Screen.FormCount - 1 do
+  begin
+    if SameText(Screen.Forms[i].Name, AName) then
+    begin
+      Result := Screen.Forms[i];
+      Break;
+    end;
+  end;
+end;
+
+procedure UpdateFormProperties(const FormName: string;
+  NewCaption: string;
+  NewColor: TColor;
+  NewWidth: Integer;
+  NewHeight: Integer);
+var
+  Form: TForm;
+          var l:Integer;
+          var b:Integer;
+          var d:Integer;
+begin
+  Form := FindFormByName(FormName);
+  if not Assigned(Form) then
+  begin
+    ShowMessageFmt('Форма "%s" не найдена!', [FormName]);
+    Exit;
+  end;
+
+   with Form do
+  begin
+    if NewCaption <> '' then
+      Caption := NewCaption;
+
+    if NewColor <> clNone then
+      Color := NewColor;
+
+    if NewWidth > 0 then
+      Width := NewWidth;
+
+    if NewHeight > 0 then
+      Height := NewHeight;
+      form.Position:=poScreenCenter;
+      for l := 0 to ComponentCount - 1 do
+      begin
+        if (Components[l] is TLabeledEdit ) then
+        begin
+          (Components[l] as TLabeledEdit).Clear;
+        end;
+  for b := 0 to ComponentCount - 1 do
+  begin
+    if (Components[b] is TButton) then
+    begin
+      (Components[b] as TButton).Anchors:=[akLeft,akRight];
+    end;
+      for d := 0 to ComponentCount - 1 do
+  begin
+    if (Components[d] is TDateTimePicker ) then
+    begin
+      (Components[d] as TDateTimePicker).Date:=Now;
+    end;
+
+  end;
+      end;
+    end;
+
+
+  end;
+end;
+  procedure SaveFormState(AForm: TForm);
+var
+  IniFile: TIniFile;
+  FileName: string;
+begin
+
+  FileName := ChangeFileExt(Application.ExeName, '.ini');
+
+  IniFile := TIniFile.Create(FileName);
+  try
+    IniFile.WriteInteger(AForm.Name, 'Left', AForm.Left);
+    IniFile.WriteInteger(AForm.Name, 'Top', AForm.Top);
+    IniFile.WriteInteger(AForm.Name, 'Width', AForm.Width);
+    IniFile.WriteInteger(AForm.Name, 'Height', AForm.Height);
+  finally
+    IniFile.Free;
+  end;
+end;
+
+procedure LoadFormState(AForm: TForm);
+var
+  IniFile: TIniFile;
+  FileName: string;
+begin
+  FileName := ChangeFileExt(Application.ExeName, '.ini');
+  if not FileExists(FileName) then Exit;
+  IniFile := TIniFile.Create(FileName);
+  try
+    AForm.Left := IniFile.ReadInteger(AForm.Name, 'Left', AForm.Left);
+    AForm.Top := IniFile.ReadInteger(AForm.Name, 'Top', AForm.Top);
+    AForm.Width := IniFile.ReadInteger(AForm.Name, 'Width', AForm.Width);
+    AForm.Height := IniFile.ReadInteger(AForm.Name, 'Height', AForm.Height);
+  finally
+    IniFile.Free;
+  end;
+end;
+ procedure UniformizeComponentSizes(AComponent: TComponent; AWidth,
+ AHeight: Integer; AColor: TColor; AFontName: string; AFontSize: Integer);
+var
+  i: Integer;
+  Control: TControl;
+begin
+  if AComponent is TControl then
+  begin
+    Control := TControl(AComponent);
+    if Control is TLabeledEdit then
+    begin
+      TLabeledEdit(Control).Width := AWidth;
+      TLabeledEdit(Control).Height := AHeight;
+      TLabeledEdit(Control).Color := AColor;
+      TLabeledEdit(Control).Font.Name := AFontName;
+      TLabeledEdit(Control).Font.Size := AFontSize;
+    end
+    else if Control is TEdit then
+    begin
+      TEdit(Control).Width := AWidth;
+      TEdit(Control).Height := AHeight;
+      TEdit(Control).Color := AColor;
+      TEdit(Control).Font.Name := AFontName;
+      TEdit(Control).Font.Size := AFontSize;
+    end
+    else if Control is TDBLookupComboBox then
+    begin
+      TDBLookupComboBox(Control).Width := AWidth;
+      TDBLookupComboBox(Control).Height := AHeight;
+      TDBLookupComboBox(Control).Color := AColor;
+      TDBLookupComboBox(Control).Font.Name := AFontName;
+      TDBLookupComboBox(Control).Font.Size := AFontSize;
+    end
+    else if Control is TDateTimePicker then
+    begin
+      TDateTimePicker(Control).Width := AWidth;
+      TDateTimePicker(Control).Height := AHeight;
+      TDateTimePicker(Control).Color := AColor;
+      TDateTimePicker(Control).Font.Name := AFontName;
+      TDateTimePicker(Control).Font.Size := AFontSize;
+    end
+     else if Control  is TDBComboBox then
+          begin
+          TDBComboBox(Control).Width := AWidth;
+          TDBComboBox(Control).Height := AHeight;
+          TDBComboBox(Control).Color := AColor;
+          TDBComboBox(Control).Font.Name := AFontName;
+          TDBComboBox(Control).Font.Size := AFontSize;
+          end
+     else if Control  is TMaskEdit then
+          begin
+          TMaskEdit(Control).Width := AWidth;
+          TMaskEdit(Control).Height := AHeight;
+          TMaskEdit(Control).Color := AColor;
+          TMaskEdit(Control).Font.Name := AFontName;
+          TMaskEdit(Control).Font.Size := AFontSize;
+     end
+     else if Control  is TComboBox then
+          begin
+          TComboBox(Control).Width := AWidth;
+          TComboBox(Control).Height := AHeight;
+          TComboBox(Control).Color := AColor;
+          TComboBox(Control).Font.Name := AFontName;
+          TComboBox(Control).Font.Size := AFontSize;
+          end;
+  end;
+  if AComponent is TWinControl then
+  begin
+    for i := 0 to TWinControl(AComponent).ControlCount - 1 do
+    begin
+      UniformizeComponentSizes(TWinControl(AComponent).Controls[i], AWidth,
+      AHeight, AColor, AFontName, AFontSize);
+    end;
+  end;
+end;
+
+procedure SaveConnectionStringToFile(const FileName, ConnectionString: string);
+var
+  FileStream: TextFile;
+begin
+  AssignFile(FileStream, FileName);
+  try
+    Rewrite(FileStream);
+    Writeln(FileStream, ConnectionString);
+  finally
+    CloseFile(FileStream);
+  end;
+end;
+const
+ cuthalf = 100; // константа, ограничивающая макс. длину
+  // обрабатываемых строк
+
+var
+  buf: array[0..((cuthalf * 2) - 1)] of integer; // рабочий буфер, заменяет
+  // матрицу, представленную
+  // в описании
+
+function min3(a, b, c: integer): integer;
+begin
+  Result := a;
+  if b < Result then
+    Result := b;
+  if c < Result then
+    Result := c;
+end;
+
+// реализация функции в принципе соответствует описанию с одной оговоркой:
+// матрица из описания заменена статическим буфером, длина которого
+// равна удвоенной максимальной длине строк
+// это сделано для 1) экономии памяти и во избежание её перераспределений
+// 2) повышения быстродействия (у меня функция работает
+// в обработчике onfilterRecord)
+// таким образом, в реализации половинами буфера представлены только
+// две последние строки матрицы, которые меняются местами каждую
+// итерацию внешнего цикла (по i)... для определения того, какая из половин
+// буфера является "нижней строкой", служит переменная flip
+// т. е. при flip = false первая половина буфера является предпоследней
+// строкой, а вторая - последней; при flip = true наоборот,
+// первая половина - последняя строка, вторая половина - предпоследняя
+
+function LeveDist(s, t: string): integer;
+var
+  i, j, m, n: integer;
+  cost: integer;
+  flip: boolean;
+begin
+  s := copy(s, 1, cuthalf - 1);
+  t := copy(t, 1, cuthalf - 1);
+  m := length(s);
+  n := length(t);
+  if m = 0 then
+    Result := n
+  else if n = 0 then
+    Result := m
+  else
+  begin
+    flip := false;
+    for i := 0 to n do
+      buf[i] := i;
+    for i := 1 to m do
+    begin
+      if flip then
+        buf[0] := i
+      else
+        buf[cuthalf] := i;
+      for j := 1 to n do
+      begin
+        if s[i] = t[j] then
+          cost := 0
+        else
+          cost := 1;
+        if flip then
+          buf[j] := min3((buf[cuthalf + j] + 1),
+            (buf[j - 1] + 1),
+            (buf[cuthalf + j - 1] + cost))
+        else
+          buf[cuthalf + j] := min3((buf[j] + 1),
+            (buf[cuthalf + j - 1] + 1),
+            (buf[j - 1] + cost));
+      end;
+      flip := not flip;
+    end;
+    if flip then
+      Result := buf[cuthalf + n]
+    else
+      Result := buf[n];
+  end;
+end;
+
+function levi_checker(Str_one,str_two:string):Boolean;
+begin
+ if (Trim(Str_one) = '') or (Trim(Str_two) = '') then
+  begin
+    Result := False;
+    Exit;
+  end;
+  if LeveDist(Str_one, Str_two) = 0 then
+    Result := True
+  else
+    Result := False;
+end;
+
+
+function NormalizeStringAndExtractParams2(var InputString: string; out p1, p2: string): Boolean;
+var
+  l: TStringList;
+  i: Integer;
+  NormalizedString: string;
+begin
+  Result := False;
+  if Trim(InputString) = '' then
+  begin
+    MessageDlg('Строка пуста', mtError, [mbOK], 0);
+    Exit;
+  end;
+  l := TStringList.Create;
+  try
+    l.Delimiter := ' ';
+    l.StrictDelimiter := True;
+    l.DelimitedText := InputString;
+    NormalizedString := '';
+    for i := 0 to l.Count - 1 do
+    begin
+      if Trim(l[i]) <> '' then
+        NormalizedString := NormalizedString + ' ' + Trim(l[i]);
+    end;
+    NormalizedString := Trim(NormalizedString);
+    if NormalizedString = '' then
+    begin
+      MessageDlg('Строка должна содержать минимум одно слово', mtError, [mbOK], 0);
+      Exit;
+    end;
+    l.DelimitedText := NormalizedString;
+    if l.Count >= 1 then p1 := l.Strings[0] else p1 := '';
+    if l.Count >= 2 then p2 := l.Strings[1] else p2 := '';
+    InputString := NormalizedString;
+    Result := True;
+  finally
+    FreeAndNil(l);
+  end;
+end;
+
+function NormalizeStringAndExtractParams3(var InputString: string; out p1, p2, p3:
+string): Boolean;
+var
+  l: TStringList;
+  i: Integer;
+  NormalizedString: string;
+begin
+  Result := False;
+  if Trim(InputString) = '' then
+  begin
+    MessageDlg('Строка пуста', mtError, [mbOK], 0);
+    Exit;
+  end;
+
+
+  l := TStringList.Create;
+  try
+    l.Delimiter := ' ';
+    l.StrictDelimiter := True;
+    l.DelimitedText := InputString;
+
+
+    NormalizedString := '';
+    for i := 0 to l.Count - 1 do
+    begin
+      if Trim(l[i]) <> '' then
+        NormalizedString := NormalizedString + ' ' + Trim(l[i]);
+    end;
+    NormalizedString := Trim(NormalizedString);
+
+
+    if NormalizedString = '' then
+    begin
+      MessageDlg('Строка должна содержать минимум одно слово', mtError, [mbOK], 0);
+      Exit;
+    end;
+
+
+    l.DelimitedText := NormalizedString;
+    if l.Count >= 1 then p1 := l.Strings[0] else p1 := '';
+    if l.Count >= 2 then p2 := l.Strings[1] else p2 := '';
+    if l.Count >= 3 then p3 := l.Strings[2] else p3 := '';
+
+
+    InputString := NormalizedString;
+    Result := True;
+  finally
+    FreeAndNil(l);
+  end;
+end;
+function Capitalizer(str:string; mode:integer=0):string;
+begin
+  if (Trim(str)='')and(mode=0) then
+  begin
+    Result:='';
+    ShowMessage('Строка пуста');
+    Exit;
+  end;
+  case mode of
+   0:
+   begin
+    str:=TrimLeft(str);
+    Result:=Concat(AnsiUpperCase(str[1]),
+    AnsiLowerCase(Copy(str, 2, length(str))));
+   end;
+   1:
+   begin
+     Result :=str;
+     Exit;
+   end;
+  end;// case
+end;
+
+function adr_fixer(str:string; mode:Integer=0):string;
+ var head_str:string;
+begin
+if (trim(str)='') then
+begin
+  head_str:='';
+  Result:='';
+  ShowMessage('строка пуста');
+  Exit;
+end;
+case mode  of
+0:
+begin
+  if not(trim(str)='') then
+   begin
+    str:=Trim(str);
+      str := Trim(str);
+      if Pos('Ул.', str) = 1 then
+        Delete(str, 1, 3);
+      if Pos('Пр.', str) = 1 then
+        Delete(str, 1, 3);
+      if Pos('Проезд', str) = 1 then
+        Delete(str, 1, 6);
+      Result := Trim(str);
+   end
+   else
+   begin
+    head_str:='';
+  Result:='';
+  ShowMessage('строка пуста');
+   end;
+end;
+1:
+begin
+  head_str:='Ул.';
+  result:=Concat(head_str, str);
+end;
+2:
+begin
+  head_str:='Пр.';
+  result:=Concat(head_str, str);
+end;
+3:
+begin
+  head_str:='Проезд ';
+  result:=Concat(head_str, str);
+end;
+end;      //case
+end;
+procedure UniformizeDBGrids(AForm: TForm; const FontName: string;
+FontSize: Integer; FontColor: TColor; BkColor: TColor);
+var
+  i: Integer;
+  DBGrid: TDBGrid;
+begin
+  for i := 0 to AForm.ComponentCount - 1 do
+  begin
+    if AForm.Components[i] is TDBGrid then
+    begin
+      DBGrid := TDBGrid(AForm.Components[i]);
+      DBGrid.Font.Name := FontName;
+      DBGrid.Font.Size := FontSize;
+      DBGrid.Font.Color := FontColor;
+      DBGrid.Color := BkColor;
+      DBGrid.Options := DBGrid.Options +
+      [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs];
+      DBGrid.DefaultDrawing := True;
+      DBGrid.ReadOnly := True;
+      DBGrid.Refresh;
+    end;
+  end;
+end;
+function ValidateComponentText(AComponent: TWinControl;
+ const AllowedChars: TSysCharSet): Boolean;
+var
+  Text: string;
+  i: Integer;
+  CharIsValid: Boolean;
+begin
+  Result := True;
+  if AComponent is TLabeledEdit then
+    Text := TLabeledEdit(AComponent).Text
+  else if AComponent is TEdit then
+    Text := TEdit(AComponent).Text;
+  for i := 1 to Length(Text) do
+  begin
+    CharIsValid := Text[i] in AllowedChars;
+    if not CharIsValid then
+    begin
+      ShowMessage('Недопустимый символ в компоненте: ' + AComponent.Name);
+      Result := False;
+      Exit;
+    end;
+  end;
+end;
+function IsEnglishText(const Text: string): Boolean;
+var
+  i: Integer;
+begin
+  Result := True;
+
+  for i := 1 to Length(Text) do
+  begin
+    if not (Text[i] in ['a'..'z', 'A'..'Z', '0'..'9', '@', '.', '_', '-']) then
+    begin
+      Result := False;
+      Exit;
+    end;
+  end;
+end;
+Function IsValidEmail(const Email: string): Boolean;
+var
+AtPos, DotPos: Integer;
+begin
+Result := False;
+if not IsEnglishText(Email) then
+begin
+ShowMessage('Ошибка: текст должен быть на английском языке');
+Exit;
+end;
+AtPos := Pos('@', Email);
+if AtPos = 0 then
+begin
+ShowMessage('Ошибка: отсутствует символ "@"');
+Exit;
+end;
+if (AtPos = 1) or (AtPos = Length(Email)) then
+begin
+ShowMessage('Ошибка: символ "@" находится в неправильной позиции');
+Exit;
+end;
+DotPos := PosEx('.', Email, AtPos);
+if DotPos = 0 then
+begin
+ShowMessage('Ошибка: отсутствует точка после "@"');
+Exit;
+end;
+if DotPos = Length(Email) then
+begin
+ShowMessage('Ошибка: точка находится в конце строки');
+Exit;
+end;
+Result := True;
+end;
+procedure HandleAnimatedCursor(Action: Integer; const FileName: string = '');
+begin
+  case Action of
+    0:
+    begin
+
+      if not FileExists(FileName) then
+        raise Exception.Create('Файл курсора не найден: ' + FileName);
+      if hAniCursor <> 0 then
+      begin
+        DestroyCursor(hAniCursor);
+        hAniCursor := 0;
+      end;
+      hAniCursor := LoadImage(
+        0,
+        PChar(FileName),
+        IMAGE_CURSOR,
+        0,
+        0,
+        LR_LOADFROMFILE or LR_DEFAULTSIZE or LR_SHARED
+      );
+
+      if hAniCursor = 0 then
+        raise Exception.Create('Ошибка загрузки курсора');
+      Screen.Cursors[crMyAnimatedCursor] := hAniCursor;
+      Screen.Cursor := crMyAnimatedCursor;
+    end;
+    1:
+    begin
+      if hAniCursor = 0 then
+        raise Exception.Create('Курсор не загружен');
+      Screen.Cursor := crMyAnimatedCursor;
+    end;
+    2:
+    begin
+      Screen.Cursor := crDefault;
+    end;
+    3:
+    begin
+      if hAniCursor <> 0 then
+        DestroyCursor(hAniCursor);
+      hAniCursor := 0;
+      Screen.Cursor := crDefault;
+    end;
+  end;
+end;
+
+procedure LoadIconFromResource(const ResourceName: string;
+Action: Integer; ImageList: TImageList = nil);
+var
+  RS: TResourceStream;
+  Icon: TIcon;
+begin
+  Icon := TIcon.Create;
+  try
+
+    RS := TResourceStream.Create(HInstance, ResourceName, RT_RCDATA);
+    try
+
+      Icon.LoadFromStream(RS);
+
+
+      case Action of
+        0:
+          Application.Icon := Icon;
+
+        1:
+          if Assigned(ImageList) then
+            ImageList.AddIcon(Icon)
+          else
+            raise Exception.Create('Ошибка: ImageList не назначен.');
+
+        else
+          raise Exception.Create('Ошибка: Неизвестное действие.');
+      end;
+    finally
+      RS.Free;
+    end;
+  finally
+    Icon.Free;
+  end;
+end;
+procedure LoadImageFromResource(const ResourceName: string; Image: TImage);
+var
+  RS: TResourceStream;
+  JPEG: TJPEGImage;
+begin
+  if not Assigned(Image) then
+    raise Exception.Create('Ошибка: Компонент TImage не назначен.');
+  RS := nil;
+  JPEG := nil;
+  try
+    RS := TResourceStream.Create(HInstance, ResourceName, RT_RCDATA);
+    JPEG := TJPEGImage.Create;
+    try
+      JPEG.LoadFromStream(RS);
+      Image.Picture.Assign(JPEG);
+    except
+      on E: Exception do
+        raise Exception.CreateFmt('Ошибка загрузки изображения "%s": %s', [ResourceName, E.Message]);
+    end;
+  finally
+
+    if Assigned(RS) then
+      RS.Free;
+    if Assigned(JPEG) then
+      JPEG.Free;
+  end;
+end;
+procedure CreateToolBarWithButtons(Form: TForm; ImageList: TImageList;
+  const ButtonCaptions: array of string; const ButtonClicks: array of TNotifyEvent);
+var
+  ToolBar: TToolBar;
+  Button: TToolButton;
+  i: Integer;
+begin
+  // Проверка входных параметров
+  if not Assigned(Form) then
+    raise Exception.Create('Ошибка: Форма не назначена.');
+  if not Assigned(ImageList) then
+    raise Exception.Create('Ошибка: ImageList не назначен.');
+
+  // Создание TToolBar
+  ToolBar := TToolBar.Create(Form);
+  ToolBar.Parent := Form;
+  ToolBar.Align := alTop;
+  ToolBar.ShowCaptions := True;
+  ToolBar.Images := ImageList;
+
+  // Создание кнопок
+  for i := 0 to High(ButtonCaptions) do
+  begin
+    Button := TToolButton.Create(ToolBar);
+    Button.Parent := ToolBar;
+    Button.ImageIndex := i; // Назначение индекса картинки из ImageList
+    Button.Caption := ButtonCaptions[i]; // Установка подписи кнопки
+    Button.Hint := ButtonCaptions[i]; // Подсказка для кнопки
+    Button.ShowHint := True; // Включение подсказок
+    Button.Tag := i; // Уникальный идентификатор кнопки
+
+    // Назначение обработчика события
+    if i <= High(ButtonClicks) then
+      Button.OnClick := ButtonClicks[i]
+    else
+      Button.OnClick := nil; // Если обработчик не задан
+  end;
+end;
+function GetTimeOfDay: string;
+var
+  CurrentHour: Word;
+  CurrentMinute: Word;
+  CurrentSecond: Word;
+begin
+  // Получаем текущее системное время
+  DecodeTime(Now, CurrentHour, CurrentMinute, CurrentSecond, CurrentSecond);
+
+  // Определяем время суток
+  if (CurrentHour >= 6) and (CurrentHour < 12) then
+    Result := 'Утро'
+  else if (CurrentHour >= 12) and (CurrentHour < 18) then
+    Result := 'День'
+  else if (CurrentHour >= 18) and (CurrentHour < 24) then
+    Result := 'Вечер'
+  else
+    Result := 'Ночь';
+end;
+procedure ExtractResFile;
+var
+  ResHandle: HRSRC;
+  ResGlobal: HGLOBAL;
+  ResPtr: Pointer;
+  ResSize: DWORD;
+  FileStream: TFileStream;
+  OutputFileName: string;
+begin
+  ResHandle := FindResource(HInstance, 'RYK', RT_RCDATA);
+  if ResHandle = 0 then
+    raise Exception.Create('Ресурс не найден');
+  ResGlobal := LoadResource(HInstance, ResHandle);
+  if ResGlobal = 0 then
+    raise Exception.Create('Ошибка загрузки ресурса');
+  ResPtr := LockResource(ResGlobal);
+  ResSize := SizeofResource(HInstance, ResHandle);
+  if (ResPtr = nil) or (ResSize = 0) then
+    raise Exception.Create('Ошибка доступа к данным ресурса');
+  OutputFileName := ExtractFilePath(ParamStr(0)) + 'ryk.wav';
+  FileStream := TFileStream.Create(OutputFileName, fmCreate);
+  try
+    FileStream.WriteBuffer(ResPtr^, ResSize);
+  finally
+    FileStream.Free;
+  end;
+end;
+
+function FileExistsInAppDirectory(const FileName: string): string;
+var
+  SearchRec: TSearchRec;
+  FindResult: Integer;
+begin
+  Result := '';  // Если файл не найден, возвращаем пустую строку
+  FindResult := FindFirst(ExtractFilePath(ParamStr(0)) + FileName, faAnyFile, SearchRec);
+  if FindResult = 0 then
+  begin
+    if (SearchRec.Attr and faDirectory = 0) then
+      Result := SearchRec.Name;
+  end;
+end;
+procedure UniformizeButtonsSize(AWinControl: TWinControl; AWidth, AHeight: Integer);
+var
+  i: Integer;
+  Control: TControl;
+begin
+  for i := 0 to AWinControl.ControlCount - 1 do
+  begin
+    Control := AWinControl.Controls[i];
+    if Control is TButton then
+    begin
+      TButton(Control).Width := AWidth;
+      TButton(Control).Height := AHeight;
+    end;
+    if Control is TWinControl then
+      UniformizeButtonsSize(TWinControl(Control), AWidth, AHeight);
+  end;
+end;
+function IsDigitsOnly(const Text: string): Boolean;
+var
+  i: Integer;
+  NumberValue: Int64; // Для больших чисел (до 18 цифр)
+begin
+  Result := True;
+
+  // Проверяем каждый символ
+  for i := 1 to Length(Text) do
+  begin
+    if not (Text[i] in ['0'..'9']) then // Разрешены только цифры
+    begin
+      ShowMessage('Ошибка: значение должно содержать только цифры.');
+      Result := False;
+      Exit;
+    end;
+  end;
+
+  // Проверяем, что строка не пустая
+  if Text = '' then
+  begin
+    ShowMessage('Ошибка: введите корректное число.');
+    Result := False;
+    Exit;
+  end;
+
+  // Преобразуем строку в целое число
+  try
+    NumberValue := StrToInt64(Text); // Для поддержки 18-значных чисел
+    // Проверка диапазона (если нужно)
+    if (NumberValue < 0) or (NumberValue > 999999999999999999) then // 10^18 - 1
+    begin
+      ShowMessage('Ошибка: значение должно быть в диапазоне от 0 до 999999999999999999.');
+      Result := False;
+      Exit;
+    end;
+  except
+    on E: EConvertError do
+    begin
+      ShowMessage('Ошибка: неверный формат числа.');
+      Result := False;
+      Exit;
+    end;
+  end;
+end;
+function is_cost_correct(var str: string): Boolean;
+var
+  i: Integer;
+begin
+  Result := False;
+  str := Trim(str);
+  
+  // Проверка на пустую строку
+  if str = '' then
+  begin
+    ShowMessage('Строка пуста');
+    Exit;
+  end;
+  
+  // Проверка, что все символы — цифры
+  for i := 1 to Length(str) do
+  begin
+    if not (str[i] in ['0'..'9']) then
+    begin
+      ShowMessage('Разрешён ввод только цифр');
+      {$IFDEF MSWINDOWS}
+      Windows.Beep(500, 100);
+      {$ENDIF}
+      Exit;
+    end;
+  end;
+  
+  // Проверка на длину числа (не более 3 знаков)
+  if Length(str) >= 4 then  // Изменено условие с = на >=
+  begin
+    ShowMessage('Ошибка: число не должно содержать четыре и более цифр');  // Обновлено сообщение
+    {$IFDEF MSWINDOWS}
+    Windows.Beep(500, 100);
+    {$ENDIF}
+    Exit;
+  end;
+  
+  // Если все проверки пройдены
+  ShowMessage('Цена корректна');
+  Result := True;
+end;
+function GetCurrentDateTime: TDateTime;
+begin
+  Result := Now; // Возвращает дату и время
+end;
+initialization
+finalization
+if hAniCursor <> 0 then
+    DestroyCursor(hAniCursor);
+end.

@@ -1,0 +1,1 @@
+Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=cont_r;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=DESKTOP-97N3JC1;Use Encryption for Data=False;Tag with column collation when possible=False;

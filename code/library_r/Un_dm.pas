@@ -38,8 +38,8 @@ type
     readerQuery: TADOQuery;
     readerDS: TDataSource;
     sel_reader: TADOStoredProc;
-    ADOStoredProc2: TADOStoredProc;
-    ADOStoredProc3: TADOStoredProc;
+    sel_reader_by_age: TADOStoredProc;
+    sel_reader_by_data_r: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;
     ADOStoredProc5: TADOStoredProc;
     ADOStoredProc6: TADOStoredProc;

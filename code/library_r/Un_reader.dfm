@@ -65,6 +65,7 @@ object frm_reader: Tfrm_reader
           Align = alCustom
           Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1060#1048#1054
           TabOrder = 0
+          OnClick = readernaimRadio_grupperClick
         end
         object reader_reset_Radio: TRadioButton
           Left = 624
@@ -74,6 +75,7 @@ object frm_reader: Tfrm_reader
           Align = alCustom
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 1
+          OnClick = reader_reset_RadioClick
         end
         object readerteansCB: TCheckBox
           Left = 19
@@ -84,6 +86,7 @@ object frm_reader: Tfrm_reader
           Anchors = [akLeft]
           Caption = #1054#1090#1086#1073#1088#1072#1090#1100' '#1090#1077#1093', '#1082#1086#1084#1091' '#1084#1077#1085#1100#1096#1077' 18'
           TabOrder = 2
+          OnClick = readerteansCBClick
         end
         object reader_datar_CB: TCheckBox
           Left = 624
@@ -94,6 +97,7 @@ object frm_reader: Tfrm_reader
           Anchors = [akLeft]
           Caption = #1054#1090#1086#1073#1088#1072#1090#1100' '#1090#1077#1093', '#1091' '#1082#1086#1075#1086' '#1089' '#1076#1072#1090#1099' '#1088#1077#1075#1080#1089#1090#1072#1088#1072#1094#1080#1080' '#1087#1088#1086#1096#1083#1086' '#1073#1086#1083#1100#1096#1077' 5 '#1083#1077#1090
           TabOrder = 3
+          OnClick = reader_datar_CBClick
         end
       end
       object reader_data_Box: TGroupBox
@@ -135,7 +139,7 @@ object frm_reader: Tfrm_reader
               Expanded = False
               FieldName = 'Date_B'
               Title.Caption = #1044#1072#1090#1072' '#1088#1086#1078#1076#1077#1085#1080#1103' '#1095#1080#1090#1072#1090#1077#1083#1103
-              Width = 89
+              Width = 144
               Visible = True
             end
             item
@@ -193,6 +197,7 @@ object frm_reader: Tfrm_reader
           EditLabel.Height = 13
           EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1072#1076#1088#1077#1089#1091' '#1087#1088#1086#1078#1080#1074#1072#1085#1080#1103
           TabOrder = 1
+          OnKeyPress = reader_fnddEditKeyPress
         end
       end
     end
