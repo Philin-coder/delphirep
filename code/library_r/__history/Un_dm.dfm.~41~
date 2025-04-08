@@ -1,6 +1,6 @@
 object DM: TDM
   OldCreateOrder = False
-  Height = 432
+  Height = 535
   Width = 811
   object Connection: TADOConnection
     Connected = True
@@ -538,12 +538,14 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@name_b'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 50
+        Value = Null
       end>
     Left = 352
     Top = 184
@@ -571,6 +573,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@ID_Book'
@@ -588,5 +591,209 @@ object DM: TDM
       end>
     Left = 360
     Top = 352
+  end
+  object upd_doc: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_doc;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@status'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@ID_Doc'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 360
+    Top = 400
+  end
+  object del_doc: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'del_doc;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@id_doc'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 368
+    Top = 452
+  end
+  object readerQuery: TADOQuery
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select  '
+      'Reader.ID_Reader,'
+      'Reader.Name_R,'
+      'Reader.Date_B,'
+      'Reader.Adres,'
+      'Reader.Tel,'
+      'Reader.Date_R'
+      'from Reader'
+      'where 1=1')
+    Left = 448
+    Top = 64
+  end
+  object readerDS: TDataSource
+    DataSet = readerQuery
+    Left = 456
+    Top = 128
+  end
+  object sel_reader: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_reader;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@Name_R'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 50
+        Value = Null
+      end>
+    Left = 464
+    Top = 192
+  end
+  object sel_reader_by_age: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_reader_by_age;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@check_date'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end>
+    Left = 480
+    Top = 256
+  end
+  object sel_reader_by_data_r: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_reader_by_data_r;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@check_date'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end>
+    Left = 496
+    Top = 320
+  end
+  object INS_Reader: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'INS_Reader;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@Name_R'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = '@Date_B'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end
+      item
+        Name = '@Adres'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 70
+      end
+      item
+        Name = '@Tel'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 15
+      end
+      item
+        Name = '@Date_R'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end>
+    Left = 496
+    Top = 376
+  end
+  object upd_reader: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_reader;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@tel'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = '@id_reader'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 496
+    Top = 424
+  end
+  object ADOStoredProc6: TADOStoredProc
+    Parameters = <>
+    Left = 560
+    Top = 456
   end
 end

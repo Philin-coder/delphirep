@@ -42,7 +42,7 @@ type
     sel_reader_by_data_r: TADOStoredProc;
     INS_Reader: TADOStoredProc;
     upd_reader: TADOStoredProc;
-    ADOStoredProc6: TADOStoredProc;
+    del_reader: TADOStoredProc;
   private
     { Private declarations }
   public

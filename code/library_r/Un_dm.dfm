@@ -791,9 +791,24 @@ object DM: TDM
     Left = 496
     Top = 424
   end
-  object ADOStoredProc6: TADOStoredProc
-    Parameters = <>
-    Left = 560
-    Top = 456
+  object del_reader: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'del_reader;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@ID_Reader'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 504
+    Top = 480
   end
 end

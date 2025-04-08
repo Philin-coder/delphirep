@@ -32,7 +32,17 @@ type
     sel_doc_in: TADOStoredProc;
     sel_doc_all_in: TADOStoredProc;
     sel_doc_all_out: TADOStoredProc;
-    ADOStoredProc4: TADOStoredProc;
+    INS_DOC: TADOStoredProc;
+    upd_doc: TADOStoredProc;
+    del_doc: TADOStoredProc;
+    readerQuery: TADOQuery;
+    readerDS: TDataSource;
+    sel_reader: TADOStoredProc;
+    sel_reader_by_age: TADOStoredProc;
+    sel_reader_by_data_r: TADOStoredProc;
+    INS_Reader: TADOStoredProc;
+    upd_reader: TADOStoredProc;
+    ADOStoredProc6: TADOStoredProc;
   private
     { Private declarations }
   public
