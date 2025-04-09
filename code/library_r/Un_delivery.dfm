@@ -75,6 +75,7 @@ object frm_delivery: Tfrm_delivery
           Align = alCustom
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 1
+          OnClick = dlv_reset_RadioClick
         end
         object dlvbackCB: TCheckBox
           Left = 19
@@ -85,6 +86,7 @@ object frm_delivery: Tfrm_delivery
           Anchors = [akLeft]
           Caption = #1054#1090#1086#1073#1088#1072#1079#1090#1100' '#1074#1086#1079#1074#1088#1072#1090#1099
           TabOrder = 2
+          OnClick = dlvbackCBClick
         end
         object dlv_dolg_CB: TCheckBox
           Left = 624
@@ -95,6 +97,7 @@ object frm_delivery: Tfrm_delivery
           Anchors = [akLeft]
           Caption = #1054#1090#1086#1073#1088#1072#1079#1080#1090#1100' '#1076#1086#1083#1075#1080
           TabOrder = 3
+          OnClick = dlv_dolg_CBClick
         end
       end
       object dlv_data_Box: TGroupBox
@@ -123,14 +126,12 @@ object frm_delivery: Tfrm_delivery
               Expanded = False
               FieldName = 'ID_Delivery'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-              Width = 86
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'Name_B'
               Title.Caption = #1050#1085#1080#1075#1072
-              Width = 115
               Visible = True
             end
             item
@@ -143,14 +144,19 @@ object frm_delivery: Tfrm_delivery
               Expanded = False
               FieldName = 'Date_D'
               Title.Caption = #1044#1072#1090#1072' '#1074#1099#1076#1072#1095#1080
-              Width = 95
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'Date_Return_Plan'
-              Title.Caption = #1042#1086#1079#1074#1088#1072#1090' '#1087#1083#1072#1085#1086#1074#1099#1081
-              Width = 142
+              Title.Caption = #1042#1086#1079#1074#1088#1072#1090' '#1087#1086' '#1087#1083#1072#1085#1091
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'Date_Return_Fact'
+              Title.Caption = #1042#1086#1079#1074#1088#1072#1090' '#1087#1086' '#1092#1072#1082#1090#1091
+              Width = 140
               Visible = True
             end>
         end

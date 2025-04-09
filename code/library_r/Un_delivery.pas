@@ -64,6 +64,9 @@ type
     procedure dlvselBtnClick(Sender: TObject);
     procedure dlv_fnddEditKeyPress(Sender: TObject; var Key: Char);
     procedure dlvnaimRadio_grupperClick(Sender: TObject);
+    procedure dlv_reset_RadioClick(Sender: TObject);
+    procedure dlvbackCBClick(Sender: TObject);
+    procedure dlv_dolg_CBClick(Sender: TObject);
 
   private
   procedure ChangeFormColor(Sender: TObject);
@@ -92,6 +95,56 @@ begin
     end;
   end;
 end;
+procedure Tfrm_delivery.dlvbackCBClick(Sender: TObject);
+begin
+case dlvbackCB.Checked of
+true:
+begin
+try
+    if not DM.Connection.Connected then
+      raise Exception.Create('Соединение с базой не установлено');
+
+    with DM.sel_book_bak_common do
+    begin
+        close;
+        Open;
+          dlvGrid.Columns[5].Visible:=True;
+       dm.deliveryQuery.Recordset:=dm.sel_book_bak_common.Recordset;
+    end;
+  except
+    on E: EDatabaseError do
+      ShowMessage('Ошибка БД: ' + E.Message);
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
+end;
+false:
+begin
+  with dm.deliveryQuery do
+     begin
+     Close;
+     sql.Clear;
+     SQL.Text:=
+     'select '+' '+
+     'Delivery.ID_Delivery ,'+' '+
+    'Book.Name_B,'+' '+
+    'Reader.Name_R,'+' '+
+    'Delivery.Date_D,'+' '+
+    'Delivery.Date_Return_Plan,'+' '+
+    'Delivery.Date_Return_Fact'+'  '+
+    'from Delivery'+' '+
+    'inner join  Doc on Delivery.ID_Doc=Doc.ID_Doc'+' '+
+    'inner join Book on Book.ID_Book=Doc.ID_Book'+' '+
+    'inner join Reader on Reader.ID_Reader=Delivery.ID_Reader'+' '+
+    'where 1=1'+' '+
+    'and Delivery.Date_Return_Fact is null';
+     Open;
+                dlvGrid.Columns[5].Visible:=False;
+     end;
+end;
+end; //case
+end;
+
 procedure Tfrm_delivery.dlvnaimRadio_grupperClick(Sender: TObject);
 begin
    if dlvnaimRadio_grupper.Checked=true then
@@ -107,7 +160,8 @@ begin
     'Book.Name_B,'+' '+
     'Reader.Name_R,'+' '+
     'Delivery.Date_D,'+' '+
-    'Delivery.Date_Return_Plan'+' '+
+    'Delivery.Date_Return_Plan,'+' '+
+    'Delivery.Date_Return_Fact'+' '+
     'from Delivery'+' '+
     'inner join  Doc on Delivery.ID_Doc=Doc.ID_Doc'+' '+
     'inner join Book on Book.ID_Book=Doc.ID_Book'+' '+
@@ -145,6 +199,61 @@ try
   end;
 end;
 
+procedure Tfrm_delivery.dlv_dolg_CBClick(Sender: TObject);
+var curdate:TDateTime;
+begin
+CurDate:=GetCurrentDateTime;
+case dlv_dolg_CB.Checked  of
+False:
+begin
+try
+   dm.deliveryQuery.SQL.Text:=
+    'select'+' '+
+    'Delivery.ID_Delivery ,'+' '+
+    'Book.Name_B,'+' '+
+    'Reader.Name_R,'+' '+
+    'Delivery.Date_D,'+' '+
+    'Delivery.Date_Return_Plan,'+' '+
+    'Delivery.Date_Return_Fact'+' '+
+    'from Delivery'+' '+
+    'inner join  Doc on Delivery.ID_Doc=Doc.ID_Doc'+' '+
+    'inner join Book on Book.ID_Book=Doc.ID_Book'+' '+
+    'inner join Reader on Reader.ID_Reader=Delivery.ID_Reader'+' '+
+    'where 1=1'+' '+
+    'and Delivery.Date_Return_Fact is null';
+     dm.deliveryQuery.close;
+     dm.deliveryQuery.Open;
+except on E: Exception do
+  begin
+  ShowMessage('wrong situation'+' '+E.Message);
+  end;
+  end;
+end;
+True:
+begin
+try
+    if not DM.Connection.Connected then
+      raise Exception.Create('Соединение с базой не установлено');
+
+    with DM.sel_delivery_d do
+    begin
+      Close;
+           Parameters.ParamByName('@check_date').Value
+           :=DateToStr(curdate);
+           ShowMessage(DateToStr_(curdate)); 
+      Open;
+       DM.deliveryQuery.Recordset:=dm.sel_delivery_d.Recordset;
+    end;
+  except
+    on E: EDatabaseError do
+      ShowMessage('Ошибка БД: ' + E.Message);
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
+end;
+end; //case
+end;
+
 procedure Tfrm_delivery.dlv_fnddEditKeyPress(Sender: TObject; var Key: Char);
 begin
    try
@@ -154,7 +263,8 @@ begin
     'Book.Name_B,'+' '+
     'Reader.Name_R,'+' '+
     'Delivery.Date_D,'+' '+
-    'Delivery.Date_Return_Plan'+' '+
+    'Delivery.Date_Return_Plan,'+' '+
+    'Delivery.Date_Return_Fact'+' '+
     'from Delivery'+' '+
     'inner join  Doc on Delivery.ID_Doc=Doc.ID_Doc'+' '+
     'inner join Book on Book.ID_Book=Doc.ID_Book'+' '+
@@ -170,6 +280,56 @@ except on E: Exception do
   ShowMessage('wrong situation'+' '+E.Message);
   end;
   end;
+end;
+
+procedure Tfrm_delivery.dlv_reset_RadioClick(Sender: TObject);
+var i,j,c:Integer;
+begin
+ if dlv_reset_Radio.Checked then
+  with frm_delivery do
+    for I := 0 to ComponentCount - 1 do
+     begin
+       if (Components[i] is TLabeledEdit)  then
+        begin
+          (Components[i] as TLabeledEdit).Clear;
+        end;
+     end;
+       with frm_delivery do
+    for c := 0 to ComponentCount - 1 do
+     begin
+       if (Components[c] is TCheckBox)  then
+        begin
+          (Components[c] as TCheckBox).Checked:=False;
+        end;
+     end;
+     with dm.deliveryQuery do
+     begin
+     Close;
+     sql.Clear;
+     SQL.Text:=
+     'select '+' '+
+     'Delivery.ID_Delivery ,'+' '+
+    'Book.Name_B,'+' '+
+    'Reader.Name_R,'+' '+
+    'Delivery.Date_D,'+' '+
+    'Delivery.Date_Return_Plan,'+' '+
+     'Delivery.Date_Return_Fact'+' '+
+    'from Delivery'+' '+
+    'inner join  Doc on Delivery.ID_Doc=Doc.ID_Doc'+' '+
+    'inner join Book on Book.ID_Book=Doc.ID_Book'+' '+
+    'inner join Reader on Reader.ID_Reader=Delivery.ID_Reader'+' '+
+    'where 1=1'+' '+
+    'and Delivery.Date_Return_Fact is null ';
+     Open;
+     end;
+    with frm_delivery do
+    for j := 0 to ComponentCount - 1 do
+    begin
+      if(Components[j] is TRadioButton)  then
+      begin
+        (Components[j] as TRadioButton).Checked:=False;
+      end;
+    end;
 end;
 
 procedure Tfrm_delivery.FormActivate(Sender: TObject);
@@ -197,6 +357,7 @@ begin
  end;
  end;
  end;
+   dlvGrid.Columns[5].Visible:=false;
 end;
 
 procedure Tfrm_delivery.FormCreate(Sender: TObject);
@@ -222,6 +383,7 @@ begin
   ButtonClicks[2] := ChangeFormColor;
   ButtonClicks[3] := ChangeFormColor;
   CreateToolBarWithButtons(Self, delvImageList, ButtonNames, ButtonClicks);
+  dlvGrid.Columns[5].Visible:=false;
 end;
 
 end.

@@ -859,23 +859,41 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@name_r'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 50
+        Value = Null
       end>
     Left = 592
     Top = 176
   end
-  object ADOStoredProc2: TADOStoredProc
+  object sel_book_bak_common: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_book_bak_common;1'
     Parameters = <>
     Left = 600
     Top = 224
   end
-  object ADOStoredProc3: TADOStoredProc
-    Parameters = <>
+  object sel_delivery_d: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_delivery_d;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@check_date'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end>
     Left = 624
     Top = 272
   end
@@ -888,5 +906,10 @@ object DM: TDM
     Parameters = <>
     Left = 640
     Top = 360
+  end
+  object ADOStoredProc1: TADOStoredProc
+    Parameters = <>
+    Left = 648
+    Top = 416
   end
 end

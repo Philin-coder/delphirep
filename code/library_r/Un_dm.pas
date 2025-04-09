@@ -46,10 +46,11 @@ type
     deliveryQuery: TADOQuery;
     deliveryDS: TDataSource;
     sel_delivery: TADOStoredProc;
-    ADOStoredProc2: TADOStoredProc;
-    ADOStoredProc3: TADOStoredProc;
+    sel_book_bak_common: TADOStoredProc;
+    sel_delivery_d: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;
     ADOStoredProc5: TADOStoredProc;
+    ADOStoredProc1: TADOStoredProc;
   private
     { Private declarations }
   public
