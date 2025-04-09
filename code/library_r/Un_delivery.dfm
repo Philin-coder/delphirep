@@ -11,6 +11,9 @@ object frm_delivery: Tfrm_delivery
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnActivate = FormActivate
+  OnClose = FormClose
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object delvToolBar: TToolBar
@@ -29,7 +32,7 @@ object frm_delivery: Tfrm_delivery
     Align = alClient
     TabOrder = 1
     object sel_tab: TTabSheet
-      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1095#1080#1090#1072#1090#1077#1083#1077
+      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1074#1099#1076#1072#1095#1077
       object readerbtnBox: TGroupBox
         Left = 0
         Top = 594
@@ -514,10 +517,6 @@ object frm_delivery: Tfrm_delivery
     object delTab: TTabSheet
       Caption = ' '#1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1095#1080#1090#1072#1090#1077#1083#1077
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object rd_del_inp_Box: TGroupBox
         Left = 0
         Top = 0

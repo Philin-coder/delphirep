@@ -28,12 +28,11 @@ object frm_reader: Tfrm_reader
     Top = 47
     Width = 1037
     Height = 692
-    ActivePage = delTab
+    ActivePage = sel_tab
     Align = alClient
     TabOrder = 1
     object sel_tab: TTabSheet
       Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1095#1080#1090#1072#1090#1077#1083#1077
-      ExplicitHeight = 540
       object readerbtnBox: TGroupBox
         Left = 0
         Top = 594
@@ -41,7 +40,6 @@ object frm_reader: Tfrm_reader
         Height = 70
         Align = alBottom
         TabOrder = 0
-        ExplicitTop = 470
         object readerselBtn: TButton
           Left = 336
           Top = 32
@@ -110,7 +108,6 @@ object frm_reader: Tfrm_reader
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        ExplicitHeight = 293
         object readerGrid: TDBGrid
           Left = 2
           Top = 15
@@ -207,7 +204,6 @@ object frm_reader: Tfrm_reader
     object ins_tab: TTabSheet
       Caption = #1044#1086#1073#1072#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1095#1080#1090#1072#1090#1077#1083#1077
       ImageIndex = 1
-      ExplicitHeight = 540
       object aboutreaderPC: TPageControl
         Left = 0
         Top = 257
@@ -215,7 +211,6 @@ object frm_reader: Tfrm_reader
         Height = 343
         Align = alClient
         TabOrder = 0
-        ExplicitHeight = 219
       end
       object ins_r_data_Box: TGroupBox
         Left = 0
@@ -238,7 +233,6 @@ object frm_reader: Tfrm_reader
           EditLabel.Height = 13
           EditLabel.Caption = ' '#1060#1048#1054' '#1095#1080#1090#1072#1090#1077#1083#1103
           TabOrder = 0
-          ExplicitTop = 42
         end
         object date_b_lbl: TStaticText
           Left = 19
@@ -249,7 +243,6 @@ object frm_reader: Tfrm_reader
           Anchors = [akLeft]
           Caption = #1044#1072#1090#1072' '#1088#1086#1078#1076#1077#1085#1080#1103' '#1095#1080#1090#1072#1077#1090#1077#1083#1103
           TabOrder = 1
-          ExplicitTop = 80
         end
         object Date_B_inp: TDateTimePicker
           Left = 19
@@ -260,7 +253,6 @@ object frm_reader: Tfrm_reader
           Date = 45755.684260115740000000
           Time = 45755.684260115740000000
           TabOrder = 2
-          ExplicitTop = 103
         end
         object adr_r_inp: TLabeledEdit
           Left = 19
@@ -273,7 +265,6 @@ object frm_reader: Tfrm_reader
           EditLabel.Caption = #1040#1076#1088#1077#1089' '#1095#1080#1090#1072#1090#1077#1083#1103
           TabOrder = 3
           OnExit = adr_r_inpExit
-          ExplicitTop = 148
         end
         object Date_r_inp: TDateTimePicker
           Left = 19
@@ -284,7 +275,6 @@ object frm_reader: Tfrm_reader
           Date = 45755.684260115740000000
           Time = 45755.684260115740000000
           TabOrder = 4
-          ExplicitTop = 247
         end
         object data_r_lbl: TStaticText
           Left = 19
@@ -324,8 +314,6 @@ object frm_reader: Tfrm_reader
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        ExplicitTop = 280
-        ExplicitHeight = 196
         object ins_r_Grid: TDBGrid
           Left = 2
           Top = 15
@@ -390,7 +378,6 @@ object frm_reader: Tfrm_reader
         Height = 64
         Align = alBottom
         TabOrder = 3
-        ExplicitTop = 476
         object Ins_book_insBtn: TButton
           Left = 272
           Top = 36
@@ -405,7 +392,6 @@ object frm_reader: Tfrm_reader
     object updTab: TTabSheet
       Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1095#1080#1090#1072#1090#1077#1083#1077
       ImageIndex = 2
-      ExplicitHeight = 540
       object rd_upd_inp_box: TGroupBox
         Left = 0
         Top = 0
@@ -464,7 +450,6 @@ object frm_reader: Tfrm_reader
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
-        ExplicitHeight = 333
         object reader_updDBGrid: TDBGrid
           Left = 2
           Top = 15
@@ -529,7 +514,6 @@ object frm_reader: Tfrm_reader
         Height = 70
         Align = alBottom
         TabOrder = 2
-        ExplicitTop = 470
         object upd_rd_Btn: TButton
           Left = 464
           Top = 24
@@ -544,7 +528,6 @@ object frm_reader: Tfrm_reader
     object delTab: TTabSheet
       Caption = ' '#1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1095#1080#1090#1072#1090#1077#1083#1077
       ImageIndex = 3
-      ExplicitHeight = 540
       object rd_del_inp_Box: TGroupBox
         Left = 0
         Top = 0
@@ -580,7 +563,6 @@ object frm_reader: Tfrm_reader
         Height = 70
         Align = alBottom
         TabOrder = 1
-        ExplicitTop = 470
         object rd_del_btn: TButton
           Left = 464
           Top = 24
@@ -599,7 +581,6 @@ object frm_reader: Tfrm_reader
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        ExplicitHeight = 365
         object rd_delGrid: TDBGrid
           Left = 2
           Top = 15

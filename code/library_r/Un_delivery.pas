@@ -58,6 +58,9 @@ type
     upd_tel_lbl: TStaticText;
     upd_tel_inp: TMaskEdit;
     rd_delGrid: TDBGrid;
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormActivate(Sender: TObject);
 
   private
   procedure ChangeFormColor(Sender: TObject);
@@ -86,4 +89,57 @@ begin
     end;
   end;
 end;
+procedure Tfrm_delivery.FormActivate(Sender: TObject);
+begin
+dm.autQuery.Open;
+dm.GenreQuery.Open;
+dm.bookQuery.Open;
+dm.docQuery.Open;
+dm.readerQuery.Open;
+dm.deliveryQuery.Open;
+end;
+
+procedure Tfrm_delivery.FormClose(Sender: TObject; var Action: TCloseAction);
+var
+ q:Integer;
+begin
+ SaveFormState(Self);
+   with dm do
+ begin
+    for q := 0 to ComponentCount - 1 do
+ begin
+    if(Components[q] is TADOQuery)  then
+   begin
+      (Components[q] as TADOQuery).Close;
+ end;
+ end;
+ end;
+end;
+
+procedure Tfrm_delivery.FormCreate(Sender: TObject);
+const
+  ButtonNames: array[0..3] of string = ('Удалить','Изменить',
+  'Добавить','Выбрать');
+ var
+  ButtonClicks: array of TNotifyEvent;
+begin
+ frm_delivery.ShowHint:=true;
+ UniformizeButtonsSize(Self,  273, 25);
+ UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+ LoadFormState(Self);
+  delvImageList.Clear;
+  LoadIconFromResource('DELETE_ICON',1,delvImageList);
+  LoadIconFromResource('EDIT_ICON',1,delvImageList);
+  LoadIconFromResource('ADD_ICON',1,delvImageList);
+  LoadIconFromResource('SELECT_ICON',1,delvImageList);
+// ShowMessage(IntToStr(iconImageList.Count));
+  SetLength(ButtonClicks, 4);
+  ButtonClicks[0] := ChangeFormColor;
+  ButtonClicks[1] := ChangeFormColor;
+  ButtonClicks[2] := ChangeFormColor;
+  ButtonClicks[3] := ChangeFormColor;
+  CreateToolBarWithButtons(Self, delvImageList, ButtonNames, ButtonClicks);
+end;
+
 end.
