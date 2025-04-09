@@ -693,12 +693,14 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@check_date'
         Attributes = [paNullable]
         DataType = ftDateTime
         Size = 10
+        Value = Null
       end>
     Left = 480
     Top = 256
@@ -712,12 +714,14 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@check_date'
         Attributes = [paNullable]
         DataType = ftDateTime
         Size = 10
+        Value = Null
       end>
     Left = 496
     Top = 320
@@ -731,36 +735,42 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@Name_R'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 50
+        Value = Null
       end
       item
         Name = '@Date_B'
         Attributes = [paNullable]
         DataType = ftDateTime
         Size = 10
+        Value = Null
       end
       item
         Name = '@Adres'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 70
+        Value = Null
       end
       item
         Name = '@Tel'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 15
+        Value = Null
       end
       item
         Name = '@Date_R'
         Attributes = [paNullable]
         DataType = ftDateTime
         Size = 10
+        Value = Null
       end>
     Left = 496
     Top = 376
@@ -774,12 +784,14 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@tel'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 50
+        Value = Null
       end
       item
         Name = '@id_reader'
@@ -800,6 +812,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@ID_Reader'
@@ -810,5 +823,70 @@ object DM: TDM
       end>
     Left = 504
     Top = 480
+  end
+  object deliveryQuery: TADOQuery
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      'Delivery.ID_Delivery ,'
+      'Book.Name_B,'
+      'Reader.Name_R,'
+      'Delivery.Date_D,'
+      'Delivery.Date_Return_Plan,'
+      'Delivery.Date_Return_Fact'
+      'from Delivery'
+      'inner join  Doc on Delivery.ID_Doc=Doc.ID_Doc'
+      'inner join Book on Book.ID_Book=Doc.ID_Book'
+      'inner join Reader on Reader.ID_Reader=Delivery.ID_Reader'
+      'where 1=1 and'
+      'Delivery.Date_Return_Fact is null')
+    Left = 584
+    Top = 64
+  end
+  object deliveryDS: TDataSource
+    DataSet = deliveryQuery
+    Left = 584
+    Top = 120
+  end
+  object sel_delivery: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_delivery;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@name_r'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 50
+      end>
+    Left = 592
+    Top = 176
+  end
+  object ADOStoredProc2: TADOStoredProc
+    Parameters = <>
+    Left = 600
+    Top = 224
+  end
+  object ADOStoredProc3: TADOStoredProc
+    Parameters = <>
+    Left = 624
+    Top = 272
+  end
+  object ADOStoredProc4: TADOStoredProc
+    Parameters = <>
+    Left = 632
+    Top = 320
+  end
+  object ADOStoredProc5: TADOStoredProc
+    Parameters = <>
+    Left = 640
+    Top = 360
   end
 end

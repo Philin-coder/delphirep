@@ -16,13 +16,13 @@ type
     ins_tab: TTabSheet;
     updTab: TTabSheet;
     delTab: TTabSheet;
-    readerbtnBox: TGroupBox;
-    reader_grupperBox: TGroupBox;
-    readerselBtn: TButton;
-    reader_data_Box: TGroupBox;
-    readernaimRadio_grupper: TRadioButton;
-    reader_reset_Radio: TRadioButton;
-    readerGrid: TDBGrid;
+    dlvbtnBox: TGroupBox;
+    dlv_grupperBox: TGroupBox;
+    dlvselBtn: TButton;
+    dlv_data_Box: TGroupBox;
+    dlvnaimRadio_grupper: TRadioButton;
+    dlv_reset_Radio: TRadioButton;
+    dlvGrid: TDBGrid;
     rd_upd_inp_box: TGroupBox;
     Upd_rd_data_Box: TGroupBox;
     rd_upd_lbl: TLabel;
@@ -35,16 +35,16 @@ type
     rd_del_btn_Box: TGroupBox;
     rd_del_btn: TButton;
     rd_del_data_Box: TGroupBox;
-    reader_condBox: TGroupBox;
-    readercondedit_inp: TLabeledEdit;
-    reader_fnddEdit: TLabeledEdit;
+    dlv_condBox: TGroupBox;
+    dlvcondedit_inp: TLabeledEdit;
+    dlv_fnddEdit: TLabeledEdit;
     aboutreaderPC: TPageControl;
-    readerteansCB: TCheckBox;
+    dlvbackCB: TCheckBox;
     ins_r_data_Box: TGroupBox;
     Ins_rd_dataBox: TGroupBox;
     ins_reader_btn_Box: TGroupBox;
     Ins_book_insBtn: TButton;
-    reader_datar_CB: TCheckBox;
+    dlv_dolg_CB: TCheckBox;
     Name_r_inp: TLabeledEdit;
     date_b_lbl: TStaticText;
     ins_r_Grid: TDBGrid;
@@ -61,6 +61,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
+    procedure dlvselBtnClick(Sender: TObject);
 
   private
   procedure ChangeFormColor(Sender: TObject);
@@ -89,6 +90,26 @@ begin
     end;
   end;
 end;
+procedure Tfrm_delivery.dlvselBtnClick(Sender: TObject);
+begin
+try
+    if not DM.Connection.Connected then
+      raise Exception.Create('Соединение с базой не установлено');
+    with DM.sel_delivery do
+    begin
+      Close;
+           Parameters.ParamByName('@name_r').Value :=dlvcondedit_inp.Text;
+      Open;
+       DM.deliveryQuery.Recordset:=dm.sel_delivery.Recordset;
+    end;
+  except
+    on E: EDatabaseError do
+      ShowMessage('Ошибка БД: ' + E.Message);
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
+end;
+
 procedure Tfrm_delivery.FormActivate(Sender: TObject);
 begin
 dm.autQuery.Open;

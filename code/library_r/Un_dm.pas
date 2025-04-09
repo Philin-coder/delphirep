@@ -43,6 +43,13 @@ type
     INS_Reader: TADOStoredProc;
     upd_reader: TADOStoredProc;
     del_reader: TADOStoredProc;
+    deliveryQuery: TADOQuery;
+    deliveryDS: TDataSource;
+    sel_delivery: TADOStoredProc;
+    ADOStoredProc2: TADOStoredProc;
+    ADOStoredProc3: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
+    ADOStoredProc5: TADOStoredProc;
   private
     { Private declarations }
   public
