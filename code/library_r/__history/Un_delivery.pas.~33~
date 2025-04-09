@@ -113,7 +113,7 @@ begin
     'inner join Book on Book.ID_Book=Doc.ID_Book'+' '+
     'inner join Reader on Reader.ID_Reader=Delivery.ID_Reader'+' '+
     'where 1=1'+' '+
-    'and Delivery.Date_Return_Fact is null'+' '+
+    'and Delivery.Date_Return_Fact is null'+
     'Order by Reader.Name_R asc';
       Open;
      end;

@@ -65,6 +65,7 @@ object frm_delivery: Tfrm_delivery
           Align = alCustom
           Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1060#1048#1054
           TabOrder = 0
+          OnClick = dlvnaimRadio_grupperClick
         end
         object dlv_reset_Radio: TRadioButton
           Left = 624
@@ -149,14 +150,7 @@ object frm_delivery: Tfrm_delivery
               Expanded = False
               FieldName = 'Date_Return_Plan'
               Title.Caption = #1042#1086#1079#1074#1088#1072#1090' '#1087#1083#1072#1085#1086#1074#1099#1081
-              Width = 98
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'Date_Return_Fact'
-              Title.Caption = #1042#1086#1079#1074#1088#1072#1090' '#1092#1072#1082#1090#1080#1095#1077#1089#1082#1080#1081
-              Width = 149
+              Width = 142
               Visible = True
             end>
         end
@@ -193,6 +187,7 @@ object frm_delivery: Tfrm_delivery
           EditLabel.Height = 13
           EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1102' '#1082#1085#1080#1075#1080
           TabOrder = 1
+          OnKeyPress = dlv_fnddEditKeyPress
         end
       end
     end

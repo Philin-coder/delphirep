@@ -1,7 +1,7 @@
 object frm_delivery: Tfrm_delivery
   Left = 0
   Top = 0
-  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1095#1080#1090#1072#1090#1077#1083#1077#1084
+  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1074#1099#1076#1072#1095#1077#1081
   ClientHeight = 739
   ClientWidth = 1037
   Color = clBtnFace
@@ -11,16 +11,19 @@ object frm_delivery: Tfrm_delivery
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnActivate = FormActivate
+  OnClose = FormClose
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object readerToolBar: TToolBar
+  object delvToolBar: TToolBar
     Left = 0
     Top = 0
     Width = 1037
     Height = 47
     TabOrder = 0
   end
-  object readerPC: TPageControl
+  object delvPC: TPageControl
     Left = 0
     Top = 47
     Width = 1037
@@ -29,31 +32,32 @@ object frm_delivery: Tfrm_delivery
     Align = alClient
     TabOrder = 1
     object sel_tab: TTabSheet
-      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1095#1080#1090#1072#1090#1077#1083#1077
-      object readerbtnBox: TGroupBox
+      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1074#1099#1076#1072#1095#1077
+      object dlvbtnBox: TGroupBox
         Left = 0
         Top = 594
         Width = 1029
         Height = 70
         Align = alBottom
         TabOrder = 0
-        object readerselBtn: TButton
+        object dlvselBtn: TButton
           Left = 336
           Top = 32
           Width = 273
           Height = 25
           Caption = #1054#1090#1073#1086#1088' '#1087#1086' '#1091#1089#1083#1086#1074#1080#1102
           TabOrder = 0
+          OnClick = dlvselBtnClick
         end
       end
-      object reader_grupperBox: TGroupBox
+      object dlv_grupperBox: TGroupBox
         Left = 0
         Top = 113
         Width = 1029
         Height = 64
         Align = alTop
         TabOrder = 1
-        object readernaimRadio_grupper: TRadioButton
+        object dlvnaimRadio_grupper: TRadioButton
           Left = 19
           Top = 14
           Width = 150
@@ -62,7 +66,7 @@ object frm_delivery: Tfrm_delivery
           Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1060#1048#1054
           TabOrder = 0
         end
-        object reader_reset_Radio: TRadioButton
+        object dlv_reset_Radio: TRadioButton
           Left = 624
           Top = 6
           Width = 113
@@ -71,28 +75,28 @@ object frm_delivery: Tfrm_delivery
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 1
         end
-        object readerteansCB: TCheckBox
+        object dlvbackCB: TCheckBox
           Left = 19
           Top = 37
           Width = 190
           Height = 17
           Align = alCustom
           Anchors = [akLeft]
-          Caption = #1054#1090#1086#1073#1088#1072#1090#1100' '#1090#1077#1093', '#1082#1086#1084#1091' '#1084#1077#1085#1100#1096#1077' 18'
+          Caption = #1054#1090#1086#1073#1088#1072#1079#1090#1100' '#1074#1086#1079#1074#1088#1072#1090#1099
           TabOrder = 2
         end
-        object reader_datar_CB: TCheckBox
+        object dlv_dolg_CB: TCheckBox
           Left = 624
           Top = 41
           Width = 353
           Height = 17
           Align = alCustom
           Anchors = [akLeft]
-          Caption = #1054#1090#1086#1073#1088#1072#1090#1100' '#1090#1077#1093', '#1091' '#1082#1086#1075#1086' '#1089' '#1076#1072#1090#1099' '#1088#1077#1075#1080#1089#1090#1072#1088#1072#1094#1080#1080' '#1087#1088#1086#1096#1083#1086' '#1073#1086#1083#1100#1096#1077' 5 '#1083#1077#1090
+          Caption = #1054#1090#1086#1073#1088#1072#1079#1080#1090#1100' '#1076#1086#1083#1075#1080
           TabOrder = 3
         end
       end
-      object reader_data_Box: TGroupBox
+      object dlv_data_Box: TGroupBox
         Left = 0
         Top = 177
         Width = 1029
@@ -100,13 +104,13 @@ object frm_delivery: Tfrm_delivery
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        object readerGrid: TDBGrid
+        object dlvGrid: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
           Height = 400
           Align = alClient
-          DataSource = DM.readerDS
+          DataSource = DM.deliveryDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -116,48 +120,41 @@ object frm_delivery: Tfrm_delivery
           Columns = <
             item
               Expanded = False
-              FieldName = 'ID_Reader'
+              FieldName = 'ID_Delivery'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-              Width = 82
+              Width = 86
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'Name_B'
+              Title.Caption = #1050#1085#1080#1075#1072
+              Width = 115
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'Name_R'
-              Title.Caption = #1060#1048#1054' '#1095#1080#1090#1072#1090#1077#1083#1103
+              Title.Caption = #1063#1080#1090#1072#1090#1077#1083#1100
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'Date_B'
-              Title.Caption = #1044#1072#1090#1072' '#1088#1086#1078#1076#1077#1085#1080#1103' '#1095#1080#1090#1072#1090#1077#1083#1103
-              Width = 144
+              FieldName = 'Date_D'
+              Title.Caption = #1044#1072#1090#1072' '#1074#1099#1076#1072#1095#1080
+              Width = 95
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'Adres'
-              Title.Caption = #1040#1076#1088#1077#1089' '#1095#1080#1090#1072#1090#1077#1083#1103
-              Width = 91
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'Tel'
-              Title.Caption = #1058#1077#1083#1077#1092#1086#1085' '#1095#1080#1090#1072#1090#1077#1083#1103
-              Width = 121
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'Date_R'
-              Title.Caption = #1044#1072#1090#1072' '#1088#1077#1075#1080#1089#1090#1088#1072#1094#1080#1080' '#1095#1080#1090#1072#1090#1077#1083#1103
-              Width = 156
+              FieldName = 'Date_Return_Plan'
+              Title.Caption = #1042#1086#1079#1074#1088#1072#1090' '#1087#1083#1072#1085#1086#1074#1099#1081
+              Width = 142
               Visible = True
             end>
         end
       end
-      object reader_condBox: TGroupBox
+      object dlv_condBox: TGroupBox
         Left = 0
         Top = 0
         Width = 1029
@@ -168,7 +165,7 @@ object frm_delivery: Tfrm_delivery
         DesignSize = (
           1029
           113)
-        object readercondedit_inp: TLabeledEdit
+        object dlvcondedit_inp: TLabeledEdit
           Left = 19
           Top = 34
           Width = 966
@@ -179,26 +176,23 @@ object frm_delivery: Tfrm_delivery
           EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1060#1048#1054' '#1095#1080#1090#1072#1090#1077#1083#1103
           TabOrder = 0
         end
-        object reader_fnddEdit: TLabeledEdit
+        object dlv_fnddEdit: TLabeledEdit
           Left = 19
           Top = 81
           Width = 966
           Height = 21
           Anchors = [akLeft, akRight]
-          EditLabel.Width = 185
+          EditLabel.Width = 191
           EditLabel.Height = 13
-          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1072#1076#1088#1077#1089#1091' '#1087#1088#1086#1078#1080#1074#1072#1085#1080#1103
+          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1102' '#1082#1085#1080#1075#1080
           TabOrder = 1
+          OnKeyPress = dlv_fnddEditKeyPress
         end
       end
     end
     object ins_tab: TTabSheet
       Caption = #1044#1086#1073#1072#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1095#1080#1090#1072#1090#1077#1083#1077
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object aboutreaderPC: TPageControl
         Left = 0
         Top = 257
@@ -384,10 +378,6 @@ object frm_delivery: Tfrm_delivery
     object updTab: TTabSheet
       Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1095#1080#1090#1072#1090#1077#1083#1077
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object rd_upd_inp_box: TGroupBox
         Left = 0
         Top = 0
@@ -522,10 +512,6 @@ object frm_delivery: Tfrm_delivery
     object delTab: TTabSheet
       Caption = ' '#1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1095#1080#1090#1072#1090#1077#1083#1077
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object rd_del_inp_Box: TGroupBox
         Left = 0
         Top = 0
@@ -637,7 +623,7 @@ object frm_delivery: Tfrm_delivery
       end
     end
   end
-  object readerImageList: TImageList
+  object delvImageList: TImageList
     Left = 256
   end
 end

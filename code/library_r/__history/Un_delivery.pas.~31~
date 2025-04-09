@@ -63,7 +63,6 @@ type
     procedure FormActivate(Sender: TObject);
     procedure dlvselBtnClick(Sender: TObject);
     procedure dlv_fnddEditKeyPress(Sender: TObject; var Key: Char);
-    procedure dlvnaimRadio_grupperClick(Sender: TObject);
 
   private
   procedure ChangeFormColor(Sender: TObject);
@@ -92,39 +91,6 @@ begin
     end;
   end;
 end;
-procedure Tfrm_delivery.dlvnaimRadio_grupperClick(Sender: TObject);
-begin
-   if dlvnaimRadio_grupper.Checked=true then
-  begin
-    try
-     with dm.deliveryQuery do
-     begin
-      close;
-      sql.Clear;
-      sql.Text:=
-     'select '+' '+
-    'Delivery.ID_Delivery ,'+' '+
-    'Book.Name_B,'+' '+
-    'Reader.Name_R,'+' '+
-    'Delivery.Date_D,'+' '+
-    'Delivery.Date_Return_Plan'+' '+
-    'from Delivery'+' '+
-    'inner join  Doc on Delivery.ID_Doc=Doc.ID_Doc'+' '+
-    'inner join Book on Book.ID_Book=Doc.ID_Book'+' '+
-    'inner join Reader on Reader.ID_Reader=Delivery.ID_Reader'+' '+
-    'where 1=1'+' '+
-    'and Delivery.Date_Return_Fact is null'+' '+
-    'Order by Reader.Name_R asc';
-      Open;
-     end;
-    except on E: EADOError do
-    begin
-      ShowMessage('Ошибка'+' '+E.Message);
-    end;
-    end;
-  end;
-end;
-
 procedure Tfrm_delivery.dlvselBtnClick(Sender: TObject);
 begin
 try
@@ -149,22 +115,22 @@ procedure Tfrm_delivery.dlv_fnddEditKeyPress(Sender: TObject; var Key: Char);
 begin
    try
    dm.deliveryQuery.SQL.Text:=
-    'select'+' '+
+    'select '+
     'Delivery.ID_Delivery ,'+' '+
     'Book.Name_B,'+' '+
-    'Reader.Name_R,'+' '+
-    'Delivery.Date_D,'+' '+
+    'Reader.Name_R,'+''+
+    'Delivery.Date_D'+' '+
     'Delivery.Date_Return_Plan'+' '+
     'from Delivery'+' '+
     'inner join  Doc on Delivery.ID_Doc=Doc.ID_Doc'+' '+
     'inner join Book on Book.ID_Book=Doc.ID_Book'+' '+
     'inner join Reader on Reader.ID_Reader=Delivery.ID_Reader'+' '+
-    'where 1=1'+' '+
+    'where 1=1'+
     'and Delivery.Date_Return_Fact is null'+' '+
-     'and Book.Name_B like'+
+     'and Book.Name_B like '+
      QuotedStr(Concat(dlv_fnddEdit.Text,#37));
-     dm.deliveryQuery.close;
-     dm.deliveryQuery.Open;
+   dm.deliveryQuery.close;
+   dm.deliveryQuery.Open;
 except on E: Exception do
   begin
   ShowMessage('wrong situation'+' '+E.Message);
