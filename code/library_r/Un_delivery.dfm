@@ -209,8 +209,6 @@ object frm_delivery: Tfrm_delivery
         Height = 334
         Align = alClient
         TabOrder = 0
-        ExplicitTop = 257
-        ExplicitHeight = 343
       end
       object ins_dlv_data_Box: TGroupBox
         Left = 0
@@ -249,7 +247,6 @@ object frm_delivery: Tfrm_delivery
           Anchors = [akLeft]
           Caption = #1063#1080#1090#1072#1090#1077#1083#1100
           TabOrder = 2
-          ExplicitTop = 85
         end
         object ins_del_doc_DBL: TDBLookupComboBox
           Left = 3
@@ -274,7 +271,6 @@ object frm_delivery: Tfrm_delivery
           ListField = 'Name_R'
           ListSource = DM.readerDS
           TabOrder = 4
-          ExplicitTop = 108
         end
         object ins_del_Date_d_inp: TDateTimePicker
           Left = 3
@@ -317,8 +313,6 @@ object frm_delivery: Tfrm_delivery
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        ExplicitTop = 257
-        ExplicitHeight = 343
         object ins_dlv_Grid: TDBGrid
           Left = 2
           Top = 15
@@ -370,7 +364,6 @@ object frm_delivery: Tfrm_delivery
               Expanded = False
               FieldName = 'Date_Return_Fact'
               Title.Caption = #1042#1086#1079#1074#1088#1072#1090' '#1087#1086' '#1092#1072#1082#1090#1091
-              Width = -1
               Visible = False
             end>
         end
@@ -531,9 +524,9 @@ object frm_delivery: Tfrm_delivery
       end
     end
     object delTab: TTabSheet
-      Caption = ' '#1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1095#1080#1090#1072#1090#1077#1083#1077
+      Caption = ' '#1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1074#1099#1076#1072#1095#1077
       ImageIndex = 3
-      object rd_del_inp_Box: TGroupBox
+      object dlv_del_inp_Box: TGroupBox
         Left = 0
         Top = 0
         Width = 1029
@@ -541,43 +534,44 @@ object frm_delivery: Tfrm_delivery
         Align = alTop
         Caption = #1042#1074#1086#1076'  '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object rd_delLbl: TLabel
+        object dlv_delLbl: TLabel
           Left = 3
           Top = 29
-          Width = 95
+          Width = 96
           Height = 13
-          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1095#1080#1090#1072#1090#1077#1083#1103
+          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1076#1086#1082#1091#1084#1077#1085#1090
         end
-        object rd_delDBL: TDBLookupComboBox
+        object dlv_delDBL: TDBLookupComboBox
           Left = 9
           Top = 58
           Width = 1017
           Height = 21
           Align = alCustom
           Anchors = [akLeft, akRight]
-          KeyField = 'ID_Reader'
-          ListField = 'Name_R'
-          ListSource = DM.readerDS
+          KeyField = 'ID_Delivery'
+          ListField = 'Name_B'
+          ListSource = DM.deliveryDS
           TabOrder = 0
         end
       end
-      object rd_del_btn_Box: TGroupBox
+      object dlv_del_btn_Box: TGroupBox
         Left = 0
         Top = 594
         Width = 1029
         Height = 70
         Align = alBottom
         TabOrder = 1
-        object rd_del_btn: TButton
+        object dlv_del_btn: TButton
           Left = 464
           Top = 24
           Width = 75
           Height = 25
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
+          OnClick = dlv_del_btnClick
         end
       end
-      object rd_del_data_Box: TGroupBox
+      object dlv_del_data_Box: TGroupBox
         Left = 0
         Top = 105
         Width = 1029
@@ -585,13 +579,13 @@ object frm_delivery: Tfrm_delivery
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        object rd_delGrid: TDBGrid
+        object Dlv_del_Grid: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
           Height = 472
           Align = alClient
-          DataSource = DM.readerDS
+          DataSource = DM.deliveryDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -601,44 +595,44 @@ object frm_delivery: Tfrm_delivery
           Columns = <
             item
               Expanded = False
-              FieldName = 'ID_Reader'
+              FieldName = 'ID_Delivery'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-              Width = 82
+              Width = 105
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'Name_B'
+              Title.Caption = #1050#1085#1080#1075#1072
+              Width = 176
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'Name_R'
-              Title.Caption = #1060#1048#1054' '#1095#1080#1090#1072#1090#1077#1083#1103
+              Title.Caption = #1063#1080#1090#1072#1090#1077#1083#1100
+              Width = 140
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'Date_B'
-              Title.Caption = #1044#1072#1090#1072' '#1088#1086#1078#1076#1077#1085#1080#1103' '#1095#1080#1090#1072#1090#1077#1083#1103
-              Width = 144
+              FieldName = 'Date_D'
+              Title.Caption = #1044#1072#1090#1072' '#1074#1099#1076#1072#1095#1080
+              Width = 171
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'Adres'
-              Title.Caption = #1040#1076#1088#1077#1089' '#1095#1080#1090#1072#1090#1077#1083#1103
-              Width = 91
+              FieldName = 'Date_Return_Plan'
+              Title.Caption = #1042#1086#1079#1074#1088#1072#1090' '#1087#1086' '#1087#1083#1072#1085#1091
+              Width = 151
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'Tel'
-              Title.Caption = #1058#1077#1083#1077#1092#1086#1085' '#1095#1080#1090#1072#1090#1077#1083#1103
-              Width = 121
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'Date_R'
-              Title.Caption = #1044#1072#1090#1072' '#1088#1077#1075#1080#1089#1090#1088#1072#1094#1080#1080' '#1095#1080#1090#1072#1090#1077#1083#1103
-              Width = 156
-              Visible = True
+              FieldName = 'Date_Return_Fact'
+              Title.Caption = #1042#1086#1079#1074#1088#1072#1090' '#1087#1086' '#1092#1072#1082#1090#1091
+              Visible = False
             end>
         end
       end

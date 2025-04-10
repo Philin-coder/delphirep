@@ -29,12 +29,12 @@ type
     dlv_updDBL: TDBLookupComboBox;
     upd_dlv_btn_box: TGroupBox;
     upd_dlv_Btn: TButton;
-    rd_del_inp_Box: TGroupBox;
-    rd_delLbl: TLabel;
-    rd_delDBL: TDBLookupComboBox;
-    rd_del_btn_Box: TGroupBox;
-    rd_del_btn: TButton;
-    rd_del_data_Box: TGroupBox;
+    dlv_del_inp_Box: TGroupBox;
+    dlv_delLbl: TLabel;
+    dlv_delDBL: TDBLookupComboBox;
+    dlv_del_btn_Box: TGroupBox;
+    dlv_del_btn: TButton;
+    dlv_del_data_Box: TGroupBox;
     dlv_condBox: TGroupBox;
     dlvcondedit_inp: TLabeledEdit;
     dlv_fnddEdit: TLabeledEdit;
@@ -49,7 +49,6 @@ type
     ins_del_data_d_lbl: TStaticText;
     ins_del_reader_lbl: TStaticText;
     dlv_data_return_fact_lbl: TStaticText;
-    rd_delGrid: TDBGrid;
     ins_del_doc_DBL: TDBLookupComboBox;
     ins_delivery_reader_DBL: TDBLookupComboBox;
     ins_del_Date_d_inp: TDateTimePicker;
@@ -58,6 +57,7 @@ type
     ins_dlv_Grid: TDBGrid;
     upd_dlvGrid: TDBGrid;
     Date_return_fact_inp: TDateTimePicker;
+    Dlv_del_Grid: TDBGrid;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
@@ -69,6 +69,7 @@ type
     procedure dlv_dolg_CBClick(Sender: TObject);
     procedure Ins_dlv_insBtnClick(Sender: TObject);
     procedure upd_dlv_BtnClick(Sender: TObject);
+    procedure dlv_del_btnClick(Sender: TObject);
 
   private
   procedure ChangeFormColor(Sender: TObject);
@@ -199,6 +200,45 @@ try
     on E: Exception do
       ShowMessage('Ошибка: ' + E.Message);
   end;
+end;
+
+procedure Tfrm_delivery.dlv_del_btnClick(Sender: TObject);
+var
+  AreFieldsEmpty:boolean;
+begin
+AreFieldsEmpty:=(
+(dlv_delDBL.Text='')
+);
+if AreFieldsEmpty  then
+begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.del_delivery do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@ID_Delivery').Value
+           :=dm.deliveryQuery.FieldByName('ID_Delivery').AsString;
+           ExecProc;
+           dm.deliveryQuery.Close;
+           dm.deliveryQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+
 end;
 
 procedure Tfrm_delivery.dlv_dolg_CBClick(Sender: TObject);

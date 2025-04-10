@@ -1,0 +1,514 @@
+unit Un_delivery;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, ImgList, ComCtrls, ToolWin,ADODB,db, StdCtrls, Grids,
+  DBGrids, DBCtrls, Mask;
+
+type
+  Tfrm_delivery = class(TForm)
+    delvToolBar: TToolBar;
+    delvImageList: TImageList;
+    delvPC: TPageControl;
+    sel_tab: TTabSheet;
+    ins_tab: TTabSheet;
+    updTab: TTabSheet;
+    delTab: TTabSheet;
+    dlvbtnBox: TGroupBox;
+    dlv_grupperBox: TGroupBox;
+    dlvselBtn: TButton;
+    dlv_data_Box: TGroupBox;
+    dlvnaimRadio_grupper: TRadioButton;
+    dlv_reset_Radio: TRadioButton;
+    dlvGrid: TDBGrid;
+    dlv_upd_inp_box: TGroupBox;
+    Upd_rd_data_Box: TGroupBox;
+    dlv_upd_lbl: TLabel;
+    dlv_updDBL: TDBLookupComboBox;
+    upd_dlv_btn_box: TGroupBox;
+    upd_dlv_Btn: TButton;
+    dlv_del_inp_Box: TGroupBox;
+    dlv_delLbl: TLabel;
+    dlv_delDBL: TDBLookupComboBox;
+    dlv_del_btn_Box: TGroupBox;
+    dlv_del_btn: TButton;
+    dlv_del_data_Box: TGroupBox;
+    dlv_condBox: TGroupBox;
+    dlvcondedit_inp: TLabeledEdit;
+    dlv_fnddEdit: TLabeledEdit;
+    aboutdlvrPC: TPageControl;
+    dlvbackCB: TCheckBox;
+    ins_dlv_data_Box: TGroupBox;
+    Ins_dlv_dataBox: TGroupBox;
+    ins_reader_btn_Box: TGroupBox;
+    Ins_dlv_insBtn: TButton;
+    dlv_dolg_CB: TCheckBox;
+    dlv_ins_doc_lbl: TStaticText;
+    ins_del_data_d_lbl: TStaticText;
+    ins_del_reader_lbl: TStaticText;
+    dlv_data_return_fact_lbl: TStaticText;
+    ins_del_doc_DBL: TDBLookupComboBox;
+    ins_delivery_reader_DBL: TDBLookupComboBox;
+    ins_del_Date_d_inp: TDateTimePicker;
+    Ins_dlv_data_return_Plan_lbl: TStaticText;
+    ins_del_Date_return_plan_inp: TDateTimePicker;
+    ins_dlv_Grid: TDBGrid;
+    upd_dlvGrid: TDBGrid;
+    Date_return_fact_inp: TDateTimePicker;
+    Dlv_del_Grid: TDBGrid;
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormActivate(Sender: TObject);
+    procedure dlvselBtnClick(Sender: TObject);
+    procedure dlv_fnddEditKeyPress(Sender: TObject; var Key: Char);
+    procedure dlvnaimRadio_grupperClick(Sender: TObject);
+    procedure dlv_reset_RadioClick(Sender: TObject);
+    procedure dlvbackCBClick(Sender: TObject);
+    procedure dlv_dolg_CBClick(Sender: TObject);
+    procedure Ins_dlv_insBtnClick(Sender: TObject);
+    procedure upd_dlv_BtnClick(Sender: TObject);
+    procedure dlv_del_btnClick(Sender: TObject);
+
+  private
+  procedure ChangeFormColor(Sender: TObject);
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_delivery: Tfrm_delivery;
+implementation
+
+uses Un_dm, Un_func, Un_main;
+
+{$R *.dfm}
+procedure Tfrm_delivery.ChangeFormColor(Sender: TObject);
+begin
+  if Sender is TToolButton then
+  begin
+    case TToolButton(Sender).Tag of
+      0:delvPC.ActivePage:=delTab;
+      1:delvPC.ActivePage:=Updtab;
+      2:delvPC.ActivePage:=ins_Tab;
+      3:delvPC.ActivePage:=sel_Tab;
+    else
+        delvPC.ActivePage:=sel_tab;
+    end;
+  end;
+end;
+procedure Tfrm_delivery.dlvbackCBClick(Sender: TObject);
+begin
+case dlvbackCB.Checked of
+true:
+begin
+try
+    if not DM.Connection.Connected then
+      raise Exception.Create('Соединение с базой не установлено');
+
+    with DM.sel_book_bak_common do
+    begin
+        close;
+        Open;
+          dlvGrid.Columns[5].Visible:=True;
+       dm.deliveryQuery.Recordset:=dm.sel_book_bak_common.Recordset;
+    end;
+  except
+    on E: EDatabaseError do
+      ShowMessage('Ошибка БД: ' + E.Message);
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
+end;
+false:
+begin
+  with dm.deliveryQuery do
+     begin
+     Close;
+     sql.Clear;
+     SQL.Text:=
+     'select '+' '+
+     'Delivery.ID_Delivery ,'+' '+
+    'Book.Name_B,'+' '+
+    'Reader.Name_R,'+' '+
+    'Delivery.Date_D,'+' '+
+    'Delivery.Date_Return_Plan,'+' '+
+    'Delivery.Date_Return_Fact'+'  '+
+    'from Delivery'+' '+
+    'inner join  Doc on Delivery.ID_Doc=Doc.ID_Doc'+' '+
+    'inner join Book on Book.ID_Book=Doc.ID_Book'+' '+
+    'inner join Reader on Reader.ID_Reader=Delivery.ID_Reader'+' '+
+    'where 1=1'+' '+
+    'and Delivery.Date_Return_Fact is null';
+     Open;
+                dlvGrid.Columns[5].Visible:=False;
+     end;
+end;
+end; //case
+end;
+
+procedure Tfrm_delivery.dlvnaimRadio_grupperClick(Sender: TObject);
+begin
+   if dlvnaimRadio_grupper.Checked=true then
+  begin
+    try
+     with dm.deliveryQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+     'select '+' '+
+    'Delivery.ID_Delivery ,'+' '+
+    'Book.Name_B,'+' '+
+    'Reader.Name_R,'+' '+
+    'Delivery.Date_D,'+' '+
+    'Delivery.Date_Return_Plan,'+' '+
+    'Delivery.Date_Return_Fact'+' '+
+    'from Delivery'+' '+
+    'inner join  Doc on Delivery.ID_Doc=Doc.ID_Doc'+' '+
+    'inner join Book on Book.ID_Book=Doc.ID_Book'+' '+
+    'inner join Reader on Reader.ID_Reader=Delivery.ID_Reader'+' '+
+    'where 1=1'+' '+
+    'and Delivery.Date_Return_Fact is null'+' '+
+    'Order by Reader.Name_R asc';
+      Open;
+     end;
+    except on E: EADOError do
+    begin
+      ShowMessage('Ошибка'+' '+E.Message);
+    end;
+    end;
+  end;
+end;
+
+procedure Tfrm_delivery.dlvselBtnClick(Sender: TObject);
+begin
+try
+    if not DM.Connection.Connected then
+      raise Exception.Create('Соединение с базой не установлено');
+    with DM.sel_delivery do
+    begin
+      Close;
+           Parameters.ParamByName('@name_r').Value :=dlvcondedit_inp.Text;
+      Open;
+       DM.deliveryQuery.Recordset:=dm.sel_delivery.Recordset;
+    end;
+  except
+    on E: EDatabaseError do
+      ShowMessage('Ошибка БД: ' + E.Message);
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
+end;
+
+procedure Tfrm_delivery.dlv_del_btnClick(Sender: TObject);
+var
+  AreFieldsEmpty:boolean;
+begin
+AreFieldsEmpty:=(
+(dlv_delDBL.Text='')
+);
+if AreFieldsEmpty  then
+begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.del_delivery do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@Name_A').Value :=Autor_inp.Text;
+           ExecProc;
+           dm.deliveryQuery.Close;
+           dm.deliveryQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+
+end;
+
+procedure Tfrm_delivery.dlv_dolg_CBClick(Sender: TObject);
+var curdate:TDateTime;
+begin
+CurDate:=GetCurrentDateTime;
+case dlv_dolg_CB.Checked  of
+False:
+begin
+try
+   dm.deliveryQuery.SQL.Text:=
+    'select'+' '+
+    'Delivery.ID_Delivery ,'+' '+
+    'Book.Name_B,'+' '+
+    'Reader.Name_R,'+' '+
+    'Delivery.Date_D,'+' '+
+    'Delivery.Date_Return_Plan,'+' '+
+    'Delivery.Date_Return_Fact'+' '+
+    'from Delivery'+' '+
+    'inner join  Doc on Delivery.ID_Doc=Doc.ID_Doc'+' '+
+    'inner join Book on Book.ID_Book=Doc.ID_Book'+' '+
+    'inner join Reader on Reader.ID_Reader=Delivery.ID_Reader'+' '+
+    'where 1=1'+' '+
+    'and Delivery.Date_Return_Fact is null';
+     dm.deliveryQuery.close;
+     dm.deliveryQuery.Open;
+except on E: Exception do
+  begin
+  ShowMessage('wrong situation'+' '+E.Message);
+  end;
+  end;
+end;
+True:
+begin
+try
+    if not DM.Connection.Connected then
+      raise Exception.Create('Соединение с базой не установлено');
+
+    with DM.sel_delivery_d do
+    begin
+      Close;
+           Parameters.ParamByName('@check_date').Value
+           :=DateToStr(curdate);
+      Open;
+       DM.deliveryQuery.Recordset:=dm.sel_delivery_d.Recordset;
+    end;
+  except
+    on E: EDatabaseError do
+      ShowMessage('Ошибка БД: ' + E.Message);
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
+end;
+end; //case
+end;
+
+procedure Tfrm_delivery.dlv_fnddEditKeyPress(Sender: TObject; var Key: Char);
+begin
+   try
+   dm.deliveryQuery.SQL.Text:=
+    'select'+' '+
+    'Delivery.ID_Delivery ,'+' '+
+    'Book.Name_B,'+' '+
+    'Reader.Name_R,'+' '+
+    'Delivery.Date_D,'+' '+
+    'Delivery.Date_Return_Plan,'+' '+
+    'Delivery.Date_Return_Fact'+' '+
+    'from Delivery'+' '+
+    'inner join  Doc on Delivery.ID_Doc=Doc.ID_Doc'+' '+
+    'inner join Book on Book.ID_Book=Doc.ID_Book'+' '+
+    'inner join Reader on Reader.ID_Reader=Delivery.ID_Reader'+' '+
+    'where 1=1'+' '+
+    'and Delivery.Date_Return_Fact is null'+' '+
+     'and Book.Name_B like'+
+     QuotedStr(Concat(dlv_fnddEdit.Text,#37));
+     dm.deliveryQuery.close;
+     dm.deliveryQuery.Open;
+except on E: Exception do
+  begin
+  ShowMessage('wrong situation'+' '+E.Message);
+  end;
+  end;
+end;
+
+procedure Tfrm_delivery.dlv_reset_RadioClick(Sender: TObject);
+var i,j,c:Integer;
+begin
+ if dlv_reset_Radio.Checked then
+  with frm_delivery do
+    for I := 0 to ComponentCount - 1 do
+     begin
+       if (Components[i] is TLabeledEdit)  then
+        begin
+          (Components[i] as TLabeledEdit).Clear;
+        end;
+     end;
+       with frm_delivery do
+    for c := 0 to ComponentCount - 1 do
+     begin
+       if (Components[c] is TCheckBox)  then
+        begin
+          (Components[c] as TCheckBox).Checked:=False;
+        end;
+     end;
+     with dm.deliveryQuery do
+     begin
+     Close;
+     sql.Clear;
+     SQL.Text:=
+     'select '+' '+
+     'Delivery.ID_Delivery ,'+' '+
+    'Book.Name_B,'+' '+
+    'Reader.Name_R,'+' '+
+    'Delivery.Date_D,'+' '+
+    'Delivery.Date_Return_Plan,'+' '+
+     'Delivery.Date_Return_Fact'+' '+
+    'from Delivery'+' '+
+    'inner join  Doc on Delivery.ID_Doc=Doc.ID_Doc'+' '+
+    'inner join Book on Book.ID_Book=Doc.ID_Book'+' '+
+    'inner join Reader on Reader.ID_Reader=Delivery.ID_Reader'+' '+
+    'where 1=1'+' '+
+    'and Delivery.Date_Return_Fact is null ';
+     Open;
+     end;
+    with frm_delivery do
+    for j := 0 to ComponentCount - 1 do
+    begin
+      if(Components[j] is TRadioButton)  then
+      begin
+        (Components[j] as TRadioButton).Checked:=False;
+      end;
+    end;
+end;
+
+procedure Tfrm_delivery.FormActivate(Sender: TObject);
+begin
+dm.autQuery.Open;
+dm.GenreQuery.Open;
+dm.bookQuery.Open;
+dm.docQuery.Open;
+dm.readerQuery.Open;
+dm.deliveryQuery.Open;
+end;
+
+procedure Tfrm_delivery.FormClose(Sender: TObject; var Action: TCloseAction);
+var
+ q:Integer;
+begin
+ SaveFormState(Self);
+   with dm do
+ begin
+    for q := 0 to ComponentCount - 1 do
+ begin
+    if(Components[q] is TADOQuery)  then
+   begin
+      (Components[q] as TADOQuery).Close;
+ end;
+ end;
+ end;
+   dlvGrid.Columns[5].Visible:=false;
+end;
+
+procedure Tfrm_delivery.FormCreate(Sender: TObject);
+const
+  ButtonNames: array[0..3] of string = ('Удалить','Изменить',
+  'Добавить','Выбрать');
+ var
+  ButtonClicks: array of TNotifyEvent;
+begin
+ frm_delivery.ShowHint:=true;
+ UniformizeButtonsSize(Self,  273, 25);
+ UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+ LoadFormState(Self);
+  delvImageList.Clear;
+  LoadIconFromResource('DELETE_ICON',1,delvImageList);
+  LoadIconFromResource('EDIT_ICON',1,delvImageList);
+  LoadIconFromResource('ADD_ICON',1,delvImageList);
+  LoadIconFromResource('SELECT_ICON',1,delvImageList);
+  SetLength(ButtonClicks, 4);
+  ButtonClicks[0] := ChangeFormColor;
+  ButtonClicks[1] := ChangeFormColor;
+  ButtonClicks[2] := ChangeFormColor;
+  ButtonClicks[3] := ChangeFormColor;
+  CreateToolBarWithButtons(Self, delvImageList, ButtonNames, ButtonClicks);
+  dlvGrid.Columns[5].Visible:=false;
+end;
+
+procedure Tfrm_delivery.Ins_dlv_insBtnClick(Sender: TObject);
+var  AreFieldsEmpty: Boolean;
+begin
+AreFieldsEmpty:=(
+(ins_del_doc_DBL.Text='')or
+(ins_delivery_reader_DBL.Text='')
+);
+if AreFieldsEmpty then
+begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+end;
+try
+      with dm.INS_Delivary do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@ID_Doc').Value
+           :=dm.docQuery.FieldByName('ID_Doc').AsString;
+           Parameters.ParamByName('@ID_Reader').Value
+           :=dm.readerQuery.FieldByName('ID_Reader').AsString;
+           Parameters.ParamByName('@Date_D').Value
+           :=DateToStr(ins_del_Date_d_inp.date);
+           Parameters.ParamByName('@Date_Return_Plan').Value
+           :=DateToStr(ins_del_Date_return_plan_inp.Date);
+           ExecProc;
+           dm.deliveryQuery.Close;
+           dm.deliveryQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+end;
+
+procedure Tfrm_delivery.upd_dlv_BtnClick(Sender: TObject);
+var AreFieldsEmpty:boolean;
+begin
+  AreFieldsEmpty:=(
+  (dlv_updDBL.Text='')
+  );
+  if AreFieldsEmpty then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.Upd_Delivary do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@Date_Return_Fact').Value
+           :=DateToStr(Date_return_fact_inp.Date);
+           Parameters.ParamByName('@ID_Delivery').Value:=
+           dm.deliveryQuery.FieldByName('ID_Delivery').AsString;
+           ExecProc;
+           dm.deliveryQuery.Close;
+           dm.deliveryQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+
+  
+end;
+
+end.

@@ -49,8 +49,8 @@ type
     sel_book_bak_common: TADOStoredProc;
     sel_delivery_d: TADOStoredProc;
     INS_Delivary: TADOStoredProc;
-    ADOStoredProc5: TADOStoredProc;
-    ADOStoredProc1: TADOStoredProc;
+    Upd_Delivary: TADOStoredProc;
+    del_delivery: TADOStoredProc;
   private
     { Private declarations }
   public
