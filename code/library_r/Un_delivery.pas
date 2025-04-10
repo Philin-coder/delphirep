@@ -23,12 +23,12 @@ type
     dlvnaimRadio_grupper: TRadioButton;
     dlv_reset_Radio: TRadioButton;
     dlvGrid: TDBGrid;
-    rd_upd_inp_box: TGroupBox;
+    dlv_upd_inp_box: TGroupBox;
     Upd_rd_data_Box: TGroupBox;
-    rd_upd_lbl: TLabel;
-    rd_updDBL: TDBLookupComboBox;
-    upd_rd_btn_box: TGroupBox;
-    upd_rd_Btn: TButton;
+    dlv_upd_lbl: TLabel;
+    dlv_updDBL: TDBLookupComboBox;
+    upd_dlv_btn_box: TGroupBox;
+    upd_dlv_Btn: TButton;
     rd_del_inp_Box: TGroupBox;
     rd_delLbl: TLabel;
     rd_delDBL: TDBLookupComboBox;
@@ -43,14 +43,12 @@ type
     ins_dlv_data_Box: TGroupBox;
     Ins_dlv_dataBox: TGroupBox;
     ins_reader_btn_Box: TGroupBox;
-    Ins_book_insBtn: TButton;
+    Ins_dlv_insBtn: TButton;
     dlv_dolg_CB: TCheckBox;
     dlv_ins_doc_lbl: TStaticText;
     ins_del_data_d_lbl: TStaticText;
     ins_del_reader_lbl: TStaticText;
-    reader_updDBGrid: TDBGrid;
-    upd_tel_lbl: TStaticText;
-    upd_tel_inp: TMaskEdit;
+    dlv_data_return_fact_lbl: TStaticText;
     rd_delGrid: TDBGrid;
     ins_del_doc_DBL: TDBLookupComboBox;
     ins_delivery_reader_DBL: TDBLookupComboBox;
@@ -58,6 +56,8 @@ type
     Ins_dlv_data_return_Plan_lbl: TStaticText;
     ins_del_Date_return_plan_inp: TDateTimePicker;
     ins_dlv_Grid: TDBGrid;
+    upd_dlvGrid: TDBGrid;
+    Date_return_fact_inp: TDateTimePicker;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
@@ -67,7 +67,8 @@ type
     procedure dlv_reset_RadioClick(Sender: TObject);
     procedure dlvbackCBClick(Sender: TObject);
     procedure dlv_dolg_CBClick(Sender: TObject);
-    procedure Ins_book_insBtnClick(Sender: TObject);
+    procedure Ins_dlv_insBtnClick(Sender: TObject);
+    procedure upd_dlv_BtnClick(Sender: TObject);
 
   private
   procedure ChangeFormColor(Sender: TObject);
@@ -386,7 +387,7 @@ begin
   dlvGrid.Columns[5].Visible:=false;
 end;
 
-procedure Tfrm_delivery.Ins_book_insBtnClick(Sender: TObject);
+procedure Tfrm_delivery.Ins_dlv_insBtnClick(Sender: TObject);
 var  AreFieldsEmpty: Boolean;
 begin
 AreFieldsEmpty:=(
@@ -428,11 +429,47 @@ try
         ShowMessage('Ошибка: ' + E.Message);
       end;
     end;
+end;
 
+procedure Tfrm_delivery.upd_dlv_BtnClick(Sender: TObject);
+var AreFieldsEmpty:boolean;
+begin
+  AreFieldsEmpty:=(
+  (dlv_updDBL.Text='')
+  );
+  if AreFieldsEmpty then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.Upd_Delivary do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@Date_Return_Fact').Value
+           :=DateToStr(Date_return_fact_inp.Date);
+           Parameters.ParamByName('@ID_Delivery').Value:=
+           dm.deliveryQuery.FieldByName('ID_Delivery').AsString;
+           ExecProc;
+           dm.deliveryQuery.Close;
+           dm.deliveryQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
 
-
-
-
+  
 end;
 
 end.

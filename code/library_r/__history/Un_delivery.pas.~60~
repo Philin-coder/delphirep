@@ -38,26 +38,26 @@ type
     dlv_condBox: TGroupBox;
     dlvcondedit_inp: TLabeledEdit;
     dlv_fnddEdit: TLabeledEdit;
-    aboutreaderPC: TPageControl;
+    aboutdlvrPC: TPageControl;
     dlvbackCB: TCheckBox;
-    ins_r_data_Box: TGroupBox;
-    Ins_rd_dataBox: TGroupBox;
+    ins_dlv_data_Box: TGroupBox;
+    Ins_dlv_dataBox: TGroupBox;
     ins_reader_btn_Box: TGroupBox;
-    Ins_book_insBtn: TButton;
+    Ins_dlv_insBtn: TButton;
     dlv_dolg_CB: TCheckBox;
-    Name_r_inp: TLabeledEdit;
-    date_b_lbl: TStaticText;
-    ins_r_Grid: TDBGrid;
-    Date_B_inp: TDateTimePicker;
-    adr_r_inp: TLabeledEdit;
-    Date_r_inp: TDateTimePicker;
-    data_r_lbl: TStaticText;
-    Tel_lbl: TStaticText;
-    tel_inp: TMaskEdit;
+    dlv_ins_doc_lbl: TStaticText;
+    ins_del_data_d_lbl: TStaticText;
+    ins_del_reader_lbl: TStaticText;
     reader_updDBGrid: TDBGrid;
     upd_tel_lbl: TStaticText;
     upd_tel_inp: TMaskEdit;
     rd_delGrid: TDBGrid;
+    ins_del_doc_DBL: TDBLookupComboBox;
+    ins_delivery_reader_DBL: TDBLookupComboBox;
+    ins_del_Date_d_inp: TDateTimePicker;
+    Ins_dlv_data_return_Plan_lbl: TStaticText;
+    ins_del_Date_return_plan_inp: TDateTimePicker;
+    ins_dlv_Grid: TDBGrid;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
@@ -67,6 +67,7 @@ type
     procedure dlv_reset_RadioClick(Sender: TObject);
     procedure dlvbackCBClick(Sender: TObject);
     procedure dlv_dolg_CBClick(Sender: TObject);
+    procedure Ins_dlv_insBtnClick(Sender: TObject);
 
   private
   procedure ChangeFormColor(Sender: TObject);
@@ -240,7 +241,6 @@ try
       Close;
            Parameters.ParamByName('@check_date').Value
            :=DateToStr(curdate);
-           ShowMessage(DateToStr_(curdate)); 
       Open;
        DM.deliveryQuery.Recordset:=dm.sel_delivery_d.Recordset;
     end;
@@ -384,6 +384,55 @@ begin
   ButtonClicks[3] := ChangeFormColor;
   CreateToolBarWithButtons(Self, delvImageList, ButtonNames, ButtonClicks);
   dlvGrid.Columns[5].Visible:=false;
+end;
+
+procedure Tfrm_delivery.Ins_dlv_insBtnClick(Sender: TObject);
+var  AreFieldsEmpty: Boolean;
+begin
+AreFieldsEmpty:=(
+(ins_del_doc_DBL.Text='')or
+(ins_delivery_reader_DBL.Text='')
+);
+if AreFieldsEmpty then
+begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+end;
+try
+      with dm.INS_Delivary do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@ID_Doc').Value
+           :=dm.docQuery.FieldByName('ID_Doc').AsString;
+           Parameters.ParamByName('@ID_Reader').Value
+           :=dm.readerQuery.FieldByName('ID_Reader').AsString;
+           Parameters.ParamByName('@Date_D').Value
+           :=DateToStr(ins_del_Date_d_inp.date);
+           Parameters.ParamByName('@Date_Return_Plan').Value
+           :=DateToStr(ins_del_Date_return_plan_inp.Date);
+           ExecProc;
+           dm.deliveryQuery.Close;
+           dm.deliveryQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+
+
+
+
+
 end;
 
 end.
