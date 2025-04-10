@@ -28,7 +28,7 @@ object frm_delivery: Tfrm_delivery
     Top = 47
     Width = 1037
     Height = 692
-    ActivePage = sel_tab
+    ActivePage = ins_tab
     Align = alClient
     TabOrder = 1
     object sel_tab: TTabSheet
@@ -75,6 +75,7 @@ object frm_delivery: Tfrm_delivery
           Align = alCustom
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 1
+          OnClick = dlv_reset_RadioClick
         end
         object dlvbackCB: TCheckBox
           Left = 19
@@ -85,6 +86,7 @@ object frm_delivery: Tfrm_delivery
           Anchors = [akLeft]
           Caption = #1054#1090#1086#1073#1088#1072#1079#1090#1100' '#1074#1086#1079#1074#1088#1072#1090#1099
           TabOrder = 2
+          OnClick = dlvbackCBClick
         end
         object dlv_dolg_CB: TCheckBox
           Left = 624
@@ -95,6 +97,7 @@ object frm_delivery: Tfrm_delivery
           Anchors = [akLeft]
           Caption = #1054#1090#1086#1073#1088#1072#1079#1080#1090#1100' '#1076#1086#1083#1075#1080
           TabOrder = 3
+          OnClick = dlv_dolg_CBClick
         end
       end
       object dlv_data_Box: TGroupBox
@@ -123,14 +126,14 @@ object frm_delivery: Tfrm_delivery
               Expanded = False
               FieldName = 'ID_Delivery'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-              Width = 86
+              Width = 105
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'Name_B'
               Title.Caption = #1050#1085#1080#1075#1072
-              Width = 115
+              Width = 58
               Visible = True
             end
             item
@@ -143,14 +146,19 @@ object frm_delivery: Tfrm_delivery
               Expanded = False
               FieldName = 'Date_D'
               Title.Caption = #1044#1072#1090#1072' '#1074#1099#1076#1072#1095#1080
-              Width = 95
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'Date_Return_Plan'
-              Title.Caption = #1042#1086#1079#1074#1088#1072#1090' '#1087#1083#1072#1085#1086#1074#1099#1081
-              Width = 142
+              Title.Caption = #1042#1086#1079#1074#1088#1072#1090' '#1087#1086' '#1087#1083#1072#1085#1091
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'Date_Return_Fact'
+              Title.Caption = #1042#1086#1079#1074#1088#1072#1090' '#1087#1086' '#1092#1072#1082#1090#1091
+              Width = 140
               Visible = True
             end>
         end
@@ -192,9 +200,9 @@ object frm_delivery: Tfrm_delivery
       end
     end
     object ins_tab: TTabSheet
-      Caption = #1044#1086#1073#1072#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1095#1080#1090#1072#1090#1077#1083#1077
+      Caption = #1044#1086#1073#1072#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1074#1099#1076#1072#1095#1077
       ImageIndex = 1
-      object aboutreaderPC: TPageControl
+      object aboutdlvrPC: TPageControl
         Left = 0
         Top = 257
         Width = 1029
@@ -202,7 +210,7 @@ object frm_delivery: Tfrm_delivery
         Align = alClient
         TabOrder = 0
       end
-      object ins_r_data_Box: TGroupBox
+      object ins_dlv_data_Box: TGroupBox
         Left = 0
         Top = 0
         Width = 1029
@@ -210,60 +218,15 @@ object frm_delivery: Tfrm_delivery
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
-        DesignSize = (
-          1029
-          257)
-        object Name_r_inp: TLabeledEdit
-          Left = 19
-          Top = 39
-          Width = 966
-          Height = 21
-          Anchors = [akLeft, akRight]
-          EditLabel.Width = 77
-          EditLabel.Height = 13
-          EditLabel.Caption = ' '#1060#1048#1054' '#1095#1080#1090#1072#1090#1077#1083#1103
-          TabOrder = 0
-        end
-        object date_b_lbl: TStaticText
-          Left = 19
-          Top = 75
-          Width = 141
+        object dlv_ins_doc_lbl: TStaticText
+          Left = 3
+          Top = 19
+          Width = 54
           Height = 17
           Align = alCustom
           Anchors = [akLeft]
-          Caption = #1044#1072#1090#1072' '#1088#1086#1078#1076#1077#1085#1080#1103' '#1095#1080#1090#1072#1077#1090#1077#1083#1103
-          TabOrder = 1
-        end
-        object Date_B_inp: TDateTimePicker
-          Left = 19
-          Top = 96
-          Width = 966
-          Height = 21
-          Anchors = [akLeft, akRight]
-          Date = 45755.684260115740000000
-          Time = 45755.684260115740000000
-          TabOrder = 2
-        end
-        object adr_r_inp: TLabeledEdit
-          Left = 19
-          Top = 138
-          Width = 966
-          Height = 21
-          Anchors = [akLeft, akRight]
-          EditLabel.Width = 82
-          EditLabel.Height = 13
-          EditLabel.Caption = #1040#1076#1088#1077#1089' '#1095#1080#1090#1072#1090#1077#1083#1103
-          TabOrder = 3
-        end
-        object Date_r_inp: TDateTimePicker
-          Left = 19
-          Top = 231
-          Width = 966
-          Height = 21
-          Anchors = [akLeft, akRight]
-          Date = 45755.684260115740000000
-          Time = 45755.684260115740000000
-          TabOrder = 4
+          Caption = #1044#1086#1082#1091#1084#1077#1085#1090
+          TabOrder = 0
         end
         object data_r_lbl: TStaticText
           Left = 19
@@ -273,7 +236,7 @@ object frm_delivery: Tfrm_delivery
           Align = alCustom
           Anchors = [akLeft]
           Caption = #1044#1072#1090#1072' '#1088#1077#1075#1080#1089#1090#1088#1072#1094#1080#1080' '#1095#1080#1090#1072#1077#1090#1077#1083#1103
-          TabOrder = 5
+          TabOrder = 1
         end
         object Tel_lbl: TStaticText
           Left = 19
@@ -283,15 +246,16 @@ object frm_delivery: Tfrm_delivery
           Align = alCustom
           Anchors = [akLeft]
           Caption = #1058#1077#1083#1077#1092#1086#1085' '#1095#1080#1090#1072#1090#1077#1083#1103
-          TabOrder = 6
+          TabOrder = 2
         end
-        object tel_inp: TMaskEdit
-          Left = 19
-          Top = 181
-          Width = 966
+        object DBLookupComboBox1: TDBLookupComboBox
+          Left = 3
+          Top = 42
+          Width = 1023
           Height = 21
+          Align = alCustom
           Anchors = [akLeft, akRight]
-          TabOrder = 7
+          TabOrder = 3
         end
       end
       object Ins_rd_dataBox: TGroupBox

@@ -887,29 +887,65 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@check_date'
         Attributes = [paNullable]
         DataType = ftDateTime
         Size = 10
+        Value = Null
       end>
-    Left = 624
+    Left = 600
     Top = 272
   end
-  object ADOStoredProc4: TADOStoredProc
-    Parameters = <>
-    Left = 632
-    Top = 320
+  object INS_Delivary: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'INS_Delivary;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@ID_Doc'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@ID_Reader'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@Date_D'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end
+      item
+        Name = '@Date_Return_Plan'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end>
+    Left = 600
+    Top = 328
   end
   object ADOStoredProc5: TADOStoredProc
     Parameters = <>
     Left = 640
-    Top = 360
+    Top = 384
   end
   object ADOStoredProc1: TADOStoredProc
     Parameters = <>
     Left = 648
-    Top = 416
+    Top = 432
   end
 end

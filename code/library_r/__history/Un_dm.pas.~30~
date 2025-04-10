@@ -34,7 +34,23 @@ type
     sel_doc_all_out: TADOStoredProc;
     INS_DOC: TADOStoredProc;
     upd_doc: TADOStoredProc;
-    ADOStoredProc2: TADOStoredProc;
+    del_doc: TADOStoredProc;
+    readerQuery: TADOQuery;
+    readerDS: TDataSource;
+    sel_reader: TADOStoredProc;
+    sel_reader_by_age: TADOStoredProc;
+    sel_reader_by_data_r: TADOStoredProc;
+    INS_Reader: TADOStoredProc;
+    upd_reader: TADOStoredProc;
+    del_reader: TADOStoredProc;
+    deliveryQuery: TADOQuery;
+    deliveryDS: TDataSource;
+    sel_delivery: TADOStoredProc;
+    sel_book_bak_common: TADOStoredProc;
+    sel_delivery_d: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
+    ADOStoredProc5: TADOStoredProc;
+    ADOStoredProc1: TADOStoredProc;
   private
     { Private declarations }
   public
