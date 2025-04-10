@@ -18,6 +18,7 @@ type
     doc_item: TMenuItem;
     reader_item: TMenuItem;
     delievry_item: TMenuItem;
+    attachment_item: TMenuItem;
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -29,6 +30,7 @@ type
     procedure doc_itemClick(Sender: TObject);
     procedure reader_itemClick(Sender: TObject);
     procedure delievry_itemClick(Sender: TObject);
+    procedure attachment_itemClick(Sender: TObject);
   private
   procedure ChangeFormColor(Sender: TObject);
 var
@@ -42,12 +44,25 @@ var
 implementation
 
 uses Un_func, Un_dm, Un_autorize, Un_aut, Un_genre, Un_book, Un_doc, Un_reader,
-  Un_delivery;
+  Un_delivery, Un_attachment;
 
 {$R *.dfm}
 const
   FileName = 'connection_string.txt';
-  procedure TFrm_main.autor_itemClick(Sender: TObject);
+  procedure TFrm_main.attachment_itemClick(Sender: TObject);
+begin
+  try
+UpdateFormProperties('frm_attachment', 'Форма Работы с вложениями',
+clBtnFace, 1024, 768);
+frm_attachment.ShowModal;
+except
+frm_attachment.Free;
+raise;
+end;
+
+end;
+
+procedure TFrm_main.autor_itemClick(Sender: TObject);
 begin
 try
 UpdateFormProperties('frm_aut', 'Форма Работы с автором',

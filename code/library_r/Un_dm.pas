@@ -51,6 +51,8 @@ type
     INS_Delivary: TADOStoredProc;
     Upd_Delivary: TADOStoredProc;
     del_delivery: TADOStoredProc;
+    AttachmentQuery: TADOQuery;
+    AttachmentDS: TDataSource;
   private
     { Private declarations }
   public
