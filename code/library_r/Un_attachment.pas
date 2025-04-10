@@ -62,6 +62,10 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure attselBtnClick(Sender: TObject);
+    procedure att_showatt_CBClick(Sender: TObject);
+    procedure att_fnddEditKeyPress(Sender: TObject; var Key: Char);
+    procedure att_reset_RadioClick(Sender: TObject);
+    procedure attnaim_f_Radio_grupperClick(Sender: TObject);
 
   private
   procedure ChangeFormColor(Sender: TObject);
@@ -76,6 +80,36 @@ implementation
 uses Un_dm, Un_func, Un_main;
 
 {$R *.dfm}
+procedure Tfrm_attachment.attnaim_f_Radio_grupperClick(Sender: TObject);
+begin
+   if attnaim_f_Radio_grupper.Checked=true then
+  begin
+    try
+     with dm.AttachmentQuery  do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+     ' select attachment.id_attachment,'+' '+
+    'attachment.file_name_attachment,'+' '+
+    'attachment.attachment,'+' '+
+    'attachment.attachment_description,'+' '+
+    'Book.Name_B'+' '+
+    'from attachment'+' '+
+    'inner join Doc on attachment.ID_Doc=Doc.ID_Doc'+' '+
+    'inner join Book on Doc.ID_Book=Book.ID_Book'+' '+
+    'where 1=1'+' '+
+    'Order by file_name_attachment asc';
+      Open;
+     end;
+    except on E: EADOError do
+    begin
+      ShowMessage('Ошибка'+' '+E.Message);
+    end;
+    end;
+  end;
+end;
+
 procedure Tfrm_attachment.attselBtnClick(Sender: TObject);
 begin
   try
@@ -94,6 +128,92 @@ begin
     on E: Exception do
       ShowMessage('Ошибка: ' + E.Message);
   end;
+end;
+
+procedure Tfrm_attachment.att_fnddEditKeyPress(Sender: TObject; var Key: Char);
+begin
+   try
+   dm.AttachmentQuery.SQL.Text:=
+   ' select attachment.id_attachment,'+' '+
+    'attachment.file_name_attachment,'+' '+
+    'attachment.attachment,'+' '+
+    'attachment.attachment_description,'+' '+
+    'Book.Name_B'+' '+
+    'from attachment'+' '+
+    'inner join Doc on attachment.ID_Doc=Doc.ID_Doc'+' '+
+    'inner join Book on Doc.ID_Book=Book.ID_Book'+' '+
+    'where 1=1'+' '+
+    'and attachment.attachment_description like'+
+   QuotedStr(Concat(att_fnddEdit.Text,#37));
+   dm.AttachmentQuery.close;
+   dm.AttachmentQuery.Open;
+except on E: Exception do
+  begin
+  ShowMessage('wrong situation'+' '+E.Message);
+  end;
+  end;
+end;
+
+procedure Tfrm_attachment.att_reset_RadioClick(Sender: TObject);
+var i,j,c:Integer;
+begin
+   if att_reset_Radio.Checked then
+  with frm_attachment do
+    for I := 0 to ComponentCount - 1 do
+     begin
+       if (Components[i] is TLabeledEdit)  then
+        begin
+          (Components[i] as TLabeledEdit).Clear;
+        end;
+     end;
+       with frm_attachment do
+    for c := 0 to ComponentCount - 1 do
+     begin
+       if (Components[c] is TCheckBox)  then
+        begin
+          (Components[c] as TCheckBox).Checked:=False;
+        end;
+     end;
+     with dm.AttachmentQuery do
+     begin
+     Close;
+     sql.Clear;
+     SQL.Text:=
+     ' select attachment.id_attachment,'+' '+
+    'attachment.file_name_attachment,'+' '+
+    'attachment.attachment,'+' '+
+    'attachment.attachment_description,'+' '+
+    'Book.Name_B'+' '+
+    'from attachment'+' '+
+    'inner join Doc on attachment.ID_Doc=Doc.ID_Doc'+' '+
+    'inner join Book on Doc.ID_Book=Book.ID_Book'+' '+
+    'where 1=1';
+     Open;
+     end;
+    with frm_attachment do
+    for j := 0 to ComponentCount - 1 do
+    begin
+      if(Components[j] is TRadioButton)  then
+      begin
+        (Components[j] as TRadioButton).Checked:=False;
+      end;
+    end;
+
+
+end;
+
+procedure Tfrm_attachment.att_showatt_CBClick(Sender: TObject);
+begin
+case att_showatt_CB.Checked of
+true:
+begin
+  attGrid.Columns[2].Visible:=true;
+end;
+false:
+begin
+  attGrid.Columns[2].Visible:=False;
+end;
+end; //case
 end;
 
 procedure Tfrm_attachment.ChangeFormColor(Sender: TObject);
@@ -135,6 +255,7 @@ begin
  end;
  end;
  end;
+   attGrid.Columns[2].Visible:=False;
 end;
 
 procedure Tfrm_attachment.FormCreate(Sender: TObject);
@@ -145,6 +266,7 @@ const
   var
   ButtonClicks: array of TNotifyEvent;
 begin
+ attGrid.Columns[2].Visible:=False;
  frm_attachment.ShowHint:=true;
  UniformizeButtonsSize(Self,  273, 25);
  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);

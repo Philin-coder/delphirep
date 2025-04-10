@@ -65,6 +65,7 @@ object frm_attachment: Tfrm_attachment
           Align = alCustom
           Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1080#1084#1077#1085#1080' '#1092#1072#1081#1083#1072
           TabOrder = 0
+          OnClick = attnaim_f_Radio_grupperClick
         end
         object att_reset_Radio: TRadioButton
           Left = 624
@@ -74,6 +75,7 @@ object frm_attachment: Tfrm_attachment
           Align = alCustom
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 1
+          OnClick = att_reset_RadioClick
         end
         object attopis_feupperCB: TCheckBox
           Left = 19
@@ -94,6 +96,7 @@ object frm_attachment: Tfrm_attachment
           Anchors = [akLeft]
           Caption = #1054#1090#1086#1073#1088#1072#1079#1080#1090#1100' '#1074#1083#1086#1078#1077#1085#1080#1077
           TabOrder = 3
+          OnClick = att_showatt_CBClick
         end
       end
       object att_data_Box: TGroupBox
@@ -136,7 +139,7 @@ object frm_attachment: Tfrm_attachment
               Expanded = False
               FieldName = 'attachment'
               Title.Caption = #1042#1083#1086#1078#1077#1085#1080#1077
-              Visible = True
+              Visible = False
             end
             item
               Expanded = False
@@ -186,6 +189,7 @@ object frm_attachment: Tfrm_attachment
           EditLabel.Height = 13
           EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1086#1087#1080#1089#1072#1085#1080#1102' '#1092#1072#1081#1083#1072
           TabOrder = 1
+          OnKeyPress = att_fnddEditKeyPress
         end
       end
     end
