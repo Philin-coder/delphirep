@@ -997,6 +997,7 @@ object DM: TDM
     SQL.Strings = (
       'select '
       'attachment.id_attachment,'
+      'attachment.file_name_attachment,'
       'attachment.attachment,'
       'attachment.attachment_description,'
       'Book.Name_B'
@@ -1011,5 +1012,24 @@ object DM: TDM
     DataSet = AttachmentQuery
     Left = 696
     Top = 128
+  end
+  object sel_attachment_by_fname: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_attachment_by_fname;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@m_fname'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 100
+      end>
+    Left = 712
+    Top = 184
   end
 end

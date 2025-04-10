@@ -16,13 +16,13 @@ type
     ins_tab: TTabSheet;
     updTab: TTabSheet;
     delTab: TTabSheet;
-    dlvbtnBox: TGroupBox;
-    dlv_grupperBox: TGroupBox;
-    dlvselBtn: TButton;
-    dlv_data_Box: TGroupBox;
-    dlvnaimRadio_grupper: TRadioButton;
-    dlv_reset_Radio: TRadioButton;
-    dlvGrid: TDBGrid;
+    attbtnBox: TGroupBox;
+    att_grupperBox: TGroupBox;
+    attselBtn: TButton;
+    att_data_Box: TGroupBox;
+    attnaim_f_Radio_grupper: TRadioButton;
+    att_reset_Radio: TRadioButton;
+    attGrid: TDBGrid;
     dlv_upd_inp_box: TGroupBox;
     Upd_rd_data_Box: TGroupBox;
     dlv_upd_lbl: TLabel;
@@ -35,16 +35,16 @@ type
     dlv_del_btn_Box: TGroupBox;
     dlv_del_btn: TButton;
     dlv_del_data_Box: TGroupBox;
-    dlv_condBox: TGroupBox;
-    dlvcondedit_inp: TLabeledEdit;
-    dlv_fnddEdit: TLabeledEdit;
+    att_condBox: TGroupBox;
+    attcondedit_inp: TLabeledEdit;
+    att_fnddEdit: TLabeledEdit;
     aboutdlvrPC: TPageControl;
-    dlvbackCB: TCheckBox;
+    attopis_feupperCB: TCheckBox;
     ins_dlv_data_Box: TGroupBox;
     Ins_dlv_dataBox: TGroupBox;
     ins_reader_btn_Box: TGroupBox;
     Ins_dlv_insBtn: TButton;
-    dlv_dolg_CB: TCheckBox;
+    att_showatt_CB: TCheckBox;
     dlv_ins_doc_lbl: TStaticText;
     ins_del_data_d_lbl: TStaticText;
     ins_del_reader_lbl: TStaticText;
@@ -61,6 +61,7 @@ type
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
+    procedure attselBtnClick(Sender: TObject);
 
   private
   procedure ChangeFormColor(Sender: TObject);
@@ -75,6 +76,26 @@ implementation
 uses Un_dm, Un_func, Un_main;
 
 {$R *.dfm}
+procedure Tfrm_attachment.attselBtnClick(Sender: TObject);
+begin
+  try
+    if not DM.Connection.Connected then
+      raise Exception.Create('Соединение с базой не установлено');
+    with DM.sel_attachment_by_fname do
+    begin
+      Close;
+           Parameters.ParamByName('@m_fname').Value :=attcondedit_inp.Text;
+      Open;
+       DM.AttachmentQuery.Recordset:=dm.sel_attachment_by_fname.Recordset;
+    end;
+  except
+    on E: EDatabaseError do
+      ShowMessage('Ошибка БД: ' + E.Message);
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
+end;
+
 procedure Tfrm_attachment.ChangeFormColor(Sender: TObject);
 begin
   if Sender is TToolButton then

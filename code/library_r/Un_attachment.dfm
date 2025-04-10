@@ -32,40 +32,41 @@ object frm_attachment: Tfrm_attachment
     Align = alClient
     TabOrder = 1
     object sel_tab: TTabSheet
-      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1074#1099#1076#1072#1095#1077
-      object dlvbtnBox: TGroupBox
+      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1074#1083#1086#1078#1077#1085#1080#1080
+      object attbtnBox: TGroupBox
         Left = 0
         Top = 594
         Width = 1029
         Height = 70
         Align = alBottom
         TabOrder = 0
-        object dlvselBtn: TButton
+        object attselBtn: TButton
           Left = 336
           Top = 32
           Width = 273
           Height = 25
           Caption = #1054#1090#1073#1086#1088' '#1087#1086' '#1091#1089#1083#1086#1074#1080#1102
           TabOrder = 0
+          OnClick = attselBtnClick
         end
       end
-      object dlv_grupperBox: TGroupBox
+      object att_grupperBox: TGroupBox
         Left = 0
         Top = 113
         Width = 1029
         Height = 64
         Align = alTop
         TabOrder = 1
-        object dlvnaimRadio_grupper: TRadioButton
+        object attnaim_f_Radio_grupper: TRadioButton
           Left = 19
           Top = 14
-          Width = 150
+          Width = 190
           Height = 17
           Align = alCustom
-          Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1060#1048#1054
+          Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1080#1084#1077#1085#1080' '#1092#1072#1081#1083#1072
           TabOrder = 0
         end
-        object dlv_reset_Radio: TRadioButton
+        object att_reset_Radio: TRadioButton
           Left = 624
           Top = 6
           Width = 113
@@ -74,28 +75,28 @@ object frm_attachment: Tfrm_attachment
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 1
         end
-        object dlvbackCB: TCheckBox
+        object attopis_feupperCB: TCheckBox
           Left = 19
           Top = 37
           Width = 190
           Height = 17
           Align = alCustom
           Anchors = [akLeft]
-          Caption = #1054#1090#1086#1073#1088#1072#1079#1090#1100' '#1074#1086#1079#1074#1088#1072#1090#1099
+          Caption = #1043#1088#1091#1087#1087#1080#1087#1088#1074#1082#1072' '#1087#1086' '#1086#1087#1080#1089#1072#1085#1080#1102
           TabOrder = 2
         end
-        object dlv_dolg_CB: TCheckBox
+        object att_showatt_CB: TCheckBox
           Left = 624
           Top = 41
-          Width = 353
+          Width = 345
           Height = 17
           Align = alCustom
           Anchors = [akLeft]
-          Caption = #1054#1090#1086#1073#1088#1072#1079#1080#1090#1100' '#1076#1086#1083#1075#1080
+          Caption = #1054#1090#1086#1073#1088#1072#1079#1080#1090#1100' '#1074#1083#1086#1078#1077#1085#1080#1077
           TabOrder = 3
         end
       end
-      object dlv_data_Box: TGroupBox
+      object att_data_Box: TGroupBox
         Left = 0
         Top = 177
         Width = 1029
@@ -103,7 +104,7 @@ object frm_attachment: Tfrm_attachment
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        object dlvGrid: TDBGrid
+        object attGrid: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
@@ -121,6 +122,14 @@ object frm_attachment: Tfrm_attachment
               Expanded = False
               FieldName = 'id_attachment'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Width = 136
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'file_name_attachment'
+              Title.Caption = #1048#1084#1103' '#1092#1072#1081#1083#1072
+              Width = 96
               Visible = True
             end
             item
@@ -133,18 +142,19 @@ object frm_attachment: Tfrm_attachment
               Expanded = False
               FieldName = 'attachment_description'
               Title.Caption = #1054#1087#1080#1089#1072#1085#1080#1077
+              Width = 147
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'Name_B'
               Title.Caption = #1050' '#1095#1077#1084#1091' '#1087#1088#1080#1083#1072#1075#1072#1077#1090#1089#1103
-              Width = 192
+              Width = 229
               Visible = True
             end>
         end
       end
-      object dlv_condBox: TGroupBox
+      object att_condBox: TGroupBox
         Left = 0
         Top = 0
         Width = 1029
@@ -155,26 +165,26 @@ object frm_attachment: Tfrm_attachment
         DesignSize = (
           1029
           113)
-        object dlvcondedit_inp: TLabeledEdit
+        object attcondedit_inp: TLabeledEdit
           Left = 19
           Top = 34
           Width = 966
           Height = 21
           Anchors = [akLeft, akRight]
-          EditLabel.Width = 191
+          EditLabel.Width = 200
           EditLabel.Height = 13
-          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1060#1048#1054' '#1095#1080#1090#1072#1090#1077#1083#1103
+          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1080#1084#1077#1085#1080' '#1074#1083#1086#1078#1077#1085#1080#1103
           TabOrder = 0
         end
-        object dlv_fnddEdit: TLabeledEdit
+        object att_fnddEdit: TLabeledEdit
           Left = 19
           Top = 81
           Width = 966
           Height = 21
           Anchors = [akLeft, akRight]
-          EditLabel.Width = 191
+          EditLabel.Width = 169
           EditLabel.Height = 13
-          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1102' '#1082#1085#1080#1075#1080
+          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1086#1087#1080#1089#1072#1085#1080#1102' '#1092#1072#1081#1083#1072
           TabOrder = 1
         end
       end

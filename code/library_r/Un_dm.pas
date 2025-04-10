@@ -53,6 +53,7 @@ type
     del_delivery: TADOStoredProc;
     AttachmentQuery: TADOQuery;
     AttachmentDS: TDataSource;
+    sel_attachment_by_fname: TADOStoredProc;
   private
     { Private declarations }
   public
