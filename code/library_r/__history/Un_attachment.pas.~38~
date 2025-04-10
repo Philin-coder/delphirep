@@ -63,11 +63,9 @@ type
     procedure att_reset_RadioClick(Sender: TObject);
     procedure attnaim_f_Radio_grupperClick(Sender: TObject);
     procedure attopis_feupperCBClick(Sender: TObject);
-    procedure Ins_att_insBtnClick(Sender: TObject);
 
   private
   procedure ChangeFormColor(Sender: TObject);
-  procedure add_attachment;
   public
     { Public declarations }
   end;
@@ -79,48 +77,6 @@ implementation
 uses Un_dm, Un_func, Un_main;
 
 {$R *.dfm}
-procedure Tfrm_attachment.add_attachment;
-var
-  FileStream: TFileStream;
-  MemoryStream: TMemoryStream;
-  FileName: string;
-begin
-  try
-    fod.Filter := 'All Files|*.*';
-    if fod.Execute then
-    begin
-      FileName := fod.FileName;
-      FileStream := TFileStream.Create(FileName, fmOpenRead);
-      MemoryStream := TMemoryStream.Create;
-      try
-        MemoryStream.LoadFromStream(FileStream);
-        MemoryStream.Position := 0;
-        try
-          dm.ins_attachment.Parameters.Refresh;
-          dm.ins_attachment.Parameters.ParamByName('@file_name_attachment').Value
-          :=ExtractFileName(FileName);
-          dm.ins_attachment.Parameters.ParamByName('@attachment').
-          LoadFromStream(MemoryStream, ftBlob);
-          dm.ins_attachment.Parameters.ParamByName('@attachment_description').Value
-          :=About_attachment_inp.Text;
-          DM.ins_attachment.Parameters.ParamByName('@ID_Doc').Value
-          :=dm.docQuery.FieldByName('ID_Doc').AsString;
-          dm.ins_attachment.ExecProc;
-          MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-          dm.attachmentQuery.Close;
-          dm.attachmentQuery.Open
-        finally
-        end;
-      finally
-        FileStream.Free;
-        MemoryStream.Free;
-      end;
-    end;
-  finally
-    fOD.Free;
-end;
-end;
-
 procedure Tfrm_attachment.attnaim_f_Radio_grupperClick(Sender: TObject);
 begin
    if attnaim_f_Radio_grupper.Checked=true then
@@ -373,35 +329,6 @@ begin
   ButtonClicks[2] := ChangeFormColor;
   ButtonClicks[3] := ChangeFormColor;
   CreateToolBarWithButtons(Self, attImageList, ButtonNames, ButtonClicks);
-end;
-
-procedure Tfrm_attachment.Ins_att_insBtnClick(Sender: TObject);
-const
- AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
- var
-   AreFieldsEmpty: Boolean;
-   AreFieldsValid: Boolean;
-begin
-   AreFieldsEmpty:=(
-   (Trim(About_attachment_inp.Text) = '')or
-   (ins_att_doc_DBL.Text='')
-   );
-   AreFieldsValid:=(
-   ValidateComponentText(About_attachment_inp,AllowedChars)
-   );
-   if AreFieldsEmpty or not AreFieldsValid then
-   begin
-    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-   end;
-
-    add_attachment;
-
-
-
-
 end;
 
 end.

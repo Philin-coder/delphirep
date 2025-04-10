@@ -40,10 +40,20 @@ type
     sel_reader: TADOStoredProc;
     sel_reader_by_age: TADOStoredProc;
     sel_reader_by_data_r: TADOStoredProc;
-    ADOStoredProc4: TADOStoredProc;
-    ADOStoredProc5: TADOStoredProc;
-    ADOStoredProc6: TADOStoredProc;
-    ADOStoredProc7: TADOStoredProc;
+    INS_Reader: TADOStoredProc;
+    upd_reader: TADOStoredProc;
+    del_reader: TADOStoredProc;
+    deliveryQuery: TADOQuery;
+    deliveryDS: TDataSource;
+    sel_delivery: TADOStoredProc;
+    sel_book_bak_common: TADOStoredProc;
+    sel_delivery_d: TADOStoredProc;
+    INS_Delivary: TADOStoredProc;
+    Upd_Delivary: TADOStoredProc;
+    del_delivery: TADOStoredProc;
+    AttachmentQuery: TADOQuery;
+    AttachmentDS: TDataSource;
+    sel_attachment_by_fname: TADOStoredProc;
   private
     { Private declarations }
   public

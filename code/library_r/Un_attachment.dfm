@@ -199,9 +199,9 @@ object frm_attachment: Tfrm_attachment
       ImageIndex = 1
       object aboutattPC: TPageControl
         Left = 0
-        Top = 266
+        Top = 137
         Width = 1029
-        Height = 334
+        Height = 463
         Align = alClient
         TabOrder = 0
       end
@@ -209,13 +209,16 @@ object frm_attachment: Tfrm_attachment
         Left = 0
         Top = 0
         Width = 1029
-        Height = 266
+        Height = 137
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
-        object att_ins_doc_lbl: TStaticText
-          Left = 3
-          Top = 29
+        DesignSize = (
+          1029
+          137)
+        object ins_att_doc_lbl: TStaticText
+          Left = 19
+          Top = 77
           Width = 54
           Height = 17
           Align = alCustom
@@ -223,88 +226,35 @@ object frm_attachment: Tfrm_attachment
           Caption = #1044#1086#1082#1091#1084#1077#1085#1090
           TabOrder = 0
         end
-        object ins_att_data_d_lbl: TStaticText
-          Left = 2
-          Top = 149
-          Width = 72
-          Height = 17
-          Align = alCustom
-          Anchors = [akLeft]
-          Caption = #1044#1072#1090#1072' '#1074#1099#1076#1072#1095#1080
-          TabOrder = 1
-        end
-        object ins_att_reader_lbl: TStaticText
-          Left = 3
-          Top = 88
-          Width = 53
-          Height = 17
-          Align = alCustom
-          Anchors = [akLeft]
-          Caption = #1063#1080#1090#1072#1090#1077#1083#1100
-          TabOrder = 2
-        end
         object ins_att_doc_DBL: TDBLookupComboBox
-          Left = 3
-          Top = 52
-          Width = 1023
+          Left = 19
+          Top = 100
+          Width = 998
           Height = 21
           Align = alCustom
           Anchors = [akLeft, akRight]
           KeyField = 'ID_Doc'
           ListField = 'Name_B'
           ListSource = DM.docDS
-          TabOrder = 3
+          TabOrder = 1
         end
-        object ins_att_reader_DBL: TDBLookupComboBox
-          Left = 3
-          Top = 112
-          Width = 1023
+        object About_attachment_inp: TLabeledEdit
+          Left = 19
+          Top = 34
+          Width = 998
           Height = 21
-          Align = alCustom
           Anchors = [akLeft, akRight]
-          KeyField = 'ID_Reader'
-          ListField = 'Name_R'
-          ListSource = DM.readerDS
-          TabOrder = 4
-        end
-        object ins_att_Date_d_inp: TDateTimePicker
-          Left = 3
-          Top = 172
-          Width = 1023
-          Height = 21
-          Align = alCustom
-          Anchors = [akLeft, akRight]
-          Date = 45757.456450300920000000
-          Time = 45757.456450300920000000
-          TabOrder = 5
-        end
-        object Ins_att_data_return_Plan_lbl: TStaticText
-          Left = 3
-          Top = 209
-          Width = 128
-          Height = 17
-          Align = alCustom
-          Anchors = [akLeft]
-          Caption = #1044#1072#1090#1072' '#1074#1086#1079#1074#1088#1072#1090#1072' '#1087#1086' '#1087#1083#1072#1085#1091
-          TabOrder = 6
-        end
-        object ins_att_Date_return_plan_inp: TDateTimePicker
-          Left = 3
-          Top = 232
-          Width = 1023
-          Height = 21
-          Align = alCustom
-          Anchors = [akLeft, akRight]
-          Date = 45757.456450300920000000
-          Time = 45757.456450300920000000
-          TabOrder = 7
+          EditLabel.Width = 102
+          EditLabel.Height = 13
+          EditLabel.Caption = #1054#1087#1080#1089#1072#1085#1080#1077' '#1074#1083#1086#1078#1077#1085#1080#1103
+          TabOrder = 2
         end
       end
       object Ins_att_dataBox: TGroupBox
         Left = 0
-        Top = 266
+        Top = 137
         Width = 1029
-        Height = 334
+        Height = 463
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
@@ -312,7 +262,7 @@ object frm_attachment: Tfrm_attachment
           Left = 2
           Top = 15
           Width = 1025
-          Height = 317
+          Height = 446
           Align = alClient
           DataSource = DM.AttachmentDS
           TabOrder = 0
@@ -372,6 +322,7 @@ object frm_attachment: Tfrm_attachment
           Height = 25
           Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
           TabOrder = 0
+          OnClick = Ins_att_insBtnClick
         end
       end
     end
@@ -627,5 +578,9 @@ object frm_attachment: Tfrm_attachment
   end
   object attImageList: TImageList
     Left = 256
+  end
+  object FOD: TOpenDialog
+    Left = 400
+    Top = 696
   end
 end

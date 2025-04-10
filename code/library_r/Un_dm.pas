@@ -54,6 +54,7 @@ type
     AttachmentQuery: TADOQuery;
     AttachmentDS: TDataSource;
     sel_attachment_by_fname: TADOStoredProc;
+    ins_attachment: TADOStoredProc;
   private
     { Private declarations }
   public

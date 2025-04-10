@@ -38,32 +38,32 @@ type
     att_condBox: TGroupBox;
     attcondedit_inp: TLabeledEdit;
     att_fnddEdit: TLabeledEdit;
-    aboutdlvrPC: TPageControl;
+    aboutattPC: TPageControl;
     attopis_feupperCB: TCheckBox;
-    ins_dlv_data_Box: TGroupBox;
-    Ins_dlv_dataBox: TGroupBox;
+    ins_att_data_Box: TGroupBox;
+    Ins_att_dataBox: TGroupBox;
     ins_reader_btn_Box: TGroupBox;
-    Ins_dlv_insBtn: TButton;
+    Ins_att_insBtn: TButton;
     att_showatt_CB: TCheckBox;
-    dlv_ins_doc_lbl: TStaticText;
-    ins_del_data_d_lbl: TStaticText;
-    ins_del_reader_lbl: TStaticText;
+    ins_att_doc_lbl: TStaticText;
     dlv_data_return_fact_lbl: TStaticText;
-    ins_del_doc_DBL: TDBLookupComboBox;
-    ins_delivery_reader_DBL: TDBLookupComboBox;
-    ins_del_Date_d_inp: TDateTimePicker;
-    Ins_dlv_data_return_Plan_lbl: TStaticText;
-    ins_del_Date_return_plan_inp: TDateTimePicker;
-    ins_dlv_Grid: TDBGrid;
+    ins_att_doc_DBL: TDBLookupComboBox;
     upd_dlvGrid: TDBGrid;
     Date_return_fact_inp: TDateTimePicker;
     Dlv_del_Grid: TDBGrid;
+    ins_attGrid: TDBGrid;
+    About_attachment_inp: TLabeledEdit;
+    FOD: TOpenDialog;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure attselBtnClick(Sender: TObject);
     procedure att_showatt_CBClick(Sender: TObject);
     procedure att_fnddEditKeyPress(Sender: TObject; var Key: Char);
+    procedure att_reset_RadioClick(Sender: TObject);
+    procedure attnaim_f_Radio_grupperClick(Sender: TObject);
+    procedure attopis_feupperCBClick(Sender: TObject);
+    procedure Ins_att_insBtnClick(Sender: TObject);
 
   private
   procedure ChangeFormColor(Sender: TObject);
@@ -78,6 +78,85 @@ implementation
 uses Un_dm, Un_func, Un_main;
 
 {$R *.dfm}
+procedure Tfrm_attachment.attnaim_f_Radio_grupperClick(Sender: TObject);
+begin
+   if attnaim_f_Radio_grupper.Checked=true then
+  begin
+    try
+     with dm.AttachmentQuery  do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+     ' select attachment.id_attachment,'+' '+
+    'attachment.file_name_attachment,'+' '+
+    'attachment.attachment,'+' '+
+    'attachment.attachment_description,'+' '+
+    'Book.Name_B'+' '+
+    'from attachment'+' '+
+    'inner join Doc on attachment.ID_Doc=Doc.ID_Doc'+' '+
+    'inner join Book on Doc.ID_Book=Book.ID_Book'+' '+
+    'where 1=1'+' '+
+    'Order by file_name_attachment asc';
+      Open;
+     end;
+    except on E: EADOError do
+    begin
+      ShowMessage('Œ¯Ë·Í‡'+' '+E.Message);
+    end;
+    end;
+  end;
+end;
+
+procedure Tfrm_attachment.attopis_feupperCBClick(Sender: TObject);
+begin
+case  attopis_feupperCB.Checked of
+True:
+begin
+    try
+   dm.AttachmentQuery.SQL.Text:=
+   ' select attachment.id_attachment,'+' '+
+    'attachment.file_name_attachment,'+' '+
+    'attachment.attachment,'+' '+
+    'attachment.attachment_description,'+' '+
+    'Book.Name_B'+' '+
+    'from attachment'+' '+
+    'inner join Doc on attachment.ID_Doc=Doc.ID_Doc'+' '+
+    'inner join Book on Doc.ID_Book=Book.ID_Book'+' '+
+    'where 1=1'+' '+
+    'order by attachment_description asc ';
+   dm.AttachmentQuery.close;
+   dm.AttachmentQuery.Open;
+except on E: Exception do
+  begin
+  ShowMessage('wrong situation'+' '+E.Message);
+  end;
+  end;
+end;
+false:
+begin
+    try
+   dm.AttachmentQuery.SQL.Text:=
+   ' select attachment.id_attachment,'+' '+
+    'attachment.file_name_attachment,'+' '+
+    'attachment.attachment,'+' '+
+    'attachment.attachment_description,'+' '+
+    'Book.Name_B'+' '+
+    'from attachment'+' '+
+    'inner join Doc on attachment.ID_Doc=Doc.ID_Doc'+' '+
+    'inner join Book on Doc.ID_Book=Book.ID_Book'+' '+
+    'where 1=1';
+   dm.AttachmentQuery.close;
+   dm.AttachmentQuery.Open;
+except on E: Exception do
+  begin
+  ShowMessage('wrong situation'+' '+E.Message);
+  end;
+  end;
+end;
+end; //case
+end;
+
 procedure Tfrm_attachment.attselBtnClick(Sender: TObject);
 begin
   try
@@ -113,7 +192,6 @@ begin
     'where 1=1'+' '+
     'and attachment.attachment_description like'+
    QuotedStr(Concat(att_fnddEdit.Text,#37));
-   ShowMessage(dm.AttachmentQuery.SQL.Text);
    dm.AttachmentQuery.close;
    dm.AttachmentQuery.Open;
 except on E: Exception do
@@ -121,6 +199,54 @@ except on E: Exception do
   ShowMessage('wrong situation'+' '+E.Message);
   end;
   end;
+end;
+
+procedure Tfrm_attachment.att_reset_RadioClick(Sender: TObject);
+var i,j,c:Integer;
+begin
+   if att_reset_Radio.Checked then
+  with frm_attachment do
+    for I := 0 to ComponentCount - 1 do
+     begin
+       if (Components[i] is TLabeledEdit)  then
+        begin
+          (Components[i] as TLabeledEdit).Clear;
+        end;
+     end;
+       with frm_attachment do
+    for c := 0 to ComponentCount - 1 do
+     begin
+       if (Components[c] is TCheckBox)  then
+        begin
+          (Components[c] as TCheckBox).Checked:=False;
+        end;
+     end;
+     with dm.AttachmentQuery do
+     begin
+     Close;
+     sql.Clear;
+     SQL.Text:=
+     ' select attachment.id_attachment,'+' '+
+    'attachment.file_name_attachment,'+' '+
+    'attachment.attachment,'+' '+
+    'attachment.attachment_description,'+' '+
+    'Book.Name_B'+' '+
+    'from attachment'+' '+
+    'inner join Doc on attachment.ID_Doc=Doc.ID_Doc'+' '+
+    'inner join Book on Doc.ID_Book=Book.ID_Book'+' '+
+    'where 1=1';
+     Open;
+     end;
+    with frm_attachment do
+    for j := 0 to ComponentCount - 1 do
+    begin
+      if(Components[j] is TRadioButton)  then
+      begin
+        (Components[j] as TRadioButton).Checked:=False;
+      end;
+    end;
+
+
 end;
 
 procedure Tfrm_attachment.att_showatt_CBClick(Sender: TObject);
@@ -204,6 +330,22 @@ begin
   ButtonClicks[2] := ChangeFormColor;
   ButtonClicks[3] := ChangeFormColor;
   CreateToolBarWithButtons(Self, attImageList, ButtonNames, ButtonClicks);
+end;
+
+procedure Tfrm_attachment.Ins_att_insBtnClick(Sender: TObject);
+const
+ AllowedChars: TSysCharSet = ['¿'..'ﬂ', '‡'..'ˇ', '0'..'9', ' ', '-', '.'];
+ var
+   AreFieldsEmpty: Boolean;
+   AreFieldsValid: Boolean;
+begin
+   AreFieldsEmpty:=(
+   (Trim(About_attachment_inp.Text) = '')or
+   (ins_att_doc_DBL.Text='')
+   );
+   AreFieldsValid:=(
+   ValidateComponentText(About_attachment_inp,AllowedChars)
+   );
 end;
 
 end.

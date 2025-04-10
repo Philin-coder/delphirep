@@ -1022,14 +1022,54 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@m_fname'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 100
+        Value = Null
       end>
     Left = 712
     Top = 184
+  end
+  object ins_attachment: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'ins_attachment;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@file_name_attachment'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end
+      item
+        Name = '@attachment'
+        Attributes = [paNullable]
+        DataType = ftBlob
+        Size = 2147483647
+      end
+      item
+        Name = '@attachment_description'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end
+      item
+        Name = '@ID_Doc'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 712
+    Top = 232
   end
 end

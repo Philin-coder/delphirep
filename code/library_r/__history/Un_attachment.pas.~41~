@@ -106,7 +106,6 @@ begin
           DM.ins_attachment.Parameters.ParamByName('@ID_Doc').Value
           :=dm.docQuery.FieldByName('ID_Doc').AsString;
           dm.ins_attachment.ExecProc;
-          MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
           dm.attachmentQuery.Close;
           dm.attachmentQuery.Open
         finally
