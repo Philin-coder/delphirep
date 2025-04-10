@@ -86,6 +86,7 @@ object frm_attachment: Tfrm_attachment
           Anchors = [akLeft]
           Caption = #1043#1088#1091#1087#1087#1080#1087#1088#1074#1082#1072' '#1087#1086' '#1086#1087#1080#1089#1072#1085#1080#1102
           TabOrder = 2
+          OnClick = attopis_feupperCBClick
         end
         object att_showatt_CB: TCheckBox
           Left = 624

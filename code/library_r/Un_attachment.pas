@@ -66,6 +66,7 @@ type
     procedure att_fnddEditKeyPress(Sender: TObject; var Key: Char);
     procedure att_reset_RadioClick(Sender: TObject);
     procedure attnaim_f_Radio_grupperClick(Sender: TObject);
+    procedure attopis_feupperCBClick(Sender: TObject);
 
   private
   procedure ChangeFormColor(Sender: TObject);
@@ -108,6 +109,55 @@ begin
     end;
     end;
   end;
+end;
+
+procedure Tfrm_attachment.attopis_feupperCBClick(Sender: TObject);
+begin
+case  attopis_feupperCB.Checked of
+True:
+begin
+    try
+   dm.AttachmentQuery.SQL.Text:=
+   ' select attachment.id_attachment,'+' '+
+    'attachment.file_name_attachment,'+' '+
+    'attachment.attachment,'+' '+
+    'attachment.attachment_description,'+' '+
+    'Book.Name_B'+' '+
+    'from attachment'+' '+
+    'inner join Doc on attachment.ID_Doc=Doc.ID_Doc'+' '+
+    'inner join Book on Doc.ID_Book=Book.ID_Book'+' '+
+    'where 1=1'+' '+
+    'order by attachment_description asc ';
+   dm.AttachmentQuery.close;
+   dm.AttachmentQuery.Open;
+except on E: Exception do
+  begin
+  ShowMessage('wrong situation'+' '+E.Message);
+  end;
+  end;
+end;
+false:
+begin
+    try
+   dm.AttachmentQuery.SQL.Text:=
+   ' select attachment.id_attachment,'+' '+
+    'attachment.file_name_attachment,'+' '+
+    'attachment.attachment,'+' '+
+    'attachment.attachment_description,'+' '+
+    'Book.Name_B'+' '+
+    'from attachment'+' '+
+    'inner join Doc on attachment.ID_Doc=Doc.ID_Doc'+' '+
+    'inner join Book on Doc.ID_Book=Book.ID_Book'+' '+
+    'where 1=1';
+   dm.AttachmentQuery.close;
+   dm.AttachmentQuery.Open;
+except on E: Exception do
+  begin
+  ShowMessage('wrong situation'+' '+E.Message);
+  end;
+  end;
+end;
+end; //case
 end;
 
 procedure Tfrm_attachment.attselBtnClick(Sender: TObject);
