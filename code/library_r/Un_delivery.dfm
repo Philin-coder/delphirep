@@ -126,12 +126,14 @@ object frm_delivery: Tfrm_delivery
               Expanded = False
               FieldName = 'ID_Delivery'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Width = 105
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'Name_B'
               Title.Caption = #1050#1085#1080#1075#1072
+              Width = 58
               Visible = True
             end
             item

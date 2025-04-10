@@ -240,7 +240,6 @@ try
       Close;
            Parameters.ParamByName('@check_date').Value
            :=DateToStr(curdate);
-           ShowMessage(DateToStr_(curdate)); 
       Open;
        DM.deliveryQuery.Recordset:=dm.sel_delivery_d.Recordset;
     end;
