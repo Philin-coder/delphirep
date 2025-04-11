@@ -1,7 +1,7 @@
 object DM: TDM
   OldCreateOrder = False
   Height = 535
-  Width = 811
+  Width = 951
   object Connection: TADOConnection
     Connected = True
     ConnectionString = 
@@ -703,7 +703,7 @@ object DM: TDM
         Value = Null
       end>
     Left = 480
-    Top = 256
+    Top = 264
   end
   object sel_reader_by_data_r: TADOStoredProc
     Connection = Connection
@@ -875,8 +875,8 @@ object DM: TDM
     Connection = Connection
     ProcedureName = 'sel_book_bak_common;1'
     Parameters = <>
-    Left = 600
-    Top = 224
+    Left = 592
+    Top = 240
   end
   object sel_delivery_d: TADOStoredProc
     Connection = Connection
@@ -896,8 +896,8 @@ object DM: TDM
         Size = 10
         Value = Null
       end>
-    Left = 600
-    Top = 272
+    Left = 592
+    Top = 312
   end
   object INS_Delivary: TADOStoredProc
     Connection = Connection
@@ -938,8 +938,8 @@ object DM: TDM
         Size = 10
         Value = Null
       end>
-    Left = 600
-    Top = 328
+    Left = 592
+    Top = 376
   end
   object Upd_Delivary: TADOStoredProc
     Connection = Connection
@@ -950,12 +950,14 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@Date_Return_Fact'
         Attributes = [paNullable]
         DataType = ftDateTime
         Size = 10
+        Value = Null
       end
       item
         Name = '@ID_Delivery'
@@ -965,7 +967,7 @@ object DM: TDM
         Value = 0
       end>
     Left = 592
-    Top = 384
+    Top = 424
   end
   object del_delivery: TADOStoredProc
     Connection = Connection
@@ -976,6 +978,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@ID_Delivery'
@@ -985,6 +988,117 @@ object DM: TDM
         Value = 0
       end>
     Left = 592
-    Top = 432
+    Top = 480
+  end
+  object AttachmentQuery: TADOQuery
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      'attachment.id_attachment,'
+      'attachment.file_name_attachment,'
+      'attachment.attachment,'
+      'attachment.attachment_description,'
+      'Book.Name_B'
+      'from attachment '
+      'inner join Doc on attachment.ID_Doc=Doc.ID_Doc'
+      'inner join Book on Doc.ID_Book=Book.ID_Book'
+      'where 1=1')
+    Left = 680
+    Top = 56
+  end
+  object AttachmentDS: TDataSource
+    DataSet = AttachmentQuery
+    Left = 696
+    Top = 128
+  end
+  object sel_attachment_by_fname: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_attachment_by_fname;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@m_fname'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 100
+        Value = Null
+      end>
+    Left = 712
+    Top = 184
+  end
+  object ins_attachment: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'ins_attachment;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@file_name_attachment'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+        Value = Null
+      end
+      item
+        Name = '@attachment'
+        Attributes = [paNullable]
+        DataType = ftBlob
+        Size = 2147483647
+        Value = Null
+      end
+      item
+        Name = '@attachment_description'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+        Value = Null
+      end
+      item
+        Name = '@ID_Doc'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 712
+    Top = 232
+  end
+  object get_attachment: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'get_attachment;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@id_attachment'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 744
+    Top = 312
+  end
+  object upd_attachment_description: TADOStoredProc
+    Parameters = <>
+    Left = 760
+    Top = 392
   end
 end

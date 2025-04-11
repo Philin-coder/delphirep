@@ -23,11 +23,11 @@ type
     attnaim_f_Radio_grupper: TRadioButton;
     att_reset_Radio: TRadioButton;
     attGrid: TDBGrid;
-    dlv_upd_inp_box: TGroupBox;
-    Upd_rd_data_Box: TGroupBox;
-    dlv_upd_lbl: TLabel;
-    dlv_updDBL: TDBLookupComboBox;
-    upd_dlv_btn_box: TGroupBox;
+    att_upd_inp_box: TGroupBox;
+    att_rd_data_Box: TGroupBox;
+    att_upd_lbl: TLabel;
+    att_updDBL: TDBLookupComboBox;
+    att_dlv_btn_box: TGroupBox;
     upd_dlv_Btn: TButton;
     dlv_del_inp_Box: TGroupBox;
     dlv_delLbl: TLabel;
@@ -46,15 +46,14 @@ type
     Ins_att_insBtn: TButton;
     att_showatt_CB: TCheckBox;
     ins_att_doc_lbl: TStaticText;
-    dlv_data_return_fact_lbl: TStaticText;
     ins_att_doc_DBL: TDBLookupComboBox;
-    upd_dlvGrid: TDBGrid;
-    Date_return_fact_inp: TDateTimePicker;
     Dlv_del_Grid: TDBGrid;
     ins_attGrid: TDBGrid;
     About_attachment_inp: TLabeledEdit;
     FOD: TOpenDialog;
-    SpeedButton1: TSpeedButton;
+    GetAtt_btn: TSpeedButton;
+    att_upd_dataGrid: TDBGrid;
+    att_description_inp: TLabeledEdit;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -65,9 +64,11 @@ type
     procedure attnaim_f_Radio_grupperClick(Sender: TObject);
     procedure attopis_feupperCBClick(Sender: TObject);
     procedure Ins_att_insBtnClick(Sender: TObject);
+    procedure GetAtt_btnClick(Sender: TObject);
 
   private
   procedure ChangeFormColor(Sender: TObject);
+  procedure get_attachment;
   procedure add_attachment;
   public
     { Public declarations }
@@ -80,6 +81,102 @@ implementation
 uses Un_dm, Un_func, Un_main;
 
 {$R *.dfm}
+procedure Tfrm_attachment.get_attachment;
+var
+  SaveDialog: TSaveDialog;
+  MemoryStream: TMemoryStream;
+  AttachmentID: Integer;
+  AboutAttachment: string;
+  ADOQuery: TADOQuery;
+begin
+  // Получаем ID записи из DBGrid
+  if not (ins_attGrid.DataSource.DataSet.Active and not ins_attGrid.DataSource.DataSet.IsEmpty) then
+  begin
+    ShowMessage('Нет активной записи в таблице');
+    Exit;
+  end;
+
+  // Извлекаем значение id_attachment из текущей записи
+  AttachmentID := ins_attGrid.DataSource.DataSet['id_attachment'];
+
+  if not dm.Connection.Connected then
+  begin
+    ShowMessage('Нет соединения с базой данных');
+    Exit;
+  end;
+
+  MemoryStream := nil;
+  ADOQuery := nil;
+  SaveDialog := nil;
+
+  try
+    MemoryStream := TMemoryStream.Create;
+    ADOQuery := TADOQuery.Create(nil);
+    ADOQuery.Connection := dm.Connection;
+
+    // Используем правильное имя параметра
+    ADOQuery.SQL.Text := 'EXEC get_attachment @id_attachment = :id_attachment';
+    ADOQuery.Parameters.ParamByName('id_attachment').Value := AttachmentID;
+
+    try
+      ADOQuery.Open;
+    except
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка выполнения запроса: ' + E.Message);
+        Exit;
+      end;
+    end;
+
+    if ADOQuery.IsEmpty then
+    begin
+      ShowMessage('Запись с указанным ID не найдена');
+      Exit;
+    end;
+
+    // Получаем описание файла (если есть)
+    AboutAttachment := ADOQuery.FieldByName('file_name_attachment').AsString;
+
+    if Trim(AboutAttachment) = '' then
+      AboutAttachment := 'file_' + IntToStr(AttachmentID);
+
+    // Проверяем, что поле attachment не NULL
+    if not ADOQuery.FieldByName('attachment').IsNull then
+      TBlobField(ADOQuery.FieldByName('attachment')).SaveToStream(MemoryStream)
+    else
+    begin
+      ShowMessage('Файл отсутствует в базе данных');
+      Exit;
+    end;
+
+    MemoryStream.Position := 0;
+
+    // Создаем диалог сохранения файла
+    SaveDialog := TSaveDialog.Create(nil);
+    SaveDialog.FileName := AboutAttachment;
+    SaveDialog.Filter := 'Все файлы (*.*)|*.*';
+    SaveDialog.Options := [ofOverwritePrompt, ofEnableSizing];
+
+    if SaveDialog.Execute then
+    begin
+      try
+        MemoryStream.SaveToFile(SaveDialog.FileName);
+        ShowMessage('Файл успешно сохранён в:'#13#10 + SaveDialog.FileName);
+      except
+        on E: EFCreateError do
+          ShowMessage('Ошибка создания файла: ' + E.Message);
+        on E: EWriteError do
+          ShowMessage('Ошибка записи файла: ' + E.Message);
+      end;
+    end;
+
+  finally
+    if Assigned(MemoryStream) then MemoryStream.Free;
+    if Assigned(ADOQuery) then ADOQuery.Free;
+    if Assigned(SaveDialog) then SaveDialog.Free;
+  end;
+end;
+
 procedure Tfrm_attachment.add_attachment;
 var
   FileStream: TFileStream;
@@ -376,6 +473,14 @@ begin
   CreateToolBarWithButtons(Self, attImageList, ButtonNames, ButtonClicks);
 end;
 
+procedure Tfrm_attachment.GetAtt_btnClick(Sender: TObject);
+//var currentID: Integer;
+begin
+//currentID:=ins_attGrid.DataSource.DataSet['id_attachment'];
+//ShowMessage(IntToStr(currentID));
+get_attachment;
+end;
+
 procedure Tfrm_attachment.Ins_att_insBtnClick(Sender: TObject);
 const
  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
@@ -397,12 +502,7 @@ begin
     Beep;
     Exit;
    end;
-
     add_attachment;
-
-
-
-
-end;
+   end;
 
 end.

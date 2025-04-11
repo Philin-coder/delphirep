@@ -65,6 +65,7 @@ type
     procedure attopis_feupperCBClick(Sender: TObject);
     procedure Ins_att_insBtnClick(Sender: TObject);
     procedure GetAtt_btnClick(Sender: TObject);
+    procedure upd_dlv_BtnClick(Sender: TObject);
 
   private
   procedure ChangeFormColor(Sender: TObject);
@@ -504,5 +505,52 @@ begin
    end;
     add_attachment;
    end;
+
+procedure Tfrm_attachment.upd_dlv_BtnClick(Sender: TObject);
+const
+  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+begin
+AreFieldsEmpty:=(
+(att_updDBL.Text='')or
+(Trim(att_description_inp.Text)='')
+);
+AreFieldsValid:=ValidateComponentText(att_description_inp,AllowedChars);
+if AreFieldsEmpty or not AreFieldsValid then
+begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+end;
+ try
+      with dm.upd_attachment_description do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@id_attachment').Value :=
+           dm.AttachmentQuery.FieldByName('id_attachment').AsString;
+           Parameters.ParamByName('@attachment_description').Value
+           :=att_description_inp.Text;
+           ExecProc;
+           dm.AttachmentQuery.Close;
+           dm.AttachmentQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+
+
+end;
 
 end.

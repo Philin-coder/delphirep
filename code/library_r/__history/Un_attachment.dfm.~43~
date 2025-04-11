@@ -28,7 +28,7 @@ object frm_attachment: Tfrm_attachment
     Top = 47
     Width = 1037
     Height = 692
-    ActivePage = ins_tab
+    ActivePage = updTab
     Align = alClient
     TabOrder = 1
     object sel_tab: TTabSheet
@@ -199,9 +199,9 @@ object frm_attachment: Tfrm_attachment
       ImageIndex = 1
       object aboutattPC: TPageControl
         Left = 0
-        Top = 266
+        Top = 137
         Width = 1029
-        Height = 334
+        Height = 463
         Align = alClient
         TabOrder = 0
       end
@@ -209,33 +209,42 @@ object frm_attachment: Tfrm_attachment
         Left = 0
         Top = 0
         Width = 1029
-        Height = 266
+        Height = 137
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
         DesignSize = (
           1029
-          266)
-        object ins_att_reader_lbl: TStaticText
+          137)
+        object GetAtt_btn: TSpeedButton
+          Left = 496
+          Top = 61
+          Width = 23
+          Height = 22
+          Align = alCustom
+          Caption = '...'
+          OnClick = GetAtt_btnClick
+        end
+        object ins_att_doc_lbl: TStaticText
           Left = 19
-          Top = 72
-          Width = 53
+          Top = 77
+          Width = 54
           Height = 17
           Align = alCustom
           Anchors = [akLeft]
-          Caption = #1063#1080#1090#1072#1090#1077#1083#1100
+          Caption = #1044#1086#1082#1091#1084#1077#1085#1090
           TabOrder = 0
         end
-        object ins_att_reader_DBL: TDBLookupComboBox
+        object ins_att_doc_DBL: TDBLookupComboBox
           Left = 19
-          Top = 95
-          Width = 1023
+          Top = 100
+          Width = 998
           Height = 21
           Align = alCustom
           Anchors = [akLeft, akRight]
-          KeyField = 'ID_Reader'
-          ListField = 'Name_R'
-          ListSource = DM.readerDS
+          KeyField = 'ID_Doc'
+          ListField = 'Name_B'
+          ListSource = DM.docDS
           TabOrder = 1
         end
         object About_attachment_inp: TLabeledEdit
@@ -252,9 +261,9 @@ object frm_attachment: Tfrm_attachment
       end
       object Ins_att_dataBox: TGroupBox
         Left = 0
-        Top = 266
+        Top = 137
         Width = 1029
-        Height = 334
+        Height = 463
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
@@ -262,7 +271,7 @@ object frm_attachment: Tfrm_attachment
           Left = 2
           Top = 15
           Width = 1025
-          Height = 317
+          Height = 446
           Align = alClient
           DataSource = DM.AttachmentDS
           TabOrder = 0
@@ -322,13 +331,14 @@ object frm_attachment: Tfrm_attachment
           Height = 25
           Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
           TabOrder = 0
+          OnClick = Ins_att_insBtnClick
         end
       end
     end
     object updTab: TTabSheet
-      Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1074#1099#1076#1072#1095#1077
+      Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1074#1083#1086#1078#1077#1085#1080#1080
       ImageIndex = 2
-      object dlv_upd_inp_box: TGroupBox
+      object att_upd_inp_box: TGroupBox
         Left = 0
         Top = 0
         Width = 1029
@@ -339,47 +349,38 @@ object frm_attachment: Tfrm_attachment
         DesignSize = (
           1029
           137)
-        object dlv_upd_lbl: TLabel
+        object att_upd_lbl: TLabel
           Left = 3
           Top = 29
-          Width = 96
+          Width = 97
           Height = 13
-          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1076#1086#1082#1091#1084#1077#1085#1090
+          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1074#1083#1086#1078#1077#1085#1080#1077
         end
-        object dlv_updDBL: TDBLookupComboBox
+        object att_updDBL: TDBLookupComboBox
           Left = 0
           Top = 48
           Width = 1017
           Height = 21
           Align = alCustom
           Anchors = [akLeft, akRight]
-          KeyField = 'ID_Delivery'
-          ListField = 'Name_B'
-          ListSource = DM.deliveryDS
+          KeyField = 'id_attachment'
+          ListField = 'attachment_description'
+          ListSource = DM.AttachmentDS
           TabOrder = 0
         end
-        object dlv_data_return_fact_lbl: TStaticText
+        object att_description_inp: TLabeledEdit
           Left = 3
-          Top = 75
-          Width = 74
-          Height = 17
-          Align = alCustom
-          Anchors = [akLeft]
-          Caption = #1044#1072#1090#1072' '#1074#1086#1079#1088#1072#1090#1072
-          TabOrder = 1
-        end
-        object Date_return_fact_inp: TDateTimePicker
-          Left = 3
-          Top = 98
+          Top = 90
           Width = 1014
           Height = 21
           Anchors = [akLeft, akRight]
-          Date = 45757.512378043980000000
-          Time = 45757.512378043980000000
-          TabOrder = 2
+          EditLabel.Width = 102
+          EditLabel.Height = 13
+          EditLabel.Caption = #1054#1087#1080#1089#1072#1085#1080#1077' '#1074#1083#1086#1078#1077#1085#1080#1103
+          TabOrder = 1
         end
       end
-      object Upd_rd_data_Box: TGroupBox
+      object att_rd_data_Box: TGroupBox
         Left = 0
         Top = 137
         Width = 1029
@@ -387,13 +388,13 @@ object frm_attachment: Tfrm_attachment
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
-        object upd_dlvGrid: TDBGrid
+        object att_upd_dataGrid: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
           Height = 440
           Align = alClient
-          DataSource = DM.deliveryDS
+          DataSource = DM.AttachmentDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -403,48 +404,41 @@ object frm_attachment: Tfrm_attachment
           Columns = <
             item
               Expanded = False
-              FieldName = 'ID_Delivery'
+              FieldName = 'id_attachment'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-              Width = 105
+              Width = 136
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'file_name_attachment'
+              Title.Caption = #1048#1084#1103' '#1092#1072#1081#1083#1072
+              Width = 96
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'attachment'
+              Title.Caption = #1042#1083#1086#1078#1077#1085#1080#1077
+              Visible = False
+            end
+            item
+              Expanded = False
+              FieldName = 'attachment_description'
+              Title.Caption = #1054#1087#1080#1089#1072#1085#1080#1077
+              Width = 147
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'Name_B'
-              Title.Caption = #1050#1085#1080#1075#1072
-              Width = 176
+              Title.Caption = #1050' '#1095#1077#1084#1091' '#1087#1088#1080#1083#1072#1075#1072#1077#1090#1089#1103
+              Width = 229
               Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'Name_R'
-              Title.Caption = #1063#1080#1090#1072#1090#1077#1083#1100
-              Width = 140
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'Date_D'
-              Title.Caption = #1044#1072#1090#1072' '#1074#1099#1076#1072#1095#1080
-              Width = 171
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'Date_Return_Plan'
-              Title.Caption = #1042#1086#1079#1074#1088#1072#1090' '#1087#1086' '#1087#1083#1072#1085#1091
-              Width = 151
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'Date_Return_Fact'
-              Title.Caption = #1042#1086#1079#1074#1088#1072#1090' '#1087#1086' '#1092#1072#1082#1090#1091
-              Visible = False
             end>
         end
       end
-      object upd_dlv_btn_box: TGroupBox
+      object att_dlv_btn_box: TGroupBox
         Left = 0
         Top = 594
         Width = 1029
@@ -577,5 +571,9 @@ object frm_attachment: Tfrm_attachment
   end
   object attImageList: TImageList
     Left = 256
+  end
+  object FOD: TOpenDialog
+    Left = 400
+    Top = 696
   end
 end

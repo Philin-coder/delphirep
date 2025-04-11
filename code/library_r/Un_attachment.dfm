@@ -452,6 +452,7 @@ object frm_attachment: Tfrm_attachment
           Height = 25
           Caption = #1048#1079#1084#1077#1085#1080#1090#1100
           TabOrder = 0
+          OnClick = upd_dlv_BtnClick
         end
       end
     end

@@ -1093,12 +1093,14 @@ object DM: TDM
         Precision = 10
         Value = 0
       end>
-    Left = 744
-    Top = 312
+    Left = 712
+    Top = 288
   end
   object upd_attachment_description: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_attachment_description;1'
     Parameters = <>
-    Left = 760
-    Top = 392
+    Left = 720
+    Top = 344
   end
 end
