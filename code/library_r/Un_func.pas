@@ -277,14 +277,14 @@ end;
 
 procedure SaveConnectionStringToFile(const FileName, ConnectionString: string);
 var
-  FileStream: TextFile;
+  MFileStream: TextFile;
 begin
-  AssignFile(FileStream, FileName);
+  AssignFile(MFileStream, FileName);
   try
-    Rewrite(FileStream);
-    Writeln(FileStream, ConnectionString);
+    Rewrite(MFileStream);
+    Writeln(MFileStream, ConnectionString);
   finally
-    CloseFile(FileStream);
+    CloseFile(MFileStream);
   end;
 end;
 const

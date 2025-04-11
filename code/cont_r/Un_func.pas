@@ -31,26 +31,46 @@ procedure UpdateFormProperties(const FormName: string;
   NewColor: TColor = clNone;
   NewWidth: Integer = -1;
   NewHeight: Integer = -1);
- procedure UniformizeComponentSizes(AComponent: TComponent; AWidth, AHeight:
- Integer; AColor: TColor; AFontName: string; AFontSize: Integer);
- procedure SaveConnectionStringToFile(const FileName, ConnectionString: string);
- function min3(a, b, c: integer): integer;
- function LeveDist(s, t: string): integer;
- function levi_checker(Str_one,str_two:string):Boolean;
-function NormalizeStringAndExtractParams2(var InputString: string;
-out p1, p2: string): Boolean;
-function NormalizeStringAndExtractParams3(var InputString: string; out p1, p2, p3:
-string): Boolean;
-function Capitalizer(str:string; mode:integer=0):string;
-function adr_fixer(str:string;  mode:Integer=0):string;
-procedure UniformizeDBGrids(AForm: TForm; const FontName: string;
-FontSize: Integer; FontColor: TColor; BkColor: TColor);
-function ValidateComponentText(AComponent: TWinControl;
- const AllowedChars: TSysCharSet): Boolean;
- function IsEnglishText(const Text: string): Boolean;
- Function IsValidEmail(const Email: string): Boolean;
-implementation
-
+
+ procedure UniformizeComponentSizes(AComponent: TComponent; AWidth, AHeight:
+
+ Integer; AColor: TColor; AFontName: string; AFontSize: Integer);
+
+ procedure SaveConnectionStringToFile(const FileName, ConnectionString: string);
+
+ function min3(a, b, c: integer): integer;
+
+ function LeveDist(s, t: string): integer;
+
+ function levi_checker(Str_one,str_two:string):Boolean;
+
+function NormalizeStringAndExtractParams2(var InputString: string;
+
+out p1, p2: string): Boolean;
+
+function NormalizeStringAndExtractParams3(var InputString: string; out p1, p2, p3:
+
+string): Boolean;
+
+function Capitalizer(str:string; mode:integer=0):string;
+
+function adr_fixer(str:string;  mode:Integer=0):string;
+
+procedure UniformizeDBGrids(AForm: TForm; const FontName: string;
+
+FontSize: Integer; FontColor: TColor; BkColor: TColor);
+
+function ValidateComponentText(AComponent: TWinControl;
+
+ const AllowedChars: TSysCharSet): Boolean;
+
+ function IsEnglishText(const Text: string): Boolean;
+
+ Function IsValidEmail(const Email: string): Boolean;
+
+implementation
+
+
 
 function    CommaPoint (X: String) : String;
 var iii : Integer;
@@ -179,8 +199,10 @@ begin
   end;
 end;
  procedure UniformizeComponentSizes(AComponent: TComponent; AWidth,
- AHeight: Integer; AColor: TColor; AFontName: string; AFontSize: Integer);
-var
+
+ AHeight: Integer; AColor: TColor; AFontName: string; AFontSize: Integer);
+
+var
   i: Integer;
   Control: TControl;
 begin
@@ -246,8 +268,10 @@ begin
   end;
 end;
 
-procedure SaveConnectionStringToFile(const FileName, ConnectionString: string);
-var
+
+procedure SaveConnectionStringToFile(const FileName, ConnectionString: string);
+
+var
   FileStream: TextFile;
 begin
   AssignFile(FileStream, FileName);
@@ -258,8 +282,10 @@ begin
     CloseFile(FileStream);
   end;
 end;
-const
- cuthalf = 100; // константа, ограничивающая макс. длину
+
+const
+
+ cuthalf = 100; // константа, ограничивающая макс. длину
   // обрабатываемых строк
 
 var
@@ -340,7 +366,8 @@ begin
 end;
 
 function levi_checker(Str_one,str_two:string):Boolean;
-begin
+
+begin
  if (Trim(Str_one) = '') or (Trim(Str_two) = '') then
   begin
     Result := False;
@@ -353,7 +380,8 @@ function levi_checker(Str_one,str_two:string):Boolean;
 end;
 
 
-function NormalizeStringAndExtractParams2(var InputString: string; out p1, p2: string): Boolean;
+
+function NormalizeStringAndExtractParams2(var InputString: string; out p1, p2: string): Boolean;
 var
   l: TStringList;
   i: Integer;
@@ -392,9 +420,12 @@ begin
   end;
 end;
 
-function NormalizeStringAndExtractParams3(var InputString: string; out p1, p2, p3:
-string): Boolean;
-var
+
+function NormalizeStringAndExtractParams3(var InputString: string; out p1, p2, p3:
+
+string): Boolean;
+
+var
   l: TStringList;
   i: Integer;
   NormalizedString: string;
@@ -442,8 +473,10 @@ begin
     FreeAndNil(l);
   end;
 end;
-function Capitalizer(str:string; mode:integer=0):string;
-begin
+
+function Capitalizer(str:string; mode:integer=0):string;
+
+begin
   if (Trim(str)='')and(mode=0) then
   begin
     Result:='';
@@ -538,8 +571,10 @@ begin
   end;
 end;
 function ValidateComponentText(AComponent: TWinControl;
- const AllowedChars: TSysCharSet): Boolean;
-var
+
+ const AllowedChars: TSysCharSet): Boolean;
+
+var
   Text: string;
   i: Integer;
   CharIsValid: Boolean;
@@ -561,7 +596,8 @@ begin
   end;
 end;
 function IsEnglishText(const Text: string): Boolean;
-var
+
+var
   i: Integer;
 begin
   Result := True;
@@ -575,7 +611,8 @@ begin
     end;
   end;
 end;
-Function IsValidEmail(const Email: string): Boolean;
+
+Function IsValidEmail(const Email: string): Boolean;
 var
 AtPos, DotPos: Integer;
 begin
