@@ -19,6 +19,7 @@ type
     reader_item: TMenuItem;
     delievry_item: TMenuItem;
     attachment_item: TMenuItem;
+    report_item: TMenuItem;
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -31,6 +32,7 @@ type
     procedure reader_itemClick(Sender: TObject);
     procedure delievry_itemClick(Sender: TObject);
     procedure attachment_itemClick(Sender: TObject);
+    procedure report_itemClick(Sender: TObject);
   private
   procedure ChangeFormColor(Sender: TObject);
 var
@@ -44,7 +46,7 @@ var
 implementation
 
 uses Un_func, Un_dm, Un_autorize, Un_aut, Un_genre, Un_book, Un_doc, Un_reader,
-  Un_delivery, Un_attachment;
+  Un_delivery, Un_attachment, Un_report;
 
 {$R *.dfm}
 const
@@ -226,12 +228,24 @@ end;
 
 procedure TFrm_main.reader_itemClick(Sender: TObject);
 begin
-    try
+try
 UpdateFormProperties('frm_reader', 'Форма работы с читателем',
 clBtnFace, 1024, 768);
 frm_reader.ShowModal;
 except
 frm_reader.Free;
+raise;
+end;
+end;
+
+procedure TFrm_main.report_itemClick(Sender: TObject);
+begin
+try
+UpdateFormProperties('frm_report', 'Форма работы с отчетом',
+clBtnFace, 1024, 768);
+frm_report.ShowModal;
+except
+frm_report.Free;
 raise;
 end;
 end;

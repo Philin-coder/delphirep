@@ -588,8 +588,6 @@ end;
         ShowMessage('Îøèáêà: ' + E.Message);
       end;
     end;
-
-
 end;
 
 end.

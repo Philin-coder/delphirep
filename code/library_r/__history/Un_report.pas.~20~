@@ -1,0 +1,75 @@
+unit Un_report;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, ImgList, ComCtrls, ToolWin,ADODB,db, StdCtrls, Grids,
+  DBGrids, DBCtrls, Mask, Buttons;
+
+type
+  Tfrm_report = class(TForm)
+    attToolBar: TToolBar;
+    attImageList: TImageList;
+    attPC: TPageControl;
+    sel_tab: TTabSheet;
+    ins_tab: TTabSheet;
+    updTab: TTabSheet;
+    delTab: TTabSheet;
+    attbtnBox: TGroupBox;
+    att_grupperBox: TGroupBox;
+    attselBtn: TButton;
+    att_data_Box: TGroupBox;
+    attnaim_f_Radio_grupper: TRadioButton;
+    att_reset_Radio: TRadioButton;
+    attGrid: TDBGrid;
+    att_upd_inp_box: TGroupBox;
+    att_rd_data_Box: TGroupBox;
+    att_upd_lbl: TLabel;
+    att_updDBL: TDBLookupComboBox;
+    att_dlv_btn_box: TGroupBox;
+    upd_dlv_Btn: TButton;
+    att_del_inp_Box: TGroupBox;
+    att_delLbl: TLabel;
+    att_delDBL: TDBLookupComboBox;
+    att_del_btn_Box: TGroupBox;
+    att_del_btn: TButton;
+    att_del_data_Box: TGroupBox;
+    att_condBox: TGroupBox;
+    attcondedit_inp: TLabeledEdit;
+    att_fnddEdit: TLabeledEdit;
+    aboutattPC: TPageControl;
+    attopis_feupperCB: TCheckBox;
+    ins_att_data_Box: TGroupBox;
+    Ins_att_dataBox: TGroupBox;
+    ins_reader_btn_Box: TGroupBox;
+    Ins_att_insBtn: TButton;
+    att_showatt_CB: TCheckBox;
+    ins_att_doc_lbl: TStaticText;
+    ins_att_doc_DBL: TDBLookupComboBox;
+    ins_attGrid: TDBGrid;
+    About_attachment_inp: TLabeledEdit;
+    FOD: TOpenDialog;
+    GetAtt_btn: TSpeedButton;
+    att_upd_dataGrid: TDBGrid;
+    att_description_inp: TLabeledEdit;
+    att_delDataGrid: TDBGrid;
+
+  private
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_report: Tfrm_report;
+implementation
+
+uses Un_dm, Un_func, Un_main;
+
+{$R *.dfm}
+procedure Tfrm_report.get_attachment;
+begin
+end;
+
+
+end.

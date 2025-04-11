@@ -1,0 +1,242 @@
+unit Un_report;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, ImgList, ComCtrls, ToolWin,ADODB,db, StdCtrls, Grids,
+  DBGrids, DBCtrls, Mask, Buttons;
+
+type
+  Tfrm_report = class(TForm)
+    attToolBar: TToolBar;
+    attImageList: TImageList;
+    attPC: TPageControl;
+    sel_tab: TTabSheet;
+    ins_tab: TTabSheet;
+    updTab: TTabSheet;
+    delTab: TTabSheet;
+    attbtnBox: TGroupBox;
+    att_grupperBox: TGroupBox;
+    attselBtn: TButton;
+    att_data_Box: TGroupBox;
+    attnaim_f_Radio_grupper: TRadioButton;
+    att_reset_Radio: TRadioButton;
+    attGrid: TDBGrid;
+    att_upd_inp_box: TGroupBox;
+    att_rd_data_Box: TGroupBox;
+    att_upd_lbl: TLabel;
+    att_updDBL: TDBLookupComboBox;
+    att_dlv_btn_box: TGroupBox;
+    upd_dlv_Btn: TButton;
+    att_del_inp_Box: TGroupBox;
+    att_delLbl: TLabel;
+    att_delDBL: TDBLookupComboBox;
+    att_del_btn_Box: TGroupBox;
+    att_del_btn: TButton;
+    att_del_data_Box: TGroupBox;
+    att_condBox: TGroupBox;
+    attcondedit_inp: TLabeledEdit;
+    att_fnddEdit: TLabeledEdit;
+    aboutattPC: TPageControl;
+    attopis_feupperCB: TCheckBox;
+    ins_att_data_Box: TGroupBox;
+    Ins_att_dataBox: TGroupBox;
+    ins_reader_btn_Box: TGroupBox;
+    Ins_att_insBtn: TButton;
+    att_showatt_CB: TCheckBox;
+    ins_att_doc_lbl: TStaticText;
+    ins_att_doc_DBL: TDBLookupComboBox;
+    ins_attGrid: TDBGrid;
+    About_attachment_inp: TLabeledEdit;
+    FOD: TOpenDialog;
+    GetAtt_btn: TSpeedButton;
+    att_upd_dataGrid: TDBGrid;
+    att_description_inp: TLabeledEdit;
+    att_delDataGrid: TDBGrid;
+    procedure attnaim_f_Radio_grupperClick(Sender: TObject);
+
+  private
+  procedure ChangeFormColor(Sender: TObject);
+  procedure get_attachment;
+  procedure add_attachment;
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_report: Tfrm_report;
+implementation
+
+uses Un_dm, Un_func, Un_main;
+
+{$R *.dfm}
+procedure Tfrm_report.get_attachment;
+var
+  SaveDialog: TSaveDialog;
+  MemoryStream: TMemoryStream;
+  AttachmentID: Integer;
+  AboutAttachment: string;
+  ADOQuery: TADOQuery;
+begin
+  // Получаем ID записи из DBGrid
+  if not (ins_attGrid.DataSource.DataSet.Active and not ins_attGrid.DataSource.DataSet.IsEmpty) then
+  begin
+    ShowMessage('Нет активной записи в таблице');
+    Exit;
+  end;
+
+  // Извлекаем значение id_attachment из текущей записи
+  AttachmentID := ins_attGrid.DataSource.DataSet['id_attachment'];
+
+  if not dm.Connection.Connected then
+  begin
+    ShowMessage('Нет соединения с базой данных');
+    Exit;
+  end;
+
+  MemoryStream := nil;
+  ADOQuery := nil;
+  SaveDialog := nil;
+
+  try
+    MemoryStream := TMemoryStream.Create;
+    ADOQuery := TADOQuery.Create(nil);
+    ADOQuery.Connection := dm.Connection;
+
+    // Используем правильное имя параметра
+    ADOQuery.SQL.Text := 'EXEC get_attachment @id_attachment = :id_attachment';
+    ADOQuery.Parameters.ParamByName('id_attachment').Value := AttachmentID;
+
+    try
+      ADOQuery.Open;
+    except
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка выполнения запроса: ' + E.Message);
+        Exit;
+      end;
+    end;
+
+    if ADOQuery.IsEmpty then
+    begin
+      ShowMessage('Запись с указанным ID не найдена');
+      Exit;
+    end;
+
+    // Получаем описание файла (если есть)
+    AboutAttachment := ADOQuery.FieldByName('file_name_attachment').AsString;
+
+    if Trim(AboutAttachment) = '' then
+      AboutAttachment := 'file_' + IntToStr(AttachmentID);
+
+    // Проверяем, что поле attachment не NULL
+    if not ADOQuery.FieldByName('attachment').IsNull then
+      TBlobField(ADOQuery.FieldByName('attachment')).SaveToStream(MemoryStream)
+    else
+    begin
+      ShowMessage('Файл отсутствует в базе данных');
+      Exit;
+    end;
+
+    MemoryStream.Position := 0;
+
+    // Создаем диалог сохранения файла
+    SaveDialog := TSaveDialog.Create(nil);
+    SaveDialog.FileName := AboutAttachment;
+    SaveDialog.Filter := 'Все файлы (*.*)|*.*';
+    SaveDialog.Options := [ofOverwritePrompt, ofEnableSizing];
+
+    if SaveDialog.Execute then
+    begin
+      try
+        MemoryStream.SaveToFile(SaveDialog.FileName);
+        ShowMessage('Файл успешно сохранён в:'#13#10 + SaveDialog.FileName);
+      except
+        on E: EFCreateError do
+          ShowMessage('Ошибка создания файла: ' + E.Message);
+        on E: EWriteError do
+          ShowMessage('Ошибка записи файла: ' + E.Message);
+      end;
+    end;
+
+  finally
+    if Assigned(MemoryStream) then MemoryStream.Free;
+    if Assigned(ADOQuery) then ADOQuery.Free;
+    if Assigned(SaveDialog) then SaveDialog.Free;
+  end;
+end;
+
+procedure Tfrm_report.add_attachment;
+var
+  FileStream: TFileStream;
+  MemoryStream: TMemoryStream;
+  FileName: string;
+begin
+  try
+    fod.Filter := 'All Files|*.*';
+    if fod.Execute then
+    begin
+      FileName := fod.FileName;
+      FileStream := TFileStream.Create(FileName, fmOpenRead);
+      MemoryStream := TMemoryStream.Create;
+      try
+        MemoryStream.LoadFromStream(FileStream);
+        MemoryStream.Position := 0;
+        try
+          dm.ins_attachment.Parameters.Refresh;
+          dm.ins_attachment.Parameters.ParamByName('@file_name_attachment').Value
+          :=ExtractFileName(FileName);
+          dm.ins_attachment.Parameters.ParamByName('@attachment').
+          LoadFromStream(MemoryStream, ftBlob);
+          dm.ins_attachment.Parameters.ParamByName('@attachment_description').Value
+          :=About_attachment_inp.Text;
+          DM.ins_attachment.Parameters.ParamByName('@ID_Doc').Value
+          :=dm.docQuery.FieldByName('ID_Doc').AsString;
+          dm.ins_attachment.ExecProc;
+          MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+          dm.attachmentQuery.Close;
+          dm.attachmentQuery.Open
+        finally
+        end;
+      finally
+        FileStream.Free;
+        MemoryStream.Free;
+      end;
+    end;
+  finally
+    fOD.Free;
+end;
+end;
+
+procedure Tfrm_report.attnaim_f_Radio_grupperClick(Sender: TObject);
+begin
+   if attnaim_f_Radio_grupper.Checked=true then
+  begin
+    try
+     with dm.AttachmentQuery  do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+     ' select attachment.id_attachment,'+' '+
+    'attachment.file_name_attachment,'+' '+
+    'attachment.attachment,'+' '+
+    'attachment.attachment_description,'+' '+
+    'Book.Name_B'+' '+
+    'from attachment'+' '+
+    'inner join Doc on attachment.ID_Doc=Doc.ID_Doc'+' '+
+    'inner join Book on Doc.ID_Book=Book.ID_Book'+' '+
+    'where 1=1'+' '+
+    'Order by file_name_attachment asc';
+      Open;
+     end;
+    except on E: EADOError do
+    begin
+      ShowMessage('Ошибка'+' '+E.Message);
+    end;
+    end;
+  end;
+end;
+
+end.
