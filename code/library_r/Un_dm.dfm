@@ -1099,8 +1099,47 @@ object DM: TDM
   object upd_attachment_description: TADOStoredProc
     Connection = Connection
     ProcedureName = 'upd_attachment_description;1'
-    Parameters = <>
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@id_attachment'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@attachment_description'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 50
+      end>
     Left = 720
     Top = 344
+  end
+  object del_att: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'del_att;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@id_attachment'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 720
+    Top = 400
   end
 end

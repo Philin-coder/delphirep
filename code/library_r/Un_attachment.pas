@@ -29,12 +29,12 @@ type
     att_updDBL: TDBLookupComboBox;
     att_dlv_btn_box: TGroupBox;
     upd_dlv_Btn: TButton;
-    dlv_del_inp_Box: TGroupBox;
-    dlv_delLbl: TLabel;
-    dlv_delDBL: TDBLookupComboBox;
-    dlv_del_btn_Box: TGroupBox;
-    dlv_del_btn: TButton;
-    dlv_del_data_Box: TGroupBox;
+    att_del_inp_Box: TGroupBox;
+    att_delLbl: TLabel;
+    att_delDBL: TDBLookupComboBox;
+    att_del_btn_Box: TGroupBox;
+    att_del_btn: TButton;
+    att_del_data_Box: TGroupBox;
     att_condBox: TGroupBox;
     attcondedit_inp: TLabeledEdit;
     att_fnddEdit: TLabeledEdit;
@@ -47,13 +47,13 @@ type
     att_showatt_CB: TCheckBox;
     ins_att_doc_lbl: TStaticText;
     ins_att_doc_DBL: TDBLookupComboBox;
-    Dlv_del_Grid: TDBGrid;
     ins_attGrid: TDBGrid;
     About_attachment_inp: TLabeledEdit;
     FOD: TOpenDialog;
     GetAtt_btn: TSpeedButton;
     att_upd_dataGrid: TDBGrid;
     att_description_inp: TLabeledEdit;
+    att_delDataGrid: TDBGrid;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -66,6 +66,7 @@ type
     procedure Ins_att_insBtnClick(Sender: TObject);
     procedure GetAtt_btnClick(Sender: TObject);
     procedure upd_dlv_BtnClick(Sender: TObject);
+    procedure att_del_btnClick(Sender: TObject);
 
   private
   procedure ChangeFormColor(Sender: TObject);
@@ -317,6 +318,44 @@ begin
     on E: Exception do
       ShowMessage('Ошибка: ' + E.Message);
   end;
+end;
+
+procedure Tfrm_attachment.att_del_btnClick(Sender: TObject);
+var AreFieldsEmpty:boolean;
+begin
+  AreFieldsEmpty:=(
+  (att_delDBL.Text='')
+  );
+  if AreFieldsEmpty then
+  begin
+      MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.del_att do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@id_attachment').Value
+           :=dm.AttachmentQuery.FieldByName('id_attachment').AsString;
+           ExecProc;
+           dm.AttachmentQuery.Close;
+           dm.AttachmentQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+  
 end;
 
 procedure Tfrm_attachment.att_fnddEditKeyPress(Sender: TObject; var Key: Char);

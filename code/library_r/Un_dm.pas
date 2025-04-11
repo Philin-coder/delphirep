@@ -57,6 +57,7 @@ type
     ins_attachment: TADOStoredProc;
     get_attachment: TADOStoredProc;
     upd_attachment_description: TADOStoredProc;
+    del_att: TADOStoredProc;
   private
     { Private declarations }
   public
