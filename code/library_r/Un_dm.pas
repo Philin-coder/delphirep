@@ -55,6 +55,8 @@ type
     AttachmentDS: TDataSource;
     sel_attachment_by_fname: TADOStoredProc;
     ins_attachment: TADOStoredProc;
+    get_attachment: TADOStoredProc;
+    upd_attachment_description: TADOStoredProc;
   private
     { Private declarations }
   public
