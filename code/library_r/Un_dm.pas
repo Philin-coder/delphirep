@@ -58,6 +58,9 @@ type
     get_attachment: TADOStoredProc;
     upd_attachment_description: TADOStoredProc;
     del_att: TADOStoredProc;
+    reportQuery: TADOQuery;
+    ReporDS: TDataSource;
+    REPORT_1: TADOStoredProc;
   private
     { Private declarations }
   public

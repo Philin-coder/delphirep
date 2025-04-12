@@ -1,7 +1,7 @@
 object frm_report: Tfrm_report
   Left = 0
   Top = 0
-  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1074#1083#1086#1078#1077#1085#1080#1103#1084#1080
+  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1086#1090#1095#1077#1090#1086#1084
   ClientHeight = 739
   ClientWidth = 1037
   Color = clBtnFace
@@ -11,9 +11,12 @@ object frm_report: Tfrm_report
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnActivate = FormActivate
+  OnClose = FormClose
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object attPC: TPageControl
+  object rpPC: TPageControl
     Left = 0
     Top = 0
     Width = 1037
@@ -22,41 +25,39 @@ object frm_report: Tfrm_report
     Align = alClient
     TabOrder = 0
     object sel_tab: TTabSheet
-      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1074#1083#1086#1078#1077#1085#1080#1080
-      ExplicitHeight = 664
-      object attbtnBox: TGroupBox
+      Caption = 'C'#1074#1086#1076#1085#1099#1081' '#1088#1077#1081#1090#1080#1085#1075' '#1085#1072#1080#1073#1086#1083#1077#1077' '#1087#1086#1087#1091#1083#1103#1088#1085#1099#1093' '#1082#1085#1080#1075
+      object rpbtnBox: TGroupBox
         Left = 0
         Top = 641
         Width = 1029
         Height = 70
         Align = alBottom
         TabOrder = 0
-        object attselBtn: TButton
+        object rpselBtn: TButton
           Left = 336
           Top = 32
           Width = 273
           Height = 25
           Caption = #1054#1090#1073#1086#1088' '#1087#1086' '#1091#1089#1083#1086#1074#1080#1102
           TabOrder = 0
+          OnClick = rpselBtnClick
         end
       end
-      object att_data_Box: TGroupBox
+      object rp_data_Box: TGroupBox
         Left = 0
-        Top = 113
+        Top = 137
         Width = 1029
-        Height = 528
+        Height = 504
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
-        ExplicitTop = 177
-        ExplicitHeight = 464
-        object attGrid: TDBGrid
+        object rpGrid: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
-          Height = 511
+          Height = 487
           Align = alClient
-          DataSource = DM.AttachmentDS
+          DataSource = DM.ReporDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -66,72 +67,74 @@ object frm_report: Tfrm_report
           Columns = <
             item
               Expanded = False
-              FieldName = 'id_attachment'
-              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-              Width = 136
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'file_name_attachment'
-              Title.Caption = #1048#1084#1103' '#1092#1072#1081#1083#1072
-              Width = 96
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'attachment'
-              Title.Caption = #1042#1083#1086#1078#1077#1085#1080#1077
-              Visible = False
-            end
-            item
-              Expanded = False
-              FieldName = 'attachment_description'
-              Title.Caption = #1054#1087#1080#1089#1072#1085#1080#1077
-              Width = 147
-              Visible = True
-            end
-            item
-              Expanded = False
               FieldName = 'Name_B'
-              Title.Caption = #1050' '#1095#1077#1084#1091' '#1087#1088#1080#1083#1072#1075#1072#1077#1090#1089#1103
-              Width = 229
+              Title.Caption = #1050#1085#1080#1075#1072
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'Name_A'
+              Title.Caption = #1040#1074#1090#1086#1088
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'books'
+              Title.Caption = #1050#1086#1083#1084#1095#1077#1089#1090#1074#1086
               Visible = True
             end>
         end
       end
-      object att_condBox: TGroupBox
+      object rp_condBox: TGroupBox
         Left = 0
         Top = 0
         Width = 1029
-        Height = 113
+        Height = 137
         Align = alTop
         Caption = #1055#1086#1080#1089#1082' '#1087#1086
         TabOrder = 2
         DesignSize = (
           1029
-          113)
-        object attcondedit_inp: TLabeledEdit
-          Left = 19
-          Top = 34
-          Width = 966
-          Height = 21
-          Anchors = [akLeft, akRight]
-          EditLabel.Width = 200
-          EditLabel.Height = 13
-          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1080#1084#1077#1085#1080' '#1074#1083#1086#1078#1077#1085#1080#1103
+          137)
+        object rp_datab_lbl: TStaticText
+          Left = 3
+          Top = 15
+          Width = 115
+          Height = 17
+          Align = alCustom
+          Anchors = [akLeft]
+          Caption = #1044#1072#1090#1072' '#1085#1072#1095#1072#1083#1072' '#1087#1077#1088#1080#1086#1076#1072
           TabOrder = 0
         end
-        object att_fnddEdit: TLabeledEdit
-          Left = 19
-          Top = 81
-          Width = 966
+        object rp_data_b_inp: TDateTimePicker
+          Left = 2
+          Top = 38
+          Width = 1010
           Height = 21
           Anchors = [akLeft, akRight]
-          EditLabel.Width = 169
-          EditLabel.Height = 13
-          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1086#1087#1080#1089#1072#1085#1080#1102' '#1092#1072#1081#1083#1072
+          Date = 45759.421105578700000000
+          Time = 45759.421105578700000000
           TabOrder = 1
+        end
+        object rp_datae_lbl: TStaticText
+          Left = 3
+          Top = 71
+          Width = 109
+          Height = 17
+          Align = alCustom
+          Anchors = [akLeft]
+          Caption = #1044#1072#1090#1072' '#1082#1086#1085#1094#1072' '#1087#1077#1088#1080#1086#1076#1072
+          TabOrder = 2
+        end
+        object rp_data_e_inp: TDateTimePicker
+          Left = 3
+          Top = 94
+          Width = 1010
+          Height = 21
+          Anchors = [akLeft, akRight]
+          Date = 45759.421105578700000000
+          Time = 45759.421105578700000000
+          TabOrder = 3
         end
       end
     end

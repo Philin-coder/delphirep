@@ -1,0 +1,108 @@
+unit Un_report;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, ImgList, ComCtrls, ToolWin,ADODB,db, StdCtrls, Grids,
+  DBGrids, DBCtrls, Mask, Buttons;
+
+type
+  Tfrm_report = class(TForm)
+    rpPC: TPageControl;
+    sel_tab: TTabSheet;
+    rpbtnBox: TGroupBox;
+    rpselBtn: TButton;
+    rp_data_Box: TGroupBox;
+    rpGrid: TDBGrid;
+    rp_condBox: TGroupBox;
+    rp_datab_lbl: TStaticText;
+    rp_data_b_inp: TDateTimePicker;
+    rp_datae_lbl: TStaticText;
+    rp_data_e_inp: TDateTimePicker;
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormActivate(Sender: TObject);
+    procedure rpselBtnClick(Sender: TObject);
+
+  private
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_report: Tfrm_report;
+implementation
+
+uses Un_dm, Un_func, Un_main;
+
+{$R *.dfm}
+
+
+procedure Tfrm_report.FormActivate(Sender: TObject);
+begin
+  dm.AutQuery.Open;
+  dm.GenreQuery.Open;
+  dm.bookQuery.Open;
+  dm.docQuery.Open;
+  dm.readerQuery.Open;
+  dm.deliveryQuery.Open;
+  dm.AttachmentQuery.Open;
+  dm.reportQuery.Open;
+end;
+
+procedure Tfrm_report.FormClose(Sender: TObject; var Action: TCloseAction);
+var q:Integer;
+begin
+  SaveFormState(Self);
+   with dm do
+ begin
+    for q := 0 to ComponentCount - 1 do
+ begin
+    if(Components[q] is TADOQuery)  then
+   begin
+      (Components[q] as TADOQuery).Close;
+ end;
+ end;
+ end;
+end;
+
+procedure Tfrm_report.FormCreate(Sender: TObject);
+begin
+ frm_report.ShowHint:=true;
+ UniformizeButtonsSize(Self,  273, 25);
+ UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+ UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+ LoadFormState(Self);
+end;
+
+procedure Tfrm_report.rpselBtnClick(Sender: TObject);
+begin
+try
+    if not DM.Connection.Connected then
+      raise Exception.Create('Соединение с базой не установлено');
+    with DM.reportQuery do
+    begin
+Close;
+     SQL.Clear;
+     SQL.Text:=
+    'SELECT Book.Name_B,Author.Name_A,COUNT(Delivery.ID_Delivery)'+' '+
+    'FROM Delivery,Doc,Book, Author WHERE'+' '+
+    'Author.ID_Author=Book.ID_Author AND Book.ID_Book=Doc.ID_Book AND'+' '+
+    'Doc.ID_Doc=Delivery.ID_Doc'+' '+
+    'AND Delivery.Date_D BETWEEN'+QuotedStr(DateToStr(rp_data_b_inp.Date))+' '+
+    'AND'+QuotedStr(DateToStr(rp_data_b_inp.Date))+' '+
+    'GROUP BY Book.Name_B,Author.Name_A'+' '+
+    'ORDER BY COUNT(Delivery.ID_Delivery) DESC';
+    ShowMessage(DM.reportQuery.SQL.Text);
+Open;
+    end;
+  except
+    on E: EDatabaseError do
+      ShowMessage('Ошибка БД: ' + E.Message);
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
+end;
+
+end.

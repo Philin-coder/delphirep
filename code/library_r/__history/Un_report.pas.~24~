@@ -1,0 +1,46 @@
+unit Un_report;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, ImgList, ComCtrls, ToolWin,ADODB,db, StdCtrls, Grids,
+  DBGrids, DBCtrls, Mask, Buttons;
+
+type
+  Tfrm_report = class(TForm)
+    rpPC: TPageControl;
+    sel_tab: TTabSheet;
+    rpbtnBox: TGroupBox;
+    rpselBtn: TButton;
+    rp_data_Box: TGroupBox;
+    rpGrid: TDBGrid;
+    rp_condBox: TGroupBox;
+    rpcondedit_inp: TLabeledEdit;
+    rp_fnddEdit: TLabeledEdit;
+    procedure FormCreate(Sender: TObject);
+
+  private
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_report: Tfrm_report;
+implementation
+
+uses Un_dm, Un_func, Un_main;
+
+{$R *.dfm}
+
+
+procedure Tfrm_report.FormCreate(Sender: TObject);
+begin
+ frm_report.ShowHint:=true;
+ UniformizeButtonsSize(Self,  273, 25);
+ UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+ UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+ LoadFormState(Self);
+end;
+
+end.

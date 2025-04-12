@@ -9,15 +9,21 @@ uses
 
 type
   Tfrm_report = class(TForm)
-    attPC: TPageControl;
+    rpPC: TPageControl;
     sel_tab: TTabSheet;
-    attbtnBox: TGroupBox;
-    attselBtn: TButton;
-    att_data_Box: TGroupBox;
-    attGrid: TDBGrid;
-    att_condBox: TGroupBox;
-    attcondedit_inp: TLabeledEdit;
-    att_fnddEdit: TLabeledEdit;
+    rpbtnBox: TGroupBox;
+    rpselBtn: TButton;
+    rp_data_Box: TGroupBox;
+    rpGrid: TDBGrid;
+    rp_condBox: TGroupBox;
+    rp_datab_lbl: TStaticText;
+    rp_data_b_inp: TDateTimePicker;
+    rp_datae_lbl: TStaticText;
+    rp_data_e_inp: TDateTimePicker;
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormActivate(Sender: TObject);
+    procedure rpselBtnClick(Sender: TObject);
 
   private
   public
@@ -32,5 +38,64 @@ uses Un_dm, Un_func, Un_main;
 
 {$R *.dfm}
 
+
+procedure Tfrm_report.FormActivate(Sender: TObject);
+begin
+  dm.AutQuery.Open;
+  dm.GenreQuery.Open;
+  dm.bookQuery.Open;
+  dm.docQuery.Open;
+  dm.readerQuery.Open;
+  dm.deliveryQuery.Open;
+  dm.AttachmentQuery.Open;
+  dm.reportQuery.Open;
+end;
+
+procedure Tfrm_report.FormClose(Sender: TObject; var Action: TCloseAction);
+var q:Integer;
+begin
+  SaveFormState(Self);
+   with dm do
+ begin
+    for q := 0 to ComponentCount - 1 do
+ begin
+    if(Components[q] is TADOQuery)  then
+   begin
+      (Components[q] as TADOQuery).Close;
+ end;
+ end;
+ end;
+end;
+
+procedure Tfrm_report.FormCreate(Sender: TObject);
+begin
+ frm_report.ShowHint:=true;
+ UniformizeButtonsSize(Self,  273, 25);
+ UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+ UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+ LoadFormState(Self);
+end;
+
+procedure Tfrm_report.rpselBtnClick(Sender: TObject);
+begin
+try
+    if not DM.Connection.Connected then
+      raise Exception.Create('Соединение с базой не установлено');
+
+    with DM.REPORT_1 do
+    begin
+      Close;
+           Parameters.ParamByName('@d1').Value :=DateToStr_(rp_data_b_inp.Date);
+           Parameters.ParamByName('@d2').Value :=DateToStr_(rp_data_e_inp.Date);
+      Open;
+       DM.reportQuery.Recordset:=dm.REPORT_1.Recordset;
+    end;
+  except
+    on E: EDatabaseError do
+      ShowMessage('Ошибка БД: ' + E.Message);
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
+end;
 
 end.

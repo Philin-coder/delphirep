@@ -1,6 +1,6 @@
 object DM: TDM
   OldCreateOrder = False
-  Height = 535
+  Height = 630
   Width = 951
   object Connection: TADOConnection
     Connected = True
@@ -1085,6 +1085,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@id_attachment'
@@ -1105,6 +1106,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@id_attachment'
@@ -1118,6 +1120,7 @@ object DM: TDM
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 50
+        Value = Null
       end>
     Left = 720
     Top = 344
@@ -1131,6 +1134,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@id_attachment'
@@ -1141,5 +1145,54 @@ object DM: TDM
       end>
     Left = 720
     Top = 400
+  end
+  object reportQuery: TADOQuery
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'SELECT '
+      'Book.Name_B,'
+      'Author.Name_A,'
+      'COUNT(Delivery.ID_Delivery) as books'
+      'FROM Delivery,Doc,Book, Author '
+      'WHERE '
+      'Author.ID_Author=Book.ID_Author AND '
+      'Book.ID_Book=Doc.ID_Book '
+      'AND Doc.ID_Doc=Delivery.ID_Doc'
+      'GROUP BY Book.Name_B,Author.Name_A'
+      'ORDER BY COUNT(Delivery.ID_Delivery) DESC')
+    Left = 800
+    Top = 56
+  end
+  object ReporDS: TDataSource
+    DataSet = reportQuery
+    Left = 808
+    Top = 120
+  end
+  object REPORT_1: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'REPORT_1;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@D1'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end
+      item
+        Name = '@D2'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end>
+    Left = 824
+    Top = 184
   end
 end

@@ -1,0 +1,75 @@
+unit Un_report;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, ImgList, ComCtrls, ToolWin,ADODB,db, StdCtrls, Grids,
+  DBGrids, DBCtrls, Mask, Buttons;
+
+type
+  Tfrm_report = class(TForm)
+    rpPC: TPageControl;
+    sel_tab: TTabSheet;
+    rpbtnBox: TGroupBox;
+    rpselBtn: TButton;
+    rp_data_Box: TGroupBox;
+    rpGrid: TDBGrid;
+    rp_condBox: TGroupBox;
+    StaticText1: TStaticText;
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormActivate(Sender: TObject);
+
+  private
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_report: Tfrm_report;
+implementation
+
+uses Un_dm, Un_func, Un_main;
+
+{$R *.dfm}
+
+
+procedure Tfrm_report.FormActivate(Sender: TObject);
+begin
+  dm.AutQuery.Open;
+  dm.GenreQuery.Open;
+  dm.bookQuery.Open;
+  dm.docQuery.Open;
+  dm.readerQuery.Open;
+  dm.deliveryQuery.Open;
+  dm.AttachmentQuery.Open;
+  dm.reportQuery.Open;
+end;
+
+procedure Tfrm_report.FormClose(Sender: TObject; var Action: TCloseAction);
+var q:Integer;
+begin
+  SaveFormState(Self);
+   with dm do
+ begin
+    for q := 0 to ComponentCount - 1 do
+ begin
+    if(Components[q] is TADOQuery)  then
+   begin
+      (Components[q] as TADOQuery).Close;
+ end;
+ end;
+ end;
+end;
+
+procedure Tfrm_report.FormCreate(Sender: TObject);
+begin
+ frm_report.ShowHint:=true;
+ UniformizeButtonsSize(Self,  273, 25);
+ UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+ UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+ LoadFormState(Self);
+end;
+
+end.

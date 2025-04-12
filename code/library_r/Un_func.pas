@@ -20,7 +20,6 @@ StrUtils,
 variants,
 JPEG,
 ImgList,
-
 ExtCtrls;
 const
   crMyAnimatedCursor = 1;
