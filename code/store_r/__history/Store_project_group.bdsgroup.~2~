@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<PersonalityInfo>
+		<Option>
+			<Option Name="Personality">Default.Personality</Option>
+			<Option Name="ProjectType"></Option>
+			<Option Name="Version">1.0</Option>
+			<Option Name="GUID">{4D3295AC-67BA-4102-A109-2E4ACE931D44}</Option>
+		</Option>
+	</PersonalityInfo>
+	<Default.Personality>
+    <Dependencies/>
+  </Default.Personality>
+</BorlandProject>

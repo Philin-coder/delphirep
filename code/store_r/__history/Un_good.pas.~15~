@@ -1,0 +1,40 @@
+unit Un_good;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls,db,adodb, ComCtrls;
+
+type
+  TFrm_good = class(TForm)
+    goodPC: TPageControl;
+    Sel_tab: TTabSheet;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormActivate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_good: TFrm_good;
+
+implementation
+
+uses Un_dm, Un_func, Un_man;
+
+{$R *.dfm}
+
+procedure TFrm_good.FormActivate(Sender: TObject);
+begin
+   dm.goodQuery.Open;
+end;
+
+procedure TFrm_good.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  CloseAllQueriesOnDataModule('dm');
+end;
+
+end.

@@ -4,10 +4,13 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs,jpeg;
+  Dialogs,jpeg, Menus, ExtCtrls;
 
 type
   TFrm_main = class(TForm)
+    ItemMenu: TMainMenu;
+    good_item: TMenuItem;
+    mainImage: TImage;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
@@ -26,7 +29,14 @@ uses Un_func;
 
 procedure TFrm_main.FormCreate(Sender: TObject);
 begin
-    setform
+SetFormPropertiesIfNeeded;
+// Закрытие всех запросов на форме 'dm'
+ // CloseAllQueriesOnForm('dm'); вызов
+ with mainImage do
+ begin
+     Stretch:=True;
+     AutoSize:=True;
+ end;
 end;
 
 end.

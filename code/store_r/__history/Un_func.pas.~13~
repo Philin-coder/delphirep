@@ -72,7 +72,7 @@ procedure UpdateFormProperties(const FormName: string;
 function IsMaskEditEmpty(MaskEdit: TMaskEdit): Boolean;
 procedure SetFormPropertiesIfNeeded;
 function FindDataModuleByName(const AName: string): TDataModule;
-procedure CloseAllQueriesOnDataModule(const DataModuleName: string);
+procedure CloseAllQueriesOnForm(const FormName: string);
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -1032,29 +1032,38 @@ var
   Q: Integer;
   Query: TADOQuery;
 begin
+  // Поиск модуля данных по имени
   DataModule := FindDataModuleByName(DataModuleName);
+
   if not Assigned(DataModule) then
   begin
     ShowMessage('Модуль данных ' + DataModuleName + ' не найден');
     Exit;
   end;
+
+  // Проход по всем компонентам модуля данных
   for Q := 0 to DataModule.ComponentCount - 1 do
   begin
+    // Проверка, является ли компонент TADOQuery
     if DataModule.Components[Q] is TADOQuery then
     begin
       Query := TADOQuery(DataModule.Components[Q]);
+
       try
+        // Закрытие TADOQuery, если он открыт
         if Query.Active then
           Query.Close;
       except
         on E: Exception do
         begin
+          // Логирование ошибки (например, в файл или окно сообщений)
           ShowMessageFmt('Ошибка при закрытии запроса "%s": %s', [Query.Name, E.Message]);
         end;
       end;
     end;
   end;
-//  ShowMessage('Все запросы успешно закрыты.');
+
+  ShowMessage('Все запросы успешно закрыты.');
 end;
 initialization
 finalization

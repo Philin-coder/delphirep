@@ -1,0 +1,14 @@
+object DM: TDM
+  OldCreateOrder = False
+  Height = 269
+  Width = 360
+  object Connection: TADOConnection
+    ConnectionString = 
+      'Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security In' +
+      'fo=False;Initial Catalog=store_r'
+    KeepConnection = False
+    Provider = 'SQLOLEDB.1'
+    Left = 8
+    Top = 16
+  end
+end

@@ -14,7 +14,6 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure good_itemClick(Sender: TObject);
-    procedure FormActivate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -26,34 +25,26 @@ var
 
 implementation
 
-uses Un_func, Un_good, Un_dm;
+uses Un_func, Un_good;
 
 {$R *.dfm}
-const
-  FileName = 'connection_string.txt';
-
-procedure TFrm_main.FormActivate(Sender: TObject);
-begin
- SaveConnectionStringToFile(FileName, dm.connection.ConnectionString);
-end;
 
 procedure TFrm_main.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  main_Image.Picture:=nil;
-  SaveFormState(Self);
+main_Image.Picture:=nil;
 end;
 
 procedure TFrm_main.FormCreate(Sender: TObject);
 begin
 SetFormPropertiesIfNeeded;
-
+// Закрытие всех запросов на форме 'dm'
+ // CloseAllQueriesOnForm('dm'); вызов
  with main_Image do
  begin
      Stretch:=True;
      AutoSize:=True;
  end;
  LoadImageFromResource('BACKGROUND_IMAGE',main_Image);
- LoadFormState(Self);
 end;
 
 procedure TFrm_main.good_itemClick(Sender: TObject);

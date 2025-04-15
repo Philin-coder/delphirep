@@ -39,14 +39,14 @@ end;
 
 procedure TFrm_main.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  main_Image.Picture:=nil;
-  SaveFormState(Self);
+main_Image.Picture:=nil;
 end;
 
 procedure TFrm_main.FormCreate(Sender: TObject);
 begin
 SetFormPropertiesIfNeeded;
-
+// Закрытие всех запросов на форме 'dm'
+ // CloseAllQueriesOnForm('dm'); вызов
  with main_Image do
  begin
      Stretch:=True;

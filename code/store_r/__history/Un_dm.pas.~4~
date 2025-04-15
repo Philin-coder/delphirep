@@ -7,9 +7,8 @@ uses
 
 type
   TDM = class(TDataModule)
-    goodQuery: TADOQuery;
-    goodDS: TDataSource;
     Connection: TADOConnection;
+    goodQuery: TADOQuery;
   private
     { Private declarations }
   public

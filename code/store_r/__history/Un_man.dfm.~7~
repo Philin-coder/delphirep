@@ -12,7 +12,6 @@ object Frm_main: TFrm_main
   Font.Style = []
   Menu = ItemMenu
   OldCreateOrder = False
-  OnActivate = FormActivate
   OnClose = FormClose
   OnCreate = FormCreate
   PixelsPerInch = 96
@@ -33,7 +32,6 @@ object Frm_main: TFrm_main
     Top = 104
     object good_item: TMenuItem
       Caption = #1058#1086#1074#1072#1088#1099
-      OnClick = good_itemClick
     end
   end
 end

@@ -7,8 +7,6 @@ uses
 
 type
   TDM = class(TDataModule)
-    goodQuery: TADOQuery;
-    goodDS: TDataSource;
     Connection: TADOConnection;
   private
     { Private declarations }
@@ -20,8 +18,6 @@ var
   DM: TDM;
 
 implementation
-
-uses Un_good;
 
 {$R *.dfm}
 
