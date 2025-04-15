@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2025.04.15 13:14:39.325.pas,C:\Users\user\OneDrive\Документы\Borland Studio Projects\Unit2.pas=F:\code\Result\delphi\code\store_r\Un_man.pas</Transaction>
+    <Transaction>2025.04.15 13:14:39.325.dfm,C:\Users\user\OneDrive\Документы\Borland Studio Projects\Unit2.dfm=F:\code\Result\delphi\code\store_r\Un_man.dfm</Transaction>
+    <Transaction>2025.04.15 13:15:17.340.bdsproj,C:\Users\user\OneDrive\Документы\Borland Studio Projects\Project1.bdsproj=F:\code\Result\delphi\code\store_r\Store_project_groupj.bdsproj</Transaction>
+    <Transaction>2025.04.15 13:16:35.095.bdsproj,F:\code\Result\delphi\code\store_r\Store_project_groupj.bdsproj=F:\code\Result\delphi\code\store_r\Store_project.bdsproj</Transaction>
+    <Transaction>2025.04.15 13:19:48.975.bdsproj,F:\code\Result\delphi\code\store_r\Store_project.bdsproj=F:\code\Result\delphi\code\store_r\Store_project.bdsproj</Transaction>
+    <Transaction>2025.04.15 14:02:12.218.pas,F:\code\Result\delphi\code\store_r\Unit1.pas=F:\code\Result\delphi\code\store_r\Un_dm.pas</Transaction>
+    <Transaction>2025.04.15 14:02:12.218.dfm,F:\code\Result\delphi\code\store_r\Unit1.dfm=F:\code\Result\delphi\code\store_r\Un_dm.dfm</Transaction>
+  </Transactions>
+</BorlandProject>
