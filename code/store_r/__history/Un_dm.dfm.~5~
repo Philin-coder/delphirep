@@ -4,16 +4,9 @@ object DM: TDM
   Width = 360
   object goodQuery: TADOQuery
     Connection = Connection
-    CursorType = ctStatic
     Parameters = <>
     SQL.Strings = (
-      'select '
-      'good.id_good,'
-      'good.naim_good,'
-      'good.quant_good,'
-      'good.cost_good '
-      'from good'
-      'where 1=1;')
+      'select * from good;')
     Left = 16
     Top = 64
   end
@@ -23,7 +16,6 @@ object DM: TDM
     Top = 128
   end
   object Connection: TADOConnection
-    Connected = True
     ConnectionString = 
       'Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security In' +
       'fo=False;Initial Catalog=store_r'

@@ -4,19 +4,12 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls,db,adodb, ComCtrls, Grids, DBGrids, ExtCtrls;
+  Dialogs, StdCtrls,db,adodb, ComCtrls;
 
 type
   TFrm_good = class(TForm)
     goodPC: TPageControl;
     Sel_tab: TTabSheet;
-    Good_sel_grouper: TGroupBox;
-    Good_sel_data_box: TGroupBox;
-    good_sel_btn_box: TGroupBox;
-    good_Sel_cond_box: TGroupBox;
-    good_selBtn: TButton;
-    Good_SelGrid: TDBGrid;
-    good_naim_inp: TLabeledEdit;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
