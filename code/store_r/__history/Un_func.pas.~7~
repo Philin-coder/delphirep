@@ -71,7 +71,6 @@ procedure UpdateFormProperties(const FormName: string;
 function GetCurrentDateTime: TDateTime;
 function IsMaskEditEmpty(MaskEdit: TMaskEdit): Boolean;
 procedure SetFormPropertiesIfNeeded;
-procedure CloseAllQueriesOnForm(const FormName: string);
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -998,57 +997,49 @@ procedure SetFormPropertiesIfNeeded;
 var
   Form: TForm;
 begin
+
   Form := FindFormByName('frm_main');
+
   if Assigned(Form) then
   begin
     // Если форма найдена, задаем ей параметры
     Form.Width := 1024;
     Form.Height := 768;
     Form.Position := poScreenCenter;
+    //ShowMessage('Параметры формы frm_main успешно установлены.');
   end
   else
   begin
+    // Если форма не найдена, выводим сообщение об ошибке
     ShowMessage('Форма frm_main не найдена!');
   end;
 end;
-procedure CloseAllQueriesOnForm(const FormName: string);
+procedure set_close;
 var
-  Form: TForm;
-  Q: Integer;
-  Query: TADOQuery;
+  Form:TForm;
+  Q:Integer;
 begin
-  // Поиск формы по имени
-  Form := FindFormByName(FormName);
-
-  if not Assigned(Form) then
+  form :=FindFormByName('dm');
+  if assigned(form) then
   begin
-    ShowMessage('Форма ' + FormName + ' не найдена');
-    Exit;
-  end;
-
-  // Проход по всем компонентам формы
-  for Q := 0 to Form.ComponentCount - 1 do
-  begin
-    // Проверка, является ли компонент TADOQuery
-    if Form.Components[Q] is TADOQuery then
+    with form do
     begin
-      Query := TADOQuery(Form.Components[Q]);
-
-      try
-        // Закрытие TADOQuery, если он открыт
-        if Query.Active then
-          Query.Close;
-      except
-        on E: Exception do
-        begin
-          // Логирование ошибки (например, в файл или окно сообщений)
-          ShowMessageFmt('Ошибка при закрытии запроса "%s": %s', [Query.Name, E.Message]);
-        end;
-      end;
+    for q := 0 to ComponentCount - 1 do
+    begin
+    if (Components[q] Is TADOQuery) then
+    begin
+       (Components[q] as TADOQuery).Close;
     end;
+
+    end;
+
+    end;
+  end
+  else
+  begin
+      ShowMessage('Форма dm не найдена');
   end;
 
-  ShowMessage('Все запросы успешно закрыты.');
 end;
 
 

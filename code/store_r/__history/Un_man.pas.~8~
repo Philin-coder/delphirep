@@ -27,8 +27,6 @@ uses Un_func;
 procedure TFrm_main.FormCreate(Sender: TObject);
 begin
 SetFormPropertiesIfNeeded;
-// Закрытие всех запросов на форме 'dm'
- // CloseAllQueriesOnForm('dm'); вызов
 end;
 
 end.

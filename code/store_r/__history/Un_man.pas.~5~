@@ -8,7 +8,6 @@ uses
 
 type
   TFrm_main = class(TForm)
-    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -23,12 +22,5 @@ implementation
 uses Un_func;
 
 {$R *.dfm}
-
-procedure TFrm_main.FormCreate(Sender: TObject);
-begin
-SetFormPropertiesIfNeeded;
-// Закрытие всех запросов на форме 'dm'
- // CloseAllQueriesOnForm('dm'); вызов
-end;
 
 end.

@@ -71,7 +71,6 @@ procedure UpdateFormProperties(const FormName: string;
 function GetCurrentDateTime: TDateTime;
 function IsMaskEditEmpty(MaskEdit: TMaskEdit): Boolean;
 procedure SetFormPropertiesIfNeeded;
-procedure CloseAllQueriesOnForm(const FormName: string);
 implementation
  var
   hAniCursor: HCURSOR = 0;

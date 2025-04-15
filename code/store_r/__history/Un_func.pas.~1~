@@ -20,8 +20,6 @@ StrUtils,
 variants,
 JPEG,
 ImgList,
-db,
-adodb,
 ExtCtrls;
 const
   crMyAnimatedCursor = 1;
@@ -70,8 +68,6 @@ procedure UpdateFormProperties(const FormName: string;
 function is_cost_correct(var str: string): Boolean;
 function GetCurrentDateTime: TDateTime;
 function IsMaskEditEmpty(MaskEdit: TMaskEdit): Boolean;
-procedure SetFormPropertiesIfNeeded;
-procedure CloseAllQueriesOnForm(const FormName: string);
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -994,65 +990,6 @@ begin
   CleanText := StringReplace(CleanText, ' ', '', [rfReplaceAll]);
   Result := Trim(CleanText) = '';
 end;
-procedure SetFormPropertiesIfNeeded;
-var
-  Form: TForm;
-begin
-  Form := FindFormByName('frm_main');
-  if Assigned(Form) then
-  begin
-    // Если форма найдена, задаем ей параметры
-    Form.Width := 1024;
-    Form.Height := 768;
-    Form.Position := poScreenCenter;
-  end
-  else
-  begin
-    ShowMessage('Форма frm_main не найдена!');
-  end;
-end;
-procedure CloseAllQueriesOnForm(const FormName: string);
-var
-  Form: TForm;
-  Q: Integer;
-  Query: TADOQuery;
-begin
-  // Поиск формы по имени
-  Form := FindFormByName(FormName);
-
-  if not Assigned(Form) then
-  begin
-    ShowMessage('Форма ' + FormName + ' не найдена');
-    Exit;
-  end;
-
-  // Проход по всем компонентам формы
-  for Q := 0 to Form.ComponentCount - 1 do
-  begin
-    // Проверка, является ли компонент TADOQuery
-    if Form.Components[Q] is TADOQuery then
-    begin
-      Query := TADOQuery(Form.Components[Q]);
-
-      try
-        // Закрытие TADOQuery, если он открыт
-        if Query.Active then
-          Query.Close;
-      except
-        on E: Exception do
-        begin
-          // Логирование ошибки (например, в файл или окно сообщений)
-          ShowMessageFmt('Ошибка при закрытии запроса "%s": %s', [Query.Name, E.Message]);
-        end;
-      end;
-    end;
-  end;
-
-  ShowMessage('Все запросы успешно закрыты.');
-end;
-
-
-
 initialization
 finalization
 if hAniCursor <> 0 then
