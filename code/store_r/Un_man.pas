@@ -11,10 +11,12 @@ type
     ItemMenu: TMainMenu;
     good_item: TMenuItem;
     main_Image: TImage;
+    m_order_item: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure good_itemClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
+    procedure m_order_itemClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -26,7 +28,7 @@ var
 
 implementation
 
-uses Un_func, Un_good, Un_dm;
+uses Un_func, Un_good, Un_dm, Un_m_order;
 
 {$R *.dfm}
 const
@@ -66,6 +68,19 @@ except
 Frm_good.Free;
 raise;
 end;
+end;
+
+procedure TFrm_main.m_order_itemClick(Sender: TObject);
+begin
+try
+UpdateFormProperties('Frm_m_order', 'Форма работы с заказом',
+clBtnFace, 1024, 768);
+Frm_m_order.ShowModal;
+except
+Frm_m_order.Free;
+raise;
+end;
+
 end;
 
 end.

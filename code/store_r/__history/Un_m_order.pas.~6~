@@ -1,0 +1,198 @@
+unit Un_m_order;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls,db,adodb, ComCtrls, Grids, DBGrids, ExtCtrls, DBCtrls;
+
+type
+  TFrm_m_order = class(TForm)
+    goodPC: TPageControl;
+    Sel_tab: TTabSheet;
+    Good_sel_grouper: TGroupBox;
+    Good_sel_data_box: TGroupBox;
+    good_sel_btn_box: TGroupBox;
+    good_Sel_cond_box: TGroupBox;
+    good_selBtn: TButton;
+    Good_SelGrid: TDBGrid;
+    good_fnd_inp: TLabeledEdit;
+    good_cond_inp: TLabeledEdit;
+    Radio_naim_gruper: TRadioButton;
+    RadioSelreset: TRadioButton;
+    InsTab: TTabSheet;
+    ins_good_data_Box: TGroupBox;
+    ins_good_btn_Box: TGroupBox;
+    ins_good_inputBox: TGroupBox;
+    good_naim_inp: TLabeledEdit;
+    quant_good_inp: TLabeledEdit;
+    Quant_good_grader: TUpDown;
+    cost_good_inp: TLabeledEdit;
+    ins_good_grd: TDBGrid;
+    ins_good_Btn: TButton;
+    UpdTab: TTabSheet;
+    GoodUpdInpBox: TGroupBox;
+    GoodUpddataBox: TGroupBox;
+    GoodUpdbtnBox: TGroupBox;
+    goodUpdBtn: TButton;
+    goodUpdGrid: TDBGrid;
+    upd_good_naim_inp: TLabeledEdit;
+    ypd_good_lbl: TStaticText;
+    upd_goodIdDBL: TDBLookupComboBox;
+    delTab: TTabSheet;
+    GooddeldataBox: TGroupBox;
+    GooddekinpBox: TGroupBox;
+    delgoodbtn_box: TGroupBox;
+    delgoodBtn: TButton;
+    Del_goodgrid: TDBGrid;
+    StaticText1: TStaticText;
+    delgoodDBL: TDBLookupComboBox;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormActivate(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure good_fnd_inpKeyPress(Sender: TObject; var Key: Char);
+    procedure goodUpdBtnClick(Sender: TObject);
+    procedure delgoodBtnClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_m_order: TFrm_m_order;
+
+implementation
+
+uses Un_dm, Un_func, Un_man;
+
+{$R *.dfm}
+
+procedure TFrm_m_order.delgoodBtnClick(Sender: TObject);
+var
+AreFieldsEmpty:boolean;
+begin
+AreFieldsEmpty:=(
+(delgoodDBL.Text='')
+);
+if AreFieldsEmpty then
+begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.del_good do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+          Parameters.ParamByName('@id_good').Value:=dm.GoodQuery.
+          FieldByName('id_good').AsString;
+           ExecProc;
+           dm.goodQuery.Close;
+           dm.GoodQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+end;
+
+procedure TFrm_m_order.FormActivate(Sender: TObject);
+begin
+   dm.goodQuery.Open;
+end;
+
+procedure TFrm_m_order.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  SaveFormState(Self);
+  CloseAllQueriesOnDataModule('dm');
+end;
+
+procedure TFrm_m_order.FormCreate(Sender: TObject);
+begin
+ frm_good.ShowHint:=true;
+ UniformizeButtonsSize(Self,  273, 25);
+ UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+ UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+ LoadFormState(Self);
+end;
+
+procedure TFrm_m_order.goodUpdBtnClick(Sender: TObject);
+const
+  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.',
+  'A'..'Z','a'..'z'];
+var
+AreFieldEmpty:boolean;
+AreFieldValid:boolean;
+begin
+AreFieldEmpty:=(
+(Trim(upd_good_naim_inp.Text)='')or
+(upd_goodIdDBL.Text='')
+);
+AreFieldValid:=(
+ValidateComponentText(upd_good_naim_inp,AllowedChars)
+);
+if AreFieldEmpty or not AreFieldValid then
+begin
+  MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+end;
+ try
+      with dm.upd_good do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+          Parameters.ParamByName('@id_good').Value:=dm.GoodQuery.
+          FieldByName('id_good').AsString;
+           Parameters.ParamByName('@naim_good').Value :=upd_good_naim_inp.Text;
+           ExecProc;
+           dm.GoodQuery.Close;
+           dm.goodQuery.Open;
+        MessageDlg('Изменнеия внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+end;
+
+procedure TFrm_m_order.good_fnd_inpKeyPress(Sender: TObject; var Key: Char);
+begin
+   try
+   dm.goodQuery.SQL.Text:=
+   'select'+' '+
+   'good.id_good,'+' '+
+    'good.naim_good,'+' '+
+    'good.quant_good,'+' '+
+    'good.cost_good'+' '+
+    'from good'+' '+
+    'where 1=1'+' '+
+     'and good.naim_good like'+
+   QuotedStr(Concat(good_fnd_inp.Text,#37));
+   dm.goodQuery.close;
+   dm.goodQuery.Open;
+except on E: Exception do
+  begin
+  ShowMessage('wrong situation'+' '+E.Message);
+  end;
+  end;
+end;
+
+end.
