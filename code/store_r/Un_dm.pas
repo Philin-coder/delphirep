@@ -10,6 +10,7 @@ type
     goodQuery: TADOQuery;
     goodDS: TDataSource;
     Connection: TADOConnection;
+    sel_good: TADOStoredProc;
   private
     { Private declarations }
   public

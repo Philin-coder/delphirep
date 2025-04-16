@@ -28,33 +28,49 @@ object Frm_good: TFrm_good
       Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1090#1086#1074#1072#1088#1077
       object Good_sel_grouper: TGroupBox
         Left = 0
-        Top = 105
+        Top = 129
         Width = 1024
         Height = 105
         Align = alTop
         Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1091#1089#1083#1086#1074#1080#1102
         TabOrder = 0
-        ExplicitLeft = 400
-        ExplicitTop = 144
-        ExplicitWidth = 185
+        ExplicitTop = 105
+        object Radio_naim_gruper: TRadioButton
+          Left = 24
+          Top = 48
+          Width = 217
+          Height = 17
+          Align = alCustom
+          Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1102
+          TabOrder = 0
+          OnClick = Radio_naim_gruperClick
+        end
+        object RadioSelreset: TRadioButton
+          Left = 568
+          Top = 48
+          Width = 113
+          Height = 17
+          Align = alCustom
+          Caption = #1057#1073#1088#1086#1089
+          TabOrder = 1
+          OnClick = RadioSelresetClick
+        end
       end
       object Good_sel_data_box: TGroupBox
         Left = 0
-        Top = 210
+        Top = 234
         Width = 1024
-        Height = 334
+        Height = 310
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
-        ExplicitLeft = 192
-        ExplicitTop = 296
-        ExplicitWidth = 185
-        ExplicitHeight = 105
+        ExplicitTop = 210
+        ExplicitHeight = 334
         object Good_SelGrid: TDBGrid
           Left = 2
           Top = 15
           Width = 1020
-          Height = 317
+          Height = 293
           Align = alClient
           DataSource = DM.goodDS
           TabOrder = 0
@@ -107,32 +123,43 @@ object Frm_good: TFrm_good
           Height = 25
           Caption = #1054#1090#1073#1086#1088' '#1087#1086' '#1091#1089#1083#1086#1074#1080#1102
           TabOrder = 0
+          OnClick = good_selBtnClick
         end
       end
       object good_Sel_cond_box: TGroupBox
         Left = 0
         Top = 0
         Width = 1024
-        Height = 105
+        Height = 129
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 3
-        ExplicitLeft = 184
-        ExplicitTop = -6
         DesignSize = (
           1024
-          105)
-        object good_naim_inp: TLabeledEdit
-          Left = 120
-          Top = 19
-          Width = 881
+          129)
+        object good_fnd_inp: TLabeledEdit
+          Left = 11
+          Top = 98
+          Width = 977
           Height = 21
           Anchors = [akLeft, akRight]
-          EditLabel.Width = 112
+          EditLabel.Width = 162
           EditLabel.Height = 13
-          EditLabel.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077' '#1090#1086#1074#1072#1088#1072
-          LabelPosition = lpLeft
+          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082'  '#1087#1086' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1102
           TabOrder = 0
+          OnKeyPress = good_fnd_inpKeyPress
+          ExplicitTop = 78
+        end
+        object good_cond_inp: TLabeledEdit
+          Left = 11
+          Top = 39
+          Width = 977
+          Height = 21
+          Anchors = [akLeft, akRight]
+          EditLabel.Width = 192
+          EditLabel.Height = 13
+          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1102
+          TabOrder = 1
         end
       end
     end

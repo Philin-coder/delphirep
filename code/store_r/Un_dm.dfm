@@ -31,4 +31,23 @@ object DM: TDM
     Provider = 'SQLOLEDB.1'
     Left = 16
   end
+  object sel_good: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_good;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@naim_good'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 50
+      end>
+    Left = 16
+    Top = 200
+  end
 end
