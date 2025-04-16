@@ -14,9 +14,6 @@ type
     ins_good: TADOStoredProc;
     upd_good: TADOStoredProc;
     del_good: TADOStoredProc;
-    m_orderQuery: TADOQuery;
-    m_orderDS: TDataSource;
-    sel_m_order_by_name: TADOStoredProc;
   private
     { Private declarations }
   public

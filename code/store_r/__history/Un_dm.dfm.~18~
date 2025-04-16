@@ -184,7 +184,7 @@ object DM: TDM
         DataType = ftWideString
         Size = 1000
       end>
-    Left = 176
+    Left = 160
     Top = 192
   end
 end

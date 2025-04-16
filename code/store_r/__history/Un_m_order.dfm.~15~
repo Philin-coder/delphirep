@@ -11,23 +11,22 @@ object Frm_m_order: TFrm_m_order
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnActivate = FormActivate
+  OnClose = FormClose
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object goodPC: TPageControl
+  object m_orderPC: TPageControl
     Left = 0
     Top = 0
     Width = 1032
     Height = 646
-    ActivePage = delTab
+    ActivePage = Sel_tab
     Align = alClient
     TabOrder = 0
     object Sel_tab: TTabSheet
-      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1090#1086#1074#1072#1088#1077
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
-      object Good_sel_grouper: TGroupBox
+      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1079#1072#1082#1072#1079#1077
+      object m_order_sel_grouper: TGroupBox
         Left = 0
         Top = 129
         Width = 1024
@@ -35,8 +34,7 @@ object Frm_m_order: TFrm_m_order
         Align = alTop
         Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1091#1089#1083#1086#1074#1080#1102
         TabOrder = 0
-        ExplicitTop = 105
-        object Radio_naim_gruper: TRadioButton
+        object m_order_Radio_naim_gruper: TRadioButton
           Left = 24
           Top = 48
           Width = 217
@@ -45,7 +43,7 @@ object Frm_m_order: TFrm_m_order
           Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1102
           TabOrder = 0
         end
-        object RadioSelreset: TRadioButton
+        object m_orderRadioSelreset: TRadioButton
           Left = 568
           Top = 48
           Width = 113
@@ -53,10 +51,9 @@ object Frm_m_order: TFrm_m_order
           Align = alCustom
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 1
-          OnClick = RadioSelresetClick
         end
       end
-      object Good_sel_data_box: TGroupBox
+      object m_order_sel_data_box: TGroupBox
         Left = 0
         Top = 234
         Width = 1024
@@ -64,15 +61,13 @@ object Frm_m_order: TFrm_m_order
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
-        ExplicitTop = 210
-        ExplicitHeight = 334
-        object Good_SelGrid: TDBGrid
+        object m_order_SelGrid: TDBGrid
           Left = 2
           Top = 15
           Width = 1020
           Height = 293
           Align = alClient
-          DataSource = DM.goodDS
+          DataSource = DM.m_orderDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -82,51 +77,85 @@ object Frm_m_order: TFrm_m_order
           Columns = <
             item
               Expanded = False
-              FieldName = 'id_good'
+              FieldName = 'm_order_id'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-              Width = 159
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'adres'
+              Title.Caption = #1040#1076#1088#1077#1089' '#1076#1086#1089#1090#1072#1074#1082#1080
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'oredr_q'
+              Title.Caption = #1050#1086#1083#1080#1095#1077#1089#1090#1074#1086' '#1090#1086#1074#1072#1088#1086#1074' '#1074' '#1079#1072#1082#1072#1079#1077
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'pay_way'
+              Title.Caption = #1057#1087#1086#1089#1086#1073' '#1086#1087#1083#1072#1090#1099
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'get_way'
+              Title.Caption = #1057#1087#1086#1089#1086#1073' '#1076#1086#1089#1090#1072#1074#1082#1080
+              Width = 122
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'm_get'
+              Title.Caption = #1054#1090#1087#1088#1072#1074#1082#1072
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'm_pay'
+              Title.Caption = #1054#1087#1083#1072#1090#1072
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'u_mail'
+              Title.Caption = #1055#1086#1095#1090#1086#1074#1099#1081' '#1103#1097#1080#1082
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'naim_good'
-              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077
-              Width = 127
+              Title.Caption = #1058#1086#1074#1072#1088
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'quant_good'
-              Title.Caption = #1050#1086#1083#1080#1095#1077#1089#1090#1074#1086' '#1090#1086#1074#1072#1088#1072
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'cost_good'
-              Title.Caption = #1062#1077#1085#1072' '#1090#1086#1074#1072#1088#1072
-              Width = 275
+              FieldName = 'about_order'
+              Title.Caption = #1044#1086#1087'.'#1091#1089#1083#1086#1074#1080#1103
+              Width = 110
               Visible = True
             end>
         end
       end
-      object good_sel_btn_box: TGroupBox
+      object M_order_sel_btn_box: TGroupBox
         Left = 0
         Top = 544
         Width = 1024
         Height = 74
         Align = alBottom
         TabOrder = 2
-        object good_selBtn: TButton
+        object m_order_selBtn: TButton
           Left = 384
           Top = 24
           Width = 107
           Height = 25
           Caption = #1054#1090#1073#1086#1088' '#1087#1086' '#1091#1089#1083#1086#1074#1080#1102
           TabOrder = 0
-          OnClick = good_selBtnClick
         end
       end
-      object good_Sel_cond_box: TGroupBox
+      object m_order_Sel_cond_box: TGroupBox
         Left = 0
         Top = 0
         Width = 1024
@@ -137,7 +166,7 @@ object Frm_m_order: TFrm_m_order
         DesignSize = (
           1024
           129)
-        object good_fnd_inp: TLabeledEdit
+        object m_order_fnd_inp: TLabeledEdit
           Left = 11
           Top = 98
           Width = 977
@@ -147,10 +176,8 @@ object Frm_m_order: TFrm_m_order
           EditLabel.Height = 13
           EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082'  '#1087#1086' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1102
           TabOrder = 0
-          OnKeyPress = good_fnd_inpKeyPress
-          ExplicitTop = 78
         end
-        object good_cond_inp: TLabeledEdit
+        object m_order_cond_inp: TLabeledEdit
           Left = 11
           Top = 39
           Width = 977
@@ -166,10 +193,6 @@ object Frm_m_order: TFrm_m_order
     object InsTab: TTabSheet
       Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1090#1086#1074#1072#1088#1077
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object ins_good_data_Box: TGroupBox
         Left = 0
         Top = 186
@@ -178,8 +201,6 @@ object Frm_m_order: TFrm_m_order
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        ExplicitTop = 105
-        ExplicitHeight = 408
         object ins_good_grd: TDBGrid
           Left = 2
           Top = 15
@@ -237,7 +258,6 @@ object Frm_m_order: TFrm_m_order
           Height = 25
           Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
           TabOrder = 0
-          OnClick = ins_good_BtnClick
         end
       end
       object ins_good_inputBox: TGroupBox
@@ -260,7 +280,6 @@ object Frm_m_order: TFrm_m_order
           EditLabel.Height = 13
           EditLabel.Caption = #1042#1074#1086#1076' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1103' '#1090#1086#1074#1072#1088#1072
           TabOrder = 0
-          ExplicitTop = 39
         end
         object quant_good_inp: TLabeledEdit
           Left = 11
@@ -273,7 +292,6 @@ object Frm_m_order: TFrm_m_order
           EditLabel.Caption = #1042#1074#1086#1076' '#1082#1086#1083#1080#1095#1077#1089#1090#1074#1072' '#1090#1086#1074#1072#1088#1072
           TabOrder = 1
           Text = '0'
-          ExplicitTop = 87
         end
         object Quant_good_grader: TUpDown
           Left = 988
@@ -283,7 +301,6 @@ object Frm_m_order: TFrm_m_order
           Anchors = [akLeft]
           Associate = quant_good_inp
           TabOrder = 2
-          ExplicitTop = 87
         end
         object cost_good_inp: TLabeledEdit
           Left = 11
@@ -295,17 +312,12 @@ object Frm_m_order: TFrm_m_order
           EditLabel.Height = 13
           EditLabel.Caption = #1042#1074#1086#1076' '#1094#1077#1085#1099' '#1090#1086#1074#1072#1088#1072
           TabOrder = 3
-          ExplicitTop = 135
         end
       end
     end
     object UpdTab: TTabSheet
       Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1090#1086#1074#1072#1088#1077
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object GoodUpdInpBox: TGroupBox
         Left = 0
         Top = 0
@@ -314,8 +326,6 @@ object Frm_m_order: TFrm_m_order
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        ExplicitLeft = 2
-        ExplicitTop = 3
         DesignSize = (
           1024
           137)
@@ -358,8 +368,6 @@ object Frm_m_order: TFrm_m_order
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
-        ExplicitTop = 105
-        ExplicitHeight = 455
         object goodUpdGrid: TDBGrid
           Left = 2
           Top = 15
@@ -417,7 +425,6 @@ object Frm_m_order: TFrm_m_order
           Height = 25
           Caption = #1048#1079#1084#1077#1085#1080#1090#1100
           TabOrder = 0
-          OnClick = goodUpdBtnClick
         end
       end
     end
@@ -520,7 +527,6 @@ object Frm_m_order: TFrm_m_order
           Height = 25
           Caption = #1059#1076#1072#1083#1080#1090#1100' '#1090#1086#1074#1072#1088
           TabOrder = 0
-          OnClick = delgoodBtnClick
         end
       end
     end

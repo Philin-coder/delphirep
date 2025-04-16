@@ -168,23 +168,4 @@ object DM: TDM
     Left = 160
     Top = 128
   end
-  object sel_m_order_by_name: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'sel_m_order_by_name;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@naim_good'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 1000
-      end>
-    Left = 176
-    Top = 192
-  end
 end

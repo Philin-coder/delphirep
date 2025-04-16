@@ -8,18 +8,18 @@ uses
 
 type
   TFrm_m_order = class(TForm)
-    goodPC: TPageControl;
+    m_orderPC: TPageControl;
     Sel_tab: TTabSheet;
-    Good_sel_grouper: TGroupBox;
-    Good_sel_data_box: TGroupBox;
-    good_sel_btn_box: TGroupBox;
-    good_Sel_cond_box: TGroupBox;
-    good_selBtn: TButton;
-    Good_SelGrid: TDBGrid;
-    good_fnd_inp: TLabeledEdit;
-    good_cond_inp: TLabeledEdit;
-    Radio_naim_gruper: TRadioButton;
-    RadioSelreset: TRadioButton;
+    m_order_sel_grouper: TGroupBox;
+    m_order_sel_data_box: TGroupBox;
+    M_order_sel_btn_box: TGroupBox;
+    m_order_Sel_cond_box: TGroupBox;
+    m_order_selBtn: TButton;
+    m_order_SelGrid: TDBGrid;
+    m_order_fnd_inp: TLabeledEdit;
+    m_order_cond_inp: TLabeledEdit;
+    m_order_Radio_naim_gruper: TRadioButton;
+    m_orderRadioSelreset: TRadioButton;
     InsTab: TTabSheet;
     ins_good_data_Box: TGroupBox;
     ins_good_btn_Box: TGroupBox;
@@ -47,9 +47,9 @@ type
     Del_goodgrid: TDBGrid;
     StaticText1: TStaticText;
     delgoodDBL: TDBLookupComboBox;
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
-    procedure delgoodBtnClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -65,53 +65,25 @@ uses Un_dm, Un_func, Un_man;
 
 {$R *.dfm}
 
-procedure TFrm_m_order.delgoodBtnClick(Sender: TObject);
-var
-AreFieldsEmpty:boolean;
-begin
-AreFieldsEmpty:=(
-(delgoodDBL.Text='')
-);
-if AreFieldsEmpty then
-begin
-    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-  try
-      with dm.del_good do
-      begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-          Parameters.ParamByName('@id_good').Value:=dm.GoodQuery.
-          FieldByName('id_good').AsString;
-           ExecProc;
-           dm.goodQuery.Close;
-           dm.GoodQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-    end;
-end;
-
 procedure TFrm_m_order.FormActivate(Sender: TObject);
 begin
-   dm.goodQuery.Open;
+dm.goodQuery.Open;
+dm.m_orderQuery.Open;
 end;
 
 procedure TFrm_m_order.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   SaveFormState(Self);
   CloseAllQueriesOnDataModule('dm');
+end;
+
+procedure TFrm_m_order.FormCreate(Sender: TObject);
+begin
+ Frm_m_order.ShowHint:=true;
+ UniformizeButtonsSize(Self,  273, 25);
+ UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+ UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+ LoadFormState(Self);
 end;
 
 end.
