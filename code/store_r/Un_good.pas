@@ -39,6 +39,14 @@ type
     upd_good_naim_inp: TLabeledEdit;
     ypd_good_lbl: TStaticText;
     upd_goodIdDBL: TDBLookupComboBox;
+    delTab: TTabSheet;
+    GooddeldataBox: TGroupBox;
+    GooddekinpBox: TGroupBox;
+    delgoodbtn_box: TGroupBox;
+    delgoodBtn: TButton;
+    Del_goodgrid: TDBGrid;
+    StaticText1: TStaticText;
+    delgoodDBL: TDBLookupComboBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -48,6 +56,7 @@ type
     procedure RadioSelresetClick(Sender: TObject);
     procedure ins_good_BtnClick(Sender: TObject);
     procedure goodUpdBtnClick(Sender: TObject);
+    procedure delgoodBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -62,6 +71,46 @@ implementation
 uses Un_dm, Un_func, Un_man;
 
 {$R *.dfm}
+
+procedure TFrm_good.delgoodBtnClick(Sender: TObject);
+var
+AreFieldsEmpty:boolean;
+begin
+AreFieldsEmpty:=(
+(delgoodDBL.Text='')
+);
+if AreFieldsEmpty then
+begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.del_good do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+          Parameters.ParamByName('@id_good').Value:=dm.GoodQuery.
+          FieldByName('id_good').AsString;
+           ExecProc;
+           dm.goodQuery.Close;
+           dm.GoodQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+
+
+end;
 
 procedure TFrm_good.FormActivate(Sender: TObject);
 begin

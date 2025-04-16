@@ -21,7 +21,7 @@ object Frm_good: TFrm_good
     Top = 0
     Width = 1032
     Height = 646
-    ActivePage = UpdTab
+    ActivePage = delTab
     Align = alClient
     TabOrder = 0
     object Sel_tab: TTabSheet
@@ -410,6 +410,113 @@ object Frm_good: TFrm_good
           Caption = #1048#1079#1084#1077#1085#1080#1090#1100
           TabOrder = 0
           OnClick = goodUpdBtnClick
+        end
+      end
+    end
+    object delTab: TTabSheet
+      Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1090#1086#1074#1072#1088#1077
+      ImageIndex = 3
+      object GooddeldataBox: TGroupBox
+        Left = 0
+        Top = 89
+        Width = 1024
+        Height = 463
+        Align = alClient
+        Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 0
+        ExplicitLeft = 504
+        ExplicitTop = 96
+        ExplicitWidth = 185
+        ExplicitHeight = 105
+        object Del_goodgrid: TDBGrid
+          Left = 2
+          Top = 15
+          Width = 1020
+          Height = 446
+          Align = alClient
+          DataSource = DM.goodDS
+          TabOrder = 0
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWindowText
+          TitleFont.Height = -11
+          TitleFont.Name = 'Tahoma'
+          TitleFont.Style = []
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'id_good'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Width = 159
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'naim_good'
+              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077
+              Width = 127
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'quant_good'
+              Title.Caption = #1050#1086#1083#1080#1095#1077#1089#1090#1074#1086' '#1090#1086#1074#1072#1088#1072
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'cost_good'
+              Title.Caption = #1062#1077#1085#1072' '#1090#1086#1074#1072#1088#1072
+              Width = 275
+              Visible = True
+            end>
+        end
+      end
+      object GooddekinpBox: TGroupBox
+        Left = 0
+        Top = 0
+        Width = 1024
+        Height = 89
+        Align = alTop
+        Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 1
+        DesignSize = (
+          1024
+          89)
+        object StaticText1: TStaticText
+          Left = 3
+          Top = 24
+          Width = 81
+          Height = 17
+          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1090#1086#1074#1072#1088
+          TabOrder = 0
+        end
+        object delgoodDBL: TDBLookupComboBox
+          Left = 3
+          Top = 47
+          Width = 1001
+          Height = 21
+          Anchors = [akLeft, akRight]
+          KeyField = 'id_good'
+          ListField = 'naim_good'
+          ListSource = DM.goodDS
+          TabOrder = 1
+        end
+      end
+      object delgoodbtn_box: TGroupBox
+        Left = 0
+        Top = 552
+        Width = 1024
+        Height = 66
+        Align = alBottom
+        TabOrder = 2
+        object delgoodBtn: TButton
+          Left = 328
+          Top = 24
+          Width = 121
+          Height = 25
+          Caption = #1059#1076#1072#1083#1080#1090#1100' '#1090#1086#1074#1072#1088
+          TabOrder = 0
+          OnClick = delgoodBtnClick
         end
       end
     end
