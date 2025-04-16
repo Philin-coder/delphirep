@@ -277,8 +277,6 @@ with dm.ins_good do
         ShowMessage('ќщибка: ' + E.Message);
       end;
       end;
-
-
 end;
 
 procedure TFrm_good.RadioSelresetClick(Sender: TObject);
