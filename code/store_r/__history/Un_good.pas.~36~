@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls,db,adodb, ComCtrls, Grids, DBGrids, ExtCtrls, DBCtrls;
+  Dialogs, StdCtrls,db,adodb, ComCtrls, Grids, DBGrids, ExtCtrls;
 
 type
   TFrm_good = class(TForm)
@@ -30,15 +30,7 @@ type
     cost_good_inp: TLabeledEdit;
     ins_good_grd: TDBGrid;
     ins_good_Btn: TButton;
-    UpdTab: TTabSheet;
-    GoodUpdInpBox: TGroupBox;
-    GoodUpddataBox: TGroupBox;
-    GoodUpdbtnBox: TGroupBox;
-    goodUpdBtn: TButton;
-    goodUpdGrid: TDBGrid;
-    upd_good_naim_inp: TLabeledEdit;
-    ypd_good_lbl: TStaticText;
-    upd_goodIdDBL: TDBLookupComboBox;
+    CheckCostcb: TCheckBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -47,7 +39,6 @@ type
     procedure Radio_naim_gruperClick(Sender: TObject);
     procedure RadioSelresetClick(Sender: TObject);
     procedure ins_good_BtnClick(Sender: TObject);
-    procedure goodUpdBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -81,53 +72,6 @@ begin
  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
  LoadFormState(Self);
-end;
-
-procedure TFrm_good.goodUpdBtnClick(Sender: TObject);
-const
-  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.',
-  'A'..'Z','a'..'z'];
-var
-AreFieldEmpty:boolean;
-AreFieldValid:boolean;
-begin
-AreFieldEmpty:=(
-(Trim(upd_good_naim_inp.Text)='')or
-(upd_goodIdDBL.Text='')
-);
-AreFieldValid:=(
-ValidateComponentText(upd_good_naim_inp,AllowedChars)
-);
-if AreFieldEmpty or not AreFieldValid then
-begin
-  MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-end;
- try
-      with dm.upd_good do
-      begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-          Parameters.ParamByName('@id_good').Value:=dm.GoodQuery.
-          FieldByName('id_good').AsString;
-           Parameters.ParamByName('@naim_good').Value :=upd_good_naim_inp.Text;
-           ExecProc;
-           dm.GoodQuery.Close;
-           dm.goodQuery.Open;
-        MessageDlg('Изменнеия внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-    end;
 end;
 
 procedure TFrm_good.good_fnd_inpKeyPress(Sender: TObject; var Key: Char);
@@ -196,7 +140,6 @@ begin
     Beep;
     Exit;
 end;
-cost_good_inp.Text:=CommaPoint(cost_good_inp.Text);
 if not IsDigitsOnly(cost_good_inp.Text) then
 begin
   ShowMessage('Ошибка: введено некорректное значение цены');

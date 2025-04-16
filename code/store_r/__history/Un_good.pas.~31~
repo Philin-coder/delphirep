@@ -20,12 +20,24 @@ type
     good_cond_inp: TLabeledEdit;
     Radio_naim_gruper: TRadioButton;
     RadioSelreset: TRadioButton;
+    InsTab: TTabSheet;
+    ins_good_data_Box: TGroupBox;
+    ins_good_btn_Box: TGroupBox;
+    ins_good_inputBox: TGroupBox;
+    good_naim_inp: TLabeledEdit;
+    quant_good_inp: TLabeledEdit;
+    Quant_good_grader: TUpDown;
+    cost_good_inp: TLabeledEdit;
+    ins_good_grd: TDBGrid;
+    ins_good_Btn: TButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure good_selBtnClick(Sender: TObject);
     procedure good_fnd_inpKeyPress(Sender: TObject; var Key: Char);
     procedure Radio_naim_gruperClick(Sender: TObject);
+    procedure RadioSelresetClick(Sender: TObject);
+    procedure ins_good_BtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -65,6 +77,7 @@ procedure TFrm_good.good_fnd_inpKeyPress(Sender: TObject; var Key: Char);
 begin
    try
    dm.goodQuery.SQL.Text:=
+   'select'+' '+
    'good.id_good,'+' '+
     'good.naim_good,'+' '+
     'good.quant_good,'+' '+
@@ -102,6 +115,72 @@ try
   end;
 end;
 
+procedure TFrm_good.ins_good_BtnClick(Sender: TObject);
+const
+  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.',
+  'A'..'Z','a'..'z'];
+var
+AreFieldEmpty:boolean;
+AreFieldValid:boolean;
+begin
+AreFieldEmpty:=(
+(Trim(good_naim_inp.Text)='')or
+(Quant_good_grader.Position=0)or
+(Trim(cost_good_inp.Text)='')
+);
+AreFieldValid:=(
+ValidateComponentText(good_naim_inp,AllowedChars)and
+ValidateComponentText(cost_good_inp,AllowedChars)
+);
+if AreFieldEmpty or not AreFieldValid then ShowMessage('mistake')
+  else ShowMessage('gut');
+
+end;
+
+procedure TFrm_good.RadioSelresetClick(Sender: TObject);
+var i,j,c:Integer;
+begin
+if RadioSelreset.Checked then
+  with Frm_good do
+    for I := 0 to ComponentCount - 1 do
+     begin
+       if (Components[i] is TLabeledEdit)  then
+        begin
+          (Components[i] as TLabeledEdit).Clear;
+        end;
+     end;
+       with Frm_good do
+    for c := 0 to ComponentCount - 1 do
+     begin
+       if (Components[c] is TCheckBox)  then
+        begin
+          (Components[c] as TCheckBox).Checked:=False;
+        end;
+     end;
+     with dm.goodQuery do
+     begin
+     Close;
+     sql.Clear;
+     SQL.Text:=
+    'select'+' '+
+    'good.id_good,'+' '+
+    'good.naim_good,'+' '+
+    'good.quant_good,'+' '+
+    'good.cost_good'+' '+
+    'from good'+' '+
+    'where 1=1';
+     Open;
+     end;
+    with Frm_good do
+    for j := 0 to ComponentCount - 1 do
+    begin
+      if(Components[j] is TRadioButton)  then
+      begin
+        (Components[j] as TRadioButton).Checked:=False;
+      end;
+    end;
+end;
+
 procedure TFrm_good.Radio_naim_gruperClick(Sender: TObject);
 begin
 if radio_naim_gruper.Checked=true then
@@ -112,13 +191,19 @@ if radio_naim_gruper.Checked=true then
       close;
       sql.Clear;
       sql.Text:=
-
-    'order by Book.Name_B asc';
+    'select'+' '+
+    'good.id_good,'+' '+
+    'good.naim_good,'+' '+
+    'good.quant_good,'+' '+
+    'good.cost_good'+' '+
+    'from good'+' '+
+    'where 1=1'+' '+
+    'order by good.naim_good asc';
       Open;
      end;
     except on E: EADOError do
     begin
-      ShowMessage('??????'+' '+E.Message);
+      ShowMessage('Ошибка'+' '+E.Message);
     end;
     end;
   end;

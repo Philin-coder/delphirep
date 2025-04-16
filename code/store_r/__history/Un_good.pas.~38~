@@ -95,39 +95,7 @@ AreFieldEmpty:=(
 (Trim(upd_good_naim_inp.Text)='')or
 (upd_goodIdDBL.Text='')
 );
-AreFieldValid:=(
-ValidateComponentText(upd_good_naim_inp,AllowedChars)
-);
-if AreFieldEmpty or not AreFieldValid then
-begin
-  MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-end;
- try
-      with dm.upd_good do
-      begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-          Parameters.ParamByName('@id_good').Value:=dm.GoodQuery.
-          FieldByName('id_good').AsString;
-           Parameters.ParamByName('@naim_good').Value :=upd_good_naim_inp.Text;
-           ExecProc;
-           dm.GoodQuery.Close;
-           dm.goodQuery.Open;
-        MessageDlg('Изменнеия внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-    end;
+
 end;
 
 procedure TFrm_good.good_fnd_inpKeyPress(Sender: TObject; var Key: Char);

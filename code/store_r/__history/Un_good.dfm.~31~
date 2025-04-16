@@ -335,7 +335,6 @@ object Frm_good: TFrm_good
           Top = 47
           Width = 1001
           Height = 21
-          Anchors = [akLeft, akRight]
           KeyField = 'id_good'
           ListField = 'naim_good'
           ListSource = DM.goodDS

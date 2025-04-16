@@ -11,8 +11,6 @@ type
     goodDS: TDataSource;
     Connection: TADOConnection;
     sel_good: TADOStoredProc;
-    ins_good: TADOStoredProc;
-    upd_good: TADOStoredProc;
   private
     { Private declarations }
   public

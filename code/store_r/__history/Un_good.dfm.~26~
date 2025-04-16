@@ -21,7 +21,7 @@ object Frm_good: TFrm_good
     Top = 0
     Width = 1032
     Height = 646
-    ActivePage = UpdTab
+    ActivePage = InsTab
     Align = alClient
     TabOrder = 0
     object Sel_tab: TTabSheet
@@ -276,7 +276,7 @@ object Frm_good: TFrm_good
           Top = 92
           Width = 16
           Height = 21
-          Anchors = [akLeft]
+          Anchors = [akLeft, akRight]
           Associate = quant_good_inp
           TabOrder = 2
           ExplicitTop = 87
@@ -293,123 +293,15 @@ object Frm_good: TFrm_good
           TabOrder = 3
           ExplicitTop = 135
         end
-      end
-    end
-    object UpdTab: TTabSheet
-      Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1090#1086#1074#1072#1088#1077
-      ImageIndex = 2
-      object GoodUpdInpBox: TGroupBox
-        Left = 0
-        Top = 0
-        Width = 1024
-        Height = 137
-        Align = alTop
-        Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
-        TabOrder = 0
-        ExplicitLeft = 2
-        ExplicitTop = 3
-        DesignSize = (
-          1024
-          137)
-        object upd_good_naim_inp: TLabeledEdit
-          Left = 3
-          Top = 98
-          Width = 1001
-          Height = 21
-          Anchors = [akLeft, akRight]
-          EditLabel.Width = 139
-          EditLabel.Height = 13
-          EditLabel.Caption = #1042#1074#1086#1076' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1103' '#1090#1086#1074#1072#1088#1072
-          TabOrder = 0
-        end
-        object ypd_good_lbl: TStaticText
-          Left = 3
-          Top = 24
-          Width = 81
-          Height = 17
-          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1090#1086#1074#1072#1088
-          TabOrder = 1
-        end
-        object upd_goodIdDBL: TDBLookupComboBox
-          Left = 3
-          Top = 47
-          Width = 1001
-          Height = 21
-          Anchors = [akLeft, akRight]
-          KeyField = 'id_good'
-          ListField = 'naim_good'
-          ListSource = DM.goodDS
-          TabOrder = 2
-        end
-      end
-      object GoodUpddataBox: TGroupBox
-        Left = 0
-        Top = 137
-        Width = 1024
-        Height = 423
-        Align = alClient
-        Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
-        TabOrder = 1
-        ExplicitTop = 105
-        ExplicitHeight = 455
-        object goodUpdGrid: TDBGrid
-          Left = 2
-          Top = 15
-          Width = 1020
-          Height = 406
-          Align = alClient
-          DataSource = DM.goodDS
-          TabOrder = 0
-          TitleFont.Charset = DEFAULT_CHARSET
-          TitleFont.Color = clWindowText
-          TitleFont.Height = -11
-          TitleFont.Name = 'Tahoma'
-          TitleFont.Style = []
-          Columns = <
-            item
-              Expanded = False
-              FieldName = 'id_good'
-              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-              Width = 159
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'naim_good'
-              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077
-              Width = 127
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'quant_good'
-              Title.Caption = #1050#1086#1083#1080#1095#1077#1089#1090#1074#1086' '#1090#1086#1074#1072#1088#1072
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'cost_good'
-              Title.Caption = #1062#1077#1085#1072' '#1090#1086#1074#1072#1088#1072
-              Width = 275
-              Visible = True
-            end>
-        end
-      end
-      object GoodUpdbtnBox: TGroupBox
-        Left = 0
-        Top = 560
-        Width = 1024
-        Height = 58
-        Align = alBottom
-        TabOrder = 2
-        object goodUpdBtn: TButton
-          Left = 368
-          Top = 16
-          Width = 75
-          Height = 25
-          Caption = #1048#1079#1084#1077#1085#1080#1090#1100
-          TabOrder = 0
-          OnClick = goodUpdBtnClick
+        object CheckCostcb: TCheckBox
+          Left = 224
+          Top = 112
+          Width = 113
+          Height = 24
+          Align = alCustom
+          Caption = #1055#1088#1086#1074#1077#1088#1082#1072' '#1094#1077#1085#1099
+          TabOrder = 4
+          OnClick = CheckCostcbClick
         end
       end
     end
