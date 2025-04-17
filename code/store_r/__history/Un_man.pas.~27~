@@ -15,7 +15,6 @@ type
     report_item: TMenuItem;
     csv_item: TMenuItem;
     xml_item: TMenuItem;
-    Json_item: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure good_itemClick(Sender: TObject);
@@ -24,7 +23,6 @@ type
     procedure report_itemClick(Sender: TObject);
     procedure csv_itemClick(Sender: TObject);
     procedure xml_itemClick(Sender: TObject);
-    procedure Json_itemClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -81,11 +79,6 @@ except
 Frm_good.Free;
 raise;
 end;
-end;
-
-procedure TFrm_main.Json_itemClick(Sender: TObject);
-begin
-GenerateJSONFile('goods.json');
 end;
 
 procedure TFrm_main.m_order_itemClick(Sender: TObject);

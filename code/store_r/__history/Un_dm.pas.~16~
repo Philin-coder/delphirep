@@ -20,9 +20,9 @@ type
     ins_m_order: TADOStoredProc;
     upd_m_order: TADOStoredProc;
     del_m_order: TADOStoredProc;
-    reportQuery: TADOQuery;
     reportDS: TDataSource;
-    report1: TADOStoredProc;
+    report_1: TADOStoredProc;
+    reportQuery: TADOQuery;
   private
     { Private declarations }
   public

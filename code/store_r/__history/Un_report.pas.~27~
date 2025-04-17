@@ -84,18 +84,6 @@ try
     on E: Exception do
       ShowMessage('Ошибка: ' + E.Message);
   end;
-  rpGrd.Columns[0].Title.Caption:='Номер порядковый';
-    rpGrd.Columns[1].Title.Caption:='Адрес';
-    rpGrd.Columns[2].Title.Caption:='Количество';
-    rpGrd.Columns[3].Title.Caption:='Способ оплаты';
-    rpGrd.Columns[4].Title.Caption:='Способ доставки';
-    rpGrd.Columns[5].Title.Caption:='Отправлен';
-    rpGrd.Columns[6].Title.Caption:='Оплачен';
-    rpGrd.Columns[7].Title.Caption:='e-mail';
-    rpGrd.Columns[8].Title.Caption:='Товар';
-    rpGrd.Columns[9].Title.Caption:='Условия';
-    rpGrd.Columns[10].Title.Caption:='Уплочено';
-
 end;
 
 

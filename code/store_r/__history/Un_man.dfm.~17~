@@ -51,9 +51,5 @@ object Frm_main: TFrm_main
       Caption = '&C'#1086#1079#1076#1072#1090#1100' xml'
       OnClick = xml_itemClick
     end
-    object Json_item: TMenuItem
-      Caption = '&C'#1086#1079#1076#1072#1090#1100' json'
-      OnClick = Json_itemClick
-    end
   end
 end

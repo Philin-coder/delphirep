@@ -71,7 +71,8 @@ procedure UpdateFormProperties(const FormName: string;
 function GetCurrentDateTime: TDateTime;
 function IsMaskEditEmpty(MaskEdit: TMaskEdit): Boolean;
 procedure SetFormPropertiesIfNeeded;
-procedure CloseAllQueriesOnForm(const FormName: string);
+function FindDataModuleByName(const AName: string): TDataModule;
+procedure CloseAllQueriesOnDataModule(const DataModuleName: string);
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -1011,42 +1012,49 @@ begin
     ShowMessage('Форма frm_main не найдена!');
   end;
 end;
-procedure CloseAllQueriesOnForm(const FormName: string);
+function FindDataModuleByName(const AName: string): TDataModule;
 var
-  Form: TForm;
+  i: Integer;
+begin
+  Result := nil;
+  for i := 0 to Screen.DataModuleCount - 1 do
+  begin
+    if SameText(Screen.DataModules[i].Name, AName) then
+    begin
+      Result := Screen.DataModules[i];
+      Break;
+    end;
+  end;
+end;
+procedure CloseAllQueriesOnDataModule(const DataModuleName: string);
+var
+  DataModule: TDataModule;
   Q: Integer;
   Query: TADOQuery;
 begin
-  // Поиск формы по имени
-  Form := FindFormByName(FormName);
-
-  if not Assigned(Form) then
+  DataModule := FindDataModuleByName(DataModuleName);
+  if not Assigned(DataModule) then
   begin
-    ShowMessage('Форма ' + FormName + ' не найдена');
+    ShowMessage('Модуль данных ' + DataModuleName + ' не найден');
     Exit;
   end;
-  // Проход по всем компонентам формы
-  for Q := 0 to Form.ComponentCount - 1 do
+  for Q := 0 to DataModule.ComponentCount - 1 do
   begin
-    // Проверка, является ли компонент TADOQuery
-    if Form.Components[Q] is TADOQuery then
+    if DataModule.Components[Q] is TADOQuery then
     begin
-      Query := TADOQuery(Form.Components[Q]);
+      Query := TADOQuery(DataModule.Components[Q]);
       try
-        // Закрытие TADOQuery, если он открыт
         if Query.Active then
           Query.Close;
       except
         on E: Exception do
         begin
-          // Логирование ошибки (например, в файл или окно сообщений)
           ShowMessageFmt('Ошибка при закрытии запроса "%s": %s', [Query.Name, E.Message]);
         end;
       end;
     end;
   end;
-
-  ShowMessage('Все запросы успешно закрыты.');
+//  ShowMessage('Все запросы успешно закрыты.');
 end;
 initialization
 finalization

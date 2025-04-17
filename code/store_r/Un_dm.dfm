@@ -307,22 +307,8 @@ object DM: TDM
     Left = 184
     Top = 376
   end
-  object reportDS: TDataSource
-    DataSet = reportQuery
-    Left = 248
-    Top = 128
-  end
-  object report_1: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'report_1;1'
-    Parameters = <>
-    Left = 264
-    Top = 192
-  end
   object reportQuery: TADOQuery
-    Active = True
     Connection = Connection
-    CursorType = ctStatic
     Parameters = <>
     SQL.Strings = (
       'select '
@@ -335,8 +321,8 @@ object DM: TDM
         'CASE m_order.is_get when 1 then  '#39#1086#1090#1087#1088#1072#1074#1083#1077#1085#39' else '#39#1085#1077' '#1086#1090#1087#1088#1072#1074#1083#1077#1085#39 +
         'end as m_get,'
       
-        'case m_order.is_pay when 1 then '#39#1086#1087#1083#1072#1095#1077#1085#39' else '#39#1085#1077' '#1086#1087#1083#1072#1095#1077#1085#39' end ' +
-        'as m_pay,'
+        'case m_order.is_pay when 1 then '#39#1086#1087#1083#1072#1072#1095#1077#1085#39' else '#39#1085#1077' '#1086#1087#1083#1072#1095#1077#1085#39' end' +
+        ' as m_pay,'
       'm_order.u_mail,'
       'good.naim_good,'
       'm_order.about_order'
@@ -344,7 +330,19 @@ object DM: TDM
       'm_order'
       'inner join good on good.id_good=m_order.id_good'
       'where 1=1 ')
-    Left = 224
-    Top = 56
+    Left = 304
+    Top = 80
+  end
+  object reportDS: TDataSource
+    DataSet = reportQuery
+    Left = 304
+    Top = 128
+  end
+  object report1: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'report_1;1'
+    Parameters = <>
+    Left = 320
+    Top = 200
   end
 end

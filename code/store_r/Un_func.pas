@@ -73,6 +73,9 @@ procedure UpdateFormProperties(const FormName: string;
 procedure SetFormPropertiesIfNeeded;
 function FindDataModuleByName(const AName: string): TDataModule;
 procedure CloseAllQueriesOnDataModule(const DataModuleName: string);
+procedure GenerateCSVFile(const FileName: string);
+procedure GenerateXMLFile(const FileName: string);
+procedure GenerateJSONFile(const FileName: string);
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -1054,7 +1057,113 @@ begin
       end;
     end;
   end;
-//  ShowMessage('Все запросы успешно закрыты.');
+end;
+
+procedure GenerateCSVFile(const FileName: string);
+var
+  CSVData: TStringList;
+  i: Integer;
+  SampleGoods: array[1..5] of record
+    id_good: Integer;
+    naim_good: string;
+    price_good: Double;
+  end;
+begin
+  CSVData := TStringList.Create;
+  try
+    CSVData.Add('id_good,naim_good,price_good');
+    SampleGoods[1].id_good := 1; SampleGoods[1].naim_good := 'Товар 1'; SampleGoods[1].price_good := 100.50;
+    SampleGoods[2].id_good := 2; SampleGoods[2].naim_good := 'Товар 2'; SampleGoods[2].price_good := 200.75;
+    SampleGoods[3].id_good := 3; SampleGoods[3].naim_good := 'Товар 3'; SampleGoods[3].price_good := 150.00;
+    SampleGoods[4].id_good := 4; SampleGoods[4].naim_good := 'Товар 4'; SampleGoods[4].price_good := 300.25;
+    SampleGoods[5].id_good := 5; SampleGoods[5].naim_good := 'Товар 5'; SampleGoods[5].price_good := 400.00;
+    for i := 1 to 5 do
+    begin
+      CSVData.Add(Format('%d,%s,%.2f', [
+        SampleGoods[i].id_good,
+        SampleGoods[i].naim_good,
+        SampleGoods[i].price_good
+      ]));
+    end;
+    CSVData.SaveToFile(FileName);
+    ShowMessage('CSV-файл успешно создан: ' + FileName);
+  except
+    on E: Exception do
+      ShowMessage('Ошибка при создании CSV-файла: ' + E.Message);
+  end;
+end;
+procedure GenerateXMLFile(const FileName: string);
+var
+  XMLData: TStringList;
+  i: Integer;
+  SampleGoods: array[1..5] of record
+    id_good: Integer;
+    naim_good: string;
+    price_good: Double;
+  end;
+begin
+  XMLData := TStringList.Create;
+  try
+    XMLData.Add('<?xml version="1.0" encoding="UTF-8"?>');
+    XMLData.Add('<goods>');
+    SampleGoods[1].id_good := 1; SampleGoods[1].naim_good := 'Товар 1'; SampleGoods[1].price_good := 100.50;
+    SampleGoods[2].id_good := 2; SampleGoods[2].naim_good := 'Товар 2'; SampleGoods[2].price_good := 200.75;
+    SampleGoods[3].id_good := 3; SampleGoods[3].naim_good := 'Товар 3'; SampleGoods[3].price_good := 150.00;
+    SampleGoods[4].id_good := 4; SampleGoods[4].naim_good := 'Товар 4'; SampleGoods[4].price_good := 300.25;
+    SampleGoods[5].id_good := 5; SampleGoods[5].naim_good := 'Товар 5'; SampleGoods[5].price_good := 400.00;
+    for i := 1 to 5 do
+    begin
+      XMLData.Add('  <good>');
+      XMLData.Add('    <id_good>' + IntToStr(SampleGoods[i].id_good) + '</id_good>');
+      XMLData.Add('    <naim_good>' + SampleGoods[i].naim_good + '</naim_good>');
+      XMLData.Add('    <price_good>' + FloatToStr(SampleGoods[i].price_good) + '</price_good>');
+      XMLData.Add('  </good>');
+    end;
+    XMLData.Add('</goods>');
+    XMLData.SaveToFile(FileName);
+    ShowMessage('XML-файл успешно создан: ' + FileName);
+  except
+    on E: Exception do
+      ShowMessage('Ошибка при создании XML-файла: ' + E.Message);
+  end;
+end;
+
+procedure GenerateJSONFile(const FileName: string);
+var
+  JSONData: TStringList;
+  i: Integer;
+  SampleGoods: array[1..5] of record
+    id_good: Integer;
+    naim_good: string;
+    price_good: Double;
+  end;
+begin
+  JSONData := TStringList.Create;
+  try
+    JSONData.Add('[');
+    SampleGoods[1].id_good := 1; SampleGoods[1].naim_good := 'Товар 1'; SampleGoods[1].price_good := 100.50;
+    SampleGoods[2].id_good := 2; SampleGoods[2].naim_good := 'Товар 2'; SampleGoods[2].price_good := 200.75;
+    SampleGoods[3].id_good := 3; SampleGoods[3].naim_good := 'Товар 3'; SampleGoods[3].price_good := 150.00;
+    SampleGoods[4].id_good := 4; SampleGoods[4].naim_good := 'Товар 4'; SampleGoods[4].price_good := 300.25;
+    SampleGoods[5].id_good := 5; SampleGoods[5].naim_good := 'Товар 5'; SampleGoods[5].price_good := 400.00;
+    for i := 1 to 5 do
+    begin
+      JSONData.Add('  {');
+      JSONData.Add('    "id_good": ' + IntToStr(SampleGoods[i].id_good) + ',');
+      JSONData.Add('    "naim_good": "' + SampleGoods[i].naim_good + '",');
+      JSONData.Add('    "price_good": ' + FloatToStr(SampleGoods[i].price_good));
+      if i < 5 then
+        JSONData.Add('  },') // Если не последний элемент, добавляем запятую
+      else
+        JSONData.Add('  }'); // Для последнего элемента запятая не нужна
+    end;
+    JSONData.Add(']');
+    JSONData.SaveToFile(FileName);
+    ShowMessage('JSON-файл успешно создан: ' + FileName);
+  except
+    on E: Exception do
+      ShowMessage('Ошибка при создании JSON-файла: ' + E.Message);
+  end;
 end;
 initialization
 finalization
