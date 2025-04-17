@@ -151,8 +151,8 @@ object DM: TDM
         'CASE m_order.is_get when 1 then  '#39#1086#1090#1087#1088#1072#1074#1083#1077#1085#39' else '#39#1085#1077' '#1086#1090#1087#1088#1072#1074#1083#1077#1085#39 +
         'end as m_get,'
       
-        'case m_order.is_pay when 1 then '#39#1086#1087#1083#1072#1072#1095#1077#1085#39' else '#39#1085#1077' '#1086#1087#1083#1072#1095#1077#1085#39' end' +
-        ' as m_pay,'
+        'case m_order.is_pay when 1 then '#39#1086#1087#1083#1072#1095#1077#1085#39' else '#39#1085#1077' '#1086#1087#1083#1072#1095#1077#1085#39' end ' +
+        'as m_pay,'
       'm_order.u_mail,'
       'good.naim_good,'
       'm_order.about_order'
@@ -177,14 +177,172 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@naim_good'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end>
     Left = 176
     Top = 192
+  end
+  object ins_m_order: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'ins_m_order;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@adres'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end
+      item
+        Name = '@oredr_q'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@pay_way'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end
+      item
+        Name = '@get_way'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 100
+      end
+      item
+        Name = '@is_get'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@is_pay'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@u_mail'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+        Value = Null
+      end
+      item
+        Name = '@id_good'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@about_order'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end>
+    Left = 176
+    Top = 256
+  end
+  object upd_m_order: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_m_order;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@m_order_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@adres'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end>
+    Left = 192
+    Top = 320
+  end
+  object del_m_order: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'del_m_order;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@m_order_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 184
+    Top = 376
+  end
+  object reportDS: TDataSource
+    DataSet = reportQuery
+    Left = 248
+    Top = 128
+  end
+  object report_1: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'report_1;1'
+    Parameters = <>
+    Left = 264
+    Top = 192
+  end
+  object reportQuery: TADOQuery
+    Connection = Connection
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      'm_order.m_order_id,'
+      'm_order.adres,'
+      'm_order.oredr_q,'
+      'm_order.pay_way,'
+      'm_order.get_way,'
+      
+        'CASE m_order.is_get when 1 then  '#39#1086#1090#1087#1088#1072#1074#1083#1077#1085#39' else '#39#1085#1077' '#1086#1090#1087#1088#1072#1074#1083#1077#1085#39 +
+        'end as m_get,'
+      
+        'case m_order.is_pay when 1 then '#39#1086#1087#1083#1072#1095#1077#1085#39' else '#39#1085#1077' '#1086#1087#1083#1072#1095#1077#1085#39' end ' +
+        'as m_pay,'
+      'm_order.u_mail,'
+      'good.naim_good,'
+      'm_order.about_order'
+      'from '
+      'm_order'
+      'inner join good on good.id_good=m_order.id_good'
+      'where 1=1 ')
+    Left = 224
+    Top = 56
   end
 end

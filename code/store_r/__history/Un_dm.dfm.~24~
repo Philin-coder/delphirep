@@ -307,22 +307,8 @@ object DM: TDM
     Left = 184
     Top = 376
   end
-  object reportDS: TDataSource
-    DataSet = reportQuery
-    Left = 248
-    Top = 128
-  end
-  object report_1: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'report_1;1'
-    Parameters = <>
-    Left = 264
-    Top = 192
-  end
   object reportQuery: TADOQuery
-    Active = True
     Connection = Connection
-    CursorType = ctStatic
     Parameters = <>
     SQL.Strings = (
       'select '
@@ -343,8 +329,20 @@ object DM: TDM
       'from '
       'm_order'
       'inner join good on good.id_good=m_order.id_good'
-      'where 1=1 ')
-    Left = 224
-    Top = 56
+      'where 1=1')
+    Left = 232
+    Top = 48
+  end
+  object reportDS: TDataSource
+    DataSet = reportQuery
+    Left = 248
+    Top = 128
+  end
+  object report_1: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'report_1;1'
+    Parameters = <>
+    Left = 248
+    Top = 192
   end
 end

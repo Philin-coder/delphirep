@@ -1,0 +1,123 @@
+object Frm_report: TFrm_report
+  Left = 0
+  Top = 0
+  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1086#1090#1095#1077#1090#1086#1084
+  ClientHeight = 793
+  ClientWidth = 1032
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  OnActivate = FormActivate
+  OnClose = FormClose
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object rpPC: TPageControl
+    Left = 0
+    Top = 0
+    Width = 1032
+    Height = 793
+    ActivePage = delTab
+    Align = alClient
+    TabOrder = 0
+    object delTab: TTabSheet
+      Caption = #1054#1090#1095#1077#1090
+      ImageIndex = 3
+      object MOdeldataBox: TGroupBox
+        Left = 0
+        Top = 0
+        Width = 1024
+        Height = 699
+        Align = alClient
+        Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 0
+        object rpGrd: TDBGrid
+          Left = 2
+          Top = 15
+          Width = 1020
+          Height = 682
+          Align = alClient
+          DataSource = DM.reportDS
+          TabOrder = 0
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWindowText
+          TitleFont.Height = -11
+          TitleFont.Name = 'Tahoma'
+          TitleFont.Style = []
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'm_order_id'
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'adres'
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'oredr_q'
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'pay_way'
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'get_way'
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'm_get'
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'm_pay'
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'u_mail'
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'naim_good'
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'about_order'
+              Visible = True
+            end>
+        end
+      end
+      object rpobtn_box: TGroupBox
+        Left = 0
+        Top = 699
+        Width = 1024
+        Height = 66
+        Align = alBottom
+        TabOrder = 1
+        object rpBtn: TButton
+          Left = 328
+          Top = 24
+          Width = 121
+          Height = 25
+          Caption = #1042#1099#1074#1086#1076' '#1086#1090#1095#1077#1090#1072
+          TabOrder = 0
+          OnClick = rpBtnClick
+        end
+      end
+    end
+  end
+end

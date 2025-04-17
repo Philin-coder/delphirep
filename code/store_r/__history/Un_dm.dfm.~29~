@@ -320,7 +320,6 @@ object DM: TDM
     Top = 192
   end
   object reportQuery: TADOQuery
-    Active = True
     Connection = Connection
     CursorType = ctStatic
     Parameters = <>

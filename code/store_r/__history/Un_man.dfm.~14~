@@ -41,7 +41,6 @@ object Frm_main: TFrm_main
     end
     object report_item: TMenuItem
       Caption = '&'#1054#1090#1095#1077#1090
-      OnClick = report_itemClick
     end
   end
 end
