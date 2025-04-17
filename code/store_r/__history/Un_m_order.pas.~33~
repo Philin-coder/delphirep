@@ -70,8 +70,6 @@ type
     procedure m_orderRadioSelresetClick(Sender: TObject);
     procedure m_order_fnd_inpKeyPress(Sender: TObject; var Key: Char);
     procedure ins_m_order_BtnClick(Sender: TObject);
-    procedure is_get_inpChange(Sender: TObject);
-    procedure is_pay_inpChange(Sender: TObject);
   private
     { Private declarations }
   public
@@ -80,8 +78,6 @@ type
 
 var
   Frm_m_order: TFrm_m_order;
-  is_get_status,
-  is_pay_status:Integer;
 
 implementation
 
@@ -97,16 +93,12 @@ end;
 
 procedure TFrm_m_order.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  is_get_status:=0;
-  is_pay_status:=0;
   SaveFormState(Self);
   CloseAllQueriesOnDataModule('dm');
 end;
 
 procedure TFrm_m_order.FormCreate(Sender: TObject);
 begin
-is_get_status:=0;
-is_pay_status:=0;
  Frm_m_order.ShowHint:=true;
  UniformizeButtonsSize(Self,  273, 25);
  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
@@ -138,57 +130,8 @@ ValidateComponentText(m_order_adres_inp,AllowedChars)and
 ValidateComponentText(pay_way_inp,AllowedChars)and
 ValidateComponentText(get_way_inp,AllowedChars)and
 IsValidEmail(u_mail_inp.Text)and
-ValidateComponentText(about_order_inp,AllowedChars)
+ValidateComponentText(about_morder_inp,AllowedChars)
 );
-if AreFieldEmpty or not AreFieldValid then
-begin
- MessageDlg('Ошибка: одно из полей пустое или текст не прошёл проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-end;
-try
-with dm.ins_m_order do
-      begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединенние с базой не установлено');
-           Parameters.ParamByName('@adres').Value :=m_order_adres_inp.Text;
-           Parameters.ParamByName('@oredr_q').Value:=
-           StrToInt(order_q_inp.Text);
-           Parameters.ParamByName('@pay_way').Value:=pay_way_inp.Text;
-           Parameters.ParamByName('@get_way').Value:=get_way_inp.Text;
-           Parameters.ParamByName('@is_get').Value:=is_get_status;
-           Parameters.ParamByName('@is_pay').Value:=is_pay_status;
-           Parameters.ParamByName('@u_mail').Value:=u_mail_inp.Text;
-           Parameters.ParamByName('@id_good').Value:=
-           dm.goodQuery.FieldByName('id_good').AsString;
-           Parameters.ParamByName('@about_order').Value:=about_order_inp.Text;
-           ExecProc;
-           dm.m_orderquery.Close;
-           dm.m_orderquery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      end;
-
-end;
-
-procedure TFrm_m_order.is_get_inpChange(Sender: TObject);
-begin
-if is_get_inp.ItemIndex=0 then is_get_status:=1 else is_get_status:=0;
-end;
-
-procedure TFrm_m_order.is_pay_inpChange(Sender: TObject);
-begin
-if is_pay_inp.ItemIndex=0 then is_pay_status:=1 else is_pay_status:=0 ;
 end;
 
 procedure TFrm_m_order.m_orderRadioSelresetClick(Sender: TObject);
@@ -222,7 +165,7 @@ if m_orderRadioSelreset.Checked then
     'm_order.pay_way,'+' '+
     'm_order.get_way,'+
     'CASE m_order.is_get when 1 then  ''отправлен'' else ''не отправлен''end as m_get,'+' '+
-    'case m_order.is_pay when 1 then ''оплачен'' else ''не оплачен'' end as m_pay,'+
+    'case m_order.is_pay when 1 then ''оплаачен'' else ''не оплачен'' end as m_pay,'+
     'm_order.u_mail,'+' '+
     'good.naim_good,'+
     'm_order.about_order'+' '+
@@ -252,7 +195,7 @@ try
     'm_order.pay_way,'+' '+
     'm_order.get_way,'+' '+
     'CASE m_order.is_get when 1 then  ''отправлен'' else ''не отправлен'' end as m_get,'+' '+
-    'case m_order.is_pay when 1 then ''оплачен'' else ''не оплачен'' end as m_pay,'+' '+
+    'case m_order.is_pay when 1 then ''оплаачен'' else ''не оплачен'' end as m_pay,'+' '+
     'm_order.u_mail,'+' '+
     'good.naim_good,'+' '+
     'm_order.about_order'+' '+
@@ -288,7 +231,7 @@ if m_order_Radio_naim_gruper.Checked=true then
     'm_order.pay_way,'+' '+
     'm_order.get_way,'+' '+
     'CASE m_order.is_get when 1 then  ''отправлен'' else ''не отправлен'' end as m_get,'+' '+
-    'case m_order.is_pay when 1 then ''оплачен'' else ''не оплачен'' end as m_pay,'+' '+
+    'case m_order.is_pay when 1 then ''оплаачен'' else ''не оплачен'' end as m_pay,'+' '+
     'm_order.u_mail,'+' '+
     'good.naim_good,'+' '+
     'm_order.about_order'+' '+

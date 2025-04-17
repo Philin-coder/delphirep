@@ -313,7 +313,7 @@ object Frm_m_order: TFrm_m_order
         Top = 0
         Width = 1024
         Height = 289
-        ActivePage = aboutm_orderrabthree
+        ActivePage = aboutm_orderrabtwo
         Align = alTop
         TabOrder = 2
         object about_morder_tab: TTabSheet
@@ -432,7 +432,8 @@ object Frm_m_order: TFrm_m_order
               OnChange = is_get_inpChange
               Items.Strings = (
                 #1054#1090#1087#1088#1072#1074#1083#1077#1085
-                #1053#1077' '#1086#1090#1087#1088#1072#1074#1083#1077#1085)
+                #1053#1077' '#1086#1090#1087#1088#1072#1074#1083#1077#1085
+                '')
             end
             object is_pay_inp: TComboBox
               Left = 11
@@ -443,7 +444,6 @@ object Frm_m_order: TFrm_m_order
               Anchors = [akLeft, akRight]
               ItemHeight = 13
               TabOrder = 4
-              OnChange = is_pay_inpChange
               Items.Strings = (
                 #1054#1087#1083#1072#1095#1077#1085
                 #1053#1077' '#1086#1087#1083#1072#1095#1077#1085)
@@ -492,9 +492,9 @@ object Frm_m_order: TFrm_m_order
               Height = 21
               Align = alCustom
               Anchors = [akLeft, akRight]
-              KeyField = 'id_good'
+              KeyField = 'm_order_id'
               ListField = 'naim_good'
-              ListSource = DM.goodDS
+              ListSource = DM.m_orderDS
               TabOrder = 2
             end
             object about_order_inp: TLabeledEdit

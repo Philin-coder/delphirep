@@ -34,7 +34,6 @@ object Frm_good: TFrm_good
         Align = alTop
         Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1091#1089#1083#1086#1074#1080#1102
         TabOrder = 0
-        ExplicitTop = 105
         object Radio_naim_gruper: TRadioButton
           Left = 24
           Top = 48
@@ -64,8 +63,6 @@ object Frm_good: TFrm_good
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
-        ExplicitTop = 210
-        ExplicitHeight = 334
         object Good_SelGrid: TDBGrid
           Left = 2
           Top = 15
@@ -148,7 +145,6 @@ object Frm_good: TFrm_good
           EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082'  '#1087#1086' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1102
           TabOrder = 0
           OnKeyPress = good_fnd_inpKeyPress
-          ExplicitTop = 78
         end
         object good_cond_inp: TLabeledEdit
           Left = 11
@@ -166,6 +162,10 @@ object Frm_good: TFrm_good
     object InsTab: TTabSheet
       Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1090#1086#1074#1072#1088#1077
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object ins_good_data_Box: TGroupBox
         Left = 0
         Top = 186
@@ -298,6 +298,10 @@ object Frm_good: TFrm_good
     object UpdTab: TTabSheet
       Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1090#1086#1074#1072#1088#1077
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object GoodUpdInpBox: TGroupBox
         Left = 0
         Top = 0
@@ -424,10 +428,6 @@ object Frm_good: TFrm_good
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        ExplicitLeft = 504
-        ExplicitTop = 96
-        ExplicitWidth = 185
-        ExplicitHeight = 105
         object Del_goodgrid: TDBGrid
           Left = 2
           Top = 15
@@ -482,7 +482,7 @@ object Frm_good: TFrm_good
         DesignSize = (
           1024
           89)
-        object StaticText1: TStaticText
+        object good_del_lbl: TStaticText
           Left = 3
           Top = 24
           Width = 81

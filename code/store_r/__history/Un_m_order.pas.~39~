@@ -158,11 +158,7 @@ with dm.ins_m_order do
            Parameters.ParamByName('@pay_way').Value:=pay_way_inp.Text;
            Parameters.ParamByName('@get_way').Value:=get_way_inp.Text;
            Parameters.ParamByName('@is_get').Value:=is_get_status;
-           Parameters.ParamByName('@is_pay').Value:=is_pay_status;
-           Parameters.ParamByName('@u_mail').Value:=u_mail_inp.Text;
-           Parameters.ParamByName('@id_good').Value:=
-           dm.goodQuery.FieldByName('id_good').AsString;
-           Parameters.ParamByName('@about_order').Value:=about_order_inp.Text;
+
            ExecProc;
            dm.m_orderquery.Close;
            dm.m_orderquery.Open;

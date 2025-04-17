@@ -45,7 +45,7 @@ type
     delgoodbtn_box: TGroupBox;
     delgoodBtn: TButton;
     Del_goodgrid: TDBGrid;
-    StaticText1: TStaticText;
+    good_del_lbl: TStaticText;
     delgoodDBL: TDBLookupComboBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);

@@ -1,7 +1,7 @@
 object DM: TDM
   OldCreateOrder = False
-  Height = 396
-  Width = 360
+  Height = 438
+  Width = 532
   object goodQuery: TADOQuery
     Connection = Connection
     CursorType = ctStatic
@@ -14,13 +14,13 @@ object DM: TDM
       'good.cost_good '
       'from good'
       'where 1=1;')
-    Left = 16
+    Left = 72
     Top = 64
   end
   object goodDS: TDataSource
     DataSet = goodQuery
-    Left = 16
-    Top = 128
+    Left = 80
+    Top = 136
   end
   object Connection: TADOConnection
     Connected = True
@@ -40,14 +40,16 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@naim_good'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 50
+        Value = Null
       end>
-    Left = 16
+    Left = 88
     Top = 200
   end
   object ins_good: TADOStoredProc
@@ -59,12 +61,14 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@naim_good'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 50
+        Value = Null
       end
       item
         Name = '@quant_good'
@@ -80,8 +84,8 @@ object DM: TDM
         Precision = 19
         Value = 0c
       end>
-    Left = 24
-    Top = 256
+    Left = 88
+    Top = 264
   end
   object upd_good: TADOStoredProc
     Connection = Connection
@@ -92,6 +96,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@id_good'
@@ -105,8 +110,81 @@ object DM: TDM
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 50
+        Value = Null
       end>
-    Left = 16
-    Top = 312
+    Left = 88
+    Top = 320
+  end
+  object del_good: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'del_good;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@id_good'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 80
+    Top = 376
+  end
+  object m_orderQuery: TADOQuery
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      'm_order.m_order_id,'
+      'm_order.adres,'
+      'm_order.oredr_q,'
+      'm_order.pay_way,'
+      'm_order.get_way,'
+      
+        'CASE m_order.is_get when 1 then  '#39#1086#1090#1087#1088#1072#1074#1083#1077#1085#39' else '#39#1085#1077' '#1086#1090#1087#1088#1072#1074#1083#1077#1085#39 +
+        'end as m_get,'
+      
+        'case m_order.is_pay when 1 then '#39#1086#1087#1083#1072#1072#1095#1077#1085#39' else '#39#1085#1077' '#1086#1087#1083#1072#1095#1077#1085#39' end' +
+        ' as m_pay,'
+      'm_order.u_mail,'
+      'good.naim_good,'
+      'm_order.about_order'
+      'from '
+      'm_order'
+      'inner join good on good.id_good=m_order.id_good'
+      'where 1=1 ')
+    Left = 152
+    Top = 56
+  end
+  object m_orderDS: TDataSource
+    DataSet = m_orderQuery
+    Left = 160
+    Top = 128
+  end
+  object sel_m_order_by_name: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_m_order_by_name;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@naim_good'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end>
+    Left = 176
+    Top = 192
   end
 end

@@ -17,7 +17,6 @@ type
     m_orderQuery: TADOQuery;
     m_orderDS: TDataSource;
     sel_m_order_by_name: TADOStoredProc;
-    ins_m_order: TADOStoredProc;
   private
     { Private declarations }
   public

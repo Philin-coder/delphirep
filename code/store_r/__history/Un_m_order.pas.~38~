@@ -157,12 +157,7 @@ with dm.ins_m_order do
            StrToInt(order_q_inp.Text);
            Parameters.ParamByName('@pay_way').Value:=pay_way_inp.Text;
            Parameters.ParamByName('@get_way').Value:=get_way_inp.Text;
-           Parameters.ParamByName('@is_get').Value:=is_get_status;
-           Parameters.ParamByName('@is_pay').Value:=is_pay_status;
-           Parameters.ParamByName('@u_mail').Value:=u_mail_inp.Text;
-           Parameters.ParamByName('@id_good').Value:=
-           dm.goodQuery.FieldByName('id_good').AsString;
-           Parameters.ParamByName('@about_order').Value:=about_order_inp.Text;
+
            ExecProc;
            dm.m_orderquery.Close;
            dm.m_orderquery.Open;
@@ -222,7 +217,7 @@ if m_orderRadioSelreset.Checked then
     'm_order.pay_way,'+' '+
     'm_order.get_way,'+
     'CASE m_order.is_get when 1 then  ''отправлен'' else ''не отправлен''end as m_get,'+' '+
-    'case m_order.is_pay when 1 then ''оплачен'' else ''не оплачен'' end as m_pay,'+
+    'case m_order.is_pay when 1 then ''оплаачен'' else ''не оплачен'' end as m_pay,'+
     'm_order.u_mail,'+' '+
     'good.naim_good,'+
     'm_order.about_order'+' '+
@@ -252,7 +247,7 @@ try
     'm_order.pay_way,'+' '+
     'm_order.get_way,'+' '+
     'CASE m_order.is_get when 1 then  ''отправлен'' else ''не отправлен'' end as m_get,'+' '+
-    'case m_order.is_pay when 1 then ''оплачен'' else ''не оплачен'' end as m_pay,'+' '+
+    'case m_order.is_pay when 1 then ''оплаачен'' else ''не оплачен'' end as m_pay,'+' '+
     'm_order.u_mail,'+' '+
     'good.naim_good,'+' '+
     'm_order.about_order'+' '+
@@ -288,7 +283,7 @@ if m_order_Radio_naim_gruper.Checked=true then
     'm_order.pay_way,'+' '+
     'm_order.get_way,'+' '+
     'CASE m_order.is_get when 1 then  ''отправлен'' else ''не отправлен'' end as m_get,'+' '+
-    'case m_order.is_pay when 1 then ''оплачен'' else ''не оплачен'' end as m_pay,'+' '+
+    'case m_order.is_pay when 1 then ''оплаачен'' else ''не оплачен'' end as m_pay,'+' '+
     'm_order.u_mail,'+' '+
     'good.naim_good,'+' '+
     'm_order.about_order'+' '+
