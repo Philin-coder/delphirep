@@ -407,9 +407,9 @@ object Frm_m_order: TFrm_m_order
             object is_get_lbl: TStaticText
               Left = 11
               Top = 104
-              Width = 107
+              Width = 108
               Height = 17
-              Caption = #1044#1086#1089#1090#1072#1074#1077#1083#1085' '#1083#1080' '#1090#1086#1074#1072#1088
+              Caption = #1054#1090#1087#1088#1072#1074#1083#1077#1085' '#1083#1080' '#1090#1086#1074#1072#1088
               TabOrder = 1
             end
             object is_payLbl: TStaticText
@@ -429,9 +429,10 @@ object Frm_m_order: TFrm_m_order
               Anchors = [akLeft, akRight]
               ItemHeight = 13
               TabOrder = 3
+              OnChange = is_get_inpChange
               Items.Strings = (
-                #1044#1086#1089#1090#1072#1074#1083#1077#1085
-                #1053#1077' '#1076#1086#1089#1090#1072#1074#1083#1077#1085)
+                #1054#1090#1087#1088#1072#1074#1083#1077#1085
+                #1053#1077' '#1086#1090#1087#1088#1072#1074#1083#1077#1085)
             end
             object is_pay_inp: TComboBox
               Left = 11
@@ -442,6 +443,7 @@ object Frm_m_order: TFrm_m_order
               Anchors = [akLeft, akRight]
               ItemHeight = 13
               TabOrder = 4
+              OnChange = is_pay_inpChange
               Items.Strings = (
                 #1054#1087#1083#1072#1095#1077#1085
                 #1053#1077' '#1086#1087#1083#1072#1095#1077#1085)
@@ -490,9 +492,9 @@ object Frm_m_order: TFrm_m_order
               Height = 21
               Align = alCustom
               Anchors = [akLeft, akRight]
-              KeyField = 'm_order_id'
+              KeyField = 'id_good'
               ListField = 'naim_good'
-              ListSource = DM.m_orderDS
+              ListSource = DM.goodDS
               TabOrder = 2
             end
             object about_order_inp: TLabeledEdit

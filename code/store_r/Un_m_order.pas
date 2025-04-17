@@ -25,14 +25,13 @@ type
     ins_m_order_btn_Box: TGroupBox;
     ins_m_order_Btn: TButton;
     UpdTab: TTabSheet;
-    GoodUpdInpBox: TGroupBox;
-    GoodUpddataBox: TGroupBox;
-    GoodUpdbtnBox: TGroupBox;
-    goodUpdBtn: TButton;
-    goodUpdGrid: TDBGrid;
-    upd_good_naim_inp: TLabeledEdit;
-    ypd_good_lbl: TStaticText;
-    upd_goodIdDBL: TDBLookupComboBox;
+    M_orderUpdInpBox: TGroupBox;
+    M_orderUpddataBox: TGroupBox;
+    M_orderUpdbtnBox: TGroupBox;
+    M_orderUpdBtn: TButton;
+    upd_M_order_adr_inp: TLabeledEdit;
+    upd_M_order_lbl: TStaticText;
+    upd_m_o_goodIdDBL: TDBLookupComboBox;
     delTab: TTabSheet;
     GooddeldataBox: TGroupBox;
     GooddekinpBox: TGroupBox;
@@ -62,6 +61,7 @@ type
     m_order_idlbl: TStaticText;
     good_idDBL: TDBLookupComboBox;
     about_order_inp: TLabeledEdit;
+    updM_orderGrd: TDBGrid;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -72,6 +72,7 @@ type
     procedure ins_m_order_BtnClick(Sender: TObject);
     procedure is_get_inpChange(Sender: TObject);
     procedure is_pay_inpChange(Sender: TObject);
+    procedure M_orderUpdBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -242,11 +243,60 @@ if m_orderRadioSelreset.Checked then
     end;
 end;
 
+procedure TFrm_m_order.M_orderUpdBtnClick(Sender: TObject);
+ const
+  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.',
+  'A'..'Z','a'..'z'];
+var
+  AreFieldEmpty:boolean;
+  AreFieldValid:boolean;
+begin
+AreFieldEmpty:=(
+(upd_m_o_goodIdDBL.Text='')or
+(Trim(upd_M_order_adr_inp.Text)='')
+);
+AreFieldValid:=(
+ValidateComponentText(upd_M_order_adr_inp,AllowedChars)
+);
+if AreFieldEmpty or not AreFieldValid then
+begin
+   MessageDlg('Ошибка: одно из полей пустое или текст не прошёл проверку',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+end;
+ try
+      with dm.upd_m_order do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+          Parameters.ParamByName('@m_order_id').Value
+          :=dm.m_orderQuery.FieldByName('m_order_id').AsString;
+           Parameters.ParamByName('@adres').Value :=upd_m_order_adr_inp.Text;
+           ExecProc;
+           dm.m_orderQuery.Close;
+           dm.m_orderQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+
+
+end;
+
 procedure TFrm_m_order.m_order_fnd_inpKeyPress(Sender: TObject; var Key: Char);
 begin
 try
    dm.m_orderQuery.SQL.Text:='select'+' '+
-       'm_order.m_order_id,'+' '+
+    'm_order.m_order_id,'+' '+
     'm_order.adres,'+' '+
     'm_order.oredr_q,'+' '+
     'm_order.pay_way,'+' '+
