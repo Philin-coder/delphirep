@@ -33,13 +33,12 @@ type
     upd_M_order_lbl: TStaticText;
     upd_m_o_goodIdDBL: TDBLookupComboBox;
     delTab: TTabSheet;
-    GooddeldataBox: TGroupBox;
-    GooddekinpBox: TGroupBox;
-    delgoodbtn_box: TGroupBox;
-    delgoodBtn: TButton;
-    Del_goodgrid: TDBGrid;
-    StaticText1: TStaticText;
-    delgoodDBL: TDBLookupComboBox;
+    MOdeldataBox: TGroupBox;
+    MOdelinpBox: TGroupBox;
+    delmobtn_box: TGroupBox;
+    delmoBtn: TButton;
+    delmolbl: TStaticText;
+    delMODBL: TDBLookupComboBox;
     ins_m_order_Grd: TDBGrid;
     aboutorderPC: TPageControl;
     about_morder_tab: TTabSheet;
@@ -62,6 +61,7 @@ type
     good_idDBL: TDBLookupComboBox;
     about_order_inp: TLabeledEdit;
     updM_orderGrd: TDBGrid;
+    DelmoGrd: TDBGrid;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -73,6 +73,7 @@ type
     procedure is_get_inpChange(Sender: TObject);
     procedure is_pay_inpChange(Sender: TObject);
     procedure M_orderUpdBtnClick(Sender: TObject);
+    procedure delmoBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -89,6 +90,45 @@ implementation
 uses Un_dm, Un_func, Un_man;
 
 {$R *.dfm}
+
+procedure TFrm_m_order.delmoBtnClick(Sender: TObject);
+var
+AreFieldsEmpty:boolean;
+begin
+    AreFieldsEmpty:=(
+    (delMODBL.Text='')
+    );
+    if AreFieldsEmpty then
+    begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошёл проверку',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+    end;
+    try
+      with dm.del_m_order do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+          Parameters.ParamByName('@m_order_id').Value
+          :=dm.m_orderQuery.FieldByName('m_order_id').AsString;
+           ExecProc;
+           dm.m_orderQuery.Close;
+           dm.m_orderQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+    
+end;
 
 procedure TFrm_m_order.FormActivate(Sender: TObject);
 begin
@@ -245,8 +285,7 @@ end;
 
 procedure TFrm_m_order.M_orderUpdBtnClick(Sender: TObject);
  const
-  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.',
-  'A'..'Z','a'..'z'];
+  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
 var
   AreFieldEmpty:boolean;
   AreFieldValid:boolean;

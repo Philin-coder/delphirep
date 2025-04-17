@@ -21,7 +21,7 @@ object Frm_m_order: TFrm_m_order
     Top = 0
     Width = 1032
     Height = 793
-    ActivePage = UpdTab
+    ActivePage = delTab
     Align = alClient
     TabOrder = 0
     object Sel_tab: TTabSheet
@@ -664,10 +664,10 @@ object Frm_m_order: TFrm_m_order
       end
     end
     object delTab: TTabSheet
-      Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1090#1086#1074#1072#1088#1077
+      Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1079#1072#1082#1079#1077
       ImageIndex = 3
       ExplicitHeight = 618
-      object GooddeldataBox: TGroupBox
+      object MOdeldataBox: TGroupBox
         Left = 0
         Top = 89
         Width = 1024
@@ -676,13 +676,13 @@ object Frm_m_order: TFrm_m_order
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
         ExplicitHeight = 463
-        object Del_goodgrid: TDBGrid
+        object DelmoGrd: TDBGrid
           Left = 2
           Top = 15
           Width = 1020
           Height = 593
           Align = alClient
-          DataSource = DM.goodDS
+          DataSource = DM.m_orderDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -692,34 +692,69 @@ object Frm_m_order: TFrm_m_order
           Columns = <
             item
               Expanded = False
-              FieldName = 'id_good'
+              FieldName = 'm_order_id'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-              Width = 159
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'adres'
+              Title.Caption = #1040#1076#1088#1077#1089' '#1076#1086#1089#1090#1072#1074#1082#1080
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'oredr_q'
+              Title.Caption = #1050#1086#1083#1080#1095#1077#1089#1090#1074#1086' '#1090#1086#1074#1072#1088#1086#1074' '#1074' '#1079#1072#1082#1072#1079#1077
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'pay_way'
+              Title.Caption = #1057#1087#1086#1089#1086#1073' '#1086#1087#1083#1072#1090#1099
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'get_way'
+              Title.Caption = #1057#1087#1086#1089#1086#1073' '#1076#1086#1089#1090#1072#1074#1082#1080
+              Width = 122
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'm_get'
+              Title.Caption = #1054#1090#1087#1088#1072#1074#1082#1072
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'm_pay'
+              Title.Caption = #1054#1087#1083#1072#1090#1072
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'u_mail'
+              Title.Caption = #1055#1086#1095#1090#1086#1074#1099#1081' '#1103#1097#1080#1082
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'naim_good'
-              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077
-              Width = 127
+              Title.Caption = #1058#1086#1074#1072#1088
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'quant_good'
-              Title.Caption = #1050#1086#1083#1080#1095#1077#1089#1090#1074#1086' '#1090#1086#1074#1072#1088#1072
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'cost_good'
-              Title.Caption = #1062#1077#1085#1072' '#1090#1086#1074#1072#1088#1072
-              Width = 275
+              FieldName = 'about_order'
+              Title.Caption = #1044#1086#1087'.'#1091#1089#1083#1086#1074#1080#1103
+              Width = 110
               Visible = True
             end>
         end
       end
-      object GooddekinpBox: TGroupBox
+      object MOdelinpBox: TGroupBox
         Left = 0
         Top = 0
         Width = 1024
@@ -730,7 +765,7 @@ object Frm_m_order: TFrm_m_order
         DesignSize = (
           1024
           89)
-        object StaticText1: TStaticText
+        object delmolbl: TStaticText
           Left = 3
           Top = 24
           Width = 81
@@ -738,19 +773,19 @@ object Frm_m_order: TFrm_m_order
           Caption = #1042#1099#1073#1088#1072#1090#1100' '#1090#1086#1074#1072#1088
           TabOrder = 0
         end
-        object delgoodDBL: TDBLookupComboBox
+        object delMODBL: TDBLookupComboBox
           Left = 3
           Top = 47
           Width = 1001
           Height = 21
           Anchors = [akLeft, akRight]
-          KeyField = 'id_good'
+          KeyField = 'm_order_id'
           ListField = 'naim_good'
-          ListSource = DM.goodDS
+          ListSource = DM.m_orderDS
           TabOrder = 1
         end
       end
-      object delgoodbtn_box: TGroupBox
+      object delmobtn_box: TGroupBox
         Left = 0
         Top = 699
         Width = 1024
@@ -758,13 +793,14 @@ object Frm_m_order: TFrm_m_order
         Align = alBottom
         TabOrder = 2
         ExplicitTop = 552
-        object delgoodBtn: TButton
+        object delmoBtn: TButton
           Left = 328
           Top = 24
           Width = 121
           Height = 25
           Caption = #1059#1076#1072#1083#1080#1090#1100' '#1090#1086#1074#1072#1088
           TabOrder = 0
+          OnClick = delmoBtnClick
         end
       end
     end

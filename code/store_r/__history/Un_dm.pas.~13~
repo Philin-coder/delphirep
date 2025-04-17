@@ -19,7 +19,6 @@ type
     sel_m_order_by_name: TADOStoredProc;
     ins_m_order: TADOStoredProc;
     upd_m_order: TADOStoredProc;
-    del_m_order: TADOStoredProc;
   private
     { Private declarations }
   public
