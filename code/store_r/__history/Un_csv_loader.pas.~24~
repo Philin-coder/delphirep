@@ -4,7 +4,8 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls,db,adodb, ComCtrls, Grids, DBGrids, ExtCtrls, DBCtrls;
+  Dialogs, StdCtrls,db,adodb, ComCtrls, Grids, DBGrids, ExtCtrls, DBCtrls,
+  StrUtils;
 
 type
   TFrm_csv_loader = class(TForm)
@@ -14,7 +15,7 @@ type
     rpobtn_box: TGroupBox;
     rpBtn: TButton;
     csvlGrd: TDBGrid;
-    xmlOD: TOpenDialog;
+    csvOD: TOpenDialog;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -39,83 +40,84 @@ var
   StringList: TStringList;
   i, FieldCount: Integer;
   Fields: array[0..2] of string;
+  SIdGood, SNameGood, SPriceGood: string;
   IDGood: Integer;
   PriceGood: Double;
-  Fmt: TFormatSettings; // Для корректного преобразования чисел
+  Fmt: TFormatSettings;
 begin
+IDGood := 0;
+PriceGood := 0.0;
   StringList := TStringList.Create;
   try
-    // Устанавливаем разделитель десятичных дробей
-    Fmt := TFormatSettings.Create;
+    GetLocaleFormatSettings(0, Fmt);
     Fmt.DecimalSeparator := '.';
 
-    // Загрузка файла с учетом кодировки (если необходимо)
-    StringList.LoadFromFile(FileName); // Для UTF-8: StringList.LoadFromFile(FileName, TEncoding.UTF8);
+    StringList.LoadFromFile(FileName);
 
-    // Очистка таблицы
     with DM.gQuery do
     begin
       Close;
-      SQL.Text := 'DELETE FROM Goods';
+      SQL.Text := 'DELETE FROM goods';
       ExecSQL;
     end;
 
-    // Обработка данных
     for i := 1 to StringList.Count - 1 do
     begin
       FieldCount := SplitString(StringList[i], ',', Fields);
 
       if FieldCount < 3 then
       begin
-        ShowMessage('Ошибка: неверный формат строки в CSV-файле.');
+        ShowMessage('Ошибка: недостаточно данных в строке.');
         Continue;
       end;
 
+      SIdGood := Fields[0];
+      SNameGood := Fields[1];
+      SPriceGood := Fields[2];
+
       try
-        IDGood := StrToIntDef(Trim(Fields[0]), 0); // Удаляем лишние пробелы
-        PriceGood := StrToFloat(Trim(Fields[2]), Fmt); // Используем Fmt
+        IDGood := StrToIntDef(Trim(SIdGood), 0);
+        PriceGood := StrToFloat(Trim(SPriceGood), Fmt);
       except
         on E: Exception do
         begin
-          ShowMessage('Ошибка преобразования: ' + E.Message);
+          ShowMessage('Ошибка при преобразовании: ' + E.Message);
           Continue;
         end;
       end;
 
-      // Вставка в БД
       with DM.gQuery do
       begin
         Close;
-        SQL.Text := 'INSERT INTO Goods (id_good, naim_good, price_good) ' +
-                    'VALUES (:id_good, :naim_good, :price_good)';
-        Parameters.ParamByName('id_good').Value := IDGood;
-        Parameters.ParamByName('naim_good').Value := Trim(Fields[1]); // Удаляем пробелы
-        Parameters.ParamByName('price_good').Value := PriceGood;
+        SQL.Text :=
+          'INSERT INTO goods (GoodsId, goods_naim, goods_cost) ' +
+          'VALUES (:GoodsId, :goods_naim, :goods_cost)';
+
+        Parameters.ParamByName('GoodsId').Value := IDGood;
+        Parameters.ParamByName('goods_naim').Value := Trim(SNameGood);
+        Parameters.ParamByName('goods_cost').Value := PriceGood;
+
         ExecSQL;
       end;
     end;
 
-    // Обновление данных
     DM.gQuery.Close;
-    DM.gQuery.SQL.Text := 'SELECT * FROM Goods';
+    DM.gQuery.SQL.Text := 'SELECT * FROM goods';
     DM.gQuery.Open;
 
     ShowMessage('Данные успешно загружены.');
   except
     on E: Exception do
-      ShowMessage('Ошибка: ' + E.Message);
+      ShowMessage('Ошибка при загрузке: ' + E.Message);
   end;
+  StringList.Free;
 end;
+
 procedure TFrm_csv_loader.rpBtnClick(Sender: TObject);
 begin
-if xmlOD.Execute then
+ if csvOD.Execute then
   begin
-    try
-      LoadGoodsFromCSV(xmlOD.FileName);
-    except
-      on E: Exception do
-        ShowMessage('Ошибка при загрузке данных: ' + E.Message);
-    end;
+    LoadGoodsFromCSV(csvOD.FileName);
   end;
 end;
 
@@ -132,12 +134,12 @@ end;
 
 procedure TFrm_csv_loader.FormCreate(Sender: TObject);
 begin
-Frm_csv_loader.ShowHint:=true;
+ Frm_csv_loader.ShowHint:=true;
  UniformizeButtonsSize(Self,  273, 25);
  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
  LoadFormState(Self);
- xmlOD.Filter:='CSV Files (*.csv)|*.csv|All Files (*.*)|*.*';
+ csvOD.Filter:='CSV Files (*.csv)|*.csv|All Files (*.*)|*.*';
 end;
 
 end.

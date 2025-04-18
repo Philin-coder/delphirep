@@ -37,14 +37,18 @@ uses Un_dm, Un_func, Un_man;
 
 procedure TFrm_csv_loader.rpBtnClick(Sender: TObject);
 begin
-LoadCSVToTableFromDialog(
-    csvOD,
-    'goods',
-    'GoodsId',
-    'goods_naim',
-    'goods_cost',
-    DM.gQuery
-  );
+ if csvOD.Execute then
+  begin
+
+    LoadCSVToTable(
+  ExtractFilePath(Application.ExeName) + 'goods.csv',
+  'goods',
+  'GoodsId',
+  'goods_naim',
+  'goods_cost',
+  DM.gQuery
+);
+  end;
 end;
 
 procedure TFrm_csv_loader.FormActivate(Sender: TObject);

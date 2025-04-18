@@ -78,6 +78,12 @@ procedure UpdateFormProperties(const FormName: string;
 procedure GenerateJSONFile(const FileName: string);
 function SplitString(const S: string; const Delimiter: Char;
 var ResultArray: array of string): Integer;
+procedure LoadCSVToTableFromDialog(
+  OpenDialog: TOpenDialog;
+  const TableName: string;
+  const FieldIdName, FieldNaimName, FieldPriceName: string;
+  Query: TADOQuery
+);
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -1195,6 +1201,84 @@ begin
 
     ResultArray[Result] := Trim(Token);
     Inc(Result);
+  end;
+end;
+procedure LoadCSVToTableFromDialog(
+  OpenDialog: TOpenDialog;
+  const TableName: string;
+  const FieldIdName, FieldNaimName, FieldPriceName: string;
+  Query: TADOQuery
+);
+var
+  StringList: TStringList;
+  i, FieldCount: Integer;
+  Fields: array[0..2] of string;
+  SId, SName, SPrice: string;
+  ID: Integer;
+  Price: Double;
+  Fmt: TFormatSettings;
+begin
+  if not Assigned(OpenDialog) then Exit;
+
+  if not OpenDialog.Execute then
+    Exit; // Пользователь отменил выбор файла
+
+  ID := 0;
+  Price := 0.0;
+  StringList := TStringList.Create;
+  try
+    GetLocaleFormatSettings(0, Fmt);
+    Fmt.DecimalSeparator := '.';
+
+    StringList.LoadFromFile(OpenDialog.FileName);
+
+    // Очищаем таблицу
+    with Query do
+    begin
+      Close;
+      SQL.Text := 'DELETE FROM ' + TableName;
+      ExecSQL;
+    end;
+
+    for i := 1 to StringList.Count - 1 do
+    begin
+      FieldCount := SplitString(StringList[i], ',', Fields);
+      if FieldCount < 3 then Continue;
+
+      SId := Fields[0];
+      SName := Fields[1];
+      SPrice := Fields[2];
+
+      try
+        ID := StrToIntDef(Trim(SId), 0);
+        Price := StrToFloat(Trim(SPrice), Fmt);
+      except
+        Continue;
+      end;
+
+      with Query do
+      begin
+        Close;
+        SQL.Text := Format(
+          'INSERT INTO %s (%s, %s, %s) VALUES (:%s, :%s, :%s)',
+          [TableName, FieldIdName, FieldNaimName, FieldPriceName,
+           FieldIdName, FieldNaimName, FieldPriceName]
+        );
+        Parameters.ParamByName(FieldIdName).Value := ID;
+        Parameters.ParamByName(FieldNaimName).Value := Trim(SName);
+        Parameters.ParamByName(FieldPriceName).Value := Price;
+        ExecSQL;
+      end;
+    end;
+      with Query do
+begin
+  Close;
+  SQL.Text := 'SELECT * FROM ' + TableName;
+  Open;
+end;
+    ShowMessage('Данные успешно загружены из файла: ' + OpenDialog.FileName);
+  finally
+    StringList.Free;
   end;
 end;
 initialization
