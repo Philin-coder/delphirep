@@ -22,6 +22,7 @@ JPEG,
 ImgList,
 db,
 adodb,
+ComObj,
 ExtCtrls;
 const
   crMyAnimatedCursor = 1;
@@ -84,6 +85,13 @@ procedure UpdateFormProperties(const FormName: string;
   const FieldIdName, FieldNaimName, FieldPriceName: string;
   Query: TADOQuery
 );
+procedure LoadXMLToTableFromDialog(
+  OpenDialog: TOpenDialog;
+  const TableName: string;
+  const FieldIdName, FieldNaimName, FieldPriceName: string;
+  Query: TADOQuery
+);
+function RemoveXMLComments(const FileName: string): string;
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -1161,9 +1169,9 @@ begin
       JSONData.Add('    "naim_good": "' + SampleGoods[i].naim_good + '",');
       JSONData.Add('    "price_good": ' + FloatToStr(SampleGoods[i].price_good));
       if i < 5 then
-        JSONData.Add('  },') // Если не последний элемент, добавляем запятую
+        JSONData.Add('  },')
       else
-        JSONData.Add('  }'); // Для последнего элемента запятая не нужна
+        JSONData.Add('  }'); 
     end;
     JSONData.Add(']');
     JSONData.SaveToFile(FileName);
@@ -1219,43 +1227,33 @@ var
   Fmt: TFormatSettings;
 begin
   if not Assigned(OpenDialog) then Exit;
-
   if not OpenDialog.Execute then
-    Exit; // Пользователь отменил выбор файла
-
+    Exit;
   ID := 0;
   Price := 0.0;
   StringList := TStringList.Create;
   try
-    GetLocaleFormatSettings(0, Fmt);
-    Fmt.DecimalSeparator := '.';
-
+    GetLocaleFormatSettings(0, Fmt);    Fmt.DecimalSeparator := '.';
     StringList.LoadFromFile(OpenDialog.FileName);
-
-    // Очищаем таблицу
     with Query do
     begin
       Close;
       SQL.Text := 'DELETE FROM ' + TableName;
       ExecSQL;
     end;
-
     for i := 1 to StringList.Count - 1 do
     begin
       FieldCount := SplitString(StringList[i], ',', Fields);
       if FieldCount < 3 then Continue;
-
       SId := Fields[0];
       SName := Fields[1];
       SPrice := Fields[2];
-
       try
         ID := StrToIntDef(Trim(SId), 0);
         Price := StrToFloat(Trim(SPrice), Fmt);
       except
         Continue;
       end;
-
       with Query do
       begin
         Close;
@@ -1281,6 +1279,135 @@ end;
     StringList.Free;
   end;
 end;
+ function RemoveXMLComments(const FileName: string): string;
+var
+  SL: TStringList;
+  XMLText: string;
+  StartPos, EndPos: Integer;
+begin
+  SL := TStringList.Create;
+  try
+    SL.LoadFromFile(FileName);
+    XMLText := SL.Text;
+    StartPos := Pos('<!--', XMLText);
+    while StartPos > 0 do
+    begin
+      EndPos := Pos('-->', Copy(XMLText, StartPos + 4, Length(XMLText)));
+      if EndPos > 0 then
+      begin
+        EndPos := EndPos + StartPos + 3; // учёт сдвига
+        Delete(XMLText, StartPos, EndPos - StartPos + 1);
+      end
+      else
+        Break; // нет закрывающего комментария
+      StartPos := Pos('<!--', XMLText);
+    end;
+    Result := XMLText;
+  finally
+    SL.Free;
+  end;
+end;
+procedure LoadXMLToTableFromDialog(
+  OpenDialog: TOpenDialog;
+  const TableName: string;
+  const FieldIdName, FieldNaimName, FieldPriceName: string;
+  Query: TADOQuery
+);
+var
+  XMLDoc: Variant;
+  GoodsNode, GoodNode: Variant;
+  i: Integer;
+  ID: Integer;
+  Price: Double;
+  Fmt: TFormatSettings;
+  SId, SName, SPrice: string;
+  XMLString: string;
+begin
+  if not Assigned(OpenDialog) then Exit;
+  if not OpenDialog.Execute then Exit;
+  try
+    XMLDoc := CreateOleObject('MSXML2.DOMDocument.6.0');
+  except
+    ShowMessage('Не удалось создать XML парсер. Убедитесь, что MSXML установлен.');
+    Exit;
+  end;
+  XMLDoc.async := False;
+  XMLDoc.preserveWhiteSpace := False;
+  XMLString := RemoveXMLComments(OpenDialog.FileName);
+
+  if not XMLDoc.loadXML(XMLString) then
+  begin
+    ShowMessage('Ошибка загрузки XML: ' + XMLDoc.parseError.reason);
+    Exit;
+  end;
+  GoodsNode := XMLDoc.documentElement;
+  if VarIsNull(GoodsNode) or (GoodsNode.nodeName <> 'goods') then
+  begin
+    ShowMessage('Неверный XML: ожидался <goods>');
+    Exit;
+  end;
+  GetLocaleFormatSettings(1033, Fmt);
+  Fmt.DecimalSeparator := '.';
+  Fmt.ThousandSeparator := ',';
+  Query.Close;
+  Query.SQL.Text := 'DELETE FROM ' + TableName;
+  Query.ExecSQL;
+
+  Query.Connection.BeginTrans;
+  try
+    for i := 0 to GoodsNode.childNodes.length - 1 do
+    begin
+      GoodNode := GoodsNode.childNodes.item[i];
+      if GoodNode.nodeName <> 'good' then Continue;
+
+      try
+        if not VarIsNull(GoodNode.selectSingleNode('id_good')) then
+          SId := GoodNode.selectSingleNode('id_good').text else SId := '0';
+        if not VarIsNull(GoodNode.selectSingleNode('naim_good')) then
+          SName := GoodNode.selectSingleNode('naim_good').text else SName := '';
+        if not VarIsNull(GoodNode.selectSingleNode('price_good')) then
+          SPrice := GoodNode.selectSingleNode('price_good').text else SPrice := '0';
+        SPrice := StringReplace(SPrice, ',', '.', [rfReplaceAll]);
+        ID := StrToIntDef(Trim(SId), 0);
+        Price := StrToFloat(Trim(SPrice), Fmt);
+        Query.Close;
+        Query.SQL.Text := Format(
+          'INSERT INTO %s (%s, %s, %s) VALUES (:%s, :%s, :%s)',
+          [TableName, FieldIdName, FieldNaimName, FieldPriceName,
+           FieldIdName, FieldNaimName, FieldPriceName]
+        );
+        Query.Parameters.ParamByName(FieldIdName).Value := ID;
+        Query.Parameters.ParamByName(FieldNaimName).Value := Trim(SName);
+        Query.Parameters.ParamByName(FieldPriceName).Value := Price;
+        Query.ExecSQL;
+      except
+        on E: Exception do
+        begin
+          ShowMessage('Ошибка при импорте ID=' + SId + ': ' + E.Message);
+          Continue;
+        end;
+      end;
+    end;
+    Query.Connection.CommitTrans;
+  except
+    on E: Exception do
+    begin
+      Query.Connection.RollbackTrans;
+      ShowMessage('Ошибка транзакции: ' + E.Message);
+      Exit;
+    end;
+  end;
+  Query.DisableControls;
+  try
+    Query.Close;
+    Query.SQL.Text := 'SELECT * FROM ' + TableName;
+    Query.Open;
+  finally
+    Query.EnableControls;
+  end;
+  ShowMessage('Импорт завершён. Загружено товаров: ' + IntToStr(GoodsNode.childNodes.length));
+end;
+
 initialization
 finalization
 if hAniCursor <> 0 then

@@ -28,7 +28,6 @@ type
     procedure xml_itemClick(Sender: TObject);
     procedure Json_itemClick(Sender: TObject);
     procedure csv_load_itemClick(Sender: TObject);
-    procedure xml_load_itemClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -40,8 +39,7 @@ var
 
 implementation
 
-uses Un_func, Un_good, Un_dm, Un_m_order, Un_report, Un_csv_loader,
-  Un_xml_loader;
+uses Un_func, Un_good, Un_dm, Un_m_order, Un_report, Un_csv_loader;
 
 {$R *.dfm}
 const
@@ -134,19 +132,6 @@ end;
 procedure TFrm_main.xml_itemClick(Sender: TObject);
 begin
      GenerateXMLFile('goods.xml');
-end;
-
-procedure TFrm_main.xml_load_itemClick(Sender: TObject);
-begin
-  try
-UpdateFormProperties('Frm_xml_loader', '‘орма работы с xml',
-clBtnFace, 1024, 768);
-Frm_xml_loader.ShowModal;
-except
-Frm_xml_loader.Free;
-raise;
-end;
-
 end;
 
 end.

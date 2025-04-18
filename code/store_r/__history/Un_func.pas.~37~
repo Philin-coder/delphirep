@@ -22,6 +22,7 @@ JPEG,
 ImgList,
 db,
 adodb,
+ComObj,
 ExtCtrls;
 const
   crMyAnimatedCursor = 1;
@@ -76,9 +77,22 @@ procedure UpdateFormProperties(const FormName: string;
 procedure GenerateCSVFile(const FileName: string);
 procedure GenerateXMLFile(const FileName: string);
 procedure GenerateJSONFile(const FileName: string);
-function SplitString(const S: string; const Delimiter: Char; var ResultArray:
-array of string): Integer;
-implementation
+function SplitString(const S: string; const Delimiter: Char;
+var ResultArray: array of string): Integer;
+procedure LoadCSVToTableFromDialog(
+  OpenDialog: TOpenDialog;
+  const TableName: string;
+  const FieldIdName, FieldNaimName, FieldPriceName: string;
+  Query: TADOQuery
+);
+procedure LoadXMLToTableFromDialog(
+  OpenDialog: TOpenDialog;
+  const TableName: string;
+  const FieldIdName, FieldNaimName, FieldPriceName: string;
+  Query: TADOQuery
+);
+function RemoveXMLComments(const FileName: string): string;
+implementation
  var
   hAniCursor: HCURSOR = 0;
 
@@ -1167,35 +1181,173 @@ begin
       ShowMessage('Ошибка при создании JSON-файла: ' + E.Message);
   end;
 end;
-function SplitString(const S: string; const Delimiter: Char; var ResultArray:
-array of string): Integer;
+function SplitString(const S: string; const Delimiter: Char;
+var ResultArray: array of string): Integer;
 var
-  StartPos, EndPos: Integer;
-  Count: Integer;
+  i, StartPos, DelimPos: Integer;
+  Token: string;
 begin
   StartPos := 1;
-  Count := 0;
+  Result := 0;
 
-  while (StartPos <= Length(S)) and (Count < High(ResultArray)) do
+  for i := 0 to High(ResultArray) do
+    ResultArray[i] := ''; 
+
+  while (StartPos <= Length(S)) and (Result <= High(ResultArray)) do
   begin
-    // Находим позицию следующего разделителя
-    EndPos := Pos(Delimiter, Copy(S, StartPos, MaxInt));
-    if EndPos = 0 then
-      EndPos := Length(S) - StartPos + 1; // Если разделителя нет, берем остаток строки
+    DelimPos := Pos(Delimiter, Copy(S, StartPos, MaxInt));
+    if DelimPos > 0 then
+    begin
+      Token := Copy(S, StartPos, DelimPos - 1);
+      StartPos := StartPos + DelimPos;
+    end
+    else
+    begin
+      Token := Copy(S, StartPos, MaxInt);
+      StartPos := Length(S) + 1;
+    end;
 
-    // Добавляем подстроку в массив
-    ResultArray[Count] := Copy(S, StartPos, EndPos);
-    Inc(Count);
+    ResultArray[Result] := Trim(Token);
+    Inc(Result);
+  end;
+end;
+procedure LoadXMLToTableFromDialog(
+  OpenDialog: TOpenDialog;
+  const TableName: string;
+  const FieldIdName, FieldNaimName, FieldPriceName: string;
+  Query: TADOQuery
+);
+var
+  XMLDoc: Variant;
+  GoodsNode, GoodNode: Variant;
+  i: Integer;
+  ID: Integer;
+  Price: Double;
+  Fmt: TFormatSettings;
+  SId, SName, SPrice: string;
+  XMLString: string;
+begin
+  if not Assigned(OpenDialog) then Exit;
+  if not OpenDialog.Execute then Exit;
 
-    // Перемещаем указатель на начало следующей подстроки
-    StartPos := StartPos + EndPos;
-    if (StartPos <= Length(S)) and (S[StartPos] = Delimiter) then
-      Inc(StartPos); // Пропускаем сам разделитель
+  try
+    XMLDoc := CreateOleObject('MSXML2.DOMDocument.6.0');
+  except
+    ShowMessage('Не удалось создать XML парсер. Убедитесь, что MSXML установлен.');
+    Exit;
   end;
 
-  // Возвращаем количество элементов в массиве
-  Result := Count;
+  XMLDoc.async := False;
+  XMLDoc.preserveWhiteSpace := False;
+
+  // Загружаем XML из строки, предварительно удалив недопустимые комментарии
+  XMLString := RemoveXMLComments(OpenDialog.FileName);
+
+  if not XMLDoc.loadXML(XMLString) then
+  begin
+    ShowMessage('Ошибка загрузки XML: ' + XMLDoc.parseError.reason);
+    Exit;
+  end;
+
+  GoodsNode := XMLDoc.documentElement;
+
+  if VarIsNull(GoodsNode) or (GoodsNode.nodeName <> 'goods') then
+  begin
+    ShowMessage('Неверный XML: ожидался <goods>');
+    Exit;
+  end;
+
+  GetLocaleFormatSettings(1033, Fmt); // Английская локаль для точек
+  Fmt.DecimalSeparator := '.';
+  Fmt.ThousandSeparator := ',';
+
+  Query.Close;
+  Query.SQL.Text := 'DELETE FROM ' + TableName;
+  Query.ExecSQL;
+
+  Query.Connection.BeginTrans;
+  try
+    for i := 0 to GoodsNode.childNodes.length - 1 do
+    begin
+      GoodNode := GoodsNode.childNodes.item[i];
+      if GoodNode.nodeName <> 'good' then Continue;
+
+      try
+        if not VarIsNull(GoodNode.selectSingleNode('id_good')) then
+          SId := GoodNode.selectSingleNode('id_good').text else SId := '0';
+        if not VarIsNull(GoodNode.selectSingleNode('naim_good')) then
+          SName := GoodNode.selectSingleNode('naim_good').text else SName := '';
+        if not VarIsNull(GoodNode.selectSingleNode('price_good')) then
+          SPrice := GoodNode.selectSingleNode('price_good').text else SPrice := '0';
+
+        SPrice := StringReplace(SPrice, ',', '.', [rfReplaceAll]);
+
+        ID := StrToIntDef(Trim(SId), 0);
+        Price := StrToFloat(Trim(SPrice), Fmt);
+
+        Query.Close;
+        Query.SQL.Text := Format(
+          'INSERT INTO %s (%s, %s, %s) VALUES (:%s, :%s, :%s)',
+          [TableName, FieldIdName, FieldNaimName, FieldPriceName,
+           FieldIdName, FieldNaimName, FieldPriceName]
+        );
+        Query.Parameters.ParamByName(FieldIdName).Value := ID;
+        Query.Parameters.ParamByName(FieldNaimName).Value := Trim(SName);
+        Query.Parameters.ParamByName(FieldPriceName).Value := Price;
+        Query.ExecSQL;
+      except
+        on E: Exception do
+        begin
+          ShowMessage('Ошибка при импорте ID=' + SId + ': ' + E.Message);
+          Continue;
+        end;
+      end;
+    end;
+    Query.Connection.CommitTrans;
+  except
+    on E: Exception do
+    begin
+      Query.Connection.RollbackTrans;
+      ShowMessage('Ошибка транзакции: ' + E.Message);
+      Exit;
+    end;
+  end;
+
+  // Обновляем данные в гриде
+  Query.DisableControls;
+  try
+    Query.Close;
+    Query.SQL.Text := 'SELECT * FROM ' + TableName;
+    Query.Open;
+  finally
+    Query.EnableControls;
+  end;
+
+  ShowMessage('Импорт завершён. Загружено товаров: ' + IntToStr(GoodsNode.childNodes.length));
 end;
+function RemoveXMLComments(const FileName: string): string;
+var
+  SL: TStringList;
+  XMLText: string;
+begin
+  SL := TStringList.Create;
+  try
+    SL.LoadFromFile(FileName, TEncoding.UTF8); // или ANSI, зависит от твоего файла
+    XMLText := SL.Text;
+
+    // Удаляем все <!-- ... -->
+    while Pos('<!--', XMLText) > 0 do
+    begin
+      Delete(XMLText, Pos('<!--', XMLText),
+             Pos('-->', XMLText) - Pos('<!--', XMLText) + 3);
+    end;
+
+    Result := XMLText;
+  finally
+    SL.Free;
+  end;
+end;
+
 initialization
 finalization
 if hAniCursor <> 0 then
