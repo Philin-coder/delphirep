@@ -23,6 +23,8 @@ type
     reportQuery: TADOQuery;
     reportDS: TDataSource;
     report1: TADOStoredProc;
+    GQuery: TADOQuery;
+    gDS: TDataSource;
   private
     { Private declarations }
   public

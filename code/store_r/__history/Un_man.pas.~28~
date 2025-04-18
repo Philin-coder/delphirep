@@ -11,10 +11,20 @@ type
     ItemMenu: TMainMenu;
     good_item: TMenuItem;
     main_Image: TImage;
+    m_order_item: TMenuItem;
+    report_item: TMenuItem;
+    csv_item: TMenuItem;
+    xml_item: TMenuItem;
+    Json_item: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure good_itemClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
+    procedure m_order_itemClick(Sender: TObject);
+    procedure report_itemClick(Sender: TObject);
+    procedure csv_itemClick(Sender: TObject);
+    procedure xml_itemClick(Sender: TObject);
+    procedure Json_itemClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -26,11 +36,16 @@ var
 
 implementation
 
-uses Un_func, Un_good, Un_dm;
+uses Un_func, Un_good, Un_dm, Un_m_order, Un_report;
 
 {$R *.dfm}
 const
   FileName = 'connection_string.txt';
+
+procedure TFrm_main.csv_itemClick(Sender: TObject);
+begin
+      GenerateCSVFile('goods.csv');
+end;
 
 procedure TFrm_main.FormActivate(Sender: TObject);
 begin
@@ -39,14 +54,14 @@ end;
 
 procedure TFrm_main.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-main_Image.Picture:=nil;
+  main_Image.Picture:=nil;
+  SaveFormState(Self);
 end;
 
 procedure TFrm_main.FormCreate(Sender: TObject);
 begin
 SetFormPropertiesIfNeeded;
-// Закрытие всех запросов на форме 'dm'
- // CloseAllQueriesOnForm('dm'); вызов
+
  with main_Image do
  begin
      Stretch:=True;
@@ -66,6 +81,42 @@ except
 Frm_good.Free;
 raise;
 end;
+end;
+
+procedure TFrm_main.Json_itemClick(Sender: TObject);
+begin
+GenerateJSONFile('goods.json');
+end;
+
+procedure TFrm_main.m_order_itemClick(Sender: TObject);
+begin
+try
+UpdateFormProperties('Frm_m_order', 'Форма работы с заказом',
+clBtnFace, 1024, 768);
+Frm_m_order.ShowModal;
+except
+Frm_m_order.Free;
+raise;
+end;
+
+end;
+
+procedure TFrm_main.report_itemClick(Sender: TObject);
+begin
+ try
+UpdateFormProperties('Frm_report', 'Форма работы с отчетом',
+clBtnFace, 1024, 768);
+Frm_report.ShowModal;
+except
+Frm_report.Free;
+raise;
+end;
+
+end;
+
+procedure TFrm_main.xml_itemClick(Sender: TObject);
+begin
+     GenerateXMLFile('goods.xml');
 end;
 
 end.

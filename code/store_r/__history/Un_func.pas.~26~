@@ -75,7 +75,10 @@ procedure UpdateFormProperties(const FormName: string;
 procedure CloseAllQueriesOnDataModule(const DataModuleName: string);
 procedure GenerateCSVFile(const FileName: string);
 procedure GenerateXMLFile(const FileName: string);
-implementation
+procedure GenerateJSONFile(const FileName: string);
+function SplitString(const S: string; const Delimiter: Char; var ResultArray:
+array of string): Integer;
+implementation
  var
   hAniCursor: HCURSOR = 0;
 
@@ -1057,6 +1060,7 @@ begin
     end;
   end;
 end;
+
 procedure GenerateCSVFile(const FileName: string);
 var
   CSVData: TStringList;
@@ -1075,8 +1079,6 @@ begin
     SampleGoods[3].id_good := 3; SampleGoods[3].naim_good := 'Товар 3'; SampleGoods[3].price_good := 150.00;
     SampleGoods[4].id_good := 4; SampleGoods[4].naim_good := 'Товар 4'; SampleGoods[4].price_good := 300.25;
     SampleGoods[5].id_good := 5; SampleGoods[5].naim_good := 'Товар 5'; SampleGoods[5].price_good := 400.00;
-
-    // Формируем строки CSV на основе тестовых данных
     for i := 1 to 5 do
     begin
       CSVData.Add(Format('%d,%s,%.2f', [
@@ -1085,11 +1087,7 @@ begin
         SampleGoods[i].price_good
       ]));
     end;
-
-    // Сохраняем данные в файл
     CSVData.SaveToFile(FileName);
-
-    // Сообщаем пользователю об успешном создании файла
     ShowMessage('CSV-файл успешно создан: ' + FileName);
   except
     on E: Exception do
@@ -1130,6 +1128,73 @@ begin
     on E: Exception do
       ShowMessage('Ошибка при создании XML-файла: ' + E.Message);
   end;
+end;
+
+procedure GenerateJSONFile(const FileName: string);
+var
+  JSONData: TStringList;
+  i: Integer;
+  SampleGoods: array[1..5] of record
+    id_good: Integer;
+    naim_good: string;
+    price_good: Double;
+  end;
+begin
+  JSONData := TStringList.Create;
+  try
+    JSONData.Add('[');
+    SampleGoods[1].id_good := 1; SampleGoods[1].naim_good := 'Товар 1'; SampleGoods[1].price_good := 100.50;
+    SampleGoods[2].id_good := 2; SampleGoods[2].naim_good := 'Товар 2'; SampleGoods[2].price_good := 200.75;
+    SampleGoods[3].id_good := 3; SampleGoods[3].naim_good := 'Товар 3'; SampleGoods[3].price_good := 150.00;
+    SampleGoods[4].id_good := 4; SampleGoods[4].naim_good := 'Товар 4'; SampleGoods[4].price_good := 300.25;
+    SampleGoods[5].id_good := 5; SampleGoods[5].naim_good := 'Товар 5'; SampleGoods[5].price_good := 400.00;
+    for i := 1 to 5 do
+    begin
+      JSONData.Add('  {');
+      JSONData.Add('    "id_good": ' + IntToStr(SampleGoods[i].id_good) + ',');
+      JSONData.Add('    "naim_good": "' + SampleGoods[i].naim_good + '",');
+      JSONData.Add('    "price_good": ' + FloatToStr(SampleGoods[i].price_good));
+      if i < 5 then
+        JSONData.Add('  },') // Если не последний элемент, добавляем запятую
+      else
+        JSONData.Add('  }'); // Для последнего элемента запятая не нужна
+    end;
+    JSONData.Add(']');
+    JSONData.SaveToFile(FileName);
+    ShowMessage('JSON-файл успешно создан: ' + FileName);
+  except
+    on E: Exception do
+      ShowMessage('Ошибка при создании JSON-файла: ' + E.Message);
+  end;
+end;
+function SplitString(const S: string; const Delimiter: Char; var ResultArray:
+array of string): Integer;
+var
+  StartPos, EndPos: Integer;
+  Count: Integer;
+begin
+  StartPos := 1;
+  Count := 0;
+
+  while (StartPos <= Length(S)) and (Count < High(ResultArray)) do
+  begin
+    // Находим позицию следующего разделителя
+    EndPos := Pos(Delimiter, Copy(S, StartPos, MaxInt));
+    if EndPos = 0 then
+      EndPos := Length(S) - StartPos + 1; // Если разделителя нет, берем остаток строки
+
+    // Добавляем подстроку в массив
+    ResultArray[Count] := Copy(S, StartPos, EndPos);
+    Inc(Count);
+
+    // Перемещаем указатель на начало следующей подстроки
+    StartPos := StartPos + EndPos;
+    if (StartPos <= Length(S)) and (S[StartPos] = Delimiter) then
+      Inc(StartPos); // Пропускаем сам разделитель
+  end;
+
+  // Возвращаем количество элементов в массиве
+  Result := Count;
 end;
 initialization
 finalization

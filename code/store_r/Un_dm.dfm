@@ -198,12 +198,14 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@adres'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end
       item
         Name = '@oredr_q'
@@ -217,12 +219,14 @@ object DM: TDM
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end
       item
         Name = '@get_way'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 100
+        Value = Null
       end
       item
         Name = '@is_get'
@@ -257,6 +261,7 @@ object DM: TDM
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end>
     Left = 176
     Top = 256
@@ -270,6 +275,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@m_order_id'
@@ -283,6 +289,7 @@ object DM: TDM
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end>
     Left = 192
     Top = 320
@@ -296,6 +303,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@m_order_id'
@@ -344,5 +352,19 @@ object DM: TDM
     Parameters = <>
     Left = 320
     Top = 200
+  end
+  object GQuery: TADOQuery
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select * from goods')
+    Left = 376
+    Top = 88
+  end
+  object gDS: TDataSource
+    DataSet = GQuery
+    Left = 384
+    Top = 152
   end
 end

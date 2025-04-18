@@ -16,6 +16,7 @@ type
     csv_item: TMenuItem;
     xml_item: TMenuItem;
     Json_item: TMenuItem;
+    csv_load_item: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure good_itemClick(Sender: TObject);
@@ -25,6 +26,7 @@ type
     procedure csv_itemClick(Sender: TObject);
     procedure xml_itemClick(Sender: TObject);
     procedure Json_itemClick(Sender: TObject);
+    procedure csv_load_itemClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -36,7 +38,7 @@ var
 
 implementation
 
-uses Un_func, Un_good, Un_dm, Un_m_order, Un_report;
+uses Un_func, Un_good, Un_dm, Un_m_order, Un_report, Un_csv_loader;
 
 {$R *.dfm}
 const
@@ -45,6 +47,18 @@ const
 procedure TFrm_main.csv_itemClick(Sender: TObject);
 begin
       GenerateCSVFile('goods.csv');
+end;
+
+procedure TFrm_main.csv_load_itemClick(Sender: TObject);
+begin
+  try
+UpdateFormProperties('Frm_csv_loader', '‘орма работы с csv',
+clBtnFace, 1024, 768);
+Frm_csv_loader.ShowModal;
+except
+Frm_csv_loader.Free;
+raise;
+end;
 end;
 
 procedure TFrm_main.FormActivate(Sender: TObject);

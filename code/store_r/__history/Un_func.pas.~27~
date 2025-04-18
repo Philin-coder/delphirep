@@ -72,7 +72,12 @@ procedure UpdateFormProperties(const FormName: string;
 function IsMaskEditEmpty(MaskEdit: TMaskEdit): Boolean;
 procedure SetFormPropertiesIfNeeded;
 function FindDataModuleByName(const AName: string): TDataModule;
-procedure CloseAllQueriesOnForm(const FormName: string);
+procedure CloseAllQueriesOnDataModule(const DataModuleName: string);
+procedure GenerateCSVFile(const FileName: string);
+procedure GenerateXMLFile(const FileName: string);
+procedure GenerateJSONFile(const FileName: string);
+function SplitString(const S: string; const Delimiter: Char;
+var ResultArray: array of string): Integer;
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -1032,38 +1037,160 @@ var
   Q: Integer;
   Query: TADOQuery;
 begin
-  // Поиск модуля данных по имени
   DataModule := FindDataModuleByName(DataModuleName);
-
   if not Assigned(DataModule) then
   begin
     ShowMessage('Модуль данных ' + DataModuleName + ' не найден');
     Exit;
   end;
-
-  // Проход по всем компонентам модуля данных
   for Q := 0 to DataModule.ComponentCount - 1 do
   begin
-    // Проверка, является ли компонент TADOQuery
     if DataModule.Components[Q] is TADOQuery then
     begin
       Query := TADOQuery(DataModule.Components[Q]);
-
       try
-        // Закрытие TADOQuery, если он открыт
         if Query.Active then
           Query.Close;
       except
         on E: Exception do
         begin
-          // Логирование ошибки (например, в файл или окно сообщений)
           ShowMessageFmt('Ошибка при закрытии запроса "%s": %s', [Query.Name, E.Message]);
         end;
       end;
     end;
   end;
+end;
 
-  ShowMessage('Все запросы успешно закрыты.');
+procedure GenerateCSVFile(const FileName: string);
+var
+  CSVData: TStringList;
+  i: Integer;
+  SampleGoods: array[1..5] of record
+    id_good: Integer;
+    naim_good: string;
+    price_good: Double;
+  end;
+begin
+  CSVData := TStringList.Create;
+  try
+    CSVData.Add('id_good,naim_good,price_good');
+    SampleGoods[1].id_good := 1; SampleGoods[1].naim_good := 'Товар 1'; SampleGoods[1].price_good := 100.50;
+    SampleGoods[2].id_good := 2; SampleGoods[2].naim_good := 'Товар 2'; SampleGoods[2].price_good := 200.75;
+    SampleGoods[3].id_good := 3; SampleGoods[3].naim_good := 'Товар 3'; SampleGoods[3].price_good := 150.00;
+    SampleGoods[4].id_good := 4; SampleGoods[4].naim_good := 'Товар 4'; SampleGoods[4].price_good := 300.25;
+    SampleGoods[5].id_good := 5; SampleGoods[5].naim_good := 'Товар 5'; SampleGoods[5].price_good := 400.00;
+    for i := 1 to 5 do
+    begin
+      CSVData.Add(Format('%d,%s,%.2f', [
+        SampleGoods[i].id_good,
+        SampleGoods[i].naim_good,
+        SampleGoods[i].price_good
+      ]));
+    end;
+    CSVData.SaveToFile(FileName);
+    ShowMessage('CSV-файл успешно создан: ' + FileName);
+  except
+    on E: Exception do
+      ShowMessage('Ошибка при создании CSV-файла: ' + E.Message);
+  end;
+end;
+procedure GenerateXMLFile(const FileName: string);
+var
+  XMLData: TStringList;
+  i: Integer;
+  SampleGoods: array[1..5] of record
+    id_good: Integer;
+    naim_good: string;
+    price_good: Double;
+  end;
+begin
+  XMLData := TStringList.Create;
+  try
+    XMLData.Add('<?xml version="1.0" encoding="UTF-8"?>');
+    XMLData.Add('<goods>');
+    SampleGoods[1].id_good := 1; SampleGoods[1].naim_good := 'Товар 1'; SampleGoods[1].price_good := 100.50;
+    SampleGoods[2].id_good := 2; SampleGoods[2].naim_good := 'Товар 2'; SampleGoods[2].price_good := 200.75;
+    SampleGoods[3].id_good := 3; SampleGoods[3].naim_good := 'Товар 3'; SampleGoods[3].price_good := 150.00;
+    SampleGoods[4].id_good := 4; SampleGoods[4].naim_good := 'Товар 4'; SampleGoods[4].price_good := 300.25;
+    SampleGoods[5].id_good := 5; SampleGoods[5].naim_good := 'Товар 5'; SampleGoods[5].price_good := 400.00;
+    for i := 1 to 5 do
+    begin
+      XMLData.Add('  <good>');
+      XMLData.Add('    <id_good>' + IntToStr(SampleGoods[i].id_good) + '</id_good>');
+      XMLData.Add('    <naim_good>' + SampleGoods[i].naim_good + '</naim_good>');
+      XMLData.Add('    <price_good>' + FloatToStr(SampleGoods[i].price_good) + '</price_good>');
+      XMLData.Add('  </good>');
+    end;
+    XMLData.Add('</goods>');
+    XMLData.SaveToFile(FileName);
+    ShowMessage('XML-файл успешно создан: ' + FileName);
+  except
+    on E: Exception do
+      ShowMessage('Ошибка при создании XML-файла: ' + E.Message);
+  end;
+end;
+
+procedure GenerateJSONFile(const FileName: string);
+var
+  JSONData: TStringList;
+  i: Integer;
+  SampleGoods: array[1..5] of record
+    id_good: Integer;
+    naim_good: string;
+    price_good: Double;
+  end;
+begin
+  JSONData := TStringList.Create;
+  try
+    JSONData.Add('[');
+    SampleGoods[1].id_good := 1; SampleGoods[1].naim_good := 'Товар 1'; SampleGoods[1].price_good := 100.50;
+    SampleGoods[2].id_good := 2; SampleGoods[2].naim_good := 'Товар 2'; SampleGoods[2].price_good := 200.75;
+    SampleGoods[3].id_good := 3; SampleGoods[3].naim_good := 'Товар 3'; SampleGoods[3].price_good := 150.00;
+    SampleGoods[4].id_good := 4; SampleGoods[4].naim_good := 'Товар 4'; SampleGoods[4].price_good := 300.25;
+    SampleGoods[5].id_good := 5; SampleGoods[5].naim_good := 'Товар 5'; SampleGoods[5].price_good := 400.00;
+    for i := 1 to 5 do
+    begin
+      JSONData.Add('  {');
+      JSONData.Add('    "id_good": ' + IntToStr(SampleGoods[i].id_good) + ',');
+      JSONData.Add('    "naim_good": "' + SampleGoods[i].naim_good + '",');
+      JSONData.Add('    "price_good": ' + FloatToStr(SampleGoods[i].price_good));
+      if i < 5 then
+        JSONData.Add('  },') // Если не последний элемент, добавляем запятую
+      else
+        JSONData.Add('  }'); // Для последнего элемента запятая не нужна
+    end;
+    JSONData.Add(']');
+    JSONData.SaveToFile(FileName);
+    ShowMessage('JSON-файл успешно создан: ' + FileName);
+  except
+    on E: Exception do
+      ShowMessage('Ошибка при создании JSON-файла: ' + E.Message);
+  end;
+end;
+function SplitString(const S: string; const Delimiter: Char;
+var ResultArray: array of string): Integer;
+var
+  StartPos, EndPos: Integer;
+  Count: Integer;
+begin
+  StartPos := 1;
+  Count := 0;
+
+  while (StartPos <= Length(S)) and (Count <= High(ResultArray)) do
+  begin
+    EndPos := Pos(Delimiter, S, StartPos); // Ищем разделитель, начиная с StartPos
+    if EndPos = 0 then
+      EndPos := Length(S) + 1; // Если разделитель не найден, берем остаток строки
+
+    // Копируем подстроку без разделителя
+    ResultArray[Count] := Copy(S, StartPos, EndPos - StartPos);
+    Inc(Count);
+
+    // Перемещаемся на позицию после разделителя
+    StartPos := EndPos + 1;
+  end;
+
+  Result := Count;
 end;
 initialization
 finalization

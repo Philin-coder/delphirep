@@ -1,0 +1,143 @@
+unit Un_csv_loader;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls,db,adodb, ComCtrls, Grids, DBGrids, ExtCtrls, DBCtrls,
+  StrUtils;
+
+type
+  TFrm_csv_loader = class(TForm)
+    csvlPC: TPageControl;
+    delTab: TTabSheet;
+    csvldeldataBox: TGroupBox;
+    rpobtn_box: TGroupBox;
+    rpBtn: TButton;
+    csvlGrd: TDBGrid;
+    xmlOD: TOpenDialog;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure rpBtnClick(Sender: TObject);
+  private
+    procedure   LoadGoodsFromCSV(const FileName: string);
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_csv_loader: TFrm_csv_loader;
+
+implementation
+
+uses Un_dm, Un_func, Un_man;
+
+{$R *.dfm}
+procedure TFrm_csv_loader.LoadGoodsFromCSV(const FileName: string);
+var
+  StringList: TStringList;
+  i, FieldCount: Integer;
+  Fields: array[0..2] of string;
+  IDGood: Integer;
+  PriceGood: Double;
+  Fmt: TFormatSettings;
+  PriceStr, NameStr: string;
+begin
+  StringList := TStringList.Create;
+  try
+    // Установка формата чисел для корректного парсинга
+    GetLocaleFormatSettings(0, Fmt);
+    Fmt.DecimalSeparator := '.';
+
+    // Загрузка файла
+    StringList.LoadFromFile(FileName);
+
+    // Очистка таблицы Goods
+    with DM.gQuery do
+    begin
+      Close;
+      SQL.Text := 'DELETE FROM Goods';
+      ExecSQL;
+    end;
+
+    // Обработка строк CSV (начиная со второй — заголовок пропускаем)
+    for i := 1 to StringList.Count - 1 do
+    begin
+      FieldCount := SplitString(StringList[i], ',', Fields);
+
+      if FieldCount < 3 then
+      begin
+        ShowMessage('Ошибка: строка ' + IntToStr(i + 1) + ' содержит недостаточно полей.');
+        Continue;
+      end;
+
+      try
+        // ID товара
+        IDGood := StrToIntDef(Trim(Fields[0]), 0);
+
+        // Название товара
+        NameStr := Trim(Fields[1]);
+
+        // Обработка цены: замена запятой на точку
+        PriceStr := Trim(Fields[2]);
+        PriceStr := StringReplace(PriceStr, ',', '.', [rfReplaceAll]);
+        PriceGood := StrToFloat(PriceStr, Fmt);
+
+      except
+        on E: Exception do
+        begin
+          ShowMessage('Ошибка в строке ' + IntToStr(i + 1) + ': ' + E.Message);
+          Continue;
+        end;
+      end;
+
+      // Вставка в таблицу
+      with DM.gQuery do
+      begin
+        Close;
+        SQL.Text :=
+          'INSERT INTO Goods (id_good, naim_good, price_good) ' +
+          'VALUES (:id_good, :naim_good, :price_good)';
+        Parameters.ParamByName('id_good').Value := IDGood;
+        Parameters.ParamByName('naim_good').Value := NameStr;
+        Parameters.ParamByName('price_good').Value := PriceGood;
+        ExecSQL;
+      end;
+    end;
+
+    // Обновление DBGrid
+    DM.gQuery.Close;
+    DM.gQuery.SQL.Text := 'SELECT * FROM Goods';
+    DM.gQuery.Open;
+
+    ShowMessage('Данные успешно загружены из CSV.');
+  except
+    on E: Exception do
+      ShowMessage('Ошибка при загрузке: ' + E.Message);
+  end;
+  StringList.Free;
+end;
+procedure TFrm_csv_loader.FormActivate(Sender: TObject);
+begin
+dm.GQuery.Open;
+end;
+
+procedure TFrm_csv_loader.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  SaveFormState(Self);
+  CloseAllQueriesOnDataModule('dm');
+end;
+
+procedure TFrm_csv_loader.FormCreate(Sender: TObject);
+begin
+Frm_csv_loader.ShowHint:=true;
+ UniformizeButtonsSize(Self,  273, 25);
+ UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+ UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+ LoadFormState(Self);
+ xmlOD.Filter:='CSV Files (*.csv)|*.csv|All Files (*.*)|*.*';
+end;
+
+end.

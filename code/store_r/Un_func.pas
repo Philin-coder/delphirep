@@ -76,6 +76,8 @@ procedure UpdateFormProperties(const FormName: string;
 procedure GenerateCSVFile(const FileName: string);
 procedure GenerateXMLFile(const FileName: string);
 procedure GenerateJSONFile(const FileName: string);
+function SplitString(const S: string; const Delimiter: Char;
+var ResultArray: array of string): Integer;
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -1163,6 +1165,36 @@ begin
   except
     on E: Exception do
       ShowMessage('Ошибка при создании JSON-файла: ' + E.Message);
+  end;
+end;
+function SplitString(const S: string; const Delimiter: Char;
+var ResultArray: array of string): Integer;
+var
+  i, StartPos, DelimPos: Integer;
+  Token: string;
+begin
+  StartPos := 1;
+  Result := 0;
+
+  for i := 0 to High(ResultArray) do
+    ResultArray[i] := ''; 
+
+  while (StartPos <= Length(S)) and (Result <= High(ResultArray)) do
+  begin
+    DelimPos := Pos(Delimiter, Copy(S, StartPos, MaxInt));
+    if DelimPos > 0 then
+    begin
+      Token := Copy(S, StartPos, DelimPos - 1);
+      StartPos := StartPos + DelimPos;
+    end
+    else
+    begin
+      Token := Copy(S, StartPos, MaxInt);
+      StartPos := Length(S) + 1;
+    end;
+
+    ResultArray[Result] := Trim(Token);
+    Inc(Result);
   end;
 end;
 initialization
