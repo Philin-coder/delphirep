@@ -1,0 +1,51 @@
+unit Un_about;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs,jpeg, StdCtrls, ExtCtrls, ComCtrls;
+
+type
+  TFrm_about = class(TForm)
+    about_me_pn: TFlowPanel;
+    logoBox: TGroupBox;
+    rtPanel: TFlowPanel;
+    btnBox: TGroupBox;
+    infPanel: TFlowPanel;
+    logoImage: TImage;
+    rtBox: TGroupBox;
+    infRE: TRichEdit;
+    closeBtn: TButton;
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_about: TFrm_about;
+
+implementation
+
+uses Un_func;
+
+{$R *.dfm}
+
+procedure TFrm_about.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  SaveFormState(Self);
+end;
+
+procedure TFrm_about.FormCreate(Sender: TObject);
+begin
+ Frm_about.ShowHint:=true;
+ UniformizeButtonsSize(Self,  273, 25);
+ UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+ UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+ LoadFormState(Self);
+end;
+
+end.

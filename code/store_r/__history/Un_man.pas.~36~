@@ -14,6 +14,12 @@ type
     m_order_item: TMenuItem;
     report_item: TMenuItem;
     csv_item: TMenuItem;
+    xml_item: TMenuItem;
+    Json_item: TMenuItem;
+    csv_load_item: TMenuItem;
+    xml_load_item: TMenuItem;
+    json_load_item: TMenuItem;
+    About1: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure good_itemClick(Sender: TObject);
@@ -21,6 +27,12 @@ type
     procedure m_order_itemClick(Sender: TObject);
     procedure report_itemClick(Sender: TObject);
     procedure csv_itemClick(Sender: TObject);
+    procedure xml_itemClick(Sender: TObject);
+    procedure Json_itemClick(Sender: TObject);
+    procedure csv_load_itemClick(Sender: TObject);
+    procedure xml_load_itemClick(Sender: TObject);
+    procedure json_load_itemClick(Sender: TObject);
+    procedure About1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -32,15 +44,41 @@ var
 
 implementation
 
-uses Un_func, Un_good, Un_dm, Un_m_order, Un_report;
+uses Un_func, Un_good, Un_dm, Un_m_order, Un_report, Un_csv_loader,
+  Un_xml_loader, Un_json_loader, Un_about;
 
 {$R *.dfm}
 const
   FileName = 'connection_string.txt';
 
+procedure TFrm_main.About1Click(Sender: TObject);
+begin
+     try
+UpdateFormProperties('Frm_about', 'О программе',
+clBtnFace, 1024, 768);
+Frm_about.ShowModal;
+except
+Frm_about.Free;
+raise;
+end;
+
+end;
+
 procedure TFrm_main.csv_itemClick(Sender: TObject);
 begin
       GenerateCSVFile('goods.csv');
+end;
+
+procedure TFrm_main.csv_load_itemClick(Sender: TObject);
+begin
+  try
+UpdateFormProperties('Frm_csv_loader', 'Форма работы с csv',
+clBtnFace, 1024, 768);
+Frm_csv_loader.ShowModal;
+except
+Frm_csv_loader.Free;
+raise;
+end;
 end;
 
 procedure TFrm_main.FormActivate(Sender: TObject);
@@ -79,6 +117,23 @@ raise;
 end;
 end;
 
+procedure TFrm_main.Json_itemClick(Sender: TObject);
+begin
+GenerateJSONFile('goods.json');
+end;
+
+procedure TFrm_main.json_load_itemClick(Sender: TObject);
+begin
+try
+UpdateFormProperties('Frm_json_loader', 'Форма работы с json',
+clBtnFace, 1024, 768);
+Frm_json_loader.ShowModal;
+except
+Frm_json_loader.Free;
+raise;
+end;
+end;
+
 procedure TFrm_main.m_order_itemClick(Sender: TObject);
 begin
 try
@@ -100,6 +155,24 @@ clBtnFace, 1024, 768);
 Frm_report.ShowModal;
 except
 Frm_report.Free;
+raise;
+end;
+
+end;
+
+procedure TFrm_main.xml_itemClick(Sender: TObject);
+begin
+     GenerateXMLFile('goods.xml');
+end;
+
+procedure TFrm_main.xml_load_itemClick(Sender: TObject);
+begin
+  try
+UpdateFormProperties('Frm_xml_loader', 'Форма работы с xml',
+clBtnFace, 1024, 768);
+Frm_xml_loader.ShowModal;
+except
+Frm_xml_loader.Free;
 raise;
 end;
 

@@ -1,0 +1,69 @@
+object Frm_about: TFrm_about
+  Left = 0
+  Top = 0
+  Caption = #1054' '#1087#1088#1086#1075#1088#1072#1084#1084#1077
+  ClientHeight = 545
+  ClientWidth = 741
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  OnClose = FormClose
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object FlowPanel1: TFlowPanel
+    Left = 0
+    Top = 0
+    Width = 185
+    Height = 480
+    Align = alLeft
+    Caption = 'FlowPanel1'
+    TabOrder = 0
+    ExplicitLeft = 232
+    ExplicitTop = 96
+    ExplicitHeight = 41
+    object GroupBox1: TGroupBox
+      Left = 1
+      Top = 1
+      Width = 185
+      Height = 105
+      Align = alTop
+      TabOrder = 0
+    end
+  end
+  object FlowPanel2: TFlowPanel
+    Left = 448
+    Top = 0
+    Width = 293
+    Height = 480
+    Align = alRight
+    Caption = 'FlowPanel2'
+    TabOrder = 1
+    ExplicitHeight = 545
+  end
+  object GroupBox2: TGroupBox
+    Left = 0
+    Top = 480
+    Width = 741
+    Height = 65
+    Align = alBottom
+    Caption = 'GroupBox2'
+    TabOrder = 2
+  end
+  object FlowPanel3: TFlowPanel
+    Left = 185
+    Top = 0
+    Width = 263
+    Height = 480
+    Align = alClient
+    Caption = 'FlowPanel2'
+    TabOrder = 3
+    ExplicitLeft = 448
+    ExplicitTop = 8
+    ExplicitWidth = 293
+  end
+end

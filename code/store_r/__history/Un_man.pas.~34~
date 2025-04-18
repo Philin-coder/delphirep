@@ -19,7 +19,6 @@ type
     csv_load_item: TMenuItem;
     xml_load_item: TMenuItem;
     json_load_item: TMenuItem;
-    About1: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure good_itemClick(Sender: TObject);
@@ -32,7 +31,6 @@ type
     procedure csv_load_itemClick(Sender: TObject);
     procedure xml_load_itemClick(Sender: TObject);
     procedure json_load_itemClick(Sender: TObject);
-    procedure About1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -45,24 +43,11 @@ var
 implementation
 
 uses Un_func, Un_good, Un_dm, Un_m_order, Un_report, Un_csv_loader,
-  Un_xml_loader, Un_json_loader, Un_about;
+  Un_xml_loader, Un_json_loader;
 
 {$R *.dfm}
 const
   FileName = 'connection_string.txt';
-
-procedure TFrm_main.About1Click(Sender: TObject);
-begin
-try
-UpdateFormProperties('Frm_about', 'О программе',
-clBtnFace, 1024, 768);
-Frm_about.ShowModal;
-except
-Frm_about.Free;
-raise;
-end;
-
-end;
 
 procedure TFrm_main.csv_itemClick(Sender: TObject);
 begin

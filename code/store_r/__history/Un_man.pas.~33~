@@ -13,11 +13,23 @@ type
     main_Image: TImage;
     m_order_item: TMenuItem;
     report_item: TMenuItem;
+    csv_item: TMenuItem;
+    xml_item: TMenuItem;
+    Json_item: TMenuItem;
+    csv_load_item: TMenuItem;
+    xml_load_item: TMenuItem;
+    json_load_item: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure good_itemClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure m_order_itemClick(Sender: TObject);
+    procedure report_itemClick(Sender: TObject);
+    procedure csv_itemClick(Sender: TObject);
+    procedure xml_itemClick(Sender: TObject);
+    procedure Json_itemClick(Sender: TObject);
+    procedure csv_load_itemClick(Sender: TObject);
+    procedure xml_load_itemClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -29,11 +41,29 @@ var
 
 implementation
 
-uses Un_func, Un_good, Un_dm, Un_m_order;
+uses Un_func, Un_good, Un_dm, Un_m_order, Un_report, Un_csv_loader,
+  Un_xml_loader;
 
 {$R *.dfm}
 const
   FileName = 'connection_string.txt';
+
+procedure TFrm_main.csv_itemClick(Sender: TObject);
+begin
+      GenerateCSVFile('goods.csv');
+end;
+
+procedure TFrm_main.csv_load_itemClick(Sender: TObject);
+begin
+  try
+UpdateFormProperties('Frm_csv_loader', 'װמנלא נאבמעû ס csv',
+clBtnFace, 1024, 768);
+Frm_csv_loader.ShowModal;
+except
+Frm_csv_loader.Free;
+raise;
+end;
+end;
 
 procedure TFrm_main.FormActivate(Sender: TObject);
 begin
@@ -71,6 +101,11 @@ raise;
 end;
 end;
 
+procedure TFrm_main.Json_itemClick(Sender: TObject);
+begin
+GenerateJSONFile('goods.json');
+end;
+
 procedure TFrm_main.m_order_itemClick(Sender: TObject);
 begin
 try
@@ -79,6 +114,37 @@ clBtnFace, 1024, 768);
 Frm_m_order.ShowModal;
 except
 Frm_m_order.Free;
+raise;
+end;
+
+end;
+
+procedure TFrm_main.report_itemClick(Sender: TObject);
+begin
+ try
+UpdateFormProperties('Frm_report', 'װמנלא נאבמעû ס מעקועמל',
+clBtnFace, 1024, 768);
+Frm_report.ShowModal;
+except
+Frm_report.Free;
+raise;
+end;
+
+end;
+
+procedure TFrm_main.xml_itemClick(Sender: TObject);
+begin
+     GenerateXMLFile('goods.xml');
+end;
+
+procedure TFrm_main.xml_load_itemClick(Sender: TObject);
+begin
+  try
+UpdateFormProperties('Frm_xml_loader', 'װמנלא נאבמעû ס xml',
+clBtnFace, 1024, 768);
+Frm_xml_loader.ShowModal;
+except
+Frm_xml_loader.Free;
 raise;
 end;
 

@@ -18,5 +18,9 @@
     <Transaction>2025.04.18 10:21:32.183.dfm,F:\code\Result\delphi\code\store_r\Un_report.dfm=F:\code\Result\delphi\code\store_r\Un_csv_loader.dfm</Transaction>
     <Transaction>2025.04.18 17:16:57.050.pas,F:\code\Result\delphi\code\store_r\Un_csv_loader.pas=F:\code\Result\delphi\code\store_r\Un_xml_loader.pas</Transaction>
     <Transaction>2025.04.18 17:16:57.050.dfm,F:\code\Result\delphi\code\store_r\Un_csv_loader.dfm=F:\code\Result\delphi\code\store_r\Un_xml_loader.dfm</Transaction>
+    <Transaction>2025.04.18 19:08:25.335.pas,F:\code\Result\delphi\code\store_r\Un_xml_loader.pas=F:\code\Result\delphi\code\store_r\Un_json_loader.pas</Transaction>
+    <Transaction>2025.04.18 19:08:25.335.dfm,F:\code\Result\delphi\code\store_r\Un_xml_loader.dfm=F:\code\Result\delphi\code\store_r\Un_json_loader.dfm</Transaction>
+    <Transaction>2025.04.18 20:31:59.306.pas,F:\code\Result\delphi\code\store_r\Unit1.pas=F:\code\Result\delphi\code\store_r\Un_about.pas</Transaction>
+    <Transaction>2025.04.18 20:31:59.306.dfm,F:\code\Result\delphi\code\store_r\Unit1.dfm=F:\code\Result\delphi\code\store_r\Un_about.dfm</Transaction>
   </Transactions>
 </BorlandProject>

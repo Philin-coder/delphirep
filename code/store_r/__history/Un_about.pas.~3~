@@ -1,0 +1,36 @@
+unit Un_about;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs;
+
+type
+  TFrm_about = class(TForm)
+    procedure FormCreate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_about: TFrm_about;
+
+implementation
+
+uses Un_func;
+
+{$R *.dfm}
+
+procedure TFrm_about.FormCreate(Sender: TObject);
+begin
+ Frm_about.ShowHint:=true;
+ UniformizeButtonsSize(Self,  273, 25);
+ UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+ UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+ LoadFormState(Self);
+end;
+
+end.

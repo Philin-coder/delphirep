@@ -1439,8 +1439,6 @@ begin
   finally
     SL.Free;
   end;
-
-  // Очистим от лишних символов
   JSONText := StringReplace(JSONText, #13#10, '', [rfReplaceAll]);
   JSONText := StringReplace(JSONText, #10, '', [rfReplaceAll]);
   JSONText := StringReplace(JSONText, ' ', '', [rfReplaceAll]);

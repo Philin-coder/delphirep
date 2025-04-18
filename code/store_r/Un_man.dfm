@@ -2,7 +2,7 @@ object Frm_main: TFrm_main
   Left = 0
   Top = 0
   Caption = #1043#1083#1074#1072#1085#1072#1103' '#1092#1086#1088#1084#1072' '#1087#1088#1086#1077#1082#1090#1072
-  ClientHeight = 379
+  ClientHeight = 399
   ClientWidth = 635
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -21,7 +21,7 @@ object Frm_main: TFrm_main
     Left = 0
     Top = 0
     Width = 635
-    Height = 379
+    Height = 399
     Align = alClient
     ExplicitLeft = 192
     ExplicitTop = 104
@@ -65,6 +65,11 @@ object Frm_main: TFrm_main
     end
     object json_load_item: TMenuItem
       Caption = '&'#1047#1072#1075#1088#1091#1079#1082#1072' json'
+      OnClick = json_load_itemClick
+    end
+    object About1: TMenuItem
+      Caption = '&About'
+      OnClick = About1Click
     end
   end
 end
