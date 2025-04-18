@@ -1169,9 +1169,9 @@ begin
       JSONData.Add('    "naim_good": "' + SampleGoods[i].naim_good + '",');
       JSONData.Add('    "price_good": ' + FloatToStr(SampleGoods[i].price_good));
       if i < 5 then
-        JSONData.Add('  },') // Если не последний элемент, добавляем запятую
+        JSONData.Add('  },')
       else
-        JSONData.Add('  }'); // Для последнего элемента запятая не нужна
+        JSONData.Add('  }'); 
     end;
     JSONData.Add(']');
     JSONData.SaveToFile(FileName);
@@ -1211,6 +1211,102 @@ begin
     Inc(Result);
   end;
 end;
+procedure LoadCSVToTableFromDialog(
+  OpenDialog: TOpenDialog;
+  const TableName: string;
+  const FieldIdName, FieldNaimName, FieldPriceName: string;
+  Query: TADOQuery
+);
+var
+  StringList: TStringList;
+  i, FieldCount: Integer;
+  Fields: array[0..2] of string;
+  SId, SName, SPrice: string;
+  ID: Integer;
+  Price: Double;
+  Fmt: TFormatSettings;
+begin
+  if not Assigned(OpenDialog) then Exit;
+  if not OpenDialog.Execute then
+    Exit;
+  ID := 0;
+  Price := 0.0;
+  StringList := TStringList.Create;
+  try
+    GetLocaleFormatSettings(0, Fmt);    Fmt.DecimalSeparator := '.';
+    StringList.LoadFromFile(OpenDialog.FileName);
+    with Query do
+    begin
+      Close;
+      SQL.Text := 'DELETE FROM ' + TableName;
+      ExecSQL;
+    end;
+    for i := 1 to StringList.Count - 1 do
+    begin
+      FieldCount := SplitString(StringList[i], ',', Fields);
+      if FieldCount < 3 then Continue;
+      SId := Fields[0];
+      SName := Fields[1];
+      SPrice := Fields[2];
+      try
+        ID := StrToIntDef(Trim(SId), 0);
+        Price := StrToFloat(Trim(SPrice), Fmt);
+      except
+        Continue;
+      end;
+      with Query do
+      begin
+        Close;
+        SQL.Text := Format(
+          'INSERT INTO %s (%s, %s, %s) VALUES (:%s, :%s, :%s)',
+          [TableName, FieldIdName, FieldNaimName, FieldPriceName,
+           FieldIdName, FieldNaimName, FieldPriceName]
+        );
+        Parameters.ParamByName(FieldIdName).Value := ID;
+        Parameters.ParamByName(FieldNaimName).Value := Trim(SName);
+        Parameters.ParamByName(FieldPriceName).Value := Price;
+        ExecSQL;
+      end;
+    end;
+      with Query do
+begin
+  Close;
+  SQL.Text := 'SELECT * FROM ' + TableName;
+  Open;
+end;
+    ShowMessage('Данные успешно загружены из файла: ' + OpenDialog.FileName);
+  finally
+    StringList.Free;
+  end;
+end;
+ function RemoveXMLComments(const FileName: string): string;
+var
+  SL: TStringList;
+  XMLText: string;
+  StartPos, EndPos: Integer;
+begin
+  SL := TStringList.Create;
+  try
+    SL.LoadFromFile(FileName);
+    XMLText := SL.Text;
+    StartPos := Pos('<!--', XMLText);
+    while StartPos > 0 do
+    begin
+      EndPos := Pos('-->', Copy(XMLText, StartPos + 4, Length(XMLText)));
+      if EndPos > 0 then
+      begin
+        EndPos := EndPos + StartPos + 3; // учёт сдвига
+        Delete(XMLText, StartPos, EndPos - StartPos + 1);
+      end
+      else
+        Break; // нет закрывающего комментария
+      StartPos := Pos('<!--', XMLText);
+    end;
+    Result := XMLText;
+  finally
+    SL.Free;
+  end;
+end;
 procedure LoadXMLToTableFromDialog(
   OpenDialog: TOpenDialog;
   const TableName: string;
@@ -1229,18 +1325,14 @@ var
 begin
   if not Assigned(OpenDialog) then Exit;
   if not OpenDialog.Execute then Exit;
-
   try
     XMLDoc := CreateOleObject('MSXML2.DOMDocument.6.0');
   except
     ShowMessage('Не удалось создать XML парсер. Убедитесь, что MSXML установлен.');
     Exit;
   end;
-
   XMLDoc.async := False;
   XMLDoc.preserveWhiteSpace := False;
-
-  // Загружаем XML из строки, предварительно удалив недопустимые комментарии
   XMLString := RemoveXMLComments(OpenDialog.FileName);
 
   if not XMLDoc.loadXML(XMLString) then
@@ -1248,19 +1340,15 @@ begin
     ShowMessage('Ошибка загрузки XML: ' + XMLDoc.parseError.reason);
     Exit;
   end;
-
   GoodsNode := XMLDoc.documentElement;
-
   if VarIsNull(GoodsNode) or (GoodsNode.nodeName <> 'goods') then
   begin
     ShowMessage('Неверный XML: ожидался <goods>');
     Exit;
   end;
-
-  GetLocaleFormatSettings(1033, Fmt); // Английская локаль для точек
+  GetLocaleFormatSettings(1033, Fmt);
   Fmt.DecimalSeparator := '.';
   Fmt.ThousandSeparator := ',';
-
   Query.Close;
   Query.SQL.Text := 'DELETE FROM ' + TableName;
   Query.ExecSQL;
@@ -1279,12 +1367,9 @@ begin
           SName := GoodNode.selectSingleNode('naim_good').text else SName := '';
         if not VarIsNull(GoodNode.selectSingleNode('price_good')) then
           SPrice := GoodNode.selectSingleNode('price_good').text else SPrice := '0';
-
         SPrice := StringReplace(SPrice, ',', '.', [rfReplaceAll]);
-
         ID := StrToIntDef(Trim(SId), 0);
         Price := StrToFloat(Trim(SPrice), Fmt);
-
         Query.Close;
         Query.SQL.Text := Format(
           'INSERT INTO %s (%s, %s, %s) VALUES (:%s, :%s, :%s)',
@@ -1312,8 +1397,6 @@ begin
       Exit;
     end;
   end;
-
-  // Обновляем данные в гриде
   Query.DisableControls;
   try
     Query.Close;
@@ -1322,30 +1405,7 @@ begin
   finally
     Query.EnableControls;
   end;
-
   ShowMessage('Импорт завершён. Загружено товаров: ' + IntToStr(GoodsNode.childNodes.length));
-end;
-function RemoveXMLComments(const FileName: string): string;
-var
-  SL: TStringList;
-  XMLText: string;
-begin
-  SL := TStringList.Create;
-  try
-    SL.LoadFromFile(FileName, TEncoding.UTF8); // или ANSI, зависит от твоего файла
-    XMLText := SL.Text;
-
-    // Удаляем все <!-- ... -->
-    while Pos('<!--', XMLText) > 0 do
-    begin
-      Delete(XMLText, Pos('<!--', XMLText),
-             Pos('-->', XMLText) - Pos('<!--', XMLText) + 3);
-    end;
-
-    Result := XMLText;
-  finally
-    SL.Free;
-  end;
 end;
 
 initialization

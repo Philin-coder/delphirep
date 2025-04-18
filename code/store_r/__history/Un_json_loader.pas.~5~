@@ -1,0 +1,34 @@
+unit Un_json_loader;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls,db,adodb, ComCtrls, Grids, DBGrids, ExtCtrls, DBCtrls,
+  StrUtils;
+
+type
+  TFrm_json_loader = class(TForm)
+    xmlPC: TPageControl;
+    delTab: TTabSheet;
+    xmlldeldataBox: TGroupBox;
+    xmlbtn_box: TGroupBox;
+    xlBtn: TButton;
+    xmllGrd: TDBGrid;
+    xmlOD: TOpenDialog;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_json_loader: TFrm_json_loader;
+
+implementation
+
+uses Un_dm, Un_func, Un_man;
+
+{$R *.dfm}
+
+end.

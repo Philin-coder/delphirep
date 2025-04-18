@@ -1,7 +1,7 @@
-object Frm_xml_loader: TFrm_xml_loader
+object Frm_json_loader: TFrm_json_loader
   Left = 0
   Top = 0
-  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' xml'
+  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' json'
   ClientHeight = 793
   ClientWidth = 1032
   Color = clBtnFace
@@ -13,10 +13,9 @@ object Frm_xml_loader: TFrm_xml_loader
   OldCreateOrder = False
   OnActivate = FormActivate
   OnClose = FormClose
-  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object xmlPC: TPageControl
+  object JSPC: TPageControl
     Left = 0
     Top = 0
     Width = 1032
@@ -25,9 +24,9 @@ object Frm_xml_loader: TFrm_xml_loader
     Align = alClient
     TabOrder = 0
     object delTab: TTabSheet
-      Caption = #1047#1072#1075#1088#1091#1079#1082#1072' xml'
+      Caption = #1047#1072#1075#1088#1091#1079#1082#1072' json'
       ImageIndex = 3
-      object xmlldeldataBox: TGroupBox
+      object jsldeldataBox: TGroupBox
         Left = 0
         Top = 0
         Width = 1024
@@ -35,7 +34,7 @@ object Frm_xml_loader: TFrm_xml_loader
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object xmllGrd: TDBGrid
+        object jsGrd: TDBGrid
           Left = 2
           Top = 15
           Width = 1020
@@ -66,26 +65,26 @@ object Frm_xml_loader: TFrm_xml_loader
             end>
         end
       end
-      object xmlbtn_box: TGroupBox
+      object jsbtn_box: TGroupBox
         Left = 0
         Top = 699
         Width = 1024
         Height = 66
         Align = alBottom
         TabOrder = 1
-        object xlBtn: TButton
+        object jsBtn: TButton
           Left = 328
           Top = 24
           Width = 121
           Height = 25
-          Caption = #1042#1099#1074#1086#1076' xml'
+          Caption = #1042#1099#1074#1086#1076' json'
           TabOrder = 0
-          OnClick = xlBtnClick
+          OnClick = jsBtnClick
         end
       end
     end
   end
-  object xmlOD: TOpenDialog
+  object jsOD: TOpenDialog
     Left = 560
   end
 end

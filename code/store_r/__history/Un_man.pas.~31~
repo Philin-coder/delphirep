@@ -18,7 +18,6 @@ type
     Json_item: TMenuItem;
     csv_load_item: TMenuItem;
     xml_load_item: TMenuItem;
-    json_load_item: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure good_itemClick(Sender: TObject);

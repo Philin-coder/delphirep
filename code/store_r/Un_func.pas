@@ -92,6 +92,13 @@ procedure UpdateFormProperties(const FormName: string;
   Query: TADOQuery
 );
 function RemoveXMLComments(const FileName: string): string;
+procedure LoadJSONToTableFromDialog(
+  OpenDialog: TOpenDialog;
+  const TableName: string;
+  const FieldIdName, FieldNaimName, FieldPriceName: string;
+  Query: TADOQuery
+);
+
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -1406,6 +1413,114 @@ begin
     Query.EnableControls;
   end;
   ShowMessage('Импорт завершён. Загружено товаров: ' + IntToStr(GoodsNode.childNodes.length));
+end;
+procedure LoadJSONToTableFromDialog(
+  OpenDialog: TOpenDialog;
+  const TableName: string;
+  const FieldIdName, FieldNaimName, FieldPriceName: string;
+  Query: TADOQuery
+);
+var
+  SL: TStringList;
+  JSONText, Line, SId, SName, SPrice: string;
+  i, ID: Integer;
+  Price: Double;
+  Fmt: TFormatSettings;
+  Items: TStringList;
+begin
+  if not Assigned(OpenDialog) then Exit;
+  OpenDialog.Filter := 'JSON файлы (*.json)|*.json';
+  if not OpenDialog.Execute then Exit;
+
+  SL := TStringList.Create;
+  try
+    SL.LoadFromFile(OpenDialog.FileName);
+    JSONText := SL.Text;
+  finally
+    SL.Free;
+  end;
+
+  // Очистим от лишних символов
+  JSONText := StringReplace(JSONText, #13#10, '', [rfReplaceAll]);
+  JSONText := StringReplace(JSONText, #10, '', [rfReplaceAll]);
+  JSONText := StringReplace(JSONText, ' ', '', [rfReplaceAll]);
+  JSONText := StringReplace(JSONText, '[', '', [rfReplaceAll]);
+  JSONText := StringReplace(JSONText, ']', '', [rfReplaceAll]);
+  JSONText := StringReplace(JSONText, '},{', '}|{', [rfReplaceAll]); // разделим объекты
+
+  Items := TStringList.Create;
+  try
+    Items.Delimiter := '|';
+    Items.StrictDelimiter := True;
+    Items.DelimitedText := JSONText;
+
+    GetLocaleFormatSettings(1033, Fmt);
+    Fmt.DecimalSeparator := '.';
+    Fmt.ThousandSeparator := ',';
+
+    // Удалим старые записи
+    Query.Close;
+    Query.SQL.Text := 'DELETE FROM ' + TableName;
+    Query.ExecSQL;
+
+    Query.Connection.BeginTrans;
+    try
+      for i := 0 to Items.Count - 1 do
+      begin
+        Line := Items[i]; // одна строка: {"id_good":1,"naim_good":"Товар 1","price_good":100.5}
+        Line := StringReplace(Line, '{', '', []);
+        Line := StringReplace(Line, '}', '', []);
+
+        // Простейший парсинг
+        SId := Copy(Line, Pos('"id_good":', Line) + 10, Pos(',', Line) - Pos('"id_good":', Line) - 10);
+        Delete(Line, 1, Pos(',', Line));
+
+        SName := Copy(Line, Pos('"naim_good":"', Line) + 13,
+                      Pos('"', Copy(Line, Pos('"naim_good":"', Line) + 13, 100)) - 1);
+        Delete(Line, 1, Pos('"price_good":', Line) - 1);
+
+        SPrice := Copy(Line, Pos('"price_good":', Line) + 13, Length(Line));
+
+        SPrice := StringReplace(SPrice, ',', '.', [rfReplaceAll]);
+
+        ID := StrToIntDef(Trim(SId), 0);
+        Price := StrToFloatDef(Trim(SPrice), 0, Fmt);
+
+        Query.Close;
+        Query.SQL.Text := Format(
+          'INSERT INTO %s (%s, %s, %s) VALUES (:%s, :%s, :%s)',
+          [TableName, FieldIdName, FieldNaimName, FieldPriceName,
+           FieldIdName, FieldNaimName, FieldPriceName]
+        );
+        Query.Parameters.ParamByName(FieldIdName).Value := ID;
+        Query.Parameters.ParamByName(FieldNaimName).Value := SName;
+        Query.Parameters.ParamByName(FieldPriceName).Value := Price;
+        Query.ExecSQL;
+      end;
+
+      Query.Connection.CommitTrans;
+    except
+      on E: Exception do
+      begin
+        Query.Connection.RollbackTrans;
+        ShowMessage('Ошибка при импорте: ' + E.Message);
+        Exit;
+      end;
+    end;
+  finally
+    Items.Free;
+  end;
+
+  Query.DisableControls;
+  try
+    Query.Close;
+    Query.SQL.Text := 'SELECT * FROM ' + TableName;
+    Query.Open;
+  finally
+    Query.EnableControls;
+  end;
+
+  ShowMessage('Импорт JSON завершён.');
 end;
 
 initialization
