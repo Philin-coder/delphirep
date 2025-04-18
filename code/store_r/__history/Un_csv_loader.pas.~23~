@@ -134,7 +134,7 @@ end;
 
 procedure TFrm_csv_loader.FormCreate(Sender: TObject);
 begin
- Frm_csv_loader.ShowHint:=true;
+Frm_csv_loader.ShowHint:=true;
  UniformizeButtonsSize(Self,  273, 25);
  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
