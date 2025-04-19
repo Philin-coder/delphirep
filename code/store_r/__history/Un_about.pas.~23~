@@ -14,12 +14,10 @@ type
     rightBox: TGroupBox;
     TimePanel: TFlowPanel;
     mTimer: TTimer;
+    logo_image: TImage;
     closeBtn: TButton;
-    RERight: TRichEdit;
-    logobox: TGroupBox;
-    logo_Image: TImage;
-    repanel: TPanel;
     REleft: TRichEdit;
+    RERight: TRichEdit;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
@@ -61,11 +59,6 @@ begin
  leftBox.Width:=(mainBox.Width)div 2;
  rightBox.Width:=(mainBox.Width)div 2;
  TimePanel.Font.Size:=20;
- with logo_image do
- begin
-     AutoSize:=true;
-     Stretch:=True;
- end;
 end;
 
 procedure TFrm_about.FormShow(Sender: TObject);

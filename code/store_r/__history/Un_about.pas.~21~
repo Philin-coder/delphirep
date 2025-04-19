@@ -4,21 +4,20 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs,jpeg, StdCtrls, ExtCtrls, ComCtrls;
+  Dialogs,jpeg, StdCtrls, ExtCtrls, ComCtrls,DateUtils;
 
 type
   TFrm_about = class(TForm)
-    about_me_pn: TFlowPanel;
-    logoBox: TGroupBox;
-    rtPanel: TFlowPanel;
+    mainBox: TGroupBox;
     btnBox: TGroupBox;
-    infPanel: TFlowPanel;
-    logoImage: TImage;
-    rtBox: TGroupBox;
-    RichEdit1: TRichEdit;
-    closeBtn: TButton;
+    leftBox: TGroupBox;
+    rightBox: TGroupBox;
+    TimePanel: TFlowPanel;
+    mTimer: TTimer;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormShow(Sender: TObject);
+    procedure mTimerTimer(Sender: TObject);
   private
     { Private declarations }
   public
@@ -37,6 +36,7 @@ uses Un_func;
 procedure TFrm_about.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   SaveFormState(Self);
+  mTimer.Enabled:=False;
 end;
 
 procedure TFrm_about.FormCreate(Sender: TObject);
@@ -46,6 +46,19 @@ begin
  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
  LoadFormState(Self);
+ leftBox.Width:=(mainBox.Width)div 2;
+ rightBox.Width:=(mainBox.Width)div 2;
+ TimePanel.Font.Size:=20;
+end;
+
+procedure TFrm_about.FormShow(Sender: TObject);
+begin
+ mTimer.Enabled:=True;
+end;
+
+procedure TFrm_about.mTimerTimer(Sender: TObject);
+begin
+  TimePanel.Caption:=DateTimeToStr(Now);
 end;
 
 end.

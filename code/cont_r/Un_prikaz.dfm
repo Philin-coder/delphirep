@@ -21,11 +21,15 @@ object Frm_prikaz: TFrm_prikaz
     Top = 0
     Width = 1037
     Height = 813
-    ActivePage = InsTab
+    ActivePage = delTab
     Align = alClient
     TabOrder = 0
     object SelTab: TTabSheet
       Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086'  '#1087#1088#1080#1082#1072#1079#1077
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object PrikazgroupBox: TGroupBox
         Left = 0
         Top = 97

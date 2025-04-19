@@ -26,52 +26,50 @@ object Frm_about: TFrm_about
     object leftBox: TGroupBox
       Left = 2
       Top = 65
-      Width = 474
+      Width = 423
       Height = 670
       Align = alLeft
       TabOrder = 0
       object logobox: TGroupBox
-        Left = 2
-        Top = 15
-        Width = 470
+        Left = 3
+        Top = 9
+        Width = 419
         Height = 105
-        Align = alTop
-        Color = clBtnFace
-        ParentColor = False
         TabOrder = 0
-        ExplicitLeft = 3
-        ExplicitTop = 13
-        ExplicitWidth = 419
         object logo_Image: TImage
           Left = 2
           Top = 15
-          Width = 466
+          Width = 415
           Height = 88
           Align = alClient
-          ExplicitLeft = 3
-          ExplicitWidth = 415
+          ExplicitLeft = 104
+          ExplicitTop = 16
+          ExplicitWidth = 105
+          ExplicitHeight = 105
         end
       end
       object repanel: TPanel
         Left = 2
-        Top = 120
-        Width = 470
-        Height = 548
+        Top = 15
+        Width = 419
+        Height = 653
         Align = alClient
         TabOrder = 1
-        ExplicitWidth = 419
+        ExplicitLeft = 168
+        ExplicitTop = 224
+        ExplicitWidth = 185
+        ExplicitHeight = 41
         object REleft: TRichEdit
           AlignWithMargins = True
           Left = 4
-          Top = 4
-          Width = 462
-          Height = 540
-          Align = alClient
+          Top = 101
+          Width = 411
+          Height = 548
+          Align = alBottom
           TabOrder = 0
-          ExplicitLeft = 0
-          ExplicitTop = -511
-          ExplicitWidth = 177
-          ExplicitHeight = 548
+          ExplicitLeft = 7
+          ExplicitTop = 118
+          ExplicitWidth = 413
         end
       end
     end

@@ -26,53 +26,33 @@ object Frm_about: TFrm_about
     object leftBox: TGroupBox
       Left = 2
       Top = 65
-      Width = 474
+      Width = 423
       Height = 670
       Align = alLeft
       TabOrder = 0
-      object logobox: TGroupBox
+      object logo_image: TImage
         Left = 2
         Top = 15
-        Width = 470
+        Width = 419
         Height = 105
         Align = alTop
-        Color = clBtnFace
-        ParentColor = False
-        TabOrder = 0
-        ExplicitLeft = 3
-        ExplicitTop = 13
-        ExplicitWidth = 419
-        object logo_Image: TImage
-          Left = 2
-          Top = 15
-          Width = 466
-          Height = 88
-          Align = alClient
-          ExplicitLeft = 3
-          ExplicitWidth = 415
-        end
+        ExplicitLeft = 48
+        ExplicitTop = 48
+        ExplicitWidth = 105
       end
-      object repanel: TPanel
+      object REleft: TRichEdit
         Left = 2
         Top = 120
-        Width = 470
+        Width = 419
         Height = 548
         Align = alClient
-        TabOrder = 1
-        ExplicitWidth = 419
-        object REleft: TRichEdit
-          AlignWithMargins = True
-          Left = 4
-          Top = 4
-          Width = 462
-          Height = 540
-          Align = alClient
-          TabOrder = 0
-          ExplicitLeft = 0
-          ExplicitTop = -511
-          ExplicitWidth = 177
-          ExplicitHeight = 548
-        end
+        Lines.Strings = (
+          'REleft')
+        TabOrder = 0
+        ExplicitLeft = 120
+        ExplicitTop = 288
+        ExplicitWidth = 185
+        ExplicitHeight = 89
       end
     end
     object rightBox: TGroupBox
@@ -88,6 +68,8 @@ object Frm_about: TFrm_about
         Width = 380
         Height = 653
         Align = alClient
+        Lines.Strings = (
+          'REleft')
         TabOrder = 0
         ExplicitLeft = 120
         ExplicitTop = 288

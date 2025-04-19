@@ -1,0 +1,65 @@
+object Frm_about: TFrm_about
+  Left = 0
+  Top = 0
+  Caption = #1054' '#1087#1088#1086#1075#1088#1072#1084#1084#1077
+  ClientHeight = 842
+  ClientWidth = 866
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object mainBox: TGroupBox
+    Left = 0
+    Top = 0
+    Width = 866
+    Height = 737
+    Align = alClient
+    TabOrder = 0
+    object leftBox: TGroupBox
+      Left = 2
+      Top = 65
+      Width = 185
+      Height = 670
+      Align = alLeft
+      TabOrder = 0
+    end
+    object rightBox: TGroupBox
+      Left = 752
+      Top = 65
+      Width = 112
+      Height = 670
+      Align = alRight
+      TabOrder = 1
+    end
+    object TimePanel: TFlowPanel
+      Left = 2
+      Top = 15
+      Width = 862
+      Height = 50
+      Align = alTop
+      TabOrder = 2
+    end
+  end
+  object btnBox: TGroupBox
+    Left = 0
+    Top = 737
+    Width = 866
+    Height = 105
+    Align = alBottom
+    TabOrder = 1
+  end
+  object mTimer: TTimer
+    Enabled = False
+    OnTimer = mTimerTimer
+    Left = 544
+    Top = 24
+  end
+end
