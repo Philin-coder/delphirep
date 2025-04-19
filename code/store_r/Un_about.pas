@@ -88,6 +88,15 @@ begin
     True,            // Включение маркеров
     True             // Установка ReadOnly = True
   );
+    LoadTextFromResource('PROGTEXT', RERight);
+  FormatRichText(
+    RERight,       // Компонент TRichEdit
+    12,              
+    'Arial',         
+    clGreen,          
+    True,            // Включение маркеров
+    True             // Установка ReadOnly = True
+  );
 end;
 
 procedure TFrm_about.FormResize(Sender: TObject);
