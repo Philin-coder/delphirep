@@ -13,6 +13,7 @@ object Frm_about: TFrm_about
   OldCreateOrder = False
   OnClose = FormClose
   OnCreate = FormCreate
+  OnResize = FormResize
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -26,33 +27,54 @@ object Frm_about: TFrm_about
     object leftBox: TGroupBox
       Left = 2
       Top = 65
-      Width = 423
+      Width = 474
       Height = 670
       Align = alLeft
       TabOrder = 0
-      object logo_image: TImage
+      object logobox: TGroupBox
         Left = 2
         Top = 15
-        Width = 419
-        Height = 105
+        Width = 470
+        Height = 114
         Align = alTop
-        ExplicitLeft = 48
-        ExplicitTop = 48
-        ExplicitWidth = 105
-      end
-      object REleft: TRichEdit
-        Left = 2
-        Top = 120
-        Width = 419
-        Height = 548
-        Align = alClient
-        Lines.Strings = (
-          'REleft')
+        Color = clBtnFace
+        ParentColor = False
         TabOrder = 0
-        ExplicitLeft = 120
-        ExplicitTop = 288
-        ExplicitWidth = 185
-        ExplicitHeight = 89
+        ExplicitTop = 6
+        object logo_Image: TImage
+          Left = 2
+          Top = 15
+          Width = 466
+          Height = 97
+          Align = alClient
+          ExplicitLeft = 3
+          ExplicitWidth = 415
+          ExplicitHeight = 88
+        end
+      end
+      object repanel: TPanel
+        Left = 2
+        Top = 129
+        Width = 470
+        Height = 539
+        Align = alClient
+        TabOrder = 1
+        ExplicitTop = 120
+        ExplicitWidth = 419
+        ExplicitHeight = 548
+        object REleft: TRichEdit
+          AlignWithMargins = True
+          Left = 4
+          Top = 4
+          Width = 462
+          Height = 531
+          Align = alClient
+          TabOrder = 0
+          ExplicitLeft = 0
+          ExplicitTop = -511
+          ExplicitWidth = 177
+          ExplicitHeight = 548
+        end
       end
     end
     object rightBox: TGroupBox
@@ -68,8 +90,6 @@ object Frm_about: TFrm_about
         Width = 380
         Height = 653
         Align = alClient
-        Lines.Strings = (
-          'REleft')
         TabOrder = 0
         ExplicitLeft = 120
         ExplicitTop = 288

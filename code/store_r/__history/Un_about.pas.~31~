@@ -14,10 +14,18 @@ type
     rightBox: TGroupBox;
     TimePanel: TFlowPanel;
     mTimer: TTimer;
-    TimeStatic: TStaticText;
+    closeBtn: TButton;
+    RERight: TRichEdit;
+    logobox: TGroupBox;
+    logo_Image: TImage;
+    repanel: TPanel;
+    REleft: TRichEdit;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
+    procedure mTimerTimer(Sender: TObject);
+    procedure closeBtnClick(Sender: TObject);
+    procedure FormResize(Sender: TObject);
   private
     { Private declarations }
   public
@@ -33,6 +41,11 @@ uses Un_func;
 
 {$R *.dfm}
 
+procedure TFrm_about.closeBtnClick(Sender: TObject);
+begin
+  Close;
+end;
+
 procedure TFrm_about.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   SaveFormState(Self);
@@ -40,7 +53,6 @@ begin
 end;
 
 procedure TFrm_about.FormCreate(Sender: TObject);
-var today:TDateTime;
 begin
  Frm_about.ShowHint:=true;
  UniformizeButtonsSize(Self,  273, 25);
@@ -49,14 +61,43 @@ begin
  LoadFormState(Self);
  leftBox.Width:=(mainBox.Width)div 2;
  rightBox.Width:=(mainBox.Width)div 2;
- TimeStatic.Font.Size:=20;
- Today:=now;
- TimeStatic.Caption:='Δενό'+ DateToStr(today)+' '+TimeToStr(today) ;
+ TimePanel.Font.Size:=20;
+ with logo_image do
+ begin
+     AutoSize:=true;
+     Stretch:=True;
+ end;
+  logoBox.Margins.Left := 0;
+  logoBox.Margins.Right := 0;
+  logoBox.Margins.Top := 0;
+  logoBox.Margins.Bottom := 0;
+  logoBox.Align := alTop;
+ TimePanel.Align := alTop;
+  TimePanel.Margins.Top := 0;
+  TimePanel.Margins.Bottom := 0;
+  logoBox.Align := alTop;
+  logoBox.Margins.Top := 0;
+  logoBox.Margins.Bottom := 0;
+  LoadImageFromResource('LG_IMAGE',logo_Image);
+end;
+
+procedure TFrm_about.FormResize(Sender: TObject);
+begin
+    leftBox.Width := mainBox.Width div 2;
+    rightBox.Width := mainBox.Width div 2;
+    leftBox.Align := alLeft;
+    rightBox.Align := alClient;
+    logoBox.Align := alTop;
 end;
 
 procedure TFrm_about.FormShow(Sender: TObject);
 begin
  mTimer.Enabled:=True;
+end;
+
+procedure TFrm_about.mTimerTimer(Sender: TObject);
+begin
+  TimePanel.Caption:=DateTimeToStr(Now);
 end;
 
 end.

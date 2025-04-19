@@ -64,9 +64,30 @@ begin
  TimePanel.Font.Size:=20;
  with logo_image do
  begin
-     AutoSize:=true;
-     Stretch:=True;
+    AutoSize:=true;
+    Stretch:=True;
  end;
+  logoBox.Margins.Left := 0;
+  logoBox.Margins.Right := 0;
+  logoBox.Margins.Top := 0;
+  logoBox.Margins.Bottom := 0;
+  logoBox.Align := alTop;
+ TimePanel.Align := alTop;
+  TimePanel.Margins.Top := 0;
+  TimePanel.Margins.Bottom := 0;
+  logoBox.Align := alTop;
+  logoBox.Margins.Top := 0;
+  logoBox.Margins.Bottom := 0;
+  LoadImageFromResource('LG_IMAGE',logo_Image);
+  LoadTextFromResource('MYTEXT', REleft);
+  FormatRichText(
+    REleft,       // Компонент TRichEdit
+    12,              
+    'Arial',         
+    clBlue,          
+    True,            // Включение маркеров
+    True             // Установка ReadOnly = True
+  );
 end;
 
 procedure TFrm_about.FormResize(Sender: TObject);
@@ -75,6 +96,7 @@ begin
     rightBox.Width := mainBox.Width div 2;
     leftBox.Align := alLeft;
     rightBox.Align := alClient;
+    logoBox.Align := alTop;
 end;
 
 procedure TFrm_about.FormShow(Sender: TObject);

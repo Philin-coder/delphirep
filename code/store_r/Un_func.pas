@@ -26,6 +26,8 @@ ComObj,
 ExtCtrls;
 const
   crMyAnimatedCursor = 1;
+const
+  EM_LINEINDEX = $BB;
 type
   TSysCharSet = set of Char;
 function  DateToStr_(Dat : TDate): String;
@@ -98,9 +100,12 @@ procedure UpdateFormProperties(const FormName: string;
   const FieldIdName, FieldNaimName, FieldPriceName: string;
   Query: TADOQuery
 );
-
-implementation
- var
+procedure LoadTextFromResource(const ResourceName: string;
+RichTextEdit: TRichEdit);
+procedure FormatRichText(RichEdit: TRichEdit; FontSize: Integer; FontName: string;
+TextColor: TColor; BulletStyle: Boolean; ReadOnly: Boolean);
+implementation
+ var
   hAniCursor: HCURSOR = 0;
 
 function    CommaPoint (X: String) : String;
@@ -1517,8 +1522,65 @@ begin
   finally
     Query.EnableControls;
   end;
-
   ShowMessage('Импорт JSON завершён.');
+end;
+procedure LoadTextFromResource(const ResourceName: string;
+RichTextEdit: TRichEdit);
+var
+  RS: TResourceStream;
+  Text: string;
+begin
+  if not Assigned(RichTextEdit) then
+  begin
+    ShowMessage('Ошибка: компонент RichTextEdit не назначен.');
+    Exit;
+  end;
+  RS := TResourceStream.Create(HInstance, ResourceName, RT_RCDATA);
+  try
+    // Определяем размер текста и читаем его из потока
+    SetLength(Text, RS.Size);
+    RS.ReadBuffer(Pointer(Text)^, RS.Size);
+
+    // Очищаем содержимое RichTextEdit и загружаем текст
+    RichTextEdit.Clear;
+    RichTextEdit.Text := Text;
+  finally
+    // Освобождаем поток
+    RS.Free;
+  end;
+end;
+
+procedure FormatRichText(RichEdit: TRichEdit; FontSize: Integer; FontName: string;
+TextColor: TColor; BulletStyle: Boolean; ReadOnly: Boolean);
+var
+  i: Integer;
+  StartPos, EndPos: Integer;
+begin
+  if not Assigned(RichEdit) then
+  begin
+    ShowMessage('Компонент RichEdit не назначен.');
+    Exit;
+  end;
+  RichEdit.Font.Name := FontName;
+  RichEdit.Font.Size := FontSize;
+  RichEdit.ReadOnly := ReadOnly;
+  for i := 0 to RichEdit.Lines.Count - 1 do
+  begin
+    StartPos := RichEdit.Perform(EM_LINEINDEX, i, 0);
+    EndPos := StartPos + Length(RichEdit.Lines[i]);
+    RichEdit.SelStart := StartPos;
+    RichEdit.SelLength := EndPos - StartPos;
+    RichEdit.SelAttributes.Color := TextColor;
+    if BulletStyle then
+    begin
+      RichEdit.Paragraph.Numbering := nsBullet; // Включаем маркеры
+    end
+    else
+    begin
+      RichEdit.Paragraph.Numbering := nsNone; // Отключаем маркеры
+    end;
+    RichEdit.SelLength := 0;
+  end;
 end;
 
 initialization
