@@ -25,6 +25,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure mTimerTimer(Sender: TObject);
     procedure closeBtnClick(Sender: TObject);
+    procedure FormResize(Sender: TObject);
   private
     { Private declarations }
   public
@@ -66,6 +67,14 @@ begin
      AutoSize:=true;
      Stretch:=True;
  end;
+end;
+
+procedure TFrm_about.FormResize(Sender: TObject);
+begin
+    leftBox.Width := mainBox.Width div 2;
+    rightBox.Width := mainBox.Width div 2;
+    leftBox.Align := alLeft;
+    rightBox.Align := alClient;
 end;
 
 procedure TFrm_about.FormShow(Sender: TObject);
