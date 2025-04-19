@@ -14,6 +14,7 @@ object Frm_m_order: TFrm_m_order
   OnActivate = FormActivate
   OnClose = FormClose
   OnCreate = FormCreate
+  OnKeyUp = FormKeyUp
   PixelsPerInch = 96
   TextHeight = 13
   object m_orderPC: TPageControl
@@ -26,7 +27,6 @@ object Frm_m_order: TFrm_m_order
     TabOrder = 0
     object Sel_tab: TTabSheet
       Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1079#1072#1082#1072#1079#1077
-      ExplicitHeight = 618
       object m_order_sel_grouper: TGroupBox
         Left = 0
         Top = 129
@@ -200,7 +200,6 @@ object Frm_m_order: TFrm_m_order
     object InsTab: TTabSheet
       Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1079#1072#1082#1072#1079#1077
       ImageIndex = 1
-      ExplicitHeight = 618
       object ins_m_order_data_Box: TGroupBox
         Left = 0
         Top = 289
@@ -317,8 +316,6 @@ object Frm_m_order: TFrm_m_order
         TabOrder = 2
         object about_morder_tab: TTabSheet
           Caption = #1054' '#1090#1086#1074#1072#1088#1077
-          ExplicitLeft = 12
-          ExplicitTop = -8
           object ins_m_order_inputBox: TGroupBox
             Left = 0
             Top = 0
@@ -326,7 +323,6 @@ object Frm_m_order: TFrm_m_order
             Height = 261
             Align = alClient
             TabOrder = 0
-            ExplicitHeight = 217
             DesignSize = (
               1016
               261)
@@ -388,7 +384,6 @@ object Frm_m_order: TFrm_m_order
             Height = 261
             Align = alClient
             TabOrder = 0
-            ExplicitHeight = 217
             DesignSize = (
               1016
               261)
@@ -452,8 +447,6 @@ object Frm_m_order: TFrm_m_order
         object aboutm_orderrabthree: TTabSheet
           Caption = #1054' '#1090#1086#1074#1072#1088#1077
           ImageIndex = 2
-          ExplicitLeft = 2
-          ExplicitTop = 22
           object m_order_inp_Boxthree: TGroupBox
             Left = 0
             Top = 0
@@ -461,7 +454,6 @@ object Frm_m_order: TFrm_m_order
             Height = 261
             Align = alClient
             TabOrder = 0
-            ExplicitHeight = 217
             DesignSize = (
               1016
               261)
@@ -514,7 +506,6 @@ object Frm_m_order: TFrm_m_order
     object UpdTab: TTabSheet
       Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1079#1072#1082#1072#1079#1077
       ImageIndex = 2
-      ExplicitHeight = 618
       object M_orderUpdInpBox: TGroupBox
         Left = 0
         Top = 0
@@ -666,7 +657,6 @@ object Frm_m_order: TFrm_m_order
     object delTab: TTabSheet
       Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1079#1072#1082#1079#1077
       ImageIndex = 3
-      ExplicitHeight = 618
       object MOdeldataBox: TGroupBox
         Left = 0
         Top = 89
@@ -675,7 +665,6 @@ object Frm_m_order: TFrm_m_order
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        ExplicitHeight = 463
         object DelmoGrd: TDBGrid
           Left = 2
           Top = 15
@@ -792,7 +781,6 @@ object Frm_m_order: TFrm_m_order
         Height = 66
         Align = alBottom
         TabOrder = 2
-        ExplicitTop = 552
         object delmoBtn: TButton
           Left = 328
           Top = 24

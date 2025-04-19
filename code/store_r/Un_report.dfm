@@ -14,6 +14,7 @@ object Frm_report: TFrm_report
   OnActivate = FormActivate
   OnClose = FormClose
   OnCreate = FormCreate
+  OnKeyUp = FormKeyUp
   PixelsPerInch = 96
   TextHeight = 13
   object rpPC: TPageControl

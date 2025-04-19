@@ -14,6 +14,7 @@ object Frm_xml_loader: TFrm_xml_loader
   OnActivate = FormActivate
   OnClose = FormClose
   OnCreate = FormCreate
+  OnKeyUp = FormKeyUp
   PixelsPerInch = 96
   TextHeight = 13
   object xmlPC: TPageControl

@@ -14,6 +14,7 @@ object Frm_csv_loader: TFrm_csv_loader
   OnActivate = FormActivate
   OnClose = FormClose
   OnCreate = FormCreate
+  OnKeyUp = FormKeyUp
   PixelsPerInch = 96
   TextHeight = 13
   object csvlPC: TPageControl

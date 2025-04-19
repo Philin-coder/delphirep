@@ -20,6 +20,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure rpBtnClick(Sender: TObject);
+    procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
   public
@@ -31,7 +32,7 @@ var
 
 implementation
 
-uses Un_dm, Un_func, Un_man;
+uses Un_dm, Un_func, Un_man, Un_hlp;
 
 {$R *.dfm}
 
@@ -60,12 +61,30 @@ end;
 
 procedure TFrm_csv_loader.FormCreate(Sender: TObject);
 begin
+ Frm_csv_loader.KeyPreview:=True;
  Frm_csv_loader.ShowHint:=true;
  UniformizeButtonsSize(Self,  273, 25);
  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
  LoadFormState(Self);
  csvOD.Filter:='CSV Files (*.csv)|*.csv|All Files (*.*)|*.*';
+end;
+
+procedure TFrm_csv_loader.FormKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+if (key=112) then
+begin
+ try
+UpdateFormProperties('Frm_help', 'Форма работы со справкой',
+clBtnFace, 1024, 768);
+Frm_help.ShowModal;
+except
+Frm_help.Free;
+raise;
+end;
+end;
+
 end;
 
 end.

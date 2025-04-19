@@ -103,7 +103,7 @@ procedure UpdateFormProperties(const FormName: string;
 procedure LoadTextFromResource(const ResourceName: string;
 RichTextEdit: TRichEdit);
 procedure FormatRichText(RichEdit: TRichEdit; FontSize: Integer; FontName: string;
-TextColor: TColor; BulletStyle: Boolean; ReadOnly: Boolean);
+  TextColor: TColor; BulletStyle: Boolean; ReadOnly: Boolean; ScrollBars: TScrollStyle);
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -1551,26 +1551,43 @@ begin
 end;
 
 procedure FormatRichText(RichEdit: TRichEdit; FontSize: Integer; FontName: string;
-TextColor: TColor; BulletStyle: Boolean; ReadOnly: Boolean);
+  TextColor: TColor; BulletStyle: Boolean; ReadOnly: Boolean; ScrollBars: TScrollStyle);
 var
   i: Integer;
   StartPos, EndPos: Integer;
 begin
+  // Проверяем, что компонент RichEdit передан
   if not Assigned(RichEdit) then
   begin
     ShowMessage('Компонент RichEdit не назначен.');
     Exit;
   end;
+
+  // Устанавливаем шрифт и размер текста для всего документа
   RichEdit.Font.Name := FontName;
   RichEdit.Font.Size := FontSize;
+
+  // Устанавливаем режим "только для чтения"
   RichEdit.ReadOnly := ReadOnly;
+
+  // Устанавливаем полосы прокрутки
+  RichEdit.ScrollBars := ScrollBars;
+
+  // Разделяем текст на строки
   for i := 0 to RichEdit.Lines.Count - 1 do
   begin
+    // Определяем позиции начала и конца строки
     StartPos := RichEdit.Perform(EM_LINEINDEX, i, 0);
     EndPos := StartPos + Length(RichEdit.Lines[i]);
+
+    // Выделяем строку
     RichEdit.SelStart := StartPos;
     RichEdit.SelLength := EndPos - StartPos;
+
+    // Устанавливаем цвет текста
     RichEdit.SelAttributes.Color := TextColor;
+
+    // Если нужно добавить маркеры (буллеты)
     if BulletStyle then
     begin
       RichEdit.Paragraph.Numbering := nsBullet; // Включаем маркеры
@@ -1579,6 +1596,8 @@ begin
     begin
       RichEdit.Paragraph.Numbering := nsNone; // Отключаем маркеры
     end;
+
+    // Снимаем выделение
     RichEdit.SelLength := 0;
   end;
 end;

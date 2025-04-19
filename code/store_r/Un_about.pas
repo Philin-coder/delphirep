@@ -26,6 +26,7 @@ type
     procedure mTimerTimer(Sender: TObject);
     procedure closeBtnClick(Sender: TObject);
     procedure FormResize(Sender: TObject);
+    procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
   public
@@ -37,7 +38,7 @@ var
 
 implementation
 
-uses Un_func;
+uses Un_func, Un_hlp;
 
 {$R *.dfm}
 
@@ -54,6 +55,7 @@ end;
 
 procedure TFrm_about.FormCreate(Sender: TObject);
 begin
+Frm_about.KeyPreview:=true;
  Frm_about.ShowHint:=true;
  UniformizeButtonsSize(Self,  273, 25);
  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
@@ -86,7 +88,8 @@ begin
     'Arial',         
     clBlue,          
     True,            // Включение маркеров
-    True             // Установка ReadOnly = True
+    True,
+    ssVertical             // Установка ReadOnly = True
   );
     LoadTextFromResource('PROGTEXT', RERight);
   FormatRichText(
@@ -95,8 +98,26 @@ begin
     'Arial',         
     clGreen,          
     True,            // Включение маркеров
-    True             // Установка ReadOnly = True
+    True,             // Установка ReadOnly = True
+     ssVertical
   );
+end;
+
+procedure TFrm_about.FormKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+if (key=112) then
+begin
+ try
+UpdateFormProperties('Frm_help', 'Форма работы со справкой',
+clBtnFace, 1024, 768);
+Frm_help.ShowModal;
+except
+Frm_help.Free;
+raise;
+end;
+
+end;
 end;
 
 procedure TFrm_about.FormResize(Sender: TObject);

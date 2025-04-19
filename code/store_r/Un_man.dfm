@@ -15,6 +15,7 @@ object Frm_main: TFrm_main
   OnActivate = FormActivate
   OnClose = FormClose
   OnCreate = FormCreate
+  OnKeyUp = FormKeyUp
   PixelsPerInch = 96
   TextHeight = 13
   object main_Image: TImage

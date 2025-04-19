@@ -1,0 +1,91 @@
+unit Un_csv_loader;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls,db,adodb, ComCtrls, Grids, DBGrids, ExtCtrls, DBCtrls,
+  StrUtils;
+
+type
+  TFrm_csv_loader = class(TForm)
+    csvlPC: TPageControl;
+    delTab: TTabSheet;
+    csvldeldataBox: TGroupBox;
+    rpobtn_box: TGroupBox;
+    rpBtn: TButton;
+    csvlGrd: TDBGrid;
+    csvOD: TOpenDialog;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure rpBtnClick(Sender: TObject);
+    procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_csv_loader: TFrm_csv_loader;
+
+implementation
+
+uses Un_dm, Un_func, Un_man, Un_hlp;
+
+{$R *.dfm}
+
+procedure TFrm_csv_loader.rpBtnClick(Sender: TObject);
+begin
+LoadCSVToTableFromDialog(
+    csvOD,
+    'goods',
+    'GoodsId',
+    'goods_naim',
+    'goods_cost',
+    DM.gQuery
+  );
+end;
+
+procedure TFrm_csv_loader.FormActivate(Sender: TObject);
+begin
+dm.GQuery.Open;
+end;
+
+procedure TFrm_csv_loader.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  SaveFormState(Self);
+  CloseAllQueriesOnDataModule('dm');
+end;
+
+procedure TFrm_csv_loader.FormCreate(Sender: TObject);
+begin
+ Frm_csv_loader.KeyPreview:=True;
+ Frm_csv_loader.ShowHint:=true;
+ UniformizeButtonsSize(Self,  273, 25);
+ UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+ UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+ LoadFormState(Self);
+ csvOD.Filter:='CSV Files (*.csv)|*.csv|All Files (*.*)|*.*';
+end;
+
+procedure TFrm_csv_loader.FormKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+if (key=112) then
+begin
+ try
+UpdateFormProperties('Frm_help', 'Форма работы со справкой',
+clBtnFace, 1024, 768);
+Frm_help.ShowModal;
+except
+Frm_help.Free;
+raise;
+end;
+
+end;
+
+end;
+
+end.

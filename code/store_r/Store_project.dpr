@@ -11,7 +11,8 @@ uses
   Un_report in 'Un_report.pas' {Frm_report},
   Un_csv_loader in 'Un_csv_loader.pas' {Frm_csv_loader},
   Un_xml_loader in 'Un_xml_loader.pas' {Frm_xml_loader},
-  Un_about in 'Un_about.pas' {Frm_about};
+  Un_about in 'Un_about.pas' {Frm_about},
+  Un_hlp in 'Un_hlp.pas' {Frm_help};
 
 {$R *.res}
 {$R resources.RES}
@@ -29,5 +30,6 @@ begin
   Application.CreateForm(TFrm_csv_loader, Frm_csv_loader);
   Application.CreateForm(TFrm_xml_loader, Frm_xml_loader);
   Application.CreateForm(TFrm_about, Frm_about);
+  Application.CreateForm(TFrm_help, Frm_help);
   Application.Run;
 end.

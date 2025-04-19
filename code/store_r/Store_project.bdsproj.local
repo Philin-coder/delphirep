@@ -22,5 +22,7 @@
     <Transaction>2025.04.18 19:08:25.335.dfm,F:\code\Result\delphi\code\store_r\Un_xml_loader.dfm=F:\code\Result\delphi\code\store_r\Un_json_loader.dfm</Transaction>
     <Transaction>2025.04.18 20:31:59.306.pas,F:\code\Result\delphi\code\store_r\Unit1.pas=F:\code\Result\delphi\code\store_r\Un_about.pas</Transaction>
     <Transaction>2025.04.18 20:31:59.306.dfm,F:\code\Result\delphi\code\store_r\Unit1.dfm=F:\code\Result\delphi\code\store_r\Un_about.dfm</Transaction>
+    <Transaction>2025.04.19 19:36:10.341.pas,F:\code\Result\delphi\code\store_r\Unit1.pas=F:\code\Result\delphi\code\store_r\Un_hlp.pas</Transaction>
+    <Transaction>2025.04.19 19:36:10.345.dfm,F:\code\Result\delphi\code\store_r\Unit1.dfm=F:\code\Result\delphi\code\store_r\Un_hlp.dfm</Transaction>
   </Transactions>
 </BorlandProject>

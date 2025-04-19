@@ -1,0 +1,43 @@
+unit Un_hlp;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs;
+
+type
+  TFrm_help = class(TForm)
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_help: TFrm_help;
+
+implementation
+
+uses Un_about, Un_func;
+
+{$R *.dfm}
+
+procedure TFrm_help.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+   SaveFormState(Self);
+end;
+
+procedure TFrm_help.FormCreate(Sender: TObject);
+begin
+Frm_help.KeyPreview:=True;
+ frm_help.ShowHint:=true;
+ UniformizeButtonsSize(Self,  273, 25);
+ UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+ UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+ LoadFormState(Self);
+end;
+
+end.

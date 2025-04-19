@@ -14,6 +14,7 @@ object Frm_json_loader: TFrm_json_loader
   OnActivate = FormActivate
   OnClose = FormClose
   OnCreate = FormCreate
+  OnKeyUp = FormKeyUp
   PixelsPerInch = 96
   TextHeight = 13
   object JSPC: TPageControl

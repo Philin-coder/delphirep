@@ -20,6 +20,7 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
   public
@@ -31,7 +32,7 @@ var
 
 implementation
 
-uses Un_dm, Un_func, Un_man;
+uses Un_dm, Un_func, Un_man, Un_hlp;
 
 {$R *.dfm}
 
@@ -48,11 +49,30 @@ end;
 
 procedure TFrm_json_loader.FormCreate(Sender: TObject);
 begin
+Frm_json_loader.KeyPreview:=true;
  Frm_json_loader.ShowHint:=true;
  UniformizeButtonsSize(Self,  273, 25);
  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
  LoadFormState(Self);
+end;
+
+procedure TFrm_json_loader.FormKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+if (key=112) then
+begin
+ try
+UpdateFormProperties('Frm_help', 'Форма работы со справкой',
+clBtnFace, 1024, 768);
+Frm_help.ShowModal;
+except
+Frm_help.Free;
+raise;
+end;
+
+end;
+
 end;
 
 procedure TFrm_json_loader.jsBtnClick(Sender: TObject);

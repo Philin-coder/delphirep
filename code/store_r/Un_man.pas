@@ -33,6 +33,7 @@ type
     procedure xml_load_itemClick(Sender: TObject);
     procedure json_load_itemClick(Sender: TObject);
     procedure About1Click(Sender: TObject);
+    procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
   public
@@ -45,7 +46,7 @@ var
 implementation
 
 uses Un_func, Un_good, Un_dm, Un_m_order, Un_report, Un_csv_loader,
-  Un_xml_loader, Un_json_loader, Un_about;
+  Un_xml_loader, Un_json_loader, Un_about, Un_hlp;
 
 {$R *.dfm}
 const
@@ -95,7 +96,7 @@ end;
 procedure TFrm_main.FormCreate(Sender: TObject);
 begin
 SetFormPropertiesIfNeeded;
-
+Frm_main.KeyPreview:=true;
  with main_Image do
  begin
      Stretch:=True;
@@ -103,6 +104,24 @@ SetFormPropertiesIfNeeded;
  end;
  LoadImageFromResource('BACKGROUND_IMAGE',main_Image);
  LoadFormState(Self);
+end;
+
+procedure TFrm_main.FormKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+if (key=112) then
+begin
+ try
+UpdateFormProperties('Frm_help', 'Форма работы со справкой',
+clBtnFace, 1024, 768);
+Frm_help.ShowModal;
+except
+Frm_help.Free;
+raise;
+end;
+
+end;
+
 end;
 
 procedure TFrm_main.good_itemClick(Sender: TObject);

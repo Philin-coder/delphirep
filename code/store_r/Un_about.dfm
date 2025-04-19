@@ -14,6 +14,7 @@ object Frm_about: TFrm_about
   OldCreateOrder = False
   OnClose = FormClose
   OnCreate = FormCreate
+  OnKeyUp = FormKeyUp
   OnResize = FormResize
   OnShow = FormShow
   PixelsPerInch = 96
@@ -25,8 +26,6 @@ object Frm_about: TFrm_about
     Height = 747
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 866
-    ExplicitHeight = 737
     object leftBox: TGroupBox
       Left = 2
       Top = 65
@@ -34,7 +33,6 @@ object Frm_about: TFrm_about
       Height = 680
       Align = alLeft
       TabOrder = 0
-      ExplicitHeight = 670
       object logobox: TGroupBox
         Left = 2
         Top = 15
@@ -44,7 +42,6 @@ object Frm_about: TFrm_about
         Color = clBtnFace
         ParentColor = False
         TabOrder = 0
-        ExplicitTop = 6
         object logo_Image: TImage
           Left = 2
           Top = 15
@@ -62,9 +59,6 @@ object Frm_about: TFrm_about
         Height = 549
         Align = alClient
         TabOrder = 1
-        ExplicitTop = 120
-        ExplicitWidth = 419
-        ExplicitHeight = 548
         object REleft: TRichEdit
           AlignWithMargins = True
           Left = 4
@@ -73,10 +67,6 @@ object Frm_about: TFrm_about
           Height = 541
           Align = alClient
           TabOrder = 0
-          ExplicitLeft = 0
-          ExplicitTop = -511
-          ExplicitWidth = 177
-          ExplicitHeight = 548
         end
       end
     end
@@ -87,8 +77,6 @@ object Frm_about: TFrm_about
       Height = 680
       Align = alRight
       TabOrder = 1
-      ExplicitLeft = 480
-      ExplicitHeight = 670
       object RERight: TRichEdit
         Left = 2
         Top = 15
@@ -96,10 +84,6 @@ object Frm_about: TFrm_about
         Height = 663
         Align = alClient
         TabOrder = 0
-        ExplicitLeft = 120
-        ExplicitTop = 288
-        ExplicitWidth = 185
-        ExplicitHeight = 89
       end
     end
     object TimePanel: TFlowPanel
@@ -109,7 +93,6 @@ object Frm_about: TFrm_about
       Height = 50
       Align = alTop
       TabOrder = 2
-      ExplicitWidth = 862
     end
   end
   object btnBox: TGroupBox
@@ -119,8 +102,6 @@ object Frm_about: TFrm_about
     Height = 105
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 737
-    ExplicitWidth = 866
     object closeBtn: TButton
       Left = 416
       Top = 40

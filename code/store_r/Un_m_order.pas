@@ -74,6 +74,7 @@ type
     procedure is_pay_inpChange(Sender: TObject);
     procedure M_orderUpdBtnClick(Sender: TObject);
     procedure delmoBtnClick(Sender: TObject);
+    procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
   public
@@ -87,7 +88,7 @@ var
 
 implementation
 
-uses Un_dm, Un_func, Un_man;
+uses Un_dm, Un_func, Un_man, Un_hlp;
 
 {$R *.dfm}
 
@@ -146,6 +147,7 @@ end;
 
 procedure TFrm_m_order.FormCreate(Sender: TObject);
 begin
+Frm_m_order.KeyPreview:=true;
 is_get_status:=0;
 is_pay_status:=0;
  Frm_m_order.ShowHint:=true;
@@ -153,6 +155,24 @@ is_pay_status:=0;
  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
  LoadFormState(Self);
+end;
+
+procedure TFrm_m_order.FormKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+if (key=112) then
+begin
+ try
+UpdateFormProperties('Frm_help', 'Форма работы со справкой',
+clBtnFace, 1024, 768);
+Frm_help.ShowModal;
+except
+Frm_help.Free;
+raise;
+end;
+
+end;
+
 end;
 
 procedure TFrm_m_order.ins_m_order_BtnClick(Sender: TObject);
