@@ -25,7 +25,6 @@ object Frm_help: TFrm_help
     Align = alLeft
     AutoSize = True
     TabOrder = 0
-    ExplicitHeight = 299
     object sel_static: TStaticText
       Left = 1
       Top = 1
@@ -87,7 +86,6 @@ object Frm_help: TFrm_help
       #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077
       #1059#1076#1072#1083#1077#1085#1080#1077)
     TabIndex = 0
-    ExplicitHeight = 299
     object Imagebox: TGroupBox
       Left = 4
       Top = 24
@@ -115,10 +113,9 @@ object Frm_help: TFrm_help
         Left = 2
         Top = 15
         Width = 567
-        Height = 301
+        Height = 307
         Align = alClient
         TabOrder = 0
-        ExplicitHeight = 395
       end
     end
   end

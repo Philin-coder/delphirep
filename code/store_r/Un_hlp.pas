@@ -144,6 +144,8 @@ end;
 
 procedure TFrm_help.FormCreate(Sender: TObject);
 begin
+ Imagebox.Align := alTop;
+  rebox.Align :=alClient;
  Frm_help.KeyPreview:=True;
  frm_help.ShowHint:=true;
  UniformizeButtonsSize(Self,  273, 25);
@@ -211,6 +213,8 @@ end;
 
 procedure TFrm_help.FormResize(Sender: TObject);
 begin
+  Imagebox.Align := alTop;
+  rebox.Align :=alClient;
   Imagebox.Height := ClientHeight div 2;
 end;
 
