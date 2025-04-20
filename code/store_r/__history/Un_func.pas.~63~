@@ -26,8 +26,12 @@ ComObj,
 ExtCtrls;
 const
   crMyAnimatedCursor = 1;
+const
+  EM_LINEINDEX = $BB;
 type
   TSysCharSet = set of Char;
+var
+  VisitedStaticTextName: string;
 function  DateToStr_(Dat : TDate): String;
 function  CommaPoint (X: String) : String;
 function  FindFormByName(const AName: string): TForm;
@@ -92,8 +96,25 @@ procedure UpdateFormProperties(const FormName: string;
   Query: TADOQuery
 );
 function RemoveXMLComments(const FileName: string): string;
-implementation
- var
+procedure LoadJSONToTableFromDialog(
+  OpenDialog: TOpenDialog;
+  const TableName: string;
+  const FieldIdName, FieldNaimName, FieldPriceName: string;
+  Query: TADOQuery
+);
+procedure LoadTextFromResource(const ResourceName: string;
+RichTextEdit: TRichEdit);
+procedure FormatRichText(RichEdit: TRichEdit; FontSize: Integer; FontName: string;
+TextColor: TColor; BulletStyle: Boolean; ReadOnly: Boolean; ScrollBars: TScrollStyle);
+procedure MakeStaticTextLookLikeLink(
+  AForm: TForm;
+  const StaticTextName: string;
+  OnMouseEnterEvent: TNotifyEvent;
+  OnMouseLeaveEvent: TNotifyEvent;
+  OnClickEvent: TNotifyEvent
+);
+implementation
+ var
   hAniCursor: HCURSOR = 0;
 
 function    CommaPoint (X: String) : String;
@@ -1211,8 +1232,6 @@ begin
     Inc(Result);
   end;
 end;
-
-
 procedure LoadCSVToTableFromDialog(
   OpenDialog: TOpenDialog;
   const TableName: string;
@@ -1230,7 +1249,7 @@ var
 begin
   if not Assigned(OpenDialog) then Exit;
   if not OpenDialog.Execute then
-    Exit; // Пользователь отменил выбор файла
+    Exit;
   ID := 0;
   Price := 0.0;
   StringList := TStringList.Create;
@@ -1247,11 +1266,9 @@ begin
     begin
       FieldCount := SplitString(StringList[i], ',', Fields);
       if FieldCount < 3 then Continue;
-
       SId := Fields[0];
       SName := Fields[1];
       SPrice := Fields[2];
-
       try
         ID := StrToIntDef(Trim(SId), 0);
         Price := StrToFloat(Trim(SPrice), Fmt);
@@ -1291,7 +1308,7 @@ var
 begin
   SL := TStringList.Create;
   try
-    SL.LoadFromFile(FileName); 
+    SL.LoadFromFile(FileName);
     XMLText := SL.Text;
     StartPos := Pos('<!--', XMLText);
     while StartPos > 0 do
@@ -1306,7 +1323,6 @@ begin
         Break; // нет закрывающего комментария
       StartPos := Pos('<!--', XMLText);
     end;
-
     Result := XMLText;
   finally
     SL.Free;
@@ -1328,26 +1344,16 @@ var
   SId, SName, SPrice: string;
   XMLString: string;
 begin
-with OpenDialog do
-begin
-  Title := 'Выберите XML файл';
-  Filter := 'XML файлы (*.xml)|*.xml';
-  InitialDir := GetCurrentDir; 
-end;
   if not Assigned(OpenDialog) then Exit;
   if not OpenDialog.Execute then Exit;
-
   try
     XMLDoc := CreateOleObject('MSXML2.DOMDocument.6.0');
   except
     ShowMessage('Не удалось создать XML парсер. Убедитесь, что MSXML установлен.');
     Exit;
   end;
-
   XMLDoc.async := False;
   XMLDoc.preserveWhiteSpace := False;
-
-  // Загружаем XML из строки, предварительно удалив комментарии
   XMLString := RemoveXMLComments(OpenDialog.FileName);
 
   if not XMLDoc.loadXML(XMLString) then
@@ -1355,20 +1361,15 @@ end;
     ShowMessage('Ошибка загрузки XML: ' + XMLDoc.parseError.reason);
     Exit;
   end;
-
   GoodsNode := XMLDoc.documentElement;
-
   if VarIsNull(GoodsNode) or (GoodsNode.nodeName <> 'goods') then
   begin
     ShowMessage('Неверный XML: ожидался <goods>');
     Exit;
   end;
-
-  GetLocaleFormatSettings(1033, Fmt); // Используем точку как разделитель
+  GetLocaleFormatSettings(1033, Fmt);
   Fmt.DecimalSeparator := '.';
   Fmt.ThousandSeparator := ',';
-
-  // Удаляем текущие записи
   Query.Close;
   Query.SQL.Text := 'DELETE FROM ' + TableName;
   Query.ExecSQL;
@@ -1387,13 +1388,9 @@ end;
           SName := GoodNode.selectSingleNode('naim_good').text else SName := '';
         if not VarIsNull(GoodNode.selectSingleNode('price_good')) then
           SPrice := GoodNode.selectSingleNode('price_good').text else SPrice := '0';
-
-        // Заменяем запятую на точку для корректного парсинга
         SPrice := StringReplace(SPrice, ',', '.', [rfReplaceAll]);
-
         ID := StrToIntDef(Trim(SId), 0);
         Price := StrToFloat(Trim(SPrice), Fmt);
-
         Query.Close;
         Query.SQL.Text := Format(
           'INSERT INTO %s (%s, %s, %s) VALUES (:%s, :%s, :%s)',
@@ -1429,9 +1426,226 @@ end;
   finally
     Query.EnableControls;
   end;
-
   ShowMessage('Импорт завершён. Загружено товаров: ' + IntToStr(GoodsNode.childNodes.length));
 end;
+procedure LoadJSONToTableFromDialog(
+  OpenDialog: TOpenDialog;
+  const TableName: string;
+  const FieldIdName, FieldNaimName, FieldPriceName: string;
+  Query: TADOQuery
+);
+var
+  SL: TStringList;
+  JSONText, Line, SId, SName, SPrice: string;
+  i, ID: Integer;
+  Price: Double;
+  Fmt: TFormatSettings;
+  Items: TStringList;
+begin
+  if not Assigned(OpenDialog) then Exit;
+  OpenDialog.Filter := 'JSON файлы (*.json)|*.json';
+  if not OpenDialog.Execute then Exit;
+
+  SL := TStringList.Create;
+  try
+    SL.LoadFromFile(OpenDialog.FileName);
+    JSONText := SL.Text;
+  finally
+    SL.Free;
+  end;
+  JSONText := StringReplace(JSONText, #13#10, '', [rfReplaceAll]);
+  JSONText := StringReplace(JSONText, #10, '', [rfReplaceAll]);
+  JSONText := StringReplace(JSONText, ' ', '', [rfReplaceAll]);
+  JSONText := StringReplace(JSONText, '[', '', [rfReplaceAll]);
+  JSONText := StringReplace(JSONText, ']', '', [rfReplaceAll]);
+  JSONText := StringReplace(JSONText, '},{', '}|{', [rfReplaceAll]); // разделим объекты
+
+  Items := TStringList.Create;
+  try
+    Items.Delimiter := '|';
+    Items.StrictDelimiter := True;
+    Items.DelimitedText := JSONText;
+
+    GetLocaleFormatSettings(1033, Fmt);
+    Fmt.DecimalSeparator := '.';
+    Fmt.ThousandSeparator := ',';
+
+    // Удалим старые записи
+    Query.Close;
+    Query.SQL.Text := 'DELETE FROM ' + TableName;
+    Query.ExecSQL;
+
+    Query.Connection.BeginTrans;
+    try
+      for i := 0 to Items.Count - 1 do
+      begin
+        Line := Items[i]; // одна строка: {"id_good":1,"naim_good":"Товар 1","price_good":100.5}
+        Line := StringReplace(Line, '{', '', []);
+        Line := StringReplace(Line, '}', '', []);
+
+        // Простейший парсинг
+        SId := Copy(Line, Pos('"id_good":', Line) + 10, Pos(',', Line) - Pos('"id_good":', Line) - 10);
+        Delete(Line, 1, Pos(',', Line));
+
+        SName := Copy(Line, Pos('"naim_good":"', Line) + 13,
+                      Pos('"', Copy(Line, Pos('"naim_good":"', Line) + 13, 100)) - 1);
+        Delete(Line, 1, Pos('"price_good":', Line) - 1);
+
+        SPrice := Copy(Line, Pos('"price_good":', Line) + 13, Length(Line));
+
+        SPrice := StringReplace(SPrice, ',', '.', [rfReplaceAll]);
+
+        ID := StrToIntDef(Trim(SId), 0);
+        Price := StrToFloatDef(Trim(SPrice), 0, Fmt);
+
+        Query.Close;
+        Query.SQL.Text := Format(
+          'INSERT INTO %s (%s, %s, %s) VALUES (:%s, :%s, :%s)',
+          [TableName, FieldIdName, FieldNaimName, FieldPriceName,
+           FieldIdName, FieldNaimName, FieldPriceName]
+        );
+        Query.Parameters.ParamByName(FieldIdName).Value := ID;
+        Query.Parameters.ParamByName(FieldNaimName).Value := SName;
+        Query.Parameters.ParamByName(FieldPriceName).Value := Price;
+        Query.ExecSQL;
+      end;
+
+      Query.Connection.CommitTrans;
+    except
+      on E: Exception do
+      begin
+        Query.Connection.RollbackTrans;
+        ShowMessage('Ошибка при импорте: ' + E.Message);
+        Exit;
+      end;
+    end;
+  finally
+    Items.Free;
+  end;
+
+  Query.DisableControls;
+  try
+    Query.Close;
+    Query.SQL.Text := 'SELECT * FROM ' + TableName;
+    Query.Open;
+  finally
+    Query.EnableControls;
+  end;
+  ShowMessage('Импорт JSON завершён.');
+end;
+procedure LoadTextFromResource(const ResourceName: string;
+RichTextEdit: TRichEdit);
+var
+  RS: TResourceStream;
+  Text: string;
+begin
+  if not Assigned(RichTextEdit) then
+  begin
+    ShowMessage('Ошибка: компонент RichTextEdit не назначен.');
+    Exit;
+  end;
+  RS := TResourceStream.Create(HInstance, ResourceName, RT_RCDATA);
+  try
+    // Определяем размер текста и читаем его из потока
+    SetLength(Text, RS.Size);
+    RS.ReadBuffer(Pointer(Text)^, RS.Size);
+
+    // Очищаем содержимое RichTextEdit и загружаем текст
+    RichTextEdit.Clear;
+    RichTextEdit.Text := Text;
+  finally
+    // Освобождаем поток
+    RS.Free;
+  end;
+end;
+
+procedure FormatRichText(RichEdit: TRichEdit; FontSize: Integer; FontName: string;
+  TextColor: TColor; BulletStyle: Boolean; ReadOnly: Boolean; ScrollBars: TScrollStyle);
+var
+  i: Integer;
+  StartPos, EndPos: Integer;
+begin
+  // Проверяем, что компонент RichEdit передан
+  if not Assigned(RichEdit) then
+  begin
+    ShowMessage('Компонент RichEdit не назначен.');
+    Exit;
+  end;
+
+  // Устанавливаем шрифт и размер текста для всего документа
+  RichEdit.Font.Name := FontName;
+  RichEdit.Font.Size := FontSize;
+
+  // Устанавливаем режим "только для чтения"
+  RichEdit.ReadOnly := ReadOnly;
+
+  // Устанавливаем полосы прокрутки
+  RichEdit.ScrollBars := ScrollBars;
+
+  // Разделяем текст на строки
+  for i := 0 to RichEdit.Lines.Count - 1 do
+  begin
+    // Определяем позиции начала и конца строки
+    StartPos := RichEdit.Perform(EM_LINEINDEX, i, 0);
+    EndPos := StartPos + Length(RichEdit.Lines[i]);
+
+    // Выделяем строку
+    RichEdit.SelStart := StartPos;
+    RichEdit.SelLength := EndPos - StartPos;
+
+    // Устанавливаем цвет текста
+    RichEdit.SelAttributes.Color := TextColor;
+
+    // Если нужно добавить маркеры (буллеты)
+    if BulletStyle then
+    begin
+      RichEdit.Paragraph.Numbering := nsBullet; // Включаем маркеры
+    end
+    else
+    begin
+      RichEdit.Paragraph.Numbering := nsNone; // Отключаем маркеры
+    end;
+
+    // Снимаем выделение
+    RichEdit.SelLength := 0;
+  end;
+end;
+procedure MakeStaticTextLookLikeLink(
+  AForm: TForm;
+  const StaticTextName: string;
+  OnMouseEnterEvent: TNotifyEvent;
+  OnMouseLeaveEvent: TNotifyEvent;
+  OnClickEvent: TNotifyEvent
+);
+var
+  StaticText: TStaticText;
+begin
+  // Находим компонент по имени
+  StaticText := TStaticText(AForm.FindComponent(StaticTextName));
+  if not Assigned(StaticText) then
+  begin
+    raise Exception.CreateFmt('Компонент TStaticText с именем "%s" не найден на форме "%s".', [StaticTextName, AForm.Name]);
+  end;
+
+  // Настройка внешнего вида
+  with StaticText do
+  begin
+    Font.Style := [fsUnderline];  // Подчеркивание
+    Cursor := crHandPoint;        // Курсор в виде руки
+
+    // Если ссылка уже была "посещена", устанавливаем красный цвет
+    if StaticTextName = VisitedStaticTextName then
+      Font.Color := clRed
+    else
+      Font.Color := clBlue;
+
+    // Добавляем обработчики событий
+    OnMouseEnter := OnMouseEnterEvent;
+    OnMouseLeave := OnMouseLeaveEvent;
+    OnClick := OnClickEvent;
+  end;
+end;
+
 
 initialization
 finalization

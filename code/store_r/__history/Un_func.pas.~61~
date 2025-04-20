@@ -103,7 +103,14 @@ procedure UpdateFormProperties(const FormName: string;
 procedure LoadTextFromResource(const ResourceName: string;
 RichTextEdit: TRichEdit);
 procedure FormatRichText(RichEdit: TRichEdit; FontSize: Integer; FontName: string;
-TextColor: TColor; BulletStyle: Boolean; ReadOnly: Boolean);
+TextColor: TColor; BulletStyle: Boolean; ReadOnly: Boolean; ScrollBars: TScrollStyle);
+procedure MakeStaticTextLookLikeLink(
+  AForm: TForm;
+  const StaticTextName: string;
+  OnMouseEnterEvent: TNotifyEvent;
+  OnMouseLeaveEvent: TNotifyEvent;
+  OnClickEvent: TNotifyEvent
+);
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -1551,26 +1558,43 @@ begin
 end;
 
 procedure FormatRichText(RichEdit: TRichEdit; FontSize: Integer; FontName: string;
-TextColor: TColor; BulletStyle: Boolean; ReadOnly: Boolean);
+  TextColor: TColor; BulletStyle: Boolean; ReadOnly: Boolean; ScrollBars: TScrollStyle);
 var
   i: Integer;
   StartPos, EndPos: Integer;
 begin
+  // Проверяем, что компонент RichEdit передан
   if not Assigned(RichEdit) then
   begin
     ShowMessage('Компонент RichEdit не назначен.');
     Exit;
   end;
+
+  // Устанавливаем шрифт и размер текста для всего документа
   RichEdit.Font.Name := FontName;
   RichEdit.Font.Size := FontSize;
+
+  // Устанавливаем режим "только для чтения"
   RichEdit.ReadOnly := ReadOnly;
+
+  // Устанавливаем полосы прокрутки
+  RichEdit.ScrollBars := ScrollBars;
+
+  // Разделяем текст на строки
   for i := 0 to RichEdit.Lines.Count - 1 do
   begin
+    // Определяем позиции начала и конца строки
     StartPos := RichEdit.Perform(EM_LINEINDEX, i, 0);
     EndPos := StartPos + Length(RichEdit.Lines[i]);
+
+    // Выделяем строку
     RichEdit.SelStart := StartPos;
     RichEdit.SelLength := EndPos - StartPos;
+
+    // Устанавливаем цвет текста
     RichEdit.SelAttributes.Color := TextColor;
+
+    // Если нужно добавить маркеры (буллеты)
     if BulletStyle then
     begin
       RichEdit.Paragraph.Numbering := nsBullet; // Включаем маркеры
@@ -1579,9 +1603,43 @@ begin
     begin
       RichEdit.Paragraph.Numbering := nsNone; // Отключаем маркеры
     end;
+
+    // Снимаем выделение
     RichEdit.SelLength := 0;
   end;
 end;
+
+procedure MakeStaticTextLookLikeLink(
+  AForm: TForm;
+  const StaticTextName: string;
+  OnMouseEnterEvent: TNotifyEvent;
+  OnMouseLeaveEvent: TNotifyEvent;
+  OnClickEvent: TNotifyEvent
+);
+var
+  StaticText: TStaticText;
+begin
+  // Находим компонент по имени
+  StaticText := TStaticText(AForm.FindComponent(StaticTextName));
+  if not Assigned(StaticText) then
+  begin
+    raise Exception.CreateFmt('Компонент TStaticText с именем "%s" не найден на форме "%s".', [StaticTextName, AForm.Name]);
+  end;
+
+  // Настройка внешнего вида
+  with StaticText do
+  begin
+    Font.Color := clBlue;         // Синий цвет текста
+    Font.Style := [fsUnderline];  // Подчеркивание
+    Cursor := crHandPoint;        // Курсор в виде руки
+
+    // Добавляем обработчики событий
+    OnMouseEnter := OnMouseEnterEvent;
+    OnMouseLeave := OnMouseLeaveEvent;
+    OnClick := OnClickEvent;
+  end;
+end;
+
 
 initialization
 finalization

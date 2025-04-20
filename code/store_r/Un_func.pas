@@ -30,6 +30,8 @@ const
   EM_LINEINDEX = $BB;
 type
   TSysCharSet = set of Char;
+var
+  VisitedStaticTexts: TStringList;
 function  DateToStr_(Dat : TDate): String;
 function  CommaPoint (X: String) : String;
 function  FindFormByName(const AName: string): TForm;
@@ -103,7 +105,14 @@ procedure UpdateFormProperties(const FormName: string;
 procedure LoadTextFromResource(const ResourceName: string;
 RichTextEdit: TRichEdit);
 procedure FormatRichText(RichEdit: TRichEdit; FontSize: Integer; FontName: string;
-  TextColor: TColor; BulletStyle: Boolean; ReadOnly: Boolean; ScrollBars: TScrollStyle);
+TextColor: TColor; BulletStyle: Boolean; ReadOnly: Boolean; ScrollBars: TScrollStyle);
+procedure MakeStaticTextLookLikeLink(
+  AForm: TForm;
+  const StaticTextName: string;
+  OnMouseEnterEvent: TNotifyEvent;
+  OnMouseLeaveEvent: TNotifyEvent;
+  OnClickEvent: TNotifyEvent
+);
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -1602,8 +1611,58 @@ begin
   end;
 end;
 
+procedure MakeStaticTextLookLikeLink(
+  AForm: TForm; 
+  const StaticTextName: string;
+  OnMouseEnterEvent: TNotifyEvent;
+  OnMouseLeaveEvent: TNotifyEvent;
+  OnClickEvent: TNotifyEvent
+);
+var
+  StaticText: TStaticText;
+begin
+  // Находим компонент по имени
+  StaticText := TStaticText(AForm.FindComponent(StaticTextName));
+  if not Assigned(StaticText) then
+  begin
+    raise Exception.CreateFmt('Компонент TStaticText с именем "%s" не найден на форме "%s".', [StaticTextName, AForm.Name]);
+  end;
+
+  // Настройка внешнего вида
+  with StaticText do
+  begin
+    Font.Style := [fsUnderline];  // Подчеркивание
+    Cursor := crHandPoint;        // Курсор в виде руки
+
+    // Проверяем, была ли ссылка нажата ранее
+    if VisitedStaticTexts.IndexOf(StaticTextName) >= 0 then
+      Font.Color := clRed
+    else
+      Font.Color := clBlue;
+
+    // Добавляем обработчики событий
+    OnMouseEnter := OnMouseEnterEvent;
+    OnMouseLeave := OnMouseLeaveEvent;
+    OnClick := OnClickEvent;
+  end;
+end;
+
+// Обработчик события OnClick
+procedure StaticTextClick(Sender: TObject);
+begin
+  if Sender is TStaticText then
+  begin
+    // Добавляем имя ссылки в список "посещенных"
+    VisitedStaticTexts.Add(TStaticText(Sender).Name);
+    TStaticText(Sender).Font.Color := clRed;
+  end;
+end;
+
+
 initialization
+  VisitedStaticTexts := TStringList.Create;
 finalization
 if hAniCursor <> 0 then
     DestroyCursor(hAniCursor);
+    VisitedStaticTexts.Free;
 end.

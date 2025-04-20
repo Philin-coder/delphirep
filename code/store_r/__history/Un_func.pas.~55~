@@ -103,7 +103,8 @@ procedure UpdateFormProperties(const FormName: string;
 procedure LoadTextFromResource(const ResourceName: string;
 RichTextEdit: TRichEdit);
 procedure FormatRichText(RichEdit: TRichEdit; FontSize: Integer; FontName: string;
-TextColor: TColor; BulletStyle: Boolean; ReadOnly: Boolean);
+TextColor: TColor; BulletStyle: Boolean; ReadOnly: Boolean; ScrollBars: TScrollStyle);
+procedure MakeStaticTextLookLikeLink(StaticText: TStaticText);
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -1551,7 +1552,7 @@ begin
 end;
 
 procedure FormatRichText(RichEdit: TRichEdit; FontSize: Integer; FontName: string;
-TextColor: TColor; BulletStyle: Boolean; ReadOnly: Boolean);
+  TextColor: TColor; BulletStyle: Boolean; ReadOnly: Boolean; ScrollBars: TScrollStyle);
 var
   i: Integer;
   StartPos, EndPos: Integer;
@@ -1569,6 +1570,9 @@ begin
 
   // Устанавливаем режим "только для чтения"
   RichEdit.ReadOnly := ReadOnly;
+
+  // Устанавливаем полосы прокрутки
+  RichEdit.ScrollBars := ScrollBars;
 
   // Разделяем текст на строки
   for i := 0 to RichEdit.Lines.Count - 1 do
@@ -1598,6 +1602,43 @@ begin
     RichEdit.SelLength := 0;
   end;
 end;
+procedure StaticTextMouseEnter(Sender: TObject);
+begin
+  if Sender is TStaticText then
+    with TStaticText(Sender) do
+      Font.Color := clRed; // Изменяем цвет текста при наведении
+end;
+
+// Обработчик события OnMouseLeave (возврат к исходному цвету)
+procedure StaticTextMouseLeave(Sender: TObject);
+begin
+  if Sender is TStaticText then
+    with TStaticText(Sender) do
+      Font.Color := clBlue; // Возвращаем исходный цвет
+end;
+
+// Основная процедура для настройки внешнего вида TStaticText
+procedure MakeStaticTextLookLikeLink(StaticText: TStaticText);
+begin
+  if not Assigned(StaticText) then
+  begin
+    raise Exception.Create('Компонент TStaticText не назначен.');
+  end;
+
+  // Используем with для упрощения доступа к свойствам
+  with StaticText do
+  begin
+    Font.Color := clBlue;         // Синий цвет текста
+    Font.Style := [fsUnderline];  // Подчеркивание
+    Cursor := crHandPoint;        // Курсор в виде руки
+
+    // Добавляем обработчики событий для изменения цвета при наведении
+    OnMouseEnter := StaticTextMouseEnter;
+    OnMouseLeave := StaticTextMouseLeave;
+  end;
+end;
+
+
 
 initialization
 finalization

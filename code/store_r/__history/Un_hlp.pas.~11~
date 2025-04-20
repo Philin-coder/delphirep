@@ -4,12 +4,15 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs;
+  Dialogs, ExtCtrls, StdCtrls;
 
 type
   TFrm_help = class(TForm)
+    FlowPanel1: TFlowPanel;
+    first_static: TStaticText;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
   public
@@ -38,6 +41,28 @@ begin
  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
  LoadFormState(Self);
+
+ MakeStaticTextLookLikeLink(Self, 'StaticText1');
+  // Делаем StaticText2 похожим на ссылку
+  MakeStaticTextLookLikeLink(Self, 'StaticText2');
+end;
+
+procedure TFrm_help.FormKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+if (key=112) then
+begin
+ try
+UpdateFormProperties('Frm_help', 'Форма работы со справкой',
+clBtnFace, 1024, 768);
+Frm_help.ShowModal;
+except
+Frm_help.Free;
+raise;
+end;
+
+end;
+
 end;
 
 end.

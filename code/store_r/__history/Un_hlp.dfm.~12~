@@ -38,16 +38,5 @@ object Frm_help: TFrm_help
       OnMouseEnter = first_staticMouseEnter
       OnMouseLeave = first_staticMouseLeave
     end
-    object StaticText1: TStaticText
-      Left = 30
-      Top = 1
-      Width = 59
-      Height = 17
-      Caption = 'StaticText1'
-      TabOrder = 1
-      OnClick = StaticText1Click
-      OnMouseEnter = StaticText1MouseEnter
-      OnMouseLeave = StaticText1MouseLeave
-    end
   end
 end

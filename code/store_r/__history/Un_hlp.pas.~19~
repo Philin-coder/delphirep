@@ -115,6 +115,7 @@ procedure TFrm_help.StaticText1Click(Sender: TObject);
 begin
 if Sender is TStaticText then
   begin
+    // Меняем цвет текста на красный и сохраняем имя "посещенной" ссылки
     TStaticText(Sender).Font.Color := clRed;
     VisitedStaticTexts.Add(TStaticText(Sender).Name);
   end;
@@ -125,6 +126,7 @@ procedure TFrm_help.StaticText1MouseEnter(Sender: TObject);
 begin
 if Sender is TStaticText then
   begin
+    // Если ссылка еще не была нажата, меняем цвет на красный при наведении
     if TStaticText(Sender).Font.Color <> clRed then
       TStaticText(Sender).Font.Color := clRed;
   end;

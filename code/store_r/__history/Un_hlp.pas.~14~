@@ -10,16 +10,12 @@ type
   TFrm_help = class(TForm)
     FlowPanel1: TFlowPanel;
     first_static: TStaticText;
-    StaticText1: TStaticText;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure first_staticMouseEnter(Sender: TObject);
     procedure first_staticMouseLeave(Sender: TObject);
     procedure first_staticClick(Sender: TObject);
-    procedure StaticText1Click(Sender: TObject);
-    procedure StaticText1MouseEnter(Sender: TObject);
-    procedure StaticText1MouseLeave(Sender: TObject);
   private
     { Private declarations }
   public
@@ -37,32 +33,20 @@ uses Un_about, Un_func;
 
 procedure TFrm_help.first_staticClick(Sender: TObject);
 begin
-if Sender is TStaticText then
-  begin
-    // Меняем цвет текста на красный и сохраняем имя "посещенной" ссылки
-    TStaticText(Sender).Font.Color := clRed;
-    VisitedStaticTexts.Add(TStaticText(Sender).Name);
-    ShowMessage('2');
-  end;
+  ShowMessage('2');
 end;
 
 procedure TFrm_help.first_staticMouseEnter(Sender: TObject);
 begin
-    if Sender is TStaticText then
-  begin
-    if TStaticText(Sender).Font.Color <> clRed then
-      TStaticText(Sender).Font.Color := clRed;
-  end;
+ if Sender is TStaticText then
+    TStaticText(Sender).Font.Color := clRed;
 end;
 
 procedure TFrm_help.first_staticMouseLeave(Sender: TObject);
 begin
-if Sender is TStaticText then
-  begin
-    if TStaticText(Sender).Font.Color <> clRed then
-      TStaticText(Sender).Font.Color := clBlue;
-  end;
-  end;
+ if Sender is TStaticText then
+    TStaticText(Sender).Font.Color := clBlue
+end;
 
 procedure TFrm_help.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
@@ -78,18 +62,11 @@ begin
  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
  LoadFormState(Self);
   MakeStaticTextLookLikeLink(
-    Self,
-    'first_static',
-    first_staticMouseEnter,
-    first_staticMouseLeave,
+    Self, 
+    'first_static', 
+    first_staticMouseEnter, 
+    first_staticMouseLeave, 
     first_staticClick
-  );
-    MakeStaticTextLookLikeLink(
-    Self,
-    'StaticText1',
-    StaticText1MouseEnter,
-    StaticText1MouseLeave,
-    StaticText1Click
   );
 end;
 
@@ -110,33 +87,5 @@ end;
 end;
 
 end;
-
-procedure TFrm_help.StaticText1Click(Sender: TObject);
-begin
-if Sender is TStaticText then
-  begin
-    TStaticText(Sender).Font.Color := clRed;
-    VisitedStaticTexts.Add(TStaticText(Sender).Name);
-  end;
- ShowMessage('4');
-end;
-
-procedure TFrm_help.StaticText1MouseEnter(Sender: TObject);
-begin
-if Sender is TStaticText then
-  begin
-    if TStaticText(Sender).Font.Color <> clRed then
-      TStaticText(Sender).Font.Color := clRed;
-  end;
-end;
-
-procedure TFrm_help.StaticText1MouseLeave(Sender: TObject);
-begin
- if Sender is TStaticText then
-  begin
-    if TStaticText(Sender).Font.Color <> clRed then
-      TStaticText(Sender).Font.Color := clBlue;
-  end;
-  end;
 
 end.
