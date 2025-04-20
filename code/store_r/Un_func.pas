@@ -115,6 +115,7 @@ procedure MakeStaticTextLookLikeLink(
 );
 procedure AlignComponentsVertically(AContainer: TWinControl;
 Spacing: Integer = 5);
+procedure CheckAndCreateHelpFolder;
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -1691,6 +1692,29 @@ begin
 
   // При необходимости можно обновить размер контейнера
   AContainer.Height := CurrentTop - Spacing;
+end;
+
+procedure CheckAndCreateHelpFolder;
+var
+  AppPath, FolderPath: string;
+begin
+  // Получаем путь к текущей папке приложения
+  AppPath := ExtractFilePath(ParamStr(0));
+  FolderPath := IncludeTrailingPathDelimiter(AppPath) + 'hlp_res';
+
+  // Проверяем, существует ли папка
+  if not DirectoryExists(FolderPath) then
+  begin
+    // Если папка не существует, создаём её
+    if not CreateDir(FolderPath) then
+      raise Exception.Create('Не удалось создать папку: ' + FolderPath);
+  end;
+  if DirectoryExists(FolderPath)  then
+  begin
+      ShowMessage('folder exists');
+      Exit;
+  end;
+  
 end;
 
 initialization
