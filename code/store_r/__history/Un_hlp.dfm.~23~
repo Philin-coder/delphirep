@@ -19,10 +19,9 @@ object Frm_help: TFrm_help
   object linkPanel: TFlowPanel
     Left = 0
     Top = 0
-    Width = 56
+    Width = 68
     Height = 299
     Align = alLeft
-    AutoSize = True
     TabOrder = 0
     object sel_static: TStaticText
       Left = 1
@@ -36,8 +35,8 @@ object Frm_help: TFrm_help
       OnMouseLeave = sel_staticMouseLeave
     end
     object ins_Static: TStaticText
-      Left = 1
-      Top = 18
+      Left = 37
+      Top = 1
       Width = 29
       Height = 17
       Caption = #1042#1074#1086#1076
@@ -48,33 +47,21 @@ object Frm_help: TFrm_help
     end
     object upd_Static: TStaticText
       Left = 1
-      Top = 35
-      Width = 54
+      Top = 18
+      Width = 66
       Height = 17
       Align = alLeft
-      Anchors = [akLeft, akBottom]
-      Caption = #1054#1073#1085#1086#1074#1080#1090#1100
+      Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077
       TabOrder = 2
       OnClick = upd_StaticClick
       OnMouseEnter = upd_StaticMouseEnter
       OnMouseLeave = upd_StaticMouseLeave
     end
-    object delStatic: TStaticText
-      Left = 1
-      Top = 52
-      Width = 48
-      Height = 17
-      Caption = #1059#1076#1072#1083#1080#1090#1100
-      TabOrder = 3
-      OnClick = delStaticClick
-      OnMouseEnter = delStaticMouseEnter
-      OnMouseLeave = delStaticMouseLeave
-    end
   end
   object helpTC: TTabControl
-    Left = 56
+    Left = 68
     Top = 0
-    Width = 579
+    Width = 567
     Height = 299
     Align = alClient
     MultiSelect = True

@@ -4,22 +4,24 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ExtCtrls, StdCtrls;
+  Dialogs, ExtCtrls, StdCtrls, ComCtrls;
 
 type
   TFrm_help = class(TForm)
-    FlowPanel1: TFlowPanel;
-    first_static: TStaticText;
-    StaticText1: TStaticText;
+    linkPanel: TFlowPanel;
+    sel_static: TStaticText;
+    ins_Static: TStaticText;
+    helpTC: TTabControl;
+    upd_Static: TStaticText;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
-    procedure first_staticMouseEnter(Sender: TObject);
-    procedure first_staticMouseLeave(Sender: TObject);
-    procedure first_staticClick(Sender: TObject);
-    procedure StaticText1Click(Sender: TObject);
-    procedure StaticText1MouseEnter(Sender: TObject);
-    procedure StaticText1MouseLeave(Sender: TObject);
+    procedure sel_staticMouseEnter(Sender: TObject);
+    procedure sel_staticMouseLeave(Sender: TObject);
+    procedure sel_staticClick(Sender: TObject);
+    procedure ins_StaticClick(Sender: TObject);
+    procedure ins_StaticMouseEnter(Sender: TObject);
+    procedure ins_StaticMouseLeave(Sender: TObject);
   private
     { Private declarations }
   public
@@ -35,18 +37,17 @@ uses Un_about, Un_func;
 
 {$R *.dfm}
 
-procedure TFrm_help.first_staticClick(Sender: TObject);
+procedure TFrm_help.sel_staticClick(Sender: TObject);
 begin
 if Sender is TStaticText then
   begin
-    // Меняем цвет текста на красный и сохраняем имя "посещенной" ссылки
     TStaticText(Sender).Font.Color := clRed;
     VisitedStaticTexts.Add(TStaticText(Sender).Name);
-    ShowMessage('2');
+    helpTC.TabIndex:=0;
   end;
 end;
 
-procedure TFrm_help.first_staticMouseEnter(Sender: TObject);
+procedure TFrm_help.sel_staticMouseEnter(Sender: TObject);
 begin
     if Sender is TStaticText then
   begin
@@ -55,7 +56,7 @@ begin
   end;
 end;
 
-procedure TFrm_help.first_staticMouseLeave(Sender: TObject);
+procedure TFrm_help.sel_staticMouseLeave(Sender: TObject);
 begin
 if Sender is TStaticText then
   begin
@@ -79,60 +80,66 @@ begin
  LoadFormState(Self);
   MakeStaticTextLookLikeLink(
     Self,
-    'first_static',
-    first_staticMouseEnter,
-    first_staticMouseLeave,
-    first_staticClick
+    'sel_static',
+    sel_staticMouseEnter,
+    sel_staticMouseLeave,
+    sel_staticClick
   );
     MakeStaticTextLookLikeLink(
     Self,
-    'StaticText1',
-    StaticText1MouseEnter,
-    StaticText1MouseLeave,
-    StaticText1Click
+    'ins_Static',
+    ins_StaticMouseEnter,
+    ins_StaticMouseLeave,
+    ins_StaticClick
   );
+   AlignComponentsVertically(linkPanel, 10);
 end;
 
 procedure TFrm_help.FormKeyUp(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
-if (key=112) then
+if Key = 112 then // Клавиша F1
 begin
- try
-UpdateFormProperties('Frm_help', 'Форма работы со справкой',
-clBtnFace, 1024, 768);
-Frm_help.ShowModal;
-except
-Frm_help.Free;
-raise;
+  try
+    // Создаем новый экземпляр формы помощи
+    with TFrm_help.Create(nil) do
+    try
+      UpdateFormProperties('Frm_help', 'Форма работы со справкой',
+        clBtnFace, 1024, 768);
+
+      ShowModal;
+    finally
+      Free;
+    end;
+  except
+    on E: Exception do
+    begin
+      ShowMessage('Ошибка при открытии формы помощи: ' + E.Message);
+    end;
+  end;
+end;
 end;
 
-end;
-
-end;
-
-procedure TFrm_help.StaticText1Click(Sender: TObject);
+procedure TFrm_help.ins_StaticClick(Sender: TObject);
 begin
 if Sender is TStaticText then
   begin
-    // Меняем цвет текста на красный и сохраняем имя "посещенной" ссылки
     TStaticText(Sender).Font.Color := clRed;
     VisitedStaticTexts.Add(TStaticText(Sender).Name);
   end;
- ShowMessage('4');
+  helpTC.TabIndex:=1;
 end;
 
-procedure TFrm_help.StaticText1MouseEnter(Sender: TObject);
+procedure TFrm_help.ins_StaticMouseEnter(Sender: TObject);
 begin
 if Sender is TStaticText then
   begin
-    // Если ссылка еще не была нажата, меняем цвет на красный при наведении
     if TStaticText(Sender).Font.Color <> clRed then
       TStaticText(Sender).Font.Color := clRed;
   end;
 end;
 
-procedure TFrm_help.StaticText1MouseLeave(Sender: TObject);
+procedure TFrm_help.ins_StaticMouseLeave(Sender: TObject);
 begin
  if Sender is TStaticText then
   begin

@@ -1,7 +1,7 @@
 object Frm_help: TFrm_help
   Left = 0
   Top = 0
-  Caption = 'Frm_help'
+  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089#1086' '#1089#1087#1088#1072#1074#1082#1086#1081
   ClientHeight = 299
   ClientWidth = 635
   Color = clBtnFace
@@ -16,26 +16,35 @@ object Frm_help: TFrm_help
   OnKeyUp = FormKeyUp
   PixelsPerInch = 96
   TextHeight = 13
-  object FlowPanel1: TFlowPanel
+  object linkPanel: TFlowPanel
     Left = 0
     Top = 0
-    Width = 185
+    Width = 81
     Height = 299
     Align = alLeft
+    AutoSize = True
     TabOrder = 0
-    ExplicitLeft = 160
-    ExplicitTop = 120
-    ExplicitHeight = 41
     object first_static: TStaticText
       Left = 1
       Top = 1
       Width = 29
       Height = 17
-      Align = alClient
       Caption = #1042#1074#1086#1076
       TabOrder = 0
+      OnClick = first_staticClick
       OnMouseEnter = first_staticMouseEnter
       OnMouseLeave = first_staticMouseLeave
+    end
+    object StaticText1: TStaticText
+      Left = 1
+      Top = 18
+      Width = 79
+      Height = 17
+      Caption = #1042#1090#1086#1088#1072#1103' '#1089#1089#1099#1083#1082#1072
+      TabOrder = 1
+      OnClick = StaticText1Click
+      OnMouseEnter = StaticText1MouseEnter
+      OnMouseLeave = StaticText1MouseLeave
     end
   end
 end

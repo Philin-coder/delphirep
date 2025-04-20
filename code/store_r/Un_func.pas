@@ -113,6 +113,8 @@ procedure MakeStaticTextLookLikeLink(
   OnMouseLeaveEvent: TNotifyEvent;
   OnClickEvent: TNotifyEvent
 );
+procedure AlignComponentsVertically(AContainer: TWinControl;
+Spacing: Integer = 5);
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -1612,7 +1614,7 @@ begin
 end;
 
 procedure MakeStaticTextLookLikeLink(
-  AForm: TForm; 
+  AForm: TForm;
   const StaticTextName: string;
   OnMouseEnterEvent: TNotifyEvent;
   OnMouseLeaveEvent: TNotifyEvent;
@@ -1658,6 +1660,38 @@ begin
   end;
 end;
 
+procedure AlignComponentsVertically(AContainer: TWinControl; Spacing: Integer = 5);
+var
+  i: Integer;
+  CurrentTop: Integer;
+  Component: TControl;
+begin
+  if not Assigned(AContainer) then
+    raise Exception.Create('Контейнер не назначен.');
+
+  // Начальная позиция для первого элемента
+  CurrentTop := 0;
+
+  // Перебираем все дочерние компоненты контейнера
+  for i := 0 to AContainer.ControlCount - 1 do
+  begin
+    Component := AContainer.Controls[i];
+
+    // Проверяем, что компонент видимый и может быть размещен
+    if Component.Visible then
+    begin
+      // Устанавливаем позицию компонента
+      Component.Top := CurrentTop;
+      Component.Left := 0; // Выравниваем по левому краю
+
+      // Обновляем текущую позицию для следующего компонента
+      CurrentTop := CurrentTop + Component.Height + Spacing;
+    end;
+  end;
+
+  // При необходимости можно обновить размер контейнера
+  AContainer.Height := CurrentTop - Spacing;
+end;
 
 initialization
   VisitedStaticTexts := TStringList.Create;

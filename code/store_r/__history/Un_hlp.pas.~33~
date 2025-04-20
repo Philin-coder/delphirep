@@ -111,7 +111,6 @@ begin
     TStaticText(Sender).Font.Color := clRed;
     VisitedStaticTexts.Add(TStaticText(Sender).Name);
   end;
-  helpTC.TabIndex:=3;
 end;
 
 procedure TFrm_help.delStaticMouseEnter(Sender: TObject);

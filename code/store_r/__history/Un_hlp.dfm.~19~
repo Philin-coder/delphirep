@@ -19,7 +19,7 @@ object Frm_help: TFrm_help
   object linkPanel: TFlowPanel
     Left = 0
     Top = 0
-    Width = 56
+    Width = 81
     Height = 299
     Align = alLeft
     AutoSize = True
@@ -35,57 +35,33 @@ object Frm_help: TFrm_help
       OnMouseEnter = sel_staticMouseEnter
       OnMouseLeave = sel_staticMouseLeave
     end
-    object ins_Static: TStaticText
+    object StaticText1: TStaticText
       Left = 1
       Top = 18
-      Width = 29
+      Width = 79
       Height = 17
-      Caption = #1042#1074#1086#1076
+      Caption = #1042#1090#1086#1088#1072#1103' '#1089#1089#1099#1083#1082#1072
       TabOrder = 1
-      OnClick = ins_StaticClick
-      OnMouseEnter = ins_StaticMouseEnter
-      OnMouseLeave = ins_StaticMouseLeave
-    end
-    object upd_Static: TStaticText
-      Left = 1
-      Top = 35
-      Width = 54
-      Height = 17
-      Align = alLeft
-      Anchors = [akLeft, akBottom]
-      Caption = #1054#1073#1085#1086#1074#1080#1090#1100
-      TabOrder = 2
-      OnClick = upd_StaticClick
-      OnMouseEnter = upd_StaticMouseEnter
-      OnMouseLeave = upd_StaticMouseLeave
-    end
-    object delStatic: TStaticText
-      Left = 1
-      Top = 52
-      Width = 48
-      Height = 17
-      Caption = #1059#1076#1072#1083#1080#1090#1100
-      TabOrder = 3
-      OnClick = delStaticClick
-      OnMouseEnter = delStaticMouseEnter
-      OnMouseLeave = delStaticMouseLeave
+      OnClick = StaticText1Click
+      OnMouseEnter = StaticText1MouseEnter
+      OnMouseLeave = StaticText1MouseLeave
     end
   end
   object helpTC: TTabControl
-    Left = 56
+    Left = 81
     Top = 0
-    Width = 579
+    Width = 554
     Height = 299
     Align = alClient
     MultiSelect = True
     TabOrder = 1
     Tabs.Strings = (
-      #1042#1099#1073#1086#1088
-      #1042#1074#1086#1076
-      #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077
-      #1059#1076#1072#1083#1077#1085#1080#1077)
+      'SelectTab'
+      'InsertTab'
+      'UpdateTab'
+      'DeleteTab')
     TabIndex = 0
-    ExplicitLeft = 38
-    ExplicitWidth = 597
+    ExplicitLeft = 86
+    ExplicitTop = 1
   end
 end

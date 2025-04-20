@@ -59,17 +59,6 @@ object Frm_help: TFrm_help
       OnMouseEnter = upd_StaticMouseEnter
       OnMouseLeave = upd_StaticMouseLeave
     end
-    object delStatic: TStaticText
-      Left = 1
-      Top = 52
-      Width = 48
-      Height = 17
-      Caption = #1059#1076#1072#1083#1080#1090#1100
-      TabOrder = 3
-      OnClick = delStaticClick
-      OnMouseEnter = delStaticMouseEnter
-      OnMouseLeave = delStaticMouseLeave
-    end
   end
   object helpTC: TTabControl
     Left = 56
