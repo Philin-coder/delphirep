@@ -1,0 +1,80 @@
+object Frm_ini_editor: TFrm_ini_editor
+  Left = 0
+  Top = 0
+  BorderStyle = bsDialog
+  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' ini'
+  ClientHeight = 445
+  ClientWidth = 645
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  OnClose = FormClose
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object ini_btnBox: TGroupBox
+    Left = 0
+    Top = 29
+    Width = 645
+    Height = 355
+    Align = alClient
+    TabOrder = 0
+    ExplicitTop = 384
+    ExplicitHeight = 61
+  end
+  object editorlBar: TToolBar
+    Left = 0
+    Top = 0
+    Width = 645
+    Height = 29
+    Caption = 'editorlBar'
+    TabOrder = 1
+    ExplicitLeft = 104
+    ExplicitTop = 32
+    ExplicitWidth = 150
+    object CheckBox2: TCheckBox
+      Left = 0
+      Top = 0
+      Width = 97
+      Height = 22
+      Caption = 'CheckBox1'
+      TabOrder = 1
+    end
+    object separator_cb: TToolButton
+      Left = 97
+      Top = 0
+      Width = 264
+      Caption = 'separator_cb'
+      ImageIndex = 2
+      Style = tbsSeparator
+    end
+    object CheckBox1: TCheckBox
+      Left = 361
+      Top = 0
+      Width = 97
+      Height = 22
+      Caption = 'CheckBox1'
+      TabOrder = 0
+    end
+  end
+  object GroupBox1: TGroupBox
+    Left = 0
+    Top = 384
+    Width = 645
+    Height = 61
+    Align = alBottom
+    TabOrder = 2
+    object Button1: TButton
+      Left = 328
+      Top = 24
+      Width = 75
+      Height = 25
+      Caption = 'C'#1086#1093#1088#1072#1085#1080#1090#1100
+      TabOrder = 0
+    end
+  end
+end

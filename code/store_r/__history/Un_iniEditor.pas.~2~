@@ -1,0 +1,26 @@
+unit Un_iniEditor;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs;
+
+type
+  TFrm_ini_editor = class(TForm)
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_ini_editor: TFrm_ini_editor;
+
+implementation
+
+uses Un_func;
+
+{$R *.dfm}
+
+end.

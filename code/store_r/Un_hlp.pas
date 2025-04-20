@@ -45,7 +45,7 @@ var
 
 implementation
 
-uses Un_about, Un_func;
+uses Un_about, Un_func, Un_iniEditor;
 
 {$R *.dfm}
 
@@ -209,6 +209,20 @@ begin
     end;
   end;
 end;
+if Key = 113 then // Клавиша F2
+begin
+    try
+UpdateFormProperties('Frm_ini_editor', 'Форма работы с ini',
+clBtnFace, 1024, 768);
+Frm_ini_editor.ShowModal;
+except
+Frm_ini_editor.Free;
+raise;
+end;
+
+end;
+
+
 end;
 
 procedure TFrm_help.FormResize(Sender: TObject);

@@ -1,0 +1,49 @@
+unit Un_iniEditor;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ToolWin, ComCtrls;
+
+type
+  TFrm_ini_editor = class(TForm)
+    ini_btnBox: TGroupBox;
+    editorlBar: TToolBar;
+    GroupBox1: TGroupBox;
+    Button1: TButton;
+    separator_cb: TToolButton;
+    CheckBox1: TCheckBox;
+    CheckBox2: TCheckBox;
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_ini_editor: TFrm_ini_editor;
+
+implementation
+
+uses Un_func;
+
+{$R *.dfm}
+
+procedure TFrm_ini_editor.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+ SaveFormState(Self);
+end;
+
+procedure TFrm_ini_editor.FormCreate(Sender: TObject);
+begin
+ LoadFormState(Self);
+ Frm_ini_editor.ShowHint:=true;
+ UniformizeButtonsSize(Self,  273, 25);
+ UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+ UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+end;
+
+end.
