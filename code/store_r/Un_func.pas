@@ -1711,7 +1711,7 @@ begin
   end;
   if DirectoryExists(FolderPath)  then
   begin
-      ShowMessage('folder exists');
+     // ShowMessage('folder exists');
       Exit;
   end;
   

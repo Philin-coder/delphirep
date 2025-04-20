@@ -14,7 +14,6 @@ object Frm_help: TFrm_help
   OnClose = FormClose
   OnCreate = FormCreate
   OnKeyUp = FormKeyUp
-  OnResize = FormResize
   PixelsPerInch = 96
   TextHeight = 13
   object linkPanel: TFlowPanel

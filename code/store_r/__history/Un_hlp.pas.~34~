@@ -13,6 +13,7 @@ type
     ins_Static: TStaticText;
     helpTC: TTabControl;
     upd_Static: TStaticText;
+    delStatic: TStaticText;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -22,6 +23,12 @@ type
     procedure ins_StaticClick(Sender: TObject);
     procedure ins_StaticMouseEnter(Sender: TObject);
     procedure ins_StaticMouseLeave(Sender: TObject);
+    procedure upd_StaticMouseEnter(Sender: TObject);
+    procedure upd_StaticMouseLeave(Sender: TObject);
+    procedure upd_StaticClick(Sender: TObject);
+    procedure delStaticMouseEnter(Sender: TObject);
+    procedure delStaticMouseLeave(Sender: TObject);
+    procedure delStaticClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -65,6 +72,66 @@ if Sender is TStaticText then
   end;
   end;
 
+procedure TFrm_help.upd_StaticClick(Sender: TObject);
+begin
+if Sender is TStaticText then
+  begin
+    // Меняем цвет текста на красный и сохраняем имя "посещенной" ссылки
+    TStaticText(Sender).Font.Color := clRed;
+    VisitedStaticTexts.Add(TStaticText(Sender).Name);
+  end;
+helpTC.TabIndex:=2;
+end;
+
+procedure TFrm_help.upd_StaticMouseEnter(Sender: TObject);
+begin
+if Sender is TStaticText then
+  begin
+    // Если ссылка еще не была нажата, меняем цвет на красный при наведении
+    if TStaticText(Sender).Font.Color <> clRed then
+      TStaticText(Sender).Font.Color := clRed;
+  end;
+end;
+
+procedure TFrm_help.upd_StaticMouseLeave(Sender: TObject);
+begin
+if Sender is TStaticText then
+  begin
+    // Если ссылка еще не была нажата, возвращаем цвет на синий
+    if TStaticText(Sender).Font.Color <> clRed then
+      TStaticText(Sender).Font.Color := clBlue;
+  end;
+end;
+
+procedure TFrm_help.delStaticClick(Sender: TObject);
+begin
+ if Sender is TStaticText then
+  begin
+    // Меняем цвет текста на красный и сохраняем имя "посещенной" ссылки
+    TStaticText(Sender).Font.Color := clRed;
+    VisitedStaticTexts.Add(TStaticText(Sender).Name);
+  end;
+  helpTC.TabIndex:=3;
+end;
+
+procedure TFrm_help.delStaticMouseEnter(Sender: TObject);
+begin
+if Sender is TStaticText then
+  begin
+    if TStaticText(Sender).Font.Color <> clRed then
+      TStaticText(Sender).Font.Color := clRed;
+  end;
+end;
+
+procedure TFrm_help.delStaticMouseLeave(Sender: TObject);
+begin
+if Sender is TStaticText then
+  begin
+    if TStaticText(Sender).Font.Color <> clRed then
+      TStaticText(Sender).Font.Color := clBlue;
+  end;
+end;
+
 procedure TFrm_help.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
    SaveFormState(Self);
@@ -80,18 +147,33 @@ begin
  LoadFormState(Self);
   MakeStaticTextLookLikeLink(
     Self,
-    'sel_static',
+   'sel_static',
     sel_staticMouseEnter,
     sel_staticMouseLeave,
     sel_staticClick
   );
     MakeStaticTextLookLikeLink(
     Self,
-    'ins_Static',
+   'ins_Static',
     ins_StaticMouseEnter,
     ins_StaticMouseLeave,
     ins_StaticClick
   );
+  MakeStaticTextLookLikeLink(
+    Self,
+   'upd_Static',
+    upd_StaticMouseEnter,
+    upd_StaticMouseLeave,
+    upd_StaticClick
+  );
+    MakeStaticTextLookLikeLink(
+    Self,
+    'delStatic',
+    delStaticMouseEnter,
+    delStaticMouseLeave,
+    delStaticClick
+  );
+
    AlignComponentsVertically(linkPanel, 10);
 end;
 

@@ -14,6 +14,10 @@ type
     helpTC: TTabControl;
     upd_Static: TStaticText;
     delStatic: TStaticText;
+    Imagebox: TGroupBox;
+    rebox: TGroupBox;
+    hlp_Image: TImage;
+    hlp_RE: TRichEdit;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -29,6 +33,7 @@ type
     procedure delStaticMouseEnter(Sender: TObject);
     procedure delStaticMouseLeave(Sender: TObject);
     procedure delStaticClick(Sender: TObject);
+    procedure FormResize(Sender: TObject);
   private
     { Private declarations }
   public
@@ -175,6 +180,8 @@ begin
   );
 
    AlignComponentsVertically(linkPanel, 10);
+    CheckAndCreateHelpFolder;
+   Imagebox.Height := ClientHeight  div 2;
 end;
 
 procedure TFrm_help.FormKeyUp(Sender: TObject; var Key: Word;
@@ -200,6 +207,11 @@ begin
     end;
   end;
 end;
+end;
+
+procedure TFrm_help.FormResize(Sender: TObject);
+begin
+  Imagebox.Height := ClientHeight div 2;
 end;
 
 procedure TFrm_help.ins_StaticClick(Sender: TObject);
