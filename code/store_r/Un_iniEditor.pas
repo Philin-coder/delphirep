@@ -133,8 +133,28 @@ begin
 end;
 if appendCB.Checked then
 begin
- AppendRichEditToIniFile(iniRE, editorSD.FileName);
+case Frm_help.helpTC.TabIndex of
+0:
+begin
+ AppendRichEditToIniFile(iniRE, 'sel_hlp.ini');
  ShowMessage('Текст успешно добавлен в файл.');
+end;
+1:
+begin
+ AppendRichEditToIniFile(iniRE, 'ins_hlp.ini');
+ ShowMessage('Текст успешно добавлен в файл.');
+end;
+2:
+begin
+AppendRichEditToIniFile(iniRE, 'upd_hlp.ini');
+ ShowMessage('Текст успешно добавлен в файл.');
+end;
+3:
+begin
+  AppendRichEditToIniFile(iniRE, 'del_hlp.ini');
+ ShowMessage('Текст успешно добавлен в файл.');
+end;
+end; //case
 end;
 end;
 

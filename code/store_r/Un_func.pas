@@ -1738,19 +1738,32 @@ begin
     end;
   end;
 end;
+
 procedure AppendRichEditToIniFile(RichEdit: TRichEdit; const FileName: string);
 var
   FileStream: TFileStream;
   RichEditText: string;
+  FilePath: string; // Полный путь к файлу
 begin
   if not Assigned(RichEdit) then
     raise Exception.Create('Компонент TRichEdit не назначен.');
+
+  // Формируем полный путь к файлу в папке hlp_res
+  FilePath := IncludeTrailingPathDelimiter(ExtractFilePath(Application.ExeName))
+  + 'hlp_res\' + FileName;
+
+  // Получаем текст из RichEdit
   RichEditText := RichEdit.Lines.Text;
-  if FileExists(FileName) then
+
+  // Если файл уже существует, открываем его для добавления данных
+  if FileExists(FilePath) then
   begin
-    FileStream := TFileStream.Create(FileName, fmOpenWrite);
+    FileStream := TFileStream.Create(FilePath, fmOpenWrite);
     try
+      // Перемещаем указатель в конец файла
       FileStream.Seek(0, soFromEnd);
+
+      // Добавляем текст в конец файла
       FileStream.WriteBuffer(Pointer(RichEditText)^, Length(RichEditText));
     finally
       FileStream.Free;
@@ -1758,7 +1771,8 @@ begin
   end
   else
   begin
-    FileStream := TFileStream.Create(FileName, fmCreate);
+    // Если файл не существует, создаем новый файл и записываем текст
+    FileStream := TFileStream.Create(FilePath, fmCreate);
     try
       FileStream.WriteBuffer(Pointer(RichEditText)^, Length(RichEditText));
     finally
@@ -1766,7 +1780,6 @@ begin
     end;
   end;
 end;
-
 procedure LoadTextFromFile(const FileName: string; RichTextEdit: TRichEdit);
 var
   FileStream: TStringList;
