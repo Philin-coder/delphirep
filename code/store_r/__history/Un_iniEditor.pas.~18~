@@ -51,7 +51,6 @@ begin
  SaveFormState(Self);
  rewriteCB.Checked:=False;
  appendCB.Checked:=False;
- iniRE.Clear;
 end;
 
 procedure TFrm_ini_editor.FormCreate(Sender: TObject);
@@ -87,11 +86,10 @@ procedure TFrm_ini_editor.iniBtnClick(Sender: TObject);
 begin
 if rewriteCB.Checked then
 begin
- SaveRichEditToFile(iniRE, editorSD)
-end;
+iniBtn.Caption:='Cохранить';
 end;
 
-
+end;
 
 procedure TFrm_ini_editor.rewriteCBClick(Sender: TObject);
 begin

@@ -23,18 +23,6 @@ object Frm_ini_editor: TFrm_ini_editor
     Height = 355
     Align = alClient
     TabOrder = 0
-    object iniRE: TRichEdit
-      Left = 2
-      Top = 15
-      Width = 641
-      Height = 338
-      Align = alClient
-      TabOrder = 0
-      ExplicitLeft = 192
-      ExplicitTop = 168
-      ExplicitWidth = 185
-      ExplicitHeight = 89
-    end
   end
   object editorlBar: TToolBar
     Left = 0
@@ -50,7 +38,6 @@ object Frm_ini_editor: TFrm_ini_editor
       Height = 22
       Caption = #1057#1086#1079#1076#1072#1090#1100
       TabOrder = 1
-      OnClick = rewriteCBClick
     end
     object separator_cb: TToolButton
       Left = 97
@@ -67,7 +54,6 @@ object Frm_ini_editor: TFrm_ini_editor
       Height = 22
       Caption = #1044#1086#1087#1080#1089#1072#1090#1100
       TabOrder = 0
-      OnClick = appendCBClick
     end
   end
   object inibtnBox: TGroupBox
@@ -86,13 +72,6 @@ object Frm_ini_editor: TFrm_ini_editor
       Height = 25
       Caption = 'C'#1086#1093#1088#1072#1085#1080#1090#1100
       TabOrder = 0
-      OnClick = iniBtnClick
     end
-  end
-  object editorOD: TOpenDialog
-    Left = 256
-  end
-  object editorSD: TSaveDialog
-    Left = 320
   end
 end

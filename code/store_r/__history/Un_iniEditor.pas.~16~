@@ -20,9 +20,6 @@ type
     editorSD: TSaveDialog;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure rewriteCBClick(Sender: TObject);
-    procedure appendCBClick(Sender: TObject);
-    procedure iniBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -38,20 +35,9 @@ uses Un_func;
 
 {$R *.dfm}
 
-procedure TFrm_ini_editor.appendCBClick(Sender: TObject);
-begin
-if appendCB.Checked then 
-begin
-    rewriteCB.Checked:=False;
-end;
-end;
-
 procedure TFrm_ini_editor.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
  SaveFormState(Self);
- rewriteCB.Checked:=False;
- appendCB.Checked:=False;
- iniRE.Clear;
 end;
 
 procedure TFrm_ini_editor.FormCreate(Sender: TObject);
@@ -65,6 +51,7 @@ begin
     if not CreateDir(FolderPath) then
       raise Exception.Create('Не удалось создать папку: ' + FolderPath);
   end;
+
  LoadFormState(Self);
  Frm_ini_editor.ShowHint:=true;
  UniformizeButtonsSize(Self,  273, 25);
@@ -79,27 +66,6 @@ begin
   DefaultExt := '*.ini';
   Options := editorSD.Options + [ofOverwritePrompt];
  end;
-    rewriteCB.Checked:=False;
-    appendCB.Checked:=False;
-end;
-
-procedure TFrm_ini_editor.iniBtnClick(Sender: TObject);
-begin
-if rewriteCB.Checked then
-begin
- SaveRichEditToFile(iniRE, editorSD)
-end;
-end;
-
-
-
-procedure TFrm_ini_editor.rewriteCBClick(Sender: TObject);
-begin
-if rewriteCB.Checked then
-begin
-  appendCB.Checked:=False;
-end;
-
 end;
 
 end.

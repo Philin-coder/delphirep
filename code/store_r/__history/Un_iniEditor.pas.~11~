@@ -4,10 +4,18 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs;
+  Dialogs, StdCtrls, ToolWin, ComCtrls;
 
 type
   TFrm_ini_editor = class(TForm)
+    ini_btnBox: TGroupBox;
+    editorlBar: TToolBar;
+    inibtnBox: TGroupBox;
+    iniBtn: TButton;
+    separator_cb: TToolButton;
+    appendCB: TCheckBox;
+    rewriteCB: TCheckBox;
+    iniRE: TRichEdit;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
@@ -32,11 +40,11 @@ end;
 
 procedure TFrm_ini_editor.FormCreate(Sender: TObject);
 begin
+ LoadFormState(Self);
  Frm_ini_editor.ShowHint:=true;
  UniformizeButtonsSize(Self,  273, 25);
  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
- LoadFormState(Self);
 end;
 
 end.

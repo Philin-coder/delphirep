@@ -86,7 +86,6 @@ object Frm_ini_editor: TFrm_ini_editor
       Height = 25
       Caption = 'C'#1086#1093#1088#1072#1085#1080#1090#1100
       TabOrder = 0
-      OnClick = iniBtnClick
     end
   end
   object editorOD: TOpenDialog

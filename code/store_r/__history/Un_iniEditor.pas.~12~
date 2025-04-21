@@ -10,12 +10,13 @@ type
   TFrm_ini_editor = class(TForm)
     ini_btnBox: TGroupBox;
     editorlBar: TToolBar;
-    GroupBox1: TGroupBox;
-    Button1: TButton;
-    ToolButton3: TToolButton;
-    CheckBox1: TCheckBox;
-    CheckBox2: TCheckBox;
-    ToolButton1: TToolButton;
+    inibtnBox: TGroupBox;
+    iniBtn: TButton;
+    separator_cb: TToolButton;
+    appendCB: TCheckBox;
+    rewriteCB: TCheckBox;
+    iniRE: TRichEdit;
+    editorOD: TOpenDialog;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private

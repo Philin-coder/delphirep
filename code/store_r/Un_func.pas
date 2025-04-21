@@ -116,6 +116,7 @@ procedure MakeStaticTextLookLikeLink(
 procedure AlignComponentsVertically(AContainer: TWinControl;
 Spacing: Integer = 5);
 procedure CheckAndCreateHelpFolder;
+procedure SaveRichEditToFile(RichEdit: TRichEdit; SaveDialog: TSaveDialog);
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -1716,6 +1717,39 @@ begin
   end;
   
 end;
+procedure SaveRichEditToFile(RichEdit: TRichEdit; SaveDialog: TSaveDialog);
+var
+  FileStream: TFileStream;
+  RichEditText: string;
+begin
+  // Проверка, что компоненты назначены
+  if not Assigned(RichEdit) then
+    raise Exception.Create('Компонент TRichEdit не назначен.');
+  if not Assigned(SaveDialog) then
+    raise Exception.Create('Компонент TSaveDialog не назначен.');
+
+  // Открываем диалог сохранения файла
+  if SaveDialog.Execute then
+  begin
+    try
+      // Получаем текст из RichEdit
+      RichEditText := RichEdit.Lines.Text;
+
+      // Создаем поток для записи данных в файл
+      FileStream := TFileStream.Create(SaveDialog.FileName, fmCreate);
+      try
+        // Записываем текст из RichEdit в файл
+        FileStream.WriteBuffer(Pointer(RichEditText)^, Length(RichEditText));
+      finally
+        FileStream.Free;
+      end;
+    except
+      on E: Exception do
+        ShowMessage('Ошибка при сохранении файла: ' + E.Message);
+    end;
+  end;
+end;
+
 
 initialization
   VisitedStaticTexts := TStringList.Create;
