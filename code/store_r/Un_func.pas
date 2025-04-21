@@ -118,6 +118,7 @@ Spacing: Integer = 5);
 procedure CheckAndCreateHelpFolder;
 procedure SaveRichEditToFile(RichEdit: TRichEdit; SaveDialog: TSaveDialog);
 procedure AppendRichEditToIniFile(RichEdit: TRichEdit; const FileName: string);
+procedure LoadTextFromFile(const FileName: string; RichTextEdit: TRichEdit);
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -1632,20 +1633,14 @@ begin
   begin
     raise Exception.CreateFmt('Компонент TStaticText с именем "%s" не найден на форме "%s".', [StaticTextName, AForm.Name]);
   end;
-
-  // Настройка внешнего вида
   with StaticText do
   begin
     Font.Style := [fsUnderline];  // Подчеркивание
     Cursor := crHandPoint;        // Курсор в виде руки
-
-    // Проверяем, была ли ссылка нажата ранее
     if VisitedStaticTexts.IndexOf(StaticTextName) >= 0 then
       Font.Color := clRed
     else
       Font.Color := clBlue;
-
-    // Добавляем обработчики событий
     OnMouseEnter := OnMouseEnterEvent;
     OnMouseLeave := OnMouseLeaveEvent;
     OnClick := OnClickEvent;
@@ -1772,7 +1767,41 @@ begin
   end;
 end;
 
+procedure LoadTextFromFile(const FileName: string; RichTextEdit: TRichEdit);
+var
+  FileStream: TStringList;
+    var FilePath:String;
+begin
+  // Проверка, что компонент RichTextEdit назначен
+  if not Assigned(RichTextEdit) then
+  begin
+    ShowMessage('Ошибка: компонент RichTextEdit не назначен.');
+    Exit;
+  end;
 
+  // Формируем полный путь к файлу в папке hlp_res
+   FilePath := IncludeTrailingPathDelimiter(ExtractFilePath(Application.ExeName)) + 'hlp_res\' + FileName;
+
+  // Проверяем существование файла
+  if not FileExists(FilePath) then
+  begin
+    ShowMessage('Ошибка: файл "' + FilePath + '" не найден.');
+    Exit;
+  end;
+
+  // Создаем объект TStringList для чтения текста из файла
+  FileStream := TStringList.Create;
+  try
+    FileStream.LoadFromFile(FilePath); // Загружаем текст из файла
+
+    // Очищаем содержимое RichTextEdit и загружаем текст
+    RichTextEdit.Clear;
+    RichTextEdit.Lines.Assign(FileStream);
+  finally
+    // Освобождаем объект TStringList
+    FileStream.Free;
+  end;
+end;
 initialization
   VisitedStaticTexts := TStringList.Create;
 finalization

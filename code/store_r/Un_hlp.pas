@@ -184,6 +184,8 @@ begin
    AlignComponentsVertically(linkPanel, 10);
     CheckAndCreateHelpFolder;
    Imagebox.Height := ClientHeight  div 2;
+ // LoadTextFromFile('sel_hlp.ini', hlp_RE);
+  //ShowMessage('Текст успешно загружен из INI-файла.');
 end;
 
 procedure TFrm_help.FormKeyUp(Sender: TObject; var Key: Word;

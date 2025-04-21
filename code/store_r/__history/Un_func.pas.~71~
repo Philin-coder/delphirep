@@ -113,6 +113,11 @@ procedure MakeStaticTextLookLikeLink(
   OnMouseLeaveEvent: TNotifyEvent;
   OnClickEvent: TNotifyEvent
 );
+procedure AlignComponentsVertically(AContainer: TWinControl;
+Spacing: Integer = 5);
+procedure CheckAndCreateHelpFolder;
+procedure SaveRichEditToFile(RichEdit: TRichEdit; SaveDialog: TSaveDialog);
+procedure AppendRichEditToIniFile(RichEdit: TRichEdit; const FileName: string);
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -1612,7 +1617,7 @@ begin
 end;
 
 procedure MakeStaticTextLookLikeLink(
-  AForm: TForm; 
+  AForm: TForm;
   const StaticTextName: string;
   OnMouseEnterEvent: TNotifyEvent;
   OnMouseLeaveEvent: TNotifyEvent;
@@ -1655,6 +1660,115 @@ begin
     // Добавляем имя ссылки в список "посещенных"
     VisitedStaticTexts.Add(TStaticText(Sender).Name);
     TStaticText(Sender).Font.Color := clRed;
+  end;
+end;
+
+procedure AlignComponentsVertically(AContainer: TWinControl; Spacing: Integer = 5);
+var
+  i: Integer;
+  CurrentTop: Integer;
+  Component: TControl;
+begin
+  if not Assigned(AContainer) then
+    raise Exception.Create('Контейнер не назначен.');
+
+  // Начальная позиция для первого элемента
+  CurrentTop := 0;
+
+  // Перебираем все дочерние компоненты контейнера
+  for i := 0 to AContainer.ControlCount - 1 do
+  begin
+    Component := AContainer.Controls[i];
+
+    // Проверяем, что компонент видимый и может быть размещен
+    if Component.Visible then
+    begin
+      // Устанавливаем позицию компонента
+      Component.Top := CurrentTop;
+      Component.Left := 0; // Выравниваем по левому краю
+
+      // Обновляем текущую позицию для следующего компонента
+      CurrentTop := CurrentTop + Component.Height + Spacing;
+    end;
+  end;
+
+  // При необходимости можно обновить размер контейнера
+  AContainer.Height := CurrentTop - Spacing;
+end;
+
+procedure CheckAndCreateHelpFolder;
+var
+  AppPath, FolderPath: string;
+begin
+  // Получаем путь к текущей папке приложения
+  AppPath := ExtractFilePath(ParamStr(0));
+  FolderPath := IncludeTrailingPathDelimiter(AppPath) + 'hlp_res';
+
+  // Проверяем, существует ли папка
+  if not DirectoryExists(FolderPath) then
+  begin
+    // Если папка не существует, создаём её
+    if not CreateDir(FolderPath) then
+      raise Exception.Create('Не удалось создать папку: ' + FolderPath);
+  end;
+  if DirectoryExists(FolderPath)  then
+  begin
+     // ShowMessage('folder exists');
+      Exit;
+  end;
+
+end;
+procedure SaveRichEditToFile(RichEdit: TRichEdit; SaveDialog: TSaveDialog);
+var
+  FileStream: TFileStream;
+  RichEditText: string;
+begin
+  if not Assigned(RichEdit) then
+    raise Exception.Create('Компонент TRichEdit не назначен.');
+  if not Assigned(SaveDialog) then
+    raise Exception.Create('Компонент TSaveDialog не назначен.');
+  if SaveDialog.Execute then
+  begin
+    try
+      RichEditText := RichEdit.Lines.Text;
+      FileStream := TFileStream.Create(SaveDialog.FileName, fmCreate);
+      try
+        FileStream.WriteBuffer(Pointer(RichEditText)^, Length(RichEditText));
+      finally
+        FileStream.Free;
+      end;
+    except
+      on E: Exception do
+        ShowMessage('Ошибка при сохранении файла: ' + E.Message);
+    end;
+  end;
+end;
+procedure AppendRichEditToIniFile(RichEdit: TRichEdit; const FileName: string);
+var
+  FileStream: TFileStream;
+  RichEditText: string;
+begin
+  if not Assigned(RichEdit) then
+    raise Exception.Create('Компонент TRichEdit не назначен.');
+  RichEditText := RichEdit.Lines.Text;
+  if FileExists(FileName) then
+  begin
+    FileStream := TFileStream.Create(FileName, fmOpenWrite);
+    try
+      FileStream.Seek(0, soFromEnd);
+      FileStream.WriteBuffer(Pointer(RichEditText)^, Length(RichEditText));
+    finally
+      FileStream.Free;
+    end;
+  end
+  else
+  begin
+    FileStream := TFileStream.Create(FileName, fmCreate);
+    try
+      FileStream.WriteBuffer(Pointer(RichEditText)^, Length(RichEditText));
+    finally
+      FileStream.Free;
+    end;
   end;
 end;
 

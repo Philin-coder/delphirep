@@ -14,7 +14,10 @@ type
     helpTC: TTabControl;
     upd_Static: TStaticText;
     delStatic: TStaticText;
-    Button1: TButton;
+    Imagebox: TGroupBox;
+    rebox: TGroupBox;
+    hlp_Image: TImage;
+    hlp_RE: TRichEdit;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -30,6 +33,7 @@ type
     procedure delStaticMouseEnter(Sender: TObject);
     procedure delStaticMouseLeave(Sender: TObject);
     procedure delStaticClick(Sender: TObject);
+    procedure FormResize(Sender: TObject);
   private
     { Private declarations }
   public
@@ -41,7 +45,7 @@ var
 
 implementation
 
-uses Un_about, Un_func;
+uses Un_about, Un_func, Un_iniEditor;
 
 {$R *.dfm}
 
@@ -140,6 +144,8 @@ end;
 
 procedure TFrm_help.FormCreate(Sender: TObject);
 begin
+ Imagebox.Align := alTop;
+  rebox.Align :=alClient;
  Frm_help.KeyPreview:=True;
  frm_help.ShowHint:=true;
  UniformizeButtonsSize(Self,  273, 25);
@@ -176,6 +182,8 @@ begin
   );
 
    AlignComponentsVertically(linkPanel, 10);
+    CheckAndCreateHelpFolder;
+   Imagebox.Height := ClientHeight  div 2;
 end;
 
 procedure TFrm_help.FormKeyUp(Sender: TObject; var Key: Word;
@@ -201,6 +209,27 @@ begin
     end;
   end;
 end;
+if Key = 113 then // Клавиша F2
+begin
+    try
+UpdateFormProperties('Frm_ini_editor', 'Форма работы с ini',
+clBtnFace, 1024, 768);
+Frm_ini_editor.ShowModal;
+except
+Frm_ini_editor.Free;
+raise;
+end;
+
+end;
+
+
+end;
+
+procedure TFrm_help.FormResize(Sender: TObject);
+begin
+  Imagebox.Align := alTop;
+  rebox.Align :=alClient;
+  Imagebox.Height := ClientHeight div 2;
 end;
 
 procedure TFrm_help.ins_StaticClick(Sender: TObject);

@@ -115,6 +115,10 @@ procedure MakeStaticTextLookLikeLink(
 );
 procedure AlignComponentsVertically(AContainer: TWinControl;
 Spacing: Integer = 5);
+procedure CheckAndCreateHelpFolder;
+procedure SaveRichEditToFile(RichEdit: TRichEdit; SaveDialog: TSaveDialog);
+procedure AppendRichEditToIniFile(RichEdit: TRichEdit; const FileName: string);
+procedure LoadTextFromIniFile(const FileName: string; RichTextEdit: TRichEdit);
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -1629,20 +1633,14 @@ begin
   begin
     raise Exception.CreateFmt('Компонент TStaticText с именем "%s" не найден на форме "%s".', [StaticTextName, AForm.Name]);
   end;
-
-  // Настройка внешнего вида
   with StaticText do
   begin
     Font.Style := [fsUnderline];  // Подчеркивание
     Cursor := crHandPoint;        // Курсор в виде руки
-
-    // Проверяем, была ли ссылка нажата ранее
     if VisitedStaticTexts.IndexOf(StaticTextName) >= 0 then
       Font.Color := clRed
     else
       Font.Color := clBlue;
-
-    // Добавляем обработчики событий
     OnMouseEnter := OnMouseEnterEvent;
     OnMouseLeave := OnMouseLeaveEvent;
     OnClick := OnClickEvent;
@@ -1693,6 +1691,123 @@ begin
   AContainer.Height := CurrentTop - Spacing;
 end;
 
+procedure CheckAndCreateHelpFolder;
+var
+  AppPath, FolderPath: string;
+begin
+  // Получаем путь к текущей папке приложения
+  AppPath := ExtractFilePath(ParamStr(0));
+  FolderPath := IncludeTrailingPathDelimiter(AppPath) + 'hlp_res';
+
+  // Проверяем, существует ли папка
+  if not DirectoryExists(FolderPath) then
+  begin
+    // Если папка не существует, создаём её
+    if not CreateDir(FolderPath) then
+      raise Exception.Create('Не удалось создать папку: ' + FolderPath);
+  end;
+  if DirectoryExists(FolderPath)  then
+  begin
+     // ShowMessage('folder exists');
+      Exit;
+  end;
+
+end;
+procedure SaveRichEditToFile(RichEdit: TRichEdit; SaveDialog: TSaveDialog);
+var
+  FileStream: TFileStream;
+  RichEditText: string;
+begin
+  if not Assigned(RichEdit) then
+    raise Exception.Create('Компонент TRichEdit не назначен.');
+  if not Assigned(SaveDialog) then
+    raise Exception.Create('Компонент TSaveDialog не назначен.');
+  if SaveDialog.Execute then
+  begin
+    try
+      RichEditText := RichEdit.Lines.Text;
+      FileStream := TFileStream.Create(SaveDialog.FileName, fmCreate);
+      try
+        FileStream.WriteBuffer(Pointer(RichEditText)^, Length(RichEditText));
+      finally
+        FileStream.Free;
+      end;
+    except
+      on E: Exception do
+        ShowMessage('Ошибка при сохранении файла: ' + E.Message);
+    end;
+  end;
+end;
+procedure AppendRichEditToIniFile(RichEdit: TRichEdit; const FileName: string);
+var
+  FileStream: TFileStream;
+  RichEditText: string;
+begin
+  if not Assigned(RichEdit) then
+    raise Exception.Create('Компонент TRichEdit не назначен.');
+  RichEditText := RichEdit.Lines.Text;
+  if FileExists(FileName) then
+  begin
+    FileStream := TFileStream.Create(FileName, fmOpenWrite);
+    try
+      FileStream.Seek(0, soFromEnd);
+      FileStream.WriteBuffer(Pointer(RichEditText)^, Length(RichEditText));
+    finally
+      FileStream.Free;
+    end;
+  end
+  else
+  begin
+    FileStream := TFileStream.Create(FileName, fmCreate);
+    try
+      FileStream.WriteBuffer(Pointer(RichEditText)^, Length(RichEditText));
+    finally
+      FileStream.Free;
+    end;
+  end;
+end;
+
+procedure LoadTextFromIniFile(const FileName: string; RichTextEdit: TRichEdit);
+var
+  IniFile: TIniFile;
+  FilePath: string;
+  SectionName: string;
+  Text: string;
+begin
+  // Проверка, что компонент RichTextEdit назначен
+  if not Assigned(RichTextEdit) then
+  begin
+    ShowMessage('Ошибка: компонент RichTextEdit не назначен.');
+    Exit;
+  end;
+
+  // Формируем полный путь к файлу в папке hlp_res
+  FilePath := IncludeTrailingPathDelimiter(ExtractFilePath(Application.ExeName)) + 'hlp_res\' + FileName;
+
+  // Проверяем существование файла
+  if not FileExists(FilePath) then
+  begin
+    ShowMessage('Ошибка: файл "' + FilePath + '" не найден.');
+    Exit;
+  end;
+
+  // Создаем объект TIniFile для работы с INI-файлом
+  IniFile := TIniFile.Create(FilePath);
+  try
+    // Определяем имя секции (например, "TextSection")
+    SectionName := 'TextSection';
+
+    // Читаем текст из INI-файла
+    Text := IniFile.ReadString(SectionName, 'Content', '');
+
+    // Очищаем содержимое RichTextEdit и загружаем текст
+    RichTextEdit.Clear;
+    RichTextEdit.Text := Text;
+  finally
+    // Освобождаем объект TIniFile
+    IniFile.Free;
+  end;
+end;
 initialization
   VisitedStaticTexts := TStringList.Create;
 finalization
