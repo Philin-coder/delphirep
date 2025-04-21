@@ -89,11 +89,6 @@ if rewriteCB.Checked then
 begin
  SaveRichEditToFile(iniRE, editorSD)
 end;
-if appendCB.Checked then
-begin
- AppendRichEditToIniFile(iniRE, editorSD.FileName);
- ShowMessage('Текст успешно добавлен в файл.');
-end;
 end;
 
 

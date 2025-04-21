@@ -117,6 +117,7 @@ procedure AlignComponentsVertically(AContainer: TWinControl;
 Spacing: Integer = 5);
 procedure CheckAndCreateHelpFolder;
 procedure SaveRichEditToFile(RichEdit: TRichEdit; SaveDialog: TSaveDialog);
+procedure AppendRichEditToIniFile(RichEdit: TRichEdit; const FileName: string);
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -1715,30 +1716,23 @@ begin
      // ShowMessage('folder exists');
       Exit;
   end;
-  
+
 end;
 procedure SaveRichEditToFile(RichEdit: TRichEdit; SaveDialog: TSaveDialog);
 var
   FileStream: TFileStream;
   RichEditText: string;
 begin
-  // Проверка, что компоненты назначены
   if not Assigned(RichEdit) then
     raise Exception.Create('Компонент TRichEdit не назначен.');
   if not Assigned(SaveDialog) then
     raise Exception.Create('Компонент TSaveDialog не назначен.');
-
-  // Открываем диалог сохранения файла
   if SaveDialog.Execute then
   begin
     try
-      // Получаем текст из RichEdit
       RichEditText := RichEdit.Lines.Text;
-
-      // Создаем поток для записи данных в файл
       FileStream := TFileStream.Create(SaveDialog.FileName, fmCreate);
       try
-        // Записываем текст из RichEdit в файл
         FileStream.WriteBuffer(Pointer(RichEditText)^, Length(RichEditText));
       finally
         FileStream.Free;
@@ -1746,6 +1740,34 @@ begin
     except
       on E: Exception do
         ShowMessage('Ошибка при сохранении файла: ' + E.Message);
+    end;
+  end;
+end;
+procedure AppendRichEditToIniFile(RichEdit: TRichEdit; const FileName: string);
+var
+  FileStream: TFileStream;
+  RichEditText: string;
+begin
+  if not Assigned(RichEdit) then
+    raise Exception.Create('Компонент TRichEdit не назначен.');
+  RichEditText := RichEdit.Lines.Text;
+  if FileExists(FileName) then
+  begin
+    FileStream := TFileStream.Create(FileName, fmOpenWrite);
+    try
+      FileStream.Seek(0, soFromEnd);
+      FileStream.WriteBuffer(Pointer(RichEditText)^, Length(RichEditText));
+    finally
+      FileStream.Free;
+    end;
+  end
+  else
+  begin
+    FileStream := TFileStream.Create(FileName, fmCreate);
+    try
+      FileStream.WriteBuffer(Pointer(RichEditText)^, Length(RichEditText));
+    finally
+      FileStream.Free;
     end;
   end;
 end;

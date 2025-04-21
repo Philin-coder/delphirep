@@ -92,7 +92,7 @@ end;
 if appendCB.Checked then
 begin
  AppendRichEditToIniFile(iniRE, editorSD.FileName);
- ShowMessage('Текст успешно добавлен в файл.');
+  ShowMessage('Текст успешно добавлен в файл.');
 end;
 end;
 
