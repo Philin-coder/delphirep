@@ -244,7 +244,6 @@ if Sender is TStaticText then
   end;
   helpTC.TabIndex:=1;
       LoadTextFromFile('ins_hlp.ini', hlp_RE);
-    ShowMessage('Текст успешно загружен из INI-файла.')
 end;
 
 procedure TFrm_help.ins_StaticMouseEnter(Sender: TObject);
