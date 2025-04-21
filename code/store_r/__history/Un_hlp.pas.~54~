@@ -34,6 +34,7 @@ type
     procedure delStaticMouseLeave(Sender: TObject);
     procedure delStaticClick(Sender: TObject);
     procedure FormResize(Sender: TObject);
+    procedure helpTCChange(Sender: TObject);
   private
     { Private declarations }
   public
@@ -56,6 +57,7 @@ if Sender is TStaticText then
     TStaticText(Sender).Font.Color := clRed;
     VisitedStaticTexts.Add(TStaticText(Sender).Name);
     helpTC.TabIndex:=0;
+    LoadTextFromFile('sel_hlp.ini', hlp_RE);
   end;
 end;
 
@@ -85,7 +87,8 @@ if Sender is TStaticText then
     TStaticText(Sender).Font.Color := clRed;
     VisitedStaticTexts.Add(TStaticText(Sender).Name);
   end;
-helpTC.TabIndex:=2;
+    helpTC.TabIndex:=2;
+    LoadTextFromFile('upd_hlp.ini', hlp_RE);
 end;
 
 procedure TFrm_help.upd_StaticMouseEnter(Sender: TObject);
@@ -117,6 +120,7 @@ begin
     VisitedStaticTexts.Add(TStaticText(Sender).Name);
   end;
   helpTC.TabIndex:=3;
+  LoadTextFromFile('del_hlp.ini', hlp_RE);
 end;
 
 procedure TFrm_help.delStaticMouseEnter(Sender: TObject);
@@ -211,22 +215,15 @@ begin
 end;
 if Key = 113 then //  лавиша F2
 begin
-  try
-    // —оздаем новый экземпл€р формы помощи
-    with TFrm_ini_editor.Create(nil) do
     try
-      UpdateFormProperties('Frm_ini_editor', '‘орма работы с ini',
-        clBtnFace, 1024, 768);
-      ShowModal;
-    finally
-      Free;
-    end;
-  except
-    on E: Exception do
-    begin
-      ShowMessage('ќшибка при открытии формы помощи: ' + E.Message);
-    end;
-  end;
+UpdateFormProperties('Frm_ini_editor', '‘орма работы с ini',
+clBtnFace, 1024, 768);
+Frm_ini_editor.ShowModal;
+except
+Frm_ini_editor.Free;
+raise;
+end;
+
 end;
 
 
@@ -239,6 +236,28 @@ begin
   Imagebox.Height := ClientHeight div 2;
 end;
 
+procedure TFrm_help.helpTCChange(Sender: TObject);
+begin
+case helpTC.TabIndex of
+0:
+begin
+   if Assigned(sel_static) then
+        sel_staticClick(sel_static);
+end;
+  1:
+  begin
+   if Assigned(ins_Static) then
+        ins_staticClick(ins_Static);
+  end;
+  2:
+  begin
+   if Assigned(upd_Static) then
+        upd_staticClick(upd_Static);
+
+  end;
+end; //case
+end;
+
 procedure TFrm_help.ins_StaticClick(Sender: TObject);
 begin
 if Sender is TStaticText then
@@ -247,6 +266,7 @@ if Sender is TStaticText then
     VisitedStaticTexts.Add(TStaticText(Sender).Name);
   end;
   helpTC.TabIndex:=1;
+      LoadTextFromFile('ins_hlp.ini', hlp_RE);
 end;
 
 procedure TFrm_help.ins_StaticMouseEnter(Sender: TObject);

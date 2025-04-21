@@ -86,6 +86,7 @@ object Frm_help: TFrm_help
       #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077
       #1059#1076#1072#1083#1077#1085#1080#1077)
     TabIndex = 0
+    OnChange = helpTCChange
     object Imagebox: TGroupBox
       Left = 4
       Top = 24

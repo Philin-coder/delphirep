@@ -34,6 +34,7 @@ type
     procedure delStaticMouseLeave(Sender: TObject);
     procedure delStaticClick(Sender: TObject);
     procedure FormResize(Sender: TObject);
+    procedure helpTCChange(Sender: TObject);
   private
     { Private declarations }
   public
@@ -233,6 +234,32 @@ begin
   Imagebox.Align := alTop;
   rebox.Align :=alClient;
   Imagebox.Height := ClientHeight div 2;
+end;
+
+procedure TFrm_help.helpTCChange(Sender: TObject);
+begin
+case helpTC.TabIndex of
+0:
+begin
+   if Assigned(sel_static) then
+        sel_staticClick(sel_static);
+end;
+  1:
+  begin
+   if Assigned(ins_Static) then
+        ins_staticClick(ins_Static);
+  end;
+  2:
+  begin
+   if Assigned(upd_Static) then
+        upd_staticClick(upd_Static);
+  end;
+  3:
+  begin
+    if Assigned(delStatic) then
+        delstaticClick(delStatic);
+  end;
+end; //case
 end;
 
 procedure TFrm_help.ins_StaticClick(Sender: TObject);
