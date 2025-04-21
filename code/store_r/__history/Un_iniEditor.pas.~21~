@@ -34,7 +34,7 @@ var
 
 implementation
 
-uses Un_func, Un_hlp;
+uses Un_func;
 
 {$R *.dfm}
 
@@ -70,9 +70,6 @@ begin
  UniformizeButtonsSize(Self,  273, 25);
  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
- case Frm_help.helpTC.TabIndex of
- 0:
- begin
  with editorSD do
  begin
   Title := 'Сохранить файл ini';
@@ -82,45 +79,6 @@ begin
   DefaultExt := '*.ini';
   Options := editorSD.Options + [ofOverwritePrompt];
  end;
- end;
- 1:
- begin
-with editorSD do
- begin
-  Title := 'Сохранить файл ini';
-  FileName := 'ins_hlp.ini';
-  InitialDir := FolderPath;
-  Filter := 'Текстовые файлы (*.ini)|*.ini';
-  DefaultExt := '*.ini';
-  Options := editorSD.Options + [ofOverwritePrompt];
- end;
- end;
- 2:
- begin
-  with editorSD do
- begin
-  Title := 'Сохранить файл ini';
-  FileName := 'upd_hlp.ini';
-  InitialDir := FolderPath;
-  Filter := 'Текстовые файлы (*.ini)|*.ini';
-  DefaultExt := '*.ini';
-  Options := editorSD.Options + [ofOverwritePrompt];
- end;
- end;
- 3:
- begin
-    with editorSD do
- begin
-  Title := 'Сохранить файл ini';
-  FileName := 'del_hlp.ini';
-  InitialDir := FolderPath;
-  Filter := 'Текстовые файлы (*.ini)|*.ini';
-  DefaultExt := '*.ini';
-  Options := editorSD.Options + [ofOverwritePrompt];
- end;
-
- end;
- end;//case
     rewriteCB.Checked:=False;
     appendCB.Checked:=False;
 end;

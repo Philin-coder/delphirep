@@ -56,6 +56,7 @@ if Sender is TStaticText then
     TStaticText(Sender).Font.Color := clRed;
     VisitedStaticTexts.Add(TStaticText(Sender).Name);
     helpTC.TabIndex:=0;
+    LoadTextFromFile('sel_hlp.ini', hlp_RE);
   end;
 end;
 
@@ -85,7 +86,8 @@ if Sender is TStaticText then
     TStaticText(Sender).Font.Color := clRed;
     VisitedStaticTexts.Add(TStaticText(Sender).Name);
   end;
-helpTC.TabIndex:=2;
+    helpTC.TabIndex:=2;
+    LoadTextFromFile('upd_hlp.ini', hlp_RE);
 end;
 
 procedure TFrm_help.upd_StaticMouseEnter(Sender: TObject);
@@ -117,6 +119,7 @@ begin
     VisitedStaticTexts.Add(TStaticText(Sender).Name);
   end;
   helpTC.TabIndex:=3;
+  LoadTextFromFile('del_hlp.ini', hlp_RE);
 end;
 
 procedure TFrm_help.delStaticMouseEnter(Sender: TObject);
@@ -184,8 +187,6 @@ begin
    AlignComponentsVertically(linkPanel, 10);
     CheckAndCreateHelpFolder;
    Imagebox.Height := ClientHeight  div 2;
- // LoadTextFromFile('sel_hlp.ini', hlp_RE);
-  //ShowMessage('Текст успешно загружен из INI-файла.');
 end;
 
 procedure TFrm_help.FormKeyUp(Sender: TObject; var Key: Word;
@@ -242,6 +243,8 @@ if Sender is TStaticText then
     VisitedStaticTexts.Add(TStaticText(Sender).Name);
   end;
   helpTC.TabIndex:=1;
+      LoadTextFromFile('ins_hlp.ini', hlp_RE);
+    ShowMessage('Текст успешно загружен из INI-файла.')
 end;
 
 procedure TFrm_help.ins_StaticMouseEnter(Sender: TObject);
