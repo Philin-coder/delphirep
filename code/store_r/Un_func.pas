@@ -1780,7 +1780,8 @@ begin
   end;
 
   // Формируем полный путь к файлу в папке hlp_res
-   FilePath := IncludeTrailingPathDelimiter(ExtractFilePath(Application.ExeName)) + 'hlp_res\' + FileName;
+   FilePath := IncludeTrailingPathDelimiter(ExtractFilePath(Application.ExeName))
+   + 'hlp_res\' + FileName;
 
   // Проверяем существование файла
   if not FileExists(FilePath) then

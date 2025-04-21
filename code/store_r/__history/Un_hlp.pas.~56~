@@ -1,0 +1,303 @@
+unit Un_hlp;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, StdCtrls, ComCtrls;
+
+type
+  TFrm_help = class(TForm)
+    linkPanel: TFlowPanel;
+    sel_static: TStaticText;
+    ins_Static: TStaticText;
+    helpTC: TTabControl;
+    upd_Static: TStaticText;
+    delStatic: TStaticText;
+    Imagebox: TGroupBox;
+    rebox: TGroupBox;
+    hlp_Image: TImage;
+    hlp_RE: TRichEdit;
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure sel_staticMouseEnter(Sender: TObject);
+    procedure sel_staticMouseLeave(Sender: TObject);
+    procedure sel_staticClick(Sender: TObject);
+    procedure ins_StaticClick(Sender: TObject);
+    procedure ins_StaticMouseEnter(Sender: TObject);
+    procedure ins_StaticMouseLeave(Sender: TObject);
+    procedure upd_StaticMouseEnter(Sender: TObject);
+    procedure upd_StaticMouseLeave(Sender: TObject);
+    procedure upd_StaticClick(Sender: TObject);
+    procedure delStaticMouseEnter(Sender: TObject);
+    procedure delStaticMouseLeave(Sender: TObject);
+    procedure delStaticClick(Sender: TObject);
+    procedure FormResize(Sender: TObject);
+    procedure helpTCChange(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_help: TFrm_help;
+
+implementation
+
+uses Un_about, Un_func, Un_iniEditor;
+
+{$R *.dfm}
+
+procedure TFrm_help.sel_staticClick(Sender: TObject);
+begin
+if Sender is TStaticText then
+  begin
+    TStaticText(Sender).Font.Color := clRed;
+    VisitedStaticTexts.Add(TStaticText(Sender).Name);
+    helpTC.TabIndex:=0;
+    LoadTextFromFile('sel_hlp.ini', hlp_RE);
+    FormatRichText(
+    hlp_RE,       // Компонент TRichEdit
+    12,
+    'Arial',
+    clBlue,
+    False,            // Включение маркеров
+    True,
+    ssVertical             // Установка ReadOnly = True
+  );
+  end;
+end;
+
+procedure TFrm_help.sel_staticMouseEnter(Sender: TObject);
+begin
+    if Sender is TStaticText then
+  begin
+    if TStaticText(Sender).Font.Color <> clRed then
+      TStaticText(Sender).Font.Color := clRed;
+  end;
+end;
+
+procedure TFrm_help.sel_staticMouseLeave(Sender: TObject);
+begin
+if Sender is TStaticText then
+  begin
+    if TStaticText(Sender).Font.Color <> clRed then
+      TStaticText(Sender).Font.Color := clBlue;
+  end;
+  end;
+
+procedure TFrm_help.upd_StaticClick(Sender: TObject);
+begin
+if Sender is TStaticText then
+  begin
+    // Меняем цвет текста на красный и сохраняем имя "посещенной" ссылки
+    TStaticText(Sender).Font.Color := clRed;
+    VisitedStaticTexts.Add(TStaticText(Sender).Name);
+  end;
+    helpTC.TabIndex:=2;
+    LoadTextFromFile('upd_hlp.ini', hlp_RE);
+end;
+
+procedure TFrm_help.upd_StaticMouseEnter(Sender: TObject);
+begin
+if Sender is TStaticText then
+  begin
+    // Если ссылка еще не была нажата, меняем цвет на красный при наведении
+    if TStaticText(Sender).Font.Color <> clRed then
+      TStaticText(Sender).Font.Color := clRed;
+  end;
+end;
+
+procedure TFrm_help.upd_StaticMouseLeave(Sender: TObject);
+begin
+if Sender is TStaticText then
+  begin
+    // Если ссылка еще не была нажата, возвращаем цвет на синий
+    if TStaticText(Sender).Font.Color <> clRed then
+      TStaticText(Sender).Font.Color := clBlue;
+  end;
+end;
+
+procedure TFrm_help.delStaticClick(Sender: TObject);
+begin
+ if Sender is TStaticText then
+  begin
+    // Меняем цвет текста на красный и сохраняем имя "посещенной" ссылки
+    TStaticText(Sender).Font.Color := clRed;
+    VisitedStaticTexts.Add(TStaticText(Sender).Name);
+  end;
+  helpTC.TabIndex:=3;
+  LoadTextFromFile('del_hlp.ini', hlp_RE);
+end;
+
+procedure TFrm_help.delStaticMouseEnter(Sender: TObject);
+begin
+if Sender is TStaticText then
+  begin
+    if TStaticText(Sender).Font.Color <> clRed then
+      TStaticText(Sender).Font.Color := clRed;
+  end;
+end;
+
+procedure TFrm_help.delStaticMouseLeave(Sender: TObject);
+begin
+if Sender is TStaticText then
+  begin
+    if TStaticText(Sender).Font.Color <> clRed then
+      TStaticText(Sender).Font.Color := clBlue;
+  end;
+end;
+
+procedure TFrm_help.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+   SaveFormState(Self);
+end;
+
+procedure TFrm_help.FormCreate(Sender: TObject);
+begin
+ Imagebox.Align := alTop;
+  rebox.Align :=alClient;
+ Frm_help.KeyPreview:=True;
+ frm_help.ShowHint:=true;
+ UniformizeButtonsSize(Self,  273, 25);
+ UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+ UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+ LoadFormState(Self);
+  MakeStaticTextLookLikeLink(
+    Self,
+   'sel_static',
+    sel_staticMouseEnter,
+    sel_staticMouseLeave,
+    sel_staticClick
+  );
+    MakeStaticTextLookLikeLink(
+    Self,
+   'ins_Static',
+    ins_StaticMouseEnter,
+    ins_StaticMouseLeave,
+    ins_StaticClick
+  );
+  MakeStaticTextLookLikeLink(
+    Self,
+   'upd_Static',
+    upd_StaticMouseEnter,
+    upd_StaticMouseLeave,
+    upd_StaticClick
+  );
+    MakeStaticTextLookLikeLink(
+    Self,
+    'delStatic',
+    delStaticMouseEnter,
+    delStaticMouseLeave,
+    delStaticClick
+  );
+
+   AlignComponentsVertically(linkPanel, 10);
+    CheckAndCreateHelpFolder;
+   Imagebox.Height := ClientHeight  div 2;
+end;
+
+procedure TFrm_help.FormKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+if Key = 112 then // Клавиша F1
+begin
+  try
+    // Создаем новый экземпляр формы помощи
+    with TFrm_help.Create(nil) do
+    try
+      UpdateFormProperties('Frm_help', 'Форма работы со справкой',
+        clBtnFace, 1024, 768);
+
+      ShowModal;
+    finally
+      Free;
+    end;
+  except
+    on E: Exception do
+    begin
+      ShowMessage('Ошибка при открытии формы помощи: ' + E.Message);
+    end;
+  end;
+end;
+if Key = 113 then // Клавиша F2
+begin
+    try
+UpdateFormProperties('Frm_ini_editor', 'Форма работы с ini',
+clBtnFace, 1024, 768);
+Frm_ini_editor.ShowModal;
+except
+Frm_ini_editor.Free;
+raise;
+end;
+
+end;
+
+
+end;
+
+procedure TFrm_help.FormResize(Sender: TObject);
+begin
+  Imagebox.Align := alTop;
+  rebox.Align :=alClient;
+  Imagebox.Height := ClientHeight div 2;
+end;
+
+procedure TFrm_help.helpTCChange(Sender: TObject);
+begin
+case helpTC.TabIndex of
+0:
+begin
+   if Assigned(sel_static) then
+        sel_staticClick(sel_static);
+end;
+  1:
+  begin
+   if Assigned(ins_Static) then
+        ins_staticClick(ins_Static);
+  end;
+  2:
+  begin
+   if Assigned(upd_Static) then
+        upd_staticClick(upd_Static);
+  end;
+  3:
+  begin
+    if Assigned(delStatic) then
+        delstaticClick(delStatic);
+  end;
+end; //case
+end;
+
+procedure TFrm_help.ins_StaticClick(Sender: TObject);
+begin
+if Sender is TStaticText then
+  begin
+    TStaticText(Sender).Font.Color := clRed;
+    VisitedStaticTexts.Add(TStaticText(Sender).Name);
+  end;
+  helpTC.TabIndex:=1;
+      LoadTextFromFile('ins_hlp.ini', hlp_RE);
+end;
+
+procedure TFrm_help.ins_StaticMouseEnter(Sender: TObject);
+begin
+if Sender is TStaticText then
+  begin
+    if TStaticText(Sender).Font.Color <> clRed then
+      TStaticText(Sender).Font.Color := clRed;
+  end;
+end;
+
+procedure TFrm_help.ins_StaticMouseLeave(Sender: TObject);
+begin
+ if Sender is TStaticText then
+  begin
+    if TStaticText(Sender).Font.Color <> clRed then
+      TStaticText(Sender).Font.Color := clBlue;
+  end;
+  end;
+
+end.

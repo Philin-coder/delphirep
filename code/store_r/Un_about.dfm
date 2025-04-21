@@ -48,6 +48,8 @@ object Frm_about: TFrm_about
           Width = 466
           Height = 97
           Align = alClient
+          AutoSize = True
+          Stretch = True
           ExplicitTop = 0
           ExplicitHeight = 112
         end

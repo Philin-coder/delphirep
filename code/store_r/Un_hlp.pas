@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ExtCtrls, StdCtrls, ComCtrls;
+  Dialogs, ExtCtrls, StdCtrls, ComCtrls,jpeg;
 
 type
   TFrm_help = class(TForm)
@@ -58,7 +58,17 @@ if Sender is TStaticText then
     VisitedStaticTexts.Add(TStaticText(Sender).Name);
     helpTC.TabIndex:=0;
     LoadTextFromFile('sel_hlp.ini', hlp_RE);
+    FormatRichText(
+    hlp_RE,       // Компонент TRichEdit
+    12,
+    'Arial',
+    clBlue,
+    False,            // Включение маркеров
+    True,
+    ssVertical             // Установка ReadOnly = True
+  );
   end;
+   LoadImageFromResource('SEL_IMAGE',hlp_Image);
 end;
 
 procedure TFrm_help.sel_staticMouseEnter(Sender: TObject);
@@ -89,6 +99,16 @@ if Sender is TStaticText then
   end;
     helpTC.TabIndex:=2;
     LoadTextFromFile('upd_hlp.ini', hlp_RE);
+    FormatRichText(
+    hlp_RE,       // Компонент TRichEdit
+    12,
+    'Arial',
+    clBlue,
+    False,            // Включение маркеров
+    True,
+    ssVertical             // Установка ReadOnly = True
+  );
+       LoadImageFromResource('UPD_IMAGE',hlp_Image);
 end;
 
 procedure TFrm_help.upd_StaticMouseEnter(Sender: TObject);
@@ -121,6 +141,16 @@ begin
   end;
   helpTC.TabIndex:=3;
   LoadTextFromFile('del_hlp.ini', hlp_RE);
+  FormatRichText(
+    hlp_RE,       // Компонент TRichEdit
+    12,
+    'Arial',
+    clBlue,
+    False,            // Включение маркеров
+    True,
+    ssVertical             // Установка ReadOnly = True
+  );
+       LoadImageFromResource('DEL_IMAGE',hlp_Image);
 end;
 
 procedure TFrm_help.delStaticMouseEnter(Sender: TObject);
@@ -271,6 +301,16 @@ if Sender is TStaticText then
   end;
   helpTC.TabIndex:=1;
       LoadTextFromFile('ins_hlp.ini', hlp_RE);
+      FormatRichText(
+    hlp_RE,       // Компонент TRichEdit
+    12,
+    'Arial',
+    clBlue,
+    False,            // Включение маркеров
+    True,
+    ssVertical             // Установка ReadOnly = True
+  );
+     LoadImageFromResource('INS_IMAGE',hlp_Image);
 end;
 
 procedure TFrm_help.ins_StaticMouseEnter(Sender: TObject);

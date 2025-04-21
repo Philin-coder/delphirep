@@ -18,6 +18,7 @@ uses
 {$R *.res}
 {$R resources.RES}
 {$R about.RES}
+{$R HLP.RES}
 
 begin
   Application.Initialize;

@@ -1,0 +1,123 @@
+object Frm_about: TFrm_about
+  Left = 0
+  Top = 0
+  BorderStyle = bsSingle
+  Caption = #1054' '#1087#1088#1086#1075#1088#1072#1084#1084#1077
+  ClientHeight = 852
+  ClientWidth = 876
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnKeyUp = FormKeyUp
+  OnResize = FormResize
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object mainBox: TGroupBox
+    Left = 0
+    Top = 0
+    Width = 876
+    Height = 747
+    Align = alClient
+    TabOrder = 0
+    object leftBox: TGroupBox
+      Left = 2
+      Top = 65
+      Width = 474
+      Height = 680
+      Align = alLeft
+      TabOrder = 0
+      object logobox: TGroupBox
+        Left = 2
+        Top = 15
+        Width = 470
+        Height = 114
+        Align = alTop
+        Color = clBtnFace
+        ParentColor = False
+        TabOrder = 0
+        object logo_Image: TImage
+          Left = 2
+          Top = 15
+          Width = 466
+          Height = 97
+          Align = alClient
+          AutoSize = True
+          Proportional = True
+          ExplicitTop = 0
+          ExplicitHeight = 112
+        end
+      end
+      object repanel: TPanel
+        Left = 2
+        Top = 129
+        Width = 470
+        Height = 549
+        Align = alClient
+        TabOrder = 1
+        object REleft: TRichEdit
+          AlignWithMargins = True
+          Left = 4
+          Top = 4
+          Width = 462
+          Height = 541
+          Align = alClient
+          TabOrder = 0
+        end
+      end
+    end
+    object rightBox: TGroupBox
+      Left = 490
+      Top = 65
+      Width = 384
+      Height = 680
+      Align = alRight
+      TabOrder = 1
+      object RERight: TRichEdit
+        Left = 2
+        Top = 15
+        Width = 380
+        Height = 663
+        Align = alClient
+        TabOrder = 0
+      end
+    end
+    object TimePanel: TFlowPanel
+      Left = 2
+      Top = 15
+      Width = 872
+      Height = 50
+      Align = alTop
+      TabOrder = 2
+    end
+  end
+  object btnBox: TGroupBox
+    Left = 0
+    Top = 747
+    Width = 876
+    Height = 105
+    Align = alBottom
+    TabOrder = 1
+    object closeBtn: TButton
+      Left = 416
+      Top = 40
+      Width = 75
+      Height = 25
+      Caption = #1047#1072#1082#1088#1099#1090#1100
+      TabOrder = 0
+      OnClick = closeBtnClick
+    end
+  end
+  object mTimer: TTimer
+    Enabled = False
+    OnTimer = mTimerTimer
+    Left = 544
+    Top = 24
+  end
+end
