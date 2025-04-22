@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2025.04.22 11:36:40.687.pas,C:\Users\user\OneDrive\Документы\Borland Studio Projects\Unit2.pas=F:\code\Result\delphi\code\conkurs_r\Un_main.pas</Transaction>
+    <Transaction>2025.04.22 11:36:40.688.dfm,C:\Users\user\OneDrive\Документы\Borland Studio Projects\Unit2.dfm=F:\code\Result\delphi\code\conkurs_r\Un_main.dfm</Transaction>
+    <Transaction>2025.04.22 11:37:13.547.bdsproj,C:\Users\user\OneDrive\Документы\Borland Studio Projects\Project1.bdsproj=F:\code\Result\delphi\code\conkurs_r\konkurs_project.bdsproj</Transaction>
+  </Transactions>
+</BorlandProject>
