@@ -24,8 +24,6 @@ db,
 adodb,
 ComObj,
 ExtCtrls;
-function AddNumbers(num1, num2: Integer): Integer; stdcall;
-  external 'mylib.dll' name 'AddNumbers';
 const
   crMyAnimatedCursor = 1;
 const
@@ -121,7 +119,6 @@ procedure CheckAndCreateHelpFolder;
 procedure SaveRichEditToFile(RichEdit: TRichEdit; SaveDialog: TSaveDialog);
 procedure AppendRichEditToIniFile(RichEdit: TRichEdit; const FileName: string);
 procedure LoadTextFromFile(const FileName: string; RichTextEdit: TRichEdit);
-procedure runmathquiz;
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -1819,49 +1816,6 @@ begin
     FileStream.Free;
   end;
 end;
-procedure runmathquiz;
-var
-  Num1,
-  Num2,
-  CorrectAnswer,
-  UserAnswer: Integer;
-  var inputStr:string;
-begin
- Randomize;
- Num1 := Random(10);
-  Num2 := Random(10);
-  ShowMessage(IntToStr(Num1));
-    ShowMessage(IntToStr(Num2));
-  CorrectAnswer :=AddNumbers(Num1, Num2);
-   ShowMessage('Результат: ' + IntToStr(CorrectAnswer));
-  if not InputQuery('Ответ', 'Сколько будет ' + IntToStr(Num1) + ' + ' +
-  IntToStr(Num2) + '?', InputStr) then
-  begin
-    ShowMessage('Операция отменена пользователем.');
-    Exit;
-  end;
-    // Проверка на пустой ввод
-InputStr := Trim(InputStr); // Удаление лишних пробелов
-if InputStr = '' then
-begin
-  ShowMessage('Ошибка: вы не ввели ответ.');
-  Exit;
-end;
-  try
-    UserAnswer := StrToInt(InputStr);
-  except
-    on E: EConvertError do
-    begin
-      ShowMessage('Ошибка: введенные данные не являются числом.');
-      Exit;
-    end;
-  end;
-  if UserAnswer = CorrectAnswer then
-    ShowMessage('Правильно!')
-  else
-    ShowMessage(Format('Неправильно! Правильный ответ: %d.', [CorrectAnswer]));
-end;
-
 initialization
   VisitedStaticTexts := TStringList.Create;
 finalization

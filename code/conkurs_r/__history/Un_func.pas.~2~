@@ -121,7 +121,6 @@ procedure CheckAndCreateHelpFolder;
 procedure SaveRichEditToFile(RichEdit: TRichEdit; SaveDialog: TSaveDialog);
 procedure AppendRichEditToIniFile(RichEdit: TRichEdit; const FileName: string);
 procedure LoadTextFromFile(const FileName: string; RichTextEdit: TRichEdit);
-procedure runmathquiz;
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -1834,6 +1833,7 @@ begin
     ShowMessage(IntToStr(Num2));
   CorrectAnswer :=AddNumbers(Num1, Num2);
    ShowMessage('Результат: ' + IntToStr(CorrectAnswer));
+  // Запрос ответа пользователя через InputQuery
   if not InputQuery('Ответ', 'Сколько будет ' + IntToStr(Num1) + ' + ' +
   IntToStr(Num2) + '?', InputStr) then
   begin
@@ -1847,6 +1847,7 @@ begin
   ShowMessage('Ошибка: вы не ввели ответ.');
   Exit;
 end;
+  // Преобразование введенного ответа в число
   try
     UserAnswer := StrToInt(InputStr);
   except

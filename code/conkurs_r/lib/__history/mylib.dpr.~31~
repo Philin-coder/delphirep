@@ -5,9 +5,7 @@ uses
 
 function AddNumbers(num1, num2: Integer): Integer; stdcall;
 asm
-  xor eax,eax
-  mov eax, num1
-  add eax,  num2
+  mov eax, ecx        // переносим num1 в eax
  end;
 
 exports

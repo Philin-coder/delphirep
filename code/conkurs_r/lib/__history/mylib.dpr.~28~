@@ -1,0 +1,22 @@
+library mylib;
+
+uses
+  Windows;
+
+function AddNumbers(num1, num2: Integer): Integer; stdcall;
+asm
+  push ebp            // сохраняем старый ebp
+  mov ebp, esp        // создаем фрейм
+  mov eax, [ebp + 8]  // num1
+  add eax, [ebp + 12] // + num2
+  pop ebp             // восстанавливаем старый ebp
+  ret                 // выходим (stdcall сам снимает аргументы)
+end;
+
+exports
+  AddNumbers;
+
+begin
+end.
+
+

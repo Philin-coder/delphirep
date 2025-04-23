@@ -1,0 +1,22 @@
+library mylib;
+
+uses
+  Windows;
+
+function AddNumbers(num1, num2: Integer): Integer; stdcall;
+asm
+  // —тек выгл€дит так:
+  // [esp + 4] Ч num1
+  // [esp + 8] Ч num2
+
+  mov eax, [esp + 4]   // загружаем num1 в eax
+  add eax, [esp + 8]   // прибавл€ем num2 к eax
+  // результат возвращаетс€ в eax (Delphi ожидает это)
+end;
+
+exports
+  AddNumbers;
+
+begin
+end.
+

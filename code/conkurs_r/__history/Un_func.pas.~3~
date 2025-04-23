@@ -1834,6 +1834,7 @@ begin
     ShowMessage(IntToStr(Num2));
   CorrectAnswer :=AddNumbers(Num1, Num2);
    ShowMessage('Результат: ' + IntToStr(CorrectAnswer));
+  // Запрос ответа пользователя через InputQuery
   if not InputQuery('Ответ', 'Сколько будет ' + IntToStr(Num1) + ' + ' +
   IntToStr(Num2) + '?', InputStr) then
   begin
@@ -1847,6 +1848,7 @@ begin
   ShowMessage('Ошибка: вы не ввели ответ.');
   Exit;
 end;
+  // Преобразование введенного ответа в число
   try
     UserAnswer := StrToInt(InputStr);
   except

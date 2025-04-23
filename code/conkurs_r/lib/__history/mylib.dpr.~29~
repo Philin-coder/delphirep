@@ -1,0 +1,18 @@
+library mylib;
+
+uses
+  Windows;
+
+function AddNumbers(num1, num2: Integer): Integer; stdcall;
+asm
+  // num1 в ecx, num2 в edx
+  add ecx, edx        // сложение num1 и num2
+  mov eax, ecx        // результат в eax (возвращаемое значение)
+end;
+
+exports
+  AddNumbers;
+
+begin
+end.
+

@@ -1,0 +1,25 @@
+library mylib;
+
+uses
+  Windows;
+
+function AddNumbers(num1, num2: Integer; var ResultVar: Integer): Boolean; stdcall;
+asm
+  test ecx, ecx
+  jz @error
+  lea eax, [eax + edx]
+  mov [ecx], eax
+  mov eax, 1            
+  ret
+
+@error:
+  xor eax, eax
+  ret
+end;
+
+exports
+  AddNumbers;
+
+begin
+end.
+
