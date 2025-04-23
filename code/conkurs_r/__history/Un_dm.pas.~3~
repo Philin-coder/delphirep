@@ -10,7 +10,7 @@ type
     Connection: TADOConnection;
     workQuery: TADOQuery;
     workDS: TDataSource;
-    ins_work: TADOStoredProc;
+    ADOStoredProc1: TADOStoredProc;
   private
     { Private declarations }
   public
