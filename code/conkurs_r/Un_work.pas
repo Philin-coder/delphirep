@@ -1,4 +1,4 @@
-unit Un_main;
+unit Un_work;
 
 interface
 
@@ -7,8 +7,7 @@ uses
   Dialogs;
 
 type
-  TForm2 = class(TForm)
-    procedure FormCreate(Sender: TObject);
+  TFrm_work = class(TForm)
   private
     { Private declarations }
   public
@@ -16,18 +15,12 @@ type
   end;
 
 var
-  Form2: TForm2;
+  Frm_work: TFrm_work;
 
 implementation
 
+uses Un_dm, Un_func, Un_main;
 
 {$R *.dfm}
-begin
-
-end;
-
-
-
 
 end.
-

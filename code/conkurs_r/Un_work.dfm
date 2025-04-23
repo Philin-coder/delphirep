@@ -1,7 +1,7 @@
-object Form2: TForm2
+object Frm_work: TFrm_work
   Left = 0
   Top = 0
-  Caption = 'Form2'
+  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1088#1072#1073#1086#1090#1086#1081
   ClientHeight = 299
   ClientWidth = 635
   Color = clBtnFace
@@ -11,7 +11,6 @@ object Form2: TForm2
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
-  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
 end

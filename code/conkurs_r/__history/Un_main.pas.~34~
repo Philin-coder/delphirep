@@ -61,11 +61,11 @@ end;
 procedure TFrm_main.work_itemClick(Sender: TObject);
 begin
   try
-UpdateFormProperties('Frm_work', 'Форма работы с работой',
+UpdateFormProperties('Frm_about', '? ?????????',
 clBtnFace, 1024, 768);
- Frm_work.ShowModal;
+Frm_about.ShowModal;
 except
-Frm_work.Free;
+Frm_about.Free;
 raise;
 end;
 
