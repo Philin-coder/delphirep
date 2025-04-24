@@ -15,7 +15,13 @@ object DM: TDM
     Connection = Connection
     Parameters = <>
     SQL.Strings = (
-      'select * from m_ser where 1=1;')
+      'select'
+      'm_user.id_user,'
+      'm_user.fio,'
+      'm_user.user_phone,'
+      'm_user.user_pas'
+      'from m_user '
+      'where 1=1')
     Left = 40
     Top = 72
   end

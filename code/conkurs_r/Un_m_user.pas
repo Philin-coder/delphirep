@@ -4,14 +4,26 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls;
+  Dialogs, StdCtrls, ComCtrls, ExtCtrls, Grids, DBGrids;
 
 type
   TFrm_muser = class(TForm)
-    GroupBox1: TGroupBox;
-    GroupBox2: TGroupBox;
-    GroupBox3: TGroupBox;
-    GroupBox4: TGroupBox;
+    m_user_PC: TPageControl;
+    selTab: TTabSheet;
+    TabSheet2: TTabSheet;
+    TabSheet3: TTabSheet;
+    TabSheet4: TTabSheet;
+    m_user_condBox: TGroupBox;
+    m_user_groper: TGroupBox;
+    m_user_dataBox: TGroupBox;
+    m_user_btndBox: TGroupBox;
+    m_user_sel_btn: TButton;
+    sel_user_cond_edit: TLabeledEdit;
+    sel_userGid: TDBGrid;
+    sel_user_fnd_edit: TLabeledEdit;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormActivate(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -26,5 +38,26 @@ implementation
 uses Un_dm, Un_func, Un_main;
 
 {$R *.dfm}
+
+procedure TFrm_muser.FormActivate(Sender: TObject);
+begin
+  dm.muserQuery.Open
+end;
+
+procedure TFrm_muser.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  SaveFormState(Self);
+  CloseAllQueriesOnDataModule('dm');
+end;
+
+procedure TFrm_muser.FormCreate(Sender: TObject);
+begin
+ Frm_muser.KeyPreview:=true;
+ Frm_muser.ShowHint:=true;
+ UniformizeButtonsSize(Self,  273, 25);
+ UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+ UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+ LoadFormState(Self);
+end;
 
 end.

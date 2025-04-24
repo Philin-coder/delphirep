@@ -1,0 +1,123 @@
+object Frm_muser: TFrm_muser
+  Left = 0
+  Top = 0
+  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1091#1095#1072#1089#1090#1085#1080#1082#1086#1084
+  ClientHeight = 497
+  ClientWidth = 922
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  OnActivate = FormActivate
+  OnClose = FormClose
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object m_user_PC: TPageControl
+    Left = 0
+    Top = 0
+    Width = 922
+    Height = 497
+    ActivePage = selTab
+    Align = alClient
+    TabOrder = 0
+    ExplicitWidth = 742
+    object selTab: TTabSheet
+      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1091#1095#1072#1089#1090#1085#1080#1082#1077
+      ExplicitWidth = 734
+      object m_user_condBox: TGroupBox
+        Left = 0
+        Top = 0
+        Width = 914
+        Height = 99
+        Align = alTop
+        Caption = #1042#1099#1073#1086#1088' '#1087#1086' '#1091#1089#1083#1086#1074#1080#1102
+        TabOrder = 0
+        ExplicitWidth = 734
+        DesignSize = (
+          914
+          99)
+        object sel_cond_edit: TLabeledEdit
+          AlignWithMargins = True
+          Left = 3
+          Top = 40
+          Width = 790
+          Height = 25
+          Anchors = [akLeft, akRight]
+          EditLabel.Width = 140
+          EditLabel.Height = 13
+          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1060#1048#1054
+          TabOrder = 0
+        end
+      end
+      object m_user_groper: TGroupBox
+        Left = 0
+        Top = 99
+        Width = 914
+        Height = 105
+        Align = alTop
+        Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1091#1089#1083#1086#1074#1080#1102
+        TabOrder = 1
+        ExplicitWidth = 734
+      end
+      object m_user_dataBox: TGroupBox
+        Left = 0
+        Top = 204
+        Width = 914
+        Height = 208
+        Align = alClient
+        Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 2
+        ExplicitWidth = 734
+        object sel_userGid: TDBGrid
+          Left = 2
+          Top = 15
+          Width = 910
+          Height = 191
+          Align = alClient
+          TabOrder = 0
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWindowText
+          TitleFont.Height = -11
+          TitleFont.Name = 'Tahoma'
+          TitleFont.Style = []
+        end
+      end
+      object m_user_btndBox: TGroupBox
+        Left = 0
+        Top = 412
+        Width = 914
+        Height = 57
+        Align = alBottom
+        TabOrder = 3
+        ExplicitWidth = 734
+        object m_user_sel_btn: TButton
+          Left = 232
+          Top = 24
+          Width = 169
+          Height = 25
+          Caption = #1054#1090#1073#1086#1088' '#1087#1086' '#1091#1089#1083#1086#1074#1080#1102
+          TabOrder = 0
+        end
+      end
+    end
+    object TabSheet2: TTabSheet
+      Caption = 'TabSheet2'
+      ImageIndex = 1
+      ExplicitWidth = 734
+    end
+    object TabSheet3: TTabSheet
+      Caption = 'TabSheet3'
+      ImageIndex = 2
+      ExplicitWidth = 734
+    end
+    object TabSheet4: TTabSheet
+      Caption = 'TabSheet4'
+      ImageIndex = 3
+      ExplicitWidth = 734
+    end
+  end
+end

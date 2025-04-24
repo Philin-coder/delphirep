@@ -22,6 +22,8 @@ var
 
 implementation
 
+uses Un_func, Un_m_user;
+
 {$R *.dfm}
 
 end.

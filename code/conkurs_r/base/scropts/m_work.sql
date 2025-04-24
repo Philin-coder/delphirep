@@ -1,7 +1,7 @@
 USE [concurs_r]
 GO
 
-/****** Object:  Table [dbo].[m_work]    Script Date: 24.04.2025 9:05:21 ******/
+/****** Object:  Table [dbo].[m_work]    Script Date: 24.04.2025 12:47:32 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -13,6 +13,7 @@ CREATE TABLE [dbo].[m_work](
 	[work_naim] [varchar](1000) NOT NULL,
 	[work_opis] [varchar](1000) NOT NULL,
 	[work_data] [varchar](1000) NOT NULL,
+	[work_mark_and_about] [varchar](1000) NOT NULL,
 	[id_user] [int] NOT NULL
 ) ON [PRIMARY]
 GO
