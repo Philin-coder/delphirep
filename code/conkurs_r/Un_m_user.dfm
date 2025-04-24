@@ -22,7 +22,7 @@ object Frm_muser: TFrm_muser
     Top = 29
     Width = 1037
     Height = 690
-    ActivePage = TabSheet3
+    ActivePage = UpdTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
@@ -201,7 +201,6 @@ object Frm_muser: TFrm_muser
           Anchors = [akLeft, akRight]
           TabOrder = 2
           OnExit = phone_inpExit
-          OnMouseDown = phone_inpMouseDown
         end
         object user_pas_inp: TLabeledEdit
           Left = 3
@@ -296,7 +295,7 @@ object Frm_muser: TFrm_muser
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object upd_usr_phone_lbl: TStaticText
+        object upd_usr_tl_lbl: TStaticText
           Left = 3
           Top = 99
           Width = 48
@@ -317,9 +316,9 @@ object Frm_muser: TFrm_muser
         object usr_upd_us_lbl: TStaticText
           Left = 3
           Top = 36
-          Width = 48
+          Width = 52
           Height = 17
-          Caption = #1058#1077#1083#1077#1092#1086#1085
+          Caption = #1059#1095#1072#1089#1090#1085#1080#1082
           TabOrder = 2
         end
         object usr_upd_DBL: TDBLookupComboBox
@@ -405,9 +404,113 @@ object Frm_muser: TFrm_muser
         end
       end
     end
-    object TabSheet4: TTabSheet
-      Caption = 'TabSheet4'
+    object UpdTab: TTabSheet
+      Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1091#1095#1072#1089#1080#1085#1080#1082#1077
       ImageIndex = 3
+      object del_usr_dataBox: TGroupBox
+        Left = 0
+        Top = 105
+        Width = 1029
+        Height = 487
+        Align = alClient
+        Caption = #1042#1099#1074#1086#1076' '#1083#1072#1085#1085#1099#1093
+        TabOrder = 0
+        ExplicitLeft = 240
+        ExplicitTop = 176
+        ExplicitWidth = 185
+        ExplicitHeight = 105
+        object Del_usr_datagrd: TDBGrid
+          Left = 2
+          Top = 15
+          Width = 1025
+          Height = 470
+          Align = alClient
+          DataSource = DM.muserDS
+          TabOrder = 0
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWindowText
+          TitleFont.Height = -11
+          TitleFont.Name = 'Tahoma'
+          TitleFont.Style = []
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'id_user'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Width = 116
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'fio'
+              Title.Caption = #1060#1048#1054' '#1091#1095#1072#1089#1090#1085#1080#1082#1072
+              Width = 121
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'user_phone'
+              Title.Caption = #1058#1077#1083#1077#1092#1086#1085' '#1091#1095#1072#1089#1090#1085#1080#1082#1072
+              Width = 109
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'user_pas'
+              Title.Caption = #1055#1072#1088#1086#1083#1100' '#1091#1095#1072#1089#1090#1085#1080#1082#1072
+              Width = 154
+              Visible = True
+            end>
+        end
+      end
+      object del_usr_inpBox: TGroupBox
+        Left = 0
+        Top = 0
+        Width = 1029
+        Height = 105
+        Align = alTop
+        Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 1
+        ExplicitLeft = 3
+        ExplicitTop = -6
+        object del_usr_us_kbl: TStaticText
+          Left = 3
+          Top = 20
+          Width = 52
+          Height = 17
+          Caption = #1059#1095#1072#1089#1090#1085#1080#1082
+          TabOrder = 0
+        end
+        object del_usr_us_DBL: TDBLookupComboBox
+          Left = 3
+          Top = 51
+          Width = 1006
+          Height = 21
+          Align = alCustom
+          Anchors = [akLeft, akRight]
+          KeyField = 'id_user'
+          ListField = 'fio'
+          ListSource = DM.muserDS
+          TabOrder = 1
+        end
+      end
+      object del_usr_btnBox: TGroupBox
+        Left = 0
+        Top = 592
+        Width = 1029
+        Height = 70
+        Align = alBottom
+        TabOrder = 2
+        object del_usr_Btn: TButton
+          Left = 408
+          Top = 24
+          Width = 75
+          Height = 25
+          Caption = #1059#1076#1072#1083#1080#1090#1100
+          TabOrder = 0
+          OnClick = del_usr_BtnClick
+        end
+      end
     end
   end
   object userToolBar: TToolBar

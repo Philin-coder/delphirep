@@ -13,7 +13,7 @@ type
     selTab: TTabSheet;
     insTab: TTabSheet;
     TabSheet3: TTabSheet;
-    TabSheet4: TTabSheet;
+    UpdTab: TTabSheet;
     m_user_condBox: TGroupBox;
     m_user_groper: TGroupBox;
     m_user_dataBox: TGroupBox;
@@ -42,10 +42,17 @@ type
     user_upd_btnBox: TGroupBox;
     upd_usrGrd: TDBGrid;
     upd_usr_Btn: TButton;
-    upd_usr_phone_lbl: TStaticText;
+    upd_usr_tl_lbl: TStaticText;
     usr_upd_phone_inp: TMaskEdit;
     usr_upd_us_lbl: TStaticText;
     usr_upd_DBL: TDBLookupComboBox;
+    del_usr_dataBox: TGroupBox;
+    del_usr_inpBox: TGroupBox;
+    del_usr_btnBox: TGroupBox;
+    del_usr_Btn: TButton;
+    Del_usr_datagrd: TDBGrid;
+    del_usr_us_kbl: TStaticText;
+    del_usr_us_DBL: TDBLookupComboBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -53,8 +60,6 @@ type
     procedure sel_user_fnd_editKeyPress(Sender: TObject; var Key: Char);
     procedure naim_grouperClick(Sender: TObject);
     procedure selRadioresetClick(Sender: TObject);
-    procedure phone_inpMouseDown(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
     procedure FormShow(Sender: TObject);
     procedure phone_inpExit(Sender: TObject);
     procedure showpasbtnClick(Sender: TObject);
@@ -62,6 +67,7 @@ type
     procedure user_insBtnClick(Sender: TObject);
     procedure usr_upd_phone_inpExit(Sender: TObject);
     procedure upd_usr_BtnClick(Sender: TObject);
+    procedure del_usr_BtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -76,6 +82,45 @@ implementation
 uses Un_dm, Un_func, Un_main;
 
 {$R *.dfm}
+
+procedure TFrm_muser.del_usr_BtnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+begin
+AreFieldsEmpty:=(
+ (del_usr_us_DBL.Text='')
+);
+if AreFieldsEmpty  then
+begin
+MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+end;
+  try
+      with dm.del_user do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@id_user').Value
+           :=dm.muserQuery.FieldByName('id_user').AsString;
+           ExecProc;
+           dm.muserQuery.Close;
+           dm.muserQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+
+end;
 
 procedure TFrm_muser.FormActivate(Sender: TObject);
 begin
@@ -175,19 +220,6 @@ begin
   else
     phone_inp.Color := clWindow;
 
-end;
-
-procedure TFrm_muser.phone_inpMouseDown(Sender: TObject; Button: TMouseButton;
-  Shift: TShiftState; X, Y: Integer);
-begin
-// if IsMaskEditEmpty(phone_inp) then
-//  begin
-//   phone_inp.Color := clRed;
-//    ShowMessage('Поле ввода телефона должно быть заполнено ');
-//    phone_inp.SetFocus;
-//  end
-//  else
-//    phone_inp.Color := clWindow;
 end;
 
 procedure TFrm_muser.selRadioresetClick(Sender: TObject);
@@ -303,8 +335,7 @@ end;
 
 procedure TFrm_muser.user_insBtnClick(Sender: TObject);
 const
-  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.','A'
-  ..'Z','a'..'z'];
+  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
 var
   AreFieldsEmpty: Boolean;
   AreFieldsValid: Boolean;
@@ -314,8 +345,7 @@ AreFieldsEmpty:=(
 (Trim(user_pas_inp.Text)='')
 );
 AreFieldsValid:=(
-ValidateComponentText(fio_inp,AllowedChars)and
-ValidateComponentText(user_pas_inp,AllowedChars)
+ValidateComponentText(fio_inp,AllowedChars)
 );
 if AreFieldsEmpty or not AreFieldsValid then
 begin
