@@ -40,47 +40,14 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@fio'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 1000
-        Value = Null
-      end>
-    Left = 32
-    Top = 192
-  end
-  object ins_user: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'ins_user;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@fio'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = '@user_phone'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 1000
-      end
-      item
-        Name = '@user_pas'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
       end>
     Left = 32
-    Top = 248
+    Top = 192
   end
 end

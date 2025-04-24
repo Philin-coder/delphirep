@@ -4,13 +4,14 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ComCtrls, ExtCtrls, Grids, DBGrids,db,ADODB;
+  Dialogs, StdCtrls, ComCtrls, ExtCtrls, Grids, DBGrids,db,ADODB, Mask, ToolWin,
+  ImgList;
 
 type
   TFrm_muser = class(TForm)
     m_user_PC: TPageControl;
     selTab: TTabSheet;
-    TabSheet2: TTabSheet;
+    insTab: TTabSheet;
     TabSheet3: TTabSheet;
     TabSheet4: TTabSheet;
     m_user_condBox: TGroupBox;
@@ -23,12 +24,31 @@ type
     sel_user_fnd_edit: TLabeledEdit;
     selRadioreset: TRadioButton;
     naim_grouper: TRadioButton;
+    mu_ins_inpBox: TGroupBox;
+    m_user_ntnBox: TGroupBox;
+    ins_user_dataBox: TGroupBox;
+    user_insBtn: TButton;
+    user_ins_grd: TDBGrid;
+    fio_inp: TLabeledEdit;
+    ins_phone_lbl: TStaticText;
+    phone_inp: TMaskEdit;
+    user_pas_inp: TLabeledEdit;
+    userToolBar: TToolBar;
+    showpasbtn: TToolButton;
+    hidepasbtn: TToolButton;
+    userImageList: TImageList;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure m_user_sel_btnClick(Sender: TObject);
     procedure sel_user_fnd_editKeyPress(Sender: TObject; var Key: Char);
     procedure naim_grouperClick(Sender: TObject);
+    procedure selRadioresetClick(Sender: TObject);
+    procedure phone_inpMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure fio_inpExit(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure phone_inpExit(Sender: TObject);
   private
     { Private declarations }
   public
@@ -43,6 +63,11 @@ implementation
 uses Un_dm, Un_func, Un_main;
 
 {$R *.dfm}
+
+procedure TFrm_muser.fio_inpExit(Sender: TObject);
+begin
+  phone_inp.SetFocus;
+end;
 
 procedure TFrm_muser.FormActivate(Sender: TObject);
 begin
@@ -63,6 +88,17 @@ begin
  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
  LoadFormState(Self);
+ phone_inp.EditMask := '!+7 \(999\) 000-00-00;1;_';
+     LoadIconFromResource('IYE',1,userImageList);
+     showpasbtn.ImageIndex:=0;
+     LoadIconFromResource('DS',1,userImageList);
+     hidepasbtn.ImageIndex:=1;
+     ShowMessage(IntToStr(userImageList.Count));
+end;
+
+procedure TFrm_muser.FormShow(Sender: TObject);
+begin
+fio_inp.SetFocus;
 end;
 
 procedure TFrm_muser.m_user_sel_btnClick(Sender: TObject);
@@ -111,6 +147,76 @@ if  naim_grouper.Checked=true then
     end;
     end;
   end;
+end;
+
+procedure TFrm_muser.phone_inpExit(Sender: TObject);
+begin
+ if IsMaskEditEmpty(phone_inp) then
+  begin
+   phone_inp.Color := clRed;
+    ShowMessage('Поле ввода телефона должно быть заполнено ');
+    phone_inp.SetFocus;
+  end
+  else
+    phone_inp.Color := clWindow;
+
+end;
+
+procedure TFrm_muser.phone_inpMouseDown(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+ if IsMaskEditEmpty(phone_inp) then
+  begin
+   phone_inp.Color := clRed;
+    ShowMessage('Поле ввода телефона должно быть заполнено ');
+    phone_inp.SetFocus;
+  end
+  else
+    phone_inp.Color := clWindow;
+end;
+
+procedure TFrm_muser.selRadioresetClick(Sender: TObject);
+  var i,j,c:Integer;
+begin
+if selRadioreset.Checked then
+  with Frm_muser do
+    for I := 0 to ComponentCount - 1 do
+     begin
+       if (Components[i] is TLabeledEdit)  then
+        begin
+          (Components[i] as TLabeledEdit).Clear;
+        end;
+     end;
+       with Frm_muser do
+    for c := 0 to ComponentCount - 1 do
+     begin
+       if (Components[c] is TCheckBox)  then
+        begin
+          (Components[c] as TCheckBox).Checked:=False;
+        end;
+     end;
+     with dm.muserQuery do
+     begin
+     Close;
+     sql.Clear;
+     SQL.Text:=
+     'select'+' '+
+     'm_user.id_user,'+' '+
+    'm_user.fio,'+' '+
+    'm_user.user_phone,'+ ' '+
+    'm_user.user_pas'+' '+
+    'from m_user'+' '+
+     'where 1=1';
+     Open;
+     end;
+    with Frm_muser do
+    for j := 0 to ComponentCount - 1 do
+    begin
+      if(Components[j] is TRadioButton)  then
+      begin
+        (Components[j] as TRadioButton).Checked:=False;
+      end;
+    end;
 end;
 
 procedure TFrm_muser.sel_user_fnd_editKeyPress(Sender: TObject; var Key: Char);

@@ -183,6 +183,7 @@ object Frm_muser: TFrm_muser
           EditLabel.Height = 13
           EditLabel.Caption = #1060#1048#1054' '#1091#1095#1072#1089#1090#1085#1080#1082#1072
           TabOrder = 0
+          OnExit = fio_inpExit
         end
         object ins_phone_lbl: TStaticText
           Left = 2
@@ -229,7 +230,6 @@ object Frm_muser: TFrm_muser
           Height = 25
           Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
           TabOrder = 0
-          OnClick = user_insBtnClick
         end
       end
       object ins_user_dataBox: TGroupBox
@@ -305,13 +305,11 @@ object Frm_muser: TFrm_muser
       Left = 0
       Top = 0
       ImageIndex = 0
-      OnClick = showpasbtnClick
     end
     object hidepasbtn: TToolButton
       Left = 23
       Top = 0
       ImageIndex = 1
-      OnClick = hidepasbtnClick
     end
   end
   object userImageList: TImageList

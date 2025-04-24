@@ -46,6 +46,7 @@ type
     procedure selRadioresetClick(Sender: TObject);
     procedure phone_inpMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
+    procedure fio_inpExit(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure phone_inpExit(Sender: TObject);
     procedure showpasbtnClick(Sender: TObject);
@@ -65,6 +66,11 @@ implementation
 uses Un_dm, Un_func, Un_main;
 
 {$R *.dfm}
+
+procedure TFrm_muser.fio_inpExit(Sender: TObject);
+begin
+  phone_inp.SetFocus;
+end;
 
 procedure TFrm_muser.FormActivate(Sender: TObject);
 begin
@@ -250,49 +256,12 @@ end;
 
 procedure TFrm_muser.user_insBtnClick(Sender: TObject);
 const
-  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.','A'
-  ..'Z','a'..'z'];
+  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
 var
   AreFieldsEmpty: Boolean;
   AreFieldsValid: Boolean;
 begin
-AreFieldsEmpty:=(
-(Trim(fio_inp.Text)='')or
-(Trim(user_pas_inp.Text)='')
-);
-AreFieldsValid:=(
-ValidateComponentText(fio_inp,AllowedChars)and
-ValidateComponentText(user_pas_inp,AllowedChars)
-);
-if AreFieldsEmpty or not AreFieldsValid then
-begin
-    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
+
 end;
-try
-      with dm.ins_user do
-      begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@fio').Value :=fio_inp.Text;
-           Parameters.ParamByName('@user_phone').Value:=phone_inp.Text;
-           Parameters.ParamByName('@user_pas').Value:=user_pas_inp.Text;
-           ExecProc;
-           dm.muserQuery.Close;
-           dm.muserQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-    end;
-end;
+
 end.
