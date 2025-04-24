@@ -10,12 +10,12 @@ type
   TFrm_main = class(TForm)
     itemMenu: TMainMenu;
     main_Image: TImage;
-    work_item: TMenuItem;
-    m_user_tem: TMenuItem;
+    m_user_item: TMenuItem;
+    m_work_item: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
-    procedure work_itemClick(Sender: TObject);
+    procedure m_user_itemClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -28,7 +28,7 @@ var
 
 implementation
 
-uses Un_func, Un_dm, Un_work;
+uses Un_func, Un_dm , Un_m_user;
 
 
 {$R *.dfm}
@@ -58,14 +58,14 @@ LoadFormState(Self);
 LoadImageFromResource('BACKGROUND_IMAGE',main_Image);
 end;
 
-procedure TFrm_main.work_itemClick(Sender: TObject);
+procedure TFrm_main.m_user_itemClick(Sender: TObject);
 begin
   try
-UpdateFormProperties('Frm_work', 'Форма работы с работой',
+UpdateFormProperties('Frm_muser', 'Форма работы с участником',
 clBtnFace, 1024, 768);
- Frm_work.ShowModal;
+ Frm_muser.ShowModal;
 except
-Frm_work.Free;
+Frm_muser.Free;
 raise;
 end;
 

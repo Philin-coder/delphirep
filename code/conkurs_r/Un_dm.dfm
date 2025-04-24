@@ -11,7 +11,7 @@ object DM: TDM
     Provider = 'SQLOLEDB.1'
     Left = 48
   end
-  object workQuery: TADOQuery
+  object muserQuery: TADOQuery
     Connection = Connection
     Parameters = <>
     SQL.Strings = (
@@ -25,39 +25,13 @@ object DM: TDM
     Left = 40
     Top = 72
   end
-  object workDS: TDataSource
-    DataSet = workQuery
+  object muserDS: TDataSource
+    DataSet = muserQuery
     Left = 40
     Top = 128
   end
-  object ins_work: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'ins_work;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@work_naim'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 1000
-      end
-      item
-        Name = '@work_opis'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 1000
-      end
-      item
-        Name = '@work_data'
-        Attributes = [paNullable]
-        DataType = ftDateTime
-        Size = 10
-      end>
+  object ADOStoredProc1: TADOStoredProc
+    Parameters = <>
     Left = 32
     Top = 192
   end

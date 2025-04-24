@@ -8,9 +8,9 @@ uses
 type
   TDM = class(TDataModule)
     Connection: TADOConnection;
-    workQuery: TADOQuery;
-    workDS: TDataSource;
-    ins_work: TADOStoredProc;
+    muserQuery: TADOQuery;
+    muserDS: TDataSource;
+    ADOStoredProc1: TADOStoredProc;
   private
     { Private declarations }
   public
