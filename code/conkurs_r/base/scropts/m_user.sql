@@ -1,7 +1,7 @@
 USE [concurs_r]
 GO
 
-/****** Object:  Table [dbo].[m_user]    Script Date: 24.04.2025 9:04:30 ******/
+/****** Object:  Table [dbo].[m_user]    Script Date: 24.04.2025 11:47:25 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -10,6 +10,7 @@ GO
 
 CREATE TABLE [dbo].[m_user](
 	[id_user] [int] IDENTITY(1,1) NOT NULL,
+	[fio] [varchar](50) NOT NULL,
 	[user_phone] [varchar](1000) NOT NULL,
 	[user_pas] [varchar](1000) NOT NULL,
  CONSTRAINT [PK_m_user] PRIMARY KEY CLUSTERED 

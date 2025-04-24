@@ -15,13 +15,7 @@ object DM: TDM
     Connection = Connection
     Parameters = <>
     SQL.Strings = (
-      'select '
-      '  mwork.id_work,'
-      '  mwork.work_naim,'
-      '  mwork.work_opis,'
-      '  mwork.work_data '
-      'from mwork'
-      'where 1=1')
+      'select * from m_ser where 1=1;')
     Left = 40
     Top = 72
   end
