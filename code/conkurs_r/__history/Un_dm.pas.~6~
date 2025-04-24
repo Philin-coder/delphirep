@@ -10,7 +10,7 @@ type
     Connection: TADOConnection;
     muserQuery: TADOQuery;
     muserDS: TDataSource;
-    sel_user_by_fio: TADOStoredProc;
+    ADOStoredProc1: TADOStoredProc;
   private
     { Private declarations }
   public

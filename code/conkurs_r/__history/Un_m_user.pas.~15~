@@ -29,7 +29,6 @@ type
     procedure m_user_sel_btnClick(Sender: TObject);
     procedure sel_user_fnd_editKeyPress(Sender: TObject; var Key: Char);
     procedure naim_grouperClick(Sender: TObject);
-    procedure selRadioresetClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -112,50 +111,6 @@ if  naim_grouper.Checked=true then
     end;
     end;
   end;
-end;
-
-procedure TFrm_muser.selRadioresetClick(Sender: TObject);
-  var i,j,c:Integer;
-begin
-if selRadioreset.Checked then
-  with Frm_muser do
-    for I := 0 to ComponentCount - 1 do
-     begin
-       if (Components[i] is TLabeledEdit)  then
-        begin
-          (Components[i] as TLabeledEdit).Clear;
-        end;
-     end;
-       with Frm_muser do
-    for c := 0 to ComponentCount - 1 do
-     begin
-       if (Components[c] is TCheckBox)  then
-        begin
-          (Components[c] as TCheckBox).Checked:=False;
-        end;
-     end;
-     with dm.muserQuery do
-     begin
-     Close;
-     sql.Clear;
-     SQL.Text:=
-     'select'+' '+
-     'm_user.id_user,'+' '+
-    'm_user.fio,'+' '+
-    'm_user.user_phone,'+ ' '+
-    'm_user.user_pas'+' '+
-    'from m_user'+' '+
-     'where 1=1';
-     Open;
-     end;
-    with Frm_muser do
-    for j := 0 to ComponentCount - 1 do
-    begin
-      if(Components[j] is TRadioButton)  then
-      begin
-        (Components[j] as TRadioButton).Checked:=False;
-      end;
-    end;
 end;
 
 procedure TFrm_muser.sel_user_fnd_editKeyPress(Sender: TObject; var Key: Char);

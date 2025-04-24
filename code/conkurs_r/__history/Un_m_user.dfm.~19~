@@ -2,8 +2,8 @@ object Frm_muser: TFrm_muser
   Left = 0
   Top = 0
   Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1091#1095#1072#1089#1090#1085#1080#1082#1086#1084
-  ClientHeight = 497
-  ClientWidth = 742
+  ClientHeight = 719
+  ClientWidth = 1037
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,74 +19,121 @@ object Frm_muser: TFrm_muser
   object m_user_PC: TPageControl
     Left = 0
     Top = 0
-    Width = 742
-    Height = 497
+    Width = 1037
+    Height = 719
     ActivePage = selTab
     Align = alClient
     TabOrder = 0
+    ExplicitWidth = 742
+    ExplicitHeight = 497
     object selTab: TTabSheet
       Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1091#1095#1072#1089#1090#1085#1080#1082#1077
+      ExplicitWidth = 734
+      ExplicitHeight = 469
       object m_user_condBox: TGroupBox
         Left = 0
         Top = 0
-        Width = 734
-        Height = 99
+        Width = 1029
+        Height = 153
         Align = alTop
         Caption = #1042#1099#1073#1086#1088' '#1087#1086' '#1091#1089#1083#1086#1074#1080#1102
         TabOrder = 0
+        ExplicitTop = -6
         DesignSize = (
-          734
-          99)
-        object sel_cond_edit: TLabeledEdit
-          Left = 2
-          Top = 32
-          Width = 711
-          Height = 21
+          1029
+          153)
+        object sel_user_cond_edit: TLabeledEdit
+          Left = 3
+          Top = 28
+          Width = 1020
+          Height = 25
           Anchors = [akLeft, akRight]
           EditLabel.Width = 140
           EditLabel.Height = 13
           EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1060#1048#1054
           TabOrder = 0
         end
+        object sel_user_fnd_edit: TLabeledEdit
+          Left = 6
+          Top = 100
+          Width = 1020
+          Height = 25
+          Anchors = [akLeft, akRight]
+          EditLabel.Width = 140
+          EditLabel.Height = 13
+          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1060#1048#1054
+          TabOrder = 1
+        end
       end
       object m_user_groper: TGroupBox
         Left = 0
-        Top = 99
-        Width = 734
-        Height = 105
+        Top = 153
+        Width = 1029
+        Height = 88
         Align = alTop
         Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1091#1089#1083#1086#1074#1080#1102
         TabOrder = 1
       end
       object m_user_dataBox: TGroupBox
         Left = 0
-        Top = 204
-        Width = 734
-        Height = 208
+        Top = 241
+        Width = 1029
+        Height = 393
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
+        ExplicitTop = 204
+        ExplicitWidth = 734
+        ExplicitHeight = 208
         object sel_userGid: TDBGrid
           Left = 2
           Top = 15
-          Width = 730
-          Height = 191
+          Width = 1025
+          Height = 376
           Align = alClient
+          DataSource = DM.muserDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
           TitleFont.Height = -11
           TitleFont.Name = 'Tahoma'
           TitleFont.Style = []
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'id_user'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'fio'
+              Title.Caption = #1060#1048#1054' '#1091#1095#1072#1089#1090#1085#1080#1082#1072
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'user_phone'
+              Title.Caption = #1058#1077#1083#1077#1092#1086#1085' '#1091#1095#1072#1089#1090#1085#1080#1082#1072
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'user_pas'
+              Title.Caption = #1055#1072#1088#1086#1083#1100' '#1091#1095#1072#1089#1090#1085#1080#1082#1072
+              Visible = True
+            end>
         end
       end
       object m_user_btndBox: TGroupBox
         Left = 0
-        Top = 412
-        Width = 734
+        Top = 634
+        Width = 1029
         Height = 57
         Align = alBottom
         TabOrder = 3
+        ExplicitTop = 412
+        ExplicitWidth = 734
         object m_user_sel_btn: TButton
           Left = 232
           Top = 24
@@ -100,14 +147,20 @@ object Frm_muser: TFrm_muser
     object TabSheet2: TTabSheet
       Caption = 'TabSheet2'
       ImageIndex = 1
+      ExplicitWidth = 734
+      ExplicitHeight = 469
     end
     object TabSheet3: TTabSheet
       Caption = 'TabSheet3'
       ImageIndex = 2
+      ExplicitWidth = 734
+      ExplicitHeight = 469
     end
     object TabSheet4: TTabSheet
       Caption = 'TabSheet4'
       ImageIndex = 3
+      ExplicitWidth = 734
+      ExplicitHeight = 469
     end
   end
 end
