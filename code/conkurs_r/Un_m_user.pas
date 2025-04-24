@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ComCtrls, ExtCtrls, Grids, DBGrids,db,ADODB, Mask, ToolWin,
-  ImgList;
+  ImgList, DBCtrls;
 
 type
   TFrm_muser = class(TForm)
@@ -37,6 +37,15 @@ type
     showpasbtn: TToolButton;
     hidepasbtn: TToolButton;
     userImageList: TImageList;
+    upd_inp_box: TGroupBox;
+    usr_upd_dataBox: TGroupBox;
+    user_upd_btnBox: TGroupBox;
+    upd_usrGrd: TDBGrid;
+    upd_usr_Btn: TButton;
+    upd_usr_phone_lbl: TStaticText;
+    usr_upd_phone_inp: TMaskEdit;
+    usr_upd_us_lbl: TStaticText;
+    usr_upd_DBL: TDBLookupComboBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -51,6 +60,8 @@ type
     procedure showpasbtnClick(Sender: TObject);
     procedure hidepasbtnClick(Sender: TObject);
     procedure user_insBtnClick(Sender: TObject);
+    procedure usr_upd_phone_inpExit(Sender: TObject);
+    procedure upd_usr_BtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -91,6 +102,8 @@ begin
      LoadIconFromResource('DS',1,userImageList);
      hidepasbtn.ImageIndex:=1;
      user_pas_inp.PasswordChar:='*';
+     usr_upd_phone_inp.EditMask:='!+7 \(999\) 000-00-00;1;_';
+     m_user_PC.ActivePage:=insTab;
 end;
 
 procedure TFrm_muser.FormShow(Sender: TObject);
@@ -167,14 +180,14 @@ end;
 procedure TFrm_muser.phone_inpMouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 begin
- if IsMaskEditEmpty(phone_inp) then
-  begin
-   phone_inp.Color := clRed;
-    ShowMessage('Поле ввода телефона должно быть заполнено ');
-    phone_inp.SetFocus;
-  end
-  else
-    phone_inp.Color := clWindow;
+// if IsMaskEditEmpty(phone_inp) then
+//  begin
+//   phone_inp.Color := clRed;
+//    ShowMessage('Поле ввода телефона должно быть заполнено ');
+//    phone_inp.SetFocus;
+//  end
+//  else
+//    phone_inp.Color := clWindow;
 end;
 
 procedure TFrm_muser.selRadioresetClick(Sender: TObject);
@@ -248,6 +261,46 @@ begin
 user_pas_inp.PasswordChar:=#0;
 end;
 
+procedure TFrm_muser.upd_usr_BtnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+begin
+AreFieldsEmpty:=(
+(usr_upd_DBL.Text='')
+);
+if AreFieldsEmpty then
+begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+end;
+try
+      with dm.upd_user do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@user_phone').Value :=usr_upd_phone_inp.Text;
+           Parameters.ParamByName('@id_user').Value:=
+           dm.muserQuery.FieldByName('id_user').AsString;
+           ExecProc;
+           dm.muserQuery.Close;
+           dm.muserQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+
+end;
+
 procedure TFrm_muser.user_insBtnClick(Sender: TObject);
 const
   AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.','A'
@@ -295,4 +348,16 @@ try
       end;
     end;
 end;
+procedure TFrm_muser.usr_upd_phone_inpExit(Sender: TObject);
+begin
+ if IsMaskEditEmpty(usr_upd_phone_inp) then
+  begin
+   usr_upd_phone_inp.Color := clRed;
+    ShowMessage('Поле ввода телефона должно быть заполнено ');
+    usr_upd_phone_inp.SetFocus;
+  end
+  else
+    usr_upd_phone_inp.Color := clWindow;
+end;
+
 end.

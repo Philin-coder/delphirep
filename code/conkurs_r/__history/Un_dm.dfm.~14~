@@ -1,6 +1,6 @@
 object DM: TDM
   OldCreateOrder = False
-  Height = 422
+  Height = 358
   Width = 491
   object Connection: TADOConnection
     Connected = True
@@ -61,56 +61,26 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@fio'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 50
-        Value = Null
       end
       item
         Name = '@user_phone'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
-        Value = Null
       end
       item
         Name = '@user_pas'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
-        Value = Null
       end>
     Left = 32
     Top = 248
-  end
-  object upd_user: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'upd_user;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@user_phone'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 1000
-      end
-      item
-        Name = '@id_user'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = 0
-      end>
-    Left = 32
-    Top = 304
   end
 end

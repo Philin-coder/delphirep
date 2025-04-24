@@ -22,7 +22,7 @@ object Frm_muser: TFrm_muser
     Top = 29
     Width = 1037
     Height = 690
-    ActivePage = insTab
+    ActivePage = TabSheet3
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
@@ -183,7 +183,6 @@ object Frm_muser: TFrm_muser
           EditLabel.Height = 13
           EditLabel.Caption = #1060#1048#1054' '#1091#1095#1072#1089#1090#1085#1080#1082#1072
           TabOrder = 0
-          OnExit = fio_inpExit
         end
         object ins_phone_lbl: TStaticText
           Left = 2
@@ -194,7 +193,7 @@ object Frm_muser: TFrm_muser
           TabOrder = 1
         end
         object phone_inp: TMaskEdit
-          Left = 0
+          Left = 2
           Top = 106
           Width = 1006
           Height = 21
@@ -230,6 +229,7 @@ object Frm_muser: TFrm_muser
           Height = 25
           Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
           TabOrder = 0
+          OnClick = user_insBtnClick
         end
       end
       object ins_user_dataBox: TGroupBox
@@ -286,8 +286,121 @@ object Frm_muser: TFrm_muser
       end
     end
     object TabSheet3: TTabSheet
-      Caption = 'TabSheet3'
+      Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1083#1080#1085#1080#1081' '#1086#1073' '#1091#1095#1072#1089#1090#1085#1080#1082#1077
       ImageIndex = 2
+      object upd_inp_box: TGroupBox
+        Left = 0
+        Top = 0
+        Width = 1029
+        Height = 161
+        Align = alTop
+        Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 0
+        object upd_usr_phone_lbl: TStaticText
+          Left = 3
+          Top = 99
+          Width = 48
+          Height = 17
+          Caption = #1058#1077#1083#1077#1092#1086#1085
+          TabOrder = 0
+        end
+        object usr_upd_phone_inp: TMaskEdit
+          Left = 2
+          Top = 122
+          Width = 1006
+          Height = 21
+          Align = alCustom
+          Anchors = [akLeft, akRight]
+          TabOrder = 1
+          OnExit = usr_upd_phone_inpExit
+        end
+        object usr_upd_us_lbl: TStaticText
+          Left = 3
+          Top = 36
+          Width = 48
+          Height = 17
+          Caption = #1058#1077#1083#1077#1092#1086#1085
+          TabOrder = 2
+        end
+        object usr_upd_DBL: TDBLookupComboBox
+          Left = 3
+          Top = 59
+          Width = 1006
+          Height = 21
+          KeyField = 'id_user'
+          ListField = 'user_phone'
+          ListSource = DM.muserDS
+          TabOrder = 3
+        end
+      end
+      object usr_upd_dataBox: TGroupBox
+        Left = 0
+        Top = 161
+        Width = 1029
+        Height = 447
+        Align = alClient
+        Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 1
+        object upd_usrGrd: TDBGrid
+          Left = 2
+          Top = 15
+          Width = 1025
+          Height = 430
+          Align = alClient
+          DataSource = DM.muserDS
+          TabOrder = 0
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWindowText
+          TitleFont.Height = -11
+          TitleFont.Name = 'Tahoma'
+          TitleFont.Style = []
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'id_user'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Width = 116
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'fio'
+              Title.Caption = #1060#1048#1054' '#1091#1095#1072#1089#1090#1085#1080#1082#1072
+              Width = 121
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'user_phone'
+              Title.Caption = #1058#1077#1083#1077#1092#1086#1085' '#1091#1095#1072#1089#1090#1085#1080#1082#1072
+              Width = 109
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'user_pas'
+              Title.Caption = #1055#1072#1088#1086#1083#1100' '#1091#1095#1072#1089#1090#1085#1080#1082#1072
+              Width = 154
+              Visible = True
+            end>
+        end
+      end
+      object user_upd_btnBox: TGroupBox
+        Left = 0
+        Top = 608
+        Width = 1029
+        Height = 54
+        Align = alBottom
+        TabOrder = 2
+        object upd_usr_Btn: TButton
+          Left = 408
+          Top = 14
+          Width = 75
+          Height = 25
+          Caption = #1054#1073#1085#1086#1074#1080#1090#1100
+          TabOrder = 0
+        end
+      end
     end
     object TabSheet4: TTabSheet
       Caption = 'TabSheet4'
@@ -305,11 +418,13 @@ object Frm_muser: TFrm_muser
       Left = 0
       Top = 0
       ImageIndex = 0
+      OnClick = showpasbtnClick
     end
     object hidepasbtn: TToolButton
       Left = 23
       Top = 0
       ImageIndex = 1
+      OnClick = hidepasbtnClick
     end
   end
   object userImageList: TImageList

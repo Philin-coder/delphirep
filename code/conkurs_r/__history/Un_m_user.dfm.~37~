@@ -14,20 +14,19 @@ object Frm_muser: TFrm_muser
   OnActivate = FormActivate
   OnClose = FormClose
   OnCreate = FormCreate
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object m_user_PC: TPageControl
     Left = 0
-    Top = 0
+    Top = 29
     Width = 1037
-    Height = 719
-    ActivePage = insTab
+    Height = 690
+    ActivePage = TabSheet3
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
       Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1091#1095#1072#1089#1090#1085#1080#1082#1077
-      ExplicitWidth = 734
-      ExplicitHeight = 469
       object m_user_condBox: TGroupBox
         Left = 0
         Top = 0
@@ -36,7 +35,6 @@ object Frm_muser: TFrm_muser
         Align = alTop
         Caption = #1042#1099#1073#1086#1088' '#1087#1086' '#1091#1089#1083#1086#1074#1080#1102
         TabOrder = 0
-        ExplicitTop = -6
         DesignSize = (
           1029
           153)
@@ -44,7 +42,7 @@ object Frm_muser: TFrm_muser
           Left = 3
           Top = 28
           Width = 1020
-          Height = 25
+          Height = 21
           Anchors = [akLeft, akRight]
           EditLabel.Width = 140
           EditLabel.Height = 13
@@ -55,7 +53,7 @@ object Frm_muser: TFrm_muser
           Left = 6
           Top = 100
           Width = 1020
-          Height = 25
+          Height = 21
           Anchors = [akLeft, akRight]
           EditLabel.Width = 107
           EditLabel.Height = 13
@@ -95,18 +93,15 @@ object Frm_muser: TFrm_muser
         Left = 0
         Top = 241
         Width = 1029
-        Height = 393
+        Height = 364
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        ExplicitTop = 204
-        ExplicitWidth = 734
-        ExplicitHeight = 208
         object sel_userGid: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
-          Height = 376
+          Height = 347
           Align = alClient
           DataSource = DM.muserDS
           TabOrder = 0
@@ -148,13 +143,11 @@ object Frm_muser: TFrm_muser
       end
       object m_user_btndBox: TGroupBox
         Left = 0
-        Top = 634
+        Top = 605
         Width = 1029
         Height = 57
         Align = alBottom
         TabOrder = 3
-        ExplicitTop = 412
-        ExplicitWidth = 734
         object m_user_sel_btn: TButton
           Left = 256
           Top = 16
@@ -169,8 +162,6 @@ object Frm_muser: TFrm_muser
     object insTab: TTabSheet
       Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1091#1095#1072#1089#1090#1085#1080#1082#1077
       ImageIndex = 1
-      ExplicitWidth = 734
-      ExplicitHeight = 469
       object mu_ins_inpBox: TGroupBox
         Left = 0
         Top = 0
@@ -186,7 +177,7 @@ object Frm_muser: TFrm_muser
           Left = 3
           Top = 52
           Width = 1020
-          Height = 25
+          Height = 21
           Anchors = [akLeft, akRight]
           EditLabel.Width = 79
           EditLabel.Height = 13
@@ -209,11 +200,24 @@ object Frm_muser: TFrm_muser
           Align = alCustom
           Anchors = [akLeft, akRight]
           TabOrder = 2
+          OnExit = phone_inpExit
+          OnMouseDown = phone_inpMouseDown
+        end
+        object user_pas_inp: TLabeledEdit
+          Left = 3
+          Top = 154
+          Width = 1020
+          Height = 21
+          Anchors = [akLeft, akRight]
+          EditLabel.Width = 93
+          EditLabel.Height = 13
+          EditLabel.Caption = #1055#1072#1088#1086#1083#1100' '#1091#1095#1072#1089#1090#1085#1080#1082#1072
+          TabOrder = 3
         end
       end
       object m_user_ntnBox: TGroupBox
         Left = 0
-        Top = 632
+        Top = 603
         Width = 1029
         Height = 59
         Align = alBottom
@@ -225,25 +229,22 @@ object Frm_muser: TFrm_muser
           Height = 25
           Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
           TabOrder = 0
+          OnClick = user_insBtnClick
         end
       end
       object ins_user_dataBox: TGroupBox
         Left = 0
         Top = 185
         Width = 1029
-        Height = 447
+        Height = 418
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        ExplicitLeft = 480
-        ExplicitTop = 280
-        ExplicitWidth = 185
-        ExplicitHeight = 105
         object user_ins_grd: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
-          Height = 430
+          Height = 401
           Align = alClient
           DataSource = DM.muserDS
           TabOrder = 0
@@ -285,16 +286,139 @@ object Frm_muser: TFrm_muser
       end
     end
     object TabSheet3: TTabSheet
-      Caption = 'TabSheet3'
+      Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1083#1080#1085#1080#1081' '#1086#1073' '#1091#1095#1072#1089#1090#1085#1080#1082#1077
       ImageIndex = 2
-      ExplicitWidth = 734
-      ExplicitHeight = 469
+      object upd_inp_box: TGroupBox
+        Left = 0
+        Top = 0
+        Width = 1029
+        Height = 105
+        Align = alTop
+        Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 0
+        ExplicitLeft = 272
+        ExplicitTop = 40
+        ExplicitWidth = 185
+        object upd_usr_phone_lbl: TStaticText
+          Left = 3
+          Top = 19
+          Width = 48
+          Height = 17
+          Caption = #1058#1077#1083#1077#1092#1086#1085
+          TabOrder = 0
+        end
+        object usr_upd_phone_inp: TMaskEdit
+          Left = 3
+          Top = 42
+          Width = 1006
+          Height = 21
+          Align = alCustom
+          Anchors = [akLeft, akRight]
+          TabOrder = 1
+          OnExit = usr_upd_phone_inpExit
+          OnMouseDown = usr_upd_phone_inpMouseDown
+        end
+      end
+      object usr_upd_dataBox: TGroupBox
+        Left = 0
+        Top = 105
+        Width = 1029
+        Height = 503
+        Align = alClient
+        Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 1
+        ExplicitLeft = 280
+        ExplicitTop = 48
+        ExplicitWidth = 185
+        ExplicitHeight = 105
+        object upd_usrGrd: TDBGrid
+          Left = 2
+          Top = 15
+          Width = 1025
+          Height = 486
+          Align = alClient
+          DataSource = DM.muserDS
+          TabOrder = 0
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWindowText
+          TitleFont.Height = -11
+          TitleFont.Name = 'Tahoma'
+          TitleFont.Style = []
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'id_user'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Width = 116
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'fio'
+              Title.Caption = #1060#1048#1054' '#1091#1095#1072#1089#1090#1085#1080#1082#1072
+              Width = 121
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'user_phone'
+              Title.Caption = #1058#1077#1083#1077#1092#1086#1085' '#1091#1095#1072#1089#1090#1085#1080#1082#1072
+              Width = 109
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'user_pas'
+              Title.Caption = #1055#1072#1088#1086#1083#1100' '#1091#1095#1072#1089#1090#1085#1080#1082#1072
+              Width = 154
+              Visible = True
+            end>
+        end
+      end
+      object user_upd_btnBox: TGroupBox
+        Left = 0
+        Top = 608
+        Width = 1029
+        Height = 54
+        Align = alBottom
+        TabOrder = 2
+        object upd_usr_Btn: TButton
+          Left = 408
+          Top = 14
+          Width = 75
+          Height = 25
+          Caption = #1054#1073#1085#1086#1074#1080#1090#1100
+          TabOrder = 0
+        end
+      end
     end
     object TabSheet4: TTabSheet
       Caption = 'TabSheet4'
       ImageIndex = 3
-      ExplicitWidth = 734
-      ExplicitHeight = 469
     end
+  end
+  object userToolBar: TToolBar
+    Left = 0
+    Top = 0
+    Width = 1037
+    Height = 29
+    Images = userImageList
+    TabOrder = 1
+    object showpasbtn: TToolButton
+      Left = 0
+      Top = 0
+      ImageIndex = 0
+      OnClick = showpasbtnClick
+    end
+    object hidepasbtn: TToolButton
+      Left = 23
+      Top = 0
+      ImageIndex = 1
+      OnClick = hidepasbtnClick
+    end
+  end
+  object userImageList: TImageList
+    Left = 336
+    Top = 8
   end
 end

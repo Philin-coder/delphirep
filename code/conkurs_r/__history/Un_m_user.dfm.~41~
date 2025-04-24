@@ -22,7 +22,7 @@ object Frm_muser: TFrm_muser
     Top = 29
     Width = 1037
     Height = 690
-    ActivePage = TabSheet3
+    ActivePage = insTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
@@ -313,6 +313,7 @@ object Frm_muser: TFrm_muser
           Anchors = [akLeft, akRight]
           TabOrder = 1
           OnExit = usr_upd_phone_inpExit
+          OnMouseDown = usr_upd_phone_inpMouseDown
         end
         object usr_upd_us_lbl: TStaticText
           Left = 3
@@ -327,10 +328,8 @@ object Frm_muser: TFrm_muser
           Top = 59
           Width = 1006
           Height = 21
-          Align = alCustom
-          Anchors = [akLeft, akRight]
           KeyField = 'id_user'
-          ListField = 'fio'
+          ListField = 'user_phone'
           ListSource = DM.muserDS
           TabOrder = 3
         end
@@ -396,12 +395,11 @@ object Frm_muser: TFrm_muser
         TabOrder = 2
         object upd_usr_Btn: TButton
           Left = 408
-          Top = 6
+          Top = 14
           Width = 75
           Height = 25
           Caption = #1054#1073#1085#1086#1074#1080#1090#1100
           TabOrder = 0
-          OnClick = upd_usr_BtnClick
         end
       end
     end

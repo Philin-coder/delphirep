@@ -37,6 +37,13 @@ type
     showpasbtn: TToolButton;
     hidepasbtn: TToolButton;
     userImageList: TImageList;
+    upd_inp_box: TGroupBox;
+    usr_upd_dataBox: TGroupBox;
+    user_upd_btnBox: TGroupBox;
+    upd_usrGrd: TDBGrid;
+    upd_usr_Btn: TButton;
+    upd_usr_phone_lbl: TStaticText;
+    usr_upd_phone_inp: TMaskEdit;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -46,9 +53,14 @@ type
     procedure selRadioresetClick(Sender: TObject);
     procedure phone_inpMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
-    procedure fio_inpExit(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure phone_inpExit(Sender: TObject);
+    procedure showpasbtnClick(Sender: TObject);
+    procedure hidepasbtnClick(Sender: TObject);
+    procedure user_insBtnClick(Sender: TObject);
+    procedure usr_upd_phone_inpExit(Sender: TObject);
+    procedure usr_upd_phone_inpMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
   private
     { Private declarations }
   public
@@ -63,11 +75,6 @@ implementation
 uses Un_dm, Un_func, Un_main;
 
 {$R *.dfm}
-
-procedure TFrm_muser.fio_inpExit(Sender: TObject);
-begin
-  phone_inp.SetFocus;
-end;
 
 procedure TFrm_muser.FormActivate(Sender: TObject);
 begin
@@ -94,11 +101,17 @@ begin
      LoadIconFromResource('DS',1,userImageList);
      hidepasbtn.ImageIndex:=1;
      user_pas_inp.PasswordChar:='*';
+     usr_upd_phone_inp.EditMask:='!+7 \(999\) 000-00-00;1;_';
 end;
 
 procedure TFrm_muser.FormShow(Sender: TObject);
 begin
-fio_inp.SetFocus;
+  fio_inp.SetFocus;
+end;
+
+procedure TFrm_muser.hidepasbtnClick(Sender: TObject);
+begin
+  user_pas_inp.PasswordChar:='*';
 end;
 
 procedure TFrm_muser.m_user_sel_btnClick(Sender: TObject);
@@ -239,6 +252,83 @@ except on E: Exception do
   ShowMessage('wrong situation'+' '+E.Message);
   end;
   end;
+end;
+
+procedure TFrm_muser.showpasbtnClick(Sender: TObject);
+begin
+user_pas_inp.PasswordChar:=#0;
+end;
+
+procedure TFrm_muser.user_insBtnClick(Sender: TObject);
+const
+  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.','A'
+  ..'Z','a'..'z'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+begin
+AreFieldsEmpty:=(
+(Trim(fio_inp.Text)='')or
+(Trim(user_pas_inp.Text)='')
+);
+AreFieldsValid:=(
+ValidateComponentText(fio_inp,AllowedChars)and
+ValidateComponentText(user_pas_inp,AllowedChars)
+);
+if AreFieldsEmpty or not AreFieldsValid then
+begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+end;
+try
+      with dm.ins_user do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@fio').Value :=fio_inp.Text;
+           Parameters.ParamByName('@user_phone').Value:=phone_inp.Text;
+           Parameters.ParamByName('@user_pas').Value:=user_pas_inp.Text;
+           ExecProc;
+           dm.muserQuery.Close;
+           dm.muserQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+end;
+procedure TFrm_muser.usr_upd_phone_inpExit(Sender: TObject);
+begin
+ if IsMaskEditEmpty(phone_inp) then
+  begin
+   phone_inp.Color := clRed;
+    ShowMessage('Поле ввода телефона должно быть заполнено ');
+    phone_inp.SetFocus;
+  end
+  else
+    phone_inp.Color := clWindow;
+end;
+
+procedure TFrm_muser.usr_upd_phone_inpMouseDown(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+ if IsMaskEditEmpty(phone_inp) then
+  begin
+   phone_inp.Color := clRed;
+    ShowMessage('Поле ввода телефона должно быть заполнено ');
+    phone_inp.SetFocus;
+  end
+  else
+    phone_inp.Color := clWindow;
 end;
 
 end.

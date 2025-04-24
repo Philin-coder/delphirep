@@ -396,7 +396,7 @@ object Frm_muser: TFrm_muser
         TabOrder = 2
         object upd_usr_Btn: TButton
           Left = 408
-          Top = 6
+          Top = 14
           Width = 75
           Height = 25
           Caption = #1054#1073#1085#1086#1074#1080#1090#1100
