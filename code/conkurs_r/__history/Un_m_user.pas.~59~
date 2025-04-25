@@ -97,7 +97,28 @@ MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
     Beep;
     Exit;
 end;
-
+  try
+      with dm.del_user do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@id_user').Value
+           :=dm.muserQuery.FieldByName('id_user').AsString;
+           ExecProc;
+           dm.muserQuery.Close;
+           dm.muserQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
 
 end;
 
@@ -368,5 +389,4 @@ begin
   else
     usr_upd_phone_inp.Color := clWindow;
 end;
-
 end.

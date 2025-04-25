@@ -22,7 +22,7 @@ object Frm_muser: TFrm_muser
     Top = 29
     Width = 1037
     Height = 690
-    ActivePage = UpdTab
+    ActivePage = delTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
@@ -292,13 +292,9 @@ object Frm_muser: TFrm_muser
         end
       end
     end
-    object TabSheet3: TTabSheet
+    object upd_tab: TTabSheet
       Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1083#1080#1085#1080#1081' '#1086#1073' '#1091#1095#1072#1089#1090#1085#1080#1082#1077
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object upd_inp_box: TGroupBox
         Left = 0
         Top = 0
@@ -416,13 +412,9 @@ object Frm_muser: TFrm_muser
         end
       end
     end
-    object UpdTab: TTabSheet
+    object delTab: TTabSheet
       Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1091#1095#1072#1089#1080#1085#1080#1082#1077
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object del_usr_dataBox: TGroupBox
         Left = 0
         Top = 105
@@ -431,10 +423,6 @@ object Frm_muser: TFrm_muser
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1083#1072#1085#1085#1099#1093
         TabOrder = 0
-        ExplicitLeft = 240
-        ExplicitTop = 176
-        ExplicitWidth = 185
-        ExplicitHeight = 105
         object Del_usr_datagrd: TDBGrid
           Left = 2
           Top = 15
@@ -487,8 +475,6 @@ object Frm_muser: TFrm_muser
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
-        ExplicitLeft = 3
-        ExplicitTop = -6
         object del_usr_us_kbl: TStaticText
           Left = 3
           Top = 20

@@ -21,7 +21,7 @@ object Frm_work: TFrm_work
     Top = 29
     Width = 1037
     Height = 690
-    ActivePage = insTab
+    ActivePage = delTab
     Align = alClient
     TabOrder = 0
     OnChange = work_user_PCChange
@@ -172,7 +172,7 @@ object Frm_work: TFrm_work
       end
     end
     object insTab: TTabSheet
-      Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1091#1095#1072#1089#1090#1085#1080#1082#1077
+      Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1088#1072#1073#1086#1090#1077
       ImageIndex = 1
       object work_ins_inpBox: TGroupBox
         Left = 0
@@ -337,10 +337,10 @@ object Frm_work: TFrm_work
         end
       end
     end
-    object TabSheet3: TTabSheet
-      Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1083#1080#1085#1080#1081' '#1086#1073' '#1091#1095#1072#1089#1090#1085#1080#1082#1077
+    object upd_tab: TTabSheet
+      Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1083#1080#1085#1080#1081' '#1086' '#1088#1072#1073#1086#1090#1077
       ImageIndex = 2
-      object upd_inp_box: TGroupBox
+      object wr_upd_inp_box: TGroupBox
         Left = 0
         Top = 0
         Width = 1029
@@ -348,45 +348,42 @@ object Frm_work: TFrm_work
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object upd_usr_tl_lbl: TStaticText
-          Left = 3
-          Top = 99
-          Width = 48
-          Height = 17
-          Caption = #1058#1077#1083#1077#1092#1086#1085
-          TabOrder = 0
-        end
-        object usr_upd_phone_inp: TMaskEdit
-          Left = 2
-          Top = 122
-          Width = 1006
-          Height = 21
-          Align = alCustom
-          Anchors = [akLeft, akRight]
-          TabOrder = 1
-        end
-        object usr_upd_us_lbl: TStaticText
+        DesignSize = (
+          1029
+          161)
+        object wr_upd_work_lbl: TStaticText
           Left = 3
           Top = 36
-          Width = 52
+          Width = 40
           Height = 17
-          Caption = #1059#1095#1072#1089#1090#1085#1080#1082
-          TabOrder = 2
+          Caption = #1056#1072#1073#1086#1090#1072
+          TabOrder = 0
         end
-        object usr_upd_DBL: TDBLookupComboBox
+        object wr_upd_DBL: TDBLookupComboBox
           Left = 3
           Top = 59
           Width = 1006
           Height = 21
           Align = alCustom
           Anchors = [akLeft, akRight]
-          KeyField = 'id_user'
-          ListField = 'fio'
-          ListSource = DM.muserDS
-          TabOrder = 3
+          KeyField = 'id_work'
+          ListField = 'work_naim'
+          ListSource = DM.workDS
+          TabOrder = 1
+        end
+        object commment_inp: TLabeledEdit
+          Left = 3
+          Top = 108
+          Width = 1006
+          Height = 21
+          Anchors = [akLeft, akRight]
+          EditLabel.Width = 67
+          EditLabel.Height = 13
+          EditLabel.Caption = #1050#1086#1084#1084#1077#1085#1090#1072#1088#1080#1081
+          TabOrder = 2
         end
       end
-      object usr_upd_dataBox: TGroupBox
+      object wrk_upd_dataBox: TGroupBox
         Left = 0
         Top = 161
         Width = 1029
@@ -394,13 +391,13 @@ object Frm_work: TFrm_work
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
-        object upd_usrGrd: TDBGrid
+        object upd_workGrd: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
           Height = 430
           Align = alClient
-          DataSource = DM.muserDS
+          DataSource = DM.workDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -410,55 +407,68 @@ object Frm_work: TFrm_work
           Columns = <
             item
               Expanded = False
-              FieldName = 'id_user'
+              FieldName = 'id_work'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-              Width = 116
+              Width = 111
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'work_naim'
+              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077
+              Width = 95
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'work_opis'
+              Title.Caption = #1054#1087#1080#1089#1072#1085#1080#1077
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'work_data'
+              Title.Caption = #1044#1072#1090#1072' '#1089#1086#1079#1076#1072#1085#1080#1103
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'work_mark_and_about'
+              Title.Caption = #1050#1086#1084#1084#1077#1085#1090#1072#1088#1080#1081' '#1080' '#1086#1094#1077#1085#1082#1072
+              Width = 138
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'fio'
-              Title.Caption = #1060#1048#1054' '#1091#1095#1072#1089#1090#1085#1080#1082#1072
-              Width = 121
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'user_phone'
-              Title.Caption = #1058#1077#1083#1077#1092#1086#1085' '#1091#1095#1072#1089#1090#1085#1080#1082#1072
-              Width = 109
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'user_pas'
-              Title.Caption = #1055#1072#1088#1086#1083#1100' '#1091#1095#1072#1089#1090#1085#1080#1082#1072
-              Width = 154
+              Title.Caption = #1060#1048#1054' '#1059#1095#1072#1089#1090#1085#1080#1082#1072
+              Width = 171
               Visible = True
             end>
         end
       end
-      object user_upd_btnBox: TGroupBox
+      object wrkr_upd_btnBox: TGroupBox
         Left = 0
         Top = 608
         Width = 1029
         Height = 54
         Align = alBottom
         TabOrder = 2
-        object upd_usr_Btn: TButton
+        object wrk_upd_Btn: TButton
           Left = 408
           Top = 6
           Width = 75
           Height = 25
           Caption = #1054#1073#1085#1086#1074#1080#1090#1100
           TabOrder = 0
+          OnClick = wrk_upd_BtnClick
         end
       end
     end
-    object UpdTab: TTabSheet
-      Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1091#1095#1072#1089#1080#1085#1080#1082#1077
+    object delTab: TTabSheet
+      Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1088#1072#1073#1086#1090#1077
       ImageIndex = 3
-      object del_usr_dataBox: TGroupBox
+      object del_wrk_dataBox: TGroupBox
         Left = 0
         Top = 105
         Width = 1029
@@ -466,13 +476,13 @@ object Frm_work: TFrm_work
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1083#1072#1085#1085#1099#1093
         TabOrder = 0
-        object Del_usr_datagrd: TDBGrid
+        object DelwrkGrid: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
           Height = 470
           Align = alClient
-          DataSource = DM.muserDS
+          DataSource = DM.workDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -482,35 +492,47 @@ object Frm_work: TFrm_work
           Columns = <
             item
               Expanded = False
-              FieldName = 'id_user'
+              FieldName = 'id_work'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-              Width = 116
+              Width = 111
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'work_naim'
+              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077
+              Width = 95
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'work_opis'
+              Title.Caption = #1054#1087#1080#1089#1072#1085#1080#1077
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'work_data'
+              Title.Caption = #1044#1072#1090#1072' '#1089#1086#1079#1076#1072#1085#1080#1103
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'work_mark_and_about'
+              Title.Caption = #1050#1086#1084#1084#1077#1085#1090#1072#1088#1080#1081' '#1080' '#1086#1094#1077#1085#1082#1072
+              Width = 138
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'fio'
-              Title.Caption = #1060#1048#1054' '#1091#1095#1072#1089#1090#1085#1080#1082#1072
-              Width = 121
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'user_phone'
-              Title.Caption = #1058#1077#1083#1077#1092#1086#1085' '#1091#1095#1072#1089#1090#1085#1080#1082#1072
-              Width = 109
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'user_pas'
-              Title.Caption = #1055#1072#1088#1086#1083#1100' '#1091#1095#1072#1089#1090#1085#1080#1082#1072
-              Width = 154
+              Title.Caption = #1060#1048#1054' '#1059#1095#1072#1089#1090#1085#1080#1082#1072
+              Width = 171
               Visible = True
             end>
         end
       end
-      object del_usr_inpBox: TGroupBox
+      object del_wrk_inpBox: TGroupBox
         Left = 0
         Top = 0
         Width = 1029
@@ -518,41 +540,42 @@ object Frm_work: TFrm_work
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
-        object del_usr_us_kbl: TStaticText
+        object del_wrk_kbl: TStaticText
           Left = 3
           Top = 20
-          Width = 52
+          Width = 40
           Height = 17
-          Caption = #1059#1095#1072#1089#1090#1085#1080#1082
+          Caption = #1056#1072#1073#1086#1090#1072
           TabOrder = 0
         end
-        object del_usr_us_DBL: TDBLookupComboBox
+        object del_wrk_DBL: TDBLookupComboBox
           Left = 3
           Top = 51
           Width = 1006
           Height = 21
           Align = alCustom
           Anchors = [akLeft, akRight]
-          KeyField = 'id_user'
-          ListField = 'fio'
-          ListSource = DM.muserDS
+          KeyField = 'id_work'
+          ListField = 'work_naim'
+          ListSource = DM.workDS
           TabOrder = 1
         end
       end
-      object del_usr_btnBox: TGroupBox
+      object del_wrk_btnBox: TGroupBox
         Left = 0
         Top = 592
         Width = 1029
         Height = 70
         Align = alBottom
         TabOrder = 2
-        object del_usr_Btn: TButton
+        object del_wrk_Btn: TButton
           Left = 408
           Top = 24
           Width = 75
           Height = 25
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
+          OnClick = del_wrk_BtnClick
         end
       end
     end

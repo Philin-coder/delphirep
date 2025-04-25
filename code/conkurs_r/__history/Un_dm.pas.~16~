@@ -10,7 +10,16 @@ type
     Connection: TADOConnection;
     muserQuery: TADOQuery;
     muserDS: TDataSource;
-    ADOStoredProc1: TADOStoredProc;
+    sel_user_by_fio: TADOStoredProc;
+    ins_user: TADOStoredProc;
+    upd_user: TADOStoredProc;
+    del_user: TADOStoredProc;
+    workQuery: TADOQuery;
+    workDS: TDataSource;
+    sel_work_by_name: TADOStoredProc;
+    ins_work: TADOStoredProc;
+    upd_work: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public

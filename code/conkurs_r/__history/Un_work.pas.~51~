@@ -12,8 +12,8 @@ type
     work_user_PC: TPageControl;
     selTab: TTabSheet;
     insTab: TTabSheet;
-    TabSheet3: TTabSheet;
-    UpdTab: TTabSheet;
+    upd_tab: TTabSheet;
+    delTab: TTabSheet;
     work_condBox: TGroupBox;
     m_work_groper: TGroupBox;
     m_work_dataBox: TGroupBox;
@@ -28,24 +28,17 @@ type
     work_ntnBox: TGroupBox;
     ins_work_dataBox: TGroupBox;
     work_insBtn: TButton;
-    work_ins_grd: TDBGrid;
-    fio_inp: TLabeledEdit;
-    ins_phone_lbl: TStaticText;
-    phone_inp: TMaskEdit;
-    user_pas_inp: TLabeledEdit;
+    ins_w_work_nain_inp: TLabeledEdit;
     workToolBar: TToolBar;
     showcombtn: TToolButton;
     hidecombtn: TToolButton;
     workImageList: TImageList;
-    upd_inp_box: TGroupBox;
-    usr_upd_dataBox: TGroupBox;
-    user_upd_btnBox: TGroupBox;
-    upd_usrGrd: TDBGrid;
-    upd_usr_Btn: TButton;
-    upd_usr_tl_lbl: TStaticText;
-    usr_upd_phone_inp: TMaskEdit;
-    usr_upd_us_lbl: TStaticText;
-    usr_upd_DBL: TDBLookupComboBox;
+    wr_upd_inp_box: TGroupBox;
+    wrk_upd_dataBox: TGroupBox;
+    wrkr_upd_btnBox: TGroupBox;
+    wrk_upd_Btn: TButton;
+    wr_upd_work_lbl: TStaticText;
+    wr_upd_DBL: TDBLookupComboBox;
     del_usr_dataBox: TGroupBox;
     del_usr_inpBox: TGroupBox;
     del_usr_btnBox: TGroupBox;
@@ -53,6 +46,15 @@ type
     Del_usr_datagrd: TDBGrid;
     del_usr_us_kbl: TStaticText;
     del_usr_us_DBL: TDBLookupComboBox;
+    ins_work_grid: TDBGrid;
+    ins_w_opis_inp: TLabeledEdit;
+    work_dataLbl: TLabel;
+    work_data_inp: TDateTimePicker;
+    work_mark_and_about_inp: TLabeledEdit;
+    ins_w_usr_Lbl: TLabel;
+    ins_w_usr_DBL: TDBLookupComboBox;
+    upd_workGrd: TDBGrid;
+    commment_inp: TLabeledEdit;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -61,6 +63,10 @@ type
     procedure work_naim_grouperClick(Sender: TObject);
     procedure work_selRadioresetClick(Sender: TObject);
     procedure showcombtnClick(Sender: TObject);
+    procedure hidecombtnClick(Sender: TObject);
+    procedure work_user_PCChange(Sender: TObject);
+    procedure work_insBtnClick(Sender: TObject);
+    procedure wrk_upd_BtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -79,7 +85,8 @@ uses Un_dm, Un_func, Un_main;
      //DONE: add work
      //todo:add pass logik
      //todo:add report
-     //todo:hide comment
+     //DONE:hide comment
+     // open_comment with  pas
 
 procedure TFrm_work.FormActivate(Sender: TObject);
 begin
@@ -106,6 +113,11 @@ begin
  LoadIconFromResource('UNLOCK',1,workImageList);
  hidecombtn.ImageIndex:=1;
  sel_workGid.Columns[4].Visible:=False;
+end;
+
+procedure TFrm_work.hidecombtnClick(Sender: TObject);
+begin
+   sel_workGid.Columns[4].Visible:=False;
 end;
 
 procedure TFrm_work.m_work_sel_btnClick(Sender: TObject);
@@ -157,6 +169,61 @@ end;
 procedure TFrm_work.showcombtnClick(Sender: TObject);
 begin
  sel_workGid.Columns[4].Visible:=True;
+end;
+
+procedure TFrm_work.work_insBtnClick(Sender: TObject);
+const
+AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+begin
+ AreFieldsEmpty:=(
+ (Trim(ins_w_work_nain_inp.Text)='')or
+ (Trim(ins_w_opis_inp.Text)='')or
+ (Trim(work_mark_and_about_inp.Text)='')or
+ (ins_w_usr_DBL.Text='')
+ );
+ AreFieldsValid:=(
+ ValidateComponentText(ins_w_work_nain_inp,AllowedChars)and
+ ValidateComponentText(ins_w_opis_inp,AllowedChars)and
+ ValidateComponentText(work_mark_and_about_inp,AllowedChars)
+ );
+ if AreFieldsEmpty or not AreFieldsValid then
+ begin
+      MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+ end;
+ try
+      with dm.ins_work do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+          Parameters.ParamByName('@work_naim').Value :=ins_w_work_nain_inp.Text;
+          Parameters.ParamByName('@work_opis').Value:=ins_w_opis_inp.Text;
+          Parameters.ParamByName('@work_data').Value:=
+          DateToStr_(work_data_inp.Date);
+          Parameters.ParamByName('@work_mark_and_about').Value:=
+          work_mark_and_about_inp.Text;
+          Parameters.ParamByName('@id_user').Value:=
+          dm.muserQuery.FieldByName('id_user').AsString;
+           ExecProc;
+           dm.workQuery.Close;
+           dm.workQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
 end;
 
 procedure TFrm_work.work_naim_grouperClick(Sender: TObject);
@@ -238,6 +305,62 @@ if work_selRadioreset.Checked then
       end;
     end;
      sel_workGid.Columns[4].Visible:=False;
+end;
+
+procedure TFrm_work.work_user_PCChange(Sender: TObject);
+  var IsActivePage:boolean;
+begin
+  IsActivePage:=(work_user_PC.ActivePage=selTab);
+  showcombtn.Enabled:=IsActivePage;
+  hidecombtn.Enabled:=IsActivePage;
+  showcombtn.Visible:=IsActivePage;
+  hidecombtn.Visible:=IsActivePage;
+end;
+procedure TFrm_work.wrk_upd_BtnClick(Sender: TObject);
+  const
+AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+begin
+    AreFieldsEmpty:=(
+    (wr_upd_DBL.Text='')or
+    (Trim(commment_inp.Text)='')
+    );
+    AreFieldsValid:=(
+    ValidateComponentText(commment_inp,AllowedChars)
+    );
+    if AreFieldsEmpty or not AreFieldsValid then
+    begin
+        MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+    end;
+try
+      with dm.upd_work do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@id_work').Value
+           :=dm.workQuery.FieldByName('id_work').AsString;
+           Parameters.ParamByName('@work_mark_and_about').Value
+           :=commment_inp.Text;
+           ExecProc;
+           dm.workQuery.Close;
+           dm.workQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
 end;
 
 end.

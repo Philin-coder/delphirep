@@ -12,8 +12,8 @@ type
     m_user_PC: TPageControl;
     selTab: TTabSheet;
     insTab: TTabSheet;
-    TabSheet3: TTabSheet;
-    UpdTab: TTabSheet;
+    upd_tab: TTabSheet;
+    delTab: TTabSheet;
     m_user_condBox: TGroupBox;
     m_user_groper: TGroupBox;
     m_user_dataBox: TGroupBox;

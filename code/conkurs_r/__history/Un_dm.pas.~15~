@@ -18,8 +18,8 @@ type
     workDS: TDataSource;
     sel_work_by_name: TADOStoredProc;
     ins_work: TADOStoredProc;
-    upd_work: TADOStoredProc;
-    del_work: TADOStoredProc;
+    ADOStoredProc3: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public
