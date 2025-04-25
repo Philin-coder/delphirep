@@ -137,6 +137,7 @@ object DM: TDM
     Top = 368
   end
   object workQuery: TADOQuery
+    Active = True
     Connection = Connection
     CursorType = ctStatic
     Parameters = <>
@@ -160,22 +161,8 @@ object DM: TDM
     Left = 192
     Top = 128
   end
-  object sel_work_by_name: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'sel_work_by_name;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@work_naim'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 1000
-      end>
+  object ADOStoredProc1: TADOStoredProc
+    Parameters = <>
     Left = 184
     Top = 184
   end

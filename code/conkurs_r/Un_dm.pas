@@ -16,7 +16,7 @@ type
     del_user: TADOStoredProc;
     workQuery: TADOQuery;
     workDS: TDataSource;
-    ADOStoredProc1: TADOStoredProc;
+    sel_work_by_name: TADOStoredProc;
     ADOStoredProc2: TADOStoredProc;
     ADOStoredProc3: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;

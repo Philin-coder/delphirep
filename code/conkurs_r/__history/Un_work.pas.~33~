@@ -55,6 +55,9 @@ type
     del_usr_us_DBL: TDBLookupComboBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure m_work_sel_btnClick(Sender: TObject);
+    procedure sel_work_fnd_editKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
   public
@@ -70,10 +73,16 @@ uses Un_dm, Un_func, Un_main;
 
 {$R *.dfm}
 
-     //TODO: add work
+     //DONE: add work
      //todo:add pass logik
      //todo:add report
      //todo:hide comment
+
+procedure TFrm_work.FormActivate(Sender: TObject);
+begin
+ dm.muserQuery.Open;
+ dm.workQuery.Open;
+end;
 
 procedure TFrm_work.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
@@ -93,6 +102,52 @@ begin
  showcombtn.ImageIndex:=0;
  LoadIconFromResource('UNLOCK',1,workImageList);
  hidecombtn.ImageIndex:=1;
+end;
+
+procedure TFrm_work.m_work_sel_btnClick(Sender: TObject);
+begin
+try
+    if not DM.Connection.Connected then
+      raise Exception.Create('Соединение с базой не установлено');
+    with DM.sel_work_by_name do
+    begin
+      Close;
+      Parameters.ParamByName('@work_naim').Value := sel_work_cond_edit.Text;
+      Open;
+       DM.workQuery.Recordset:=dm.sel_work_by_name.Recordset;
+    end;
+  except
+    on E: EDatabaseError do
+      ShowMessage('Ошибка: ' + E.Message);
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
+end;
+
+procedure TFrm_work.sel_work_fnd_editKeyPress(Sender: TObject; var Key: Char);
+begin
+ try
+   dm.workQuery.SQL.Text:=
+   'select'+' '+
+   'm_work.id_work,'+' '+
+   'm_work.work_naim,'+' '+
+   'm_work.work_opis,'+' '+
+   'm_work.work_data,'+' '+
+   'm_work.work_mark_and_about,'+' '+
+   'm_user.fio'+' '+
+   'from m_work'+' '+
+   'inner join m_user'+' '+
+    'on m_user.id_user=m_work.id_user'+' '+
+    'where 1=1'+' '+
+    'and m_work.work_naim like'+
+   QuotedStr(Concat(sel_work_fnd_edit.Text,#37));
+   dm.workQuery.close;
+   dm.workQuery.Open;
+except on E: Exception do
+  begin
+  ShowMessage('wrong situation'+' '+E.Message);
+  end;
+  end;
 end;
 
 end.
