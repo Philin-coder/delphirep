@@ -12,11 +12,13 @@ type
     main_Image: TImage;
     m_user_item: TMenuItem;
     m_work_item: TMenuItem;
+    report_item: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure m_user_itemClick(Sender: TObject);
     procedure m_work_itemClick(Sender: TObject);
+    procedure report_itemClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -29,7 +31,7 @@ var
 
 implementation
 
-uses Un_func, Un_dm , Un_m_user, Un_work;
+uses Un_func, Un_dm , Un_m_user, Un_work, Un_report;
 
 
 {$R *.dfm}
@@ -83,6 +85,18 @@ Frm_work.Free;
 raise;
 end;
 
+end;
+
+procedure TFrm_main.report_itemClick(Sender: TObject);
+begin
+   try
+UpdateFormProperties('Frm_report', 'װמנלא נאבמעû ס מעקועמל',
+clBtnFace, 1024, 768);
+ Frm_report.ShowModal;
+except
+Frm_report.Free;
+raise;
+end;
 end;
 
 end.

@@ -1,0 +1,70 @@
+unit Un_report;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ComCtrls, ExtCtrls, Grids, DBGrids,db,ADODB, Mask, ToolWin,
+  ImgList, DBCtrls;
+
+type
+  TFrm_report = class(TForm)
+    report_PC: TPageControl;
+    insTab: TTabSheet;
+    report_ins_inpBox: TGroupBox;
+    report_ntnBox: TGroupBox;
+    report_dataBox: TGroupBox;
+    report_insBtn: TButton;
+    report_grid: TDBGrid;
+    report_databLbl: TLabel;
+    report_begin_data_inp: TDateTimePicker;
+    report_dataeLbl: TLabel;
+    end_data_inp: TDateTimePicker;
+    procedure FormActivate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_report: TFrm_report;
+
+implementation
+
+uses Un_dm, Un_func, Un_main;
+
+{$R *.dfm}
+
+     //DONE: add work
+     //todo:add pass logik
+     //todo:add report
+     //DONE:hide comment
+     // open_comment with  pas
+
+procedure TFrm_report.FormActivate(Sender: TObject);
+begin
+  dm.muserQuery.Open;
+  dm.workQuery.Open;
+end;
+
+procedure TFrm_report.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  SaveFormState(Self);
+  CloseAllQueriesOnDataModule('dm');
+end;
+
+procedure TFrm_report.FormCreate(Sender: TObject);
+begin
+ Frm_report.KeyPreview:=true;
+ Frm_report.ShowHint:=true;
+ UniformizeButtonsSize(Self,  273, 25);
+ UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+ UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+ LoadFormState(Self);
+end;
+
+end.

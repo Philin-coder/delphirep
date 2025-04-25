@@ -6,8 +6,7 @@ uses
   Un_func in 'Un_func.pas',
   Un_dm in 'Un_dm.pas' {DM: TDataModule},
   Un_work in 'Un_work.pas' {Frm_work},
-  Un_m_user in 'Un_m_user.pas' {Frm_muser},
-  Un_report in 'Un_report.pas' {Frm_report};
+  Un_m_user in 'Un_m_user.pas' {Frm_muser};
 
 {$R *.res}
  {$R resources.RES}
@@ -18,6 +17,5 @@ begin
   Application.CreateForm(TDM, DM);
   Application.CreateForm(TFrm_work, Frm_work);
   Application.CreateForm(TFrm_muser, Frm_muser);
-  Application.CreateForm(TFrm_report, Frm_report);
   Application.Run;
 end.
