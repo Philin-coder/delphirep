@@ -60,8 +60,6 @@ type
     procedure sel_user_fnd_editKeyPress(Sender: TObject; var Key: Char);
     procedure naim_grouperClick(Sender: TObject);
     procedure selRadioresetClick(Sender: TObject);
-    procedure phone_inpMouseDown(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
     procedure FormShow(Sender: TObject);
     procedure phone_inpExit(Sender: TObject);
     procedure showpasbtnClick(Sender: TObject);
@@ -99,7 +97,28 @@ MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
     Beep;
     Exit;
 end;
-
+  try
+      with dm.del_user do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@id_user').Value
+           :=dm.muserQuery.FieldByName('id_user').AsString;
+           ExecProc;
+           dm.muserQuery.Close;
+           dm.muserQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
 
 end;
 
@@ -201,19 +220,6 @@ begin
   else
     phone_inp.Color := clWindow;
 
-end;
-
-procedure TFrm_muser.phone_inpMouseDown(Sender: TObject; Button: TMouseButton;
-  Shift: TShiftState; X, Y: Integer);
-begin
-// if IsMaskEditEmpty(phone_inp) then
-//  begin
-//   phone_inp.Color := clRed;
-//    ShowMessage('Поле ввода телефона должно быть заполнено ');
-//    phone_inp.SetFocus;
-//  end
-//  else
-//    phone_inp.Color := clWindow;
 end;
 
 procedure TFrm_muser.selRadioresetClick(Sender: TObject);
@@ -383,5 +389,9 @@ begin
   else
     usr_upd_phone_inp.Color := clWindow;
 end;
+     //TODO: add work
+     //todo:add pass logik
+     //todo:add report
+     //todo:hide comment
 
 end.

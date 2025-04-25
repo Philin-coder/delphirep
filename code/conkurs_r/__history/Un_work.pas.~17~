@@ -1,0 +1,128 @@
+unit Un_work;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ComCtrls, ExtCtrls, Grids, DBGrids,db,ADODB, Mask, ToolWin,
+  ImgList, DBCtrls;
+
+type
+  TFrm_work = class(TForm)
+    m_user_PC: TPageControl;
+    selTab: TTabSheet;
+    insTab: TTabSheet;
+    TabSheet3: TTabSheet;
+    UpdTab: TTabSheet;
+    m_user_condBox: TGroupBox;
+    m_user_groper: TGroupBox;
+    m_user_dataBox: TGroupBox;
+    m_user_btndBox: TGroupBox;
+    m_user_sel_btn: TButton;
+    sel_user_cond_edit: TLabeledEdit;
+    sel_userGid: TDBGrid;
+    sel_user_fnd_edit: TLabeledEdit;
+    selRadioreset: TRadioButton;
+    naim_grouper: TRadioButton;
+    mu_ins_inpBox: TGroupBox;
+    m_user_ntnBox: TGroupBox;
+    ins_user_dataBox: TGroupBox;
+    user_insBtn: TButton;
+    user_ins_grd: TDBGrid;
+    fio_inp: TLabeledEdit;
+    ins_phone_lbl: TStaticText;
+    phone_inp: TMaskEdit;
+    user_pas_inp: TLabeledEdit;
+    userToolBar: TToolBar;
+    showpasbtn: TToolButton;
+    hidepasbtn: TToolButton;
+    userImageList: TImageList;
+    upd_inp_box: TGroupBox;
+    usr_upd_dataBox: TGroupBox;
+    user_upd_btnBox: TGroupBox;
+    upd_usrGrd: TDBGrid;
+    upd_usr_Btn: TButton;
+    upd_usr_tl_lbl: TStaticText;
+    usr_upd_phone_inp: TMaskEdit;
+    usr_upd_us_lbl: TStaticText;
+    usr_upd_DBL: TDBLookupComboBox;
+    del_usr_dataBox: TGroupBox;
+    del_usr_inpBox: TGroupBox;
+    del_usr_btnBox: TGroupBox;
+    del_usr_Btn: TButton;
+    Del_usr_datagrd: TDBGrid;
+    del_usr_us_kbl: TStaticText;
+    del_usr_us_DBL: TDBLookupComboBox;
+    procedure FormActivate(Sender: TObject);
+    procedure upd_usr_BtnClick(Sender: TObject);
+    procedure del_usr_BtnClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_work: TFrm_work;
+
+implementation
+
+uses Un_dm, Un_func, Un_main;
+
+{$R *.dfm}
+
+procedure TFrm_work.del_usr_BtnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+begin
+AreFieldsEmpty:=(
+ (del_usr_us_DBL.Text='')
+);
+if AreFieldsEmpty  then
+begin
+MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+end;
+  try
+      with dm.del_user do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@id_user').Value
+           :=dm.muserQuery.FieldByName('id_user').AsString;
+           ExecProc;
+           dm.muserQuery.Close;
+           dm.muserQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+
+end;
+
+procedure TFrm_work.FormActivate(Sender: TObject);
+begin
+  dm.muserQuery.Open
+end;
+
+procedure TFrm_work.upd_usr_BtnClick(Sender: TObject);
+
+begin
+
+end;
+     //TODO: add work
+     //todo:add pass logik
+     //todo:add report
+     //todo:hide comment
+
+end.

@@ -37,7 +37,6 @@ object Frm_main: TFrm_main
     end
     object m_work_item: TMenuItem
       Caption = '&'#1056#1072#1073#1086#1090#1072
-      OnClick = m_work_itemClick
     end
   end
 end

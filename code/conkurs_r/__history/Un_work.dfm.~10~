@@ -1,4 +1,4 @@
-object Frm_muser: TFrm_muser
+object Frm_work: TFrm_work
   Left = 0
   Top = 0
   Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1091#1095#1072#1089#1090#1085#1080#1082#1086#1084
@@ -11,10 +11,6 @@ object Frm_muser: TFrm_muser
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
-  OnActivate = FormActivate
-  OnClose = FormClose
-  OnCreate = FormCreate
-  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object m_user_PC: TPageControl
@@ -27,10 +23,6 @@ object Frm_muser: TFrm_muser
     TabOrder = 0
     object selTab: TTabSheet
       Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1091#1095#1072#1089#1090#1085#1080#1082#1077
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object m_user_condBox: TGroupBox
         Left = 0
         Top = 0
@@ -63,7 +55,6 @@ object Frm_muser: TFrm_muser
           EditLabel.Height = 13
           EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1060#1048#1054
           TabOrder = 1
-          OnKeyPress = sel_user_fnd_editKeyPress
         end
       end
       object m_user_groper: TGroupBox
@@ -81,7 +72,6 @@ object Frm_muser: TFrm_muser
           Height = 17
           Caption = #1057#1086#1088#1090#1080#1088#1086#1082#1072' '#1087#1086' '#1060#1048#1054
           TabOrder = 0
-          OnClick = naim_grouperClick
         end
         object selRadioreset: TRadioButton
           Left = 560
@@ -90,7 +80,6 @@ object Frm_muser: TFrm_muser
           Height = 17
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 1
-          OnClick = selRadioresetClick
         end
       end
       object m_user_dataBox: TGroupBox
@@ -159,17 +148,12 @@ object Frm_muser: TFrm_muser
           Height = 25
           Caption = #1054#1090#1073#1086#1088' '#1087#1086' '#1091#1089#1083#1086#1074#1080#1102
           TabOrder = 0
-          OnClick = m_user_sel_btnClick
         end
       end
     end
     object insTab: TTabSheet
       Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1091#1095#1072#1089#1090#1085#1080#1082#1077
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object mu_ins_inpBox: TGroupBox
         Left = 0
         Top = 0
@@ -208,7 +192,6 @@ object Frm_muser: TFrm_muser
           Align = alCustom
           Anchors = [akLeft, akRight]
           TabOrder = 2
-          OnExit = phone_inpExit
         end
         object user_pas_inp: TLabeledEdit
           Left = 3
@@ -295,10 +278,6 @@ object Frm_muser: TFrm_muser
     object TabSheet3: TTabSheet
       Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1083#1080#1085#1080#1081' '#1086#1073' '#1091#1095#1072#1089#1090#1085#1080#1082#1077
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object upd_inp_box: TGroupBox
         Left = 0
         Top = 0
@@ -419,10 +398,6 @@ object Frm_muser: TFrm_muser
     object UpdTab: TTabSheet
       Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1091#1095#1072#1089#1080#1085#1080#1082#1077
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object del_usr_dataBox: TGroupBox
         Left = 0
         Top = 105
@@ -431,10 +406,6 @@ object Frm_muser: TFrm_muser
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1083#1072#1085#1085#1099#1093
         TabOrder = 0
-        ExplicitLeft = 240
-        ExplicitTop = 176
-        ExplicitWidth = 185
-        ExplicitHeight = 105
         object Del_usr_datagrd: TDBGrid
           Left = 2
           Top = 15
@@ -487,8 +458,6 @@ object Frm_muser: TFrm_muser
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
-        ExplicitLeft = 3
-        ExplicitTop = -6
         object del_usr_us_kbl: TStaticText
           Left = 3
           Top = 20
@@ -546,7 +515,6 @@ object Frm_muser: TFrm_muser
       Left = 23
       Top = 0
       ImageIndex = 1
-      OnClick = hidepasbtnClick
     end
   end
   object userImageList: TImageList
