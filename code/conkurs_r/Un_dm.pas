@@ -20,6 +20,9 @@ type
     ins_work: TADOStoredProc;
     upd_work: TADOStoredProc;
     del_work: TADOStoredProc;
+    reportQuery: TADOQuery;
+    reportDS: TDataSource;
+    report1: TADOStoredProc;
   private
     { Private declarations }
   public

@@ -40,9 +40,11 @@ uses Un_dm, Un_func, Un_main;
 
 {$R *.dfm}
 
-          //todo:add pass logik
-          // open_comment with  pas
-        
+     //DONE: add work
+     //todo:add pass logik
+     //todo:add report
+     //DONE:hide comment
+     // open_comment with  pas
 
 procedure TFrm_report.FormActivate(Sender: TObject);
 begin

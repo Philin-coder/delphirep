@@ -1,7 +1,7 @@
-object Frm_report: TFrm_report
+object Frm_work: TFrm_work
   Left = 0
   Top = 0
-  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1086#1090#1095#1077#1090#1086#1084
+  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1088#1072#1073#1086#1090#1086#1081
   ClientHeight = 719
   ClientWidth = 1037
   Color = clBtnFace
@@ -11,6 +11,9 @@ object Frm_report: TFrm_report
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnActivate = FormActivate
+  OnClose = FormClose
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object work_user_PC: TPageControl
@@ -21,6 +24,7 @@ object Frm_report: TFrm_report
     ActivePage = delTab
     Align = alClient
     TabOrder = 0
+    OnChange = work_user_PCChange
     object selTab: TTabSheet
       Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1088#1072#1073#1086#1090#1077
       object work_condBox: TGroupBox

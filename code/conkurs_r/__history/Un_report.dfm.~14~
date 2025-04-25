@@ -27,6 +27,7 @@ object Frm_report: TFrm_report
     object insTab: TTabSheet
       Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1086#1090#1095#1077#1090#1077
       ImageIndex = 1
+      ExplicitHeight = 662
       object report_ins_inpBox: TGroupBox
         Left = 0
         Top = 0
@@ -79,6 +80,7 @@ object Frm_report: TFrm_report
         Height = 59
         Align = alBottom
         TabOrder = 1
+        ExplicitTop = 603
         object report_insBtn: TButton
           Left = 384
           Top = 24
@@ -86,7 +88,6 @@ object Frm_report: TFrm_report
           Height = 25
           Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
           TabOrder = 0
-          OnClick = report_insBtnClick
         end
       end
       object report_dataBox: TGroupBox
@@ -101,9 +102,9 @@ object Frm_report: TFrm_report
           Left = 2
           Top = 15
           Width = 1025
-          Height = 422
+          Height = 455
           Align = alClient
-          DataSource = DM.reportDS
+          DataSource = DM.workDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText

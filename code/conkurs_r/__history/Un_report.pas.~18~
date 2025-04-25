@@ -23,7 +23,6 @@ type
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
-    procedure report_insBtnClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -40,9 +39,11 @@ uses Un_dm, Un_func, Un_main;
 
 {$R *.dfm}
 
-          //todo:add pass logik
-          // open_comment with  pas
-        
+     //DONE: add work
+     //todo:add pass logik
+     //todo:add report
+     //DONE:hide comment
+     // open_comment with  pas
 
 procedure TFrm_report.FormActivate(Sender: TObject);
 begin
@@ -64,30 +65,6 @@ begin
  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
  LoadFormState(Self);
-end;
-
-procedure TFrm_report.report_insBtnClick(Sender: TObject);
-begin
-try
-    if not DM.Connection.Connected then
-      raise Exception.Create('Соединение с базой не установлено');
-
-    with DM.report1 do
-    begin
-      Close;
-           Parameters.ParamByName('@d1').Value
-           :=DateToStr_(report_begin_data_inp.Date);
-           Parameters.ParamByName('@d2').Value
-           :=DateToStr_(end_data_inp.Date);
-      Open;
-       DM.reportQuery.Recordset:=dm.report1.Recordset;
-    end;
-  except
-    on E: EDatabaseError do
-      ShowMessage('Ошибка: ' + E.Message);
-    on E: Exception do
-      ShowMessage('Ошибка: ' + E.Message);
-  end;
 end;
 
 end.

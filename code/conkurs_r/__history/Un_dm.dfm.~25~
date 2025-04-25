@@ -239,7 +239,6 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@id_work'
@@ -253,7 +252,6 @@ object DM: TDM
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
-        Value = Null
       end>
     Left = 200
     Top = 296
@@ -267,7 +265,6 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@id_work'
@@ -278,55 +275,5 @@ object DM: TDM
       end>
     Left = 192
     Top = 360
-  end
-  object reportQuery: TADOQuery
-    Active = True
-    Connection = Connection
-    CursorType = ctStatic
-    Parameters = <>
-    SQL.Strings = (
-      'select '
-      'm_work.id_work,'
-      'm_work.work_naim,'
-      'm_work.work_opis,'
-      'm_work.work_data,'
-      'm_work.work_mark_and_about,'
-      'm_user.fio'
-      'from m_work '
-      'inner join m_user '
-      '  on m_user.id_user=m_work.id_user'
-      'where 1=1')
-    Left = 272
-    Top = 80
-  end
-  object reportDS: TDataSource
-    DataSet = reportQuery
-    Left = 280
-    Top = 144
-  end
-  object report1: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'report1;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@d1'
-        Attributes = [paNullable]
-        DataType = ftDateTime
-        Size = 10
-      end
-      item
-        Name = '@d2'
-        Attributes = [paNullable]
-        DataType = ftDateTime
-        Size = 10
-      end>
-    Left = 280
-    Top = 200
   end
 end
