@@ -14,12 +14,7 @@ type
     ins_user: TADOStoredProc;
     upd_user: TADOStoredProc;
     del_user: TADOStoredProc;
-    workQuery: TADOQuery;
-    workDS: TDataSource;
-    ADOStoredProc1: TADOStoredProc;
-    ADOStoredProc2: TADOStoredProc;
-    ADOStoredProc3: TADOStoredProc;
-    ADOStoredProc4: TADOStoredProc;
+    ADOQuery1: TADOQuery;
   private
     { Private declarations }
   public

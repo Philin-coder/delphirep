@@ -1,6 +1,6 @@
 object DM: TDM
   OldCreateOrder = False
-  Height = 530
+  Height = 422
   Width = 491
   object Connection: TADOConnection
     Connected = True
@@ -96,14 +96,12 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@user_phone'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
-        Value = Null
       end
       item
         Name = '@id_user'
@@ -124,7 +122,6 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@id_user'
@@ -135,47 +132,5 @@ object DM: TDM
       end>
     Left = 40
     Top = 368
-  end
-  object workQuery: TADOQuery
-    Connection = Connection
-    Parameters = <>
-    SQL.Strings = (
-      'select '
-      'm_work.id_work,'
-      'm_work.work_naim,'
-      'm_work.work_opis,'
-      'm_work.work_data,'
-      'm_work.work_mark_and_about,'
-      'm_user.fio'
-      'from m_work '
-      'inner join m_user '
-      '  on m_user.id_user=m_work.id_user'
-      'where 1=1')
-    Left = 184
-    Top = 72
-  end
-  object workDS: TDataSource
-    Left = 192
-    Top = 128
-  end
-  object ADOStoredProc1: TADOStoredProc
-    Parameters = <>
-    Left = 184
-    Top = 184
-  end
-  object ADOStoredProc2: TADOStoredProc
-    Parameters = <>
-    Left = 192
-    Top = 248
-  end
-  object ADOStoredProc3: TADOStoredProc
-    Parameters = <>
-    Left = 200
-    Top = 296
-  end
-  object ADOStoredProc4: TADOStoredProc
-    Parameters = <>
-    Left = 192
-    Top = 360
   end
 end

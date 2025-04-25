@@ -53,9 +53,6 @@ type
     Del_usr_datagrd: TDBGrid;
     del_usr_us_kbl: TStaticText;
     del_usr_us_DBL: TDBLookupComboBox;
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure FormCreate(Sender: TObject);
-    procedure FormActivate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -75,31 +72,5 @@ uses Un_dm, Un_func, Un_main;
      //todo:add pass logik
      //todo:add report
      //todo:hide comment
-
-procedure TFrm_work.FormActivate(Sender: TObject);
-begin
- dm.muserQuery.Open;
- dm.workQuery.Open;
-end;
-
-procedure TFrm_work.FormClose(Sender: TObject; var Action: TCloseAction);
-begin
-  SaveFormState(Self);
-  CloseAllQueriesOnDataModule('dm');
-end;
-
-procedure TFrm_work.FormCreate(Sender: TObject);
-begin
- Frm_work.KeyPreview:=true;
- Frm_work.ShowHint:=true;
- UniformizeButtonsSize(Self,  273, 25);
- UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
- UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
- LoadFormState(Self);
- LoadIconFromResource('LOCK',1,workImageList);
- showcombtn.ImageIndex:=0;
- LoadIconFromResource('UNLOCK',1,workImageList);
- hidecombtn.ImageIndex:=1;
-end;
 
 end.

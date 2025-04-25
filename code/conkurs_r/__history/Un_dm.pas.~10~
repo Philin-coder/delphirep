@@ -8,6 +8,12 @@ uses
 type
   TDM = class(TDataModule)
     Connection: TADOConnection;
+    muserQuery: TADOQuery;
+    muserDS: TDataSource;
+    sel_user_by_fio: TADOStoredProc;
+    ins_user: TADOStoredProc;
+    upd_user: TADOStoredProc;
+    del_user: TADOStoredProc;
   private
     { Private declarations }
   public
@@ -18,6 +24,8 @@ var
   DM: TDM;
 
 implementation
+
+uses Un_func, Un_m_user;
 
 {$R *.dfm}
 
