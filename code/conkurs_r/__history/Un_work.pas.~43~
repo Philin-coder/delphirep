@@ -28,11 +28,7 @@ type
     work_ntnBox: TGroupBox;
     ins_work_dataBox: TGroupBox;
     work_insBtn: TButton;
-    work_ins_grd: TDBGrid;
-    fio_inp: TLabeledEdit;
-    ins_phone_lbl: TStaticText;
-    phone_inp: TMaskEdit;
-    user_pas_inp: TLabeledEdit;
+    ins_w_work_nain_inp: TLabeledEdit;
     workToolBar: TToolBar;
     showcombtn: TToolButton;
     hidecombtn: TToolButton;
@@ -53,11 +49,24 @@ type
     Del_usr_datagrd: TDBGrid;
     del_usr_us_kbl: TStaticText;
     del_usr_us_DBL: TDBLookupComboBox;
+    ins_work_grid: TDBGrid;
+    ins_w_opis_inp: TLabeledEdit;
+    work_dataLbl: TLabel;
+    work_data_inp: TDateTimePicker;
+    work_mark_and_about_inp: TLabeledEdit;
+    ins_w_usr_Lbl: TLabel;
+    ins_w_usr_DBL: TDBLookupComboBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure m_work_sel_btnClick(Sender: TObject);
     procedure sel_work_fnd_editKeyPress(Sender: TObject; var Key: Char);
+    procedure work_naim_grouperClick(Sender: TObject);
+    procedure work_selRadioresetClick(Sender: TObject);
+    procedure showcombtnClick(Sender: TObject);
+    procedure hidecombtnClick(Sender: TObject);
+    procedure work_user_PCChange(Sender: TObject);
+    procedure work_insBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -76,7 +85,8 @@ uses Un_dm, Un_func, Un_main;
      //DONE: add work
      //todo:add pass logik
      //todo:add report
-     //todo:hide comment
+     //DONE:hide comment
+     // open_comment with  pas
 
 procedure TFrm_work.FormActivate(Sender: TObject);
 begin
@@ -102,6 +112,12 @@ begin
  showcombtn.ImageIndex:=0;
  LoadIconFromResource('UNLOCK',1,workImageList);
  hidecombtn.ImageIndex:=1;
+ sel_workGid.Columns[4].Visible:=False;
+end;
+
+procedure TFrm_work.hidecombtnClick(Sender: TObject);
+begin
+   sel_workGid.Columns[4].Visible:=False;
 end;
 
 procedure TFrm_work.m_work_sel_btnClick(Sender: TObject);
@@ -135,11 +151,11 @@ begin
    'm_work.work_data,'+' '+
    'm_work.work_mark_and_about,'+' '+
    'm_user.fio'+' '+
-    'from m_work'+' '+
-    'inner join m_user'+' '+
+   'from m_work'+' '+
+   'inner join m_user'+' '+
     'on m_user.id_user=m_work.id_user'+' '+
     'where 1=1'+' '+
-     'and m_work.work_naim like'+
+    'and m_work.work_naim like'+
    QuotedStr(Concat(sel_work_fnd_edit.Text,#37));
    dm.workQuery.close;
    dm.workQuery.Open;
@@ -150,4 +166,111 @@ except on E: Exception do
   end;
 end;
 
+procedure TFrm_work.showcombtnClick(Sender: TObject);
+begin
+ sel_workGid.Columns[4].Visible:=True;
+end;
+
+procedure TFrm_work.work_insBtnClick(Sender: TObject);
+const
+AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+begin
+ AreFieldsEmpty:=(
+ 
+ );
+end;
+
+procedure TFrm_work.work_naim_grouperClick(Sender: TObject);
+begin
+if  work_naim_grouper.Checked=true then
+  begin
+    try
+     with dm.workQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+   'select'+' '+
+   'm_work.id_work,'+' '+
+   'm_work.work_naim,'+' '+
+   'm_work.work_opis,'+' '+
+   'm_work.work_data,'+' '+
+   'm_work.work_mark_and_about,'+' '+
+   'm_user.fio'+' '+
+   'from m_work'+' '+
+   'inner join m_user'+' '+
+    'on m_user.id_user=m_work.id_user'+' '+
+    'where 1=1'+' '+
+    'order by m_work.work_naim asc';
+      Open;
+     end;
+    except on E: EADOError do
+    begin
+      ShowMessage('Ошибка'+' '+E.Message);
+    end;
+    end;
+  end;
+end;
+
+procedure TFrm_work.work_selRadioresetClick(Sender: TObject);
+var i,j,c:Integer;
+begin
+if work_selRadioreset.Checked then
+  with Frm_work do
+    for I := 0 to ComponentCount - 1 do
+     begin
+       if (Components[i] is TLabeledEdit)  then
+        begin
+          (Components[i] as TLabeledEdit).Clear;
+        end;
+     end;
+       with Frm_work do
+    for c := 0 to ComponentCount - 1 do
+     begin
+       if (Components[c] is TCheckBox)  then
+        begin
+          (Components[c] as TCheckBox).Checked:=False;
+        end;
+     end;
+     with dm.workQuery do
+     begin
+     Close;
+     sql.Clear;
+     SQL.Text:=
+     'select'+' '+
+     'm_work.id_work,'+' '+
+   'm_work.work_naim,'+' '+
+   'm_work.work_opis,'+' '+
+   'm_work.work_data,'+' '+
+   'm_work.work_mark_and_about,'+' '+
+   'm_user.fio'+' '+
+   'from m_work'+' '+
+   'inner join m_user'+' '+
+    'on m_user.id_user=m_work.id_user'+' '+
+    'where 1=1';
+     Open;
+     end;
+    with Frm_work do
+    for j := 0 to ComponentCount - 1 do
+    begin
+      if(Components[j] is TRadioButton)  then
+      begin
+        (Components[j] as TRadioButton).Checked:=False;
+      end;
+    end;
+     sel_workGid.Columns[4].Visible:=False;
+end;
+
+procedure TFrm_work.work_user_PCChange(Sender: TObject);
+  var IsActivePage:boolean;
+begin
+  IsActivePage:=(work_user_PC.ActivePage=selTab);
+  showcombtn.Enabled:=IsActivePage;
+  hidecombtn.Enabled:=IsActivePage;
+  showcombtn.Visible:=IsActivePage;
+  hidecombtn.Visible:=IsActivePage;
+end;
 end.

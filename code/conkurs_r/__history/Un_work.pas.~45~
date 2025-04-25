@@ -189,41 +189,7 @@ begin
  ValidateComponentText(ins_w_opis_inp,AllowedChars)and
  ValidateComponentText(work_mark_and_about_inp,AllowedChars)
  );
- if AreFieldsEmpty or not AreFieldsValid then
- begin
-      MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
- end;
- try
-      with dm.ins_work do
-      begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-          Parameters.ParamByName('@work_naim').Value :=ins_w_work_nain_inp.Text;
-          Parameters.ParamByName('@work_opis').Value:=ins_w_opis_inp.Text;
-          Parameters.ParamByName('@work_data').Value:=
-          DateToStr_(work_data_inp.Date);
-          Parameters.ParamByName('@work_mark_and_about').Value:=
-          work_mark_and_about_inp.Text;
-          Parameters.ParamByName('@id_user').Value:=
-          dm.muserQuery.FieldByName('id_user').AsString;
-           ExecProc;
-           dm.workQuery.Close;
-           dm.workQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-    end;
+
 end;
 
 procedure TFrm_work.work_naim_grouperClick(Sender: TObject);
