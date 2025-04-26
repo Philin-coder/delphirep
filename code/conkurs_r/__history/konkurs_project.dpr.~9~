@@ -7,20 +7,17 @@ uses
   Un_dm in 'Un_dm.pas' {DM: TDataModule},
   Un_work in 'Un_work.pas' {Frm_work},
   Un_m_user in 'Un_m_user.pas' {Frm_muser},
-  Un_pass_autor in 'Un_pass_autor.pas' {Frm_pass_aut},
   Un_report in 'Un_report.pas' {Frm_report};
 
 {$R *.res}
  {$R resources.RES}
  {$R comment.RES}
- {$R passwd.RES}
 begin
   Application.Initialize;
   Application.CreateForm(TFrm_main, Frm_main);
   Application.CreateForm(TDM, DM);
   Application.CreateForm(TFrm_work, Frm_work);
   Application.CreateForm(TFrm_muser, Frm_muser);
-  Application.CreateForm(TFrm_pass_aut, Frm_pass_aut);
   Application.CreateForm(TFrm_report, Frm_report);
   Application.Run;
 end.

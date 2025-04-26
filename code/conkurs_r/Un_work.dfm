@@ -21,16 +21,12 @@ object Frm_work: TFrm_work
     Top = 29
     Width = 1037
     Height = 690
-    ActivePage = delTab
+    ActivePage = selTab
     Align = alClient
     TabOrder = 0
     OnChange = work_user_PCChange
     object selTab: TTabSheet
       Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1088#1072#1073#1086#1090#1077
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object work_condBox: TGroupBox
         Left = 0
         Top = 0
@@ -178,10 +174,6 @@ object Frm_work: TFrm_work
     object insTab: TTabSheet
       Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1088#1072#1073#1086#1090#1077
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object work_ins_inpBox: TGroupBox
         Left = 0
         Top = 0
@@ -348,10 +340,6 @@ object Frm_work: TFrm_work
     object upd_tab: TTabSheet
       Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1083#1080#1085#1080#1081' '#1086' '#1088#1072#1073#1086#1090#1077
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object wr_upd_inp_box: TGroupBox
         Left = 0
         Top = 0

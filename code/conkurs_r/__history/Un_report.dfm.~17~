@@ -29,7 +29,7 @@ object Frm_report: TFrm_report
       ImageIndex = 1
       object report_ins_inpBox: TGroupBox
         Left = 0
-        Top = 29
+        Top = 0
         Width = 1029
         Height = 193
         Align = alTop
@@ -91,9 +91,9 @@ object Frm_report: TFrm_report
       end
       object report_dataBox: TGroupBox
         Left = 0
-        Top = 222
+        Top = 193
         Width = 1029
-        Height = 410
+        Height = 439
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
@@ -101,7 +101,7 @@ object Frm_report: TFrm_report
           Left = 2
           Top = 15
           Width = 1025
-          Height = 393
+          Height = 422
           Align = alClient
           DataSource = DM.reportDS
           TabOrder = 0
@@ -153,26 +153,6 @@ object Frm_report: TFrm_report
             end>
         end
       end
-      object get_pas_toolbar: TToolBar
-        Left = 0
-        Top = 0
-        Width = 1029
-        Height = 29
-        ButtonWidth = 41
-        Caption = 'get_pas_toolbar'
-        Images = pasvarImageList
-        TabOrder = 3
-        object get_pas_btn: TToolButton
-          Left = 0
-          Top = 0
-          ImageIndex = 0
-          OnClick = get_pas_btnClick
-        end
-      end
     end
-  end
-  object pasvarImageList: TImageList
-    Left = 104
-    Top = 24
   end
 end

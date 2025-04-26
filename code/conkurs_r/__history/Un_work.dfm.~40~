@@ -1,7 +1,7 @@
-object Frm_report: TFrm_report
+object Frm_work: TFrm_work
   Left = 0
   Top = 0
-  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1086#1090#1095#1077#1090#1086#1084
+  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1088#1072#1073#1086#1090#1086#1081
   ClientHeight = 719
   ClientWidth = 1037
   Color = clBtnFace
@@ -11,6 +11,9 @@ object Frm_report: TFrm_report
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnActivate = FormActivate
+  OnClose = FormClose
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object work_user_PC: TPageControl
@@ -21,8 +24,13 @@ object Frm_report: TFrm_report
     ActivePage = delTab
     Align = alClient
     TabOrder = 0
+    OnChange = work_user_PCChange
     object selTab: TTabSheet
       Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1088#1072#1073#1086#1090#1077
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object work_condBox: TGroupBox
         Left = 0
         Top = 0
@@ -73,6 +81,7 @@ object Frm_report: TFrm_report
           Height = 17
           Caption = #1057#1086#1088#1090#1080#1088#1086#1082#1072' '#1087#1086' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1102
           TabOrder = 0
+          OnClick = work_naim_grouperClick
         end
         object work_selRadioreset: TRadioButton
           Left = 560
@@ -81,6 +90,7 @@ object Frm_report: TFrm_report
           Height = 17
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 1
+          OnClick = work_selRadioresetClick
         end
       end
       object m_work_dataBox: TGroupBox
@@ -168,6 +178,10 @@ object Frm_report: TFrm_report
     object insTab: TTabSheet
       Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1088#1072#1073#1086#1090#1077
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object work_ins_inpBox: TGroupBox
         Left = 0
         Top = 0
@@ -334,6 +348,10 @@ object Frm_report: TFrm_report
     object upd_tab: TTabSheet
       Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1083#1080#1085#1080#1081' '#1086' '#1088#1072#1073#1086#1090#1077
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object wr_upd_inp_box: TGroupBox
         Left = 0
         Top = 0

@@ -2,7 +2,7 @@ object Frm_main: TFrm_main
   Left = 0
   Top = 0
   Caption = #1043#1083#1074#1085#1072#1103' '#1092#1086#1088#1084#1072
-  ClientHeight = 379
+  ClientHeight = 399
   ClientWidth = 635
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -21,7 +21,7 @@ object Frm_main: TFrm_main
     Left = 0
     Top = 0
     Width = 635
-    Height = 379
+    Height = 399
     Align = alClient
     ExplicitLeft = 160
     ExplicitTop = 96

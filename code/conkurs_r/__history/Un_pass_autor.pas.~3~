@@ -1,4 +1,4 @@
-unit Un_report;
+unit Un_pass_autor;
 
 interface
 
@@ -8,7 +8,7 @@ uses
   ImgList, DBCtrls;
 
 type
-  TFrm_report = class(TForm)
+  TFrm_pass_aut = class(TForm)
     report_PC: TPageControl;
     insTab: TTabSheet;
     report_ins_inpBox: TGroupBox;
@@ -26,8 +26,6 @@ type
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
-    procedure report_insBtnClick(Sender: TObject);
-    procedure get_pas_btnClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -36,26 +34,26 @@ type
   end;
 
 var
-  Frm_report: TFrm_report;
+  Frm_pass_aut: TFrm_pass_aut;
 
 implementation
 
-uses Un_dm, Un_func, Un_main, Un_pass_autor;
+uses Un_dm, Un_func, Un_main;
 
 {$R *.dfm}
-procedure TFrm_report.FormActivate(Sender: TObject);
+procedure TFrm_pass_aut.FormActivate(Sender: TObject);
 begin
   dm.muserQuery.Open;
   dm.workQuery.Open;
 end;
 
-procedure TFrm_report.FormClose(Sender: TObject; var Action: TCloseAction);
+procedure TFrm_pass_aut.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   SaveFormState(Self);
   CloseAllQueriesOnDataModule('dm');
 end;
 
-procedure TFrm_report.FormCreate(Sender: TObject);
+procedure TFrm_pass_aut.FormCreate(Sender: TObject);
 begin
  Frm_report.KeyPreview:=true;
  Frm_report.ShowHint:=true;
@@ -65,42 +63,6 @@ begin
  LoadFormState(Self);
  LoadIconFromResource('PASSWD',1,pasvarImageList);
  get_pas_btn.ImageIndex:=0;
-end;
-
-procedure TFrm_report.get_pas_btnClick(Sender: TObject);
-begin
-try
-UpdateFormProperties('Frm_pass_aut', 'Форма авторизации для ввода пароля',
-clBtnFace, 1024, 768);
- Frm_pass_aut.ShowModal;
-except
-Frm_pass_aut.Free;
-raise;
-end
-end;
-
-procedure TFrm_report.report_insBtnClick(Sender: TObject);
-begin
-try
-    if not DM.Connection.Connected then
-      raise Exception.Create('Соединение с базой не установлено');
-
-    with DM.report1 do
-    begin
-      Close;
-           Parameters.ParamByName('@d1').Value
-           :=DateToStr_(report_begin_data_inp.Date);
-           Parameters.ParamByName('@d2').Value
-           :=DateToStr_(end_data_inp.Date);
-      Open;
-       DM.reportQuery.Recordset:=dm.report1.Recordset;
-    end;
-  except
-    on E: EDatabaseError do
-      ShowMessage('Ошибка: ' + E.Message);
-    on E: Exception do
-      ShowMessage('Ошибка: ' + E.Message);
-  end;
 end;
 
 end.

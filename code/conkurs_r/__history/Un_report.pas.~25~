@@ -27,7 +27,6 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure report_insBtnClick(Sender: TObject);
-    procedure get_pas_btnClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -40,7 +39,7 @@ var
 
 implementation
 
-uses Un_dm, Un_func, Un_main, Un_pass_autor;
+uses Un_dm, Un_func, Un_main;
 
 {$R *.dfm}
 procedure TFrm_report.FormActivate(Sender: TObject);
@@ -65,18 +64,6 @@ begin
  LoadFormState(Self);
  LoadIconFromResource('PASSWD',1,pasvarImageList);
  get_pas_btn.ImageIndex:=0;
-end;
-
-procedure TFrm_report.get_pas_btnClick(Sender: TObject);
-begin
-try
-UpdateFormProperties('Frm_pass_aut', 'Форма авторизации для ввода пароля',
-clBtnFace, 1024, 768);
- Frm_pass_aut.ShowModal;
-except
-Frm_pass_aut.Free;
-raise;
-end
 end;
 
 procedure TFrm_report.report_insBtnClick(Sender: TObject);

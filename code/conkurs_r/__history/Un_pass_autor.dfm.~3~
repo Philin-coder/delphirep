@@ -1,4 +1,4 @@
-object Frm_report: TFrm_report
+object Frm_pass_aut: TFrm_pass_aut
   Left = 0
   Top = 0
   Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1086#1090#1095#1077#1090#1086#1084
@@ -11,9 +11,6 @@ object Frm_report: TFrm_report
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
-  OnActivate = FormActivate
-  OnClose = FormClose
-  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object report_PC: TPageControl
@@ -35,6 +32,7 @@ object Frm_report: TFrm_report
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
+        ExplicitTop = 0
         object report_databLbl: TLabel
           Left = 3
           Top = 40
@@ -86,7 +84,6 @@ object Frm_report: TFrm_report
           Height = 25
           Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
           TabOrder = 0
-          OnClick = report_insBtnClick
         end
       end
       object report_dataBox: TGroupBox
@@ -97,6 +94,8 @@ object Frm_report: TFrm_report
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
+        ExplicitTop = 193
+        ExplicitHeight = 439
         object report_grid: TDBGrid
           Left = 2
           Top = 15
@@ -162,11 +161,12 @@ object Frm_report: TFrm_report
         Caption = 'get_pas_toolbar'
         Images = pasvarImageList
         TabOrder = 3
+        ExplicitLeft = 480
+        ExplicitWidth = 150
         object get_pas_btn: TToolButton
           Left = 0
           Top = 0
           ImageIndex = 0
-          OnClick = get_pas_btnClick
         end
       end
     end

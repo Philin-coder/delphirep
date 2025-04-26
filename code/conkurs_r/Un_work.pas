@@ -82,11 +82,6 @@ implementation
 uses Un_dm, Un_func, Un_main;
 
 {$R *.dfm}
-
-
-     //todo:add pass logik
-     // open_comment with  pas
-
 procedure TFrm_work.del_wrk_BtnClick(Sender: TObject);
  var   AreFieldsEmpty: Boolean;
 begin

@@ -1,0 +1,41 @@
+unit Un_pass_autor;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ComCtrls, ExtCtrls, Grids, DBGrids,db,ADODB, Mask, ToolWin,
+  ImgList, DBCtrls;
+
+type
+  TFrm_pass_aut = class(TForm)
+    report_PC: TPageControl;
+    insTab: TTabSheet;
+    report_ins_inpBox: TGroupBox;
+    report_ntnBox: TGroupBox;
+    report_dataBox: TGroupBox;
+    report_insBtn: TButton;
+    report_grid: TDBGrid;
+    report_databLbl: TLabel;
+    report_begin_data_inp: TDateTimePicker;
+    report_dataeLbl: TLabel;
+    end_data_inp: TDateTimePicker;
+    get_pas_toolbar: TToolBar;
+    get_pas_btn: TToolButton;
+    pasvarImageList: TImageList;
+
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_pass_aut: TFrm_pass_aut;
+
+implementation
+
+uses Un_dm, Un_func, Un_main;
+
+{$R *.dfm}
+end.
