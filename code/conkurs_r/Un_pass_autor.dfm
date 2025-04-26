@@ -25,9 +25,6 @@ object Frm_pass_aut: TFrm_pass_aut
     Caption = 'get_pas_toolbar'
     Images = pasvarImageList
     TabOrder = 0
-    ExplicitLeft = 8
-    ExplicitTop = 8
-    ExplicitWidth = 1029
     object get_pas_btn: TToolButton
       Left = 0
       Top = 0
@@ -42,9 +39,6 @@ object Frm_pass_aut: TFrm_pass_aut
     Align = alClient
     Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
     TabOrder = 1
-    ExplicitTop = 193
-    ExplicitWidth = 1029
-    ExplicitHeight = 439
     object pass_a_grid: TDBGrid
       Left = 2
       Top = 15
@@ -89,8 +83,6 @@ object Frm_pass_aut: TFrm_pass_aut
     Height = 59
     Align = alBottom
     TabOrder = 2
-    ExplicitTop = 632
-    ExplicitWidth = 1029
     object pass_a_insBtn: TButton
       Left = 384
       Top = 24
@@ -109,8 +101,6 @@ object Frm_pass_aut: TFrm_pass_aut
     Align = alTop
     Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
     TabOrder = 3
-    ExplicitTop = 0
-    ExplicitWidth = 1029
     DesignSize = (
       1037
       193)

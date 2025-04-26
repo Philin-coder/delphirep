@@ -23,7 +23,6 @@ ImgList,
 db,
 adodb,
 ComObj,
-math,
 ExtCtrls;
 function AddNumbers(num1, num2: Integer): Integer; stdcall;
   external 'mylib.dll' name 'AddNumbers';
@@ -122,8 +121,7 @@ procedure CheckAndCreateHelpFolder;
 procedure SaveRichEditToFile(RichEdit: TRichEdit; SaveDialog: TSaveDialog);
 procedure AppendRichEditToIniFile(RichEdit: TRichEdit; const FileName: string);
 procedure LoadTextFromFile(const FileName: string; RichTextEdit: TRichEdit);
-procedure RunMathQuiz(CaptchaLabel: TLabel; InputBox:
- TLabeledEdit; ResultLabel: TStaticText);
+procedure runmathquiz;
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -1821,31 +1819,34 @@ begin
     FileStream.Free;
   end;
 end;
-procedure RunMathQuiz(CaptchaLabel: TLabel; InputBox:
- TLabeledEdit; ResultLabel: TStaticText);
+procedure runmathquiz;
 var
-  Num1, Num2, CorrectAnswer, UserAnswer: Integer;
-  InputStr: string;
+  Num1,
+  Num2,
+  CorrectAnswer,
+  UserAnswer: Integer;
+  var inputStr:string;
 begin
-  Randomize;
-  Num1 := Random(10);
+ Randomize;
+ Num1 := Random(10);
   Num2 := Random(10);
-  with CaptchaLabel do
+  ShowMessage(IntToStr(Num1));
+    ShowMessage(IntToStr(Num2));
+  CorrectAnswer :=AddNumbers(Num1, Num2);
+   ShowMessage('Результат: ' + IntToStr(CorrectAnswer));
+  if not InputQuery('Ответ', 'Сколько будет ' + IntToStr(Num1) + ' + ' +
+  IntToStr(Num2) + '?', InputStr) then
   begin
-    Caption := IntToStr(Num1) + ' + ' + IntToStr(Num2);
-    Font.Size := RandomRange(12, 20); // Случайный размер шрифта
-    Font.Color := RGB(Random(256), Random(256), Random(256)); // Случайный цвет
-    Font.Style := [fsBold]; // Жирный шрифт
-  end;
-  CorrectAnswer := AddNumbers(Num1, Num2);
-  InputBox.Text := '';
-  ShowMessage('Сколько будет ' + CaptchaLabel.Caption + '?');
-  InputStr := Trim(InputBox.Text); // Получение введенного текста
-  if InputStr = '' then
-  begin
-    ShowMessage('Ошибка: вы не ввели ответ.');
+    ShowMessage('Операция отменена пользователем.');
     Exit;
   end;
+    // Проверка на пустой ввод
+InputStr := Trim(InputStr); // Удаление лишних пробелов
+if InputStr = '' then
+begin
+  ShowMessage('Ошибка: вы не ввели ответ.');
+  Exit;
+end;
   try
     UserAnswer := StrToInt(InputStr);
   except
@@ -1856,12 +1857,10 @@ begin
     end;
   end;
   if UserAnswer = CorrectAnswer then
-    ResultLabel.Caption := 'Правильно!'
+    ShowMessage('Правильно!')
   else
-    ResultLabel.Caption := Format('Неправильно! Правильный ответ: %d.',
-    [CorrectAnswer]);
+    ShowMessage(Format('Неправильно! Правильный ответ: %d.', [CorrectAnswer]));
 end;
-
 
 initialization
   VisitedStaticTexts := TStringList.Create;

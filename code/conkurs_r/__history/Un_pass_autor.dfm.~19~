@@ -12,6 +12,8 @@ object Frm_pass_aut: TFrm_pass_aut
   Font.Style = []
   OldCreateOrder = False
   OnActivate = FormActivate
+  OnClose = FormClose
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object get_pas_toolbar: TToolBar
@@ -23,9 +25,6 @@ object Frm_pass_aut: TFrm_pass_aut
     Caption = 'get_pas_toolbar'
     Images = pasvarImageList
     TabOrder = 0
-    ExplicitLeft = 8
-    ExplicitTop = 8
-    ExplicitWidth = 1029
     object get_pas_btn: TToolButton
       Left = 0
       Top = 0
@@ -40,9 +39,6 @@ object Frm_pass_aut: TFrm_pass_aut
     Align = alClient
     Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
     TabOrder = 1
-    ExplicitTop = 193
-    ExplicitWidth = 1029
-    ExplicitHeight = 439
     object pass_a_grid: TDBGrid
       Left = 2
       Top = 15
@@ -56,6 +52,7 @@ object Frm_pass_aut: TFrm_pass_aut
       TitleFont.Height = -11
       TitleFont.Name = 'Tahoma'
       TitleFont.Style = []
+      OnCellClick = pass_a_gridCellClick
       Columns = <
         item
           Expanded = False
@@ -65,6 +62,16 @@ object Frm_pass_aut: TFrm_pass_aut
         item
           Expanded = False
           FieldName = 'fio'
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'user_phone'
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'user_pas'
           Visible = True
         end>
     end
@@ -76,8 +83,6 @@ object Frm_pass_aut: TFrm_pass_aut
     Height = 59
     Align = alBottom
     TabOrder = 2
-    ExplicitTop = 632
-    ExplicitWidth = 1029
     object pass_a_insBtn: TButton
       Left = 384
       Top = 24
@@ -85,6 +90,7 @@ object Frm_pass_aut: TFrm_pass_aut
       Height = 25
       Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
       TabOrder = 0
+      OnClick = pass_a_insBtnClick
     end
   end
   object pass_a_inpBox: TGroupBox
@@ -95,20 +101,26 @@ object Frm_pass_aut: TFrm_pass_aut
     Align = alTop
     Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
     TabOrder = 3
-    ExplicitTop = 0
-    ExplicitWidth = 1029
     DesignSize = (
       1037
       193)
-    object pass_a_login_inp: TLabeledEdit
+    object Label1: TLabel
+      Left = 272
+      Top = 24
+      Width = 31
+      Height = 13
+      Caption = 'Label1'
+      FocusControl = get_pas_toolbar
+    end
+    object pass_a_fio_inp: TLabeledEdit
       Left = 14
       Top = 52
       Width = 1020
       Height = 21
       Anchors = [akLeft, akRight]
-      EditLabel.Width = 186
+      EditLabel.Width = 143
       EditLabel.Height = 13
-      EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1085#1072#1080#1084#1080#1086#1074#1072#1085#1080#1102
+      EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086'  '#1060#1048#1054
       TabOrder = 0
     end
     object pass_a_pwd_inp: TLabeledEdit
@@ -117,10 +129,28 @@ object Frm_pass_aut: TFrm_pass_aut
       Width = 1020
       Height = 21
       Anchors = [akLeft, akRight]
-      EditLabel.Width = 186
+      EditLabel.Width = 156
       EditLabel.Height = 13
-      EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1085#1072#1080#1084#1080#1086#1074#1072#1085#1080#1102
+      EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1087#1072#1088#1086#1083#1102
       TabOrder = 1
+    end
+    object LabeledEdit1: TLabeledEdit
+      Left = 344
+      Top = 25
+      Width = 121
+      Height = 21
+      EditLabel.Width = 61
+      EditLabel.Height = 13
+      EditLabel.Caption = 'LabeledEdit1'
+      TabOrder = 2
+    end
+    object StaticText1: TStaticText
+      Left = 504
+      Top = 24
+      Width = 59
+      Height = 17
+      Caption = 'StaticText1'
+      TabOrder = 3
     end
   end
   object pasvarImageList: TImageList

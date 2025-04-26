@@ -36,7 +36,7 @@ var
 
 implementation
 
-uses Un_dm, Un_func;
+uses Un_dm, Un_func, change_pas_quest;
 
 {$R *.dfm}
 procedure TFrm_pass_aut.FormActivate(Sender: TObject);
@@ -71,14 +71,29 @@ begin
 end;
 
 procedure TFrm_pass_aut.pass_a_gridCellClick(Column: TColumn);
- // var SelectedRowNumber:Integer;
+ var SelectedRowNumber:Integer;
 begin
- if pass_a_grid.DataSource.DataSet.Active then
+ if (pass_a_grid.DataSource.DataSet.Active)and
+ not(pass_a_grid.DataSource.DataSet.IsEmpty)  then
   begin
-    //SelectedRowNumber := pass_a_grid.DataSource.DataSet.RecNo;
-    //ShowMessage('Номер выбранной строки: ' + IntToStr(SelectedRowNumber));
-    //runmathquiz;
+    SelectedRowNumber := pass_a_grid.DataSource.DataSet.RecNo;
+    ShowMessage('Номер выбранной строки: ' + IntToStr(SelectedRowNumber));
+    //RunMathQuiz(Label1,LabeledEdit1,StaticText1);
+    //todo: fix
+       try
+UpdateFormProperties('Frm_change_pass_quest', 'Форма проверки смены пароля',
+clBtnFace, 1024, 768);
+ Frm_change_pass_quest.ShowModal;
+except
+Frm_change_pass_quest.Free;
+raise;
+end;
 
+  end
+  else
+  begin
+      ShowMessage('Набор данных пуст. Нет записей для отображения.');
+       Exit;
   end;
 end;
 

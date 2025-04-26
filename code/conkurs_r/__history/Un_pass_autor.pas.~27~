@@ -19,10 +19,14 @@ type
     pass_a_inpBox: TGroupBox;
     pass_a_fio_inp: TLabeledEdit;
     pass_a_pwd_inp: TLabeledEdit;
+    Label1: TLabel;
+    LabeledEdit1: TLabeledEdit;
+    StaticText1: TStaticText;
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure pass_a_insBtnClick(Sender: TObject);
+    procedure pass_a_gridCellClick(Column: TColumn);
 
   private
     { Private declarations }
@@ -47,6 +51,8 @@ procedure TFrm_pass_aut.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
    SaveFormState(Self);
    CloseAllQueriesOnDataModule('dm');
+    pass_a_grid.Columns[2].Visible:=false;
+    pass_a_grid.Columns[3].Visible:=False;
 end;
 
 procedure TFrm_pass_aut.FormCreate(Sender: TObject);
@@ -58,7 +64,30 @@ begin
  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
  LoadFormState(Self);
  pass_a_grid.Columns[0].Title.Caption:='Номер порядковый';
- pass_a_grid.Columns[1].Title.Caption:='ФИО'
+ pass_a_grid.Columns[1].Title.Caption:='ФИО';
+ pass_a_grid.Columns[2].Visible:=false;
+ pass_a_grid.Columns[3].Visible:=False;
+ pass_a_fio_inp.ShowHint:=True;
+ pass_a_pwd_inp.ShowHint:=True;
+ pass_a_fio_inp.Hint:='Пример ввода:'+#10#13+'Иванов Иван Иванович';
+ pass_a_pwd_inp.Hint:='Пример ввода:'+#10#13+'my_pas';
+end;
+
+procedure TFrm_pass_aut.pass_a_gridCellClick(Column: TColumn);
+ var SelectedRowNumber:Integer;
+begin
+ if (pass_a_grid.DataSource.DataSet.Active)and
+ not(pass_a_grid.DataSource.DataSet.IsEmpty)  then
+  begin
+    SelectedRowNumber := pass_a_grid.DataSource.DataSet.RecNo;
+    ShowMessage('Номер выбранной строки: ' + IntToStr(SelectedRowNumber));
+    //RunMathQuiz(Label1,LabeledEdit1,StaticText1);
+  end
+  else
+  begin
+      ShowMessage('Набор данных пуст. Нет записей для отображения.');
+       Exit;
+  end;
 end;
 
 procedure TFrm_pass_aut.pass_a_insBtnClick(Sender: TObject);
@@ -82,6 +111,33 @@ begin
     Beep;
     Exit;
 end;
+try
+      with dm.aut_pas do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+          Close;
+          Parameters.ParamByName('@fio').Value:=pass_a_fio_inp.Text;
+          Parameters.ParamByName('@user_pas').Value:=pass_a_pwd_inp.Text;
+          Open;
+          DM.pass_aQuery.Recordset:=dm.aut_pas.Recordset;
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+     pass_a_grid.Columns[2].Visible:=True;
+     pass_a_grid.Columns[3].Visible:=True;
+     pass_a_grid.Columns[0].Title.Caption:='Номер порядковый';
+     pass_a_grid.Columns[1].Title.Caption:='ФИО';
+     pass_a_grid.Columns[2].Title.Caption:='Телефон';
+     pass_a_grid.Columns[3].Title.Caption:='Пароль';
 end;
 
 end.
