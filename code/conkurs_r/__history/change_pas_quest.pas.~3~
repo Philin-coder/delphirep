@@ -11,10 +11,9 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
-     FNumber: Integer;
-      procedure SetNumber(const Value: Integer);
+    { Private declarations }
   public
-    property Number:Integer read Fnumber  write setNumber;
+    { Public declarations }
   end;
 
 var
@@ -25,11 +24,6 @@ implementation
 uses Un_dm, Un_func, Un_pass_autor;
 
 {$R *.dfm}
-procedure TFrm_change_pass_quest.SetNumber(const Value: Integer);
-begin
-  FNumber := Value;
-  ShowMessage( 'Номер строки: ' + IntToStr(FNumber)); 
-end;
 
 procedure TFrm_change_pass_quest.FormClose(Sender: TObject;
   var Action: TCloseAction);
