@@ -4,10 +4,12 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs;
+  Dialogs,db,adodb;
 
 type
   TFrm_change_pass_quest = class(TForm)
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
   public
@@ -22,5 +24,23 @@ implementation
 uses Un_dm, Un_func, Un_pass_autor;
 
 {$R *.dfm}
+
+procedure TFrm_change_pass_quest.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+   SaveFormState(Self);
+   CloseAllQueriesOnDataModule('dm');
+end;
+
+procedure TFrm_change_pass_quest.FormCreate(Sender: TObject);
+begin
+ Frm_change_pass_quest.KeyPreview:=true;
+ Frm_change_pass_quest.ShowHint:=true;
+ UniformizeButtonsSize(Self,  273, 25);
+ UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+ UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+ LoadFormState(Self);
+
+end;
 
 end.

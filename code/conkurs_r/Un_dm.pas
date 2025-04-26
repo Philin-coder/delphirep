@@ -26,6 +26,9 @@ type
     pass_aQuery: TADOQuery;
     pass_aDS: TDataSource;
     aut_pas: TADOStoredProc;
+    SelbyIDQuery: TADOQuery;
+    SelbyIDDS: TDataSource;
+    SelbyID: TADOStoredProc;
   private
     { Private declarations }
   public

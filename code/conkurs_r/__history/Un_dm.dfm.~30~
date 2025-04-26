@@ -1,7 +1,7 @@
 object DM: TDM
   OldCreateOrder = False
   Height = 530
-  Width = 557
+  Width = 491
   object Connection: TADOConnection
     Connected = True
     ConnectionString = 
@@ -361,62 +361,20 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@fio'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
-        Value = Null
       end
       item
         Name = '@user_pas'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
-        Value = Null
       end>
     Left = 368
     Top = 208
-  end
-  object SelbyIDQuery: TADOQuery
-    Connection = Connection
-    Parameters = <>
-    SQL.Strings = (
-      'select'
-      'm_user.id_user,'
-      'm_user.fio,'
-      'm_user.user_phone,'
-      'm_user.user_pas '
-      'from m_user '
-      'where 1=1')
-    Left = 424
-    Top = 96
-  end
-  object SelbyIDDS: TDataSource
-    DataSet = SelbyIDQuery
-    Left = 432
-    Top = 160
-  end
-  object SelbyID: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'SelbyID;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@id'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = 0
-      end>
-    Left = 448
-    Top = 216
   end
 end
