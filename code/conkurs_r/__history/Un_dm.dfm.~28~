@@ -339,9 +339,7 @@ object DM: TDM
     SQL.Strings = (
       'select '
       'm_user.id_user,'
-      'm_user.fio,'
-      'm_user.user_phone,'
-      'm_user.user_pas '
+      'm_user.fio'
       'from m_user '
       'where 1=1')
     Left = 352
@@ -352,28 +350,8 @@ object DM: TDM
     Left = 368
     Top = 152
   end
-  object aut_pas: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'aut_pas;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@fio'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 1000
-      end
-      item
-        Name = '@user_pas'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 1000
-      end>
+  object ADOStoredProc1: TADOStoredProc
+    Parameters = <>
     Left = 368
     Top = 208
   end

@@ -23,6 +23,9 @@ type
     reportQuery: TADOQuery;
     reportDS: TDataSource;
     report1: TADOStoredProc;
+    pass_aQuery: TADOQuery;
+    pass_aDS: TDataSource;
+    aut_pas: TADOStoredProc;
   private
     { Private declarations }
   public

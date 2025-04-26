@@ -68,16 +68,6 @@ object Frm_pass_aut: TFrm_pass_aut
           Expanded = False
           FieldName = 'fio'
           Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'user_phone'
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'user_pas'
-          Visible = True
         end>
     end
   end

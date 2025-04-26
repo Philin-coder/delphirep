@@ -9,23 +9,20 @@ uses
 
 type
   TFrm_pass_aut = class(TForm)
-    report_PC: TPageControl;
-    insTab: TTabSheet;
-    report_ins_inpBox: TGroupBox;
-    report_ntnBox: TGroupBox;
-    report_dataBox: TGroupBox;
-    report_insBtn: TButton;
-    report_grid: TDBGrid;
-    report_databLbl: TLabel;
-    report_begin_data_inp: TDateTimePicker;
-    report_dataeLbl: TLabel;
-    end_data_inp: TDateTimePicker;
+    pasvarImageList: TImageList;
     get_pas_toolbar: TToolBar;
     get_pas_btn: TToolButton;
-    pasvarImageList: TImageList;
+    pass_a_dataBox: TGroupBox;
+    pass_a_grid: TDBGrid;
+    pass_a_ntnBox: TGroupBox;
+    pass_a_insBtn: TButton;
+    pass_a_inpBox: TGroupBox;
+    pass_a_fio_inp: TLabeledEdit;
+    pass_a_pwd_inp: TLabeledEdit;
     procedure FormActivate(Sender: TObject);
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure pass_a_insBtnClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -38,31 +35,41 @@ var
 
 implementation
 
-uses Un_dm, Un_func, Un_main;
+uses Un_dm, Un_func;
 
 {$R *.dfm}
 procedure TFrm_pass_aut.FormActivate(Sender: TObject);
 begin
-  dm.muserQuery.Open;
-  dm.workQuery.Open;
+  dm.pass_aQuery.Open;
 end;
 
 procedure TFrm_pass_aut.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  SaveFormState(Self);
-  CloseAllQueriesOnDataModule('dm');
+   SaveFormState(Self);
+   CloseAllQueriesOnDataModule('dm');
 end;
 
 procedure TFrm_pass_aut.FormCreate(Sender: TObject);
 begin
- Frm_report.KeyPreview:=true;
- Frm_report.ShowHint:=true;
+ Frm_pass_aut.KeyPreview:=true;
+ Frm_pass_aut.ShowHint:=true;
  UniformizeButtonsSize(Self,  273, 25);
  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
  LoadFormState(Self);
- LoadIconFromResource('PASSWD',1,pasvarImageList);
- get_pas_btn.ImageIndex:=0;
+ pass_a_grid.Columns[0].Title.Caption:='Номер порядковый';
+ pass_a_grid.Columns[1].Title.Caption:='ФИО'
+end;
+
+procedure TFrm_pass_aut.pass_a_insBtnClick(Sender: TObject);
+  const
+AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.',
+'A'..'Z','a'..'z'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+begin
+
 end;
 
 end.

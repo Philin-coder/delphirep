@@ -47,8 +47,6 @@ procedure TFrm_pass_aut.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
    SaveFormState(Self);
    CloseAllQueriesOnDataModule('dm');
-    pass_a_grid.Columns[2].Visible:=false;
-    pass_a_grid.Columns[3].Visible:=False;
 end;
 
 procedure TFrm_pass_aut.FormCreate(Sender: TObject);
@@ -60,9 +58,7 @@ begin
  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
  LoadFormState(Self);
  pass_a_grid.Columns[0].Title.Caption:='Номер порядковый';
- pass_a_grid.Columns[1].Title.Caption:='ФИО';
- pass_a_grid.Columns[2].Visible:=false;
- pass_a_grid.Columns[3].Visible:=False;
+ pass_a_grid.Columns[1].Title.Caption:='ФИО'
 end;
 
 procedure TFrm_pass_aut.pass_a_insBtnClick(Sender: TObject);
@@ -107,9 +103,6 @@ try
         ShowMessage('Ошибка: ' + E.Message);
       end;
     end;
-    
-     pass_a_grid.Columns[2].Visible:=True;
-     pass_a_grid.Columns[3].Visible:=True;
      pass_a_grid.Columns[0].Title.Caption:='Номер порядковый';
      pass_a_grid.Columns[1].Title.Caption:='ФИО';
      pass_a_grid.Columns[2].Title.Caption:='Телефон';

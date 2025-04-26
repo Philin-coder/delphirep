@@ -13,6 +13,19 @@ type
     sel_user_by_fio: TADOStoredProc;
     ins_user: TADOStoredProc;
     upd_user: TADOStoredProc;
+    del_user: TADOStoredProc;
+    workQuery: TADOQuery;
+    workDS: TDataSource;
+    sel_work_by_name: TADOStoredProc;
+    ins_work: TADOStoredProc;
+    upd_work: TADOStoredProc;
+    del_work: TADOStoredProc;
+    reportQuery: TADOQuery;
+    reportDS: TDataSource;
+    report1: TADOStoredProc;
+    pass_aQuery: TADOQuery;
+    pass_aDS: TDataSource;
+    ADOStoredProc1: TADOStoredProc;
   private
     { Private declarations }
   public

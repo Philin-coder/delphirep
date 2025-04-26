@@ -12,8 +12,6 @@ object Frm_pass_aut: TFrm_pass_aut
   Font.Style = []
   OldCreateOrder = False
   OnActivate = FormActivate
-  OnClose = FormClose
-  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object get_pas_toolbar: TToolBar
@@ -68,16 +66,6 @@ object Frm_pass_aut: TFrm_pass_aut
           Expanded = False
           FieldName = 'fio'
           Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'user_phone'
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'user_pas'
-          Visible = True
         end>
     end
   end
@@ -97,7 +85,6 @@ object Frm_pass_aut: TFrm_pass_aut
       Height = 25
       Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
       TabOrder = 0
-      OnClick = pass_a_insBtnClick
     end
   end
   object pass_a_inpBox: TGroupBox
@@ -113,15 +100,15 @@ object Frm_pass_aut: TFrm_pass_aut
     DesignSize = (
       1037
       193)
-    object pass_a_fio_inp: TLabeledEdit
+    object pass_a_login_inp: TLabeledEdit
       Left = 14
       Top = 52
       Width = 1020
       Height = 21
       Anchors = [akLeft, akRight]
-      EditLabel.Width = 143
+      EditLabel.Width = 186
       EditLabel.Height = 13
-      EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086'  '#1060#1048#1054
+      EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1085#1072#1080#1084#1080#1086#1074#1072#1085#1080#1102
       TabOrder = 0
     end
     object pass_a_pwd_inp: TLabeledEdit
@@ -130,9 +117,9 @@ object Frm_pass_aut: TFrm_pass_aut
       Width = 1020
       Height = 21
       Anchors = [akLeft, akRight]
-      EditLabel.Width = 156
+      EditLabel.Width = 186
       EditLabel.Height = 13
-      EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1087#1072#1088#1086#1083#1102
+      EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1085#1072#1080#1084#1080#1086#1074#1072#1085#1080#1102
       TabOrder = 1
     end
   end

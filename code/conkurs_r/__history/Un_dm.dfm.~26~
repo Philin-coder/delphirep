@@ -138,6 +138,7 @@ object DM: TDM
   end
   object workQuery: TADOQuery
     Connection = Connection
+    CursorType = ctStatic
     Parameters = <>
     SQL.Strings = (
       'select '
@@ -155,27 +156,177 @@ object DM: TDM
     Top = 72
   end
   object workDS: TDataSource
+    DataSet = workQuery
     Left = 192
     Top = 128
   end
-  object ADOStoredProc1: TADOStoredProc
-    Parameters = <>
+  object sel_work_by_name: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_work_by_name;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@work_naim'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+        Value = Null
+      end>
     Left = 184
     Top = 184
   end
-  object ADOStoredProc2: TADOStoredProc
-    Parameters = <>
+  object ins_work: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'ins_work;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@work_naim'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+        Value = Null
+      end
+      item
+        Name = '@work_opis'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+        Value = Null
+      end
+      item
+        Name = '@work_data'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+        Value = Null
+      end
+      item
+        Name = '@work_mark_and_about'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+        Value = Null
+      end
+      item
+        Name = '@id_user'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
     Left = 192
     Top = 248
   end
-  object ADOStoredProc3: TADOStoredProc
-    Parameters = <>
+  object upd_work: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_work;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@id_work'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@work_mark_and_about'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+        Value = Null
+      end>
     Left = 200
     Top = 296
   end
-  object ADOStoredProc4: TADOStoredProc
-    Parameters = <>
+  object del_work: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'del_work;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@id_work'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
     Left = 192
     Top = 360
+  end
+  object reportQuery: TADOQuery
+    Active = True
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      'm_work.id_work,'
+      'm_work.work_naim,'
+      'm_work.work_opis,'
+      'm_work.work_data,'
+      'm_work.work_mark_and_about,'
+      'm_user.fio'
+      'from m_work '
+      'inner join m_user '
+      '  on m_user.id_user=m_work.id_user'
+      'where 1=1')
+    Left = 272
+    Top = 80
+  end
+  object reportDS: TDataSource
+    DataSet = reportQuery
+    Left = 280
+    Top = 144
+  end
+  object report1: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'report1;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@d1'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end
+      item
+        Name = '@d2'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end>
+    Left = 280
+    Top = 200
   end
 end

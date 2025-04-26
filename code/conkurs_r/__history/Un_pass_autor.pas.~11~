@@ -17,8 +17,10 @@ type
     pass_a_ntnBox: TGroupBox;
     pass_a_insBtn: TButton;
     pass_a_inpBox: TGroupBox;
-    sel_work_cond_edit: TLabeledEdit;
-    LabeledEdit1: TLabeledEdit;
+    pass_a_login_inp: TLabeledEdit;
+    pass_a_pwd_inp: TLabeledEdit;
+    procedure FormActivate(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
 
   private
     { Private declarations }
@@ -34,4 +36,19 @@ implementation
 uses Un_dm, Un_func;
 
 {$R *.dfm}
+procedure TFrm_pass_aut.FormActivate(Sender: TObject);
+begin
+  dm.pass_aQuery.Open;
+end;
+
+procedure TFrm_pass_aut.FormCreate(Sender: TObject);
+begin
+ Frm_pass_aut.KeyPreview:=true;
+ Frm_pass_aut.ShowHint:=true;
+ UniformizeButtonsSize(Self,  273, 25);
+ UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+ UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+ LoadFormState(Self);
+end;
+
 end.
