@@ -107,6 +107,7 @@ try
         ShowMessage('Ошибка: ' + E.Message);
       end;
     end;
+    
      pass_a_grid.Columns[2].Visible:=True;
      pass_a_grid.Columns[3].Visible:=True;
      pass_a_grid.Columns[0].Title.Caption:='Номер порядковый';
