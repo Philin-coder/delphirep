@@ -58,6 +58,7 @@ object Frm_pass_aut: TFrm_pass_aut
       TitleFont.Height = -11
       TitleFont.Name = 'Tahoma'
       TitleFont.Style = []
+      OnCellClick = pass_a_gridCellClick
       Columns = <
         item
           Expanded = False

@@ -47,6 +47,8 @@ procedure TFrm_pass_aut.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
    SaveFormState(Self);
    CloseAllQueriesOnDataModule('dm');
+    pass_a_grid.Columns[2].Visible:=false;
+    pass_a_grid.Columns[3].Visible:=False;
 end;
 
 procedure TFrm_pass_aut.FormCreate(Sender: TObject);
@@ -58,18 +60,59 @@ begin
  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
  LoadFormState(Self);
  pass_a_grid.Columns[0].Title.Caption:='Номер порядковый';
- pass_a_grid.Columns[1].Title.Caption:='ФИО'
+ pass_a_grid.Columns[1].Title.Caption:='ФИО';
+ pass_a_grid.Columns[2].Visible:=false;
+ pass_a_grid.Columns[3].Visible:=False;
 end;
 
 procedure TFrm_pass_aut.pass_a_insBtnClick(Sender: TObject);
   const
-AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.',
-'A'..'Z','a'..'z'];
+AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
 var
   AreFieldsEmpty: Boolean;
   AreFieldsValid: Boolean;
 begin
-
+AreFieldsEmpty:=(
+(Trim(pass_a_fio_inp.Text)='')or
+(Trim(pass_a_pwd_inp.Text)='')
+);
+AreFieldsValid:=(
+ValidateComponentText(pass_a_fio_inp,AllowedChars)
+);
+if AreFieldsEmpty or not AreFieldsValid then
+begin
+ MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+end;
+try
+      with dm.aut_pas do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+          Close;
+          Parameters.ParamByName('@fio').Value:=pass_a_fio_inp.Text;
+          Parameters.ParamByName('@user_pas').Value:=pass_a_pwd_inp.Text;
+          Open;
+          DM.pass_aQuery.Recordset:=dm.aut_pas.Recordset;
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+     pass_a_grid.Columns[2].Visible:=True;
+     pass_a_grid.Columns[3].Visible:=True;
+     pass_a_grid.Columns[0].Title.Caption:='Номер порядковый';
+     pass_a_grid.Columns[1].Title.Caption:='ФИО';
+     pass_a_grid.Columns[2].Title.Caption:='Телефон';
+     pass_a_grid.Columns[3].Title.Caption:='Пароль';
 end;
 
 end.

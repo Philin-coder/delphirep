@@ -11,6 +11,9 @@ object Frm_pass_aut: TFrm_pass_aut
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnActivate = FormActivate
+  OnClose = FormClose
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object get_pas_toolbar: TToolBar
@@ -48,52 +51,33 @@ object Frm_pass_aut: TFrm_pass_aut
       Width = 1033
       Height = 421
       Align = alClient
-      DataSource = DM.reportDS
+      DataSource = DM.pass_aDS
       TabOrder = 0
       TitleFont.Charset = DEFAULT_CHARSET
       TitleFont.Color = clWindowText
       TitleFont.Height = -11
       TitleFont.Name = 'Tahoma'
       TitleFont.Style = []
+      OnMouseDown = pass_a_gridMouseDown
       Columns = <
         item
           Expanded = False
-          FieldName = 'id_work'
-          Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-          Width = 111
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'work_naim'
-          Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077
-          Width = 95
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'work_opis'
-          Title.Caption = #1054#1087#1080#1089#1072#1085#1080#1077
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'work_data'
-          Title.Caption = #1044#1072#1090#1072' '#1089#1086#1079#1076#1072#1085#1080#1103
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'work_mark_and_about'
-          Title.Caption = #1050#1086#1084#1084#1077#1085#1090#1072#1088#1080#1081' '#1080' '#1086#1094#1077#1085#1082#1072
-          Width = 138
+          FieldName = 'id_user'
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'fio'
-          Title.Caption = #1060#1048#1054' '#1059#1095#1072#1089#1090#1085#1080#1082#1072
-          Width = 171
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'user_phone'
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'user_pas'
           Visible = True
         end>
     end
@@ -114,6 +98,7 @@ object Frm_pass_aut: TFrm_pass_aut
       Height = 25
       Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
       TabOrder = 0
+      OnClick = pass_a_insBtnClick
     end
   end
   object pass_a_inpBox: TGroupBox
@@ -129,26 +114,26 @@ object Frm_pass_aut: TFrm_pass_aut
     DesignSize = (
       1037
       193)
-    object sel_work_cond_edit: TLabeledEdit
+    object pass_a_fio_inp: TLabeledEdit
       Left = 14
       Top = 52
       Width = 1020
       Height = 21
       Anchors = [akLeft, akRight]
-      EditLabel.Width = 186
+      EditLabel.Width = 143
       EditLabel.Height = 13
-      EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1085#1072#1080#1084#1080#1086#1074#1072#1085#1080#1102
+      EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086'  '#1060#1048#1054
       TabOrder = 0
     end
-    object LabeledEdit1: TLabeledEdit
+    object pass_a_pwd_inp: TLabeledEdit
       Left = 14
       Top = 132
       Width = 1020
       Height = 21
       Anchors = [akLeft, akRight]
-      EditLabel.Width = 186
+      EditLabel.Width = 156
       EditLabel.Height = 13
-      EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1085#1072#1080#1084#1080#1086#1074#1072#1085#1080#1102
+      EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1087#1072#1088#1086#1083#1102
       TabOrder = 1
     end
   end

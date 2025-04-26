@@ -23,7 +23,8 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure pass_a_insBtnClick(Sender: TObject);
-    procedure pass_a_gridCellClick(Column: TColumn);
+    procedure pass_a_gridMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
 
   private
     { Private declarations }
@@ -64,22 +65,18 @@ begin
  pass_a_grid.Columns[1].Title.Caption:='ФИО';
  pass_a_grid.Columns[2].Visible:=false;
  pass_a_grid.Columns[3].Visible:=False;
- pass_a_fio_inp.ShowHint:=True;
- pass_a_pwd_inp.ShowHint:=True;
- pass_a_fio_inp.Hint:='Пример ввода:'+#10#13+'Иванов Иван Иванович';
- pass_a_pwd_inp.Hint:='Пример ввода:'+#10#13+'my_pas';
 end;
 
-procedure TFrm_pass_aut.pass_a_gridCellClick(Column: TColumn);
- // var SelectedRowNumber:Integer;
+procedure TFrm_pass_aut.pass_a_gridMouseDown(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+  var SelectedRowNumber:Integer;
 begin
- if pass_a_grid.DataSource.DataSet.Active then
+  if pass_a_grid.DataSource.DataSet.Active then
   begin
-    //SelectedRowNumber := pass_a_grid.DataSource.DataSet.RecNo;
-    //ShowMessage('Номер выбранной строки: ' + IntToStr(SelectedRowNumber));
-    //runmathquiz;
-
+    SelectedRowNumber := pass_a_grid.DataSource.DataSet.RecNo;
+    ShowMessage('Номер выбранной строки: ' + IntToStr(SelectedRowNumber));
   end;
+
 end;
 
 procedure TFrm_pass_aut.pass_a_insBtnClick(Sender: TObject);
