@@ -71,7 +71,7 @@ object Frm_cript_choise: TFrm_cript_choise
     Top = 121
     Width = 1110
     Height = 412
-    ActivePage = MorzeTab
+    ActivePage = CezarTab
     Align = alClient
     TabOrder = 1
     OnChange = cryortPCChange
@@ -139,33 +139,100 @@ object Frm_cript_choise: TFrm_cript_choise
         end
       end
     end
-    object MorzeTab: TTabSheet
-      Caption = #1064#1080#1092#1086#1088#1074#1072#1085#1080#1077' '#1087#1088#1080' '#1087#1086#1084#1086#1096#1080' '#1072#1079#1073#1091#1082#1080' '#1084#1086#1088#1079#1077
+    object CezarTab: TTabSheet
+      Caption = #1064#1080#1092#1086#1088#1074#1072#1085#1080#1077' '#1087#1088#1080' '#1087#1086#1084#1086#1096#1080' '#1096#1080#1088#1072' '#1062#1077#1079#1072#1088#1103
       ImageIndex = 1
+      object cryprmainBox: TGroupBox
+        Left = 0
+        Top = 0
+        Width = 1102
+        Height = 217
+        Align = alTop
+        Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 0
+        ExplicitLeft = 3
+        object cryptcondBox: TGroupBox
+          Left = 2
+          Top = 15
+          Width = 1098
+          Height = 146
+          Align = alTop
+          Caption = #1042#1093#1086#1076#1085#1099#1077' '#1091#1089#1083#1086#1074#1080#1103
+          TabOrder = 0
+          ExplicitLeft = -6
+          DesignSize = (
+            1098
+            146)
+          object Radioruslng: TRadioButton
+            Left = 96
+            Top = 16
+            Width = 113
+            Height = 17
+            Caption = #1056#1091#1089#1089#1082#1080#1081' '#1090#1077#1082#1089#1090
+            TabOrder = 0
+          end
+          object Radioenglng: TRadioButton
+            Left = 231
+            Top = 16
+            Width = 130
+            Height = 17
+            Caption = #1040#1085#1075#1083#1080#1081#1089#1082#1080#1081' '#1090#1077#1082'c'#1090
+            TabOrder = 1
+          end
+          object Radiomixed: TRadioButton
+            Left = 416
+            Top = 16
+            Width = 113
+            Height = 17
+            Caption = #1057#1084#1077#1096#1072#1085#1085#1099#1081
+            TabOrder = 2
+          end
+          object orignPasinp: TLabeledEdit
+            Left = 3
+            Top = 50
+            Width = 1087
+            Height = 21
+            Anchors = [akLeft, akRight]
+            EditLabel.Width = 93
+            EditLabel.Height = 13
+            EditLabel.Caption = #1048#1089#1093#1086#1076#1085#1099#1081'  '#1087#1072#1088#1086#1083#1100
+            TabOrder = 3
+          end
+          object shift_inp: TLabeledEdit
+            Left = 24
+            Top = 106
+            Width = 1066
+            Height = 21
+            Anchors = [akLeft, akRight]
+            EditLabel.Width = 31
+            EditLabel.Height = 13
+            EditLabel.Caption = #1057#1076#1074#1080#1075
+            TabOrder = 4
+            Text = '0'
+          end
+          object shift_grader: TUpDown
+            Left = 3
+            Top = 106
+            Width = 18
+            Height = 21
+            AlignButton = udLeft
+            Associate = shift_inp
+            TabOrder = 5
+          end
+        end
+      end
     end
     object TabSheet3: TTabSheet
       Caption = 'TabSheet3'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 1038
-      ExplicitHeight = 0
     end
     object TabSheet4: TTabSheet
       Caption = 'TabSheet4'
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 1038
-      ExplicitHeight = 0
     end
     object TabSheet5: TTabSheet
       Caption = 'TabSheet5'
       ImageIndex = 4
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 1038
-      ExplicitHeight = 0
     end
   end
 end

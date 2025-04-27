@@ -4,7 +4,7 @@ object Frm_cript_choise: TFrm_cript_choise
   BorderStyle = bsDialog
   Caption = #1060#1086#1088#1084#1072' '#1074#1099#1073#1086#1088#1072' '#1096#1080#1092#1088#1086#1074#1072#1085#1080#1103' '#1076#1083#1103' '#1087#1072#1088#1086#1083#1103
   ClientHeight = 533
-  ClientWidth = 1110
+  ClientWidth = 1118
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,22 +20,21 @@ object Frm_cript_choise: TFrm_cript_choise
   object cript_inp_box: TGroupBox
     Left = 0
     Top = 0
-    Width = 1110
+    Width = 1118
     Height = 121
     Align = alTop
     Caption = #1042#1099#1073#1086#1088' '#1096#1080#1092#1088#1086#1074#1072#1085#1080#1103' '#1076#1083#1103' '#1087#1072#1088#1086#1083#1103
     TabOrder = 0
-    ExplicitWidth = 1046
+    ExplicitWidth = 1110
     object oldpasBox: TGroupBox
       Left = 2
       Top = 72
-      Width = 1106
+      Width = 1114
       Height = 47
       Align = alBottom
       Caption = 'C'#1090#1072#1088#1099#1081' '#1087#1072#1088#1086#1083#1100
       TabOrder = 0
-      ExplicitLeft = 1
-      ExplicitWidth = 1042
+      ExplicitWidth = 1106
       object aldpasslbl: TLabel
         Left = 272
         Top = 16
@@ -54,7 +53,7 @@ object Frm_cript_choise: TFrm_cript_choise
     object passKindCombo: TComboBox
       Left = 3
       Top = 45
-      Width = 1093
+      Width = 1101
       Height = 21
       Align = alCustom
       Anchors = [akLeft, akRight]
@@ -67,52 +66,50 @@ object Frm_cript_choise: TFrm_cript_choise
         'Morze'
         'Hash'
         'Bloufish')
+      ExplicitWidth = 1093
     end
   end
   object cryortPC: TPageControl
     Left = 0
     Top = 121
-    Width = 1110
+    Width = 1118
     Height = 412
-    ActivePage = RandombaseTab
+    ActivePage = CezarTab
     Align = alClient
     TabOrder = 1
     OnChange = cryortPCChange
-    ExplicitLeft = 8
-    ExplicitTop = 113
-    ExplicitWidth = 1046
+    ExplicitWidth = 1110
     object RandombaseTab: TTabSheet
       Caption = #1064#1080#1092#1088#1086#1074#1072#1085#1080#1077' '#1085#1072' '#1073#1072#1079#1077' '#1043#1077#1085#1077#1088#1072#1090#1086#1088#1072' '#1089#1083#1091#1095#1072#1081#1085#1099#1093' '#1095#1080#1089#1077#1083
-      ExplicitLeft = 5
-      ExplicitWidth = 1038
+      ExplicitWidth = 1102
       object rb_input_box: TGroupBox
         Left = 0
         Top = 0
-        Width = 1102
+        Width = 1110
         Height = 193
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        ExplicitWidth = 1038
+        ExplicitWidth = 1102
         DesignSize = (
-          1102
+          1110
           193)
         object rnd_base_out_pass: TLabeledEdit
           Left = 26
           Top = 117
-          Width = 1063
+          Width = 1071
           Height = 21
           Anchors = [akLeft, akRight]
           EditLabel.Width = 72
           EditLabel.Height = 13
           EditLabel.Caption = #1053#1086#1074#1099#1081' '#1087#1072#1088#1086#1083#1100
           TabOrder = 0
-          ExplicitWidth = 999
+          ExplicitWidth = 1063
         end
         object rnd_base_sym_amoount_inp: TLabeledEdit
           Left = 26
           Top = 32
-          Width = 1063
+          Width = 1071
           Height = 21
           Anchors = [akLeft, akRight]
           EditLabel.Width = 155
@@ -120,10 +117,10 @@ object Frm_cript_choise: TFrm_cript_choise
           EditLabel.Caption = #1050#1086#1083#1080#1095#1077#1089#1090#1074#1086' '#1089#1080#1084#1086#1074#1086#1083#1086#1074' '#1087#1072#1088#1086#1083#1103
           TabOrder = 1
           Text = '0'
-          ExplicitWidth = 999
+          ExplicitWidth = 1063
         end
         object rnd_base_grader: TUpDown
-          Left = 3
+          Left = 10
           Top = 32
           Width = 17
           Height = 21
@@ -134,11 +131,11 @@ object Frm_cript_choise: TFrm_cript_choise
         object rnd_base_btn_box: TGroupBox
           Left = 2
           Top = 144
-          Width = 1098
+          Width = 1106
           Height = 47
           Align = alBottom
           TabOrder = 3
-          ExplicitWidth = 1034
+          ExplicitWidth = 1098
           object rnd_base_init_Btn: TButton
             Left = 208
             Top = 16
@@ -151,25 +148,126 @@ object Frm_cript_choise: TFrm_cript_choise
         end
       end
     end
-    object TabSheet2: TTabSheet
-      Caption = 'TabSheet2'
+    object CezarTab: TTabSheet
+      Caption = #1064#1080#1092#1086#1088#1074#1072#1085#1080#1077' '#1087#1088#1080' '#1087#1086#1084#1086#1096#1080' '#1096#1080#1088#1072' '#1062#1077#1079#1072#1088#1103
       ImageIndex = 1
-      ExplicitWidth = 1038
+      ExplicitWidth = 1102
+      object cryprmainBox: TGroupBox
+        Left = 0
+        Top = 0
+        Width = 1110
+        Height = 217
+        Align = alTop
+        Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 0
+        ExplicitLeft = 3
+        ExplicitWidth = 1102
+        object cryptcondBox: TGroupBox
+          Left = 2
+          Top = 15
+          Width = 1106
+          Height = 146
+          Align = alTop
+          Caption = #1042#1093#1086#1076#1085#1099#1077' '#1091#1089#1083#1086#1074#1080#1103
+          TabOrder = 0
+          ExplicitLeft = -6
+          ExplicitWidth = 1098
+          DesignSize = (
+            1106
+            146)
+          object Radioruslng: TRadioButton
+            Left = 96
+            Top = 16
+            Width = 113
+            Height = 17
+            Caption = #1056#1091#1089#1089#1082#1080#1081' '#1090#1077#1082#1089#1090
+            TabOrder = 0
+          end
+          object Radioenglng: TRadioButton
+            Left = 231
+            Top = 16
+            Width = 130
+            Height = 17
+            Caption = #1040#1085#1075#1083#1080#1081#1089#1082#1080#1081' '#1090#1077#1082'c'#1090
+            TabOrder = 1
+          end
+          object Radiomixed: TRadioButton
+            Left = 416
+            Top = 16
+            Width = 113
+            Height = 17
+            Caption = #1057#1084#1077#1096#1072#1085#1085#1099#1081
+            TabOrder = 2
+          end
+          object orignPasinp: TLabeledEdit
+            Left = 3
+            Top = 50
+            Width = 1095
+            Height = 21
+            Anchors = [akLeft, akRight]
+            EditLabel.Width = 93
+            EditLabel.Height = 13
+            EditLabel.Caption = #1048#1089#1093#1086#1076#1085#1099#1081'  '#1087#1072#1088#1086#1083#1100
+            TabOrder = 3
+            ExplicitWidth = 1087
+          end
+          object shift_inp: TLabeledEdit
+            Left = 24
+            Top = 106
+            Width = 1074
+            Height = 21
+            Anchors = [akLeft, akRight]
+            EditLabel.Width = 31
+            EditLabel.Height = 13
+            EditLabel.Caption = #1057#1076#1074#1080#1075
+            TabOrder = 4
+            Text = '0'
+            ExplicitWidth = 1066
+          end
+          object shift_grader: TUpDown
+            Left = 3
+            Top = 106
+            Width = 18
+            Height = 21
+            AlignButton = udLeft
+            Associate = shift_inp
+            TabOrder = 5
+          end
+        end
+        object cezarbtnBox: TGroupBox
+          Left = 2
+          Top = 156
+          Width = 1106
+          Height = 59
+          Align = alBottom
+          TabOrder = 1
+          ExplicitTop = 110
+          ExplicitWidth = 1098
+          object cezarinitBtn: TButton
+            Left = 488
+            Top = 24
+            Width = 75
+            Height = 25
+            Caption = #1047#1072#1096#1080#1092#1088#1086#1074#1072#1090#1100
+            TabOrder = 0
+          end
+        end
+      end
     end
     object TabSheet3: TTabSheet
       Caption = 'TabSheet3'
       ImageIndex = 2
-      ExplicitWidth = 1038
+      ExplicitWidth = 1102
     end
     object TabSheet4: TTabSheet
       Caption = 'TabSheet4'
       ImageIndex = 3
-      ExplicitWidth = 1038
+      ExplicitWidth = 1102
     end
     object TabSheet5: TTabSheet
       Caption = 'TabSheet5'
       ImageIndex = 4
-      ExplicitWidth = 1038
+      ExplicitWidth = 1102
     end
   end
 end

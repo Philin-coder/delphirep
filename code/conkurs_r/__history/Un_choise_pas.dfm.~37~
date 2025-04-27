@@ -4,7 +4,7 @@ object Frm_cript_choise: TFrm_cript_choise
   BorderStyle = bsDialog
   Caption = #1060#1086#1088#1084#1072' '#1074#1099#1073#1086#1088#1072' '#1096#1080#1092#1088#1086#1074#1072#1085#1080#1103' '#1076#1083#1103' '#1087#1072#1088#1086#1083#1103
   ClientHeight = 533
-  ClientWidth = 1395
+  ClientWidth = 1269
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,7 +20,7 @@ object Frm_cript_choise: TFrm_cript_choise
   object cript_inp_box: TGroupBox
     Left = 0
     Top = 0
-    Width = 1395
+    Width = 1269
     Height = 121
     Align = alTop
     Caption = #1042#1099#1073#1086#1088' '#1096#1080#1092#1088#1086#1074#1072#1085#1080#1103' '#1076#1083#1103' '#1087#1072#1088#1086#1083#1103
@@ -29,7 +29,7 @@ object Frm_cript_choise: TFrm_cript_choise
     object oldpasBox: TGroupBox
       Left = 2
       Top = 72
-      Width = 1391
+      Width = 1265
       Height = 47
       Align = alBottom
       Caption = 'C'#1090#1072#1088#1099#1081' '#1087#1072#1088#1086#1083#1100
@@ -51,9 +51,9 @@ object Frm_cript_choise: TFrm_cript_choise
       TabOrder = 1
     end
     object passKindCombo: TComboBox
-      Left = 2
+      Left = 3
       Top = 45
-      Width = 1379
+      Width = 1252
       Height = 21
       Align = alCustom
       Anchors = [akLeft, akRight]
@@ -66,13 +66,13 @@ object Frm_cript_choise: TFrm_cript_choise
         'Morze'
         'Hash'
         'Bloufish')
-      ExplicitWidth = 1253
+      ExplicitWidth = 1093
     end
   end
   object cryortPC: TPageControl
     Left = 0
     Top = 121
-    Width = 1395
+    Width = 1269
     Height = 412
     ActivePage = CezarTab
     Align = alClient
@@ -85,19 +85,19 @@ object Frm_cript_choise: TFrm_cript_choise
       object rb_input_box: TGroupBox
         Left = 0
         Top = 0
-        Width = 1387
+        Width = 1261
         Height = 193
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
         ExplicitWidth = 1102
         DesignSize = (
-          1387
+          1261
           193)
         object rnd_base_out_pass: TLabeledEdit
           Left = 26
           Top = 117
-          Width = 1348
+          Width = 1222
           Height = 21
           Anchors = [akLeft, akRight]
           EditLabel.Width = 72
@@ -109,7 +109,7 @@ object Frm_cript_choise: TFrm_cript_choise
         object rnd_base_sym_amoount_inp: TLabeledEdit
           Left = 26
           Top = 32
-          Width = 1348
+          Width = 1222
           Height = 21
           Anchors = [akLeft, akRight]
           EditLabel.Width = 155
@@ -131,7 +131,7 @@ object Frm_cript_choise: TFrm_cript_choise
         object rnd_base_btn_box: TGroupBox
           Left = 2
           Top = 144
-          Width = 1383
+          Width = 1257
           Height = 47
           Align = alBottom
           TabOrder = 3
@@ -155,7 +155,7 @@ object Frm_cript_choise: TFrm_cript_choise
       object cryprmainBox: TGroupBox
         Left = 0
         Top = 0
-        Width = 1387
+        Width = 1261
         Height = 305
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
@@ -164,7 +164,7 @@ object Frm_cript_choise: TFrm_cript_choise
         object cryptcondBox: TGroupBox
           Left = 2
           Top = 15
-          Width = 1383
+          Width = 1257
           Height = 210
           Align = alTop
           Caption = #1042#1093#1086#1076#1085#1099#1077' '#1091#1089#1083#1086#1074#1080#1103
@@ -199,68 +199,69 @@ object Frm_cript_choise: TFrm_cript_choise
           object GroupBox1: TGroupBox
             Left = 2
             Top = 15
-            Width = 1379
+            Width = 1253
             Height = 193
             Align = alClient
             Caption = #1055#1072#1088#1072#1084#1077#1090#1088#1099
             TabOrder = 3
             ExplicitWidth = 1243
             DesignSize = (
-              1379
+              1253
               193)
             object orignPasinp: TLabeledEdit
-              Left = 0
-              Top = 44
-              Width = 1376
-              Height = 29
+              Left = 3
+              Top = 60
+              Width = 1208
+              Height = 21
               Anchors = [akLeft, akRight]
               EditLabel.Width = 93
               EditLabel.Height = 13
               EditLabel.Caption = #1048#1089#1093#1086#1076#1085#1099#1081'  '#1087#1072#1088#1086#1083#1100
               TabOrder = 0
-              ExplicitWidth = 1250
+              ExplicitWidth = 1198
             end
             object shift_inp: TLabeledEdit
-              Left = 0
-              Top = 104
-              Width = 1376
-              Height = 33
+              Left = 38
+              Top = 112
+              Width = 1173
+              Height = 21
               Anchors = [akLeft, akRight]
               EditLabel.Width = 31
               EditLabel.Height = 13
               EditLabel.Caption = #1057#1076#1074#1080#1075
               TabOrder = 1
               Text = '0'
-              ExplicitWidth = 1250
+              ExplicitWidth = 1163
             end
             object shift_grader: TUpDown
-              Left = -18
-              Top = 104
-              Width = 48
-              Height = 22
+              Left = 26
+              Top = 121
+              Width = 16
+              Height = 21
               AlignButton = udLeft
               Anchors = [akRight]
               Associate = shift_inp
               TabOrder = 2
+              ExplicitLeft = 16
             end
             object newPasinp: TLabeledEdit
               Left = 8
-              Top = 151
-              Width = 1368
+              Top = 167
+              Width = 1203
               Height = 21
               Anchors = [akLeft, akRight]
               EditLabel.Width = 75
               EditLabel.Height = 13
               EditLabel.Caption = #1053#1086#1074#1099#1081'  '#1087#1072#1088#1086#1083#1100
               TabOrder = 3
-              ExplicitWidth = 1242
+              ExplicitWidth = 1193
             end
           end
         end
         object cezarbtnBox: TGroupBox
           Left = 2
           Top = 240
-          Width = 1383
+          Width = 1257
           Height = 63
           Align = alBottom
           TabOrder = 1

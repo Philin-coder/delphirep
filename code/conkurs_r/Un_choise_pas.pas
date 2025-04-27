@@ -30,15 +30,20 @@ type
     Radioruslng: TRadioButton;
     Radioenglng: TRadioButton;
     Radiomixed: TRadioButton;
+    cezarbtnBox: TGroupBox;
+    cezarinitBtn: TButton;
+    GroupBox1: TGroupBox;
     orignPasinp: TLabeledEdit;
     shift_inp: TLabeledEdit;
     shift_grader: TUpDown;
+    newPasinp: TLabeledEdit;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure passKindComboChange(Sender: TObject);
     procedure cryortPCChange(Sender: TObject);
     procedure rnd_base_init_BtnClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
+    procedure RadiomixedClick(Sender: TObject);
   private
     get_pas:string;
     procedure SyncTabControlAndComboBox(Sender: TObject);
@@ -87,7 +92,8 @@ end;
 
 procedure TFrm_cript_choise.FormActivate(Sender: TObject);
 begin
-aldpasslbl.Caption:=get_pas;
+  aldpasslbl.Caption:=get_pas;
+  orignPasinp.Text:=trim(aldpasslbl.Caption);
 end;
 
 procedure TFrm_cript_choise.FormClose(Sender: TObject;
@@ -120,6 +126,24 @@ procedure TFrm_cript_choise.passKindComboChange(Sender: TObject);
 begin
     SyncTabControlAndComboBox(Sender);
 end;
+
+procedure TFrm_cript_choise.RadiomixedClick(Sender: TObject);
+var
+  EncryptedText: string;
+begin
+if Radiomixed.Checked then
+begin
+try
+EncryptedText := EncryptCaesarFromComponent(orignPasinp, shift_grader.Position,
+emMixed);
+    newPasinp.Text:= EncryptedText;
+  except
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
+end;
+end;
+
 
 procedure TFrm_cript_choise.rnd_base_init_BtnClick(Sender: TObject);
   var rnd_string:string;

@@ -15,7 +15,7 @@ type
     passKindCombo: TComboBox;
     cryortPC: TPageControl;
     RandombaseTab: TTabSheet;
-    TabSheet2: TTabSheet;
+    CezarTab: TTabSheet;
     TabSheet3: TTabSheet;
     TabSheet4: TTabSheet;
     TabSheet5: TTabSheet;
@@ -25,11 +25,20 @@ type
     rnd_base_grader: TUpDown;
     rnd_base_btn_box: TGroupBox;
     rnd_base_init_Btn: TButton;
+    cryprmainBox: TGroupBox;
+    cryptcondBox: TGroupBox;
+    Radioruslng: TRadioButton;
+    Radioenglng: TRadioButton;
+    Radiomixed: TRadioButton;
+    orignPasinp: TLabeledEdit;
+    shift_inp: TLabeledEdit;
+    shift_grader: TUpDown;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure passKindComboChange(Sender: TObject);
     procedure cryortPCChange(Sender: TObject);
     procedure rnd_base_init_BtnClick(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
   private
     get_pas:string;
     procedure SyncTabControlAndComboBox(Sender: TObject);
@@ -60,12 +69,14 @@ begin
   begin
     case cryortPC.TabIndex of
       0: passKindCombo.ItemIndex := 0;
+      1: passKindCombo.ItemIndex := 1;
     end;
   end
   else
   begin
     case passKindCombo.ItemIndex of
       0: cryortPC.ActivePage := RandombaseTab;
+      1: cryortPC.ActivePage := CezarTab;
     end;
   end;
 end;
@@ -74,11 +85,17 @@ begin
    SyncTabControlAndComboBox(Sender);
 end;
 
+procedure TFrm_cript_choise.FormActivate(Sender: TObject);
+begin
+aldpasslbl.Caption:=get_pas;
+end;
+
 procedure TFrm_cript_choise.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
     SaveFormState(Self);
     CloseAllQueriesOnDataModule('dm');
+    rnd_base_grader.Position:=0;
 end;
 
 procedure TFrm_cript_choise.FormCreate(Sender: TObject);
@@ -89,7 +106,14 @@ begin
  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
  LoadFormState(Self);
+ rnd_base_grader.Min:=4;
  Randomize;
+  try
+    FormatLabel('aldpasslbl', Self, 14, 'Arial', clGreen);
+  except
+    on E: Exception do
+      ShowMessage(E.Message); // Отображаем сообщение об ошибке
+  end;
 end;
 
 procedure TFrm_cript_choise.passKindComboChange(Sender: TObject);
