@@ -86,7 +86,6 @@ except
 Frm_change_pass_quest.Free;
 raise;
 end;
-
   end
   else
   begin

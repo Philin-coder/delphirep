@@ -1,0 +1,49 @@
+unit Un_choise_pas;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls,adodb,db;
+
+type
+  TFrm_cript_choise = class(TForm)
+    cript_inp_box: TGroupBox;
+    oldpasBox: TGroupBox;
+    aldpasslbl: TLabel;
+    pass_choiche_lbl: TStaticText;
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_cript_choise: TFrm_cript_choise;
+
+implementation
+
+uses change_pas_quest, Un_dm, Un_func;
+
+{$R *.dfm}
+
+procedure TFrm_cript_choise.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+    SaveFormState(Self);
+    CloseAllQueriesOnDataModule('dm');
+end;
+
+procedure TFrm_cript_choise.FormCreate(Sender: TObject);
+begin
+ Frm_cript_choise.KeyPreview:=true;
+ Frm_cript_choise.ShowHint:=true;
+ UniformizeButtonsSize(Self,  273, 25);
+ UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+ UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+ LoadFormState(Self);
+end;
+
+end.

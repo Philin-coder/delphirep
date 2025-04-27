@@ -32,7 +32,7 @@ var
 
 implementation
 
-uses Un_dm, Un_func, Un_pass_autor;
+uses Un_dm, Un_func, Un_pass_autor, Un_choise_pas;
 
 {$R *.dfm}
 procedure TFrm_change_pass_quest.SetNumber(const Value: Integer);
@@ -46,7 +46,15 @@ begin
    if test_lbl.Caption='Правильно!' 
    then 
    begin
-   
+   try
+UpdateFormProperties('Frm_cript_choise',
+'Форма выбора шифрования для пароля',
+clBtnFace, 1024, 768);
+ Frm_cript_choise.ShowModal;
+except
+Frm_cript_choise.Free;
+raise;
+end;
    end
    else exit;
    
@@ -55,7 +63,7 @@ end;
 procedure TFrm_change_pass_quest.answerinpKeyPress(Sender: TObject;
   var Key: Char);
 begin
-         if not (Key in ['0'..'9', #8]) then
+if not (Key in ['0'..'9', #8]) then
   begin
     ShowMessage('Разрешен ввод только цифр!');
     Key := #0; 

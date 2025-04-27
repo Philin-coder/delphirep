@@ -16,5 +16,7 @@
     <Transaction>2025.04.26 10:38:35.312.dfm,F:\code\Result\delphi\code\conkurs_r\Un_report.dfm=F:\code\Result\delphi\code\conkurs_r\Un_pass_autor.dfm</Transaction>
     <Transaction>2025.04.26 22:47:26.991.pas,F:\code\Result\delphi\code\conkurs_r\Unit1.pas=F:\code\Result\delphi\code\conkurs_r\change_pas_quest.pas</Transaction>
     <Transaction>2025.04.26 22:47:26.991.dfm,F:\code\Result\delphi\code\conkurs_r\Unit1.dfm=F:\code\Result\delphi\code\conkurs_r\change_pas_quest.dfm</Transaction>
+    <Transaction>2025.04.27 12:18:37.805.pas,F:\code\Result\delphi\code\conkurs_r\Unit1.pas=F:\code\Result\delphi\code\conkurs_r\Un_choise_pas.pas</Transaction>
+    <Transaction>2025.04.27 12:18:37.805.dfm,F:\code\Result\delphi\code\conkurs_r\Unit1.dfm=F:\code\Result\delphi\code\conkurs_r\Un_choise_pas.dfm</Transaction>
   </Transactions>
 </BorlandProject>
