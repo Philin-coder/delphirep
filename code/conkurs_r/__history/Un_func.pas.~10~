@@ -23,6 +23,7 @@ ImgList,
 db,
 adodb,
 ComObj,
+math,
 ExtCtrls;
 function AddNumbers(num1, num2: Integer): Integer; stdcall;
   external 'mylib.dll' name 'AddNumbers';
@@ -32,6 +33,10 @@ const
   EM_LINEINDEX = $BB;
 type
   TSysCharSet = set of Char;
+  type
+    symmx=array[1..155] of Byte;
+var
+  symcount:Integer;
 var
   VisitedStaticTexts: TStringList;
 function  DateToStr_(Dat : TDate): String;
@@ -121,7 +126,12 @@ procedure CheckAndCreateHelpFolder;
 procedure SaveRichEditToFile(RichEdit: TRichEdit; SaveDialog: TSaveDialog);
 procedure AppendRichEditToIniFile(RichEdit: TRichEdit; const FileName: string);
 procedure LoadTextFromFile(const FileName: string; RichTextEdit: TRichEdit);
-procedure runmathquiz;
+ procedure GenerateMathQuiz(CaptchaLabel: TLabel; ResultLabel: TStaticText);
+ procedure FormatPanelCaption(const PanelName: string; AForm: TForm;
+  FontName: string; FontSize: Integer; FontColor: TColor);
+  procedure CheckMathQuizAnswer(CaptchaLabel: TLabel; InputBox: TLabeledEdit;
+ ResultLabel: TStaticText);
+ Procedure get_rnd_char(symcount:Integer);
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -1819,49 +1829,113 @@ begin
     FileStream.Free;
   end;
 end;
-procedure runmathquiz;
+procedure GenerateMathQuiz(CaptchaLabel: TLabel; ResultLabel: TStaticText);
 var
-  Num1,
-  Num2,
-  CorrectAnswer,
-  UserAnswer: Integer;
-  var inputStr:string;
+  Num1, Num2: Integer;
 begin
- Randomize;
- Num1 := Random(10);
+  Randomize;
+
+  // Ãåíåğàöèÿ ñëó÷àéíûõ ÷èñåë
+  Num1 := Random(10);
   Num2 := Random(10);
-  ShowMessage(IntToStr(Num1));
-    ShowMessage(IntToStr(Num2));
-  CorrectAnswer :=AddNumbers(Num1, Num2);
-   ShowMessage('Ğåçóëüòàò: ' + IntToStr(CorrectAnswer));
-  // Çàïğîñ îòâåòà ïîëüçîâàòåëÿ ÷åğåç InputQuery
-  if not InputQuery('Îòâåò', 'Ñêîëüêî áóäåò ' + IntToStr(Num1) + ' + ' +
-  IntToStr(Num2) + '?', InputStr) then
+
+  // Íàñòğîéêà ìåòêè ñ ìàòåìàòè÷åñêèì âûğàæåíèåì
+  with CaptchaLabel do
   begin
-    ShowMessage('Îïåğàöèÿ îòìåíåíà ïîëüçîâàòåëåì.');
+    Caption := IntToStr(Num1) + ' + ' + IntToStr(Num2);
+    Font.Size := RandomRange(12, 20); // Ñëó÷àéíûé ğàçìåğ øğèôòà
+    Font.Color := RGB(Random(256), Random(256), Random(256)); // Ñëó÷àéíûé öâåò
+    Font.Style := [fsBold]; // Æèğíûé øğèôò
+  end;
+
+  // Âûâîä âîïğîñà â ResultLabel
+  ResultLabel.Caption := 'Ñêîëüêî áóäåò ' + CaptchaLabel.Caption + '?';
+end;
+procedure FormatPanelCaption(const PanelName: string; AForm: TForm;
+  FontName: string; FontSize: Integer; FontColor: TColor);
+var
+  Component: TComponent;
+  Panel: TPanel;
+begin
+  // Íàõîäèì êîìïîíåíò ïî èìåíè â êîíòåêñòå ôîğìû
+  Component := AForm.FindComponent(PanelName);
+
+  // Ïğîâåğÿåì, ÷òî êîìïîíåíò íàéäåí è ÿâëÿåòñÿ TPanel
+  if not Assigned(Component) or not (Component is TPanel) then
+  begin
+    raise Exception.CreateFmt('Êîìïîíåíò "%s" íå íàéäåí èëè íå ÿâëÿåòñÿ TPanel.', [PanelName]);
+  end;
+
+  // Ïğèâîäèì êîìïîíåíò ê òèïó TPanel
+  Panel := TPanel(Component);
+
+  // Óñòàíàâëèâàåì ïàğàìåòğû øğèôòà
+  if Assigned(Panel.Font) then
+  begin
+    Panel.Font.Name := FontName;   // Óñòàíàâëèâàåì íàçâàíèå øğèôòà
+    Panel.Font.Size := FontSize;   // Óñòàíàâëèâàåì ğàçìåğ øğèôòà
+    Panel.Font.Color := FontColor; // Óñòàíàâëèâàåì öâåò øğèôòà
+  end;
+
+  // Îáíîâëÿåì òåêñò Caption (íåîáÿçàòåëüíî)
+  Panel.Caption := Panel.Caption;
+end;
+ procedure CheckMathQuizAnswer(CaptchaLabel: TLabel; InputBox: TLabeledEdit;
+ ResultLabel: TStaticText);
+var
+  Num1, Num2, CorrectAnswer, UserAnswer: Integer;
+  InputStr: string;
+begin
+  // Ïîëó÷åíèå ÷èñåë èç CaptchaLabel
+  Num1 := StrToInt(Copy(CaptchaLabel.Caption, 1, Pos(' + ', CaptchaLabel.Caption) - 1));
+  Num2 := StrToInt(Copy(CaptchaLabel.Caption, Pos(' + ', CaptchaLabel.Caption) + 3, Length(CaptchaLabel.Caption)));
+
+  // Âû÷èñëåíèå ïğàâèëüíîãî îòâåòà
+  CorrectAnswer := AddNumbers(Num1, Num2);
+
+  // Ïîëó÷åíèå ââåäåííîãî òåêñòà
+  InputStr := Trim(InputBox.Text);
+
+  // Ïğîâåğêà, ÷òî ïîëüçîâàòåëü ââåë ÷òî-òî
+  if InputStr = '' then
+  begin
+    ResultLabel.Caption := 'Îøèáêà: âû íå ââåëè îòâåò.';
     Exit;
   end;
-    // Ïğîâåğêà íà ïóñòîé ââîä
-InputStr := Trim(InputStr); // Óäàëåíèå ëèøíèõ ïğîáåëîâ
-if InputStr = '' then
-begin
-  ShowMessage('Îøèáêà: âû íå ââåëè îòâåò.');
-  Exit;
-end;
-  // Ïğåîáğàçîâàíèå ââåäåííîãî îòâåòà â ÷èñëî
+
+  // Ïğåîáğàçîâàíèå ââåäåííîãî òåêñòà â ÷èñëî
   try
     UserAnswer := StrToInt(InputStr);
   except
     on E: EConvertError do
     begin
-      ShowMessage('Îøèáêà: ââåäåííûå äàííûå íå ÿâëÿşòñÿ ÷èñëîì.');
+      ResultLabel.Caption := 'Îøèáêà: ââåäåííûå äàííûå íå ÿâëÿşòñÿ ÷èñëîì.';
       Exit;
     end;
   end;
   if UserAnswer = CorrectAnswer then
-    ShowMessage('Ïğàâèëüíî!')
+    ResultLabel.Caption := 'Ïğàâèëüíî!'
   else
-    ShowMessage(Format('Íåïğàâèëüíî! Ïğàâèëüíûé îòâåò: %d.', [CorrectAnswer]));
+    ResultLabel.Caption := Format('Íåïğàâèëüíî! Ïğàâèëüíûé îòâåò: %d.', [CorrectAnswer]);
+end;
+
+Procedure get_rnd_char(symcount:Integer);
+var x:symmx;
+var i:Integer;
+begin
+for I:=1 to symcount do
+begin
+Randomize;
+x[i]:=Random(59)+64;
+end;
+for I := 1 to symcount do
+begin
+//if (x[i]>97)and (x[i]<122) then
+
+//fmain.Form1.LabeledEdit1.Text:=fmain.Form1.LabeledEdit1.Text+' '+IntToStr(x[i]);
+fmain.Form1.LabeledEdit1.Text:=fmain.Form1.LabeledEdit1.Text+' '+chr(x[i]);
+
+end;
 end;
 
 initialization

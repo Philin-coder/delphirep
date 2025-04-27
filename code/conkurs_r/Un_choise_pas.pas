@@ -29,6 +29,7 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure passKindComboChange(Sender: TObject);
     procedure cryortPCChange(Sender: TObject);
+    procedure rnd_base_init_BtnClick(Sender: TObject);
   private
           procedure SyncTabControlAndComboBox(Sender: TObject);
   public
@@ -86,6 +87,14 @@ end;
 procedure TFrm_cript_choise.passKindComboChange(Sender: TObject);
 begin
     SyncTabControlAndComboBox(Sender);
+end;
+
+procedure TFrm_cript_choise.rnd_base_init_BtnClick(Sender: TObject);
+  var rnd_string:string;
+begin
+  Randomize;
+  rnd_string:=get_rnd_char(rnd_base_grader.Position);
+  rnd_base_out_pass.Text:=rnd_base_out_pass.Text+rnd_string;
 end;
 
 end.

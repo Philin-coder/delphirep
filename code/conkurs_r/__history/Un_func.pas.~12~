@@ -34,7 +34,7 @@ const
 type
   TSysCharSet = set of Char;
   type
-    symmx=array[1..255] of Byte;
+    symmx=array[1..155] of Byte;
 var
   symcount:Integer;
 var
@@ -1919,10 +1919,9 @@ begin
     ResultLabel.Caption := Format('Неправильно! Правильный ответ: %d.', [CorrectAnswer]);
 end;
 function get_rnd_char(symcount:Integer):string;
-var
-  x:symmx;
-  i:Integer;
-  Symstr:string;
+var x:symmx;
+var i:Integer;
+Symstr:string;
 begin
 Symstr:='';
 for I:=1 to symcount do
@@ -1933,7 +1932,6 @@ for I := 1 to symcount do
 begin
 Symstr:=Symstr+Chr(x[i]);
 end;
-Result:=Symstr;
 end;
 
 initialization

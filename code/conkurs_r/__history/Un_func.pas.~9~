@@ -33,10 +33,6 @@ const
   EM_LINEINDEX = $BB;
 type
   TSysCharSet = set of Char;
-  type
-    symmx=array[1..255] of Byte;
-var
-  symcount:Integer;
 var
   VisitedStaticTexts: TStringList;
 function  DateToStr_(Dat : TDate): String;
@@ -131,7 +127,6 @@ procedure LoadTextFromFile(const FileName: string; RichTextEdit: TRichEdit);
   FontName: string; FontSize: Integer; FontColor: TColor);
   procedure CheckMathQuizAnswer(CaptchaLabel: TLabel; InputBox: TLabeledEdit;
  ResultLabel: TStaticText);
-function get_rnd_char(symcount:Integer):string;
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -1913,28 +1908,14 @@ begin
       Exit;
     end;
   end;
+
+  // Проверка ответа пользователя
   if UserAnswer = CorrectAnswer then
     ResultLabel.Caption := 'Правильно!'
   else
     ResultLabel.Caption := Format('Неправильно! Правильный ответ: %d.', [CorrectAnswer]);
 end;
-function get_rnd_char(symcount:Integer):string;
-var
-  x:symmx;
-  i:Integer;
-  Symstr:string;
-begin
-Symstr:='';
-for I:=1 to symcount do
-begin
-x[i]:=Random(59)+64;
-end;
-for I := 1 to symcount do
-begin
-Symstr:=Symstr+Chr(x[i]);
-end;
-Result:=Symstr;
-end;
+
 
 initialization
   VisitedStaticTexts := TStringList.Create;

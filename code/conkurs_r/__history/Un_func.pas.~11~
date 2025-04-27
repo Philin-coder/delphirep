@@ -23,6 +23,7 @@ ImgList,
 db,
 adodb,
 ComObj,
+math,
 ExtCtrls;
 function AddNumbers(num1, num2: Integer): Integer; stdcall;
   external 'mylib.dll' name 'AddNumbers';
@@ -32,6 +33,10 @@ const
   EM_LINEINDEX = $BB;
 type
   TSysCharSet = set of Char;
+  type
+    symmx=array[1..155] of Byte;
+var
+  symcount:Integer;
 var
   VisitedStaticTexts: TStringList;
 function  DateToStr_(Dat : TDate): String;
@@ -121,6 +126,12 @@ procedure CheckAndCreateHelpFolder;
 procedure SaveRichEditToFile(RichEdit: TRichEdit; SaveDialog: TSaveDialog);
 procedure AppendRichEditToIniFile(RichEdit: TRichEdit; const FileName: string);
 procedure LoadTextFromFile(const FileName: string; RichTextEdit: TRichEdit);
+ procedure GenerateMathQuiz(CaptchaLabel: TLabel; ResultLabel: TStaticText);
+ procedure FormatPanelCaption(const PanelName: string; AForm: TForm;
+  FontName: string; FontSize: Integer; FontColor: TColor);
+  procedure CheckMathQuizAnswer(CaptchaLabel: TLabel; InputBox: TLabeledEdit;
+ ResultLabel: TStaticText);
+ Procedure get_rnd_char(symcount:Integer);
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -1818,49 +1829,111 @@ begin
     FileStream.Free;
   end;
 end;
-procedure runmathquiz;
+procedure GenerateMathQuiz(CaptchaLabel: TLabel; ResultLabel: TStaticText);
 var
-  Num1,
-  Num2,
-  CorrectAnswer,
-  UserAnswer: Integer;
-  var inputStr:string;
+  Num1, Num2: Integer;
 begin
- Randomize;
- Num1 := Random(10);
+  Randomize;
+
+  // Генерация случайных чисел
+  Num1 := Random(10);
   Num2 := Random(10);
-  ShowMessage(IntToStr(Num1));
-    ShowMessage(IntToStr(Num2));
-  CorrectAnswer :=AddNumbers(Num1, Num2);
-   ShowMessage('Результат: ' + IntToStr(CorrectAnswer));
-  // Запрос ответа пользователя через InputQuery
-  if not InputQuery('Ответ', 'Сколько будет ' + IntToStr(Num1) + ' + ' +
-  IntToStr(Num2) + '?', InputStr) then
+
+  // Настройка метки с математическим выражением
+  with CaptchaLabel do
   begin
-    ShowMessage('Операция отменена пользователем.');
+    Caption := IntToStr(Num1) + ' + ' + IntToStr(Num2);
+    Font.Size := RandomRange(12, 20); // Случайный размер шрифта
+    Font.Color := RGB(Random(256), Random(256), Random(256)); // Случайный цвет
+    Font.Style := [fsBold]; // Жирный шрифт
+  end;
+
+  // Вывод вопроса в ResultLabel
+  ResultLabel.Caption := 'Сколько будет ' + CaptchaLabel.Caption + '?';
+end;
+procedure FormatPanelCaption(const PanelName: string; AForm: TForm;
+  FontName: string; FontSize: Integer; FontColor: TColor);
+var
+  Component: TComponent;
+  Panel: TPanel;
+begin
+  // Находим компонент по имени в контексте формы
+  Component := AForm.FindComponent(PanelName);
+
+  // Проверяем, что компонент найден и является TPanel
+  if not Assigned(Component) or not (Component is TPanel) then
+  begin
+    raise Exception.CreateFmt('Компонент "%s" не найден или не является TPanel.', [PanelName]);
+  end;
+
+  // Приводим компонент к типу TPanel
+  Panel := TPanel(Component);
+
+  // Устанавливаем параметры шрифта
+  if Assigned(Panel.Font) then
+  begin
+    Panel.Font.Name := FontName;   // Устанавливаем название шрифта
+    Panel.Font.Size := FontSize;   // Устанавливаем размер шрифта
+    Panel.Font.Color := FontColor; // Устанавливаем цвет шрифта
+  end;
+
+  // Обновляем текст Caption (необязательно)
+  Panel.Caption := Panel.Caption;
+end;
+ procedure CheckMathQuizAnswer(CaptchaLabel: TLabel; InputBox: TLabeledEdit;
+ ResultLabel: TStaticText);
+var
+  Num1, Num2, CorrectAnswer, UserAnswer: Integer;
+  InputStr: string;
+begin
+  // Получение чисел из CaptchaLabel
+  Num1 := StrToInt(Copy(CaptchaLabel.Caption, 1, Pos(' + ', CaptchaLabel.Caption) - 1));
+  Num2 := StrToInt(Copy(CaptchaLabel.Caption, Pos(' + ', CaptchaLabel.Caption) + 3, Length(CaptchaLabel.Caption)));
+
+  // Вычисление правильного ответа
+  CorrectAnswer := AddNumbers(Num1, Num2);
+
+  // Получение введенного текста
+  InputStr := Trim(InputBox.Text);
+
+  // Проверка, что пользователь ввел что-то
+  if InputStr = '' then
+  begin
+    ResultLabel.Caption := 'Ошибка: вы не ввели ответ.';
     Exit;
   end;
-    // Проверка на пустой ввод
-InputStr := Trim(InputStr); // Удаление лишних пробелов
-if InputStr = '' then
-begin
-  ShowMessage('Ошибка: вы не ввели ответ.');
-  Exit;
-end;
-  // Преобразование введенного ответа в число
+
+  // Преобразование введенного текста в число
   try
     UserAnswer := StrToInt(InputStr);
   except
     on E: EConvertError do
     begin
-      ShowMessage('Ошибка: введенные данные не являются числом.');
+      ResultLabel.Caption := 'Ошибка: введенные данные не являются числом.';
       Exit;
     end;
   end;
   if UserAnswer = CorrectAnswer then
-    ShowMessage('Правильно!')
+    ResultLabel.Caption := 'Правильно!'
   else
-    ShowMessage(Format('Неправильно! Правильный ответ: %d.', [CorrectAnswer]));
+    ResultLabel.Caption := Format('Неправильно! Правильный ответ: %d.', [CorrectAnswer]);
+end;
+Procedure get_rnd_char(symcount:Integer);
+var x:symmx;
+var i:Integer;
+Symstr:string;
+begin
+Symstr:='';
+for I:=1 to symcount do
+begin
+Randomize;
+x[i]:=Random(59)+64;
+end;
+for I := 1 to symcount do
+begin
+Symstr:=' '+chr(x[i]);
+//fmain.Form1.LabeledEdit1.Text:=fmain.Form1.LabeledEdit1.Text+' '+chr(x[i]);
+end;
 end;
 
 initialization
