@@ -4,12 +4,24 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs;
+  Dialogs, StdCtrls,adodb,db, ComCtrls;
 
 type
   TFrm_cript_choise = class(TForm)
+    cript_inp_box: TGroupBox;
+    oldpasBox: TGroupBox;
+    aldpasslbl: TLabel;
+    pass_choiche_lbl: TStaticText;
+    passKindCombo: TComboBox;
+    cryortPC: TPageControl;
+    RandombaseTab: TTabSheet;
+    TabSheet2: TTabSheet;
+    TabSheet3: TTabSheet;
+    TabSheet4: TTabSheet;
+    TabSheet5: TTabSheet;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure passKindComboChange(Sender: TObject);
   private
     { Private declarations }
   public
@@ -40,6 +52,18 @@ begin
  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
  LoadFormState(Self);
+end;
+
+procedure TFrm_cript_choise.passKindComboChange(Sender: TObject);
+begin
+case passKindCombo.ItemIndex of
+0:
+begin
+    cryortPC.ActivePage:=RandombaseTab;
+end;
+
+
+end;//case
 end;
 
 end.

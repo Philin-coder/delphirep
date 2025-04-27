@@ -22,15 +22,11 @@ object Frm_muser: TFrm_muser
     Top = 29
     Width = 1037
     Height = 690
-    ActivePage = delTab
+    ActivePage = selTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
       Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1091#1095#1072#1089#1090#1085#1080#1082#1077
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object m_user_condBox: TGroupBox
         Left = 0
         Top = 0
@@ -295,6 +291,10 @@ object Frm_muser: TFrm_muser
     object upd_tab: TTabSheet
       Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1083#1080#1085#1080#1081' '#1086#1073' '#1091#1095#1072#1089#1090#1085#1080#1082#1077
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object upd_inp_box: TGroupBox
         Left = 0
         Top = 0

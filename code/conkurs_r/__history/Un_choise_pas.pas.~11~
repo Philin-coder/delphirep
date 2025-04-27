@@ -21,10 +21,8 @@ type
     TabSheet5: TTabSheet;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure passKindComboChange(Sender: TObject);
-    procedure cryortPCChange(Sender: TObject);
   private
-          procedure SyncTabControlAndComboBox(Sender: TObject);
+    { Private declarations }
   public
     { Public declarations }
   end;
@@ -37,28 +35,6 @@ implementation
 uses change_pas_quest, Un_dm, Un_func;
 
 {$R *.dfm}
- procedure TFrm_cript_choise.SyncTabControlAndComboBox(Sender: TObject);
-var
-  IsUpdatingFromTab: Boolean;
-begin
-  IsUpdatingFromTab := (Sender = cryortPC);
-  if IsUpdatingFromTab then
-  begin
-    case cryortPC.TabIndex of
-      0: passKindCombo.ItemIndex := 0;
-    end;
-  end
-  else
-  begin
-    case passKindCombo.ItemIndex of
-      0: cryortPC.ActivePage := RandombaseTab;
-    end;
-  end;
-end;
-procedure TFrm_cript_choise.cryortPCChange(Sender: TObject);
-begin
-   SyncTabControlAndComboBox(Sender);
-end;
 
 procedure TFrm_cript_choise.FormClose(Sender: TObject;
   var Action: TCloseAction);
@@ -75,11 +51,6 @@ begin
  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
  LoadFormState(Self);
-end;
-
-procedure TFrm_cript_choise.passKindComboChange(Sender: TObject);
-begin
-    SyncTabControlAndComboBox(Sender);
 end;
 
 end.

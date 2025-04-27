@@ -21,10 +21,10 @@ type
     TabSheet5: TTabSheet;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure passKindComboChange(Sender: TObject);
-    procedure cryortPCChange(Sender: TObject);
+    procedure RandombaseTabContextPopup(Sender: TObject; MousePos: TPoint;
+      var Handled: Boolean);
   private
-          procedure SyncTabControlAndComboBox(Sender: TObject);
+         procedure SyncTabControlAndComboBox;
   public
     { Public declarations }
   end;
@@ -37,27 +37,27 @@ implementation
 uses change_pas_quest, Un_dm, Un_func;
 
 {$R *.dfm}
- procedure TFrm_cript_choise.SyncTabControlAndComboBox(Sender: TObject);
+ procedure TFrm_cript_choise.SyncTabControlAndComboBox;
 var
-  IsUpdatingFromTab: Boolean;
+  IsUpdatingFromTab: Boolean; // Логическая переменная для отслеживания контекста
 begin
+  // Определяем, вызывается ли процедура из обработчика TabControl или ComboBox
   IsUpdatingFromTab := (Sender = cryortPC);
+
   if IsUpdatingFromTab then
   begin
+    // Если вызов из TabControl, обновляем ComboBox
     case cryortPC.TabIndex of
       0: passKindCombo.ItemIndex := 0;
     end;
   end
   else
   begin
+    // Если вызов из ComboBox, обновляем TabControl
     case passKindCombo.ItemIndex of
       0: cryortPC.ActivePage := RandombaseTab;
     end;
   end;
-end;
-procedure TFrm_cript_choise.cryortPCChange(Sender: TObject);
-begin
-   SyncTabControlAndComboBox(Sender);
 end;
 
 procedure TFrm_cript_choise.FormClose(Sender: TObject;
@@ -77,9 +77,10 @@ begin
  LoadFormState(Self);
 end;
 
-procedure TFrm_cript_choise.passKindComboChange(Sender: TObject);
+procedure TFrm_cript_choise.RandombaseTabContextPopup(Sender: TObject;
+  MousePos: TPoint; var Handled: Boolean);
 begin
-    SyncTabControlAndComboBox(Sender);
+       SyncTabControlAndComboBox
 end;
 
 end.
