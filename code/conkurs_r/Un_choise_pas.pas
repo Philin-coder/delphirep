@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls,adodb,db, ComCtrls;
+  Dialogs, StdCtrls,adodb,db, ComCtrls, ExtCtrls;
 
 type
   TFrm_cript_choise = class(TForm)
@@ -19,6 +19,12 @@ type
     TabSheet3: TTabSheet;
     TabSheet4: TTabSheet;
     TabSheet5: TTabSheet;
+    rb_input_box: TGroupBox;
+    rnd_base_out_pass: TLabeledEdit;
+    rnd_base_sym_amoount_inp: TLabeledEdit;
+    rnd_base_grader: TUpDown;
+    rnd_base_btn_box: TGroupBox;
+    rnd_base_init_Btn: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure passKindComboChange(Sender: TObject);
