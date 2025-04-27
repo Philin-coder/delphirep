@@ -12,32 +12,8 @@ object Frm_change_pass_quest: TFrm_change_pass_quest
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
-  OnActivate = FormActivate
   OnClose = FormClose
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object GreeatingBox: TGroupBox
-    Left = 0
-    Top = 0
-    Width = 645
-    Height = 105
-    Align = alTop
-    TabOrder = 0
-    ExplicitLeft = 288
-    ExplicitTop = 56
-    ExplicitWidth = 185
-    object greatingPanel: TPanel
-      Left = 2
-      Top = 15
-      Width = 641
-      Height = 88
-      Align = alClient
-      TabOrder = 0
-      ExplicitLeft = 328
-      ExplicitTop = 16
-      ExplicitWidth = 185
-      ExplicitHeight = 41
-    end
-  end
 end

@@ -1,0 +1,58 @@
+unit change_pas_quest;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs,db,adodb, StdCtrls;
+
+type
+  TFrm_change_pass_quest = class(TForm)
+    Button1: TButton;
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormActivate(Sender: TObject);
+  private
+     FNumber: Integer;
+      procedure SetNumber(const Value: Integer);
+  public
+    property Number:Integer read Fnumber  write setNumber;
+  end;
+
+var
+  Frm_change_pass_quest: TFrm_change_pass_quest;
+
+implementation
+
+uses Un_dm, Un_func, Un_pass_autor;
+
+{$R *.dfm}
+procedure TFrm_change_pass_quest.SetNumber(const Value: Integer);
+begin
+  FNumber := Value;
+end;
+
+procedure TFrm_change_pass_quest.FormActivate(Sender: TObject);
+begin
+ dm.SelbyIDQuery.Open;
+end;
+
+procedure TFrm_change_pass_quest.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+   SaveFormState(Self);
+   CloseAllQueriesOnDataModule('dm');
+end;
+
+procedure TFrm_change_pass_quest.FormCreate(Sender: TObject);
+begin
+ Frm_change_pass_quest.KeyPreview:=true;
+ Frm_change_pass_quest.ShowHint:=true;
+ UniformizeButtonsSize(Self,  273, 25);
+ UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+ UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+ LoadFormState(Self);
+
+end;
+
+end.
