@@ -10,9 +10,15 @@ type
   TFrm_change_pass_quest = class(TForm)
     GreeatingBox: TGroupBox;
     greatingPanel: TPanel;
+    TaskBox: TGroupBox;
+    answerinp: TLabeledEdit;
+    taskLbl: TLabel;
+    test_lbl: TStaticText;
+    taskBtn: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
+    procedure taskBtnClick(Sender: TObject);
   private
      FNumber: Integer;
       procedure SetNumber(const Value: Integer);
@@ -31,6 +37,11 @@ uses Un_dm, Un_func, Un_pass_autor;
 procedure TFrm_change_pass_quest.SetNumber(const Value: Integer);
 begin
   FNumber := Value;
+end;
+
+procedure TFrm_change_pass_quest.taskBtnClick(Sender: TObject);
+begin
+   CheckMathQuizAnswer(taskLbl, answerinp, test_lbl);
 end;
 
 procedure TFrm_change_pass_quest.FormActivate(Sender: TObject);
@@ -57,6 +68,10 @@ begin
             VarToStr(dm.SelbyIDQuery.FieldByName('fio').Value)+','+
             'Вы действительно хотите изменить пороль'+' '+
             VarToStr(dm.SelbyIDQuery.FieldByName('user_pas').Value)+'?';
+            greatingPanel.ShowHint:=true;
+            greatingPanel.Hint:=
+            'Для этого, Вам необходимо будет решить маленьекую задачку,'+#10#13+
+            'с которой человек легко справится, а бот нет)';
         greatingPanel.Caption:=ResultString;
       end;
     except
@@ -66,7 +81,14 @@ begin
         ShowMessage('Ошибка: ' + E.Message);
     end;
   end;
-
+    try
+    FormatPanelCaption('greatingPanel', Self, 'Arial', 14, clRed);
+  except
+    on E: Exception do
+      ShowMessage(E.Message);
+  end;
+  GenerateMathQuiz(taskLbl, test_lbl);
+  answerinp.Text := '';
 end;
 
 procedure TFrm_change_pass_quest.FormClose(Sender: TObject;
@@ -94,7 +116,6 @@ begin
  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
  LoadFormState(Self);
-
 end;
 
 end.

@@ -122,11 +122,11 @@ procedure CheckAndCreateHelpFolder;
 procedure SaveRichEditToFile(RichEdit: TRichEdit; SaveDialog: TSaveDialog);
 procedure AppendRichEditToIniFile(RichEdit: TRichEdit; const FileName: string);
 procedure LoadTextFromFile(const FileName: string; RichTextEdit: TRichEdit);
- procedure GenerateMathQuiz(CaptchaLabel: TLabel; ResultLabel: TStaticText);
+procedure RunMathQuiz(CaptchaLabel: TLabel; InputBox:
+ TLabeledEdit; ResultLabel: TStaticText);
+
  procedure FormatPanelCaption(const PanelName: string; AForm: TForm;
   FontName: string; FontSize: Integer; FontColor: TColor);
-  procedure CheckMathQuizAnswer(CaptchaLabel: TLabel; InputBox: TLabeledEdit;
- ResultLabel: TStaticText);
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -1824,17 +1824,15 @@ begin
     FileStream.Free;
   end;
 end;
-procedure GenerateMathQuiz(CaptchaLabel: TLabel; ResultLabel: TStaticText);
+procedure RunMathQuiz(CaptchaLabel: TLabel; InputBox:
+ TLabeledEdit; ResultLabel: TStaticText);
 var
-  Num1, Num2: Integer;
+  Num1, Num2, CorrectAnswer, UserAnswer: Integer;
+  InputStr: string;
 begin
   Randomize;
-
-  // Генерация случайных чисел
   Num1 := Random(10);
   Num2 := Random(10);
-
-  // Настройка метки с математическим выражением
   with CaptchaLabel do
   begin
     Caption := IntToStr(Num1) + ' + ' + IntToStr(Num2);
@@ -1842,9 +1840,29 @@ begin
     Font.Color := RGB(Random(256), Random(256), Random(256)); // Случайный цвет
     Font.Style := [fsBold]; // Жирный шрифт
   end;
-
-  // Вывод вопроса в ResultLabel
-  ResultLabel.Caption := 'Сколько будет ' + CaptchaLabel.Caption + '?';
+  CorrectAnswer := AddNumbers(Num1, Num2);
+  InputBox.Text := '';
+  ShowMessage('Сколько будет ' + CaptchaLabel.Caption + '?');
+  InputStr := Trim(InputBox.Text); // Получение введенного текста
+  if InputStr = '' then
+  begin
+    ShowMessage('Ошибка: вы не ввели ответ.');
+    Exit;
+  end;
+  try
+    UserAnswer := StrToInt(InputStr);
+  except
+    on E: EConvertError do
+    begin
+      ShowMessage('Ошибка: введенные данные не являются числом.');
+      Exit;
+    end;
+  end;
+  if UserAnswer = CorrectAnswer then
+    ResultLabel.Caption := 'Правильно!'
+  else
+    ResultLabel.Caption := Format('Неправильно! Правильный ответ: %d.',
+    [CorrectAnswer]);
 end;
 procedure FormatPanelCaption(const PanelName: string; AForm: TForm;
   FontName: string; FontSize: Integer; FontColor: TColor);
@@ -1875,46 +1893,7 @@ begin
   // Обновляем текст Caption (необязательно)
   Panel.Caption := Panel.Caption;
 end;
- procedure CheckMathQuizAnswer(CaptchaLabel: TLabel; InputBox: TLabeledEdit;
- ResultLabel: TStaticText);
-var
-  Num1, Num2, CorrectAnswer, UserAnswer: Integer;
-  InputStr: string;
-begin
-  // Получение чисел из CaptchaLabel
-  Num1 := StrToInt(Copy(CaptchaLabel.Caption, 1, Pos(' + ', CaptchaLabel.Caption) - 1));
-  Num2 := StrToInt(Copy(CaptchaLabel.Caption, Pos(' + ', CaptchaLabel.Caption) + 3, Length(CaptchaLabel.Caption)));
 
-  // Вычисление правильного ответа
-  CorrectAnswer := AddNumbers(Num1, Num2);
-
-  // Получение введенного текста
-  InputStr := Trim(InputBox.Text);
-
-  // Проверка, что пользователь ввел что-то
-  if InputStr = '' then
-  begin
-    ResultLabel.Caption := 'Ошибка: вы не ввели ответ.';
-    Exit;
-  end;
-
-  // Преобразование введенного текста в число
-  try
-    UserAnswer := StrToInt(InputStr);
-  except
-    on E: EConvertError do
-    begin
-      ResultLabel.Caption := 'Ошибка: введенные данные не являются числом.';
-      Exit;
-    end;
-  end;
-
-  // Проверка ответа пользователя
-  if UserAnswer = CorrectAnswer then
-    ResultLabel.Caption := 'Правильно!'
-  else
-    ResultLabel.Caption := Format('Неправильно! Правильный ответ: %d.', [CorrectAnswer]);
-end;
 
 
 initialization

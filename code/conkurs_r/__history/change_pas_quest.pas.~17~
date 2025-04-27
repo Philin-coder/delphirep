@@ -14,12 +14,12 @@ type
     answerinp: TLabeledEdit;
     taskLbl: TLabel;
     test_lbl: TStaticText;
+    GroupBox1: TGroupBox;
     taskBtn: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure taskBtnClick(Sender: TObject);
-    procedure answerinpKeyPress(Sender: TObject; var Key: Char);
   private
      FNumber: Integer;
       procedure SetNumber(const Value: Integer);
@@ -43,23 +43,6 @@ end;
 procedure TFrm_change_pass_quest.taskBtnClick(Sender: TObject);
 begin
    CheckMathQuizAnswer(taskLbl, answerinp, test_lbl);
-   if test_lbl.Caption='Правильно!' 
-   then 
-   begin
-   
-   end
-   else exit;
-   
-end;
-
-procedure TFrm_change_pass_quest.answerinpKeyPress(Sender: TObject;
-  var Key: Char);
-begin
-         if not (Key in ['0'..'9', #8]) then
-  begin
-    ShowMessage('Разрешен ввод только цифр!');
-    Key := #0; 
-  end;
 end;
 
 procedure TFrm_change_pass_quest.FormActivate(Sender: TObject);

@@ -10,9 +10,15 @@ type
   TFrm_change_pass_quest = class(TForm)
     GreeatingBox: TGroupBox;
     greatingPanel: TPanel;
+    TaskBox: TGroupBox;
+    taskLbl: TLabel;
+    answerinp: TLabeledEdit;
+    test_lbl: TStaticText;
+    Button1: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
   private
      FNumber: Integer;
       procedure SetNumber(const Value: Integer);
@@ -33,11 +39,15 @@ begin
   FNumber := Value;
 end;
 
+procedure TFrm_change_pass_quest.Button1Click(Sender: TObject);
+begin
+   CheckMathQuizAnswer(taskLbl, answerinp, test_lbl);
+end;
+
 procedure TFrm_change_pass_quest.FormActivate(Sender: TObject);
 var
  ResultString: string;
 begin
- dm.SelbyIDQuery.Open;
  if not dm.SelbyIDQuery.Active then
   begin
     try
@@ -58,6 +68,10 @@ begin
             VarToStr(dm.SelbyIDQuery.FieldByName('fio').Value)+','+
             'Вы действительно хотите изменить пороль'+' '+
             VarToStr(dm.SelbyIDQuery.FieldByName('user_pas').Value)+'?';
+            greatingPanel.ShowHint:=true;
+            greatingPanel.Hint:=
+            'Для этого, Вам необходимо будет решить маленьекую задачку,'+#10#13+
+            'с которой человек легко справится, а бот нет)';
         greatingPanel.Caption:=ResultString;
       end;
     except
@@ -67,7 +81,14 @@ begin
         ShowMessage('Ошибка: ' + E.Message);
     end;
   end;
-
+    try
+    FormatPanelCaption('greatingPanel', Self, 'Arial', 14, clRed);
+  except
+    on E: Exception do
+      ShowMessage(E.Message);
+  end;
+  GenerateMathQuiz(taskLbl, test_lbl);
+  answerinp.Text := '';
 end;
 
 procedure TFrm_change_pass_quest.FormClose(Sender: TObject;
@@ -75,6 +96,16 @@ procedure TFrm_change_pass_quest.FormClose(Sender: TObject;
 begin
    SaveFormState(Self);
    CloseAllQueriesOnDataModule('dm');
+   dm.pass_aQuery.SQL.Text:=
+          'select'+' '+
+          'm_user.id_user,'+' '+
+          'm_user.fio,'+' '+
+          'm_user.user_phone,'+' '+
+          'm_user.user_pas'+' '+
+          'from m_user'+' '+
+          'where 1=1';
+          dm.pass_aQuery.Close;
+          dm.pass_aQuery.Open;
 end;
 
 procedure TFrm_change_pass_quest.FormCreate(Sender: TObject);

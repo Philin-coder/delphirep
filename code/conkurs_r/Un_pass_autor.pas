@@ -77,12 +77,9 @@ begin
  not(pass_a_grid.DataSource.DataSet.IsEmpty)  then
   begin
     SelectedRowNumber := pass_a_grid.DataSource.DataSet.RecNo;
-//    ShowMessage('Номер выбранной строки: ' + IntToStr(SelectedRowNumber));
-    //RunMathQuiz(Label1,LabeledEdit1,StaticText1);
-    //todo: fix
        try
 UpdateFormProperties('Frm_change_pass_quest', 'Форма проверки смены пароля',
-clBtnFace, 1024, 768);
+clBtnFace, 1024, 290);
  Frm_change_pass_quest.Number := SelectedRowNumber;
  Frm_change_pass_quest.ShowModal;
 except
