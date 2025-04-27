@@ -124,9 +124,6 @@ procedure AppendRichEditToIniFile(RichEdit: TRichEdit; const FileName: string);
 procedure LoadTextFromFile(const FileName: string; RichTextEdit: TRichEdit);
 procedure RunMathQuiz(CaptchaLabel: TLabel; InputBox:
  TLabeledEdit; ResultLabel: TStaticText);
-
- procedure FormatPanelCaption(const PanelName: string; AForm: TForm;
-  FontName: string; FontSize: Integer; FontColor: TColor);
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -1864,36 +1861,6 @@ begin
     ResultLabel.Caption := Format('Неправильно! Правильный ответ: %d.',
     [CorrectAnswer]);
 end;
-procedure FormatPanelCaption(const PanelName: string; AForm: TForm;
-  FontName: string; FontSize: Integer; FontColor: TColor);
-var
-  Component: TComponent;
-  Panel: TPanel;
-begin
-  // Находим компонент по имени в контексте формы
-  Component := AForm.FindComponent(PanelName);
-
-  // Проверяем, что компонент найден и является TPanel
-  if not Assigned(Component) or not (Component is TPanel) then
-  begin
-    raise Exception.CreateFmt('Компонент "%s" не найден или не является TPanel.', [PanelName]);
-  end;
-
-  // Приводим компонент к типу TPanel
-  Panel := TPanel(Component);
-
-  // Устанавливаем параметры шрифта
-  if Assigned(Panel.Font) then
-  begin
-    Panel.Font.Name := FontName;   // Устанавливаем название шрифта
-    Panel.Font.Size := FontSize;   // Устанавливаем размер шрифта
-    Panel.Font.Color := FontColor; // Устанавливаем цвет шрифта
-  end;
-
-  // Обновляем текст Caption (необязательно)
-  Panel.Caption := Panel.Caption;
-end;
-
 
 
 initialization

@@ -66,12 +66,7 @@ begin
         ShowMessage('Ошибка: ' + E.Message);
     end;
   end;
-    try
-    FormatPanelCaption('greatingPanel', Self, 'Arial', 14, clRed);
-  except
-    on E: Exception do
-      ShowMessage(E.Message);
-  end;
+
 end;
 
 procedure TFrm_change_pass_quest.FormClose(Sender: TObject;
