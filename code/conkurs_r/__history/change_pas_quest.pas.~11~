@@ -56,11 +56,8 @@ begin
             'Добрый день, пользователь'+' '+
             VarToStr(dm.SelbyIDQuery.FieldByName('fio').Value)+','+
             'Вы действительно хотите изменить пороль'+' '+
-            VarToStr(dm.SelbyIDQuery.FieldByName('user_pas').Value)+'?';
-            greatingPanel.ShowHint:=true;
-            greatingPanel.Hint:=
-            'Для этого, Вам необходимо будет решить маленьекую задачку,'+#10#13+
-            'с которой человек легко справится, а бот нет)';
+            VarToStr(dm.SelbyIDQuery.FieldByName('user_pas').Value)+'?'+#10#13+
+            'Для этого, Вам необходимо будет решить маленьекую задачку)';
         greatingPanel.Caption:=ResultString;
       end;
     except
