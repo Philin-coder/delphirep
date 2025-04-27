@@ -15,7 +15,7 @@ type
     passKindCombo: TComboBox;
     cryortPC: TPageControl;
     RandombaseTab: TTabSheet;
-    TabSheet2: TTabSheet;
+    CezarTab: TTabSheet;
     TabSheet3: TTabSheet;
     TabSheet4: TTabSheet;
     TabSheet5: TTabSheet;
@@ -25,14 +25,23 @@ type
     rnd_base_grader: TUpDown;
     rnd_base_btn_box: TGroupBox;
     rnd_base_init_Btn: TButton;
+    cryprmainBox: TGroupBox;
+    GroupBox1: TGroupBox;
+    RadioButton1: TRadioButton;
+    RadioButton2: TRadioButton;
+    RadioButton3: TRadioButton;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure passKindComboChange(Sender: TObject);
     procedure cryortPCChange(Sender: TObject);
     procedure rnd_base_init_BtnClick(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
   private
-          procedure SyncTabControlAndComboBox(Sender: TObject);
+    get_pas:string;
+    procedure SyncTabControlAndComboBox(Sender: TObject);
+    procedure SetPas(const value:string);
   public
+     property m_pas:string read get_pas write SetPas;
     { Public declarations }
   end;
 
@@ -44,6 +53,10 @@ implementation
 uses change_pas_quest, Un_dm, Un_func;
 
 {$R *.dfm}
+procedure TFrm_cript_choise.SetPas(const value:string);
+begin
+ get_pas:=value;
+end;
  procedure TFrm_cript_choise.SyncTabControlAndComboBox(Sender: TObject);
 var
   IsUpdatingFromTab: Boolean;
@@ -53,12 +66,14 @@ begin
   begin
     case cryortPC.TabIndex of
       0: passKindCombo.ItemIndex := 0;
+      1: passKindCombo.ItemIndex := 1;
     end;
   end
   else
   begin
     case passKindCombo.ItemIndex of
       0: cryortPC.ActivePage := RandombaseTab;
+      1: cryortPC.ActivePage := CezarTab;
     end;
   end;
 end;
@@ -67,11 +82,17 @@ begin
    SyncTabControlAndComboBox(Sender);
 end;
 
+procedure TFrm_cript_choise.FormActivate(Sender: TObject);
+begin
+aldpasslbl.Caption:=get_pas;
+end;
+
 procedure TFrm_cript_choise.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
     SaveFormState(Self);
     CloseAllQueriesOnDataModule('dm');
+    rnd_base_grader.Position:=0;
 end;
 
 procedure TFrm_cript_choise.FormCreate(Sender: TObject);
@@ -82,6 +103,14 @@ begin
  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
  LoadFormState(Self);
+ rnd_base_grader.Min:=4;
+ Randomize;
+  try
+    FormatLabel('aldpasslbl', Self, 14, 'Arial', clGreen);
+  except
+    on E: Exception do
+      ShowMessage(E.Message); // Отображаем сообщение об ошибке
+  end;
 end;
 
 procedure TFrm_cript_choise.passKindComboChange(Sender: TObject);
@@ -92,7 +121,6 @@ end;
 procedure TFrm_cript_choise.rnd_base_init_BtnClick(Sender: TObject);
   var rnd_string:string;
 begin
-  Randomize;
   rnd_string:=get_rnd_char(rnd_base_grader.Position);
   rnd_base_out_pass.Text:=rnd_base_out_pass.Text+rnd_string;
 end;

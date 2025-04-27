@@ -146,41 +146,77 @@ object Frm_cript_choise: TFrm_cript_choise
         Left = 0
         Top = 0
         Width = 1102
-        Height = 145
+        Height = 217
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object GroupBox1: TGroupBox
+        object cryptcondBox: TGroupBox
           Left = 2
           Top = 15
           Width = 1098
-          Height = 58
+          Height = 146
           Align = alTop
           Caption = #1042#1093#1086#1076#1085#1099#1077' '#1091#1089#1083#1086#1074#1080#1103
           TabOrder = 0
-          object RadioButton1: TRadioButton
+          DesignSize = (
+            1098
+            146)
+          object Radioruslng: TRadioButton
             Left = 96
             Top = 16
             Width = 113
             Height = 17
-            Caption = 'RadioButton1'
+            Caption = #1056#1091#1089#1089#1082#1080#1081' '#1090#1077#1082#1089#1090
             TabOrder = 0
           end
-          object RadioButton2: TRadioButton
-            Left = 215
+          object Radioenglng: TRadioButton
+            Left = 231
             Top = 16
-            Width = 113
+            Width = 130
             Height = 17
-            Caption = 'RadioButton1'
+            Caption = #1040#1085#1075#1083#1080#1081#1089#1082#1080#1081' '#1090#1077#1082'c'#1090
             TabOrder = 1
           end
-          object RadioButton3: TRadioButton
-            Left = 376
+          object Radiomixed: TRadioButton
+            Left = 416
             Top = 16
             Width = 113
             Height = 17
-            Caption = 'RadioButton1'
+            Caption = #1057#1084#1077#1096#1072#1085#1085#1099#1081
             TabOrder = 2
+          end
+          object orignPasinp: TLabeledEdit
+            Left = 3
+            Top = 50
+            Width = 1063
+            Height = 21
+            Anchors = [akLeft, akRight]
+            EditLabel.Width = 93
+            EditLabel.Height = 13
+            EditLabel.Caption = #1048#1089#1093#1086#1076#1085#1099#1081'  '#1087#1072#1088#1086#1083#1100
+            TabOrder = 3
+            ExplicitTop = 47
+          end
+          object shift_inp: TLabeledEdit
+            Left = 3
+            Top = 106
+            Width = 1042
+            Height = 21
+            Anchors = [akLeft, akRight]
+            EditLabel.Width = 31
+            EditLabel.Height = 13
+            EditLabel.Caption = #1057#1076#1074#1080#1075
+            TabOrder = 4
+            Text = '0'
+            ExplicitTop = 112
+          end
+          object shift_grader: TUpDown
+            Left = 1066
+            Top = 98
+            Width = 16
+            Height = 21
+            Associate = shift_inp
+            TabOrder = 5
           end
         end
       end

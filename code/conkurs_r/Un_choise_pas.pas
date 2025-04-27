@@ -26,10 +26,13 @@ type
     rnd_base_btn_box: TGroupBox;
     rnd_base_init_Btn: TButton;
     cryprmainBox: TGroupBox;
-    GroupBox1: TGroupBox;
-    RadioButton1: TRadioButton;
-    RadioButton2: TRadioButton;
-    RadioButton3: TRadioButton;
+    cryptcondBox: TGroupBox;
+    Radioruslng: TRadioButton;
+    Radioenglng: TRadioButton;
+    Radiomixed: TRadioButton;
+    orignPasinp: TLabeledEdit;
+    shift_inp: TLabeledEdit;
+    shift_grader: TUpDown;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure passKindComboChange(Sender: TObject);
