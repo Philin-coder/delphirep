@@ -50,6 +50,8 @@ begin
 UpdateFormProperties('Frm_cript_choise',
 'Форма выбора шифрования для пароля',
 clBtnFace, 1024, 768);
+Frm_cript_choise.m_pas:=
+VarToStr(dm.SelbyIDQuery.FieldByName('user_pas').Value);
  Frm_cript_choise.ShowModal;
 except
 Frm_cript_choise.Free;

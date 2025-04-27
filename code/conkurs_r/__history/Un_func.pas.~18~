@@ -34,6 +34,8 @@ const
 type
   TSysCharSet = set of Char;
 var
+  symcount:Integer;
+var
   VisitedStaticTexts: TStringList;
 function  DateToStr_(Dat : TDate): String;
 function  CommaPoint (X: String) : String;
@@ -122,11 +124,12 @@ procedure CheckAndCreateHelpFolder;
 procedure SaveRichEditToFile(RichEdit: TRichEdit; SaveDialog: TSaveDialog);
 procedure AppendRichEditToIniFile(RichEdit: TRichEdit; const FileName: string);
 procedure LoadTextFromFile(const FileName: string; RichTextEdit: TRichEdit);
-procedure RunMathQuiz(CaptchaLabel: TLabel; InputBox:
- TLabeledEdit; ResultLabel: TStaticText);
-
+ procedure GenerateMathQuiz(CaptchaLabel: TLabel; ResultLabel: TStaticText);
  procedure FormatPanelCaption(const PanelName: string; AForm: TForm;
   FontName: string; FontSize: Integer; FontColor: TColor);
+  procedure CheckMathQuizAnswer(CaptchaLabel: TLabel; InputBox: TLabeledEdit;
+ ResultLabel: TStaticText);
+function get_rnd_char(symcount:Integer):string;
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -1824,10 +1827,9 @@ begin
     FileStream.Free;
   end;
 end;
-procedure RunMathQuiz(CaptchaLabel: TLabel; InputBox: TLabeledEdit; ResultLabel: TStaticText);
+procedure GenerateMathQuiz(CaptchaLabel: TLabel; ResultLabel: TStaticText);
 var
-  Num1, Num2, CorrectAnswer, UserAnswer: Integer;
-  InputStr: string;
+  Num1, Num2: Integer;
 begin
   Randomize;
 
@@ -1844,44 +1846,8 @@ begin
     Font.Style := [fsBold]; // Жирный шрифт
   end;
 
-  // Вычисление правильного ответа
-  CorrectAnswer := AddNumbers(Num1, Num2);
-
-  // Очистка поля ввода
-  InputBox.Text := '';
-
   // Вывод вопроса в ResultLabel
   ResultLabel.Caption := 'Сколько будет ' + CaptchaLabel.Caption + '?';
-
-  // Ждем, пока пользователь введет данные (например, через кнопку "Проверить")
-  // Здесь предполагается, что процедура вызывается после ввода данных пользователем
-
-  // Получение введенного текста
-  InputStr := Trim(InputBox.Text);
-
-  // Проверка, что пользователь ввел что-то
-  if InputStr = '' then
-  begin
-    ResultLabel.Caption := 'Ошибка: вы не ввели ответ.';
-    Exit;
-  end;
-
-  // Преобразование введенного текста в число
-  try
-    UserAnswer := StrToInt(InputStr);
-  except
-    on E: EConvertError do
-    begin
-      ResultLabel.Caption := 'Ошибка: введенные данные не являются числом.';
-      Exit;
-    end;
-  end;
-
-  // Проверка ответа пользователя
-  if UserAnswer = CorrectAnswer then
-    ResultLabel.Caption := 'Правильно!'
-  else
-    ResultLabel.Caption := Format('Неправильно! Правильный ответ: %d.', [CorrectAnswer]);
 end;
 procedure FormatPanelCaption(const PanelName: string; AForm: TForm;
   FontName: string; FontSize: Integer; FontColor: TColor);
@@ -1912,8 +1878,87 @@ begin
   // Обновляем текст Caption (необязательно)
   Panel.Caption := Panel.Caption;
 end;
+ procedure CheckMathQuizAnswer(CaptchaLabel: TLabel; InputBox: TLabeledEdit;
+ ResultLabel: TStaticText);
+var
+  Num1, Num2, CorrectAnswer, UserAnswer: Integer;
+  InputStr: string;
+begin
+  // Получение чисел из CaptchaLabel
+  Num1 := StrToInt(Copy(CaptchaLabel.Caption, 1, Pos(' + ', CaptchaLabel.Caption) - 1));
+  Num2 := StrToInt(Copy(CaptchaLabel.Caption, Pos(' + ', CaptchaLabel.Caption) + 3, Length(CaptchaLabel.Caption)));
 
+  // Вычисление правильного ответа
+  CorrectAnswer := AddNumbers(Num1, Num2);
 
+  // Получение введенного текста
+  InputStr := Trim(InputBox.Text);
+
+  // Проверка, что пользователь ввел что-то
+  if InputStr = '' then
+  begin
+    ResultLabel.Caption := 'Ошибка: вы не ввели ответ.';
+    Exit;
+  end;
+
+  // Преобразование введенного текста в число
+  try
+    UserAnswer := StrToInt(InputStr);
+  except
+    on E: EConvertError do
+    begin
+      ResultLabel.Caption := 'Ошибка: введенные данные не являются числом.';
+      Exit;
+    end;
+  end;
+  if UserAnswer = CorrectAnswer then
+    ResultLabel.Caption := 'Правильно!'
+  else
+    ResultLabel.Caption := Format('Неправильно! Правильный ответ: %d.', [CorrectAnswer]);
+end;
+function get_rnd_char(symcount:Integer):string;
+var
+  i:Integer;
+  Symstr:string;
+begin
+if symcount <= 0 then
+  begin
+    Result := '';
+    Exit;
+  end;
+Symstr:='';
+for I := 1 to symcount do
+begin
+Symstr:=Symstr+chr(Random(59)+64);
+end;
+Result:=Symstr;
+end;
+procedure FormatLabel(const LabelName: string; AForm: TForm;
+  FontSize: Integer; FontName: string; FontColor: TColor);
+var
+  Component: TComponent;
+  LabelComponent: TLabel;
+begin
+  // Находим компонент по имени в контексте формы
+  Component := AForm.FindComponent(LabelName);
+
+  // Проверяем, что компонент найден и является TLabel
+  if not Assigned(Component) or not (Component is TLabel) then
+  begin
+    raise Exception.CreateFmt('Компонент "%s" не найден или не является TLabel.', [LabelName]);
+  end;
+
+  // Приводим компонент к типу TLabel
+  LabelComponent := TLabel(Component);
+
+  // Устанавливаем параметры шрифта
+  with LabelComponent.Font do
+  begin
+    Name := FontName;   // Название шрифта
+    Size := FontSize;   // Размер шрифта
+    Color := FontColor; // Цвет шрифта
+  end;
+end;
 
 initialization
   VisitedStaticTexts := TStringList.Create;

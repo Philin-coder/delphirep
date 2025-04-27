@@ -33,7 +33,6 @@ object Frm_cript_choise: TFrm_cript_choise
       Align = alBottom
       Caption = 'C'#1090#1072#1088#1099#1081' '#1087#1072#1088#1086#1083#1100
       TabOrder = 0
-      ExplicitLeft = 1
       object aldpasslbl: TLabel
         Left = 272
         Top = 16

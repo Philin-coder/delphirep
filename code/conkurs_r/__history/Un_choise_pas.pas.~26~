@@ -31,8 +31,11 @@ type
     procedure cryortPCChange(Sender: TObject);
     procedure rnd_base_init_BtnClick(Sender: TObject);
   private
-          procedure SyncTabControlAndComboBox(Sender: TObject);
+    get_pas:string;
+    procedure SyncTabControlAndComboBox(Sender: TObject);
+    procedure SetPas(const value:string);
   public
+     property m_pas:string read get_pas write SetPas;
     { Public declarations }
   end;
 
@@ -44,6 +47,10 @@ implementation
 uses change_pas_quest, Un_dm, Un_func;
 
 {$R *.dfm}
+procedure TFrm_cript_choise.SetPas(const value:string);
+begin
+ get_pas:=value;
+end;
  procedure TFrm_cript_choise.SyncTabControlAndComboBox(Sender: TObject);
 var
   IsUpdatingFromTab: Boolean;
@@ -82,6 +89,8 @@ begin
  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
  LoadFormState(Self);
+ aldpasslbl.Caption:=get_pas;
+ Randomize;
 end;
 
 procedure TFrm_cript_choise.passKindComboChange(Sender: TObject);
@@ -90,8 +99,10 @@ begin
 end;
 
 procedure TFrm_cript_choise.rnd_base_init_BtnClick(Sender: TObject);
+  var rnd_string:string;
 begin
-  get_rnd_char(rnd_base_grader.Position);
+  rnd_string:=get_rnd_char(rnd_base_grader.Position);
+  rnd_base_out_pass.Text:=rnd_base_out_pass.Text+rnd_string;
 end;
 
 end.

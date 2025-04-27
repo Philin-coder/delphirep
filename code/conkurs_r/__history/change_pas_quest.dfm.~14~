@@ -24,6 +24,9 @@ object Frm_change_pass_quest: TFrm_change_pass_quest
     Height = 105
     Align = alTop
     TabOrder = 0
+    ExplicitLeft = 288
+    ExplicitTop = 56
+    ExplicitWidth = 185
     object greatingPanel: TPanel
       Left = 2
       Top = 15
@@ -31,6 +34,10 @@ object Frm_change_pass_quest: TFrm_change_pass_quest
       Height = 88
       Align = alClient
       TabOrder = 0
+      ExplicitLeft = 328
+      ExplicitTop = 16
+      ExplicitWidth = 185
+      ExplicitHeight = 41
     end
   end
   object TaskBox: TGroupBox
@@ -40,6 +47,7 @@ object Frm_change_pass_quest: TFrm_change_pass_quest
     Height = 151
     Align = alClient
     TabOrder = 1
+    ExplicitHeight = 249
     object taskLbl: TLabel
       Left = 16
       Top = 16

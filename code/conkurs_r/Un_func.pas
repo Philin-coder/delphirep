@@ -130,6 +130,8 @@ procedure LoadTextFromFile(const FileName: string; RichTextEdit: TRichEdit);
   procedure CheckMathQuizAnswer(CaptchaLabel: TLabel; InputBox: TLabeledEdit;
  ResultLabel: TStaticText);
 function get_rnd_char(symcount:Integer):string;
+procedure FormatLabel(const LabelName: string; AForm: TForm;
+  FontSize: Integer; FontName: string; FontColor: TColor);
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -1932,6 +1934,32 @@ begin
 Symstr:=Symstr+chr(Random(59)+64);
 end;
 Result:=Symstr;
+end;
+procedure FormatLabel(const LabelName: string; AForm: TForm;
+  FontSize: Integer; FontName: string; FontColor: TColor);
+var
+  Component: TComponent;
+  LabelComponent: TLabel;
+begin
+  // Находим компонент по имени в контексте формы
+  Component := AForm.FindComponent(LabelName);
+
+  // Проверяем, что компонент найден и является TLabel
+  if not Assigned(Component) or not (Component is TLabel) then
+  begin
+    raise Exception.CreateFmt('Компонент "%s" не найден или не является TLabel.', [LabelName]);
+  end;
+
+  // Приводим компонент к типу TLabel
+  LabelComponent := TLabel(Component);
+
+  // Устанавливаем параметры шрифта
+  with LabelComponent.Font do
+  begin
+    Name := FontName;   // Название шрифта
+    Size := FontSize;   // Размер шрифта
+    Color := FontColor; // Цвет шрифта
+  end;
 end;
 
 initialization

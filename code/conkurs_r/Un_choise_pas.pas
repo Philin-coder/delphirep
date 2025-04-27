@@ -30,9 +30,13 @@ type
     procedure passKindComboChange(Sender: TObject);
     procedure cryortPCChange(Sender: TObject);
     procedure rnd_base_init_BtnClick(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
   private
-          procedure SyncTabControlAndComboBox(Sender: TObject);
+    get_pas:string;
+    procedure SyncTabControlAndComboBox(Sender: TObject);
+    procedure SetPas(const value:string);
   public
+     property m_pas:string read get_pas write SetPas;
     { Public declarations }
   end;
 
@@ -44,6 +48,10 @@ implementation
 uses change_pas_quest, Un_dm, Un_func;
 
 {$R *.dfm}
+procedure TFrm_cript_choise.SetPas(const value:string);
+begin
+ get_pas:=value;
+end;
  procedure TFrm_cript_choise.SyncTabControlAndComboBox(Sender: TObject);
 var
   IsUpdatingFromTab: Boolean;
@@ -67,11 +75,17 @@ begin
    SyncTabControlAndComboBox(Sender);
 end;
 
+procedure TFrm_cript_choise.FormActivate(Sender: TObject);
+begin
+aldpasslbl.Caption:=get_pas;
+end;
+
 procedure TFrm_cript_choise.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
     SaveFormState(Self);
     CloseAllQueriesOnDataModule('dm');
+    rnd_base_grader.Position:=0;
 end;
 
 procedure TFrm_cript_choise.FormCreate(Sender: TObject);
@@ -82,7 +96,14 @@ begin
  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
  LoadFormState(Self);
+ rnd_base_grader.Min:=4;
  Randomize;
+  try
+    FormatLabel('aldpasslbl', Self, 14, 'Arial', clGreen);
+  except
+    on E: Exception do
+      ShowMessage(E.Message); // Отображаем сообщение об ошибке
+  end;
 end;
 
 procedure TFrm_cript_choise.passKindComboChange(Sender: TObject);
