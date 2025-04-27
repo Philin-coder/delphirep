@@ -82,7 +82,6 @@ begin
  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
  LoadFormState(Self);
- Randomize;
 end;
 
 procedure TFrm_cript_choise.passKindComboChange(Sender: TObject);

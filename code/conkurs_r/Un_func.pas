@@ -33,8 +33,6 @@ const
   EM_LINEINDEX = $BB;
 type
   TSysCharSet = set of Char;
-  type
-    symmx=array[1..255] of Byte;
 var
   symcount:Integer;
 var
@@ -1920,18 +1918,18 @@ begin
 end;
 function get_rnd_char(symcount:Integer):string;
 var
-  x:symmx;
   i:Integer;
   Symstr:string;
 begin
+if symcount <= 0 then
+  begin
+    Result := '';
+    Exit;
+  end;
 Symstr:='';
-for I:=1 to symcount do
-begin
-x[i]:=Random(59)+64;
-end;
 for I := 1 to symcount do
 begin
-Symstr:=Symstr+Chr(x[i]);
+Symstr:=Symstr+chr(Random(59)+64);
 end;
 Result:=Symstr;
 end;
