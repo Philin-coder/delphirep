@@ -71,7 +71,7 @@ object Frm_cript_choise: TFrm_cript_choise
     Top = 121
     Width = 1110
     Height = 412
-    ActivePage = CezarTab
+    ActivePage = MorzeTab
     Align = alClient
     TabOrder = 1
     OnChange = cryortPCChange
@@ -139,63 +139,33 @@ object Frm_cript_choise: TFrm_cript_choise
         end
       end
     end
-    object CezarTab: TTabSheet
-      Caption = #1064#1080#1092#1086#1088#1074#1072#1085#1080#1077' '#1087#1088#1080' '#1087#1086#1084#1086#1096#1080' '#1096#1080#1088#1072' '#1062#1077#1079#1072#1088#1103
+    object MorzeTab: TTabSheet
+      Caption = #1064#1080#1092#1086#1088#1074#1072#1085#1080#1077' '#1087#1088#1080' '#1087#1086#1084#1086#1096#1080' '#1072#1079#1073#1091#1082#1080' '#1084#1086#1088#1079#1077
       ImageIndex = 1
-      object cryprmainBox: TGroupBox
-        Left = 0
-        Top = 0
-        Width = 1102
-        Height = 145
-        Align = alTop
-        Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
-        TabOrder = 0
-        object GroupBox1: TGroupBox
-          Left = 2
-          Top = 15
-          Width = 1098
-          Height = 58
-          Align = alTop
-          Caption = #1042#1093#1086#1076#1085#1099#1077' '#1091#1089#1083#1086#1074#1080#1103
-          TabOrder = 0
-          object RadioButton1: TRadioButton
-            Left = 96
-            Top = 16
-            Width = 113
-            Height = 17
-            Caption = 'RadioButton1'
-            TabOrder = 0
-          end
-          object RadioButton2: TRadioButton
-            Left = 215
-            Top = 16
-            Width = 113
-            Height = 17
-            Caption = 'RadioButton1'
-            TabOrder = 1
-          end
-          object RadioButton3: TRadioButton
-            Left = 376
-            Top = 16
-            Width = 113
-            Height = 17
-            Caption = 'RadioButton1'
-            TabOrder = 2
-          end
-        end
-      end
     end
     object TabSheet3: TTabSheet
       Caption = 'TabSheet3'
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 1038
+      ExplicitHeight = 0
     end
     object TabSheet4: TTabSheet
       Caption = 'TabSheet4'
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 1038
+      ExplicitHeight = 0
     end
     object TabSheet5: TTabSheet
       Caption = 'TabSheet5'
       ImageIndex = 4
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 1038
+      ExplicitHeight = 0
     end
   end
 end

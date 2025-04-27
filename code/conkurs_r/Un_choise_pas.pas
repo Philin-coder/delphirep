@@ -15,7 +15,7 @@ type
     passKindCombo: TComboBox;
     cryortPC: TPageControl;
     RandombaseTab: TTabSheet;
-    TabSheet2: TTabSheet;
+    CezarTab: TTabSheet;
     TabSheet3: TTabSheet;
     TabSheet4: TTabSheet;
     TabSheet5: TTabSheet;
@@ -25,6 +25,11 @@ type
     rnd_base_grader: TUpDown;
     rnd_base_btn_box: TGroupBox;
     rnd_base_init_Btn: TButton;
+    cryprmainBox: TGroupBox;
+    GroupBox1: TGroupBox;
+    RadioButton1: TRadioButton;
+    RadioButton2: TRadioButton;
+    RadioButton3: TRadioButton;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure passKindComboChange(Sender: TObject);
@@ -61,12 +66,14 @@ begin
   begin
     case cryortPC.TabIndex of
       0: passKindCombo.ItemIndex := 0;
+      1: passKindCombo.ItemIndex := 1;
     end;
   end
   else
   begin
     case passKindCombo.ItemIndex of
       0: cryortPC.ActivePage := RandombaseTab;
+      1: cryortPC.ActivePage := CezarTab;
     end;
   end;
 end;
