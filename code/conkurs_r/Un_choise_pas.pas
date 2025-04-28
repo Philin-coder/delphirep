@@ -30,13 +30,13 @@ type
     Radioruslng: TRadioButton;
     Radioenglng: TRadioButton;
     Radiomixed: TRadioButton;
-    cezarbtnBox: TGroupBox;
-    cezarinitBtn: TButton;
-    GroupBox1: TGroupBox;
+    paramBox: TGroupBox;
     orignPasinp: TLabeledEdit;
     shift_inp: TLabeledEdit;
     shift_grader: TUpDown;
     newPasinp: TLabeledEdit;
+    cezarbtnBox: TGroupBox;
+    cezarinitBtn: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure passKindComboChange(Sender: TObject);
@@ -119,6 +119,12 @@ begin
   except
     on E: Exception do
       ShowMessage(E.Message); // Отображаем сообщение об ошибке
+  end;
+  with Frm_cript_choise do
+  begin
+      width:=1024;
+      Height:=768;
+      Position:=poScreenCenter;
   end;
 end;
 
