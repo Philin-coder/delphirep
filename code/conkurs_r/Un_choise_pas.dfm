@@ -365,6 +365,7 @@ object Frm_cript_choise: TFrm_cript_choise
           Height = 25
           Caption = #1056#1072#1089#1096#1080#1092#1086#1088#1074#1072#1090#1100
           TabOrder = 0
+          OnClick = morzeinitBtnClick
         end
       end
       object morzeParamBox: TGroupBox

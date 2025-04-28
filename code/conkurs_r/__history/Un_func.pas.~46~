@@ -147,20 +147,19 @@ Mode: TEncryptionMode): string;
 function GetMorseChar(Ch: Char; Mode: TMorseMode): string;
 function TextToMorse(const Input: string; Mode: TMorseMode): string;
 implementation
+
 const
-  // Английский алфавит (26 букв)
   EnglishLetters: array['A'..'Z'] of string = (
-    '.-', '-...', '-.-.', '-..', '.', '..-.', '--.', '....', '..', '.---', 
-    '-.-', '.-..', '--', '-.', '---', '.--.', '--.-', '.-.', '...', '-', 
+    '.-', '-...', '-.-.', '-..', '.', '..-.', '--.', '....', '..', '.---',
+    '-.-', '.-..', '--', '-.', '---', '.--.', '--.-', '.-.', '...', '-',
     '..-', '...-', '.--', '-..-', '-.--', '--..'
   );
-
+ const
   EnglishDigits: array['0'..'9'] of string = (
-    '-----', '.----', '..---', '...--', '....-', '.....', 
+    '-----', '.----', '..---', '...--', '....-', '.....',
     '-....', '--...', '---..', '----.'
   );
 
-  // Русский алфавит ('А'..'Я' — 32 буквы)
   const
   RussianLetters: array['А'..'Я'] of string = (
     '.-',    // А
@@ -2221,27 +2220,38 @@ begin
     end;
   end;
 end;
+
 function GetMorseChar(Ch: Char; Mode: TMorseMode): string;
 var
   UpCh: Char;
 begin
-  Result := '';
-  UpCh := UpCase(Ch);
+  Result := '';  // По умолчанию результат пустой
+
+  // Приводим символ к верхнему регистру
+  case Ch of
+    'а'..'я': UpCh := Chr(Ord(Ch) - 32); // Маленькая русская -> большая
+    'ё': UpCh := 'Ё';                    // Специальная буква "ё"
+    else
+      UpCh := UpCase(Ch);                // Стандартное приведение
+  end;
 
   if Mode in [mmEnglish, mmMixed] then
   begin
     if (UpCh >= 'A') and (UpCh <= 'Z') then
-      Exit(EnglishLetters[UpCh])
+      Result := EnglishLetters[UpCh]
     else if (UpCh >= '0') and (UpCh <= '9') then
-      Exit(EnglishDigits[UpCh]);
+      Result := EnglishDigits[UpCh];
   end;
 
-  if Mode in [mmRussian, mmMixed] then
+  if (Result = '') and (Mode in [mmRussian, mmMixed]) then
   begin
     if (UpCh >= 'А') and (UpCh <= 'Я') then
-      Exit(RussianLetters[UpCh]);
+      Result := RussianLetters[UpCh]
+    else if UpCh = 'Ё' then
+      Result := RussianLetters['Ё']; // Обработка буквы Ё
   end;
 end;
+
 
 function TextToMorse(const Input: string; Mode: TMorseMode): string;
 var

@@ -146,6 +146,8 @@ function DecryptCaesarFromComponent(AComponent: TControl; Shift: Integer;
 Mode: TEncryptionMode): string;
 function GetMorseChar(Ch: Char; Mode: TMorseMode): string;
 function TextToMorse(const Input: string; Mode: TMorseMode): string;
+function FindChar(const MorseCode: string; Mode: TMorseMode): string;
+function MorseToText(const Input: string; Mode: TMorseMode): string;
 implementation
 
 const
@@ -195,6 +197,8 @@ const
     '..--',  // Ю
     '.-.-'   // Я
   );
+  const
+  RussianLetterYo: string = '.--.-';
 
  var
   hAniCursor: HCURSOR = 0;
@@ -2248,7 +2252,7 @@ begin
     if (UpCh >= 'А') and (UpCh <= 'Я') then
       Result := RussianLetters[UpCh]
     else if UpCh = 'Ё' then
-      Result := RussianLetters['Ё']; // Обработка буквы Ё
+      Result := RussianLetterYo; // Обработка буквы Ё
   end;
 end;
 
@@ -2269,6 +2273,96 @@ begin
       if MorseChar <> '' then
         Result := Result + MorseChar + ' ';
     end;
+  end;
+end;
+function FindChar(const MorseCode: string; Mode: TMorseMode): string;
+var
+  c: Char;
+begin
+  Result := '';
+  
+  // Сначала проверяем все стандартные буквы
+  if Mode in [mmEnglish, mmMixed] then
+  begin
+    for c := 'A' to 'Z' do
+      if EnglishLetters[c] = MorseCode then
+      begin
+        Result := c;
+        Exit;
+      end;
+    for c := '0' to '9' do
+      if EnglishDigits[c] = MorseCode then
+      begin
+        Result := c;
+        Exit;
+      end;
+  end;
+
+  if Mode in [mmRussian, mmMixed] then
+  begin
+    for c := 'А' to 'Я' do
+      if RussianLetters[c] = MorseCode then
+      begin
+        Result := c;
+        Exit;
+      end;
+  end;
+
+  // Только если не нашли ничего — пробуем Ё
+  if (Result = '') and (Mode in [mmRussian, mmMixed]) then
+  begin
+    if RussianLetterYo = MorseCode then
+      Result := 'Ё';
+  end;
+end;
+
+function MorseToText(const Input: string; Mode: TMorseMode): string;
+var
+  i: Integer;
+  MorseLetter, DecodedChar: string;
+begin
+  Result := '';
+  MorseLetter := '';
+  i := 1;
+
+  while i <= Length(Input) do
+  begin
+    if (Input[i] = '.') or (Input[i] = '-') then
+    begin
+      MorseLetter := MorseLetter + Input[i];
+    end
+    else if Input[i] = ' ' then
+    begin
+      if MorseLetter <> '' then
+      begin
+        DecodedChar := FindChar(MorseLetter, Mode);
+        if DecodedChar <> '' then
+          Result := Result + DecodedChar;
+        MorseLetter := '';
+      end;
+    end
+    else if (Input[i] = '/') then
+    begin
+      if MorseLetter <> '' then
+      begin
+        DecodedChar := FindChar(MorseLetter, Mode);
+        if DecodedChar <> '' then
+          Result := Result + DecodedChar;
+        MorseLetter := '';
+      end;
+      Result := Result + ' '; 
+      if (i < Length(Input)) and (Input[i+1] = ' ') then
+        Inc(i);
+    end;
+    Inc(i);
+  end;
+
+  // Обработка последней буквы в конце строки
+  if MorseLetter <> '' then
+  begin
+    DecodedChar := FindChar(MorseLetter, Mode);
+    if DecodedChar <> '' then
+      Result := Result + DecodedChar;
   end;
 end;
 

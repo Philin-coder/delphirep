@@ -68,6 +68,7 @@ type
     procedure Radiom_rus_textClick(Sender: TObject);
     procedure Radio_m_mixed_textClick(Sender: TObject);
     procedure bipBtnClick(Sender: TObject);
+    procedure morzeinitBtnClick(Sender: TObject);
   private
     get_pas:string;
     procedure SyncTabControlAndComboBox(Sender: TObject);
@@ -127,7 +128,6 @@ for i := 1 to Length(m_new_pas.Text) do
       else Continue;
     end;
   Sleep(400);
-
 end;
 
 procedure TFrm_cript_choise.cezarinitBtnClick(Sender: TObject);
@@ -200,6 +200,7 @@ begin
  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
  LoadImageFromResource('CRYPT',cryptImg);
  LoadImageFromResource('CRYPT',cezar_cryprt_img);
+ LoadImageFromResource('CRYPT',m_Image);
  LoadFormState(Self);
  rnd_base_grader.Min:=4;
  Randomize;
@@ -225,6 +226,47 @@ begin
       Stretch:=true;
       AutoSize:=true;
   end;
+   with m_Image do
+  begin
+      Stretch:=true;
+      AutoSize:=true;
+  end;
+
+end;
+
+procedure TFrm_cript_choise.morzeinitBtnClick(Sender: TObject);
+var
+  MorseInput, DecodedText: string;
+    tmp_str:string;
+begin
+if Radiom_rus_text.Checked then
+begin
+  tmp_str:='';
+  MorseInput := m_new_pas.Text;
+  DecodedText := MorseToText(MorseInput, mmRussian);
+  morignpas.Text :=DecodedText;
+  tmp_str:=AnsiLowerCase(DecodedText);
+  morignpas.Text:=tmp_str
+end;
+ if Radio_m_eng_text.Checked then
+begin
+  tmp_str:='';
+  MorseInput := m_new_pas.Text;
+  DecodedText := MorseToText(MorseInput, mmEnglish);
+  morignpas.Text := DecodedText;
+  tmp_str:=AnsiLowerCase(DecodedText);
+  morignpas.Text:=tmp_str
+end;
+ if Radio_m_mixed_text.Checked then
+begin
+  tmp_str:='';
+  MorseInput := m_new_pas.Text;
+  DecodedText := MorseToText(MorseInput, mmMixed);
+  morignpas.Text := DecodedText;
+  tmp_str:=AnsiLowerCase(DecodedText);
+  morignpas.Text:=tmp_str
+
+end;
 
 end;
 

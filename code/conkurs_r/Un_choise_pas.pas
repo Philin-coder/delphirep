@@ -68,6 +68,7 @@ type
     procedure Radiom_rus_textClick(Sender: TObject);
     procedure Radio_m_mixed_textClick(Sender: TObject);
     procedure bipBtnClick(Sender: TObject);
+    procedure morzeinitBtnClick(Sender: TObject);
   private
     get_pas:string;
     procedure SyncTabControlAndComboBox(Sender: TObject);
@@ -230,6 +231,32 @@ begin
       Stretch:=true;
       AutoSize:=true;
   end;
+
+end;
+
+procedure TFrm_cript_choise.morzeinitBtnClick(Sender: TObject);
+var
+  MorseInput, DecodedText: string;
+begin
+if Radiom_rus_text.Checked then
+begin
+  MorseInput := m_new_pas.Text;
+  DecodedText := MorseToText(MorseInput, mmRussian);
+  morignpas.Text :=DecodedText;
+end;
+ if Radio_m_eng_text.Checked then
+begin
+
+  MorseInput := m_new_pas.Text;
+  DecodedText := MorseToText(MorseInput, mmEnglish);
+  morignpas.Text := DecodedText;
+end;
+ if Radio_m_mixed_text.Checked then
+begin
+  MorseInput := m_new_pas.Text;
+  DecodedText := MorseToText(MorseInput, mmMixed);
+  morignpas.Text := DecodedText;
+end;
 
 end;
 
