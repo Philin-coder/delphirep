@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls,adodb,db, ComCtrls, ExtCtrls,jpeg;
+  Dialogs, StdCtrls,adodb,db, ComCtrls, ExtCtrls,jpeg, Buttons;
 
 type
   TFrm_cript_choise = class(TForm)
@@ -16,7 +16,7 @@ type
     cryortPC: TPageControl;
     RandombaseTab: TTabSheet;
     CezarTab: TTabSheet;
-    TabSheet3: TTabSheet;
+    morze_tab: TTabSheet;
     TabSheet4: TTabSheet;
     TabSheet5: TTabSheet;
     rb_input_box: TGroupBox;
@@ -41,6 +41,13 @@ type
     cryptImg: TImage;
     cezar_imgBox: TGroupBox;
     cezar_cryprt_img: TImage;
+    Morze_inp_Box: TGroupBox;
+    Radiom_rus_text: TRadioButton;
+    Radio_m_eng_text: TRadioButton;
+    Radio_m_mixed_text: TRadioButton;
+    bipBtn: TBitBtn;
+    morzebtinBox: TGroupBox;
+    morzeinitBtn: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure passKindComboChange(Sender: TObject);
@@ -48,6 +55,9 @@ type
     procedure rnd_base_init_BtnClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure RadiomixedClick(Sender: TObject);
+    procedure RadioenglngClick(Sender: TObject);
+    procedure RadioruslngClick(Sender: TObject);
+    procedure cezarinitBtnClick(Sender: TObject);
   private
     get_pas:string;
     procedure SyncTabControlAndComboBox(Sender: TObject);
@@ -79,6 +89,7 @@ begin
     case cryortPC.TabIndex of
       0: passKindCombo.ItemIndex := 0;
       1: passKindCombo.ItemIndex := 1;
+      2: passKindCombo.ItemIndex := 2;
     end;
   end
   else
@@ -86,9 +97,51 @@ begin
     case passKindCombo.ItemIndex of
       0: cryortPC.ActivePage := RandombaseTab;
       1: cryortPC.ActivePage := CezarTab;
+      2: cryortPC.ActivePage := morze_tab;
     end;
   end;
 end;
+procedure TFrm_cript_choise.cezarinitBtnClick(Sender: TObject);
+var
+  DecryptedText: string;
+begin
+if Radioruslng.Checked then 
+begin
+     try
+    DecryptedText := DecryptCaesarFromComponent(newPasinp, shift_grader.Position,
+    emRussian);
+   orignPasinp.Text:=DecryptedText;
+  except
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
+end;
+if Radioenglng.Checked then 
+begin
+     try
+    DecryptedText := DecryptCaesarFromComponent(newPasinp, shift_grader.Position, 
+    emLatin);
+   orignPasinp.Text:=DecryptedText;
+  except
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
+end;
+if Radiomixed.Checked then 
+begin
+     try
+    DecryptedText := DecryptCaesarFromComponent(newPasinp, shift_grader.Position, 
+    emMixed);
+   orignPasinp.Text:=DecryptedText;
+  except
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
+end;
+
+
+end;
+
 procedure TFrm_cript_choise.cryortPCChange(Sender: TObject);
 begin
    SyncTabControlAndComboBox(Sender);
@@ -134,6 +187,12 @@ begin
   end;
   with cryptImg do
   begin
+      Stretch:=true;
+      AutoSize:=true;
+  end;
+   with cezar_cryprt_img do
+  begin
+      Stretch:=true;
       AutoSize:=true;
   end;
   
@@ -142,6 +201,24 @@ end;
 procedure TFrm_cript_choise.passKindComboChange(Sender: TObject);
 begin
     SyncTabControlAndComboBox(Sender);
+end;
+
+procedure TFrm_cript_choise.RadioenglngClick(Sender: TObject);
+  var
+  EncryptedText: string;
+begin
+if Radioenglng.Checked then
+begin
+try
+EncryptedText := EncryptCaesarFromComponent(orignPasinp, shift_grader.Position,
+emLatin);
+    newPasinp.Text:= EncryptedText;
+  except
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
+end;
+
 end;
 
 procedure TFrm_cript_choise.RadiomixedClick(Sender: TObject);
@@ -161,6 +238,23 @@ emMixed);
 end;
 end;
 
+
+procedure TFrm_cript_choise.RadioruslngClick(Sender: TObject);
+   var EncryptedText:String;
+begin
+if Radioruslng.Checked then
+begin
+try
+EncryptedText := EncryptCaesarFromComponent(orignPasinp, shift_grader.Position,
+emRussian);
+    newPasinp.Text:= EncryptedText;
+  except
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
+end;
+
+end;
 
 procedure TFrm_cript_choise.rnd_base_init_BtnClick(Sender: TObject);
   var rnd_string:string;

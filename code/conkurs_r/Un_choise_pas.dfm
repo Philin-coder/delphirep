@@ -315,13 +315,10 @@ object Frm_cript_choise: TFrm_cript_choise
         Left = 0
         Top = 0
         Width = 1010
-        Height = 105
+        Height = 134
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        ExplicitLeft = 312
-        ExplicitTop = 80
-        ExplicitWidth = 185
         object Radiom_rus_text: TRadioButton
           Left = 56
           Top = 56
@@ -346,13 +343,24 @@ object Frm_cript_choise: TFrm_cript_choise
           Caption = #1057#1084#1077#1096#1072#1085#1085#1099#1081
           TabOrder = 2
         end
-        object bipBtn: TBitBtn
-          Left = 784
-          Top = 56
-          Width = 75
-          Height = 25
-          Caption = #1041#1080#1087#1077#1088
+        object beeperPanel: TPanel
+          Left = 2
+          Top = 91
+          Width = 1006
+          Height = 41
+          Align = alBottom
           TabOrder = 3
+          ExplicitLeft = 320
+          ExplicitTop = 112
+          ExplicitWidth = 185
+          object bipBtn: TBitBtn
+            Left = 312
+            Top = 12
+            Width = 75
+            Height = 25
+            Caption = #1041#1080#1087#1077#1088
+            TabOrder = 0
+          end
         end
       end
       object morzebtinBox: TGroupBox
@@ -369,6 +377,66 @@ object Frm_cript_choise: TFrm_cript_choise
           Height = 25
           Caption = #1056#1072#1089#1096#1080#1092#1086#1088#1074#1072#1090#1100
           TabOrder = 0
+        end
+      end
+      object morzeParamBox: TGroupBox
+        Left = 0
+        Top = 134
+        Width = 1010
+        Height = 138
+        Align = alTop
+        Caption = #1055#1072#1088#1072#1084#1077#1090#1088#1099
+        TabOrder = 2
+        ExplicitTop = 111
+        DesignSize = (
+          1010
+          138)
+        object morignpas: TLabeledEdit
+          Left = 3
+          Top = 35
+          Width = 985
+          Height = 21
+          Anchors = [akLeft, akRight]
+          EditLabel.Width = 93
+          EditLabel.Height = 13
+          EditLabel.Caption = #1048#1089#1093#1086#1076#1085#1099#1081'  '#1087#1072#1088#1086#1083#1100
+          TabOrder = 0
+          ExplicitTop = 24
+        end
+        object m_new_pas: TLabeledEdit
+          Left = 11
+          Top = 81
+          Width = 985
+          Height = 21
+          Anchors = [akLeft, akRight]
+          EditLabel.Width = 75
+          EditLabel.Height = 13
+          EditLabel.Caption = #1053#1086#1074#1099#1081'  '#1087#1072#1088#1086#1083#1100
+          TabOrder = 1
+          ExplicitTop = 85
+        end
+      end
+      object m_imageBox: TGroupBox
+        Left = 0
+        Top = 272
+        Width = 1010
+        Height = 320
+        Align = alClient
+        TabOrder = 3
+        ExplicitLeft = 144
+        ExplicitTop = 288
+        ExplicitWidth = 185
+        ExplicitHeight = 105
+        object m_Image: TImage
+          Left = 2
+          Top = 15
+          Width = 1006
+          Height = 303
+          Align = alClient
+          ExplicitLeft = 264
+          ExplicitTop = 112
+          ExplicitWidth = 105
+          ExplicitHeight = 105
         end
       end
     end

@@ -45,9 +45,15 @@ type
     Radiom_rus_text: TRadioButton;
     Radio_m_eng_text: TRadioButton;
     Radio_m_mixed_text: TRadioButton;
-    bipBtn: TBitBtn;
     morzebtinBox: TGroupBox;
     morzeinitBtn: TButton;
+    morzeParamBox: TGroupBox;
+    morignpas: TLabeledEdit;
+    m_new_pas: TLabeledEdit;
+    m_imageBox: TGroupBox;
+    m_Image: TImage;
+    beeperPanel: TPanel;
+    bipBtn: TBitBtn;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure passKindComboChange(Sender: TObject);
