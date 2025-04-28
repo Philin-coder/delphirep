@@ -140,6 +140,8 @@ procedure FormatLabel(const LabelName: string; AForm: TForm;
 procedure SetFormSizeAndPosition(const FormName: string;
 NewWidth, NewHeight: Integer);
 function FindFormByName_new(const AName: string): TForm;
+function DecryptCaesarFromComponent(AComponent: TControl; Shift: Integer;
+Mode: TEncryptionMode): string;
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -2099,7 +2101,80 @@ begin
     end;
   end;
 end;
+function DecryptCaesarFromComponent(AComponent: TControl; Shift: Integer;
+Mode: TEncryptionMode): string;
+const
+  // Алфавиты для русских и латинских букв
+  RussianLowercase = 'абвгдежзийклмнопрстуфхцчшщъыьэюя';
+  RussianUppercase = 'АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ';
+  LatinLowercase = 'abcdefghijklmnopqrstuvwxyz';
+  LatinUppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+var
+  i: Integer;
+  Ch: Char;
+  Text: string;
+begin
+  // Проверяем, что компонент передан
+  if not Assigned(AComponent) then
+  begin
+    raise Exception.Create('Компонент не назначен.');
+  end;
 
+  // Получаем текст из компонента
+  if AComponent is TLabel then
+    Text := TLabel(AComponent).Caption
+  else if AComponent is TEdit then
+    Text := TEdit(AComponent).Text
+  else if AComponent is TLabeledEdit then
+    Text := TLabeledEdit(AComponent).Text
+  else
+  begin
+    raise Exception.Create('Неподдерживаемый тип компонента.');
+  end;
+
+  // Расшифровываем текст
+  Result := '';
+  for i := 1 to Length(Text) do
+  begin
+    Ch := Text[i];
+
+    case Mode of
+      emLatin:
+        begin
+          if Ch in ['a'..'z'] then
+            Result := Result + ShiftChar(Ch, -Shift, LatinLowercase) // Вычитаем сдвиг
+          else if Ch in ['A'..'Z'] then
+            Result := Result + ShiftChar(Ch, -Shift, LatinUppercase) // Вычитаем сдвиг
+          else
+            Result := Result + Ch; // Неизменяемые символы
+        end;
+
+      emRussian:
+        begin
+          if Ch in ['а'..'я'] then
+            Result := Result + ShiftChar(Ch, -Shift, RussianLowercase) // Вычитаем сдвиг
+          else if Ch in ['А'..'Я'] then
+            Result := Result + ShiftChar(Ch, -Shift, RussianUppercase) // Вычитаем сдвиг
+          else
+            Result := Result + Ch; // Неизменяемые символы
+        end;
+
+      emMixed:
+        begin
+          if Ch in ['а'..'я'] then
+            Result := Result + ShiftChar(Ch, -Shift, RussianLowercase) // Вычитаем сдвиг
+          else if Ch in ['А'..'Я'] then
+            Result := Result + ShiftChar(Ch, -Shift, RussianUppercase) // Вычитаем сдвиг
+          else if Ch in ['a'..'z'] then
+            Result := Result + ShiftChar(Ch, -Shift, LatinLowercase) // Вычитаем сдвиг
+          else if Ch in ['A'..'Z'] then
+            Result := Result + ShiftChar(Ch, -Shift, LatinUppercase) // Вычитаем сдвиг
+          else
+            Result := Result + Ch; // Неизменяемые символы
+        end;
+    end;
+  end;
+end;
 initialization
   VisitedStaticTexts := TStringList.Create;
 finalization

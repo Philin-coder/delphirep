@@ -50,6 +50,7 @@ type
     procedure RadiomixedClick(Sender: TObject);
     procedure RadioenglngClick(Sender: TObject);
     procedure RadioruslngClick(Sender: TObject);
+    procedure cezarinitBtnClick(Sender: TObject);
   private
     get_pas:string;
     procedure SyncTabControlAndComboBox(Sender: TObject);
@@ -91,6 +92,47 @@ begin
     end;
   end;
 end;
+procedure TFrm_cript_choise.cezarinitBtnClick(Sender: TObject);
+var
+  DecryptedText: string;
+begin
+if Radioruslng.Checked then 
+begin
+     try
+    DecryptedText := DecryptCaesarFromComponent(newPasinp, shift_grader.Position, 
+    emRussian);
+   orignPasinp.Text:=DecryptedText;
+  except
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
+end;
+if Radioenglng.Checked then 
+begin
+     try
+    DecryptedText := DecryptCaesarFromComponent(newPasinp, shift_grader.Position, 
+    emLatin);
+   orignPasinp.Text:=DecryptedText;
+  except
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
+end;
+if Radiomixed.Checked then 
+begin
+     try
+    DecryptedText := DecryptCaesarFromComponent(newPasinp, shift_grader.Position, 
+    emMixed);
+   orignPasinp.Text:=DecryptedText;
+  except
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
+end;
+
+
+end;
+
 procedure TFrm_cript_choise.cryortPCChange(Sender: TObject);
 begin
    SyncTabControlAndComboBox(Sender);
