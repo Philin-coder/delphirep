@@ -23,19 +23,27 @@ type
     rnd_base_out_pass: TLabeledEdit;
     rnd_base_sym_amoount_inp: TLabeledEdit;
     rnd_base_grader: TUpDown;
+    cryprmainBox: TGroupBox;
+    cryptcondBox: TGroupBox;
+    Radioruslng: TRadioButton;
+    Radioenglng: TRadioButton;
+    Radiomixed: TRadioButton;
+    paramBox: TGroupBox;
+    orignPasinp: TLabeledEdit;
+    shift_inp: TLabeledEdit;
+    shift_grader: TUpDown;
+    newPasinp: TLabeledEdit;
+    cezarbtnBox: TGroupBox;
+    cezarinitBtn: TButton;
     rnd_base_btn_box: TGroupBox;
     rnd_base_init_Btn: TButton;
-    cryprmainBox: TGroupBox;
-    GroupBox1: TGroupBox;
-    RadioButton1: TRadioButton;
-    RadioButton2: TRadioButton;
-    RadioButton3: TRadioButton;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure passKindComboChange(Sender: TObject);
     procedure cryortPCChange(Sender: TObject);
     procedure rnd_base_init_BtnClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
+    procedure RadiomixedClick(Sender: TObject);
   private
     get_pas:string;
     procedure SyncTabControlAndComboBox(Sender: TObject);
@@ -84,7 +92,8 @@ end;
 
 procedure TFrm_cript_choise.FormActivate(Sender: TObject);
 begin
-aldpasslbl.Caption:=get_pas;
+  aldpasslbl.Caption:=get_pas;
+  orignPasinp.Text:=trim(aldpasslbl.Caption);
 end;
 
 procedure TFrm_cript_choise.FormClose(Sender: TObject;
@@ -111,12 +120,37 @@ begin
     on E: Exception do
       ShowMessage(E.Message); // Отображаем сообщение об ошибке
   end;
+    try
+    // Устанавливаем размеры и положение формы 'Frm_cript_choise'
+    SetFormSizeAndPosition('Frm_cript_choise', 1024, 768);
+  except
+    on E: Exception do
+      ShowMessage(E.Message); // Отображаем сообщение об ошибке
+  end;
 end;
 
 procedure TFrm_cript_choise.passKindComboChange(Sender: TObject);
 begin
     SyncTabControlAndComboBox(Sender);
 end;
+
+procedure TFrm_cript_choise.RadiomixedClick(Sender: TObject);
+var
+  EncryptedText: string;
+begin
+if Radiomixed.Checked then
+begin
+try
+EncryptedText := EncryptCaesarFromComponent(orignPasinp, shift_grader.Position,
+emMixed);
+    newPasinp.Text:= EncryptedText;
+  except
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
+end;
+end;
+
 
 procedure TFrm_cript_choise.rnd_base_init_BtnClick(Sender: TObject);
   var rnd_string:string;

@@ -73,7 +73,7 @@ object Frm_cript_choise: TFrm_cript_choise
     Top = 121
     Width = 1018
     Height = 618
-    ActivePage = CezarTab
+    ActivePage = RandombaseTab
     Align = alClient
     TabOrder = 1
     OnChange = cryortPCChange
@@ -87,17 +87,16 @@ object Frm_cript_choise: TFrm_cript_choise
         Left = 0
         Top = 0
         Width = 1010
-        Height = 193
+        Height = 177
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        ExplicitWidth = 1387
         DesignSize = (
           1010
-          193)
+          177)
         object rnd_base_out_pass: TLabeledEdit
           Left = 10
-          Top = 117
+          Top = 108
           Width = 997
           Height = 21
           Anchors = [akLeft, akRight]
@@ -108,7 +107,7 @@ object Frm_cript_choise: TFrm_cript_choise
         end
         object rnd_base_sym_amoount_inp: TLabeledEdit
           Left = 26
-          Top = 32
+          Top = 29
           Width = 981
           Height = 21
           Anchors = [akLeft, akRight]
@@ -117,6 +116,7 @@ object Frm_cript_choise: TFrm_cript_choise
           EditLabel.Caption = #1050#1086#1083#1080#1095#1077#1089#1090#1074#1086' '#1089#1080#1084#1086#1074#1086#1083#1086#1074' '#1087#1072#1088#1086#1083#1103
           TabOrder = 1
           Text = '0'
+          ExplicitTop = 32
         end
         object rnd_base_grader: TUpDown
           Left = 10
@@ -127,31 +127,32 @@ object Frm_cript_choise: TFrm_cript_choise
           Associate = rnd_base_sym_amoount_inp
           TabOrder = 2
         end
-        object rnd_base_btn_box: TGroupBox
-          Left = 2
-          Top = 144
-          Width = 1006
-          Height = 47
-          Align = alBottom
-          TabOrder = 3
-          ExplicitWidth = 1383
-          object rnd_base_init_Btn: TButton
-            Left = 540
-            Top = 19
-            Width = 293
-            Height = 25
-            Caption = #1043#1077#1085#1077#1088#1080#1088#1086#1074#1072#1090#1100' '#1087#1072#1088#1086#1083#1100
-            TabOrder = 0
-            OnClick = rnd_base_init_BtnClick
-          end
+      end
+      object rnd_base_btn_box: TGroupBox
+        Left = 0
+        Top = 543
+        Width = 1010
+        Height = 47
+        Align = alBottom
+        TabOrder = 1
+        ExplicitLeft = 2
+        ExplicitTop = 144
+        ExplicitWidth = 1383
+        object rnd_base_init_Btn: TButton
+          Left = 540
+          Top = 19
+          Width = 293
+          Height = 25
+          Caption = #1043#1077#1085#1077#1088#1080#1088#1086#1074#1072#1090#1100' '#1087#1072#1088#1086#1083#1100
+          TabOrder = 0
+          OnClick = rnd_base_init_BtnClick
         end
       end
     end
     object CezarTab: TTabSheet
       Caption = #1064#1080#1092#1086#1088#1074#1072#1085#1080#1077' '#1087#1088#1080' '#1087#1086#1084#1086#1096#1080' '#1096#1080#1088#1072' '#1062#1077#1079#1072#1088#1103
       ImageIndex = 1
-      ExplicitWidth = 1387
-      ExplicitHeight = 384
+      ExplicitLeft = 3
       object cryprmainBox: TGroupBox
         Left = 0
         Top = 0

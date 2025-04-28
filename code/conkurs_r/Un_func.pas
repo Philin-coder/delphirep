@@ -137,7 +137,9 @@ procedure FormatLabel(const LabelName: string; AForm: TForm;
   function EncryptCaesarFromComponent(AComponent: TControl; Shift: Integer;
   Mode: TEncryptionMode): string;
   function ShiftChar(Ch: Char; Shift: Integer; Alphabet: string): Char;
-
+procedure SetFormSizeAndPosition(const FormName: string;
+NewWidth, NewHeight: Integer);
+function FindFormByName_new(const AName: string): TForm;
 implementation
  var
   hAniCursor: HCURSOR = 0;
@@ -2059,6 +2061,44 @@ begin
   end;
 end;
 
+procedure SetFormSizeAndPosition(const FormName: string; NewWidth, NewHeight: Integer);
+var
+  Form: TForm;
+begin
+  Form := FindFormByName_new(FormName);
+
+  // Проверяем, что форма найдена
+  if not Assigned(Form) then
+  begin
+    raise Exception.CreateFmt('Форма с именем "%s" не найдена.', [FormName]);
+  end;
+
+  // Устанавливаем новые размеры и положение
+  with Form do
+  begin
+    if NewWidth > 0 then
+      Width := NewWidth;
+
+    if NewHeight > 0 then
+      Height := NewHeight;
+
+    Position := poScreenCenter;
+  end;
+end;
+ function FindFormByName_new(const AName: string): TForm;
+var
+  i: Integer;
+begin
+  Result := nil;
+  for i := 0 to Screen.FormCount - 1 do
+  begin
+    if SameText(Screen.Forms[i].Name, AName) then
+    begin
+      Result := Screen.Forms[i];
+      Break;
+    end;
+  end;
+end;
 
 initialization
   VisitedStaticTexts := TStringList.Create;
