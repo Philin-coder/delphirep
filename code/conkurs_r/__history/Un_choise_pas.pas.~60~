@@ -16,7 +16,7 @@ type
     cryortPC: TPageControl;
     RandombaseTab: TTabSheet;
     CezarTab: TTabSheet;
-    TabSheet3: TTabSheet;
+    morze_tab: TTabSheet;
     TabSheet4: TTabSheet;
     TabSheet5: TTabSheet;
     rb_input_box: TGroupBox;
@@ -48,6 +48,9 @@ type
     procedure rnd_base_init_BtnClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure RadiomixedClick(Sender: TObject);
+    procedure RadioenglngClick(Sender: TObject);
+    procedure RadioruslngClick(Sender: TObject);
+    procedure cezarinitBtnClick(Sender: TObject);
   private
     get_pas:string;
     procedure SyncTabControlAndComboBox(Sender: TObject);
@@ -79,6 +82,7 @@ begin
     case cryortPC.TabIndex of
       0: passKindCombo.ItemIndex := 0;
       1: passKindCombo.ItemIndex := 1;
+      2: passKindCombo.ItemIndex := 2;
     end;
   end
   else
@@ -86,9 +90,51 @@ begin
     case passKindCombo.ItemIndex of
       0: cryortPC.ActivePage := RandombaseTab;
       1: cryortPC.ActivePage := CezarTab;
+      2: cryortPC.ActivePage := morze_tab;
     end;
   end;
 end;
+procedure TFrm_cript_choise.cezarinitBtnClick(Sender: TObject);
+var
+  DecryptedText: string;
+begin
+if Radioruslng.Checked then 
+begin
+     try
+    DecryptedText := DecryptCaesarFromComponent(newPasinp, shift_grader.Position,
+    emRussian);
+   orignPasinp.Text:=DecryptedText;
+  except
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
+end;
+if Radioenglng.Checked then 
+begin
+     try
+    DecryptedText := DecryptCaesarFromComponent(newPasinp, shift_grader.Position, 
+    emLatin);
+   orignPasinp.Text:=DecryptedText;
+  except
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
+end;
+if Radiomixed.Checked then 
+begin
+     try
+    DecryptedText := DecryptCaesarFromComponent(newPasinp, shift_grader.Position, 
+    emMixed);
+   orignPasinp.Text:=DecryptedText;
+  except
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
+end;
+
+
+end;
+
 procedure TFrm_cript_choise.cryortPCChange(Sender: TObject);
 begin
    SyncTabControlAndComboBox(Sender);
@@ -109,7 +155,6 @@ begin
 end;
 
 procedure TFrm_cript_choise.FormCreate(Sender: TObject);
-  var i:Integer;
 begin
  Frm_cript_choise.KeyPreview:=true;
  Frm_cript_choise.ShowHint:=true;
@@ -133,22 +178,40 @@ begin
     on E: Exception do
       ShowMessage(E.Message);
   end;
-  with Frm_cript_choise do
+  with cryptImg do
   begin
-     for I := 0 to componentCount - 1 do
-     begin
-       if (Components[i] is TImage) then
-       begin
-           (Components[i] as TImage).AutoSize:=true;
-          
-       end;
-     end;
+      Stretch:=true;
+      AutoSize:=true;
   end;
+   with cezar_cryprt_img do
+  begin
+      Stretch:=true;
+      AutoSize:=true;
+  end;
+  
 end;
 
 procedure TFrm_cript_choise.passKindComboChange(Sender: TObject);
 begin
     SyncTabControlAndComboBox(Sender);
+end;
+
+procedure TFrm_cript_choise.RadioenglngClick(Sender: TObject);
+  var
+  EncryptedText: string;
+begin
+if Radioenglng.Checked then
+begin
+try
+EncryptedText := EncryptCaesarFromComponent(orignPasinp, shift_grader.Position,
+emLatin);
+    newPasinp.Text:= EncryptedText;
+  except
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
+end;
+
 end;
 
 procedure TFrm_cript_choise.RadiomixedClick(Sender: TObject);
@@ -168,6 +231,23 @@ emMixed);
 end;
 end;
 
+
+procedure TFrm_cript_choise.RadioruslngClick(Sender: TObject);
+   var EncryptedText:String;
+begin
+if Radioruslng.Checked then
+begin
+try
+EncryptedText := EncryptCaesarFromComponent(orignPasinp, shift_grader.Position,
+emRussian);
+    newPasinp.Text:= EncryptedText;
+  except
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
+end;
+
+end;
 
 procedure TFrm_cript_choise.rnd_base_init_BtnClick(Sender: TObject);
   var rnd_string:string;

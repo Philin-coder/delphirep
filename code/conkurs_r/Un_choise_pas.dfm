@@ -311,6 +311,66 @@ object Frm_cript_choise: TFrm_cript_choise
       Caption = #1064#1080#1092#1088#1086#1074#1072#1085#1080#1077' '#1087#1088#1080' '#1087#1086#1084#1086#1097#1080' '#1072#1079#1073#1091#1082#1080' '#1052#1086#1088#1079#1077
       ImageIndex = 2
       ExplicitHeight = 590
+      object Morze_inp_Box: TGroupBox
+        Left = 0
+        Top = 0
+        Width = 1010
+        Height = 105
+        Align = alTop
+        Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 0
+        ExplicitLeft = 312
+        ExplicitTop = 80
+        ExplicitWidth = 185
+        object Radiom_rus_text: TRadioButton
+          Left = 56
+          Top = 56
+          Width = 113
+          Height = 17
+          Caption = #1056#1091#1089#1089#1082#1080#1081' '#1090#1077#1082#1089#1090
+          TabOrder = 0
+        end
+        object Radio_m_eng_text: TRadioButton
+          Left = 304
+          Top = 56
+          Width = 113
+          Height = 17
+          Caption = #1040#1085#1075#1083#1080#1081#1089#1082#1080#1081' '#1090#1077#1082#1089#1090
+          TabOrder = 1
+        end
+        object Radio_m_mixed_text: TRadioButton
+          Left = 584
+          Top = 56
+          Width = 113
+          Height = 17
+          Caption = #1057#1084#1077#1096#1072#1085#1085#1099#1081
+          TabOrder = 2
+        end
+        object bipBtn: TBitBtn
+          Left = 784
+          Top = 56
+          Width = 75
+          Height = 25
+          Caption = #1041#1080#1087#1077#1088
+          TabOrder = 3
+        end
+      end
+      object morzebtinBox: TGroupBox
+        Left = 0
+        Top = 592
+        Width = 1010
+        Height = 67
+        Align = alBottom
+        TabOrder = 1
+        object morzeinitBtn: TButton
+          Left = 464
+          Top = 32
+          Width = 91
+          Height = 25
+          Caption = #1056#1072#1089#1096#1080#1092#1086#1088#1074#1072#1090#1100
+          TabOrder = 0
+        end
+      end
     end
     object TabSheet4: TTabSheet
       Caption = 'TabSheet4'

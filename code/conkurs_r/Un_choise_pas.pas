@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls,adodb,db, ComCtrls, ExtCtrls,jpeg;
+  Dialogs, StdCtrls,adodb,db, ComCtrls, ExtCtrls,jpeg, Buttons;
 
 type
   TFrm_cript_choise = class(TForm)
@@ -41,6 +41,13 @@ type
     cryptImg: TImage;
     cezar_imgBox: TGroupBox;
     cezar_cryprt_img: TImage;
+    Morze_inp_Box: TGroupBox;
+    Radiom_rus_text: TRadioButton;
+    Radio_m_eng_text: TRadioButton;
+    Radio_m_mixed_text: TRadioButton;
+    bipBtn: TBitBtn;
+    morzebtinBox: TGroupBox;
+    morzeinitBtn: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure passKindComboChange(Sender: TObject);
