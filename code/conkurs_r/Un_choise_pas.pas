@@ -64,6 +64,10 @@ type
     procedure RadioenglngClick(Sender: TObject);
     procedure RadioruslngClick(Sender: TObject);
     procedure cezarinitBtnClick(Sender: TObject);
+    procedure Radio_m_eng_textClick(Sender: TObject);
+    procedure Radiom_rus_textClick(Sender: TObject);
+    procedure Radio_m_mixed_textClick(Sender: TObject);
+    procedure bipBtnClick(Sender: TObject);
   private
     get_pas:string;
     procedure SyncTabControlAndComboBox(Sender: TObject);
@@ -107,6 +111,24 @@ begin
     end;
   end;
 end;
+procedure TFrm_cript_choise.bipBtnClick(Sender: TObject);
+var i:Integer;
+begin
+for i := 1 to Length(m_new_pas.Text) do
+    case m_new_pas.Text[i] of
+      '.': begin
+             Windows.Beep(1000, 200);
+             Sleep(200);
+           end;
+      '-': begin
+             Windows.Beep(1000, 600);
+             Sleep(200);
+           end;
+      else Continue;
+    end;
+  Sleep(400);
+end;
+
 procedure TFrm_cript_choise.cezarinitBtnClick(Sender: TObject);
 var
   DecryptedText: string;
@@ -157,6 +179,7 @@ procedure TFrm_cript_choise.FormActivate(Sender: TObject);
 begin
   aldpasslbl.Caption:=get_pas;
   orignPasinp.Text:=trim(aldpasslbl.Caption);
+    morignPas.Text:=trim(aldpasslbl.Caption);
 end;
 
 procedure TFrm_cript_choise.FormClose(Sender: TObject;
@@ -176,6 +199,7 @@ begin
  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
  LoadImageFromResource('CRYPT',cryptImg);
  LoadImageFromResource('CRYPT',cezar_cryprt_img);
+ LoadImageFromResource('CRYPT',m_Image);
  LoadFormState(Self);
  rnd_base_grader.Min:=4;
  Randomize;
@@ -201,7 +225,12 @@ begin
       Stretch:=true;
       AutoSize:=true;
   end;
-  
+   with m_Image do
+  begin
+      Stretch:=true;
+      AutoSize:=true;
+  end;
+
 end;
 
 procedure TFrm_cript_choise.passKindComboChange(Sender: TObject);
@@ -245,6 +274,23 @@ end;
 end;
 
 
+procedure TFrm_cript_choise.Radiom_rus_textClick(Sender: TObject);
+var i: Integer;
+     InputText, MorseText: string;
+begin
+    if Radiom_rus_text.Checked then
+begin
+  InputText := morignpas.Text;
+
+  MorseText := '';
+  for i := 1 to Length(InputText) do
+  begin
+    MorseText := MorseText + GetMorseChar(InputText[i], mmRussian) + ' ';
+  end;
+  m_new_pas.Text:=MorseText;
+end;
+end;
+
 procedure TFrm_cript_choise.RadioruslngClick(Sender: TObject);
    var EncryptedText:String;
 begin
@@ -258,6 +304,48 @@ emRussian);
     on E: Exception do
       ShowMessage('Œ¯Ë·Í‡: ' + E.Message);
   end;
+end;
+
+end;
+
+procedure TFrm_cript_choise.Radio_m_eng_textClick(Sender: TObject);
+var
+  i: Integer;
+  InputText, MorseText: string;
+begin
+if Radio_m_eng_text.Checked then
+begin
+
+  InputText := morignpas.Text;
+  MorseText := '';
+
+  for i := 1 to Length(InputText) do
+  begin
+    MorseText := MorseText + GetMorseChar(InputText[i], mmEnglish) + ' ';
+  end;
+
+  m_new_pas.Text:=MorseText;
+end;
+end;
+
+
+
+procedure TFrm_cript_choise.Radio_m_mixed_textClick(Sender: TObject);
+var i: Integer;
+     InputText, MorseText: string;
+begin
+if Radio_m_mixed_text.Checked then
+begin
+
+  InputText := morignpas.Text;
+  MorseText := '';
+
+  for i := 1 to Length(InputText) do
+  begin
+    MorseText := MorseText + GetMorseChar(InputText[i], mmMixed) + ' ';
+  end;
+
+  m_new_pas.Text:=MorseText;
 end;
 
 end;

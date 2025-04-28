@@ -35,6 +35,8 @@ type
   TSysCharSet = set of Char;
   type
     TEncryptionMode = (emLatin, emRussian, emMixed);
+  type
+    TMorseMode = (mmRussian, mmEnglish, mmMixed);
 var
   symcount:Integer;
 var
@@ -137,8 +139,63 @@ procedure FormatLabel(const LabelName: string; AForm: TForm;
   function EncryptCaesarFromComponent(AComponent: TControl; Shift: Integer;
   Mode: TEncryptionMode): string;
   function ShiftChar(Ch: Char; Shift: Integer; Alphabet: string): Char;
-
+procedure SetFormSizeAndPosition(const FormName: string;
+NewWidth, NewHeight: Integer);
+function FindFormByName_new(const AName: string): TForm;
+function DecryptCaesarFromComponent(AComponent: TControl; Shift: Integer;
+Mode: TEncryptionMode): string;
+function GetMorseChar(Ch: Char; Mode: TMorseMode): string;
+function TextToMorse(const Input: string; Mode: TMorseMode): string;
 implementation
+
+const
+  EnglishLetters: array['A'..'Z'] of string = (
+    '.-', '-...', '-.-.', '-..', '.', '..-.', '--.', '....', '..', '.---',
+    '-.-', '.-..', '--', '-.', '---', '.--.', '--.-', '.-.', '...', '-',
+    '..-', '...-', '.--', '-..-', '-.--', '--..'
+  );
+ const
+  EnglishDigits: array['0'..'9'] of string = (
+    '-----', '.----', '..---', '...--', '....-', '.....',
+    '-....', '--...', '---..', '----.'
+  );
+
+  const
+  RussianLetters: array['А'..'Я'] of string = (
+    '.-',    // А
+    '-...',  // Б
+    '.--',   // В
+    '--.',   // Г
+    '-..',   // Д
+    '.',     // Е
+    '...-',  // Ж
+    '--..',  // З
+    '..',    // И
+    '.---',  // Й
+    '-.-',   // К
+    '.-..',  // Л
+    '--',    // М
+    '-.',    // Н
+    '---',   // О
+    '.--.',  // П
+    '.-.',   // Р
+    '...',   // С
+    '-',     // Т
+    '..-',   // У
+    '..-.',  // Ф
+    '....',  // Х
+    '-.-.',  // Ц
+    '---.',  // Ч
+    '----',  // Ш
+    '--.-',  // Щ
+    '--.--', // Ъ
+    '-.--',  // Ы
+    '-..-',  // Ь
+    '..-..', // Э
+    '..--',  // Ю
+    '.-.-'   // Я
+  );
+
  var
   hAniCursor: HCURSOR = 0;
 
@@ -2058,6 +2115,154 @@ begin
     end;
   end;
 end;
+
+procedure SetFormSizeAndPosition(const FormName: string; NewWidth, NewHeight: Integer);
+var
+  Form: TForm;
+begin
+  Form := FindFormByName_new(FormName);
+
+  // Проверяем, что форма найдена
+  if not Assigned(Form) then
+  begin
+    raise Exception.CreateFmt('Форма с именем "%s" не найдена.', [FormName]);
+  end;
+
+  // Устанавливаем новые размеры и положение
+  with Form do
+  begin
+    if NewWidth > 0 then
+      Width := NewWidth;
+
+    if NewHeight > 0 then
+      Height := NewHeight;
+
+    Position := poScreenCenter;
+  end;
+end;
+ function FindFormByName_new(const AName: string): TForm;
+var
+  i: Integer;
+begin
+  Result := nil;
+  for i := 0 to Screen.FormCount - 1 do
+  begin
+    if SameText(Screen.Forms[i].Name, AName) then
+    begin
+      Result := Screen.Forms[i];
+      Break;
+    end;
+  end;
+end;
+function DecryptCaesarFromComponent(AComponent: TControl; Shift: Integer;
+Mode: TEncryptionMode): string;
+const
+  RussianLowercase = 'абвгдежзийклмнопрстуфхцчшщъыьэюя';
+  RussianUppercase = 'АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ';
+  LatinLowercase = 'abcdefghijklmnopqrstuvwxyz';
+  LatinUppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+var
+  i: Integer;
+  Ch: Char;
+  Text: string;
+begin
+  if not Assigned(AComponent) then
+  begin
+    raise Exception.Create('Компонент не назначен.');
+  end;
+  if AComponent is TLabel then
+    Text := TLabel(AComponent).Caption
+  else if AComponent is TEdit then
+    Text := TEdit(AComponent).Text
+  else if AComponent is TLabeledEdit then
+    Text := TLabeledEdit(AComponent).Text
+  else
+  begin
+    raise Exception.Create('Неподдерживаемый тип компонента.');
+  end;
+  Result := '';
+  for i := 1 to Length(Text) do
+  begin
+    Ch := Text[i];
+    case Mode of
+      emLatin:
+        begin
+          if Ch in ['a'..'z'] then
+            Result := Result + ShiftChar(Ch, -Shift, LatinLowercase) // Вычитаем сдвиг
+          else if Ch in ['A'..'Z'] then
+            Result := Result + ShiftChar(Ch, -Shift, LatinUppercase) // Вычитаем сдвиг
+          else
+            Result := Result + Ch; // Неизменяемые символы
+        end;
+      emRussian:
+        begin
+          if Ch in ['а'..'я'] then
+            Result := Result + ShiftChar(Ch, -Shift, RussianLowercase) // Вычитаем сдвиг
+          else if Ch in ['А'..'Я'] then
+            Result := Result + ShiftChar(Ch, -Shift, RussianUppercase) // Вычитаем сдвиг
+          else
+            Result := Result + Ch; // Неизменяемые символы
+        end;
+
+      emMixed:
+        begin
+          if Ch in ['а'..'я'] then
+            Result := Result + ShiftChar(Ch, -Shift, RussianLowercase) // Вычитаем сдвиг
+          else if Ch in ['А'..'Я'] then
+            Result := Result + ShiftChar(Ch, -Shift, RussianUppercase) // Вычитаем сдвиг
+          else if Ch in ['a'..'z'] then
+            Result := Result + ShiftChar(Ch, -Shift, LatinLowercase) // Вычитаем сдвиг
+          else if Ch in ['A'..'Z'] then
+            Result := Result + ShiftChar(Ch, -Shift, LatinUppercase) // Вычитаем сдвиг
+          else
+            Result := Result + Ch; // Неизменяемые символы
+        end;
+    end;
+  end;
+end;
+
+function GetMorseChar(Ch: Char; Mode: TMorseMode): string;
+var
+  UpCh: Char;
+begin
+  Result := '';  // По умолчанию результат — пустой
+  UpCh := UpCase(Ch);
+
+  if Mode in [mmEnglish, mmMixed] then
+  begin
+    if (UpCh >= 'A') and (UpCh <= 'Z') then
+      Result := EnglishLetters[UpCh]
+    else if (UpCh >= '0') and (UpCh <= '9') then
+      Result := EnglishDigits[UpCh];  // <<< исправлено здесь
+  end;
+
+  if (Result = '') and (Mode in [mmRussian, mmMixed]) then
+  begin
+    if (UpCh >= 'А') and (UpCh <= 'Я') then
+      Result := RussianLetters[UpCh];
+  end;
+end;
+
+
+function TextToMorse(const Input: string; Mode: TMorseMode): string;
+var
+  i: Integer;
+  MorseChar: string;
+begin
+  Result := '';
+  for i := 1 to Length(Input) do
+  begin
+    if Input[i] = ' ' then
+      Result := Result + ' / ' // Разделение слов
+    else
+    begin
+      MorseChar := GetMorseChar(Input[i], Mode);
+      if MorseChar <> '' then
+        Result := Result + MorseChar + ' ';
+    end;
+  end;
+end;
+
 
 
 initialization

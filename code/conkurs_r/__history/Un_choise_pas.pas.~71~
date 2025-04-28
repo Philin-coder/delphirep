@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls,adodb,db, ComCtrls, ExtCtrls,jpeg;
+  Dialogs, StdCtrls,adodb,db, ComCtrls, ExtCtrls,jpeg, Buttons;
 
 type
   TFrm_cript_choise = class(TForm)
@@ -16,7 +16,7 @@ type
     cryortPC: TPageControl;
     RandombaseTab: TTabSheet;
     CezarTab: TTabSheet;
-    TabSheet3: TTabSheet;
+    morze_tab: TTabSheet;
     TabSheet4: TTabSheet;
     TabSheet5: TTabSheet;
     rb_input_box: TGroupBox;
@@ -41,6 +41,19 @@ type
     cryptImg: TImage;
     cezar_imgBox: TGroupBox;
     cezar_cryprt_img: TImage;
+    Morze_inp_Box: TGroupBox;
+    Radiom_rus_text: TRadioButton;
+    Radio_m_eng_text: TRadioButton;
+    Radio_m_mixed_text: TRadioButton;
+    morzebtinBox: TGroupBox;
+    morzeinitBtn: TButton;
+    morzeParamBox: TGroupBox;
+    morignpas: TLabeledEdit;
+    m_new_pas: TLabeledEdit;
+    m_imageBox: TGroupBox;
+    m_Image: TImage;
+    beeperPanel: TPanel;
+    bipBtn: TBitBtn;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure passKindComboChange(Sender: TObject);
@@ -51,6 +64,9 @@ type
     procedure RadioenglngClick(Sender: TObject);
     procedure RadioruslngClick(Sender: TObject);
     procedure cezarinitBtnClick(Sender: TObject);
+    procedure Radio_m_eng_textClick(Sender: TObject);
+    procedure Radiom_rus_textClick(Sender: TObject);
+    procedure Radio_m_mixed_textClick(Sender: TObject);
   private
     get_pas:string;
     procedure SyncTabControlAndComboBox(Sender: TObject);
@@ -82,6 +98,7 @@ begin
     case cryortPC.TabIndex of
       0: passKindCombo.ItemIndex := 0;
       1: passKindCombo.ItemIndex := 1;
+      2: passKindCombo.ItemIndex := 2;
     end;
   end
   else
@@ -89,6 +106,7 @@ begin
     case passKindCombo.ItemIndex of
       0: cryortPC.ActivePage := RandombaseTab;
       1: cryortPC.ActivePage := CezarTab;
+      2: cryortPC.ActivePage := morze_tab;
     end;
   end;
 end;
@@ -99,7 +117,7 @@ begin
 if Radioruslng.Checked then 
 begin
      try
-    DecryptedText := DecryptCaesarFromComponent(newPasinp, shift_grader.Position, 
+    DecryptedText := DecryptCaesarFromComponent(newPasinp, shift_grader.Position,
     emRussian);
    orignPasinp.Text:=DecryptedText;
   except
@@ -107,6 +125,29 @@ begin
       ShowMessage('Ошибка: ' + E.Message);
   end;
 end;
+if Radioenglng.Checked then 
+begin
+     try
+    DecryptedText := DecryptCaesarFromComponent(newPasinp, shift_grader.Position, 
+    emLatin);
+   orignPasinp.Text:=DecryptedText;
+  except
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
+end;
+if Radiomixed.Checked then 
+begin
+     try
+    DecryptedText := DecryptCaesarFromComponent(newPasinp, shift_grader.Position, 
+    emMixed);
+   orignPasinp.Text:=DecryptedText;
+  except
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
+end;
+
 
 end;
 
@@ -119,6 +160,7 @@ procedure TFrm_cript_choise.FormActivate(Sender: TObject);
 begin
   aldpasslbl.Caption:=get_pas;
   orignPasinp.Text:=trim(aldpasslbl.Caption);
+    morignPas.Text:=trim(aldpasslbl.Caption);
 end;
 
 procedure TFrm_cript_choise.FormClose(Sender: TObject;
@@ -163,7 +205,7 @@ begin
       Stretch:=true;
       AutoSize:=true;
   end;
-  
+
 end;
 
 procedure TFrm_cript_choise.passKindComboChange(Sender: TObject);
@@ -207,6 +249,23 @@ end;
 end;
 
 
+procedure TFrm_cript_choise.Radiom_rus_textClick(Sender: TObject);
+var i: Integer;
+     InputText, MorseText: string;
+begin
+    if Radiom_rus_text.Checked then
+begin
+  InputText := morignpas.Text;
+
+  MorseText := '';
+  for i := 1 to Length(InputText) do
+  begin
+    MorseText := MorseText + GetMorseChar(InputText[i], mmRussian) + ' ';
+  end;
+  m_new_pas.Text:=MorseText;
+end;
+end;
+
 procedure TFrm_cript_choise.RadioruslngClick(Sender: TObject);
    var EncryptedText:String;
 begin
@@ -220,6 +279,48 @@ emRussian);
     on E: Exception do
       ShowMessage('Ошибка: ' + E.Message);
   end;
+end;
+
+end;
+
+procedure TFrm_cript_choise.Radio_m_eng_textClick(Sender: TObject);
+var
+  i: Integer;
+  InputText, MorseText: string;
+begin
+if Radio_m_eng_text.Checked then
+begin
+
+  InputText := morignpas.Text;
+  MorseText := '';
+
+  for i := 1 to Length(InputText) do
+  begin
+    MorseText := MorseText + GetMorseChar(InputText[i], mmEnglish) + ' ';
+  end;
+
+  m_new_pas.Text:=MorseText;
+end;
+end;
+
+
+
+procedure TFrm_cript_choise.Radio_m_mixed_textClick(Sender: TObject);
+var i: Integer;
+     InputText, MorseText: string;
+begin
+if Radio_m_mixed_text.Checked then
+begin
+
+  InputText := morignpas.Text;
+  MorseText := '';
+
+  for i := 1 to Length(InputText) do
+  begin
+    MorseText := MorseText + GetMorseChar(InputText[i], mmMixed) + ' ';
+  end;
+
+  m_new_pas.Text:=MorseText;
 end;
 
 end;

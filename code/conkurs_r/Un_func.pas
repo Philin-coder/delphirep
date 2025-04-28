@@ -35,6 +35,8 @@ type
   TSysCharSet = set of Char;
   type
     TEncryptionMode = (emLatin, emRussian, emMixed);
+  type
+    TMorseMode = (mmRussian, mmEnglish, mmMixed);
 var
   symcount:Integer;
 var
@@ -142,7 +144,58 @@ NewWidth, NewHeight: Integer);
 function FindFormByName_new(const AName: string): TForm;
 function DecryptCaesarFromComponent(AComponent: TControl; Shift: Integer;
 Mode: TEncryptionMode): string;
+function GetMorseChar(Ch: Char; Mode: TMorseMode): string;
+function TextToMorse(const Input: string; Mode: TMorseMode): string;
 implementation
+
+const
+  EnglishLetters: array['A'..'Z'] of string = (
+    '.-', '-...', '-.-.', '-..', '.', '..-.', '--.', '....', '..', '.---',
+    '-.-', '.-..', '--', '-.', '---', '.--.', '--.-', '.-.', '...', '-',
+    '..-', '...-', '.--', '-..-', '-.--', '--..'
+  );
+ const
+  EnglishDigits: array['0'..'9'] of string = (
+    '-----', '.----', '..---', '...--', '....-', '.....',
+    '-....', '--...', '---..', '----.'
+  );
+
+  const
+  RussianLetters: array['А'..'Я'] of string = (
+    '.-',    // А
+    '-...',  // Б
+    '.--',   // В
+    '--.',   // Г
+    '-..',   // Д
+    '.',     // Е
+    '...-',  // Ж
+    '--..',  // З
+    '..',    // И
+    '.---',  // Й
+    '-.-',   // К
+    '.-..',  // Л
+    '--',    // М
+    '-.',    // Н
+    '---',   // О
+    '.--.',  // П
+    '.-.',   // Р
+    '...',   // С
+    '-',     // Т
+    '..-',   // У
+    '..-.',  // Ф
+    '....',  // Х
+    '-.-.',  // Ц
+    '---.',  // Ч
+    '----',  // Ш
+    '--.-',  // Щ
+    '--.--', // Ъ
+    '-.--',  // Ы
+    '-..-',  // Ь
+    '..-..', // Э
+    '..--',  // Ю
+    '.-.-'   // Я
+  );
+
  var
   hAniCursor: HCURSOR = 0;
 
@@ -2167,6 +2220,60 @@ begin
     end;
   end;
 end;
+
+function GetMorseChar(Ch: Char; Mode: TMorseMode): string;
+var
+  UpCh: Char;
+begin
+  Result := '';  // По умолчанию результат пустой
+
+  // Приводим символ к верхнему регистру
+  case Ch of
+    'а'..'я': UpCh := Chr(Ord(Ch) - 32); // Маленькая русская -> большая
+    'ё': UpCh := 'Ё';                    // Специальная буква "ё"
+    else
+      UpCh := UpCase(Ch);                // Стандартное приведение
+  end;
+
+  if Mode in [mmEnglish, mmMixed] then
+  begin
+    if (UpCh >= 'A') and (UpCh <= 'Z') then
+      Result := EnglishLetters[UpCh]
+    else if (UpCh >= '0') and (UpCh <= '9') then
+      Result := EnglishDigits[UpCh];
+  end;
+
+  if (Result = '') and (Mode in [mmRussian, mmMixed]) then
+  begin
+    if (UpCh >= 'А') and (UpCh <= 'Я') then
+      Result := RussianLetters[UpCh]
+    else if UpCh = 'Ё' then
+      Result := RussianLetters['Ё']; // Обработка буквы Ё
+  end;
+end;
+
+
+function TextToMorse(const Input: string; Mode: TMorseMode): string;
+var
+  i: Integer;
+  MorseChar: string;
+begin
+  Result := '';
+  for i := 1 to Length(Input) do
+  begin
+    if Input[i] = ' ' then
+      Result := Result + ' / ' // Разделение слов
+    else
+    begin
+      MorseChar := GetMorseChar(Input[i], Mode);
+      if MorseChar <> '' then
+        Result := Result + MorseChar + ' ';
+    end;
+  end;
+end;
+
+
+
 initialization
   VisitedStaticTexts := TStringList.Create;
 finalization

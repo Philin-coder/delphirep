@@ -77,7 +77,6 @@ object Frm_cript_choise: TFrm_cript_choise
     OnChange = cryortPCChange
     object RandombaseTab: TTabSheet
       Caption = #1064#1080#1092#1088#1086#1074#1072#1085#1080#1077' '#1085#1072' '#1073#1072#1079#1077' '#1043#1077#1085#1077#1088#1072#1090#1086#1088#1072' '#1089#1083#1091#1095#1072#1081#1085#1099#1093' '#1095#1080#1089#1077#1083
-      ExplicitHeight = 590
       object rb_input_box: TGroupBox
         Left = 0
         Top = 0
@@ -129,7 +128,6 @@ object Frm_cript_choise: TFrm_cript_choise
         Height = 47
         Align = alBottom
         TabOrder = 1
-        ExplicitTop = 543
         object rnd_base_init_Btn: TButton
           Left = 324
           Top = 19
@@ -147,10 +145,6 @@ object Frm_cript_choise: TFrm_cript_choise
         Height = 435
         Align = alClient
         TabOrder = 2
-        ExplicitLeft = 368
-        ExplicitTop = 328
-        ExplicitWidth = 185
-        ExplicitHeight = 105
         object cryptImg: TImage
           Left = 2
           Top = 15
@@ -167,7 +161,6 @@ object Frm_cript_choise: TFrm_cript_choise
     object CezarTab: TTabSheet
       Caption = #1064#1080#1092#1086#1088#1074#1072#1085#1080#1077' '#1087#1088#1080' '#1087#1086#1084#1086#1096#1080' '#1096#1080#1088#1072' '#1062#1077#1079#1072#1088#1103
       ImageIndex = 1
-      ExplicitHeight = 590
       object cryprmainBox: TGroupBox
         Left = 0
         Top = 0
@@ -275,7 +268,6 @@ object Frm_cript_choise: TFrm_cript_choise
         Height = 63
         Align = alBottom
         TabOrder = 1
-        ExplicitTop = 527
         object cezarinitBtn: TButton
           Left = 268
           Top = 19
@@ -293,10 +285,6 @@ object Frm_cript_choise: TFrm_cript_choise
         Height = 291
         Align = alClient
         TabOrder = 2
-        ExplicitLeft = 368
-        ExplicitTop = 328
-        ExplicitWidth = 185
-        ExplicitHeight = 105
         object cezar_cryprt_img: TImage
           Left = 2
           Top = 15
@@ -310,7 +298,6 @@ object Frm_cript_choise: TFrm_cript_choise
     object morze_tab: TTabSheet
       Caption = #1064#1080#1092#1088#1086#1074#1072#1085#1080#1077' '#1087#1088#1080' '#1087#1086#1084#1086#1097#1080' '#1072#1079#1073#1091#1082#1080' '#1052#1086#1088#1079#1077
       ImageIndex = 2
-      ExplicitHeight = 590
       object Morze_inp_Box: TGroupBox
         Left = 0
         Top = 0
@@ -326,6 +313,7 @@ object Frm_cript_choise: TFrm_cript_choise
           Height = 17
           Caption = #1056#1091#1089#1089#1082#1080#1081' '#1090#1077#1082#1089#1090
           TabOrder = 0
+          OnClick = Radiom_rus_textClick
         end
         object Radio_m_eng_text: TRadioButton
           Left = 304
@@ -334,6 +322,7 @@ object Frm_cript_choise: TFrm_cript_choise
           Height = 17
           Caption = #1040#1085#1075#1083#1080#1081#1089#1082#1080#1081' '#1090#1077#1082#1089#1090
           TabOrder = 1
+          OnClick = Radio_m_eng_textClick
         end
         object Radio_m_mixed_text: TRadioButton
           Left = 584
@@ -342,6 +331,7 @@ object Frm_cript_choise: TFrm_cript_choise
           Height = 17
           Caption = #1057#1084#1077#1096#1072#1085#1085#1099#1081
           TabOrder = 2
+          OnClick = Radio_m_mixed_textClick
         end
         object beeperPanel: TPanel
           Left = 2
@@ -350,9 +340,6 @@ object Frm_cript_choise: TFrm_cript_choise
           Height = 41
           Align = alBottom
           TabOrder = 3
-          ExplicitLeft = 320
-          ExplicitTop = 112
-          ExplicitWidth = 185
           object bipBtn: TBitBtn
             Left = 312
             Top = 12
@@ -360,6 +347,7 @@ object Frm_cript_choise: TFrm_cript_choise
             Height = 25
             Caption = #1041#1080#1087#1077#1088
             TabOrder = 0
+            OnClick = bipBtnClick
           end
         end
       end
@@ -387,12 +375,11 @@ object Frm_cript_choise: TFrm_cript_choise
         Align = alTop
         Caption = #1055#1072#1088#1072#1084#1077#1090#1088#1099
         TabOrder = 2
-        ExplicitTop = 111
         DesignSize = (
           1010
           138)
         object morignpas: TLabeledEdit
-          Left = 3
+          Left = 0
           Top = 35
           Width = 985
           Height = 21
@@ -401,10 +388,9 @@ object Frm_cript_choise: TFrm_cript_choise
           EditLabel.Height = 13
           EditLabel.Caption = #1048#1089#1093#1086#1076#1085#1099#1081'  '#1087#1072#1088#1086#1083#1100
           TabOrder = 0
-          ExplicitTop = 24
         end
         object m_new_pas: TLabeledEdit
-          Left = 11
+          Left = 3
           Top = 81
           Width = 985
           Height = 21
@@ -413,7 +399,6 @@ object Frm_cript_choise: TFrm_cript_choise
           EditLabel.Height = 13
           EditLabel.Caption = #1053#1086#1074#1099#1081'  '#1087#1072#1088#1086#1083#1100
           TabOrder = 1
-          ExplicitTop = 85
         end
       end
       object m_imageBox: TGroupBox
@@ -423,10 +408,6 @@ object Frm_cript_choise: TFrm_cript_choise
         Height = 320
         Align = alClient
         TabOrder = 3
-        ExplicitLeft = 144
-        ExplicitTop = 288
-        ExplicitWidth = 185
-        ExplicitHeight = 105
         object m_Image: TImage
           Left = 2
           Top = 15
@@ -443,12 +424,10 @@ object Frm_cript_choise: TFrm_cript_choise
     object TabSheet4: TTabSheet
       Caption = 'TabSheet4'
       ImageIndex = 3
-      ExplicitHeight = 590
     end
     object TabSheet5: TTabSheet
       Caption = 'TabSheet5'
       ImageIndex = 4
-      ExplicitHeight = 590
     end
   end
 end
