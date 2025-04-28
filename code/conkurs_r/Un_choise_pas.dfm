@@ -71,11 +71,10 @@ object Frm_cript_choise: TFrm_cript_choise
     Top = 121
     Width = 1018
     Height = 687
-    ActivePage = CezarTab
+    ActivePage = morze_tab
     Align = alClient
     TabOrder = 1
     OnChange = cryortPCChange
-    ExplicitHeight = 618
     object RandombaseTab: TTabSheet
       Caption = #1064#1080#1092#1088#1086#1074#1072#1085#1080#1077' '#1085#1072' '#1073#1072#1079#1077' '#1043#1077#1085#1077#1088#1072#1090#1086#1088#1072' '#1089#1083#1091#1095#1072#1081#1085#1099#1093' '#1095#1080#1089#1077#1083
       ExplicitHeight = 590
@@ -308,8 +307,8 @@ object Frm_cript_choise: TFrm_cript_choise
         end
       end
     end
-    object TabSheet3: TTabSheet
-      Caption = 'TabSheet3'
+    object morze_tab: TTabSheet
+      Caption = #1064#1080#1092#1088#1086#1074#1072#1085#1080#1077' '#1087#1088#1080' '#1087#1086#1084#1086#1097#1080' '#1072#1079#1073#1091#1082#1080' '#1052#1086#1088#1079#1077
       ImageIndex = 2
       ExplicitHeight = 590
     end

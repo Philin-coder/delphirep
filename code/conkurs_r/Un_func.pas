@@ -2104,7 +2104,6 @@ end;
 function DecryptCaesarFromComponent(AComponent: TControl; Shift: Integer;
 Mode: TEncryptionMode): string;
 const
-  // Алфавиты для русских и латинских букв
   RussianLowercase = 'абвгдежзийклмнопрстуфхцчшщъыьэюя';
   RussianUppercase = 'АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ';
   LatinLowercase = 'abcdefghijklmnopqrstuvwxyz';
@@ -2114,13 +2113,10 @@ var
   Ch: Char;
   Text: string;
 begin
-  // Проверяем, что компонент передан
   if not Assigned(AComponent) then
   begin
     raise Exception.Create('Компонент не назначен.');
   end;
-
-  // Получаем текст из компонента
   if AComponent is TLabel then
     Text := TLabel(AComponent).Caption
   else if AComponent is TEdit then
@@ -2131,13 +2127,10 @@ begin
   begin
     raise Exception.Create('Неподдерживаемый тип компонента.');
   end;
-
-  // Расшифровываем текст
   Result := '';
   for i := 1 to Length(Text) do
   begin
     Ch := Text[i];
-
     case Mode of
       emLatin:
         begin
@@ -2148,7 +2141,6 @@ begin
           else
             Result := Result + Ch; // Неизменяемые символы
         end;
-
       emRussian:
         begin
           if Ch in ['а'..'я'] then

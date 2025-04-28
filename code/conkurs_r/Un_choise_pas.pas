@@ -16,7 +16,7 @@ type
     cryortPC: TPageControl;
     RandombaseTab: TTabSheet;
     CezarTab: TTabSheet;
-    TabSheet3: TTabSheet;
+    morze_tab: TTabSheet;
     TabSheet4: TTabSheet;
     TabSheet5: TTabSheet;
     rb_input_box: TGroupBox;
@@ -82,6 +82,7 @@ begin
     case cryortPC.TabIndex of
       0: passKindCombo.ItemIndex := 0;
       1: passKindCombo.ItemIndex := 1;
+      2: passKindCombo.ItemIndex := 2;
     end;
   end
   else
@@ -89,6 +90,7 @@ begin
     case passKindCombo.ItemIndex of
       0: cryortPC.ActivePage := RandombaseTab;
       1: cryortPC.ActivePage := CezarTab;
+      2: cryortPC.ActivePage := morze_tab;
     end;
   end;
 end;
@@ -99,7 +101,7 @@ begin
 if Radioruslng.Checked then 
 begin
      try
-    DecryptedText := DecryptCaesarFromComponent(newPasinp, shift_grader.Position, 
+    DecryptedText := DecryptCaesarFromComponent(newPasinp, shift_grader.Position,
     emRussian);
    orignPasinp.Text:=DecryptedText;
   except
