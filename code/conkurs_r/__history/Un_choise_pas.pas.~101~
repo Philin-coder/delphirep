@@ -17,7 +17,7 @@ type
     RandombaseTab: TTabSheet;
     CezarTab: TTabSheet;
     morze_tab: TTabSheet;
-    TabSheet4: TTabSheet;
+    BloufishTab: TTabSheet;
     TabSheet5: TTabSheet;
     rb_input_box: TGroupBox;
     rnd_base_out_pass: TLabeledEdit;
@@ -54,6 +54,15 @@ type
     m_Image: TImage;
     beeperPanel: TPanel;
     bipBtn: TBitBtn;
+    bloufish_inp_Box: TGroupBox;
+    blpasskeyInp: TLabeledEdit;
+    blpaskeygrader: TUpDown;
+    blnewpas: TLabeledEdit;
+    blorignpas: TLabeledEdit;
+    blbtnBox: TGroupBox;
+    blinitBtn: TButton;
+    blimgBox: TGroupBox;
+    blImg: TImage;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure passKindComboChange(Sender: TObject);
@@ -69,6 +78,8 @@ type
     procedure Radio_m_mixed_textClick(Sender: TObject);
     procedure bipBtnClick(Sender: TObject);
     procedure morzeinitBtnClick(Sender: TObject);
+    procedure blnewpasExit(Sender: TObject);
+    procedure blinitBtnClick(Sender: TObject);
   private
     get_pas:string;
     procedure SyncTabControlAndComboBox(Sender: TObject);
@@ -80,6 +91,7 @@ type
 
 var
   Frm_cript_choise: TFrm_cript_choise;
+  var f_crypt:AnsiString;
 
 implementation
 
@@ -101,6 +113,7 @@ begin
       0: passKindCombo.ItemIndex := 0;
       1: passKindCombo.ItemIndex := 1;
       2: passKindCombo.ItemIndex := 2;
+      3: passKindCombo.ItemIndex := 3;
     end;
   end
   else
@@ -109,6 +122,7 @@ begin
       0: cryortPC.ActivePage := RandombaseTab;
       1: cryortPC.ActivePage := CezarTab;
       2: cryortPC.ActivePage := morze_tab;
+      3:cryortPC.ActivePage :=BloufishTab;
     end;
   end;
 end;
@@ -130,11 +144,33 @@ for i := 1 to Length(m_new_pas.Text) do
   Sleep(400);
 end;
 
+procedure TFrm_cript_choise.blinitBtnClick(Sender: TObject);
+var
+ my_key:Word;
+ sDecrypted,sEncrypted:AnsiString;
+begin
+  my_key:=blpaskeygrader.Position;
+    sEncrypted:=Encrypt(QuotedStr( blorignpas.Text),my_key);
+  sDecrypted := Decrypt(sEncrypted,my_key);
+  blorignpas.Text:=sDecrypted;
+end;
+
+procedure TFrm_cript_choise.blnewpasExit(Sender: TObject);
+  var
+  sEncrypted :AnsiString;
+  my_key:Word;
+begin
+   my_key:=blpaskeygrader.Position;
+   sEncrypted:=Encrypt(QuotedStr( blorignpas.Text),my_key);
+    f_
+   blnewpas.Text:=sEncrypted;
+end;
+
 procedure TFrm_cript_choise.cezarinitBtnClick(Sender: TObject);
 var
   DecryptedText: string;
 begin
-if Radioruslng.Checked then 
+if Radioruslng.Checked then
 begin
      try
     DecryptedText := DecryptCaesarFromComponent(newPasinp, shift_grader.Position,
@@ -180,7 +216,8 @@ procedure TFrm_cript_choise.FormActivate(Sender: TObject);
 begin
   aldpasslbl.Caption:=get_pas;
   orignPasinp.Text:=trim(aldpasslbl.Caption);
-    morignPas.Text:=trim(aldpasslbl.Caption);
+  morignPas.Text:=trim(aldpasslbl.Caption);
+  blorignpas.Text:=trim(aldpasslbl.Caption);
 end;
 
 procedure TFrm_cript_choise.FormClose(Sender: TObject;
@@ -201,8 +238,10 @@ begin
  LoadImageFromResource('CRYPT',cryptImg);
  LoadImageFromResource('CRYPT',cezar_cryprt_img);
  LoadImageFromResource('CRYPT',m_Image);
+ LoadImageFromResource('CRYPT',blImg);
  LoadFormState(Self);
  rnd_base_grader.Min:=4;
+ blpaskeygrader.Position:=3189;
  Randomize;
   try
     FormatLabel('aldpasslbl', Self, 14, 'Arial', clGreen);
@@ -231,7 +270,14 @@ begin
       Stretch:=true;
       AutoSize:=true;
   end;
-
+    with blImg do
+  begin
+      Stretch:=true;
+      AutoSize:=true;
+  end;
+ blpasskeyInp.ShowHint:=true;
+ blpasskeyInp.Hint:='Пример ввода'+#10#13+
+ '33189';
 end;
 
 procedure TFrm_cript_choise.morzeinitBtnClick(Sender: TObject);
@@ -240,9 +286,22 @@ var
 begin
 if Radiom_rus_text.Checked then
 begin
-MorseInput := m_new_pas.Text;
-  DecodedText := MorseToText(MorseInput, mm);          // вызываем функцию
-  Memo1.Text := DecodedText;
+  MorseInput := m_new_pas.Text;
+  DecodedText := MorseToText(MorseInput, mmRussian);
+  morignpas.Text :=DecodedText;
+end;
+ if Radio_m_eng_text.Checked then
+begin
+
+  MorseInput := m_new_pas.Text;
+  DecodedText := MorseToText(MorseInput, mmEnglish);
+  morignpas.Text := DecodedText;
+end;
+ if Radio_m_mixed_text.Checked then
+begin
+  MorseInput := m_new_pas.Text;
+  DecodedText := MorseToText(MorseInput, mmMixed);
+  morignpas.Text := DecodedText;
 end;
 
 end;

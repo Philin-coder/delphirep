@@ -148,6 +148,8 @@ function GetMorseChar(Ch: Char; Mode: TMorseMode): string;
 function TextToMorse(const Input: string; Mode: TMorseMode): string;
 function FindChar(const MorseCode: string; Mode: TMorseMode): string;
 function MorseToText(const Input: string; Mode: TMorseMode): string;
+function Decrypt(const S: AnsiString; Key: Word): AnsiString;
+function Encrypt(const S: AnsiString; Key: Word): AnsiString;
 implementation
 
 const
@@ -198,7 +200,10 @@ const
     '.-.-'   // Я
   );
   const
-  RussianLetterYo: string = '.--.';
+  RussianLetterYo: string = '.--.-';
+  const
+  C1 = 52845;
+  C2 = 22719;
 
  var
   hAniCursor: HCURSOR = 0;
@@ -2120,7 +2125,8 @@ begin
   end;
 end;
 
-procedure SetFormSizeAndPosition(const FormName: string; NewWidth, NewHeight: Integer);
+procedure SetFormSizeAndPosition(const FormName:
+string; NewWidth, NewHeight: Integer);
 var
   Form: TForm;
 begin
@@ -2280,11 +2286,8 @@ var
   c: Char;
 begin
   Result := '';
-  if (Mode in [mmRussian, mmMixed]) and (RussianLetterYo = MorseCode) then
-  begin
-    Result := 'Ё';
-    Exit;
-  end;
+  
+  // Сначала проверяем все стандартные буквы
   if Mode in [mmEnglish, mmMixed] then
   begin
     for c := 'A' to 'Z' do
@@ -2301,7 +2304,7 @@ begin
       end;
   end;
 
-  if (Result = '') and (Mode in [mmRussian, mmMixed]) then
+  if Mode in [mmRussian, mmMixed] then
   begin
     for c := 'А' to 'Я' do
       if RussianLetters[c] = MorseCode then
@@ -2309,6 +2312,11 @@ begin
         Result := c;
         Exit;
       end;
+  end;
+
+  // Только если не нашли ничего — пробуем Ё
+  if (Result = '') and (Mode in [mmRussian, mmMixed]) then
+  begin
     if RussianLetterYo = MorseCode then
       Result := 'Ё';
   end;
@@ -2348,21 +2356,59 @@ begin
           Result := Result + DecodedChar;
         MorseLetter := '';
       end;
-      Result := Result + ' '; // Пробел между словами
-      // пропускаем возможный пробел после /
+      Result := Result + ' '; 
       if (i < Length(Input)) and (Input[i+1] = ' ') then
         Inc(i);
     end;
     Inc(i);
   end;
-
-  // Обработка последней буквы в конце строки
   if MorseLetter <> '' then
   begin
     DecodedChar := FindChar(MorseLetter, Mode);
     if DecodedChar <> '' then
       Result := Result + DecodedChar;
   end;
+end;
+function Decode(const S: AnsiString): AnsiString;
+const
+  Map: array[aNSIChar] of Byte = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 62, 0, 0, 0, 63, 52, 53,54, 55, 56, 57, 58, 59, 60, 61, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2,3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,20, 21, 22, 23, 24, 25, 0, 0, 0, 0, 0, 0, 26, 27, 28, 29, 30,31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45,46, 47, 48, 49, 50, 51, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0);
+var
+  I: LongInt;
+begin
+  case Length(S) of
+    2:
+      begin
+        I := Map[S[1]] + (Map[S[2]] shl 6);
+        SetLength(Result, 1);
+        Move(I, Result[1], Length(Result))
+      end;
+    3:
+      begin
+        I := Map[S[1]] + (Map[S[2]] shl 6) + (Map[S[3]] shl 12);
+        SetLength(Result, 2);
+        Move(I, Result[1], Length(Result))
+      end;
+    4:
+      begin
+        I := Map[S[1]] + (Map[S[2]] shl 6) + (Map[S[3]] shl 12) +
+          (Map[S[4]] shl 18);
+        SetLength(Result, 3);
+        Move(I, Result[1], Length(Result))
+      end
+  end
+end;
+
+function PreProcess(const S: AnsiString): AnsiString;
+var
+  SS: AnsiString;
+begin
+  SS := S;
+  Result := '';
+  while SS <> '' do
+  begin
+    Result := Result + Decode(Copy(SS, 1, 4));
+    Delete(SS, 1, 4)
+  end
 end;
 
 

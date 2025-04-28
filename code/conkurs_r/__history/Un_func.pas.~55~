@@ -148,6 +148,8 @@ function GetMorseChar(Ch: Char; Mode: TMorseMode): string;
 function TextToMorse(const Input: string; Mode: TMorseMode): string;
 function FindChar(const MorseCode: string; Mode: TMorseMode): string;
 function MorseToText(const Input: string; Mode: TMorseMode): string;
+function Decrypt(const S: AnsiString; Key: Word): AnsiString;
+function Encrypt(const S: AnsiString; Key: Word): AnsiString;
 implementation
 
 const
@@ -198,7 +200,10 @@ const
     '.-.-'   // я
   );
   const
-  RussianLetterYo: string = '.--.';
+  RussianLetterYo: string = '.--.-';
+  const
+  C1 = 52845;
+  C2 = 22719;
 
  var
   hAniCursor: HCURSOR = 0;
@@ -2120,7 +2125,8 @@ begin
   end;
 end;
 
-procedure SetFormSizeAndPosition(const FormName: string; NewWidth, NewHeight: Integer);
+procedure SetFormSizeAndPosition(const FormName:
+string; NewWidth, NewHeight: Integer);
 var
   Form: TForm;
 begin
@@ -2350,15 +2356,12 @@ begin
           Result := Result + DecodedChar;
         MorseLetter := '';
       end;
-      Result := Result + ' '; // ѕробел между словами
-      // пропускаем возможный пробел после /
+      Result := Result + ' '; 
       if (i < Length(Input)) and (Input[i+1] = ' ') then
         Inc(i);
     end;
     Inc(i);
   end;
-
-  // ќбработка последней буквы в конце строки
   if MorseLetter <> '' then
   begin
     DecodedChar := FindChar(MorseLetter, Mode);
