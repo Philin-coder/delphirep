@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls,adodb,db, ComCtrls, ExtCtrls;
+  Dialogs, StdCtrls,adodb,db, ComCtrls, ExtCtrls,jpeg;
 
 type
   TFrm_cript_choise = class(TForm)
@@ -37,6 +37,10 @@ type
     cezarinitBtn: TButton;
     rnd_base_btn_box: TGroupBox;
     rnd_base_init_Btn: TButton;
+    imgBox: TGroupBox;
+    cryptImg: TImage;
+    cezar_imgBox: TGroupBox;
+    cezar_cryprt_img: TImage;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure passKindComboChange(Sender: TObject);
@@ -44,6 +48,8 @@ type
     procedure rnd_base_init_BtnClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure RadiomixedClick(Sender: TObject);
+    procedure RadioenglngClick(Sender: TObject);
+    procedure RadioruslngClick(Sender: TObject);
   private
     get_pas:string;
     procedure SyncTabControlAndComboBox(Sender: TObject);
@@ -111,6 +117,8 @@ begin
  UniformizeButtonsSize(Self,  273, 25);
  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+ LoadImageFromResource('CRYPT',cryptImg);
+ LoadImageFromResource('CRYPT',cezar_cryprt_img);
  LoadFormState(Self);
  rnd_base_grader.Min:=4;
  Randomize;
@@ -126,11 +134,40 @@ begin
     on E: Exception do
       ShowMessage(E.Message);
   end;
+  with cryptImg do
+  begin
+      Stretch:=true;
+      AutoSize:=true;
+  end;
+   with cezar_cryprt_img do
+  begin
+      Stretch:=true;
+      AutoSize:=true;
+  end;
+  
 end;
 
 procedure TFrm_cript_choise.passKindComboChange(Sender: TObject);
 begin
     SyncTabControlAndComboBox(Sender);
+end;
+
+procedure TFrm_cript_choise.RadioenglngClick(Sender: TObject);
+  var
+  EncryptedText: string;
+begin
+if Radioenglng.Checked then
+begin
+try
+EncryptedText := EncryptCaesarFromComponent(orignPasinp, shift_grader.Position,
+emLatin);
+    newPasinp.Text:= EncryptedText;
+  except
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
+end;
+
 end;
 
 procedure TFrm_cript_choise.RadiomixedClick(Sender: TObject);
@@ -150,6 +187,23 @@ emMixed);
 end;
 end;
 
+
+procedure TFrm_cript_choise.RadioruslngClick(Sender: TObject);
+   var EncryptedText:String;
+begin
+if Radioruslng.Checked then
+begin
+try
+EncryptedText := EncryptCaesarFromComponent(orignPasinp, shift_grader.Position,
+emRussian);
+    newPasinp.Text:= EncryptedText;
+  except
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
+end;
+
+end;
 
 procedure TFrm_cript_choise.rnd_base_init_BtnClick(Sender: TObject);
   var rnd_string:string;

@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls,adodb,db, ComCtrls, ExtCtrls;
+  Dialogs, StdCtrls,adodb,db, ComCtrls, ExtCtrls,jpeg;
 
 type
   TFrm_cript_choise = class(TForm)
@@ -23,8 +23,6 @@ type
     rnd_base_out_pass: TLabeledEdit;
     rnd_base_sym_amoount_inp: TLabeledEdit;
     rnd_base_grader: TUpDown;
-    rnd_base_btn_box: TGroupBox;
-    rnd_base_init_Btn: TButton;
     cryprmainBox: TGroupBox;
     cryptcondBox: TGroupBox;
     Radioruslng: TRadioButton;
@@ -37,6 +35,12 @@ type
     newPasinp: TLabeledEdit;
     cezarbtnBox: TGroupBox;
     cezarinitBtn: TButton;
+    rnd_base_btn_box: TGroupBox;
+    rnd_base_init_Btn: TButton;
+    imgBox: TGroupBox;
+    cryptImg: TImage;
+    cezar_imgBox: TGroupBox;
+    cezar_cryprt_img: TImage;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure passKindComboChange(Sender: TObject);
@@ -120,11 +124,11 @@ begin
     on E: Exception do
       ShowMessage(E.Message); // Отображаем сообщение об ошибке
   end;
-  with Frm_cript_choise do
-  begin
-      width:=1024;
-      Height:=768;
-      Position:=poScreenCenter;
+    try
+    SetFormSizeAndPosition('Frm_cript_choise', 1024, 768);
+  except
+    on E: Exception do
+      ShowMessage(E.Message);
   end;
 end;
 

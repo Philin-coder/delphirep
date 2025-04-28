@@ -16,7 +16,6 @@ uses
  {$R resources.RES}
  {$R comment.RES}
  {$R passwd.RES}
- {$R CRYPT.RES}
 begin
   Application.Initialize;
   Application.CreateForm(TFrm_main, Frm_main);

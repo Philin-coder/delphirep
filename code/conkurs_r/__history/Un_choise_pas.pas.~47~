@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls,adodb,db, ComCtrls, ExtCtrls;
+  Dialogs, StdCtrls,adodb,db, ComCtrls, ExtCtrls,jpeg;
 
 type
   TFrm_cript_choise = class(TForm)
@@ -37,6 +37,8 @@ type
     cezarinitBtn: TButton;
     rnd_base_btn_box: TGroupBox;
     rnd_base_init_Btn: TButton;
+    imgBox: TGroupBox;
+    cryptImg: TImage;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure passKindComboChange(Sender: TObject);
@@ -121,11 +123,10 @@ begin
       ShowMessage(E.Message); // Отображаем сообщение об ошибке
   end;
     try
-    // Устанавливаем размеры и положение формы 'Frm_cript_choise'
     SetFormSizeAndPosition('Frm_cript_choise', 1024, 768);
   except
     on E: Exception do
-      ShowMessage(E.Message); // Отображаем сообщение об ошибке
+      ShowMessage(E.Message);
   end;
 end;
 
