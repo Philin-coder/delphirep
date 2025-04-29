@@ -71,7 +71,7 @@ object Frm_cript_choise: TFrm_cript_choise
     Top = 121
     Width = 1018
     Height = 687
-    ActivePage = BloufishTab
+    ActivePage = hashTab
     Align = alClient
     TabOrder = 1
     OnChange = cryortPCChange
@@ -113,7 +113,7 @@ object Frm_cript_choise: TFrm_cript_choise
         end
         object rnd_base_grader: TUpDown
           Left = 10
-          Top = 53
+          Top = 56
           Width = 17
           Height = 21
           AlignButton = udLeft
@@ -449,7 +449,7 @@ object Frm_cript_choise: TFrm_cript_choise
           Text = '0'
         end
         object blpaskeygrader: TUpDown
-          Left = 3
+          Left = 7
           Top = 77
           Width = 14
           Height = 21
@@ -505,10 +505,6 @@ object Frm_cript_choise: TFrm_cript_choise
         Height = 431
         Align = alClient
         TabOrder = 2
-        ExplicitLeft = 312
-        ExplicitTop = 280
-        ExplicitWidth = 185
-        ExplicitHeight = 105
         object blImg: TImage
           Left = 2
           Top = 15
@@ -522,9 +518,99 @@ object Frm_cript_choise: TFrm_cript_choise
         end
       end
     end
-    object TabSheet5: TTabSheet
-      Caption = 'TabSheet5'
+    object hashTab: TTabSheet
+      Caption = #1064#1080#1092#1088#1086#1074#1072#1085#1080#1077' '#1087#1088#1080' '#1087#1086#1084#1086#1097#1080' hash'
       ImageIndex = 4
+      object hash_inp_Box: TGroupBox
+        Left = 0
+        Top = 0
+        Width = 1010
+        Height = 105
+        Align = alTop
+        Caption = #1042#1074#1086#1076' '#1083#1072#1085#1085#1099#1093
+        TabOrder = 0
+        object hashUtfradio: TRadioButton
+          Left = 23
+          Top = 48
+          Width = 113
+          Height = 17
+          Caption = 'UTF8'
+          TabOrder = 0
+          OnClick = hashUtfradioClick
+        end
+        object hash_asciiradio: TRadioButton
+          Left = 376
+          Top = 48
+          Width = 113
+          Height = 17
+          Caption = 'Ascii'
+          TabOrder = 1
+          OnClick = hash_asciiradioClick
+        end
+      end
+      object hash_paramBox: TGroupBox
+        Left = 0
+        Top = 105
+        Width = 1010
+        Height = 105
+        Align = alTop
+        Caption = #1055#1072#1088#1072#1080#1077#1090#1088#1099
+        TabOrder = 1
+        DesignSize = (
+          1010
+          105)
+        object h_orignPas_inp: TLabeledEdit
+          Left = 0
+          Top = 35
+          Width = 985
+          Height = 21
+          Anchors = [akLeft, akRight]
+          EditLabel.Width = 93
+          EditLabel.Height = 13
+          EditLabel.Caption = #1048#1089#1093#1086#1076#1085#1099#1081'  '#1087#1072#1088#1086#1083#1100
+          TabOrder = 0
+        end
+        object has_new_pas_inp: TLabeledEdit
+          Left = 3
+          Top = 73
+          Width = 985
+          Height = 21
+          Anchors = [akLeft, akRight]
+          EditLabel.Width = 75
+          EditLabel.Height = 13
+          EditLabel.Caption = #1053#1086#1074#1099#1081'  '#1087#1072#1088#1086#1083#1100
+          TabOrder = 1
+        end
+      end
+      object has_imgBox: TGroupBox
+        Left = 0
+        Top = 210
+        Width = 1010
+        Height = 449
+        Align = alClient
+        TabOrder = 2
+        ExplicitHeight = 390
+        object hash_img: TImage
+          Left = 2
+          Top = 15
+          Width = 1006
+          Height = 432
+          Align = alClient
+          ExplicitLeft = 280
+          ExplicitTop = 168
+          ExplicitWidth = 105
+          ExplicitHeight = 105
+        end
+      end
     end
+  end
+  object save_correct_pas_cb: TCheckBox
+    Left = 800
+    Top = 127
+    Width = 137
+    Height = 17
+    Caption = #1057#1086#1093#1088#1072#1085#1080#1090#1100' '#1087#1072#1088#1086#1083#1100
+    TabOrder = 2
+    OnClick = save_correct_pas_cbClick
   end
 end

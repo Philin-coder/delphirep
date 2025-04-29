@@ -69,10 +69,9 @@ type
     hash_paramBox: TGroupBox;
     h_orignPas_inp: TLabeledEdit;
     has_new_pas_inp: TLabeledEdit;
-    has_btnBox: TGroupBox;
-    has_init_btn: TButton;
     has_imgBox: TGroupBox;
     hash_img: TImage;
+    save_correct_pas_cb: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure passKindComboChange(Sender: TObject);
@@ -92,12 +91,16 @@ type
     procedure blinitBtnClick(Sender: TObject);
     procedure hashUtfradioClick(Sender: TObject);
     procedure hash_asciiradioClick(Sender: TObject);
+    procedure save_correct_pas_cbClick(Sender: TObject);
   private
     get_pas:string;
+    correctPas:string;
     procedure SyncTabControlAndComboBox(Sender: TObject);
     procedure SetPas(const value:string);
+    procedure setcorrectPas(const value:string);
   public
      property m_pas:string read get_pas write SetPas;
+     property sv_pas:string read correctpas write  SetCorrectPas;
     { Public declarations }
   end;
 
@@ -113,6 +116,49 @@ uses change_pas_quest, Un_dm, Un_func;
 procedure TFrm_cript_choise.SetPas(const value:string);
 begin
  get_pas:=value;
+end;
+procedure TFrm_cript_choise.save_correct_pas_cbClick(Sender: TObject);
+  var cor_p: string;
+begin
+if save_correct_pas_cb.Checked then
+begin
+case cryortPC.TabIndex of
+   0:
+   begin
+       cor_p:=Trim(rnd_base_out_pass.Text);
+   end;
+   1:
+   begin
+     cor_p:=Trim(newPasinp.Text);
+   end;
+   2:
+   begin
+     cor_p:=Trim(m_new_pas.Text);
+   end;
+   3:
+   begin
+    cor_p:=Trim(blnewpas.Text);
+   end;
+   4:
+   begin
+     cor_p:=Trim(has_new_pas_inp.Text);
+   end;
+end;//case
+if cor_p='' then
+begin
+     ShowMessage('Ошибка: поле не может быть пустым.');
+      Exit;
+end;
+
+    Frm_cript_choise.correctPas:=cor_p;
+    ShowMessage(cor_p);;
+end;
+
+end;
+
+procedure TFrm_cript_choise.setcorrectPas(const value:string);
+begin
+     correctPas:=value;
 end;
  procedure TFrm_cript_choise.SyncTabControlAndComboBox(Sender: TObject);
 var

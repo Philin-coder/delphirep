@@ -539,7 +539,7 @@ object Frm_cript_choise: TFrm_cript_choise
           OnClick = hashUtfradioClick
         end
         object hash_asciiradio: TRadioButton
-          Left = 368
+          Left = 376
           Top = 48
           Width = 113
           Height = 17
@@ -582,34 +582,19 @@ object Frm_cript_choise: TFrm_cript_choise
           TabOrder = 1
         end
       end
-      object has_btnBox: TGroupBox
-        Left = 0
-        Top = 600
-        Width = 1010
-        Height = 59
-        Align = alBottom
-        TabOrder = 2
-        object has_init_btn: TButton
-          Left = 408
-          Top = 24
-          Width = 75
-          Height = 25
-          Caption = 'C'#1075#1077#1085#1077#1088#1080#1088#1086#1074#1072#1090#1100
-          TabOrder = 0
-        end
-      end
       object has_imgBox: TGroupBox
         Left = 0
         Top = 210
         Width = 1010
-        Height = 390
+        Height = 449
         Align = alClient
-        TabOrder = 3
+        TabOrder = 2
+        ExplicitHeight = 390
         object hash_img: TImage
           Left = 2
           Top = 15
           Width = 1006
-          Height = 373
+          Height = 432
           Align = alClient
           ExplicitLeft = 280
           ExplicitTop = 168
@@ -618,5 +603,14 @@ object Frm_cript_choise: TFrm_cript_choise
         end
       end
     end
+  end
+  object save_correct_pas_cb: TCheckBox
+    Left = 664
+    Top = 22
+    Width = 137
+    Height = 17
+    Caption = #1057#1086#1093#1088#1072#1085#1080#1090#1100' '#1087#1072#1088#1086#1083#1100
+    TabOrder = 2
+    OnClick = save_correct_pas_cbClick
   end
 end
