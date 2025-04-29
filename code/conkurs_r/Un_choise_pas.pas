@@ -18,7 +18,7 @@ type
     CezarTab: TTabSheet;
     morze_tab: TTabSheet;
     BloufishTab: TTabSheet;
-    TabSheet5: TTabSheet;
+    hashTab: TTabSheet;
     rb_input_box: TGroupBox;
     rnd_base_out_pass: TLabeledEdit;
     rnd_base_sym_amoount_inp: TLabeledEdit;
@@ -63,6 +63,16 @@ type
     blinitBtn: TButton;
     blimgBox: TGroupBox;
     blImg: TImage;
+    hash_inp_Box: TGroupBox;
+    hashUtfradio: TRadioButton;
+    hash_asciiradio: TRadioButton;
+    hash_paramBox: TGroupBox;
+    h_orignPas_inp: TLabeledEdit;
+    has_new_pas_inp: TLabeledEdit;
+    has_btnBox: TGroupBox;
+    has_init_btn: TButton;
+    has_imgBox: TGroupBox;
+    hash_img: TImage;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure passKindComboChange(Sender: TObject);
@@ -114,6 +124,7 @@ begin
       1: passKindCombo.ItemIndex := 1;
       2: passKindCombo.ItemIndex := 2;
       3: passKindCombo.ItemIndex := 3;
+      4:passKindCombo.ItemIndex := 4;
     end;
   end
   else
@@ -123,6 +134,7 @@ begin
       1: cryortPC.ActivePage := CezarTab;
       2: cryortPC.ActivePage := morze_tab;
       3:cryortPC.ActivePage :=BloufishTab;
+      4:cryortPC.ActivePage :=hashTab;
     end;
   end;
 end;
@@ -163,7 +175,6 @@ begin
    sEncrypted:=Encrypt(blorignpas.Text,my_key);
     f_crypt:=sEncrypted;
    blnewpas.Text:=sEncrypted;
-   ShowMessage(IntToStr(my_key));
 end;
 
 procedure TFrm_cript_choise.cezarinitBtnClick(Sender: TObject);
@@ -218,6 +229,7 @@ begin
   orignPasinp.Text:=trim(aldpasslbl.Caption);
   morignPas.Text:=trim(aldpasslbl.Caption);
   blorignpas.Text:=trim(aldpasslbl.Caption);
+  h_orignPas_inp.Text:=trim(aldpasslbl.Caption);
 end;
 
 procedure TFrm_cript_choise.FormClose(Sender: TObject;
@@ -240,6 +252,7 @@ begin
  LoadImageFromResource('CRYPT',cezar_cryprt_img);
  LoadImageFromResource('CRYPT',m_Image);
  LoadImageFromResource('CRYPT',blImg);
+ LoadImageFromResource('CRYPT',hash_img);
  LoadFormState(Self);
  rnd_base_grader.Min:=4;
  Randomize;
@@ -271,6 +284,11 @@ begin
       AutoSize:=true;
   end;
     with blImg do
+  begin
+      Stretch:=true;
+      AutoSize:=true;
+  end;
+  with hash_img do
   begin
       Stretch:=true;
       AutoSize:=true;

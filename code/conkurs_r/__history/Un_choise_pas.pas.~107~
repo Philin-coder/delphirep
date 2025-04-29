@@ -18,7 +18,7 @@ type
     CezarTab: TTabSheet;
     morze_tab: TTabSheet;
     BloufishTab: TTabSheet;
-    TabSheet5: TTabSheet;
+    hashTab: TTabSheet;
     rb_input_box: TGroupBox;
     rnd_base_out_pass: TLabeledEdit;
     rnd_base_sym_amoount_inp: TLabeledEdit;
@@ -91,6 +91,7 @@ type
 
 var
   Frm_cript_choise: TFrm_cript_choise;
+  var f_crypt:AnsiString;
 
 implementation
 
@@ -113,6 +114,7 @@ begin
       1: passKindCombo.ItemIndex := 1;
       2: passKindCombo.ItemIndex := 2;
       3: passKindCombo.ItemIndex := 3;
+      4:passKindCombo.ItemIndex := 4;
     end;
   end
   else
@@ -122,6 +124,7 @@ begin
       1: cryortPC.ActivePage := CezarTab;
       2: cryortPC.ActivePage := morze_tab;
       3:cryortPC.ActivePage :=BloufishTab;
+      4:cryortPC.ActivePage :=hashTab;
     end;
   end;
 end;
@@ -146,11 +149,10 @@ end;
 procedure TFrm_cript_choise.blinitBtnClick(Sender: TObject);
 var
  my_key:Word;
- sDecrypted,sEncrypted:AnsiString;
+ sDecrypted:AnsiString;
 begin
   my_key:=blpaskeygrader.Position;
-    sEncrypted:=Encrypt(QuotedStr( blorignpas.Text),my_key);
-  sDecrypted := Decrypt(sEncrypted,my_key);
+  sDecrypted := Decrypt(f_crypt,my_key);
   blorignpas.Text:=sDecrypted;
 end;
 
@@ -160,7 +162,8 @@ procedure TFrm_cript_choise.blnewpasExit(Sender: TObject);
   my_key:Word;
 begin
    my_key:=blpaskeygrader.Position;
-   sEncrypted:=Encrypt(QuotedStr( blorignpas.Text),my_key);
+   sEncrypted:=Encrypt(blorignpas.Text,my_key);
+    f_crypt:=sEncrypted;
    blnewpas.Text:=sEncrypted;
 end;
 
@@ -168,7 +171,7 @@ procedure TFrm_cript_choise.cezarinitBtnClick(Sender: TObject);
 var
   DecryptedText: string;
 begin
-if Radioruslng.Checked then 
+if Radioruslng.Checked then
 begin
      try
     DecryptedText := DecryptCaesarFromComponent(newPasinp, shift_grader.Position,
@@ -224,6 +227,7 @@ begin
     SaveFormState(Self);
     CloseAllQueriesOnDataModule('dm');
     rnd_base_grader.Position:=0;
+    f_crypt:='';
 end;
 
 procedure TFrm_cript_choise.FormCreate(Sender: TObject);
@@ -239,7 +243,6 @@ begin
  LoadImageFromResource('CRYPT',blImg);
  LoadFormState(Self);
  rnd_base_grader.Min:=4;
- blpaskeygrader.Position:=3189;
  Randomize;
   try
     FormatLabel('aldpasslbl', Self, 14, 'Arial', clGreen);
