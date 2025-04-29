@@ -613,4 +613,9 @@ object Frm_cript_choise: TFrm_cript_choise
     TabOrder = 2
     OnClick = save_correct_pas_cbClick
   end
+  object passd: TSaveDialog
+    Filter = 'text|*.txt'
+    Left = 816
+    Top = 16
+  end
 end

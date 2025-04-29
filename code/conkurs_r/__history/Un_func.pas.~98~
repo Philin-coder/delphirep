@@ -153,7 +153,10 @@ function Encrypt(const S: AnsiString; Key: Word): AnsiString;
 function md5UTF8(const S: UTF8String): AnsiString;
 function md5 (buf: AnsiString): AnsiString;
 function ConvertToUTF8(const AInput: string): string;
-implementation
+procedure ConfigureAndExecuteDialog(AForm: TForm; Dialog: TCommonDialog; const
+DialogName: string);implementation
+
+uses Un_choise_pas;
 type
   tdata = array [0..15] of DWORD;
   tcur = array[0..3] of DWord;
@@ -2587,35 +2590,34 @@ begin
   Inc (CurrentHash[3], D);
 end;
 
-function md5(buf: AnsiString): AnsiString;
+function md5 (buf: AnsiString): AnsiString;
 type
-  tbyte = array[0..15] of Byte;
-  pdata = ^tbyte;
+  pint = ^Integer;
+  tbyte = array [0..15] of byte;
+  //tdata = array [0..15] of DWORD;
+  pdata = ^tdata;
+  pbyte = ^tbyte;
 var
   i, Len: Integer;
   data: pdata;
   CurrentHash: tcur;
+  P: array[0..7] of Word absolute CurrentHash;
   A, B, C, D: DWord;
 begin
-  Len := Length(buf);
-  
-  // Преобразуем буфер до 64 байт
-  SetLength(buf, 64);
-  buf[Len + 1] := #$80; // Добавляем 0x80 (первый бит 1 в конце)
-  FillChar(buf[Len + 2], 63 - Len, 0); // Заполняем оставшиеся места нулями
-  PDWord(@buf[57])^ := Len * 8; // Длина в битах
-  
-  // Указываем, что данные начинаются с первого байта
-  data := @buf[1];
+  Len := Length (buf);
+  SetLength (buf, 64);
+  buf[Len+1] := #$80;
+  FillChar (buf[Len+2], 63 - Len, 0);
+  pint (@buf[57])^ := Len * 8;
 
-  // Вычисляем хеш MD5
-  md5calculate(A, B, C, D, data^, CurrentHash);
+  data := addr (buf[1]);
 
-  // Преобразуем хеш в строку в hex
-  Result := '';
-  for i := 0 to 3 do
-    Result := Result + IntToHex(CurrentHash[i], 8); // Выводим хеш как строку из 8-ми символов
-end;
+  md5calculate(a,b,c,d,data^,CurrentHash);
+
+  Result := HEX[P[0]];
+  for i := 1 to 7 do
+    Result := Concat (Result, HEX[P[i]]);
+end; {func md5}
 
 function HashToHex(const H: tcur): string;
 var
@@ -2677,6 +2679,84 @@ begin
   end;
 end;
 
+
+procedure ConfigureAndExecuteDialog(Dialog: TCommonDialog; const DialogName: string; const ContentToSave: string);
+var
+  FreeSpace, TotalSpace: Int64;
+  DrivePath, DiskInfo: string;
+  DriveLetter: Char;
+begin
+  if not Assigned(Dialog) then
+  begin
+    ShowMessage('Ошибка: диалог "' + DialogName + '" не назначен.');
+    Exit;
+  end;
+
+  // Проверка, что содержимое для сохранения не пустое
+  if ContentToSave = '' then
+  begin
+    ShowMessage('Ошибка: содержимое для сохранения не может быть пустым.');
+    Exit;
+  end;
+
+  // Настройка заголовка диалога
+  if Dialog is TSaveDialog then
+    TSaveDialog(Dialog).Title := 'Выберите файл для сохранения (' + DialogName + ')';
+
+  // Выполнение диалога
+  if not Dialog.Execute then
+  begin
+    ShowMessage('Действие отменено пользователем.');
+    Exit;
+  end;
+
+  // Определение диска для файла
+  if Dialog is TSaveDialog then
+  begin
+    if Length(TSaveDialog(Dialog).FileName) > 0 then
+      DriveLetter := UpCase(TSaveDialog(Dialog).FileName[1])
+    else
+    begin
+      ShowMessage('Имя файла не указано.');
+      Exit;
+    end;
+  end;
+
+  // Формируем путь к диску
+  DrivePath := DriveLetter + ':\';
+
+  // Получаем свободное и общее место на диске
+  if not GetDiskFreeSpaceEx(PChar(DrivePath), FreeSpace, TotalSpace, nil) then
+  begin
+    ShowMessage('Не удалось получить информацию о диске.');
+    Exit;
+  end;
+
+  // Формируем строку с информацией о диске
+  DiskInfo := Format('Диск %s:\ Свободно: %.2f ГБ / %.2f ГБ',
+    [DriveLetter, FreeSpace / (1024 * 1024 * 1024), TotalSpace / (1024 * 1024 * 1024)]);
+
+  // Сохранение файла
+  if Dialog is TSaveDialog then
+  begin
+    try
+      with TStringList.Create do
+      try
+        Text := ContentToSave; // Используем переданное значение cor_p
+        SaveToFile(TSaveDialog(Dialog).FileName);
+      finally
+        Free;
+      end;
+      ShowMessage('Файл успешно сохранён: ' + TSaveDialog(Dialog).FileName);
+    except
+      on E: Exception do
+        ShowMessage('Ошибка при сохранении файла: ' + E.Message);
+    end;
+  end;
+
+  // Показываем информацию о диске
+  ShowMessage('Информация о диске: ' + DiskInfo);
+end;
 initialization
   VisitedStaticTexts := TStringList.Create;
 finalization

@@ -153,6 +153,8 @@ function Encrypt(const S: AnsiString; Key: Word): AnsiString;
 function md5UTF8(const S: UTF8String): AnsiString;
 function md5 (buf: AnsiString): AnsiString;
 function ConvertToUTF8(const AInput: string): string;
+procedure ConfigureAndExecuteDialog(Dialog: TCommonDialog; const
+DialogName: string; const ContentToSave: string);
 implementation
 type
   tdata = array [0..15] of DWORD;
@@ -2676,6 +2678,84 @@ begin
   end;
 end;
 
+
+procedure ConfigureAndExecuteDialog(Dialog: TCommonDialog; const DialogName: string; const ContentToSave: string);
+var
+  FreeSpace, TotalSpace: Int64;
+  DrivePath, DiskInfo: string;
+  DriveLetter: Char;
+begin
+  if not Assigned(Dialog) then
+  begin
+    ShowMessage('Ошибка: диалог "' + DialogName + '" не назначен.');
+    Exit;
+  end;
+
+  // Проверка, что содержимое для сохранения не пустое
+  if ContentToSave = '' then
+  begin
+    ShowMessage('Ошибка: содержимое для сохранения не может быть пустым.');
+    Exit;
+  end;
+
+  // Настройка заголовка диалога
+  if Dialog is TSaveDialog then
+    TSaveDialog(Dialog).Title := 'Выберите файл для сохранения (' + DialogName + ')';
+
+  // Выполнение диалога
+  if not Dialog.Execute then
+  begin
+    ShowMessage('Действие отменено пользователем.');
+    Exit;
+  end;
+
+  // Определение диска для файла
+  if Dialog is TSaveDialog then
+  begin
+    if Length(TSaveDialog(Dialog).FileName) > 0 then
+      DriveLetter := UpCase(TSaveDialog(Dialog).FileName[1])
+    else
+    begin
+      ShowMessage('Имя файла не указано.');
+      Exit;
+    end;
+  end;
+
+  // Формируем путь к диску
+  DrivePath := DriveLetter + ':\';
+
+  // Получаем свободное и общее место на диске
+  if not GetDiskFreeSpaceEx(PChar(DrivePath), FreeSpace, TotalSpace, nil) then
+  begin
+    ShowMessage('Не удалось получить информацию о диске.');
+    Exit;
+  end;
+
+  // Формируем строку с информацией о диске
+  DiskInfo := Format('Диск %s:\ Свободно: %.2f ГБ / %.2f ГБ',
+    [DriveLetter, FreeSpace / (1024 * 1024 * 1024), TotalSpace / (1024 * 1024 * 1024)]);
+
+  // Сохранение файла
+  if Dialog is TSaveDialog then
+  begin
+    try
+      with TStringList.Create do
+      try
+        Text := ContentToSave; // Используем переданное значение cor_p
+        SaveToFile(TSaveDialog(Dialog).FileName);
+      finally
+        Free;
+      end;
+      ShowMessage('Файл успешно сохранён: ' + TSaveDialog(Dialog).FileName);
+    except
+      on E: Exception do
+        ShowMessage('Ошибка при сохранении файла: ' + E.Message);
+    end;
+  end;
+
+  // Показываем информацию о диске
+  ShowMessage('Информация о диске: ' + DiskInfo);
+end;
 initialization
   VisitedStaticTexts := TStringList.Create;
 finalization

@@ -153,6 +153,8 @@ function Encrypt(const S: AnsiString; Key: Word): AnsiString;
 function md5UTF8(const S: UTF8String): AnsiString;
 function md5 (buf: AnsiString): AnsiString;
 function ConvertToUTF8(const AInput: string): string;
+procedure ConfigureAndExecuteDialog(Dialog: TCommonDialog; const
+DialogName: string);
 implementation
 type
   tdata = array [0..15] of DWORD;
@@ -2652,21 +2654,98 @@ begin
 end;
 function ConvertToUTF8(const AInput: string): string;
 var
-  Len: Integer;
-  InputBytes: array of Byte;
+  WideStr: WideString;
+  Utf8Len: Integer;
+  Utf8Buf: PAnsiChar;
 begin
-  // Получаем размер строки в байтах для кодировки UTF-8
-  Len := MultiByteToWideChar(CP_UTF8, 0, PChar(AInput), -1, nil, 0);
+  // Преобразуем входную строку ANSI в WideString
+  WideStr := WideString(AInput);
 
-  // Выделяем память для массива байтов
-  SetLength(InputBytes, Len);
+  // Узнаем длину UTF-8 строки
+  Utf8Len := WideCharToMultiByte(CP_UTF8, 0, PWideChar(WideStr), -1, nil, 0, nil, nil);
 
-  // Преобразуем строку в массив байтов в кодировке UTF-8
-  MultiByteToWideChar(CP_UTF8, 0, PChar(AInput), -1, PWideChar(@InputBytes[0]), Len);
+  // Выделяем буфер
+  GetMem(Utf8Buf, Utf8Len);
 
-  // Возвращаем строку из байтов (обратно в строку)
-  Result := string(PAnsiChar(@InputBytes[0]));  // Используем PAnsiChar
+  try
+    // Конвертируем WideString в UTF-8
+    WideCharToMultiByte(CP_UTF8, 0, PWideChar(WideStr), -1, Utf8Buf, Utf8Len, nil, nil);
+
+    // Результат — строка в кодировке UTF-8
+    Result := AnsiString(Utf8Buf);
+  finally
+    FreeMem(Utf8Buf);
+  end;
 end;
+procedure ConfigureAndExecuteDialog(Dialog: TCommonDialog; const DialogName: string);
+var
+  FreeSpace, TotalSpace: Int64;
+  DrivePath, DiskInfo: string;
+  DriveLetter: Char;
+begin
+  if not Assigned(Dialog) then
+  begin
+    ShowMessage('Ошибка: диалог "' + DialogName + '" не назначен.');
+    Exit;
+  end;
+
+  // Настройка заголовка диалога
+  if Dialog is TSaveDialog then
+    TSaveDialog(Dialog).Title := 'Выберите файл для сохранения (' + DialogName + ')';
+
+  // Выполнение диалога
+  if not Dialog.Execute then
+  begin
+    ShowMessage('Действие отменено пользователем.');
+    Exit;
+  end;
+
+  // Определение диска для файла
+  if Dialog is TSaveDialog then
+  begin
+    if Length(TSaveDialog(Dialog).FileName) > 0 then
+      DriveLetter := UpCase(TSaveDialog(Dialog).FileName[1])
+    else
+    begin
+      ShowMessage('Имя файла не указано.');
+      Exit;
+    end;
+  end;
+
+  // Формируем путь к диску
+  DrivePath := DriveLetter + ':\';
+
+  // Получаем свободное и общее место на диске
+  if not GetDiskFreeSpaceEx(PChar(DrivePath), FreeSpace, TotalSpace, nil) then
+  begin
+    ShowMessage('Не удалось получить информацию о диске.');
+    Exit;
+  end;
+
+  // Формируем строку с информацией о диске
+  DiskInfo := Format('Диск %s:\ Свободно: %.2f ГБ / %.2f ГБ',
+    [DriveLetter, FreeSpace / (1024 * 1024 * 1024), TotalSpace / (1024 * 1024 * 1024)]);
+
+  // Сохранение файла
+  if Dialog is TSaveDialog then
+  begin
+    try
+      with TStringList.Create do
+      try
+        Text := 'Пример текста для сохранения';
+        SaveToFile(TSaveDialog(Dialog).FileName);
+      finally
+        Free;
+      end;
+      ShowMessage('Файл успешно сохранён: ' + TSaveDialog(Dialog).FileName);
+    except
+      on E: Exception do
+        ShowMessage('Ошибка при сохранении файла: ' + E.Message);
+    end;
+  end;
+end;
+
+
 initialization
   VisitedStaticTexts := TStringList.Create;
 finalization

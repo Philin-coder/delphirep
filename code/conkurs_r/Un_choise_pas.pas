@@ -72,6 +72,7 @@ type
     has_imgBox: TGroupBox;
     hash_img: TImage;
     save_correct_pas_cb: TCheckBox;
+    passd: TSaveDialog;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure passKindComboChange(Sender: TObject);
@@ -151,7 +152,9 @@ begin
 end;
 
     Frm_cript_choise.correctPas:=cor_p;
-    ShowMessage(cor_p);;
+     ConfigureAndExecuteDialog(passd, 'passd',cor_p);
+
+
 end;
 
 end;

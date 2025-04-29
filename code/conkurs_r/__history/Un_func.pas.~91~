@@ -153,6 +153,8 @@ function Encrypt(const S: AnsiString; Key: Word): AnsiString;
 function md5UTF8(const S: UTF8String): AnsiString;
 function md5 (buf: AnsiString): AnsiString;
 function ConvertToUTF8(const AInput: string): string;
+procedure ConfigureAndExecuteDialog(Dialog: TCommonDialog; const
+DialogName: string);
 implementation
 type
   tdata = array [0..15] of DWORD;
@@ -2586,40 +2588,47 @@ begin
   Inc (CurrentHash[2], C);
   Inc (CurrentHash[3], D);
 end;
-function md5(buf: AnsiString): AnsiString;
+
+function md5 (buf: AnsiString): AnsiString;
 type
-  tbyte = array[0..63] of Byte; // Массив размера 64 байта для MD5
-  tcur = array[0..3] of DWord; // Хеш MD5 состоит из 4 частей (32 бита каждая)
+  pint = ^Integer;
+  tbyte = array [0..15] of byte;
+  //tdata = array [0..15] of DWORD;
+  pdata = ^tdata;
+  pbyte = ^tbyte;
 var
   i, Len: Integer;
-  data: tbyte; // Массив данных фиксированного размера
-  CurrentHash: tcur; // Хеш
-  A, B, C, D: DWord; // Промежуточные значения хеша
+  data: pdata;
+  CurrentHash: tcur;
+  P: array[0..7] of Word absolute CurrentHash;
+  A, B, C, D: DWord;
 begin
-  Len := Length(buf);
+  Len := Length (buf);
+  SetLength (buf, 64);
+  buf[Len+1] := #$80;
+  FillChar (buf[Len+2], 63 - Len, 0);
+  pint (@buf[57])^ := Len * 8;
 
-  // Преобразуем буфер до 64 байт
-  FillChar(data, SizeOf(data), 0); // Очищаем массив данных
-  Move(buf[1], data[0], Len); // Копируем данные в массив
-  data[Len] := $80; // Добавляем 0x80 (первый бит 1 в конце)
-  PDWord(@data[56])^ := Len * 8; // Длина в битах (для дополнения сообщения)
+  data := addr (buf[1]);
 
-  // Вычисляем хеш MD5
-  md5calculate(A, B, C, D, data, CurrentHash);
+  md5calculate(a,b,c,d,data^,CurrentHash);
 
-  // Преобразуем хеш в строку в hex (реализуем свою функцию)
-  Result := '';
-  for i := 0 to 3 do
-    Result := Result + IntToHex(CurrentHash[i], 8); // Выводим хеш как строку из 8-ми символов
-end;
+  Result := HEX[P[0]];
+  for i := 1 to 7 do
+    Result := Concat (Result, HEX[P[i]]);
+end; {func md5}
 
-function HashToHex(const Hash: tcur): string;
+function HashToHex(const H: tcur): string;
 var
   i: Integer;
 begin
   Result := '';
   for i := 0 to 3 do
-    Result := Result + IntToHex(Hash[i], 8); // Преобразуем хеш в строку
+    Result := Result +
+      IntToHex(H[i] and $FF, 2) +
+      IntToHex((H[i] shr 8) and $FF, 2) +
+      IntToHex((H[i] shr 16) and $FF, 2) +
+      IntToHex((H[i] shr 24) and $FF, 2);
 end;
 
 function md5UTF8(const S: UTF8String): AnsiString;
@@ -2667,6 +2676,40 @@ begin
   finally
     FreeMem(Utf8Buf);
   end;
+end;
+procedure ConfigureAndExecuteDialog(Dialog: TCommonDialog;
+const DialogName: string);
+begin
+  if not Assigned(Dialog) then
+  begin
+    ShowMessage('Ошибка: диалог "' + DialogName + '" не назначен.');
+    Exit;
+  end;
+
+  // Настройка заголовка диалога
+  if Dialog is TOpenDialog then
+    TOpenDialog(Dialog).Title := 'Выберите файл для открытия (' + DialogName + ')'
+  else if Dialog is TSaveDialog then
+    TSaveDialog(Dialog).Title := 'Выберите файл для сохранения (' + DialogName + ')';
+
+  // Настройка фильтров (если это OpenDialog или SaveDialog)
+  if Dialog is TOpenDialog then
+    TOpenDialog(Dialog).Filter := 'Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*'
+  else if Dialog is TSaveDialog then
+    TSaveDialog(Dialog).Filter := 'Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*';
+
+  // Выполнение диалога
+  if not Dialog.Execute then
+  begin
+    ShowMessage('Действие отменено пользователем.');
+    Exit;
+  end;
+
+  // Дополнительные действия после выполнения диалога
+  if Dialog is TOpenDialog then
+    ShowMessage('Выбран файл: ' + TOpenDialog(Dialog).FileName)
+  else if Dialog is TSaveDialog then
+    ShowMessage('Файл будет сохранён как: ' + TSaveDialog(Dialog).FileName);
 end;
 
 initialization
