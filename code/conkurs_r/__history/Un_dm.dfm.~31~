@@ -1,7 +1,7 @@
 object DM: TDM
   OldCreateOrder = False
   Height = 530
-  Width = 633
+  Width = 557
   object Connection: TADOConnection
     Connected = True
     ConnectionString = 
@@ -408,7 +408,6 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@id'
@@ -419,50 +418,5 @@ object DM: TDM
       end>
     Left = 448
     Top = 216
-  end
-  object updby_idQuery: TADOQuery
-    Connection = Connection
-    Parameters = <>
-    SQL.Strings = (
-      'select'
-      'm_user.id_user,'
-      'm_user.fio,'
-      'm_user.user_phone,'
-      'm_user.user_pas '
-      'from m_user '
-      'where 1=1')
-    Left = 504
-    Top = 96
-  end
-  object updby_idDS: TDataSource
-    DataSet = updby_idQuery
-    Left = 512
-    Top = 152
-  end
-  object updby_id: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'upd_pass_by_id;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@pass'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 1000
-      end
-      item
-        Name = '@id'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = 0
-      end>
-    Left = 528
-    Top = 208
   end
 end

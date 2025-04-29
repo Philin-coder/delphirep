@@ -65,6 +65,15 @@ object Frm_cript_choise: TFrm_cript_choise
         'Bloufish'
         'Hash')
     end
+    object pas_updRadio: TRadioButton
+      Left = 902
+      Top = 22
+      Width = 113
+      Height = 17
+      Caption = #1054#1073#1085#1086#1074#1080#1090#1100' '#1087#1072#1088#1086#1083#1100
+      TabOrder = 3
+      OnClick = pas_updRadioClick
+    end
   end
   object cryortPC: TPageControl
     Left = 0

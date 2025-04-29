@@ -29,6 +29,9 @@ type
     SelbyIDQuery: TADOQuery;
     SelbyIDDS: TDataSource;
     SelbyID: TADOStoredProc;
+    updby_idQuery: TADOQuery;
+    updby_idDS: TDataSource;
+    updby_id: TADOStoredProc;
   private
     { Private declarations }
   public
