@@ -519,7 +519,7 @@ object Frm_cript_choise: TFrm_cript_choise
       end
     end
     object hashTab: TTabSheet
-      Caption = #1055#1086#1083#1091#1095#1080#1090#1100' hash'
+      Caption = #1064#1080#1092#1088#1086#1074#1072#1085#1080#1077' '#1087#1088#1080' '#1087#1086#1084#1086#1097#1080' hash'
       ImageIndex = 4
       object hash_inp_Box: TGroupBox
         Left = 0
