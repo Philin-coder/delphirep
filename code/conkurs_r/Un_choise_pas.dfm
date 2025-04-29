@@ -529,9 +529,6 @@ object Frm_cript_choise: TFrm_cript_choise
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1083#1072#1085#1085#1099#1093
         TabOrder = 0
-        ExplicitLeft = 48
-        ExplicitTop = 16
-        ExplicitWidth = 185
         object hashUtfradio: TRadioButton
           Left = 23
           Top = 48
@@ -539,6 +536,7 @@ object Frm_cript_choise: TFrm_cript_choise
           Height = 17
           Caption = 'UTF8'
           TabOrder = 0
+          OnClick = hashUtfradioClick
         end
         object hash_asciiradio: TRadioButton
           Left = 368
@@ -547,6 +545,7 @@ object Frm_cript_choise: TFrm_cript_choise
           Height = 17
           Caption = 'Ascii'
           TabOrder = 1
+          OnClick = hash_asciiradioClick
         end
       end
       object hash_paramBox: TGroupBox
@@ -557,9 +556,6 @@ object Frm_cript_choise: TFrm_cript_choise
         Align = alTop
         Caption = #1055#1072#1088#1072#1080#1077#1090#1088#1099
         TabOrder = 1
-        ExplicitLeft = 192
-        ExplicitTop = 248
-        ExplicitWidth = 185
         DesignSize = (
           1010
           105)
@@ -609,10 +605,6 @@ object Frm_cript_choise: TFrm_cript_choise
         Height = 390
         Align = alClient
         TabOrder = 3
-        ExplicitLeft = 320
-        ExplicitTop = 328
-        ExplicitWidth = 185
-        ExplicitHeight = 105
         object hash_img: TImage
           Left = 2
           Top = 15

@@ -90,6 +90,8 @@ type
     procedure morzeinitBtnClick(Sender: TObject);
     procedure blnewpasExit(Sender: TObject);
     procedure blinitBtnClick(Sender: TObject);
+    procedure hashUtfradioClick(Sender: TObject);
+    procedure hash_asciiradioClick(Sender: TObject);
   private
     get_pas:string;
     procedure SyncTabControlAndComboBox(Sender: TObject);
@@ -229,7 +231,7 @@ begin
   orignPasinp.Text:=trim(aldpasslbl.Caption);
   morignPas.Text:=trim(aldpasslbl.Caption);
   blorignpas.Text:=trim(aldpasslbl.Caption);
-  h_orignPas_inp.Text:=trim(aldpasslbl.Caption);
+  h_orignPas_inp.Text:=aldpasslbl.Caption;
 end;
 
 procedure TFrm_cript_choise.FormClose(Sender: TObject;
@@ -296,6 +298,26 @@ begin
  blpasskeyInp.ShowHint:=true;
  blpasskeyInp.Hint:='Пример ввода'+#10#13+
  '33189';
+end;
+
+procedure TFrm_cript_choise.hashUtfradioClick(Sender: TObject);
+var temp_str:string;
+begin
+if hashUtfradio.Checked then
+begin
+    temp_str := ConvertToUTF8(h_orignPas_inp.Text);  // Преобразуем текст в UTF-8
+    h_orignPas_inp.Text := temp_str;  // Вставляем преобразованный текст обратно
+    has_new_pas_inp.Text:=md5UTF8(Trim(h_orignPas_inp.Text));
+end;
+
+end;
+
+procedure TFrm_cript_choise.hash_asciiradioClick(Sender: TObject);
+begin
+ if hash_asciiradio.Checked then
+  begin
+  has_new_pas_inp.Text:=md5UTF8(h_orignPas_inp.Text);
+  end;
 end;
 
 procedure TFrm_cript_choise.morzeinitBtnClick(Sender: TObject);
