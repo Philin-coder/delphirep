@@ -78,8 +78,8 @@ type
     procedure Radio_m_mixed_textClick(Sender: TObject);
     procedure bipBtnClick(Sender: TObject);
     procedure morzeinitBtnClick(Sender: TObject);
-    procedure blnewpasSubLabelMouseDown(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
+    procedure blnewpasExit(Sender: TObject);
+    procedure blinitBtnClick(Sender: TObject);
   private
     get_pas:string;
     procedure SyncTabControlAndComboBox(Sender: TObject);
@@ -91,6 +91,7 @@ type
 
 var
   Frm_cript_choise: TFrm_cript_choise;
+  var f_crypt:AnsiString;
 
 implementation
 
@@ -143,20 +144,32 @@ for i := 1 to Length(m_new_pas.Text) do
   Sleep(400);
 end;
 
-procedure TFrm_cript_choise.blnewpasSubLabelMouseDown(Sender: TObject;
-  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-  var
-  sEncrypted, sDecrypted :AnsiString;
-  my_key:Integer;
+procedure TFrm_cript_choise.blinitBtnClick(Sender: TObject);
+var
+ my_key:Word;
+ sDecrypted:AnsiString;
 begin
-   sEncrypted:=(QuotedStr(blpasskeyInp.Text)+','+blpasskeyInp.Text);
+  my_key:=blpaskeygrader.Position;
+  sDecrypted := Decrypt(f_crypt,my_key);
+  blorignpas.Text:=sDecrypted;
+end;
+
+procedure TFrm_cript_choise.blnewpasExit(Sender: TObject);
+  var
+  sEncrypted :AnsiString;
+  my_key:Word;
+begin
+   my_key:=blpaskeygrader.Position;
+   sEncrypted:=Encrypt(blorignpas.Text,my_key);
+    f_crypt:=sEncrypted;
+   blnewpas.Text:=sEncrypted;
 end;
 
 procedure TFrm_cript_choise.cezarinitBtnClick(Sender: TObject);
 var
   DecryptedText: string;
 begin
-if Radioruslng.Checked then 
+if Radioruslng.Checked then
 begin
      try
     DecryptedText := DecryptCaesarFromComponent(newPasinp, shift_grader.Position,
@@ -212,6 +225,7 @@ begin
     SaveFormState(Self);
     CloseAllQueriesOnDataModule('dm');
     rnd_base_grader.Position:=0;
+    f_crypt:='';
 end;
 
 procedure TFrm_cript_choise.FormCreate(Sender: TObject);

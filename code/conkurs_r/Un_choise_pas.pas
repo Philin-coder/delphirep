@@ -160,9 +160,10 @@ procedure TFrm_cript_choise.blnewpasExit(Sender: TObject);
   my_key:Word;
 begin
    my_key:=blpaskeygrader.Position;
-   sEncrypted:=Encrypt(QuotedStr( blorignpas.Text),my_key);
+   sEncrypted:=Encrypt(blorignpas.Text,my_key);
     f_crypt:=sEncrypted;
    blnewpas.Text:=sEncrypted;
+   ShowMessage(IntToStr(my_key));
 end;
 
 procedure TFrm_cript_choise.cezarinitBtnClick(Sender: TObject);
@@ -225,6 +226,7 @@ begin
     SaveFormState(Self);
     CloseAllQueriesOnDataModule('dm');
     rnd_base_grader.Position:=0;
+    f_crypt:='';
 end;
 
 procedure TFrm_cript_choise.FormCreate(Sender: TObject);
@@ -240,7 +242,6 @@ begin
  LoadImageFromResource('CRYPT',blImg);
  LoadFormState(Self);
  rnd_base_grader.Min:=4;
- blpaskeygrader.Position:=3189;
  Randomize;
   try
     FormatLabel('aldpasslbl', Self, 14, 'Arial', clGreen);

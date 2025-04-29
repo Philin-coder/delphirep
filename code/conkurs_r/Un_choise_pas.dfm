@@ -113,7 +113,7 @@ object Frm_cript_choise: TFrm_cript_choise
         end
         object rnd_base_grader: TUpDown
           Left = 10
-          Top = 53
+          Top = 56
           Width = 17
           Height = 21
           AlignButton = udLeft
@@ -449,7 +449,7 @@ object Frm_cript_choise: TFrm_cript_choise
           Text = '0'
         end
         object blpaskeygrader: TUpDown
-          Left = 3
+          Left = 7
           Top = 77
           Width = 14
           Height = 21
@@ -505,10 +505,6 @@ object Frm_cript_choise: TFrm_cript_choise
         Height = 431
         Align = alClient
         TabOrder = 2
-        ExplicitLeft = 312
-        ExplicitTop = 280
-        ExplicitWidth = 185
-        ExplicitHeight = 105
         object blImg: TImage
           Left = 2
           Top = 15
