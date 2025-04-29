@@ -123,7 +123,6 @@ uses change_pas_quest, Un_dm, Un_func;
 procedure  TFrm_cript_choise.SetUserNum(const value:integer);
 begin
     user_num:=value;
-    ShowMessage(IntToStr(user_num));
 end;
 procedure TFrm_cript_choise.SetPas(const value:string);
 begin

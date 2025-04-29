@@ -86,6 +86,10 @@ object Frm_cript_choise: TFrm_cript_choise
     OnChange = cryortPCChange
     object RandombaseTab: TTabSheet
       Caption = #1064#1080#1092#1088#1086#1074#1072#1085#1080#1077' '#1085#1072' '#1073#1072#1079#1077' '#1043#1077#1085#1077#1088#1072#1090#1086#1088#1072' '#1089#1083#1091#1095#1072#1081#1085#1099#1093' '#1095#1080#1089#1077#1083
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object rb_input_box: TGroupBox
         Left = 0
         Top = 0
@@ -170,6 +174,10 @@ object Frm_cript_choise: TFrm_cript_choise
     object CezarTab: TTabSheet
       Caption = #1064#1080#1092#1086#1088#1074#1072#1085#1080#1077' '#1087#1088#1080' '#1087#1086#1084#1086#1096#1080' '#1096#1080#1088#1072' '#1062#1077#1079#1072#1088#1103
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object cryprmainBox: TGroupBox
         Left = 0
         Top = 0
@@ -307,6 +315,10 @@ object Frm_cript_choise: TFrm_cript_choise
     object morze_tab: TTabSheet
       Caption = #1064#1080#1092#1088#1086#1074#1072#1085#1080#1077' '#1087#1088#1080' '#1087#1086#1084#1086#1097#1080' '#1072#1079#1073#1091#1082#1080' '#1052#1086#1088#1079#1077
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Morze_inp_Box: TGroupBox
         Left = 0
         Top = 0
@@ -434,6 +446,10 @@ object Frm_cript_choise: TFrm_cript_choise
     object BloufishTab: TTabSheet
       Caption = #1064#1080#1092#1088#1086#1074#1072#1085#1080#1077' '#1087#1088#1080' '#1087#1086' '#1084#1086#1096#1080' bloufish'
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object bloufish_inp_Box: TGroupBox
         Left = 0
         Top = 0
@@ -598,7 +614,6 @@ object Frm_cript_choise: TFrm_cript_choise
         Height = 449
         Align = alClient
         TabOrder = 2
-        ExplicitHeight = 390
         object hash_img: TImage
           Left = 2
           Top = 15

@@ -72,6 +72,8 @@ type
     has_imgBox: TGroupBox;
     hash_img: TImage;
     save_correct_pas_cb: TCheckBox;
+    passd: TSaveDialog;
+    pas_updRadio: TRadioButton;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure passKindComboChange(Sender: TObject);
@@ -92,57 +94,77 @@ type
     procedure hashUtfradioClick(Sender: TObject);
     procedure hash_asciiradioClick(Sender: TObject);
     procedure save_correct_pas_cbClick(Sender: TObject);
+    procedure pas_updRadioClick(Sender: TObject);
   private
     get_pas:string;
     correctPas:string;
+    user_num:Integer;
     procedure SyncTabControlAndComboBox(Sender: TObject);
     procedure SetPas(const value:string);
     procedure setcorrectPas(const value:string);
+    procedure SetUserNum(const value:integer);
   public
      property m_pas:string read get_pas write SetPas;
      property sv_pas:string read correctpas write  SetCorrectPas;
+     property u_number:Integer read user_num write SetUserNum;
     { Public declarations }
   end;
 
 var
   Frm_cript_choise: TFrm_cript_choise;
   var f_crypt:AnsiString;
+    var cor_p: string;
 
 implementation
 
 uses change_pas_quest, Un_dm, Un_func;
 
 {$R *.dfm}
+procedure  TFrm_cript_choise.SetUserNum(const value:integer);
+begin
+    user_num:=value;
+    ShowMessage(IntToStr(user_num));
+end;
 procedure TFrm_cript_choise.SetPas(const value:string);
 begin
  get_pas:=value;
 end;
 procedure TFrm_cript_choise.save_correct_pas_cbClick(Sender: TObject);
-var cor_p: string;
 begin
-
 if save_correct_pas_cb.Checked then
 begin
 case cryortPC.TabIndex of
    0:
    begin
-       cor_p:=newPasinp.Text
+       cor_p:=Trim(rnd_base_out_pass.Text);
    end;
    1:
    begin
-     cor_p:=m_new_pas.Text
+     cor_p:=Trim(newPasinp.Text);
    end;
    2:
    begin
-     cor_p:=blnewpas.Text
+     cor_p:=Trim(m_new_pas.Text);
    end;
    3:
    begin
-    cor_p:=has_new_pas_inp.Text
+    cor_p:=Trim(blnewpas.Text);
    end;
-
+   4:
+   begin
+     cor_p:=Trim(has_new_pas_inp.Text);
+   end;
 end;//case
-    Frm_cript_choise.correctPas:=cor_p
+if cor_p='' then
+begin
+     ShowMessage('Ошибка: поле не может быть пустым.');
+      Exit;
+end;
+
+    Frm_cript_choise.correctPas:=cor_p;
+     ConfigureAndExecuteDialog(passd, 'passd',cor_p);
+
+
 end;
 
 end;
@@ -264,6 +286,7 @@ end;
 
 procedure TFrm_cript_choise.FormActivate(Sender: TObject);
 begin
+  DM.updby_idQuery.Open;
   aldpasslbl.Caption:=get_pas;
   orignPasinp.Text:=trim(aldpasslbl.Caption);
   morignPas.Text:=trim(aldpasslbl.Caption);
@@ -278,6 +301,7 @@ begin
     CloseAllQueriesOnDataModule('dm');
     rnd_base_grader.Position:=0;
     f_crypt:='';
+    cor_p:='';
 end;
 
 procedure TFrm_cript_choise.FormCreate(Sender: TObject);
@@ -294,6 +318,7 @@ begin
  LoadImageFromResource('CRYPT',hash_img);
  LoadFormState(Self);
  rnd_base_grader.Min:=4;
+ cor_p:='';
  Randomize;
   try
     FormatLabel('aldpasslbl', Self, 14, 'Arial', clGreen);
@@ -386,6 +411,35 @@ end;
 procedure TFrm_cript_choise.passKindComboChange(Sender: TObject);
 begin
     SyncTabControlAndComboBox(Sender);
+end;
+
+procedure TFrm_cript_choise.pas_updRadioClick(Sender: TObject);
+begin
+if pas_updRadio.Checked then
+begin
+    try
+      with dm.updby_id do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@pass').Value :=cor_p;
+           Parameters.ParamByName('@id').Value:=Frm_cript_choise.u_number;
+           ExecProc;
+           dm.updby_idQuery.Close;
+           dm.updby_idQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+end;
 end;
 
 procedure TFrm_cript_choise.RadioenglngClick(Sender: TObject);
