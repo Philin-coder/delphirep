@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2025.05.03 12:13:35.379.pas,C:\Users\user\OneDrive\Документы\Borland Studio Projects\Unit2.pas=F:\code\Result\delphi\code\hotel_r\Un_main.pas</Transaction>
+    <Transaction>2025.05.03 12:13:35.380.dfm,C:\Users\user\OneDrive\Документы\Borland Studio Projects\Unit2.dfm=F:\code\Result\delphi\code\hotel_r\Un_main.dfm</Transaction>
+    <Transaction>2025.05.03 12:14:44.941.bdsproj,C:\Users\user\OneDrive\Документы\Borland Studio Projects\Project1.bdsproj=F:\code\Result\delphi\code\hotel_r\hotel_project_group.bdsproj</Transaction>
+    <Transaction>2025.05.03 12:15:35.039.bdsproj,F:\code\Result\delphi\code\hotel_r\hotel_project_group.bdsproj=F:\code\Result\delphi\code\hotel_r\hotel_project.bdsproj</Transaction>
+    <Transaction>2025.05.03 12:16:03.101.bdsproj,F:\code\Result\delphi\code\hotel_r\hotel_project.bdsproj=F:\code\Result\delphi\code\hotel_r\hotel_project.bdsproj</Transaction>
+  </Transactions>
+</BorlandProject>
