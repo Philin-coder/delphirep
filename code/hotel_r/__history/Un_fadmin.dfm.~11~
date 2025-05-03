@@ -13,7 +13,6 @@ object Frm_fadmin: TFrm_fadmin
   OldCreateOrder = False
   OnActivate = FormActivate
   OnClose = FormClose
-  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object FadminPC: TPageControl

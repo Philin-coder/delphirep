@@ -21,11 +21,7 @@ type
     m_addminselgrd: TDBGrid;
     fio_cond_edit: TLabeledEdit;
     sel_adm_fnd_Edit: TLabeledEdit;
-    Radiofiogrupper: TRadioButton;
-    Radiosmgrupper: TRadioButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure FormActivate(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -41,25 +37,10 @@ uses Un_dm, Un_func;
 
 {$R *.dfm}
 
-procedure TFrm_fadmin.FormActivate(Sender: TObject);
-begin
-  dm.admQuery.Open;
-end;
-
 procedure TFrm_fadmin.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   SaveFormState(Self);
   CloseAllQueriesOnDataModule('dm');
-end;
-
-procedure TFrm_fadmin.FormCreate(Sender: TObject);
-begin
-Frm_fadmin.KeyPreview:=true;
- Frm_fadmin.ShowHint:=true;
- UniformizeButtonsSize(Self,  273, 25);
- UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
- UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
- LoadFormState(Self);
 end;
 
 end.
