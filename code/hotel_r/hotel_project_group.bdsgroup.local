@@ -5,6 +5,6 @@
     <Transaction>2025.05.03 12:15:24.863.bdsgroup,F:\code\Result\delphi\code\hotel_r\hotel_project.bdsgroup=F:\code\Result\delphi\code\hotel_r\hotel_project_group.bdsgroup</Transaction>
   </Transactions>
   <Default.Personality>
-    <Projects ActiveProject="hotel_project_group.exe"/>
+    <Projects ActiveProject="hotel_project.exe"/>
   </Default.Personality>
 </BorlandProject>

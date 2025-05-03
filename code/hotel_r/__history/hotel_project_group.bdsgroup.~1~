@@ -12,11 +12,9 @@
     
     
     
-    
-    
     <Projects>
-      <Projects Name="hotel_project.exe">hotel_project.bdsproj</Projects>
-      <Projects Name="Targets">hotel_project.exe</Projects>
+      <Projects Name="hotel_project_group.exe">hotel_project_group.bdsproj</Projects>
+      <Projects Name="Targets">hotel_project_group.exe</Projects>
     </Projects>
     <Dependencies/>
   </Default.Personality>
