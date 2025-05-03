@@ -8,5 +8,7 @@
     <Transaction>2025.05.03 12:16:03.101.bdsproj,F:\code\Result\delphi\code\hotel_r\hotel_project.bdsproj=F:\code\Result\delphi\code\hotel_r\hotel_project.bdsproj</Transaction>
     <Transaction>2025.05.03 12:33:23.393.pas,F:\code\Result\delphi\code\hotel_r\Unit1.pas=F:\code\Result\delphi\code\hotel_r\Un_dm.pas</Transaction>
     <Transaction>2025.05.03 12:33:23.393.dfm,F:\code\Result\delphi\code\hotel_r\Unit1.dfm=F:\code\Result\delphi\code\hotel_r\Un_dm.dfm</Transaction>
+    <Transaction>2025.05.03 19:04:53.771.pas,F:\code\Result\delphi\code\hotel_r\Unit1.pas=F:\code\Result\delphi\code\hotel_r\Un_fadmin.pas</Transaction>
+    <Transaction>2025.05.03 19:04:53.774.dfm,F:\code\Result\delphi\code\hotel_r\Unit1.dfm=F:\code\Result\delphi\code\hotel_r\Un_fadmin.dfm</Transaction>
   </Transactions>
 </BorlandProject>

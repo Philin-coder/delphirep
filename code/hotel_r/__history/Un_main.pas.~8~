@@ -14,7 +14,6 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
-    procedure admin_itemClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -26,25 +25,13 @@ var
 
 implementation
 
-uses Un_func, Un_dm, Un_fadmin;
+uses Un_func, Un_dm;
 const
   FileName = 'connection_string.txt';
 
 
 
 {$R *.dfm}
-
-procedure TFrm_main.admin_itemClick(Sender: TObject);
-begin
- try
-UpdateFormProperties('Frm_fadmin', 'Форма работы с данными администратора',
-clBtnFace, 1024, 768);
- Frm_fadmin.ShowModal;
-except
-Frm_fadmin.Free;
-raise;
-end
-end;
 
 procedure TFrm_main.FormActivate(Sender: TObject);
 begin

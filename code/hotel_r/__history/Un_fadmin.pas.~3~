@@ -1,0 +1,35 @@
+unit Un_fadmin;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ComCtrls, Grids, DBGrids, StdCtrls;
+
+type
+  TFrm_fadmin = class(TForm)
+    FadminPC: TPageControl;
+    seLTab: TTabSheet;
+    TabSheet2: TTabSheet;
+    TabSheet3: TTabSheet;
+    TabSheet4: TTabSheet;
+    sel_admincondBox: TGroupBox;
+    m_admin_grupper: TGroupBox;
+    seladmbtnBox: TGroupBox;
+    GroupBox4: TGroupBox;
+    m_adminsekBtn: TButton;
+    m_addminselgrd: TDBGrid;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_fadmin: TFrm_fadmin;
+
+implementation
+
+{$R *.dfm}
+
+end.
