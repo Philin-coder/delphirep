@@ -12,7 +12,6 @@ type
     admDS: TDataSource;
     ins_adm: TADOStoredProc;
     sel_adm_by_fio: TADOStoredProc;
-    upd_adm: TADOStoredProc;
   private
     { Private declarations }
   public

@@ -333,9 +333,6 @@ object Frm_fadmin: TFrm_fadmin
           Height = 21
           Align = alCustom
           Anchors = [akLeft, akRight]
-          KeyField = 'id_admin'
-          ListField = 'fio_admin'
-          ListSource = DM.admDS
           TabOrder = 1
         end
         object upd_adm_ulbl: TStaticText
@@ -355,8 +352,6 @@ object Frm_fadmin: TFrm_fadmin
           Anchors = [akLeft, akRight]
           ItemHeight = 13
           TabOrder = 3
-          OnChange = upd_adm_sm_inpChange
-          OnKeyPress = upd_adm_sm_inpKeyPress
           Items.Strings = (
             #1053#1086#1095#1085#1072#1103
             #1044#1085#1077#1074#1085#1072#1103' '
@@ -378,7 +373,6 @@ object Frm_fadmin: TFrm_fadmin
           Height = 25
           Caption = #1054#1073#1085#1086#1074#1080#1090#1100
           TabOrder = 0
-          OnClick = upd_adm_btnClick
         end
       end
       object upd_adm_data_box: TGroupBox

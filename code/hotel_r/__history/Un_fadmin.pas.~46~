@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, Grids, DBGrids, StdCtrls, ExtCtrls,adodb,db;
+  Dialogs, ComCtrls, Grids, DBGrids, StdCtrls, ExtCtrls,adodb,db, DBCtrls;
 
 type
   TFrm_fadmin = class(TForm)
@@ -35,6 +35,15 @@ type
     liveQuercB: TCheckBox;
     lqPanel: TPanel;
     lqsvBtn: TButton;
+    upd_adm_inp_Box: TGroupBox;
+    upd_adm_btn_Box: TGroupBox;
+    upd_adm_data_box: TGroupBox;
+    upd_adm_btn: TButton;
+    upd_adm_grd: TDBGrid;
+    upd_adm_adm_lbl: TStaticText;
+    upd_adm_u_dbl: TDBLookupComboBox;
+    upd_adm_ulbl: TStaticText;
+    upd_adm_sm_inp: TComboBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -189,7 +198,7 @@ begin
   with dm.admQuery do
 begin
   Close;
-  LockType:=ltBatchOptimistic;
+  LockType:=ltOptimistic;
   CursorType:= ctKeyset;
   CursorLocation := clUseClient;
   open;
@@ -213,15 +222,43 @@ end;//case
 end;
 
 procedure TFrm_fadmin.lqsvBtnClick(Sender: TObject);
+var
+  UserResponse: Integer;
 begin
   dm.Connection.BeginTrans;
   try
     if dm.admQuery.State in [dsEdit, dsInsert] then
       dm.admQuery.Post;
+    UserResponse := MessageDlg('Вы уверены, что хотите сохранить изменения?', mtConfirmation, [mbYes, mbNo], 0);
 
-
-    dm.Connection.CommitTrans;
-    ShowMessage('Изменения успешно сохранены.');
+    if UserResponse = mrYes then
+    begin
+      dm.Connection.CommitTrans;
+      dm.admQuery.DisableControls;
+      try
+        dm.admQuery.Close;
+        dm.admQuery.SQL.Text :=
+          'select' + ' ' +
+          'm_admin.id_admin,' +
+          'm_admin.fio_admin,' +
+          'case when m_admin.smena=0 then ''Ночная'' when m_admin.smena=1' + ' ' +
+          'then ''Дневная'' when m_admin.smena=2' + ' ' +
+          'then ''Вечерняя''  else ''Утренняя'' end as smena' + ' ' +
+          'from' + ' ' +
+          'm_admin' + ' ' +
+          'where 1=1';
+        dm.admQuery.Open;
+      finally
+        dm.admQuery.EnableControls;
+      end;
+      ShowMessage('Изменения успешно сохранены.');
+    end
+    else
+    begin
+      // Отменяем транзакцию, если пользователь отказался
+      dm.Connection.RollbackTrans;
+      ShowMessage('Изменения отменены.');
+    end;
   except
     on E: Exception do
     begin
@@ -229,6 +266,7 @@ begin
       ShowMessage('Ошибка при сохранении данных: ' + E.Message);
     end;
   end;
+
 end;
 
 

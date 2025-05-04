@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, Grids, DBGrids, StdCtrls, ExtCtrls,adodb,db;
+  Dialogs, ComCtrls, Grids, DBGrids, StdCtrls, ExtCtrls,adodb,db, DBCtrls;
 
 type
   TFrm_fadmin = class(TForm)
@@ -32,6 +32,18 @@ type
     ins_adm_dataGid: TDBGrid;
     sm_inp_lbl: TStaticText;
     smena_inp: TComboBox;
+    liveQuercB: TCheckBox;
+    lqPanel: TPanel;
+    lqsvBtn: TButton;
+    upd_adm_inp_Box: TGroupBox;
+    upd_adm_btn_Box: TGroupBox;
+    upd_adm_data_box: TGroupBox;
+    upd_adm_btn: TButton;
+    upd_adm_grd: TDBGrid;
+    upd_adm_adm_lbl: TStaticText;
+    upd_adm_u_dbl: TDBLookupComboBox;
+    upd_adm_ulbl: TStaticText;
+    upd_adm_sm_inp: TComboBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -43,6 +55,9 @@ type
     procedure smena_inpChange(Sender: TObject);
     procedure ins_admBtnClick(Sender: TObject);
     procedure smena_inpKeyPress(Sender: TObject; var Key: Char);
+    procedure liveQuercBClick(Sender: TObject);
+    procedure lqsvBtnClick(Sender: TObject);
+    procedure upd_adm_sm_inpChange(Sender: TObject);
   private
     { Private declarations }
   public
@@ -175,6 +190,86 @@ try
       end;
     end;
 end;
+
+procedure TFrm_fadmin.liveQuercBClick(Sender: TObject);
+begin
+case liveQuercB.Checked of
+true:
+begin
+  with dm.admQuery do
+begin
+  Close;
+  LockType:=ltOptimistic;
+  CursorType:= ctKeyset;
+  CursorLocation := clUseClient;
+  open;
+end;
+  ins_adm_dataGid.ReadOnly:=false;
+end;
+false:
+begin
+with dm.admQuery do
+begin
+  Close;
+  LockType:=ltOptimistic;
+  CursorType:= ctStatic;
+  CursorLocation := clUseClient;
+  Open;
+end;
+  ins_adm_dataGid.ReadOnly:=True;
+end;
+
+end;//case
+end;
+
+procedure TFrm_fadmin.lqsvBtnClick(Sender: TObject);
+var
+  UserResponse: Integer;
+begin
+  dm.Connection.BeginTrans;
+  try
+    if dm.admQuery.State in [dsEdit, dsInsert] then
+      dm.admQuery.Post;
+    UserResponse := MessageDlg('Вы уверены, что хотите сохранить изменения?', mtConfirmation, [mbYes, mbNo], 0);
+
+    if UserResponse = mrYes then
+    begin
+      dm.Connection.CommitTrans;
+      dm.admQuery.DisableControls;
+      try
+        dm.admQuery.Close;
+        dm.admQuery.SQL.Text :=
+          'select' + ' ' +
+          'm_admin.id_admin,' +
+          'm_admin.fio_admin,' +
+          'case when m_admin.smena=0 then ''Ночная'' when m_admin.smena=1' + ' ' +
+          'then ''Дневная'' when m_admin.smena=2' + ' ' +
+          'then ''Вечерняя''  else ''Утренняя'' end as smena' + ' ' +
+          'from' + ' ' +
+          'm_admin' + ' ' +
+          'where 1=1';
+        dm.admQuery.Open;
+      finally
+        dm.admQuery.EnableControls;
+      end;
+      ShowMessage('Изменения успешно сохранены.');
+    end
+    else
+    begin
+      // Отменяем транзакцию, если пользователь отказался
+      dm.Connection.RollbackTrans;
+      ShowMessage('Изменения отменены.');
+    end;
+  except
+    on E: Exception do
+    begin
+      dm.Connection.RollbackTrans;
+      ShowMessage('Ошибка при сохранении данных: ' + E.Message);
+    end;
+  end;
+
+end;
+
 
 procedure TFrm_fadmin.m_adminsekBtnClick(Sender: TObject);
 begin
@@ -313,6 +408,32 @@ begin
     Exit;
  end;
  
+end;
+
+procedure TFrm_fadmin.upd_adm_sm_inpChange(Sender: TObject);
+begin
+case upd_adm_sm_inp.ItemIndex of
+0:
+begin
+ sm_st:=0;
+ ShowMessage(IntToStr(sm_st));
+end;
+ 1:
+ begin
+    sm_st:=1;
+    ShowMessage(IntToStr(sm_st));
+ end;
+ 2:
+ begin
+    sm_st:=2;
+     ShowMessage(IntToStr(sm_st));
+ end;
+ 3:
+ begin
+   sm_st:=3;
+    ShowMessage(IntToStr(sm_st));
+ end;
+end; // case
 end;
 
 end.

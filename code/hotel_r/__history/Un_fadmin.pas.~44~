@@ -213,31 +213,43 @@ end;//case
 end;
 
 procedure TFrm_fadmin.lqsvBtnClick(Sender: TObject);
+var
+  UserResponse: Integer;
 begin
- dm.Connection.BeginTrans;
+  dm.Connection.BeginTrans;
   try
     if dm.admQuery.State in [dsEdit, dsInsert] then
-      dm.admQuery.Post; // Фиксируем изменения в текущей записи
-    dm.Connection.CommitTrans;
-    dm.admQuery.DisableControls;
-    try
-      dm.admQuery.Close;
-      dm.admQuery.SQL.Text :=
-      'select'+' '+
-     'm_admin.id_admin,'+
-    'm_admin.fio_admin,'+
-    'case when m_admin.smena=0 then ''Ночная'' when m_admin.smena=1'+' '+
-    'then ''Дневная'' when m_admin.smena=2'+' '+
-    'then ''Вечерняя''  else ''Утренняя'' end as smena'+' '+
-    'from'+' '+
-    'm_admin'+' '+
-    'where 1=1';
-      dm.admQuery.Open;
-    finally
-      dm.admQuery.EnableControls;
-    end;
+      dm.admQuery.Post;
+    UserResponse := MessageDlg('Вы уверены, что хотите сохранить изменения?', mtConfirmation, [mbYes, mbNo], 0);
 
-    ShowMessage('Изменения успешно сохранены.');
+    if UserResponse = mrYes then
+    begin
+      dm.Connection.CommitTrans;
+      dm.admQuery.DisableControls;
+      try
+        dm.admQuery.Close;
+        dm.admQuery.SQL.Text :=
+          'select' + ' ' +
+          'm_admin.id_admin,' +
+          'm_admin.fio_admin,' +
+          'case when m_admin.smena=0 then ''Ночная'' when m_admin.smena=1' + ' ' +
+          'then ''Дневная'' when m_admin.smena=2' + ' ' +
+          'then ''Вечерняя''  else ''Утренняя'' end as smena' + ' ' +
+          'from' + ' ' +
+          'm_admin' + ' ' +
+          'where 1=1';
+        dm.admQuery.Open;
+      finally
+        dm.admQuery.EnableControls;
+      end;
+      ShowMessage('Изменения успешно сохранены.');
+    end
+    else
+    begin
+      // Отменяем транзакцию, если пользователь отказался
+      dm.Connection.RollbackTrans;
+      ShowMessage('Изменения отменены.');
+    end;
   except
     on E: Exception do
     begin
@@ -245,6 +257,7 @@ begin
       ShowMessage('Ошибка при сохранении данных: ' + E.Message);
     end;
   end;
+
 end;
 
 

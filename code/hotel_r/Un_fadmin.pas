@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, Grids, DBGrids, StdCtrls, ExtCtrls,adodb,db;
+  Dialogs, ComCtrls, Grids, DBGrids, StdCtrls, ExtCtrls,adodb,db, DBCtrls;
 
 type
   TFrm_fadmin = class(TForm)
@@ -35,6 +35,15 @@ type
     liveQuercB: TCheckBox;
     lqPanel: TPanel;
     lqsvBtn: TButton;
+    upd_adm_inp_Box: TGroupBox;
+    upd_adm_btn_Box: TGroupBox;
+    upd_adm_data_box: TGroupBox;
+    upd_adm_btn: TButton;
+    upd_adm_grd: TDBGrid;
+    upd_adm_adm_lbl: TStaticText;
+    upd_adm_u_dbl: TDBLookupComboBox;
+    upd_adm_ulbl: TStaticText;
+    upd_adm_sm_inp: TComboBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -48,6 +57,9 @@ type
     procedure smena_inpKeyPress(Sender: TObject; var Key: Char);
     procedure liveQuercBClick(Sender: TObject);
     procedure lqsvBtnClick(Sender: TObject);
+    procedure upd_adm_sm_inpChange(Sender: TObject);
+    procedure upd_adm_sm_inpKeyPress(Sender: TObject; var Key: Char);
+    procedure upd_adm_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -398,6 +410,79 @@ begin
     Exit;
  end;
  
+end;
+
+procedure TFrm_fadmin.upd_adm_btnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+begin
+AreFieldsEmpty:=(
+(upd_adm_u_dbl.Text='')or
+(upd_adm_sm_inp.Text='')
+);
+if AreFieldsEmpty then
+begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+try
+      with dm.upd_adm do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@id_admin').Value :=
+           dm.admQuery.FieldByName('id_admin').AsString;
+           Parameters.ParamByName('@smena').Value:=sm_st;
+           ExecProc;
+           dm.admQuery.Close;
+           dm.admQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+end;
+
+procedure TFrm_fadmin.upd_adm_sm_inpChange(Sender: TObject);
+begin
+case upd_adm_sm_inp.ItemIndex of
+0:
+begin
+ sm_st:=0;
+end;
+ 1:
+ begin
+    sm_st:=1;
+ end;
+ 2:
+ begin
+    sm_st:=2;
+ end;
+ 3:
+ begin
+   sm_st:=3;
+ end;
+end; // case
+end;
+
+procedure TFrm_fadmin.upd_adm_sm_inpKeyPress(Sender: TObject; var Key: Char);
+begin
+  if not(Key in ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.',#8,#13]) then
+ begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+ end;
 end;
 
 end.
