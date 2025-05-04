@@ -59,7 +59,6 @@ type
     procedure tn_reset_radioClick(Sender: TObject);
     procedure sel_tn_fnd_EditKeyPress(Sender: TObject; var Key: Char);
     procedure tnliveQuercBClick(Sender: TObject);
-    procedure tnlqsvBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -147,50 +146,6 @@ end;
 end;
 
 end;//case
-end;
-
-procedure TFrm_type_nom.tnlqsvBtnClick(Sender: TObject);
-  var
-  UserResponse: Integer;
-begin
- dm.Connection.BeginTrans;
-  try
-    if dm.type_nQuery.State in [dsEdit, dsInsert] then
-      dm.type_nQuery.Post;
-    UserResponse := MessageDlg('Сохранить изменеия?',
-    mtConfirmation, [mbYes, mbNo], 0);
-
-    if UserResponse = mrYes then
-    begin
-      dm.Connection.CommitTrans;
-      dm.type_nQuery.DisableControls;
-      try
-        dm.type_nQuery.Close;
-        dm.type_nQuery.SQL.Text :=
-         'select'+' '+
-     'type_nomer.id_type_nomer,'+' '+
-     'type_nomer.type_naim,'+''+' '+
-     'type_nomer.type_opis'+' '+
-    'from type_nomer'+' '+
-    'where 1=1';
-        dm.type_nQuery.Open;
-      finally
-        dm.type_nQuery.EnableControls;
-      end;
-      ShowMessage('Изменения внесены.');
-    end
-    else
-    begin
-      dm.Connection.RollbackTrans;
-      ShowMessage('Измененмя отменеены.');
-    end;
-  except
-    on E: Exception do
-    begin
-      dm.Connection.RollbackTrans;
-      ShowMessage('Ошибка соединения с базой: ' + E.Message);
-    end;
-  end;
 end;
 
 procedure TFrm_type_nom.tnselBtnClick(Sender: TObject);
