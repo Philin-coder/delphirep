@@ -32,6 +32,9 @@ type
     ins_adm_dataGid: TDBGrid;
     sm_inp_lbl: TStaticText;
     smena_inp: TComboBox;
+    liveQuercB: TCheckBox;
+    lqPanel: TPanel;
+    lqsvBtn: TButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -43,6 +46,7 @@ type
     procedure smena_inpChange(Sender: TObject);
     procedure ins_admBtnClick(Sender: TObject);
     procedure smena_inpKeyPress(Sender: TObject; var Key: Char);
+    procedure liveQuercBClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -157,7 +161,8 @@ try
       begin
         if not Connection.Connected then
           raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@Name_A').Value :=Autor_inp.Text;
+           Parameters.ParamByName('@fio_admin').Value :=fio_inp.Text;
+           Parameters.ParamByName('@smena').Value:=sm_st;
            ExecProc;
            dm.admQuery.Close;
            dm.admQuery.Open;
@@ -173,6 +178,30 @@ try
         ShowMessage('Ошибка: ' + E.Message);
       end;
     end;
+end;
+
+procedure TFrm_fadmin.liveQuercBClick(Sender: TObject);
+begin
+case liveQuercB.Checked of
+true:
+begin
+  with dm.admQuery do
+begin
+  LockType:=ltBatchOptimistic;
+  CursorType:= ctKeyset;
+  CursorLocation := clUseClient;
+end;
+end;
+false:
+begin
+with dm.admQuery do
+begin
+  LockType:=ltOptimistic;
+  CursorType:= ctStatic;
+  CursorLocation := clUseClient;
+end;
+end;
+end;//case
 end;
 
 procedure TFrm_fadmin.m_adminsekBtnClick(Sender: TObject);

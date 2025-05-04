@@ -152,6 +152,28 @@ begin
     Beep;
     Exit;
 end;
+try
+      with dm.ins_adm do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@fio_admin').Value :=fio_inp.Text;
+           Parameters.ParamByName('@smena').Value:=sm_st;
+           ExecProc;
+           dm.admQuery.Close;
+           dm.admQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
 end;
 
 procedure TFrm_fadmin.m_adminsekBtnClick(Sender: TObject);

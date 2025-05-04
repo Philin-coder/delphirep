@@ -164,20 +164,15 @@ object Frm_fadmin: TFrm_fadmin
       ImageIndex = 1
       object ins_adm_dataBox: TGroupBox
         Left = 0
-        Top = 105
+        Top = 184
         Width = 1005
-        Height = 551
-        Align = alClient
+        Height = 472
         TabOrder = 0
-        ExplicitLeft = 632
-        ExplicitTop = 200
-        ExplicitWidth = 185
-        ExplicitHeight = 105
         object ins_adm_dataGid: TDBGrid
           Left = 2
           Top = 15
           Width = 1001
-          Height = 534
+          Height = 455
           Align = alClient
           DataSource = DM.admDS
           TabOrder = 0
@@ -213,19 +208,16 @@ object Frm_fadmin: TFrm_fadmin
         Left = 0
         Top = 0
         Width = 1005
-        Height = 105
+        Height = 146
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
-        ExplicitLeft = 352
-        ExplicitTop = 304
-        ExplicitWidth = 185
         DesignSize = (
           1005
-          105)
+          146)
         object fio_inp: TLabeledEdit
           Left = 3
-          Top = 32
+          Top = 38
           Width = 999
           Height = 21
           Anchors = [akLeft, akRight]
@@ -233,18 +225,19 @@ object Frm_fadmin: TFrm_fadmin
           EditLabel.Height = 13
           EditLabel.Caption = #1042#1074#1086#1076' '#1060#1048#1054' '#1072#1076#1084#1080#1085#1080#1089#1090#1088#1072#1090#1086#1088#1072
           TabOrder = 0
+          ExplicitTop = 32
         end
         object sm_inp_lbl: TStaticText
-          Left = 3
-          Top = 59
+          Left = 11
+          Top = 76
           Width = 35
           Height = 17
           Caption = #1057#1084#1077#1085#1072
           TabOrder = 1
         end
         object smena_inp: TComboBox
-          Left = 3
-          Top = 81
+          Left = 11
+          Top = 99
           Width = 999
           Height = 21
           Align = alCustom
@@ -257,6 +250,15 @@ object Frm_fadmin: TFrm_fadmin
             #1044#1085#1077#1074#1085#1072#1103' '
             #1042#1077#1095#1077#1088#1085#1103#1103
             #1059#1090#1088#1077#1085#1085#1103#1103)
+        end
+        object liveQuercB: TCheckBox
+          Left = 408
+          Top = 126
+          Width = 121
+          Height = 17
+          Caption = #1046#1080#1074#1099#1077' '#1079#1072#1087#1088#1086#1086#1089#1099
+          TabOrder = 3
+          OnClick = liveQuercBClick
         end
       end
       object ins_adm_btn_Box: TGroupBox
@@ -274,6 +276,26 @@ object Frm_fadmin: TFrm_fadmin
           Caption = #1042#1074#1086#1076
           TabOrder = 0
           OnClick = ins_admBtnClick
+        end
+      end
+      object lqPanel: TPanel
+        Left = 0
+        Top = 146
+        Width = 1005
+        Height = 41
+        Align = alTop
+        TabOrder = 3
+        ExplicitLeft = 72
+        ExplicitTop = 152
+        ExplicitWidth = 185
+        object lqsvBtn: TButton
+          Left = 440
+          Top = 7
+          Width = 75
+          Height = 25
+          Caption = 'C'#1086#1093#1088#1072#1085#1080#1090#1100
+          TabOrder = 0
+          OnClick = lqsvBtnClick
         end
       end
     end

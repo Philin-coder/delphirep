@@ -32,6 +32,9 @@ type
     ins_adm_dataGid: TDBGrid;
     sm_inp_lbl: TStaticText;
     smena_inp: TComboBox;
+    liveQuercB: TCheckBox;
+    lqPanel: TPanel;
+    lqsvBtn: TButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -43,6 +46,8 @@ type
     procedure smena_inpChange(Sender: TObject);
     procedure ins_admBtnClick(Sender: TObject);
     procedure smena_inpKeyPress(Sender: TObject; var Key: Char);
+    procedure liveQuercBClick(Sender: TObject);
+    procedure lqsvBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -152,8 +157,110 @@ begin
     Beep;
     Exit;
 end;
+try
+      with dm.ins_adm do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@fio_admin').Value :=fio_inp.Text;
+           Parameters.ParamByName('@smena').Value:=sm_st;
+           ExecProc;
+           dm.admQuery.Close;
+           dm.admQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+end;
+
+procedure TFrm_fadmin.liveQuercBClick(Sender: TObject);
+begin
+case liveQuercB.Checked of
+true:
+begin
+  with dm.admQuery do
+begin
+  Close;
+  LockType:=ltOptimistic;
+  CursorType:= ctKeyset;
+  CursorLocation := clUseClient;
+  open;
+end;
+  ins_adm_dataGid.ReadOnly:=false;
+end;
+false:
+begin
+with dm.admQuery do
+begin
+  Close;
+  LockType:=ltOptimistic;
+  CursorType:= ctStatic;
+  CursorLocation := clUseClient;
+  Open;
+end;
+  ins_adm_dataGid.ReadOnly:=True;
+end;
+
+end;//case
+end;
+
+procedure TFrm_fadmin.lqsvBtnClick(Sender: TObject);
+var
+  UserResponse: Integer;
+begin
+  dm.Connection.BeginTrans;
+  try
+    if dm.admQuery.State in [dsEdit, dsInsert] then
+      dm.admQuery.Post;
+    UserResponse := MessageDlg('Вы уверены, что хотите сохранить изменения?', mtConfirmation, [mbYes, mbNo], 0);
+
+    if UserResponse = mrYes then
+    begin
+      dm.Connection.CommitTrans;
+      dm.admQuery.DisableControls;
+      try
+        dm.admQuery.Close;
+        dm.admQuery.SQL.Text :=
+          'select' + ' ' +
+          'm_admin.id_admin,' +
+          'm_admin.fio_admin,' +
+          'case when m_admin.smena=0 then ''Ночная'' when m_admin.smena=1' + ' ' +
+          'then ''Дневная'' when m_admin.smena=2' + ' ' +
+          'then ''Вечерняя''  else ''Утренняя'' end as smena' + ' ' +
+          'from' + ' ' +
+          'm_admin' + ' ' +
+          'where 1=1';
+        dm.admQuery.Open;
+      finally
+        dm.admQuery.EnableControls;
+      end;
+      ShowMessage('Изменения успешно сохранены.');
+    end
+    else
+    begin
+      // Отменяем транзакцию, если пользователь отказался
+      dm.Connection.RollbackTrans;
+      ShowMessage('Изменения отменены.');
+    end;
+  except
+    on E: Exception do
+    begin
+      // Откатываем транзакцию в случае ошибки
+      dm.Connection.RollbackTrans;
+      ShowMessage('Ошибка при сохранении данных: ' + E.Message);
+    end;
+  end;
 
 end;
+
 
 procedure TFrm_fadmin.m_adminsekBtnClick(Sender: TObject);
 begin
