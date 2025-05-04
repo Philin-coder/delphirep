@@ -58,7 +58,6 @@ type
     procedure tn_RadiotypegrupperClick(Sender: TObject);
     procedure tn_RadioopisgrupperClick(Sender: TObject);
     procedure tn_reset_radioClick(Sender: TObject);
-    procedure sel_tn_fnd_EditKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
   public
@@ -96,32 +95,11 @@ begin
  LoadFormState(Self);
 end;
 
-procedure TFrm_type_nom.sel_tn_fnd_EditKeyPress(Sender: TObject; var Key: Char);
-begin
-try
-   dm.type_nQuery.SQL.Text:=
-     'select'+' '+
-     'type_nomer.id_type_nomer,'+' '+
-     'type_nomer.type_naim,'+''+' '+
-     'type_nomer.type_opis'+' '+
-    'from type_nomer'+' '+
-    'where 1=1'+' '+
-   'and  type_nomer.type_naim like'+
-   QuotedStr(Concat(sel_tn_fnd_edit.Text,#37));
-   dm.type_nQuery.close;
-   dm.type_nQuery.Open;
-except on E: Exception do
-  begin
-  ShowMessage('Ошибка'+' '+E.Message);
-  end;
-  end;
-end;
-
 procedure TFrm_type_nom.tnselBtnClick(Sender: TObject);
 begin
   try
     if not DM.Connection.Connected then
-      raise Exception.Create('Cоединение с базой не установлено');
+      raise Exception.Create('Cоеджжинение с базой не установлено');
     with DM.sel_type_by_opis do
     begin
       Close;

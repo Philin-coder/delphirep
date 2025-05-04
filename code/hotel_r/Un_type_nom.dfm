@@ -58,6 +58,7 @@ object Frm_type_nom: TFrm_type_nom
           EditLabel.Height = 13
           EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1090#1080#1087#1091' '#1085#1086#1084#1077#1088#1072
           TabOrder = 1
+          OnKeyPress = sel_tn_fnd_EditKeyPress
         end
       end
       object m_typen_grupper: TGroupBox
@@ -75,6 +76,7 @@ object Frm_type_nom: TFrm_type_nom
           Height = 17
           Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1090#1080#1087#1091' '#1085#1086#1084#1077#1088#1072
           TabOrder = 0
+          OnClick = tn_RadiotypegrupperClick
         end
         object tn_Radioopisgrupper: TRadioButton
           Left = 296
@@ -83,6 +85,7 @@ object Frm_type_nom: TFrm_type_nom
           Height = 17
           Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1086#1087#1080#1089#1072#1085#1080#1102
           TabOrder = 1
+          OnClick = tn_RadioopisgrupperClick
         end
         object tn_reset_radio: TRadioButton
           Left = 584
@@ -91,6 +94,7 @@ object Frm_type_nom: TFrm_type_nom
           Height = 17
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 2
+          OnClick = tn_reset_radioClick
         end
       end
       object seltypenmbtnBox: TGroupBox
@@ -107,6 +111,7 @@ object Frm_type_nom: TFrm_type_nom
           Height = 25
           Caption = #1042#1099#1073#1088#1072#1090#1100
           TabOrder = 0
+          OnClick = tnselBtnClick
         end
       end
       object sel_typen_data_box: TGroupBox
@@ -141,6 +146,7 @@ object Frm_type_nom: TFrm_type_nom
               Expanded = False
               FieldName = 'type_naim'
               Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077' '#1090#1080#1087#1072
+              Width = 127
               Visible = True
             end
             item

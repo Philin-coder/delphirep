@@ -56,9 +56,6 @@ type
     procedure FormCreate(Sender: TObject);
     procedure tnselBtnClick(Sender: TObject);
     procedure tn_RadiotypegrupperClick(Sender: TObject);
-    procedure tn_RadioopisgrupperClick(Sender: TObject);
-    procedure tn_reset_radioClick(Sender: TObject);
-    procedure sel_tn_fnd_EditKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
   public
@@ -96,32 +93,11 @@ begin
  LoadFormState(Self);
 end;
 
-procedure TFrm_type_nom.sel_tn_fnd_EditKeyPress(Sender: TObject; var Key: Char);
-begin
-try
-   dm.type_nQuery.SQL.Text:=
-     'select'+' '+
-     'type_nomer.id_type_nomer,'+' '+
-     'type_nomer.type_naim,'+''+' '+
-     'type_nomer.type_opis'+' '+
-    'from type_nomer'+' '+
-    'where 1=1'+' '+
-   'and  type_nomer.type_naim like'+
-   QuotedStr(Concat(sel_tn_fnd_edit.Text,#37));
-   dm.type_nQuery.close;
-   dm.type_nQuery.Open;
-except on E: Exception do
-  begin
-  ShowMessage('Ошибка'+' '+E.Message);
-  end;
-  end;
-end;
-
 procedure TFrm_type_nom.tnselBtnClick(Sender: TObject);
 begin
   try
     if not DM.Connection.Connected then
-      raise Exception.Create('Cоединение с базой не установлено');
+      raise Exception.Create('Cоеджжинение с базой не установлено');
     with DM.sel_type_by_opis do
     begin
       Close;
@@ -134,33 +110,6 @@ begin
       ShowMessage('Ошибка: ' + E.Message);
     on E: Exception do
       ShowMessage('Ошибка: ' + E.Message);
-  end;
-end;
-
-procedure TFrm_type_nom.tn_RadioopisgrupperClick(Sender: TObject);
-begin
-if  tn_Radioopisgrupper.Checked=true then
-  begin
-    try
-     with dm.type_nQuery do
-     begin
-      close;
-      sql.Clear;
-      sql.Text:=
-      'select'+' '+
-     'type_nomer.id_type_nomer,'+' '+
-     'type_nomer.type_naim,'+''+' '+
-     'type_nomer.type_opis'+' '+
-    'from type_nomer'+' '+
-    'where 1=1'+' '+
-    'order by type_opis asc';
-      Open;
-     end;
-    except on E: EADOError do
-    begin
-      ShowMessage('Ошибка'+' '+E.Message);
-    end;
-    end;
   end;
 end;
 
@@ -189,49 +138,6 @@ if  tn_Radiotypegrupper.Checked=true then
     end;
     end;
   end;
-end;
-
-procedure TFrm_type_nom.tn_reset_radioClick(Sender: TObject);
-var i,j,c:Integer;
-begin
-if  tn_reset_radio.Checked=true then
-with Frm_type_nom do
-    for I := 0 to ComponentCount - 1 do
-     begin
-       if (Components[i] is TLabeledEdit)  then
-        begin
-          (Components[i] as TLabeledEdit).Clear;
-        end;
-     end;
-       with Frm_type_nom do
-    for c := 0 to ComponentCount - 1 do
-     begin
-       if (Components[c] is TCheckBox)  then
-        begin
-          (Components[c] as TCheckBox).Checked:=False;
-        end;
-     end;
-     with dm.type_nQuery do
-     begin
-     Close;
-     sql.Clear;
-       sql.Text:=
-       'select'+' '+
-     'type_nomer.id_type_nomer,'+' '+
-     'type_nomer.type_naim,'+''+' '+
-     'type_nomer.type_opis'+' '+
-    'from type_nomer'+' '+
-    'where 1=1';
-     Open;
-     end;
-    with Frm_type_nom do
-    for j := 0 to ComponentCount - 1 do
-    begin
-      if(Components[j] is TRadioButton)  then
-      begin
-        (Components[j] as TRadioButton).Checked:=False;
-      end;
-    end;
 end;
 
 end.
