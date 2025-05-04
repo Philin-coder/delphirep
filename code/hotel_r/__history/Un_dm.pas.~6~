@@ -13,7 +13,6 @@ type
     ins_adm: TADOStoredProc;
     sel_adm_by_fio: TADOStoredProc;
     upd_adm: TADOStoredProc;
-    del_adm: TADOStoredProc;
   private
     { Private declarations }
   public

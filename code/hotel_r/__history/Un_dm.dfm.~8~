@@ -1,6 +1,6 @@
 object DM: TDM
   OldCreateOrder = False
-  Height = 431
+  Height = 373
   Width = 544
   object Connection: TADOConnection
     Connected = True
@@ -112,25 +112,5 @@ object DM: TDM
       end>
     Left = 64
     Top = 296
-  end
-  object del_adm: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'del_adm;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@id_admin'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = 0
-      end>
-    Left = 64
-    Top = 352
   end
 end
