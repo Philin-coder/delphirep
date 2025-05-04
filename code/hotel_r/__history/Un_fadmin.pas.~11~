@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, Grids, DBGrids, StdCtrls, ExtCtrls;
+  Dialogs, ComCtrls, Grids, DBGrids, StdCtrls, ExtCtrls,adodb,db;
 
 type
   TFrm_fadmin = class(TForm)
@@ -25,6 +25,8 @@ type
     Radiosmgrupper: TRadioButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure RadiofiogrupperClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -49,6 +51,49 @@ procedure TFrm_fadmin.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   SaveFormState(Self);
   CloseAllQueriesOnDataModule('dm');
+end;
+
+procedure TFrm_fadmin.FormCreate(Sender: TObject);
+begin
+Frm_fadmin.KeyPreview:=true;
+ Frm_fadmin.ShowHint:=true;
+ UniformizeButtonsSize(Self,  273, 25);
+ UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+ UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+ LoadFormState(Self);
+end;
+
+procedure TFrm_fadmin.RadiofiogrupperClick(Sender: TObject);
+begin
+if  Radiofiogrupper.Checked=true then
+  begin
+    try
+     with dm.admQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+      'select'+' '+
+  'm_admin.id_admin,'+' '+
+  'm_admin.fio_admin,'+
+  'case'+' '+
+  'when smena=0 then'+ ''ночна€''+' '+
+  'when smena=1 then ''дневна€''+
+  else 'утренн€€'
+   end as smena
+from
+m_admin
+where 1=1
+'
+
+      Open;
+     end;
+    except on E: EADOError do
+    begin
+      ShowMessage('ќшибка'+' '+E.Message);
+    end;
+    end;
+  end;
 end;
 
 end.

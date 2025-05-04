@@ -1,7 +1,7 @@
 object DM: TDM
   OldCreateOrder = False
   Height = 373
-  Width = 544
+  Width = 215
   object Connection: TADOConnection
     Connected = True
     ConnectionString = 
@@ -21,11 +21,10 @@ object DM: TDM
       '  m_admin.id_admin,'
       '  m_admin.fio_admin,'
       '  case  '
-      '  when m_admin.smena=0 then '#39#1053#1086#1095#1085#1072#1103#39'  '
-      '  when m_admin.smena=1 then '#39#1044#1085#1077#1074#1085#1072#1103#39#9
-      '  when m_admin.smena=2 then '#39#1042#1077#1095#1077#1088#1085#1103#1103#39#9
-      '  else '#39#1059#1090#1088#1077#1085#1085#1103#1103#39
-      '  end as smena'
+      '  when smena=0 then '#39#1085#1086#1095#1085#1072#1103#39'  '
+      '  when smena=1 then '#39#1076#1085#1077#1074#1085#1072#1103#39#9
+      '  else '#39#1091#1090#1088#1077#1085#1085#1103#1103#39
+      '   end as smena'
       'from '
       'm_admin '
       'where 1=1')

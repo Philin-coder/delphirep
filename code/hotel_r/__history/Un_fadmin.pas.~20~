@@ -31,7 +31,6 @@ type
     procedure RadiosmgrupperClick(Sender: TObject);
     procedure adm_reset_radioClick(Sender: TObject);
     procedure sel_adm_fnd_EditKeyPress(Sender: TObject; var Key: Char);
-    procedure m_adminsekBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -115,26 +114,6 @@ Frm_fadmin.KeyPreview:=true;
  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
  LoadFormState(Self);
-end;
-
-procedure TFrm_fadmin.m_adminsekBtnClick(Sender: TObject);
-begin
-try
-    if not DM.Connection.Connected then
-      raise Exception.Create('Cоединение с базой не установдено');
-    with DM.sel_adm_by_fio do
-    begin
-      Close;
-      Parameters.ParamByName('@fio_admin').Value := fio_cond_edit.Text;
-      Open;
-       DM.admQuery.Recordset:=dm.sel_adm_by_fio.Recordset;
-    end;
-  except
-    on E: EDatabaseError do
-      ShowMessage('Ошибка: ' + E.Message);
-    on E: Exception do
-      ShowMessage('Ошибка: ' + E.Message);
-  end;
 end;
 
 procedure TFrm_fadmin.RadiofiogrupperClick(Sender: TObject);

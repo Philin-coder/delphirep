@@ -10,7 +10,6 @@ type
     Connection: TADOConnection;
     admQuery: TADOQuery;
     admDS: TDataSource;
-    ins_adm: TADOStoredProc;
     sel_adm_by_fio: TADOStoredProc;
   private
     { Private declarations }

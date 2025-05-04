@@ -30,8 +30,6 @@ type
     procedure RadiofiogrupperClick(Sender: TObject);
     procedure RadiosmgrupperClick(Sender: TObject);
     procedure adm_reset_radioClick(Sender: TObject);
-    procedure sel_adm_fnd_EditKeyPress(Sender: TObject; var Key: Char);
-    procedure m_adminsekBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -48,30 +46,16 @@ uses Un_dm, Un_func;
 {$R *.dfm}
 
 procedure TFrm_fadmin.adm_reset_radioClick(Sender: TObject);
-var i,j,c:Integer;
+begin
     begin
 if  adm_reset_radio.Checked=true then
-with Frm_fadmin do
-    for I := 0 to ComponentCount - 1 do
-     begin
-       if (Components[i] is TLabeledEdit)  then
-        begin
-          (Components[i] as TLabeledEdit).Clear;
-        end;
-     end;
-       with Frm_fadmin do
-    for c := 0 to ComponentCount - 1 do
-     begin
-       if (Components[c] is TCheckBox)  then
-        begin
-          (Components[c] as TCheckBox).Checked:=False;
-        end;
-     end;
+  begin
+    try
      with dm.admQuery do
      begin
-     Close;
-     sql.Clear;
-       sql.Text:=
+      close;
+      sql.Clear;
+      sql.Text:=
       'select'+' '+
      'm_admin.id_admin,'+
     'm_admin.fio_admin,'+
@@ -81,20 +65,16 @@ with Frm_fadmin do
     'from'+' '+
     'm_admin'+' '+
     'where 1=1';
-     Open;
+      Open;
      end;
-    with Frm_fadmin do
-    for j := 0 to ComponentCount - 1 do
+    except on E: EADOError do
     begin
-      if(Components[j] is TRadioButton)  then
-      begin
-        (Components[j] as TRadioButton).Checked:=False;
-      end;
+      ShowMessage('Ошибка'+' '+E.Message);
     end;
     end;
+  end;
 
-
-
+end;
 
 procedure TFrm_fadmin.FormActivate(Sender: TObject);
 begin
@@ -115,26 +95,6 @@ Frm_fadmin.KeyPreview:=true;
  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
  LoadFormState(Self);
-end;
-
-procedure TFrm_fadmin.m_adminsekBtnClick(Sender: TObject);
-begin
-try
-    if not DM.Connection.Connected then
-      raise Exception.Create('Cоединение с базой не установдено');
-    with DM.sel_adm_by_fio do
-    begin
-      Close;
-      Parameters.ParamByName('@fio_admin').Value := fio_cond_edit.Text;
-      Open;
-       DM.admQuery.Recordset:=dm.sel_adm_by_fio.Recordset;
-    end;
-  except
-    on E: EDatabaseError do
-      ShowMessage('Ошибка: ' + E.Message);
-    on E: Exception do
-      ShowMessage('Ошибка: ' + E.Message);
-  end;
 end;
 
 procedure TFrm_fadmin.RadiofiogrupperClick(Sender: TObject);
@@ -196,30 +156,6 @@ if  Radiosmgrupper.Checked=true then
     end;
   end;
 
-end;
-
-procedure TFrm_fadmin.sel_adm_fnd_EditKeyPress(Sender: TObject; var Key: Char);
-begin
-try
-   dm.admQuery.SQL.Text:=
-   'select'+' '+
-   'm_admin.id_admin,'+
-    'm_admin.fio_admin,'+
-    'case when m_admin.smena=0 then ''Ночная'' when m_admin.smena=1'+' '+
-    'then ''Дневная'' when m_admin.smena=2'+' '+
-    'then ''Вечерняя''  else ''Утренняя'' end as smena'+' '+
-    'from'+' '+
-    'm_admin'+' '+
-    'where 1=1'+
-    'and  m_admin.fio_admin like'+
-   QuotedStr(Concat(sel_adm_fnd_edit.Text,#37));
-   dm.admQuery.close;
-   dm.admQuery.Open;
-except on E: Exception do
-  begin
-  ShowMessage('Ошибка'+' '+E.Message);
-  end;
-  end;
 end;
 
 end.
