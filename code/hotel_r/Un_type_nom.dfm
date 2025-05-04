@@ -265,6 +265,7 @@ object Frm_type_nom: TFrm_type_nom
           Height = 25
           Caption = #1042#1074#1086#1076
           TabOrder = 0
+          OnClick = ins_tnBtnClick
         end
       end
       object tnlqPanel: TPanel

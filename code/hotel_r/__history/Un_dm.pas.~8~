@@ -17,7 +17,6 @@ type
     type_nQuery: TADOQuery;
     TYpe_nDS: TDataSource;
     sel_type_by_opis: TADOStoredProc;
-    ins_type: TADOStoredProc;
   private
     { Private declarations }
   public

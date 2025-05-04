@@ -109,39 +109,6 @@ AreFieldsEmpty:=(
 (trim(type_naim_inp.Text)='') or
 (Trim(type_opis_inp.Text)='')
 );
-AreFieldsValid:=(
-ValidateComponentText(type_naim_inp,AllowedChars) and
-ValidateComponentText(type_opis_inp,AllowedChars)
-);
-if AreFieldsEmpty or not AreFieldsValid then
-  begin
-    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-try
-      with dm.ins_type do
-      begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@type_naim').Value :=type_naim_inp.Text;
-           Parameters.ParamByName('@type_opis').Value:=type_opis_inp.Text;
-           ExecProc;
-           dm.type_nQuery.Close;
-           dm.type_nQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-    end;
 
 end;
 

@@ -121,15 +121,14 @@ if AreFieldsEmpty or not AreFieldsValid then
     Exit;
   end;
 try
-      with dm.ins_type do
+      with dm.ins_autor do
       begin
         if not Connection.Connected then
           raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@type_naim').Value :=type_naim_inp.Text;
-           Parameters.ParamByName('@type_opis').Value:=type_opis_inp.Text;
+           Parameters.ParamByName('@Name_A').Value :=Autor_inp.Text;
            ExecProc;
-           dm.type_nQuery.Close;
-           dm.type_nQuery.Open;
+           dm.AutQuery.Close;
+           dm.AutQuery.Open;
         MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
       end;
     except

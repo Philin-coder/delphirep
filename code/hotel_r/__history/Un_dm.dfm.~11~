@@ -171,29 +171,4 @@ object DM: TDM
     Left = 136
     Top = 176
   end
-  object ins_type: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'ins_type;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@type_naim'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 1000
-      end
-      item
-        Name = '@type_opis'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 1000
-      end>
-    Left = 128
-    Top = 232
-  end
 end
