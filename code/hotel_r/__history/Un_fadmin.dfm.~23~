@@ -21,14 +21,11 @@ object Frm_fadmin: TFrm_fadmin
     Top = 0
     Width = 1013
     Height = 755
-    ActivePage = seLTab
+    ActivePage = insTab
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 889
     object seLTab: TTabSheet
       Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1091#1095#1072#1089#1090#1085#1080#1082#1077
-      ExplicitWidth = 627
-      ExplicitHeight = 271
       object sel_admincondBox: TGroupBox
         Left = 0
         Top = 0
@@ -37,16 +34,13 @@ object Frm_fadmin: TFrm_fadmin
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        ExplicitLeft = 88
-        ExplicitTop = 40
-        ExplicitWidth = 185
         DesignSize = (
           1005
           105)
         object fio_cond_edit: TLabeledEdit
-          Left = 16
+          Left = 3
           Top = 32
-          Width = 986
+          Width = 999
           Height = 21
           Anchors = [akLeft, akRight]
           EditLabel.Width = 227
@@ -55,15 +49,16 @@ object Frm_fadmin: TFrm_fadmin
           TabOrder = 0
         end
         object sel_adm_fnd_Edit: TLabeledEdit
-          Left = 16
+          Left = 3
           Top = 78
-          Width = 986
+          Width = 999
           Height = 21
           Anchors = [akLeft, akRight]
           EditLabel.Width = 110
           EditLabel.Height = 13
           EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1092#1048#1054' '
           TabOrder = 1
+          OnKeyPress = sel_adm_fnd_EditKeyPress
         end
       end
       object m_admin_grupper: TGroupBox
@@ -74,9 +69,6 @@ object Frm_fadmin: TFrm_fadmin
         Align = alTop
         Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072
         TabOrder = 1
-        ExplicitLeft = 88
-        ExplicitTop = 176
-        ExplicitWidth = 185
         object Radiofiogrupper: TRadioButton
           Left = 80
           Top = 48
@@ -84,14 +76,25 @@ object Frm_fadmin: TFrm_fadmin
           Height = 17
           Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1060#1048#1054
           TabOrder = 0
+          OnClick = RadiofiogrupperClick
         end
         object Radiosmgrupper: TRadioButton
-          Left = 640
+          Left = 264
           Top = 48
           Width = 177
           Height = 17
           Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1089#1084#1077#1085#1077
           TabOrder = 1
+          OnClick = RadiosmgrupperClick
+        end
+        object adm_reset_radio: TRadioButton
+          Left = 584
+          Top = 48
+          Width = 113
+          Height = 17
+          Caption = #1057#1073#1088#1086#1089
+          TabOrder = 2
+          OnClick = adm_reset_radioClick
         end
       end
       object seladmbtnBox: TGroupBox
@@ -101,7 +104,6 @@ object Frm_fadmin: TFrm_fadmin
         Height = 55
         Align = alBottom
         TabOrder = 2
-        ExplicitWidth = 881
         object m_adminsekBtn: TButton
           Left = 296
           Top = 16
@@ -109,6 +111,7 @@ object Frm_fadmin: TFrm_fadmin
           Height = 25
           Caption = #1042#1099#1073#1088#1072#1090#1100
           TabOrder = 0
+          OnClick = m_adminsekBtnClick
         end
       end
       object sel_adm_data_box: TGroupBox
@@ -119,9 +122,6 @@ object Frm_fadmin: TFrm_fadmin
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 3
-        ExplicitLeft = -16
-        ExplicitTop = 226
-        ExplicitWidth = 881
         object m_addminselgrd: TDBGrid
           Left = 2
           Top = 15
@@ -140,6 +140,7 @@ object Frm_fadmin: TFrm_fadmin
               Expanded = False
               FieldName = 'id_admin'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Width = 175
               Visible = True
             end
             item
@@ -152,28 +153,137 @@ object Frm_fadmin: TFrm_fadmin
               Expanded = False
               FieldName = 'smena'
               Title.Caption = #1057#1084#1077#1085#1072
+              Width = 166
               Visible = True
             end>
         end
       end
     end
-    object TabSheet2: TTabSheet
-      Caption = 'TabSheet2'
+    object insTab: TTabSheet
+      Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1072#1076#1084#1080#1085#1080#1089#1090#1088#1072#1090#1086#1088#1077
       ImageIndex = 1
-      ExplicitWidth = 627
-      ExplicitHeight = 271
+      object ins_adm_dataBox: TGroupBox
+        Left = 0
+        Top = 105
+        Width = 1005
+        Height = 551
+        Align = alClient
+        TabOrder = 0
+        ExplicitLeft = 632
+        ExplicitTop = 200
+        ExplicitWidth = 185
+        ExplicitHeight = 105
+        object ins_adm_dataGid: TDBGrid
+          Left = 2
+          Top = 15
+          Width = 1001
+          Height = 534
+          Align = alClient
+          DataSource = DM.admDS
+          TabOrder = 0
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWindowText
+          TitleFont.Height = -11
+          TitleFont.Name = 'Tahoma'
+          TitleFont.Style = []
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'id_admin'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Width = 175
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'fio_admin'
+              Title.Caption = #1060#1048#1054
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'smena'
+              Title.Caption = #1057#1084#1077#1085#1072
+              Width = 166
+              Visible = True
+            end>
+        end
+      end
+      object ins_adm_inpBox: TGroupBox
+        Left = 0
+        Top = 0
+        Width = 1005
+        Height = 105
+        Align = alTop
+        Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 1
+        ExplicitLeft = 352
+        ExplicitTop = 304
+        ExplicitWidth = 185
+        DesignSize = (
+          1005
+          105)
+        object fio_inp: TLabeledEdit
+          Left = 3
+          Top = 32
+          Width = 999
+          Height = 21
+          Anchors = [akLeft, akRight]
+          EditLabel.Width = 227
+          EditLabel.Height = 13
+          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1060#1048#1054' '#1072#1076#1084#1080#1085#1080#1089#1090#1088#1072#1090#1086#1088#1072
+          TabOrder = 0
+        end
+        object sm_inp_lbl: TStaticText
+          Left = 3
+          Top = 59
+          Width = 35
+          Height = 17
+          Caption = #1057#1084#1077#1085#1072
+          TabOrder = 1
+        end
+        object smena_inp: TComboBox
+          Left = 3
+          Top = 81
+          Width = 999
+          Height = 21
+          Align = alCustom
+          ItemHeight = 13
+          TabOrder = 2
+          OnChange = smena_inpChange
+          OnKeyPress = smena_inpKeyPress
+          Items.Strings = (
+            #1053#1086#1095#1085#1072#1103
+            #1044#1085#1077#1074#1085#1072#1103' '
+            #1042#1077#1095#1077#1088#1085#1103#1103
+            #1059#1090#1088#1077#1085#1085#1103#1103)
+        end
+      end
+      object ins_adm_btn_Box: TGroupBox
+        Left = 0
+        Top = 656
+        Width = 1005
+        Height = 71
+        Align = alBottom
+        TabOrder = 2
+        object ins_admBtn: TButton
+          Left = 496
+          Top = 24
+          Width = 75
+          Height = 25
+          Caption = #1042#1074#1086#1076
+          TabOrder = 0
+          OnClick = ins_admBtnClick
+        end
+      end
     end
     object TabSheet3: TTabSheet
       Caption = 'TabSheet3'
       ImageIndex = 2
-      ExplicitWidth = 627
-      ExplicitHeight = 271
     end
     object TabSheet4: TTabSheet
       Caption = 'TabSheet4'
       ImageIndex = 3
-      ExplicitWidth = 627
-      ExplicitHeight = 271
     end
   end
 end

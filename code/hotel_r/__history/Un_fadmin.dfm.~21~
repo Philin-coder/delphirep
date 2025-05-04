@@ -229,9 +229,9 @@ object Frm_fadmin: TFrm_fadmin
           Width = 999
           Height = 21
           Anchors = [akLeft, akRight]
-          EditLabel.Width = 138
+          EditLabel.Width = 227
           EditLabel.Height = 13
-          EditLabel.Caption = #1042#1074#1086#1076' '#1060#1048#1054' '#1072#1076#1084#1080#1085#1080#1089#1090#1088#1072#1090#1086#1088#1072
+          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1060#1048#1054' '#1072#1076#1084#1080#1085#1080#1089#1090#1088#1072#1090#1086#1088#1072
           TabOrder = 0
         end
         object sm_inp_lbl: TStaticText
@@ -251,7 +251,6 @@ object Frm_fadmin: TFrm_fadmin
           ItemHeight = 13
           TabOrder = 2
           OnChange = smena_inpChange
-          OnKeyPress = smena_inpKeyPress
           Items.Strings = (
             #1053#1086#1095#1085#1072#1103
             #1044#1085#1077#1074#1085#1072#1103' '
@@ -273,7 +272,6 @@ object Frm_fadmin: TFrm_fadmin
           Height = 25
           Caption = #1042#1074#1086#1076
           TabOrder = 0
-          OnClick = ins_admBtnClick
         end
       end
     end
