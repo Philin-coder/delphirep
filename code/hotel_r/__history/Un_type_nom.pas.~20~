@@ -51,9 +51,6 @@ type
     del_adm_d_gr: TDBGrid;
     del_dbl_adm_lbl: TStaticText;
     del_dbl_adm_dbl: TDBLookupComboBox;
-    procedure FormActivate(Sender: TObject);
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -69,26 +66,5 @@ implementation
 uses Un_dm, Un_func;
 
 {$R *.dfm}
-
-procedure TFrm_type_nom.FormActivate(Sender: TObject);
-begin
-  dm.type_nQuery.Open;
-end;
-
-procedure TFrm_type_nom.FormClose(Sender: TObject; var Action: TCloseAction);
-begin
-  SaveFormState(Self);
-  CloseAllQueriesOnDataModule('dm');
-end;
-
-procedure TFrm_type_nom.FormCreate(Sender: TObject);
-begin
-  Frm_type_nom.KeyPreview:=true;
- Frm_type_nom.ShowHint:=true;
- UniformizeButtonsSize(Self,  273, 25);
- UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
- UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
- LoadFormState(Self);
-end;
 
 end.

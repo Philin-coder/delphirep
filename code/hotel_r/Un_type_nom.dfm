@@ -11,6 +11,9 @@ object Frm_type_nom: TFrm_type_nom
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnActivate = FormActivate
+  OnClose = FormClose
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object FadminPC: TPageControl
@@ -98,7 +101,7 @@ object Frm_type_nom: TFrm_type_nom
         Align = alBottom
         TabOrder = 2
         object tnselBtn: TButton
-          Left = 296
+          Left = 344
           Top = 16
           Width = 75
           Height = 25
@@ -120,13 +123,33 @@ object Frm_type_nom: TFrm_type_nom
           Width = 1001
           Height = 445
           Align = alClient
-          DataSource = DM.admDS
+          DataSource = DM.TYpe_nDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
           TitleFont.Height = -11
           TitleFont.Name = 'Tahoma'
           TitleFont.Style = []
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'id_type_nomer'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'type_naim'
+              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077' '#1090#1080#1087#1072
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'type_opis'
+              Title.Caption = #1054#1087#1080#1089#1072#1085#1080#1077' '#1090#1080#1087#1072
+              Width = 194
+              Visible = True
+            end>
         end
       end
     end

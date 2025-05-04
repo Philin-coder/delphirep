@@ -133,42 +133,4 @@ object DM: TDM
     Left = 64
     Top = 352
   end
-  object type_nQuery: TADOQuery
-    Connection = Connection
-    CursorType = ctStatic
-    Parameters = <>
-    SQL.Strings = (
-      'select '
-      'type_nomer.id_type_nomer,'
-      'type_nomer.type_naim,'
-      'type_nomer.type_opis '
-      'from type_nomer '
-      'where 1=1')
-    Left = 120
-    Top = 72
-  end
-  object TYpe_nDS: TDataSource
-    DataSet = type_nQuery
-    Left = 120
-    Top = 128
-  end
-  object sel_type_by_opis: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'sel_type_by_opis;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@type_opis'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 1000
-      end>
-    Left = 136
-    Top = 176
-  end
 end

@@ -14,9 +14,6 @@ type
     sel_adm_by_fio: TADOStoredProc;
     upd_adm: TADOStoredProc;
     del_adm: TADOStoredProc;
-    type_nQuery: TADOQuery;
-    TYpe_nDS: TDataSource;
-    sel_type_by_opis: TADOStoredProc;
   private
     { Private declarations }
   public
