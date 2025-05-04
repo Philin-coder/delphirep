@@ -21,11 +21,11 @@ object Frm_fadmin: TFrm_fadmin
     Top = 0
     Width = 1013
     Height = 755
-    ActivePage = seLTab
+    ActivePage = delTab
     Align = alClient
     TabOrder = 0
     object seLTab: TTabSheet
-      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1072#1076#1084#1080#1085#1080#1089#1090#1088#1072#1090#1086#1088#1077
+      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1091#1095#1072#1089#1090#1085#1080#1082#1077
       object sel_admincondBox: TGroupBox
         Left = 0
         Top = 0
@@ -169,6 +169,8 @@ object Frm_fadmin: TFrm_fadmin
         Height = 469
         Align = alClient
         TabOrder = 0
+        ExplicitTop = 184
+        ExplicitHeight = 472
         object ins_adm_dataGid: TDBGrid
           Left = 2
           Top = 15
@@ -226,6 +228,7 @@ object Frm_fadmin: TFrm_fadmin
           EditLabel.Height = 13
           EditLabel.Caption = #1042#1074#1086#1076' '#1060#1048#1054' '#1072#1076#1084#1080#1085#1080#1089#1090#1088#1072#1090#1086#1088#1072
           TabOrder = 0
+          ExplicitTop = 32
         end
         object sm_inp_lbl: TStaticText
           Left = 11
@@ -286,6 +289,9 @@ object Frm_fadmin: TFrm_fadmin
         Height = 41
         Align = alTop
         TabOrder = 3
+        ExplicitLeft = 72
+        ExplicitTop = 152
+        ExplicitWidth = 185
         object lqsvBtn: TButton
           Left = 440
           Top = 7
@@ -383,6 +389,10 @@ object Frm_fadmin: TFrm_fadmin
         Align = alClient
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
+        ExplicitLeft = 624
+        ExplicitTop = 304
+        ExplicitWidth = 185
+        ExplicitHeight = 105
         object upd_adm_grd: TDBGrid
           Left = 2
           Top = 15
@@ -451,6 +461,7 @@ object Frm_fadmin: TFrm_fadmin
           ListField = 'fio_admin'
           ListSource = DM.admDS
           TabOrder = 1
+          ExplicitTop = 47
         end
       end
       object del_adm_dataBox: TGroupBox
@@ -461,6 +472,10 @@ object Frm_fadmin: TFrm_fadmin
         Align = alClient
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
+        ExplicitLeft = 696
+        ExplicitTop = 216
+        ExplicitWidth = 185
+        ExplicitHeight = 105
         object del_adm_d_gr: TDBGrid
           Left = 2
           Top = 15

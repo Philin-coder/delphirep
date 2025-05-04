@@ -16,7 +16,6 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure admin_itemClick(Sender: TObject);
-    procedure type_n_itemClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -69,18 +68,6 @@ begin
  end;
  LoadFormState(Self);
  LoadImageFromResource('BACKGROUND_IMAGE',main_Image);
-end;
-
-procedure TFrm_main.type_n_itemClick(Sender: TObject);
-begin
-     try
-UpdateFormProperties('Frm_type_nom', 'Форма работы с типом номера',
-clBtnFace, 1024, 768);
- Frm_type_nom.ShowModal;
-except
-Frm_type_nom.Free;
-raise;
-end;
 end;
 
 end.

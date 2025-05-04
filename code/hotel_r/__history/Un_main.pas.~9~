@@ -11,12 +11,10 @@ type
     main_image: TImage;
     ItemMenu: TMainMenu;
     admin_item: TMenuItem;
-    type_n_item: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure admin_itemClick(Sender: TObject);
-    procedure type_n_itemClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -28,7 +26,7 @@ var
 
 implementation
 
-uses Un_func, Un_dm, Un_fadmin, Un_type_nom;
+uses Un_func, Un_dm, Un_fadmin;
 const
   FileName = 'connection_string.txt';
 
@@ -45,7 +43,7 @@ clBtnFace, 1024, 768);
 except
 Frm_fadmin.Free;
 raise;
-end;
+end
 end;
 
 procedure TFrm_main.FormActivate(Sender: TObject);
@@ -69,18 +67,6 @@ begin
  end;
  LoadFormState(Self);
  LoadImageFromResource('BACKGROUND_IMAGE',main_Image);
-end;
-
-procedure TFrm_main.type_n_itemClick(Sender: TObject);
-begin
-     try
-UpdateFormProperties('Frm_type_nom', 'Форма работы с типом номера',
-clBtnFace, 1024, 768);
- Frm_type_nom.ShowModal;
-except
-Frm_type_nom.Free;
-raise;
-end;
 end;
 
 end.

@@ -1,0 +1,165 @@
+unit Un_type_nom;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ComCtrls, Grids, DBGrids, StdCtrls, ExtCtrls,adodb,db, DBCtrls;
+
+type
+  TFrm_type_nom = class(TForm)
+    FadminPC: TPageControl;
+    seLTab: TTabSheet;
+    insTab: TTabSheet;
+    updTab: TTabSheet;
+    delTab: TTabSheet;
+    sel_admincondBox: TGroupBox;
+    m_admin_grupper: TGroupBox;
+    seladmbtnBox: TGroupBox;
+    sel_adm_data_box: TGroupBox;
+    m_adminsekBtn: TButton;
+    m_addminselgrd: TDBGrid;
+    fio_cond_edit: TLabeledEdit;
+    sel_adm_fnd_Edit: TLabeledEdit;
+    Radiofiogrupper: TRadioButton;
+    Radiosmgrupper: TRadioButton;
+    adm_reset_radio: TRadioButton;
+    ins_adm_dataBox: TGroupBox;
+    ins_adm_inpBox: TGroupBox;
+    ins_adm_btn_Box: TGroupBox;
+    ins_admBtn: TButton;
+    fio_inp: TLabeledEdit;
+    ins_adm_dataGid: TDBGrid;
+    sm_inp_lbl: TStaticText;
+    smena_inp: TComboBox;
+    liveQuercB: TCheckBox;
+    lqPanel: TPanel;
+    lqsvBtn: TButton;
+    upd_adm_inp_Box: TGroupBox;
+    upd_adm_btn_Box: TGroupBox;
+    upd_adm_data_box: TGroupBox;
+    upd_adm_btn: TButton;
+    upd_adm_grd: TDBGrid;
+    upd_adm_adm_lbl: TStaticText;
+    upd_adm_u_dbl: TDBLookupComboBox;
+    upd_adm_ulbl: TStaticText;
+    upd_adm_sm_inp: TComboBox;
+    del_adm_inpBox: TGroupBox;
+    del_adm_dataBox: TGroupBox;
+    del_adm_btn_Box: TGroupBox;
+    del_adm_d_btn: TButton;
+    del_adm_d_gr: TDBGrid;
+    del_dbl_adm_lbl: TStaticText;
+    del_dbl_adm_dbl: TDBLookupComboBox;
+    procedure FormActivate(Sender: TObject);
+    procedure adm_reset_radioClick(Sender: TObject);
+    procedure del_adm_d_btnClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_type_nom: TFrm_type_nom;
+  var sm_st:Integer;
+
+implementation
+
+uses Un_dm, Un_func;
+
+{$R *.dfm}
+
+procedure TFrm_type_nom.adm_reset_radioClick(Sender: TObject);
+var i,j,c:Integer;
+    begin
+if  adm_reset_radio.Checked=true then
+with Frm_fadmin do
+    for I := 0 to ComponentCount - 1 do
+     begin
+       if (Components[i] is TLabeledEdit)  then
+        begin
+          (Components[i] as TLabeledEdit).Clear;
+        end;
+     end;
+       with Frm_fadmin do
+    for c := 0 to ComponentCount - 1 do
+     begin
+       if (Components[c] is TCheckBox)  then
+        begin
+          (Components[c] as TCheckBox).Checked:=False;
+        end;
+     end;
+     with dm.admQuery do
+     begin
+     Close;
+     sql.Clear;
+       sql.Text:=
+      'select'+' '+
+     'm_admin.id_admin,'+
+    'm_admin.fio_admin,'+
+    'case when m_admin.smena=0 then ''Ночная'' when m_admin.smena=1'+' '+
+    'then ''Дневная'' when m_admin.smena=2'+' '+
+    'then ''Вечерняя''  else ''Утренняя'' end as smena'+' '+
+    'from'+' '+
+    'm_admin'+' '+
+    'where 1=1';
+     Open;
+     end;
+    with Frm_fadmin do
+    for j := 0 to ComponentCount - 1 do
+    begin
+      if(Components[j] is TRadioButton)  then
+      begin
+        (Components[j] as TRadioButton).Checked:=False;
+      end;
+    end;
+    end;
+
+
+
+
+procedure TFrm_type_nom.del_adm_d_btnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+begin
+AreFieldsEmpty:=(
+(del_dbl_adm_dbl.Text='')
+);
+  if AreFieldsEmpty then
+  begin
+      MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.del_adm do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@id_admin').Value :=
+           dm.admQuery.FieldByName('id_admin').AsString;
+           ExecProc;
+           dm.admQuery.Close;
+           dm.admQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+end;
+
+procedure TFrm_type_nom.FormActivate(Sender: TObject);
+begin
+  dm.admQuery.Open;
+end;
+
+end.

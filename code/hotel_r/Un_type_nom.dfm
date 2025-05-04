@@ -1,7 +1,7 @@
-object Frm_fadmin: TFrm_fadmin
+object Frm_type_nom: TFrm_type_nom
   Left = 0
   Top = 0
-  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1076#1072#1085#1085#1099#1084#1080' '#1072#1076#1084#1080#1085#1080#1089#1090#1088#1072#1090#1086#1088#1072
+  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1090#1080#1087#1086#1084' '#1085#1086#1084#1077#1088#1072
   ClientHeight = 755
   ClientWidth = 1013
   Color = clBtnFace
@@ -11,9 +11,6 @@ object Frm_fadmin: TFrm_fadmin
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
-  OnActivate = FormActivate
-  OnClose = FormClose
-  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object FadminPC: TPageControl
@@ -25,8 +22,8 @@ object Frm_fadmin: TFrm_fadmin
     Align = alClient
     TabOrder = 0
     object seLTab: TTabSheet
-      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1072#1076#1084#1080#1085#1080#1089#1090#1088#1072#1090#1086#1088#1077
-      object sel_admincondBox: TGroupBox
+      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1090#1080#1087#1077' '#1085#1086#1084#1077#1088#1072
+      object sel_typencondBox: TGroupBox
         Left = 0
         Top = 0
         Width = 1005
@@ -37,31 +34,30 @@ object Frm_fadmin: TFrm_fadmin
         DesignSize = (
           1005
           105)
-        object fio_cond_edit: TLabeledEdit
+        object opis_tn_cond_edit: TLabeledEdit
           Left = 3
           Top = 32
           Width = 999
           Height = 21
           Anchors = [akLeft, akRight]
-          EditLabel.Width = 227
+          EditLabel.Width = 167
           EditLabel.Height = 13
-          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1060#1048#1054' '#1072#1076#1084#1080#1085#1080#1089#1090#1088#1072#1090#1086#1088#1072
+          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1086#1087#1080#1089#1072#1085#1080#1102
           TabOrder = 0
         end
-        object sel_adm_fnd_Edit: TLabeledEdit
+        object sel_tn_fnd_Edit: TLabeledEdit
           Left = 3
           Top = 78
           Width = 999
           Height = 21
           Anchors = [akLeft, akRight]
-          EditLabel.Width = 110
+          EditLabel.Width = 147
           EditLabel.Height = 13
-          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1092#1048#1054' '
+          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1090#1080#1087#1091' '#1085#1086#1084#1077#1088#1072
           TabOrder = 1
-          OnKeyPress = sel_adm_fnd_EditKeyPress
         end
       end
-      object m_admin_grupper: TGroupBox
+      object m_typen_grupper: TGroupBox
         Left = 0
         Top = 105
         Width = 1005
@@ -69,52 +65,48 @@ object Frm_fadmin: TFrm_fadmin
         Align = alTop
         Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072
         TabOrder = 1
-        object Radiofiogrupper: TRadioButton
-          Left = 80
+        object tn_Radiotypegrupper: TRadioButton
+          Left = 40
           Top = 48
-          Width = 153
+          Width = 185
           Height = 17
-          Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1060#1048#1054
+          Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1090#1080#1087#1091' '#1085#1086#1084#1077#1088#1072
           TabOrder = 0
-          OnClick = RadiofiogrupperClick
         end
-        object Radiosmgrupper: TRadioButton
-          Left = 264
+        object tn_Radioopisgrupper: TRadioButton
+          Left = 296
           Top = 48
           Width = 177
           Height = 17
-          Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1089#1084#1077#1085#1077
+          Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1086#1087#1080#1089#1072#1085#1080#1102
           TabOrder = 1
-          OnClick = RadiosmgrupperClick
         end
-        object adm_reset_radio: TRadioButton
+        object tn_reset_radio: TRadioButton
           Left = 584
           Top = 48
           Width = 113
           Height = 17
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 2
-          OnClick = adm_reset_radioClick
         end
       end
-      object seladmbtnBox: TGroupBox
+      object seltypenmbtnBox: TGroupBox
         Left = 0
         Top = 672
         Width = 1005
         Height = 55
         Align = alBottom
         TabOrder = 2
-        object m_adminsekBtn: TButton
+        object tnselBtn: TButton
           Left = 296
           Top = 16
           Width = 75
           Height = 25
           Caption = #1042#1099#1073#1088#1072#1090#1100
           TabOrder = 0
-          OnClick = m_adminsekBtnClick
         end
       end
-      object sel_adm_data_box: TGroupBox
+      object sel_typen_data_box: TGroupBox
         Left = 0
         Top = 210
         Width = 1005
@@ -122,7 +114,7 @@ object Frm_fadmin: TFrm_fadmin
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 3
-        object m_addminselgrd: TDBGrid
+        object seltnselgrd: TDBGrid
           Left = 2
           Top = 15
           Width = 1001
@@ -135,27 +127,6 @@ object Frm_fadmin: TFrm_fadmin
           TitleFont.Height = -11
           TitleFont.Name = 'Tahoma'
           TitleFont.Style = []
-          Columns = <
-            item
-              Expanded = False
-              FieldName = 'id_admin'
-              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-              Width = 175
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'fio_admin'
-              Title.Caption = #1060#1048#1054
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'smena'
-              Title.Caption = #1057#1084#1077#1085#1072
-              Width = 166
-              Visible = True
-            end>
         end
       end
     end
@@ -169,6 +140,8 @@ object Frm_fadmin: TFrm_fadmin
         Height = 469
         Align = alClient
         TabOrder = 0
+        ExplicitTop = 184
+        ExplicitHeight = 472
         object ins_adm_dataGid: TDBGrid
           Left = 2
           Top = 15
@@ -226,6 +199,7 @@ object Frm_fadmin: TFrm_fadmin
           EditLabel.Height = 13
           EditLabel.Caption = #1042#1074#1086#1076' '#1060#1048#1054' '#1072#1076#1084#1080#1085#1080#1089#1090#1088#1072#1090#1086#1088#1072
           TabOrder = 0
+          ExplicitTop = 32
         end
         object sm_inp_lbl: TStaticText
           Left = 11
@@ -244,8 +218,6 @@ object Frm_fadmin: TFrm_fadmin
           Anchors = [akLeft, akRight]
           ItemHeight = 13
           TabOrder = 2
-          OnChange = smena_inpChange
-          OnKeyPress = smena_inpKeyPress
           Items.Strings = (
             #1053#1086#1095#1085#1072#1103
             #1044#1085#1077#1074#1085#1072#1103' '
@@ -259,7 +231,6 @@ object Frm_fadmin: TFrm_fadmin
           Height = 17
           Caption = #1046#1080#1074#1099#1077' '#1079#1072#1087#1088#1086#1086#1089#1099
           TabOrder = 3
-          OnClick = liveQuercBClick
         end
       end
       object ins_adm_btn_Box: TGroupBox
@@ -276,7 +247,6 @@ object Frm_fadmin: TFrm_fadmin
           Height = 25
           Caption = #1042#1074#1086#1076
           TabOrder = 0
-          OnClick = ins_admBtnClick
         end
       end
       object lqPanel: TPanel
@@ -286,6 +256,9 @@ object Frm_fadmin: TFrm_fadmin
         Height = 41
         Align = alTop
         TabOrder = 3
+        ExplicitLeft = 72
+        ExplicitTop = 152
+        ExplicitWidth = 185
         object lqsvBtn: TButton
           Left = 440
           Top = 7
@@ -293,7 +266,6 @@ object Frm_fadmin: TFrm_fadmin
           Height = 25
           Caption = 'C'#1086#1093#1088#1072#1085#1080#1090#1100
           TabOrder = 0
-          OnClick = lqsvBtnClick
         end
       end
     end
@@ -349,8 +321,6 @@ object Frm_fadmin: TFrm_fadmin
           Anchors = [akLeft, akRight]
           ItemHeight = 13
           TabOrder = 3
-          OnChange = upd_adm_sm_inpChange
-          OnKeyPress = upd_adm_sm_inpKeyPress
           Items.Strings = (
             #1053#1086#1095#1085#1072#1103
             #1044#1085#1077#1074#1085#1072#1103' '
@@ -372,7 +342,6 @@ object Frm_fadmin: TFrm_fadmin
           Height = 25
           Caption = #1054#1073#1085#1086#1074#1080#1090#1100
           TabOrder = 0
-          OnClick = upd_adm_btnClick
         end
       end
       object upd_adm_data_box: TGroupBox
@@ -383,6 +352,10 @@ object Frm_fadmin: TFrm_fadmin
         Align = alClient
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
+        ExplicitLeft = 624
+        ExplicitTop = 304
+        ExplicitWidth = 185
+        ExplicitHeight = 105
         object upd_adm_grd: TDBGrid
           Left = 2
           Top = 15
@@ -451,6 +424,7 @@ object Frm_fadmin: TFrm_fadmin
           ListField = 'fio_admin'
           ListSource = DM.admDS
           TabOrder = 1
+          ExplicitTop = 47
         end
       end
       object del_adm_dataBox: TGroupBox
@@ -461,6 +435,10 @@ object Frm_fadmin: TFrm_fadmin
         Align = alClient
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
+        ExplicitLeft = 696
+        ExplicitTop = 216
+        ExplicitWidth = 185
+        ExplicitHeight = 105
         object del_adm_d_gr: TDBGrid
           Left = 2
           Top = 15
@@ -511,7 +489,6 @@ object Frm_fadmin: TFrm_fadmin
           Height = 25
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
-          OnClick = del_adm_d_btnClick
         end
       end
     end
