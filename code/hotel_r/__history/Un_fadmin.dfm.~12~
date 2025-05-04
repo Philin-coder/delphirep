@@ -44,9 +44,9 @@ object Frm_fadmin: TFrm_fadmin
           1005
           105)
         object fio_cond_edit: TLabeledEdit
-          Left = 3
+          Left = 16
           Top = 32
-          Width = 999
+          Width = 986
           Height = 21
           Anchors = [akLeft, akRight]
           EditLabel.Width = 227
@@ -55,9 +55,9 @@ object Frm_fadmin: TFrm_fadmin
           TabOrder = 0
         end
         object sel_adm_fnd_Edit: TLabeledEdit
-          Left = 3
+          Left = 16
           Top = 78
-          Width = 999
+          Width = 986
           Height = 21
           Anchors = [akLeft, akRight]
           EditLabel.Width = 110
