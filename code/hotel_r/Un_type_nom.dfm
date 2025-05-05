@@ -21,7 +21,7 @@ object Frm_type_nom: TFrm_type_nom
     Top = 0
     Width = 1013
     Height = 755
-    ActivePage = insTab
+    ActivePage = delTab
     Align = alClient
     TabOrder = 0
     object seLTab: TTabSheet
@@ -425,7 +425,7 @@ object Frm_type_nom: TFrm_type_nom
     object delTab: TTabSheet
       Caption = #1059#1076#1072#1083#1077#1085#1080#1077'  '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1090#1080#1087#1077' '#1085#1086#1084#1077#1088#1072
       ImageIndex = 3
-      object del_adm_inpBox: TGroupBox
+      object del_tn_inpBox: TGroupBox
         Left = 0
         Top = 0
         Width = 1005
@@ -433,7 +433,7 @@ object Frm_type_nom: TFrm_type_nom
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object del_dbl_adm_lbl: TStaticText
+        object del_dbl_tn_lbl: TStaticText
           Left = 3
           Top = 24
           Width = 135
@@ -442,20 +442,20 @@ object Frm_type_nom: TFrm_type_nom
           Caption = #1042#1099#1073#1088#1072#1090#1100' '#1072#1076#1084#1080#1085#1080#1089#1090#1088#1072#1090#1086#1088#1072
           TabOrder = 0
         end
-        object del_dbl_adm_dbl: TDBLookupComboBox
+        object del_dbl_tn_dbl: TDBLookupComboBox
           Left = 3
           Top = 37
           Width = 982
           Height = 21
           Align = alCustom
           Anchors = [akLeft, akRight]
-          KeyField = 'id_admin'
-          ListField = 'fio_admin'
-          ListSource = DM.admDS
+          KeyField = 'id_type_nomer'
+          ListField = 'type_naim'
+          ListSource = DM.TYpe_nDS
           TabOrder = 1
         end
       end
-      object del_adm_dataBox: TGroupBox
+      object del_tn_dataBox: TGroupBox
         Left = 0
         Top = 81
         Width = 1005
@@ -463,7 +463,7 @@ object Frm_type_nom: TFrm_type_nom
         Align = alClient
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
-        object DBGrid1: TDBGrid
+        object DelTnGid: TDBGrid
           Left = 2
           Top = 15
           Width = 1001
@@ -507,20 +507,21 @@ object Frm_type_nom: TFrm_type_nom
             end>
         end
       end
-      object del_adm_btn_Box: TGroupBox
+      object del_tn_btn_Box: TGroupBox
         Left = 0
         Top = 656
         Width = 1005
         Height = 71
         Align = alBottom
         TabOrder = 2
-        object del_adm_d_btn: TButton
+        object del_tn_d_btn: TButton
           Left = 488
           Top = 24
           Width = 75
           Height = 25
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
+          OnClick = del_tn_d_btnClick
         end
       end
     end
