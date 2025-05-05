@@ -95,7 +95,6 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@id_admin'
@@ -123,7 +122,6 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@id_admin'
@@ -136,7 +134,6 @@ object DM: TDM
     Top = 352
   end
   object type_nQuery: TADOQuery
-    Active = True
     Connection = Connection
     CursorType = ctStatic
     Parameters = <>
@@ -144,8 +141,7 @@ object DM: TDM
       'select '
       'type_nomer.id_type_nomer,'
       'type_nomer.type_naim,'
-      'type_nomer.type_opis,'
-      'type_nomer.type_image '
+      'type_nomer.type_opis '
       'from type_nomer '
       'where 1=1')
     Left = 120
@@ -196,12 +192,6 @@ object DM: TDM
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
-      end
-      item
-        Name = '@type_image'
-        Attributes = [paNullable]
-        DataType = ftBlob
-        Size = 2147483647
       end>
     Left = 128
     Top = 232

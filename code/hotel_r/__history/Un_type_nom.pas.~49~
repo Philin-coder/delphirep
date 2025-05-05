@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, Grids, DBGrids, StdCtrls, ExtCtrls,adodb,db, DBCtrls,jpeg;
+  Dialogs, ComCtrls, Grids, DBGrids, StdCtrls, ExtCtrls,adodb,db, DBCtrls;
 
 type
   TFrm_type_nom = class(TForm)
@@ -125,6 +125,7 @@ AreFieldsEmpty := (
     Beep;
     Exit;
   end;
+
   try
     with dm.ins_type do
     begin
@@ -172,15 +173,54 @@ AreFieldsEmpty := (
 end;
 
 procedure TFrm_type_nom.ins_tnGrdCellClick(Column: TColumn);
+var
+  BlobStream: TStream;
+  ImageForm: TForm;
+  ImageViewer: TImage;
+  Query: TADOQuery;
 begin
-ShowImageFromDatabase(
-    dm.Connection,
-    'type_nomer',
-    'type_image',
-    'id_type_nomer',
-    ins_tnGrd.DataSource.DataSet.FieldByName('id_type_nomer').AsInteger
+ if Column.FieldName <> 'id_type_nomer' then Exit;
+  Query := TADOQuery.Create(nil);
+  try
+    Query.Connection := dm.Connection;
+    Query.SQL.Text :=
+    'SELECT type_image FROM type_nomer WHERE id_type_nomer = :id';
+    Query.Parameters.ParamByName('id').Value :=
+    ins_tnGrd.DataSource.DataSet.FieldByName('id_type_nomer').AsInteger;
+    Query.Open;
+    if not Query.FieldByName('type_image').IsNull then
+    begin
+      ImageForm := TForm.Create(nil);
+      try
+        ImageForm.Caption := 'Просмотр изображения';
+        ImageForm.Width := 600;
+        ImageForm.Height := 400;
 
-  );
+        // Добавляем компонент TImage для отображения изображения
+        ImageViewer := TImage.Create(ImageForm);
+        ImageViewer.Parent := ImageForm;
+        ImageViewer.Align := alClient;
+        BlobStream := Query.CreateBlobStream(Query.FieldByName('type_image'), bmRead);
+        try
+          ImageViewer.Picture.Bitmap.LoadFromStream(BlobStream);
+        finally
+          BlobStream.Free;
+        end;
+
+        // Показываем форму
+        ImageForm.ShowModal;
+      finally
+        ImageForm.Free;
+      end;
+    end
+    else
+    begin
+      ShowMessage('Изображение не найдено.');
+    end;
+  finally
+    Query.Free;
+  end;
+
 end;
 
 procedure TFrm_type_nom.sel_tn_fnd_EditKeyPress(Sender: TObject; var Key: Char);

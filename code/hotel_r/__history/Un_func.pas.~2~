@@ -155,8 +155,6 @@ function md5 (buf: AnsiString): AnsiString;
 function ConvertToUTF8(const AInput: string): string;
 procedure ConfigureAndExecuteDialog(Dialog: TCommonDialog; const
 DialogName: string; const ContentToSave: string);
-procedure ShowImageFromDatabase(AConnection: TADOConnection;
-const ATableName, AFieldName, AKeyField: string; AKeyValue: Integer);
 implementation
 type
   tdata = array [0..15] of DWORD;
@@ -2758,58 +2756,6 @@ begin
   // Показываем информацию о диске
   ShowMessage('Информация о диске: ' + DiskInfo);
 end;
-procedure ShowImageFromDatabase(AConnection: TADOConnection; const ATableName,
-AFieldName, AKeyField: string; AKeyValue: Integer);
-var
-  BlobStream: TStream;
-  ImageForm: TForm;
-  ImageViewer: TImage;
-  Query: TADOQuery;
-begin
-  Query := TADOQuery.Create(nil);
-  try
-    Query.Connection := AConnection;
-    Query.SQL.Text := Format('SELECT %s FROM %s WHERE %s = :id', [AFieldName,
-    ATableName, AKeyField]);
-    Query.Parameters.ParamByName('id').Value := AKeyValue;
-    Query.Open;
-    if not Query.FieldByName(AFieldName).IsNull then
-    begin
-      ImageForm := TForm.Create(nil);
-      try
-        ImageForm.Caption := 'Просмотр изображения';
-        ImageForm.Width := 1024;
-        ImageForm.Height := 768;
-        ImageViewer := TImage.Create(ImageForm);
-        ImageViewer.Parent := ImageForm;
-        ImageViewer.Align := alClient;
-        BlobStream := Query.CreateBlobStream(Query.FieldByName(AFieldName), bmRead);
-        try
-          if ImageViewer.Picture.Graphic <> nil then
-            ImageViewer.Picture.Graphic.Free;
-          ImageViewer.Picture.Graphic := TJPEGImage.Create;
-          TJPEGImage(ImageViewer.Picture.Graphic).LoadFromStream(BlobStream);
-        except
-          on E: Exception do
-          begin
-            ShowMessage('Ошибка при загрузке изображения: ' + E.Message);
-            Exit;
-          end;
-        end;
-        ImageForm.ShowModal;
-      finally
-        ImageForm.Free;
-      end;
-    end
-    else
-    begin
-      ShowMessage('Изображение не найдено.');
-    end;
-  finally
-    Query.Free;
-  end;
-end;
-
 initialization
   VisitedStaticTexts := TStringList.Create;
 finalization

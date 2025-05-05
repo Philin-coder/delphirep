@@ -48,8 +48,10 @@ type
     del_adm_d_gr: TDBGrid;
     del_dbl_adm_lbl: TStaticText;
     del_dbl_adm_dbl: TDBLookupComboBox;
-    ins_tnGrd: TDBGrid;
     type_opis_inp: TLabeledEdit;
+    fod: TOpenDialog;
+    ins_tn_data_Box: TGroupBox;
+    ins_tnGrd: TDBGrid;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -61,6 +63,7 @@ type
     procedure tnliveQuercBClick(Sender: TObject);
     procedure tnlqsvBtnClick(Sender: TObject);
     procedure ins_tnBtnClick(Sender: TObject);
+    procedure ins_tnGrdCellClick(Column: TColumn);
   private
     { Private declarations }
   public
@@ -104,43 +107,135 @@ AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
 var
   AreFieldsEmpty: Boolean;
   AreFieldsValid: Boolean;
+  FileStream: TFileStream;
 begin
-AreFieldsEmpty:=(
-(trim(type_naim_inp.Text)='') or
-(Trim(type_opis_inp.Text)='')
-);
-AreFieldsValid:=(
-ValidateComponentText(type_naim_inp,AllowedChars) and
-ValidateComponentText(type_opis_inp,AllowedChars)
-);
-if AreFieldsEmpty or not AreFieldsValid then
+AreFieldsEmpty := (
+    (Trim(type_naim_inp.Text) = '') or
+    (Trim(type_opis_inp.Text) = '')
+  );
+  AreFieldsValid := (
+    ValidateComponentText(type_naim_inp, AllowedChars) and
+    ValidateComponentText(type_opis_inp, AllowedChars)
+  );
+
+  if AreFieldsEmpty or not AreFieldsValid then
   begin
     MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
+      mtError, [mbOK], 0);
     Beep;
     Exit;
   end;
-try
-      with dm.ins_autor do
+
+  try
+    with dm.ins_type do
+    begin
+      if not Connection.Connected then
+        raise Exception.Create('Соединение с базой не установлено');
+      Parameters.ParamByName('@type_naim').Value := type_naim_inp.Text;
+      Parameters.ParamByName('@type_opis').Value := type_opis_inp.Text;
+      if fod.Execute then
       begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@Name_A').Value :=Autor_inp.Text;
-           ExecProc;
-           dm.AutQuery.Close;
-           dm.AutQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
+        try
+          FileStream := TFileStream.Create(fod.FileName, fmOpenRead);
+          try
+            Parameters.ParamByName('@type_image').LoadFromStream(FileStream, ftBlob);
+          finally
+            FileStream.Free;
+          end;
+        except
+          on E: Exception do
+          begin
+            ShowMessage('Ошибка при чтении файла: ' + E.Message);
+            Exit;
+          end;
+        end;
+      end
+      else
       begin
-        ShowMessage('Ошибка: ' + E.Message);
+        Parameters.ParamByName('@type_image').Value := Unassigned; // Или Null
       end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
+      ExecProc;
+      dm.type_nQuery.Close;
+      dm.type_nQuery.Open;
+      MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
     end;
+  except
+    on E: EADOError do
+    begin
+      ShowMessage('Ошибка ADO: ' + E.Message);
+    end;
+    on E: Exception do
+    begin
+      ShowMessage('Общая ошибка: ' + E.Message);
+    end;
+  end;
+
+end;
+
+procedure TFrm_type_nom.ins_tnGrdCellClick(Column: TColumn);
+var
+  BlobStream: TStream;
+  ImageForm: TForm;
+  ImageViewer: TImage;
+  Query: TADOQuery;
+begin
+   if Column.FieldName <> 'id_type_nomer' then Exit;
+
+  // Создаем запрос для получения изображения
+  Query := TADOQuery.Create(nil);
+  try
+    Query.Connection := dm.Connection;
+    Query.SQL.Text := 'SELECT type_image FROM type_nomer WHERE id_type_nomer = :id';
+    
+    // Используем RecNo для получения текущего ID
+    Query.Parameters.ParamByName('id').Value := ins_tnGrd.DataSource.DataSet.FieldByName('id_type_nomer').AsInteger;
+    Query.Open;
+
+    // Проверяем, что поле type_image не пустое
+    if not Query.FieldByName('type_image').IsNull then
+    begin
+      // Создаем динамическую форму
+      ImageForm := TForm.Create(nil);
+      try
+        ImageForm.Caption := 'Просмотр изображения';
+        ImageForm.Width := 600;
+        ImageForm.Height := 400;
+
+        // Добавляем компонент TImage для отображения изображения
+        ImageViewer := TImage.Create(ImageForm);
+        ImageViewer.Parent := ImageForm;
+        ImageViewer.Align := alClient;
+
+        // Загружаем изображение
+        BlobStream := Query.CreateBlobStream(Query.FieldByName('type_image'), bmRead);
+        try
+          if ImageViewer.Picture.Graphic <> nil then
+            ImageViewer.Picture.Graphic.Free;
+          ImageViewer.Picture.Graphic := TJPEGImage.Create;
+          TJPEGImage(ImageViewer.Picture.Graphic).LoadFromStream(BlobStream);
+        except
+          on E: Exception do
+          begin
+            ShowMessage('Ошибка при загрузке изображения: ' + E.Message);
+            Exit;
+          end;
+        finally
+          BlobStream.Free;
+        end;
+
+        // Показываем форму
+        ImageForm.ShowModal;
+      finally
+        ImageForm.Free;
+      end;
+    end
+    else
+    begin
+      ShowMessage('Изображение не найдено.');
+    end;
+  finally
+    Query.Free;
+  end;
 
 end;
 
@@ -148,10 +243,11 @@ procedure TFrm_type_nom.sel_tn_fnd_EditKeyPress(Sender: TObject; var Key: Char);
 begin
 try
    dm.type_nQuery.SQL.Text:=
-     'select'+' '+
+      'select'+' '+
      'type_nomer.id_type_nomer,'+' '+
      'type_nomer.type_naim,'+''+' '+
-     'type_nomer.type_opis'+' '+
+     'type_nomer.type_opis,'+' '+
+     'type_nomer.type_image'+' '+
     'from type_nomer'+' '+
     'where 1=1'+' '+
    'and  type_nomer.type_naim like'+
@@ -214,10 +310,11 @@ begin
       try
         dm.type_nQuery.Close;
         dm.type_nQuery.SQL.Text :=
-         'select'+' '+
+      'select'+' '+
      'type_nomer.id_type_nomer,'+' '+
      'type_nomer.type_naim,'+''+' '+
-     'type_nomer.type_opis'+' '+
+     'type_nomer.type_opis,'+' '+
+     'type_nomer.type_image'+''+
     'from type_nomer'+' '+
     'where 1=1';
         dm.type_nQuery.Open;
@@ -273,7 +370,8 @@ if  tn_Radioopisgrupper.Checked=true then
       'select'+' '+
      'type_nomer.id_type_nomer,'+' '+
      'type_nomer.type_naim,'+''+' '+
-     'type_nomer.type_opis'+' '+
+     'type_nomer.type_opis,'+' '+
+     'type_nomer.type_image'+' '+
     'from type_nomer'+' '+
     'where 1=1'+' '+
     'order by type_opis asc';
@@ -300,7 +398,8 @@ if  tn_Radiotypegrupper.Checked=true then
       'select'+' '+
      'type_nomer.id_type_nomer,'+' '+
      'type_nomer.type_naim,'+''+' '+
-     'type_nomer.type_opis'+' '+
+     'type_nomer.type_opis,'+' '+
+     'type_nomer.type_image'+' '+
     'from type_nomer'+' '+
     'where 1=1'+' '+
     'order by type_naim asc';
@@ -342,7 +441,8 @@ with Frm_type_nom do
        'select'+' '+
      'type_nomer.id_type_nomer,'+' '+
      'type_nomer.type_naim,'+''+' '+
-     'type_nomer.type_opis'+' '+
+     'type_nomer.type_opis,'+' '+
+    'type_nomer.type_image'+' '+
     'from type_nomer'+' '+
     'where 1=1';
      Open;

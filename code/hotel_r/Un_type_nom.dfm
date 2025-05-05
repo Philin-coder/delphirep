@@ -145,15 +145,19 @@ object Frm_type_nom: TFrm_type_nom
             item
               Expanded = False
               FieldName = 'type_naim'
-              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077' '#1090#1080#1087#1072
-              Width = 127
+              Title.Caption = #1058#1080#1087' '#1085#1086#1084#1077#1088#1072
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'type_opis'
-              Title.Caption = #1054#1087#1080#1089#1072#1085#1080#1077' '#1090#1080#1087#1072
-              Width = 194
+              Title.Caption = #1054#1087#1080#1089#1072#1085#1080#1077' '
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'type_image'
+              Title.Caption = #1060#1086#1090#1086
               Visible = True
             end>
         end
@@ -169,42 +173,58 @@ object Frm_type_nom: TFrm_type_nom
         Height = 469
         Align = alClient
         TabOrder = 0
-        ExplicitTop = 184
-        ExplicitHeight = 472
-        object ins_tnGrd: TDBGrid
+        object ins_tn_data_Box: TGroupBox
           Left = 2
           Top = 15
           Width = 1001
           Height = 452
           Align = alClient
-          DataSource = DM.TYpe_nDS
+          Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
           TabOrder = 0
-          TitleFont.Charset = DEFAULT_CHARSET
-          TitleFont.Color = clWindowText
-          TitleFont.Height = -11
-          TitleFont.Name = 'Tahoma'
-          TitleFont.Style = []
-          Columns = <
-            item
-              Expanded = False
-              FieldName = 'id_type_nomer'
-              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'type_naim'
-              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077' '#1090#1080#1087#1072
-              Width = 127
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'type_opis'
-              Title.Caption = #1054#1087#1080#1089#1072#1085#1080#1077' '#1090#1080#1087#1072
-              Width = 194
-              Visible = True
-            end>
+          ExplicitLeft = 0
+          ExplicitTop = 210
+          ExplicitWidth = 1005
+          ExplicitHeight = 462
+          object ins_tnGrd: TDBGrid
+            Left = 2
+            Top = 15
+            Width = 997
+            Height = 435
+            Align = alClient
+            DataSource = DM.TYpe_nDS
+            TabOrder = 0
+            TitleFont.Charset = DEFAULT_CHARSET
+            TitleFont.Color = clWindowText
+            TitleFont.Height = -11
+            TitleFont.Name = 'Tahoma'
+            TitleFont.Style = []
+            OnCellClick = ins_tnGrdCellClick
+            Columns = <
+              item
+                Expanded = False
+                FieldName = 'id_type_nomer'
+                Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+                Visible = True
+              end
+              item
+                Expanded = False
+                FieldName = 'type_naim'
+                Title.Caption = #1058#1080#1087' '#1085#1086#1084#1077#1088#1072
+                Visible = True
+              end
+              item
+                Expanded = False
+                FieldName = 'type_opis'
+                Title.Caption = #1054#1087#1080#1089#1072#1085#1080#1077' '
+                Visible = True
+              end
+              item
+                Expanded = False
+                FieldName = 'type_image'
+                Title.Caption = #1060#1086#1090#1086
+                Visible = True
+              end>
+          end
         end
       end
       object ins_tn_inpBox: TGroupBox
@@ -228,7 +248,6 @@ object Frm_type_nom: TFrm_type_nom
           EditLabel.Height = 13
           EditLabel.Caption = #1042#1074#1086#1076' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1103' '#1090#1080#1087#1072' '#1085#1086#1084#1077#1088#1072
           TabOrder = 0
-          ExplicitTop = 32
         end
         object tnliveQuercB: TCheckBox
           Left = 408
@@ -275,9 +294,6 @@ object Frm_type_nom: TFrm_type_nom
         Height = 41
         Align = alTop
         TabOrder = 3
-        ExplicitLeft = 72
-        ExplicitTop = 152
-        ExplicitWidth = 185
         object tnlqsvBtn: TButton
           Left = 440
           Top = 7
@@ -372,10 +388,6 @@ object Frm_type_nom: TFrm_type_nom
         Align = alClient
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        ExplicitLeft = 624
-        ExplicitTop = 304
-        ExplicitWidth = 185
-        ExplicitHeight = 105
         object upd_adm_grd: TDBGrid
           Left = 2
           Top = 15
@@ -444,7 +456,6 @@ object Frm_type_nom: TFrm_type_nom
           ListField = 'fio_admin'
           ListSource = DM.admDS
           TabOrder = 1
-          ExplicitTop = 47
         end
       end
       object del_adm_dataBox: TGroupBox
@@ -455,10 +466,6 @@ object Frm_type_nom: TFrm_type_nom
         Align = alClient
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
-        ExplicitLeft = 696
-        ExplicitTop = 216
-        ExplicitWidth = 185
-        ExplicitHeight = 105
         object del_adm_d_gr: TDBGrid
           Left = 2
           Top = 15
@@ -512,5 +519,9 @@ object Frm_type_nom: TFrm_type_nom
         end
       end
     end
+  end
+  object fod: TOpenDialog
+    Left = 640
+    Top = 704
   end
 end
