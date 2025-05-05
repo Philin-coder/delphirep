@@ -1,0 +1,205 @@
+unit Un_usl;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ComCtrls, Grids, DBGrids, StdCtrls, ExtCtrls,adodb,db, DBCtrls,jpeg;
+
+type
+  TFrm_usl = class(TForm)
+    FadminPC: TPageControl;
+    seLTab: TTabSheet;
+    insTab: TTabSheet;
+    updTab: TTabSheet;
+    delTab: TTabSheet;
+    sel_typencondBox: TGroupBox;
+    m_typen_grupper: TGroupBox;
+    seltypenmbtnBox: TGroupBox;
+    sel_typen_data_box: TGroupBox;
+    tnselBtn: TButton;
+    seltnselgrd: TDBGrid;
+    opis_tn_cond_edit: TLabeledEdit;
+    sel_tn_fnd_Edit: TLabeledEdit;
+    tn_Radiotypegrupper: TRadioButton;
+    tn_Radioopisgrupper: TRadioButton;
+    tn_reset_radio: TRadioButton;
+    ins_tn_dataBox: TGroupBox;
+    ins_tn_inpBox: TGroupBox;
+    ins_tn_btn_Box: TGroupBox;
+    ins_tnBtn: TButton;
+    type_naim_inp: TLabeledEdit;
+    tnliveQuercB: TCheckBox;
+    tnlqPanel: TPanel;
+    tnlqsvBtn: TButton;
+    upd_tn_inp_Box: TGroupBox;
+    upd_tn_btn_Box: TGroupBox;
+    upd_tn_data_box: TGroupBox;
+    upd_tn_btn: TButton;
+    upd_tn_lbl: TStaticText;
+    upd_tn_u_dbl: TDBLookupComboBox;
+    del_tn_inpBox: TGroupBox;
+    del_tn_dataBox: TGroupBox;
+    del_tn_btn_Box: TGroupBox;
+    del_tn_d_btn: TButton;
+    del_dbl_tn_lbl: TStaticText;
+    del_dbl_tn_dbl: TDBLookupComboBox;
+    type_opis_inp: TLabeledEdit;
+    ins_tn_data_Box: TGroupBox;
+    ins_tnGrd: TDBGrid;
+    Upd_tn_grd: TDBGrid;
+    upd_tn_naim_inp: TLabeledEdit;
+    DelTnGid: TDBGrid;
+    fod: TOpenDialog;
+    procedure FormActivate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure ins_tnBtnClick(Sender: TObject);
+    procedure del_tn_d_btnClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_usl: TFrm_usl;
+
+
+implementation
+
+uses Un_dm, Un_func;
+
+{$R *.dfm}
+
+procedure TFrm_usl.del_tn_d_btnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+begin
+AreFieldsEmpty:=(
+(del_dbl_tn_dbl.Text='')
+);
+if AreFieldsEmpty then
+ begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+
+try
+      with dm.del_type do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@id_type_nomer').Value
+           :=dm.type_nQuery.FieldByName('id_type_nomer').AsString;
+           ExecProc;
+           dm.type_nQuery.Close;
+           dm.type_nQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+end;
+
+procedure TFrm_usl.FormActivate(Sender: TObject);
+begin
+  dm.type_nQuery.Open;
+end;
+
+procedure TFrm_usl.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  SaveFormState(Self);
+  CloseAllQueriesOnDataModule('dm');
+end;
+
+procedure TFrm_usl.FormCreate(Sender: TObject);
+begin
+  Frm_type_nom.KeyPreview:=true;
+ Frm_type_nom.ShowHint:=true;
+ UniformizeButtonsSize(Self,  273, 25);
+ UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+ UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+ LoadFormState(Self);
+end;
+
+procedure TFrm_usl.ins_tnBtnClick(Sender: TObject);
+const
+AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+  FileStream: TFileStream;
+begin
+AreFieldsEmpty := (
+    (Trim(type_naim_inp.Text) = '') or
+    (Trim(type_opis_inp.Text) = '')
+  );
+  AreFieldsValid := (
+    ValidateComponentText(type_naim_inp, AllowedChars) and
+    ValidateComponentText(type_opis_inp, AllowedChars)
+  );
+
+  if AreFieldsEmpty or not AreFieldsValid then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+      mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+    with dm.ins_type do
+    begin
+      if not Connection.Connected then
+        raise Exception.Create('Соединение с базой не установлено');
+      Parameters.ParamByName('@type_naim').Value := type_naim_inp.Text;
+      Parameters.ParamByName('@type_opis').Value := type_opis_inp.Text;
+      if fod.Execute then
+      begin
+        try
+          FileStream := TFileStream.Create(fod.FileName, fmOpenRead);
+          try
+            Parameters.ParamByName('@type_image').LoadFromStream(FileStream, ftBlob);
+          finally
+            FileStream.Free;
+          end;
+        except
+          on E: Exception do
+          begin
+            ShowMessage('Ошибка при чтении файла: ' + E.Message);
+            Exit;
+          end;
+        end;
+      end
+      else
+      begin
+        Parameters.ParamByName('@type_image').Value := Unassigned; // Или Null
+      end;
+      ExecProc;
+      dm.type_nQuery.Close;
+      dm.type_nQuery.Open;
+      MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+    end;
+  except
+    on E: EADOError do
+    begin
+      ShowMessage('Ошибка ADO: ' + E.Message);
+    end;
+    on E: Exception do
+    begin
+      ShowMessage('Общая ошибка: ' + E.Message);
+    end;
+  end;
+
+end;
+
+end.

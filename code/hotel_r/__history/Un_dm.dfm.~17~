@@ -164,14 +164,12 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@type_opis'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
-        Value = Null
       end>
     Left = 136
     Top = 176
@@ -185,28 +183,24 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@type_naim'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
-        Value = Null
       end
       item
         Name = '@type_opis'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
-        Value = Null
       end
       item
         Name = '@type_image'
         Attributes = [paNullable]
         DataType = ftBlob
         Size = 2147483647
-        Value = Null
       end>
     Left = 144
     Top = 232
@@ -220,7 +214,6 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@id_type_nomer'
@@ -248,7 +241,6 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@id_type_nomer'
@@ -259,44 +251,5 @@ object DM: TDM
       end>
     Left = 168
     Top = 344
-  end
-  object UslQuery: TADOQuery
-    Connection = Connection
-    Parameters = <>
-    SQL.Strings = (
-      'select '
-      'usluga.usl_id,'
-      'usluga.usl_cost,'
-      'usluga.usl_naim,'
-      'usluga.usl_ed_ism '
-      'from usluga'
-      'where 1=1')
-    Left = 256
-    Top = 64
-  end
-  object uslDS: TDataSource
-    DataSet = UslQuery
-    Left = 264
-    Top = 120
-  end
-  object ADOStoredProc1: TADOStoredProc
-    Parameters = <>
-    Left = 280
-    Top = 184
-  end
-  object ADOStoredProc2: TADOStoredProc
-    Parameters = <>
-    Left = 288
-    Top = 232
-  end
-  object ADOStoredProc3: TADOStoredProc
-    Parameters = <>
-    Left = 288
-    Top = 288
-  end
-  object ADOStoredProc4: TADOStoredProc
-    Parameters = <>
-    Left = 288
-    Top = 352
   end
 end

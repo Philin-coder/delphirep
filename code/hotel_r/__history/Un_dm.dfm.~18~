@@ -260,24 +260,14 @@ object DM: TDM
     Left = 168
     Top = 344
   end
-  object UslQuery: TADOQuery
-    Connection = Connection
+  object ADOQuery1: TADOQuery
     Parameters = <>
-    SQL.Strings = (
-      'select '
-      'usluga.usl_id,'
-      'usluga.usl_cost,'
-      'usluga.usl_naim,'
-      'usluga.usl_ed_ism '
-      'from usluga'
-      'where 1=1')
     Left = 256
     Top = 64
   end
-  object uslDS: TDataSource
-    DataSet = UslQuery
-    Left = 264
-    Top = 120
+  object DataSource1: TDataSource
+    Left = 272
+    Top = 128
   end
   object ADOStoredProc1: TADOStoredProc
     Parameters = <>

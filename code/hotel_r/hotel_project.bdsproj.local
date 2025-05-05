@@ -12,5 +12,7 @@
     <Transaction>2025.05.03 19:04:53.774.dfm,F:\code\Result\delphi\code\hotel_r\Unit1.dfm=F:\code\Result\delphi\code\hotel_r\Un_fadmin.dfm</Transaction>
     <Transaction>2025.05.04 19:37:49.931.pas,F:\code\Result\delphi\code\hotel_r\Un_fadmin.pas=F:\code\Result\delphi\code\hotel_r\Un_type_nom.pas</Transaction>
     <Transaction>2025.05.04 19:37:49.931.dfm,F:\code\Result\delphi\code\hotel_r\Un_fadmin.dfm=F:\code\Result\delphi\code\hotel_r\Un_type_nom.dfm</Transaction>
+    <Transaction>2025.05.05 22:01:21.572.pas,F:\code\Result\delphi\code\hotel_r\Un_type_nom.pas=F:\code\Result\delphi\code\hotel_r\Un_usl.pas</Transaction>
+    <Transaction>2025.05.05 22:01:21.575.dfm,F:\code\Result\delphi\code\hotel_r\Un_type_nom.dfm=F:\code\Result\delphi\code\hotel_r\Un_usl.dfm</Transaction>
   </Transactions>
 </BorlandProject>
