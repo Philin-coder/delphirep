@@ -32,26 +32,25 @@ type
     tnliveQuercB: TCheckBox;
     tnlqPanel: TPanel;
     tnlqsvBtn: TButton;
-    upd_adm_inp_Box: TGroupBox;
-    upd_adm_btn_Box: TGroupBox;
-    upd_adm_data_box: TGroupBox;
-    upd_adm_btn: TButton;
-    upd_adm_grd: TDBGrid;
-    upd_adm_adm_lbl: TStaticText;
-    upd_adm_u_dbl: TDBLookupComboBox;
-    upd_adm_ulbl: TStaticText;
-    upd_adm_sm_inp: TComboBox;
+    upd_tn_inp_Box: TGroupBox;
+    upd_tn_btn_Box: TGroupBox;
+    upd_tn_data_box: TGroupBox;
+    upd_tn_btn: TButton;
+    upd_tn_lbl: TStaticText;
+    upd_tn_u_dbl: TDBLookupComboBox;
     del_adm_inpBox: TGroupBox;
     del_adm_dataBox: TGroupBox;
     del_adm_btn_Box: TGroupBox;
     del_adm_d_btn: TButton;
-    del_adm_d_gr: TDBGrid;
     del_dbl_adm_lbl: TStaticText;
     del_dbl_adm_dbl: TDBLookupComboBox;
     type_opis_inp: TLabeledEdit;
-    fod: TOpenDialog;
     ins_tn_data_Box: TGroupBox;
     ins_tnGrd: TDBGrid;
+    Upd_tn_grd: TDBGrid;
+    upd_tn_naim_inp: TLabeledEdit;
+    DBGrid1: TDBGrid;
+    fod: TOpenDialog;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -64,6 +63,7 @@ type
     procedure tnlqsvBtnClick(Sender: TObject);
     procedure ins_tnBtnClick(Sender: TObject);
     procedure ins_tnGrdDblClick(Sender: TObject);
+    procedure upd_tn_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -400,5 +400,54 @@ with Frm_type_nom do
       end;
     end;
 end;
+
+procedure TFrm_type_nom.upd_tn_btnClick(Sender: TObject);
+const
+  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (Trim(upd_tn_naim_inp.Text)='')or
+   (upd_tn_u_dbl.Text='')
+  );
+  AreFieldsValid:=(
+  ValidateComponentText(upd_tn_naim_inp,AllowedChars)
+  );
+  if AreFieldsEmpty or not AreFieldsValid then
+  begin
+      MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+try
+      with dm.upd_type_n do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@id_type_nomer').Value :=
+           dm.type_nQuery.FieldByName('id_type_nomer').AsString;
+           Parameters.ParamByName('@type_naim').Value:=
+           upd_tn_naim_inp.Text;
+           ExecProc;
+           dm.type_nQuery.Close;
+           dm.type_nQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+end;
+
+
 
 end.

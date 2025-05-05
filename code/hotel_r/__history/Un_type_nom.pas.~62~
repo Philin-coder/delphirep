@@ -32,15 +32,12 @@ type
     tnliveQuercB: TCheckBox;
     tnlqPanel: TPanel;
     tnlqsvBtn: TButton;
-    upd_adm_inp_Box: TGroupBox;
-    upd_adm_btn_Box: TGroupBox;
-    upd_adm_data_box: TGroupBox;
-    upd_adm_btn: TButton;
-    upd_adm_grd: TDBGrid;
-    upd_adm_adm_lbl: TStaticText;
-    upd_adm_u_dbl: TDBLookupComboBox;
-    upd_adm_ulbl: TStaticText;
-    upd_adm_sm_inp: TComboBox;
+    upd_tn_inp_Box: TGroupBox;
+    upd_tn_btn_Box: TGroupBox;
+    upd_tn_data_box: TGroupBox;
+    upd_tn_btn: TButton;
+    upd_tn_lbl: TStaticText;
+    upd_tn_u_dbl: TDBLookupComboBox;
     del_adm_inpBox: TGroupBox;
     del_adm_dataBox: TGroupBox;
     del_adm_btn_Box: TGroupBox;
@@ -52,6 +49,8 @@ type
     fod: TOpenDialog;
     ins_tn_data_Box: TGroupBox;
     ins_tnGrd: TDBGrid;
+    Upd_tn_grd: TDBGrid;
+    upd_tn_naim_inp: TLabeledEdit;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -63,7 +62,8 @@ type
     procedure tnliveQuercBClick(Sender: TObject);
     procedure tnlqsvBtnClick(Sender: TObject);
     procedure ins_tnBtnClick(Sender: TObject);
-    procedure ins_tnGrdCellClick(Column: TColumn);
+    procedure ins_tnGrdDblClick(Sender: TObject);
+    procedure upd_tn_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -125,7 +125,6 @@ AreFieldsEmpty := (
     Beep;
     Exit;
   end;
-
   try
     with dm.ins_type do
     begin
@@ -172,69 +171,16 @@ AreFieldsEmpty := (
 
 end;
 
-procedure TFrm_type_nom.ins_tnGrdCellClick(Column: TColumn);
-var
-  BlobStream: TStream;
-  ImageForm: TForm;
-  ImageViewer: TImage;
-  Query: TADOQuery;
+procedure TFrm_type_nom.ins_tnGrdDblClick(Sender: TObject);
 begin
-if Column.FieldName <> 'id_type_nomer' then Exit;
+ShowImageFromDatabase(
+    dm.Connection,
+    'type_nomer',
+    'type_image',
+    'id_type_nomer',
+    ins_tnGrd.DataSource.DataSet.FieldByName('id_type_nomer').AsInteger
 
-  // Создаем запрос для получения изображения
-  Query := TADOQuery.Create(nil);
-  try
-    Query.Connection := dm.Connection;
-    Query.SQL.Text := 'SELECT type_image FROM type_nomer WHERE id_type_nomer = :id';
-
-    // Используем текущее значение поля id_type_nomer
-    Query.Parameters.ParamByName('id').Value := ins_tnGrd.DataSource.DataSet.FieldByName('id_type_nomer').AsInteger;
-    Query.Open;
-
-    // Проверяем, что поле type_image не пустое
-    if not Query.FieldByName('type_image').IsNull then
-    begin
-      // Создаем динамическую форму
-      ImageForm := TForm.Create(nil);
-      try
-        ImageForm.Caption := 'Просмотр изображения';
-        ImageForm.Width := 600;
-        ImageForm.Height := 400;
-
-        // Добавляем компонент TImage для отображения изображения
-        ImageViewer := TImage.Create(ImageForm);
-        ImageViewer.Parent := ImageForm;
-        ImageViewer.Align := alClient;
-
-        // Загружаем изображение
-        BlobStream := Query.CreateBlobStream(Query.FieldByName('type_image'), bmRead);
-        try
-          if ImageViewer.Picture.Graphic <> nil then
-            ImageViewer.Picture.Graphic.Free;
-          ImageViewer.Picture.Graphic := TJPEGImage.Create;
-          TJPEGImage(ImageViewer.Picture.Graphic).LoadFromStream(BlobStream);
-        except
-          on E: Exception do
-          begin
-            ShowMessage('Ошибка при загрузке изображения: ' + E.Message);
-            Exit;
-          end;
-        end; // Конец блока try...except
-
-        // Показываем форму
-        ImageForm.ShowModal;
-      finally
-        ImageForm.Free; // Освобождаем форму
-      end; // Конец блока try...finally
-    end
-    else
-    begin
-      ShowMessage('Изображение не найдено.');
-    end;
-  finally
-    Query.Free; // Освобождаем запрос
-  end; // Конец блока try...finally
-
+  );
 end;
 
 procedure TFrm_type_nom.sel_tn_fnd_EditKeyPress(Sender: TObject; var Key: Char);
@@ -312,7 +258,7 @@ begin
      'type_nomer.id_type_nomer,'+' '+
      'type_nomer.type_naim,'+''+' '+
      'type_nomer.type_opis,'+' '+
-     'type_nomer.type_image'+''+
+     'type_nomer.type_image'+' '+
     'from type_nomer'+' '+
     'where 1=1';
         dm.type_nQuery.Open;
@@ -453,6 +399,16 @@ with Frm_type_nom do
         (Components[j] as TRadioButton).Checked:=False;
       end;
     end;
+end;
+
+procedure TFrm_type_nom.upd_tn_btnClick(Sender: TObject);
+const
+AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+begin
+
 end;
 
 end.

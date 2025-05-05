@@ -18,7 +18,6 @@ type
     TYpe_nDS: TDataSource;
     sel_type_by_opis: TADOStoredProc;
     ins_type: TADOStoredProc;
-    upd_type_n: TADOStoredProc;
   private
     { Private declarations }
   public

@@ -32,15 +32,12 @@ type
     tnliveQuercB: TCheckBox;
     tnlqPanel: TPanel;
     tnlqsvBtn: TButton;
-    upd_adm_inp_Box: TGroupBox;
-    upd_adm_btn_Box: TGroupBox;
-    upd_adm_data_box: TGroupBox;
-    upd_adm_btn: TButton;
-    upd_adm_grd: TDBGrid;
-    upd_adm_adm_lbl: TStaticText;
-    upd_adm_u_dbl: TDBLookupComboBox;
-    upd_adm_ulbl: TStaticText;
-    upd_adm_sm_inp: TComboBox;
+    upd_tn_inp_Box: TGroupBox;
+    upd_tn_btn_Box: TGroupBox;
+    upd_tn_data_box: TGroupBox;
+    upd_tn_btn: TButton;
+    upd_tn_lbl: TStaticText;
+    upd_tn_u_dbl: TDBLookupComboBox;
     del_adm_inpBox: TGroupBox;
     del_adm_dataBox: TGroupBox;
     del_adm_btn_Box: TGroupBox;
@@ -52,6 +49,8 @@ type
     fod: TOpenDialog;
     ins_tn_data_Box: TGroupBox;
     ins_tnGrd: TDBGrid;
+    Upd_tn_grd: TDBGrid;
+    upd_tn_naim_inp: TLabeledEdit;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -63,7 +62,8 @@ type
     procedure tnliveQuercBClick(Sender: TObject);
     procedure tnlqsvBtnClick(Sender: TObject);
     procedure ins_tnBtnClick(Sender: TObject);
-    procedure ins_tnGrdCellClick(Column: TColumn);
+    procedure ins_tnGrdDblClick(Sender: TObject);
+    procedure upd_tn_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -125,7 +125,6 @@ AreFieldsEmpty := (
     Beep;
     Exit;
   end;
-
   try
     with dm.ins_type do
     begin
@@ -172,14 +171,16 @@ AreFieldsEmpty := (
 
 end;
 
-procedure TFrm_type_nom.ins_tnGrdCellClick(Column: TColumn);
-var
-  BlobStream: TStream;
-  ImageForm: TForm;
-  ImageViewer: TImage;
-  Query: TADOQuery;
+procedure TFrm_type_nom.ins_tnGrdDblClick(Sender: TObject);
 begin
+ShowImageFromDatabase(
+    dm.Connection,
+    'type_nomer',
+    'type_image',
+    'id_type_nomer',
+    ins_tnGrd.DataSource.DataSet.FieldByName('id_type_nomer').AsInteger
 
+  );
 end;
 
 procedure TFrm_type_nom.sel_tn_fnd_EditKeyPress(Sender: TObject; var Key: Char);
@@ -257,7 +258,7 @@ begin
      'type_nomer.id_type_nomer,'+' '+
      'type_nomer.type_naim,'+''+' '+
      'type_nomer.type_opis,'+' '+
-     'type_nomer.type_image'+''+
+     'type_nomer.type_image'+' '+
     'from type_nomer'+' '+
     'where 1=1';
         dm.type_nQuery.Open;
@@ -399,5 +400,54 @@ with Frm_type_nom do
       end;
     end;
 end;
+
+procedure TFrm_type_nom.upd_tn_btnClick(Sender: TObject);
+const
+  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (Trim(upd_tn_naim_inp.Text)='')or
+   (upd_tn_u_dbl.Text='')
+  );
+  AreFieldsValid:=(
+  ValidateComponentText(upd_tn_naim_inp,AllowedChars)
+  );
+  if AreFieldsEmpty or not AreFieldsValid then
+  begin
+      MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+try
+      with dm.upd_type_n do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@id_type_nomer').Value :=
+           dm.type_nQuery.FieldByName('id_type_nomer').AsString;
+           Parameters.ParamByName('@type_naim').Value:=
+           upd_tn_naim_inp.Text;
+           ExecProc;
+           dm.type_nQuery.Close;
+           dm.type_nQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+end;
+
+
 
 end.
