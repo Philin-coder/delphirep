@@ -198,7 +198,7 @@ object Frm_type_nom: TFrm_type_nom
             TitleFont.Height = -11
             TitleFont.Name = 'Tahoma'
             TitleFont.Style = []
-            OnCellClick = ins_tnGrdCellClick
+            OnDblClick = ins_tnGrdDblClick
             Columns = <
               item
                 Expanded = False

@@ -63,7 +63,7 @@ type
     procedure tnliveQuercBClick(Sender: TObject);
     procedure tnlqsvBtnClick(Sender: TObject);
     procedure ins_tnBtnClick(Sender: TObject);
-    procedure ins_tnGrdCellClick(Column: TColumn);
+    procedure ins_tnGrdDblClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -171,7 +171,7 @@ AreFieldsEmpty := (
 
 end;
 
-procedure TFrm_type_nom.ins_tnGrdCellClick(Column: TColumn);
+procedure TFrm_type_nom.ins_tnGrdDblClick(Sender: TObject);
 begin
 ShowImageFromDatabase(
     dm.Connection,
@@ -258,7 +258,7 @@ begin
      'type_nomer.id_type_nomer,'+' '+
      'type_nomer.type_naim,'+''+' '+
      'type_nomer.type_opis,'+' '+
-     'type_nomer.type_image'+''+
+     'type_nomer.type_image'+' '+
     'from type_nomer'+' '+
     'where 1=1';
         dm.type_nQuery.Open;

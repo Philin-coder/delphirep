@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, Grids, DBGrids, StdCtrls, ExtCtrls,adodb,db, DBCtrls;
+  Dialogs, ComCtrls, Grids, DBGrids, StdCtrls, ExtCtrls,adodb,db, DBCtrls,jpeg;
 
 type
   TFrm_type_nom = class(TForm)
@@ -63,7 +63,6 @@ type
     procedure tnliveQuercBClick(Sender: TObject);
     procedure tnlqsvBtnClick(Sender: TObject);
     procedure ins_tnBtnClick(Sender: TObject);
-    procedure ins_tnGrdCellClick(Column: TColumn);
   private
     { Private declarations }
   public
@@ -125,7 +124,6 @@ AreFieldsEmpty := (
     Beep;
     Exit;
   end;
-
   try
     with dm.ins_type do
     begin
@@ -168,59 +166,6 @@ AreFieldsEmpty := (
     begin
       ShowMessage('Общая ошибка: ' + E.Message);
     end;
-  end;
-
-end;
-
-procedure TFrm_type_nom.ins_tnGrdCellClick(Column: TColumn);
-var
-  BlobStream: TStream;
-  ImageForm: TForm;
-  ImageViewer: TImage;
-  Query: TADOQuery;
-begin
- if Column.FieldName <> 'id_type_nomer' then Exit;
-  Query := TADOQuery.Create(nil);
-  try
-    Query.Connection := dm.Connection;
-    Query.SQL.Text :=
-    'SELECT type_image FROM type_nomer WHERE id_type_nomer = :id';
-    Query.Parameters.ParamByName('id').Value :=
-    ins_tnGrd.DataSource.DataSet.FieldByName('id_type_nomer').AsInteger;
-    Query.Open;
-    if not Query.FieldByName('type_image').IsNull then
-    begin
-      ImageForm := TForm.Create(nil);
-      try
-        ImageForm.Caption := 'Просмотр изображения';
-        ImageForm.Width := 600;
-        ImageForm.Height := 400;
-
-        // Добавляем компонент TImage для отображения изображения
-        ImageViewer := TImage.Create(ImageForm);
-        ImageViewer.Parent := ImageForm;
-        ImageViewer.Align := alClient;
-
-        // Загружаем BLOB-данные в TImage
-        BlobStream := Query.CreateBlobStream(Query.FieldByName('type_image'), bmRead);
-        try
-          ImageViewer.Picture.Bitmap.LoadFromStream(BlobStream);
-        finally
-          BlobStream.Free;
-        end;
-
-        // Показываем форму
-        ImageForm.ShowModal;
-      finally
-        ImageForm.Free;
-      end;
-    end
-    else
-    begin
-      ShowMessage('Изображение не найдено.');
-    end;
-  finally
-    Query.Free;
   end;
 
 end;
@@ -300,7 +245,7 @@ begin
      'type_nomer.id_type_nomer,'+' '+
      'type_nomer.type_naim,'+''+' '+
      'type_nomer.type_opis,'+' '+
-     'type_nomer.type_image'+''+
+     'type_nomer.type_image'+' '+
     'from type_nomer'+' '+
     'where 1=1';
         dm.type_nQuery.Open;
