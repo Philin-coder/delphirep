@@ -262,7 +262,6 @@ object DM: TDM
   end
   object UslQuery: TADOQuery
     Connection = Connection
-    CursorType = ctStatic
     Parameters = <>
     SQL.Strings = (
       'select '
@@ -280,7 +279,12 @@ object DM: TDM
     Left = 264
     Top = 120
   end
-  object ins_usl: TADOStoredProc
+  object ADOStoredProc1: TADOStoredProc
+    Parameters = <>
+    Left = 280
+    Top = 184
+  end
+  object ADOStoredProc2: TADOStoredProc
     Parameters = <>
     Left = 288
     Top = 232
@@ -294,24 +298,5 @@ object DM: TDM
     Parameters = <>
     Left = 288
     Top = 352
-  end
-  object sel_usl_by_name: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'sel_usl_by_name;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@usl_naim'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 1000
-      end>
-    Left = 280
-    Top = 176
   end
 end

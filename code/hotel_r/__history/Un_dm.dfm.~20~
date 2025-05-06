@@ -95,6 +95,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@id_admin'
@@ -122,6 +123,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@id_admin'
@@ -141,7 +143,8 @@ object DM: TDM
       'select '
       'type_nomer.id_type_nomer,'
       'type_nomer.type_naim,'
-      'type_nomer.type_opis '
+      'type_nomer.type_opis,'
+      'type_nomer.type_image '
       'from type_nomer '
       'where 1=1')
     Left = 120
@@ -161,14 +164,153 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@type_opis'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end>
-    Left = 128
-    Top = 184
+    Left = 136
+    Top = 176
+  end
+  object ins_type: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'ins_type;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@type_naim'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+        Value = Null
+      end
+      item
+        Name = '@type_opis'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+        Value = Null
+      end
+      item
+        Name = '@type_image'
+        Attributes = [paNullable]
+        DataType = ftBlob
+        Size = 2147483647
+        Value = Null
+      end>
+    Left = 144
+    Top = 232
+  end
+  object upd_type_n: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_type_n;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@id_type_nomer'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@type_naim'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+        Value = Null
+      end>
+    Left = 160
+    Top = 288
+  end
+  object del_type: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'del_type;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@id_type_nomer'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 168
+    Top = 344
+  end
+  object UslQuery: TADOQuery
+    Connection = Connection
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      'usluga.usl_id,'
+      'usluga.usl_cost,'
+      'usluga.usl_naim,'
+      'usluga.usl_ed_ism '
+      'from usluga'
+      'where 1=1')
+    Left = 256
+    Top = 64
+  end
+  object uslDS: TDataSource
+    DataSet = UslQuery
+    Left = 264
+    Top = 120
+  end
+  object sel_usl_by_name: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_usl_by_name;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@usl_naim'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end>
+    Left = 264
+    Top = 168
+  end
+  object ins_usl: TADOStoredProc
+    Parameters = <>
+    Left = 288
+    Top = 232
+  end
+  object ADOStoredProc3: TADOStoredProc
+    Parameters = <>
+    Left = 288
+    Top = 288
+  end
+  object ADOStoredProc4: TADOStoredProc
+    Parameters = <>
+    Left = 288
+    Top = 352
   end
 end

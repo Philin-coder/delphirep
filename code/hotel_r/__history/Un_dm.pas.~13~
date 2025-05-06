@@ -22,10 +22,10 @@ type
     del_type: TADOStoredProc;
     UslQuery: TADOQuery;
     uslDS: TDataSource;
-    ins_usl: TADOStoredProc;
+    ADOStoredProc1: TADOStoredProc;
+    ADOStoredProc2: TADOStoredProc;
     ADOStoredProc3: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;
-    sel_usl_by_name: TADOStoredProc;
   private
     { Private declarations }
   public

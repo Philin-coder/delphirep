@@ -55,7 +55,6 @@ type
     procedure FormCreate(Sender: TObject);
     procedure uslselBtnClick(Sender: TObject);
     procedure sel_usl_ei_fnd_EditKeyPress(Sender: TObject; var Key: Char);
-    procedure usl_RadiocostgrupperClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -117,6 +116,7 @@ end;
 
 procedure TFrm_usl.uslselBtnClick(Sender: TObject);
 begin
+
  try
     if not DM.Connection.Connected then
       raise Exception.Create('Соединение с базой не усановлено');
@@ -134,34 +134,6 @@ begin
       ShowMessage('Ошибка: ' + E.Message);
   end;
 
-end;
-
-procedure TFrm_usl.usl_RadiocostgrupperClick(Sender: TObject);
-begin
-  if  usl_Radiocostgrupper.Checked=true then
-  begin
-    try
-     with dm.uslQuery do
-     begin
-      close;
-      sql.Clear;
-      sql.Text:=
-     'select'+' '+
-     'usluga.usl_id,'+' '+
-     'usluga.usl_cost,'+' '+
-     'usluga.usl_naim,'+' '+
-     'usluga.usl_ed_ism'+' '+
-    'from usluga'+' '+
-    'where 1=1'+
-    'order by usluga.usl_cost asc';
-      Open;
-     end;
-    except on E: EADOError do
-    begin
-      ShowMessage('??????'+' '+E.Message);
-    end;
-    end;
-  end;
 end;
 
 end.

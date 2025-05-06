@@ -8,22 +8,22 @@ uses
 
 type
   TFrm_usl = class(TForm)
-    FadminPC: TPageControl;
+    FuslPC: TPageControl;
     seLTab: TTabSheet;
     insTab: TTabSheet;
     updTab: TTabSheet;
     delTab: TTabSheet;
-    sel_typencondBox: TGroupBox;
-    m_typen_grupper: TGroupBox;
-    seltypenmbtnBox: TGroupBox;
-    sel_typen_data_box: TGroupBox;
-    tnselBtn: TButton;
-    seltnselgrd: TDBGrid;
-    opis_tn_cond_edit: TLabeledEdit;
-    sel_tn_fnd_Edit: TLabeledEdit;
-    tn_Radiotypegrupper: TRadioButton;
-    tn_Radioopisgrupper: TRadioButton;
-    tn_reset_radio: TRadioButton;
+    sel_uslcondBox: TGroupBox;
+    m_usl_grupper: TGroupBox;
+    seluslmbtnBox: TGroupBox;
+    sel_usl_data_box: TGroupBox;
+    uslselBtn: TButton;
+    seluslselgrd: TDBGrid;
+    usl_naim_usl_cond_edit: TLabeledEdit;
+    sel_usl_ei_fnd_Edit: TLabeledEdit;
+    usl_Radiocostgrupper: TRadioButton;
+    usl_Radionaimgrupper: TRadioButton;
+    usl_reset_radio: TRadioButton;
     ins_tn_dataBox: TGroupBox;
     ins_tn_inpBox: TGroupBox;
     ins_tn_btn_Box: TGroupBox;
@@ -50,7 +50,9 @@ type
     Upd_tn_grd: TDBGrid;
     upd_tn_naim_inp: TLabeledEdit;
     DelTnGid: TDBGrid;
-    fod: TOpenDialog;
+    procedure FormActivate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -66,5 +68,26 @@ implementation
 uses Un_dm, Un_func;
 
 {$R *.dfm}
+
+procedure TFrm_usl.FormActivate(Sender: TObject);
+begin
+  dm.UslQuery.Open;
+end;
+
+procedure TFrm_usl.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  SaveFormState(Self);
+  CloseAllQueriesOnDataModule('dm')
+end;
+
+procedure TFrm_usl.FormCreate(Sender: TObject);
+begin
+  Frm_usl.KeyPreview:=true;
+  Frm_usl.ShowHint:=true;
+  UniformizeButtonsSize(Self,  273, 25);
+  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+  LoadFormState(Self);
+end;
 
 end.
