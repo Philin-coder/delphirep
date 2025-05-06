@@ -281,17 +281,81 @@ object DM: TDM
     Top = 120
   end
   object ins_usl: TADOStoredProc
-    Parameters = <>
+    Connection = Connection
+    ProcedureName = 'ins_usl;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@usl_cost'
+        Attributes = [paNullable]
+        DataType = ftFloat
+        NumericScale = 2
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@usl_naim'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end
+      item
+        Name = '@usl_ed_ism'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end>
     Left = 288
     Top = 232
   end
-  object ADOStoredProc3: TADOStoredProc
-    Parameters = <>
+  object upd_usl: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_usl;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@usl_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@usl_naim'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end>
     Left = 288
     Top = 288
   end
-  object ADOStoredProc4: TADOStoredProc
-    Parameters = <>
+  object del_usl: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'del_usl;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@usl_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
     Left = 288
     Top = 352
   end
@@ -304,12 +368,14 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@usl_naim'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end>
     Left = 280
     Top = 176

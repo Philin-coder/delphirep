@@ -13,6 +13,19 @@ type
     ins_adm: TADOStoredProc;
     sel_adm_by_fio: TADOStoredProc;
     upd_adm: TADOStoredProc;
+    del_adm: TADOStoredProc;
+    type_nQuery: TADOQuery;
+    TYpe_nDS: TDataSource;
+    sel_type_by_opis: TADOStoredProc;
+    ins_type: TADOStoredProc;
+    upd_type_n: TADOStoredProc;
+    del_type: TADOStoredProc;
+    UslQuery: TADOQuery;
+    uslDS: TDataSource;
+    ins_usl: TADOStoredProc;
+    upd_usl: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
+    sel_usl_by_name: TADOStoredProc;
   private
     { Private declarations }
   public

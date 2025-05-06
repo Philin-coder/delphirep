@@ -21,7 +21,7 @@ object Frm_type_nom: TFrm_type_nom
     Top = 0
     Width = 1013
     Height = 755
-    ActivePage = delTab
+    ActivePage = updTab
     Align = alClient
     TabOrder = 0
     object seLTab: TTabSheet
@@ -181,10 +181,6 @@ object Frm_type_nom: TFrm_type_nom
           Align = alClient
           Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
           TabOrder = 0
-          ExplicitLeft = 0
-          ExplicitTop = 210
-          ExplicitWidth = 1005
-          ExplicitHeight = 462
           object ins_tnGrd: TDBGrid
             Left = 2
             Top = 15
@@ -306,7 +302,7 @@ object Frm_type_nom: TFrm_type_nom
       end
     end
     object updTab: TTabSheet
-      Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1080#1084#1087#1077' '#1085#1086#1084#1077#1088#1072
+      Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1090#1080#1087#1077' '#1085#1086#1084#1077#1088#1072
       ImageIndex = 2
       object upd_tn_inp_Box: TGroupBox
         Left = 0

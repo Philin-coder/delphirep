@@ -28,7 +28,7 @@ object frm_book: Tfrm_book
     Top = 47
     Width = 1037
     Height = 568
-    ActivePage = updTab
+    ActivePage = ins_tab
     Align = alClient
     TabOrder = 1
     object sel_tab: TTabSheet
@@ -212,7 +212,7 @@ object frm_book: Tfrm_book
         Top = 0
         Width = 1029
         Height = 540
-        ActivePage = about_book_yab_two
+        ActivePage = about_bookTab_one
         Align = alClient
         TabOrder = 0
         object about_bookTab_one: TTabSheet

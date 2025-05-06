@@ -32,25 +32,25 @@ type
     uslliveQuercB: TCheckBox;
     usllqPanel: TPanel;
     usllqsvBtn: TButton;
-    upd_usl_inp_Box: TGroupBox;
-    upd_usl_btn_Box: TGroupBox;
-    upd_usl_data_box: TGroupBox;
-    upd_uls_btn: TButton;
-    upd_usl_lbl: TStaticText;
-    upd_usl_u_dbl: TDBLookupComboBox;
-    del_usl_inpBox: TGroupBox;
-    del_usl_dataBox: TGroupBox;
-    del_usl_btn_Box: TGroupBox;
-    del_usl_d_btn: TButton;
-    del_dbl_usl_lbl: TStaticText;
-    del_dbl_usl_dbl: TDBLookupComboBox;
+    upd_tn_inp_Box: TGroupBox;
+    upd_tn_btn_Box: TGroupBox;
+    upd_tn_data_box: TGroupBox;
+    upd_tn_btn: TButton;
+    upd_tn_lbl: TStaticText;
+    upd_tn_u_dbl: TDBLookupComboBox;
+    del_tn_inpBox: TGroupBox;
+    del_tn_dataBox: TGroupBox;
+    del_tn_btn_Box: TGroupBox;
+    del_tn_d_btn: TButton;
+    del_dbl_tn_lbl: TStaticText;
+    del_dbl_tn_dbl: TDBLookupComboBox;
     usl_ed_ism_inp: TLabeledEdit;
     ins_tn_data_Box: TGroupBox;
-    upd_usl_naim_inp: TLabeledEdit;
+    Upd_tn_grd: TDBGrid;
+    upd_tn_naim_inp: TLabeledEdit;
+    DelTnGid: TDBGrid;
     ins_usl_grd: TDBGrid;
     usl_cost_inp: TLabeledEdit;
-    uslGrd: TDBGrid;
-    Del_usl_grd: TDBGrid;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -60,10 +60,6 @@ type
     procedure usl_reset_radioClick(Sender: TObject);
     procedure usl_RadionaimgrupperClick(Sender: TObject);
     procedure ins_uslBtnClick(Sender: TObject);
-    procedure uslliveQuercBClick(Sender: TObject);
-    procedure usllqsvBtnClick(Sender: TObject);
-    procedure upd_uls_btnClick(Sender: TObject);
-    procedure del_usl_d_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -79,44 +75,6 @@ implementation
 uses Un_dm, Un_func;
 
 {$R *.dfm}
-
-procedure TFrm_usl.del_usl_d_btnClick(Sender: TObject);
-var
-   AreFieldsEmpty: Boolean;
-begin
-AreFieldsEmpty:=(
-(del_dbl_usl_dbl.Text='')
-);
-if AreFieldsEmpty then
-begin
-    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-end;
-try
-with dm.del_usl do
-      begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@usl_id').Value :=
-           dm.UslQuery.FieldByName('usl_id').AsString;
-           ExecProc;
-           dm.uslQuery.Close;
-           dm.uslQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      end;
-end;
 
 procedure TFrm_usl.FormActivate(Sender: TObject);
 begin
@@ -214,124 +172,49 @@ except on E: Exception do
   end;
 end;
 
-
-procedure TFrm_usl.upd_uls_btnClick(Sender: TObject);
-const
-AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+procedure TFrm_fadmin.lqsvBtnClick(Sender: TObject);
 var
-  AreFieldsEmpty: Boolean;
-  AreFieldsValid: Boolean;
-begin
-AreFieldsEmpty:=(
-(upd_usl_u_dbl.Text='')or
-(Trim(upd_usl_naim_inp.Text)='')
-);
-AreFieldsValid:=(
-ValidateComponentText(upd_usl_naim_inp,AllowedChars)
-);
-if AreFieldsEmpty or not AreFieldsValid then 
-begin
-    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-end;
-  try
-      with dm.upd_usl do
-      begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@usl_id').Value :=
-           dm.UslQuery.FieldByName('usl_id').AsString;
-           Parameters.ParamByName('@usl_naim').Value:=upd_usl_naim_inp.Text;
-           ExecProc;
-           dm.uslQuery.Close;
-           dm.uslQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-    end;
-end;
-
-procedure TFrm_usl.uslliveQuercBClick(Sender: TObject);
-begin
-case uslliveQuercB.Checked of
-true:
-begin
-  with dm.uslQuery do
-begin
-  Close;
-  LockType:=ltOptimistic;
-  CursorType:= ctKeyset;
-  CursorLocation := clUseClient;
-  open;
-end;
-  ins_usl_Grd.ReadOnly:=false;
-end;
-false:
-begin
-with dm.uslQuery do
-begin
-  Close;
-  LockType:=ltOptimistic;
-  CursorType:= ctStatic;
-  CursorLocation := clUseClient;
-  Open;
-end;
-  ins_usl_Grd.ReadOnly:=True;
-end;
-
-end;//case
-end;
-
-procedure TFrm_usl.usllqsvBtnClick(Sender: TObject);
-  var
   UserResponse: Integer;
 begin
-   dm.Connection.BeginTrans;
+  dm.Connection.BeginTrans;
   try
-    if dm.uslQuery.State in [dsEdit, dsInsert] then
-      dm.uslQuery.Post;
-    UserResponse := MessageDlg('Вы хотите cохранить изменения?',
-    mtConfirmation, [mbYes, mbNo], 0);
+    if dm.admQuery.State in [dsEdit, dsInsert] then
+      dm.admQuery.Post;
+    UserResponse := MessageDlg('?? ???????, ??? ?????? ????????? ??????????', mtConfirmation, [mbYes, mbNo], 0);
+
     if UserResponse = mrYes then
     begin
       dm.Connection.CommitTrans;
-      dm.uslQuery.DisableControls;
+      dm.admQuery.DisableControls;
       try
-        dm.uslQuery.Close;
-        dm.uslQuery.SQL.Text :=
-        'select'+' '+
-     'usluga.usl_id,'+' '+
-     'usluga.usl_cost,'+' '+
-     'usluga.usl_naim,'+' '+
-     'usluga.usl_ed_ism'+' '+
-    'from usluga'+' '+
-    'where 1=1';
-        dm.uslQuery.Open;
+        dm.admQuery.Close;
+        dm.admQuery.SQL.Text :=
+          'select' + ' ' +
+          'm_admin.id_admin,' +
+          'm_admin.fio_admin,' +
+          'case when m_admin.smena=0 then ''??????'' when m_admin.smena=1' + ' ' +
+          'then ''???????'' when m_admin.smena=2' + ' ' +
+          'then ''????????''  else ''????????'' end as smena' + ' ' +
+          'from' + ' ' +
+          'm_admin' + ' ' +
+          'where 1=1';
+        dm.admQuery.Open;
       finally
-        dm.uslQuery.EnableControls;
+        dm.admQuery.EnableControls;
       end;
-      ShowMessage('Изменения успешно сохроненны.');
+      ShowMessage('????????? ??????? ?????????.');
     end
     else
     begin
+      // ???????? ??????????, ???? ???????????? ?????????
       dm.Connection.RollbackTrans;
-      ShowMessage('Изменения  отменены.');
+      ShowMessage('????????? ????????.');
     end;
   except
     on E: Exception do
     begin
       dm.Connection.RollbackTrans;
-      ShowMessage('Ошибка при сохранении данных: ' + E.Message);
+      ShowMessage('?????? ??? ?????????? ??????: ' + E.Message);
     end;
   end;
 

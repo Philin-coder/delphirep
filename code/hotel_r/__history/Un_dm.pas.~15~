@@ -23,8 +23,8 @@ type
     UslQuery: TADOQuery;
     uslDS: TDataSource;
     ins_usl: TADOStoredProc;
-    upd_usl: TADOStoredProc;
-    del_usl: TADOStoredProc;
+    ADOStoredProc3: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
     sel_usl_by_name: TADOStoredProc;
   private
     { Private declarations }

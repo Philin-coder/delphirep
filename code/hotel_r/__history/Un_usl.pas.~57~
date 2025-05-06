@@ -35,22 +35,22 @@ type
     upd_usl_inp_Box: TGroupBox;
     upd_usl_btn_Box: TGroupBox;
     upd_usl_data_box: TGroupBox;
-    upd_uls_btn: TButton;
+    upd_tn_btn: TButton;
     upd_usl_lbl: TStaticText;
     upd_usl_u_dbl: TDBLookupComboBox;
-    del_usl_inpBox: TGroupBox;
-    del_usl_dataBox: TGroupBox;
-    del_usl_btn_Box: TGroupBox;
-    del_usl_d_btn: TButton;
-    del_dbl_usl_lbl: TStaticText;
-    del_dbl_usl_dbl: TDBLookupComboBox;
+    del_tn_inpBox: TGroupBox;
+    del_tn_dataBox: TGroupBox;
+    del_tn_btn_Box: TGroupBox;
+    del_tn_d_btn: TButton;
+    del_dbl_tn_lbl: TStaticText;
+    del_dbl_tn_dbl: TDBLookupComboBox;
     usl_ed_ism_inp: TLabeledEdit;
     ins_tn_data_Box: TGroupBox;
     upd_usl_naim_inp: TLabeledEdit;
+    DelTnGid: TDBGrid;
     ins_usl_grd: TDBGrid;
     usl_cost_inp: TLabeledEdit;
-    uslGrd: TDBGrid;
-    Del_usl_grd: TDBGrid;
+    usltnGrd: TDBGrid;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -62,8 +62,7 @@ type
     procedure ins_uslBtnClick(Sender: TObject);
     procedure uslliveQuercBClick(Sender: TObject);
     procedure usllqsvBtnClick(Sender: TObject);
-    procedure upd_uls_btnClick(Sender: TObject);
-    procedure del_usl_d_btnClick(Sender: TObject);
+    procedure upd_tn_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -79,44 +78,6 @@ implementation
 uses Un_dm, Un_func;
 
 {$R *.dfm}
-
-procedure TFrm_usl.del_usl_d_btnClick(Sender: TObject);
-var
-   AreFieldsEmpty: Boolean;
-begin
-AreFieldsEmpty:=(
-(del_dbl_usl_dbl.Text='')
-);
-if AreFieldsEmpty then
-begin
-    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-end;
-try
-with dm.del_usl do
-      begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@usl_id').Value :=
-           dm.UslQuery.FieldByName('usl_id').AsString;
-           ExecProc;
-           dm.uslQuery.Close;
-           dm.uslQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      end;
-end;
 
 procedure TFrm_usl.FormActivate(Sender: TObject);
 begin
@@ -215,7 +176,7 @@ except on E: Exception do
 end;
 
 
-procedure TFrm_usl.upd_uls_btnClick(Sender: TObject);
+procedure TFrm_usl.upd_tn_btnClick(Sender: TObject);
 const
 AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
 var
@@ -242,8 +203,8 @@ end;
         if not Connection.Connected then
           raise Exception.Create('Соединение с базой не установлено');
            Parameters.ParamByName('@usl_id').Value :=
-           dm.UslQuery.FieldByName('usl_id').AsString;
-           Parameters.ParamByName('@usl_naim').Value:=upd_usl_naim_inp.Text;
+           dm.UslQuery.FieldByName('@usl_id').AsString;
+           Parameters.ParamByName('usl_naim').Value:=upd_usl_naim_inp.Text;
            ExecProc;
            dm.uslQuery.Close;
            dm.uslQuery.Open;

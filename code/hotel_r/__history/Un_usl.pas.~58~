@@ -84,7 +84,7 @@ procedure TFrm_usl.del_usl_d_btnClick(Sender: TObject);
 var
    AreFieldsEmpty: Boolean;
 begin
-AreFieldsEmpty:=(
+AreFieldsEmpty(
 (del_dbl_usl_dbl.Text='')
 );
 if AreFieldsEmpty then
@@ -94,16 +94,14 @@ begin
     Beep;
     Exit;
 end;
-try
 with dm.del_usl do
       begin
         if not Connection.Connected then
           raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@usl_id').Value :=
-           dm.UslQuery.FieldByName('usl_id').AsString;
+           Parameters.ParamByName('@Name_A').Value :=Autor_inp.Text;
            ExecProc;
-           dm.uslQuery.Close;
-           dm.uslQuery.Open;
+           dm.AutQuery.Close;
+           dm.AutQuery.Open;
         MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
       end;
     except
@@ -115,7 +113,7 @@ with dm.del_usl do
       begin
         ShowMessage('Ошибка: ' + E.Message);
       end;
-      end;
+    end;
 end;
 
 procedure TFrm_usl.FormActivate(Sender: TObject);
