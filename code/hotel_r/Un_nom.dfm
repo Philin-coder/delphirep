@@ -21,7 +21,7 @@ object Frm_nom: TFrm_nom
     Top = 0
     Width = 1013
     Height = 755
-    ActivePage = seLTab
+    ActivePage = insTab
     Align = alClient
     TabOrder = 0
     object seLTab: TTabSheet
@@ -139,7 +139,7 @@ object Frm_nom: TFrm_nom
           Columns = <
             item
               Expanded = False
-              FieldName = 'id_type_nomer'
+              FieldName = 'nomer_id'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
               Width = 96
               Visible = True
@@ -202,30 +202,26 @@ object Frm_nom: TFrm_nom
             Columns = <
               item
                 Expanded = False
-                FieldName = 'id_type_nomer'
+                FieldName = 'nomer_id'
                 Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-                Width = 141
                 Visible = True
               end
               item
                 Expanded = False
                 FieldName = 'nomer_kind'
                 Title.Caption = #1042#1080#1076' '#1085#1086#1084#1077#1088#1072
-                Width = 116
                 Visible = True
               end
               item
                 Expanded = False
                 FieldName = 'nomer_cost_day'
-                Title.Caption = #1062#1077#1085#1072' '#1074' '#1076#1077#1085#1100
-                Width = 250
+                Title.Caption = #1062#1077#1085#1072' '#1074' '#1076#1077#1085#1100' '
                 Visible = True
               end
               item
                 Expanded = False
                 FieldName = 'type_image'
                 Title.Caption = #1060#1086#1090#1086
-                Width = 212
                 Visible = True
               end>
           end
@@ -289,9 +285,9 @@ object Frm_nom: TFrm_nom
           Height = 21
           Align = alCustom
           Anchors = [akLeft, akRight]
-          KeyField = 'nomer_id'
-          ListField = 'nomer_kind'
-          ListSource = DM.nomDS
+          KeyField = 'id_type_nomer'
+          ListField = 'type_naim'
+          ListSource = DM.TYpe_nDS
           TabOrder = 4
         end
       end
@@ -418,7 +414,7 @@ object Frm_nom: TFrm_nom
           Columns = <
             item
               Expanded = False
-              FieldName = 'id_type_nomer'
+              FieldName = 'nomer_id'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
               Width = 141
               Visible = True
@@ -448,9 +444,9 @@ object Frm_nom: TFrm_nom
       end
     end
     object delTab: TTabSheet
-      Caption = #1059#1076#1072#1083#1077#1085#1080#1077'  '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1091#1089#1083#1091#1075#1077
+      Caption = #1059#1076#1072#1083#1077#1085#1080#1077'  '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1085#1086#1084#1077#1088#1077
       ImageIndex = 3
-      object del_usl_inpBox: TGroupBox
+      object del_nom_inpBox: TGroupBox
         Left = 0
         Top = 0
         Width = 1005
@@ -458,7 +454,7 @@ object Frm_nom: TFrm_nom
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object del_dbl_usl_lbl: TStaticText
+        object del_dbl_nom_lbl: TStaticText
           Left = 3
           Top = 24
           Width = 85
@@ -467,7 +463,7 @@ object Frm_nom: TFrm_nom
           Caption = #1042#1099#1073#1088#1072#1090#1100' '#1091#1089#1083#1091#1075#1091
           TabOrder = 0
         end
-        object del_dbl_usl_dbl: TDBLookupComboBox
+        object del_dbl_nom_dbl: TDBLookupComboBox
           Left = 3
           Top = 37
           Width = 982
@@ -480,7 +476,7 @@ object Frm_nom: TFrm_nom
           TabOrder = 1
         end
       end
-      object del_usl_dataBox: TGroupBox
+      object del_nom_dataBox: TGroupBox
         Left = 0
         Top = 81
         Width = 1005
@@ -488,13 +484,13 @@ object Frm_nom: TFrm_nom
         Align = alClient
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
-        object Del_usl_grd: TDBGrid
+        object del_nom_grd: TDBGrid
           Left = 2
           Top = 15
           Width = 1001
           Height = 558
           Align = alClient
-          DataSource = DM.uslDS
+          DataSource = DM.nomDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -504,42 +500,42 @@ object Frm_nom: TFrm_nom
           Columns = <
             item
               Expanded = False
-              FieldName = 'usl_id'
+              FieldName = 'nomer_id'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-              Width = 111
+              Width = 141
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'usl_cost'
-              Title.Caption = #1062#1077#1085#1072
-              Width = 140
+              FieldName = 'nomer_kind'
+              Title.Caption = #1042#1080#1076' '#1085#1086#1084#1077#1088#1072
+              Width = 116
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'usl_naim'
-              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077
-              Width = 99
+              FieldName = 'nomer_cost_day'
+              Title.Caption = #1062#1077#1085#1072' '#1074' '#1076#1077#1085#1100
+              Width = 250
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'usl_ed_ism'
-              Title.Caption = #1045#1076#1080#1085#1080#1094#1072' '#1080#1079#1084#1077#1088#1077#1085#1080#1103
-              Width = 128
+              FieldName = 'type_image'
+              Title.Caption = #1060#1086#1090#1086
+              Width = 212
               Visible = True
             end>
         end
       end
-      object del_usl_btn_Box: TGroupBox
+      object del_nom_btn_Box: TGroupBox
         Left = 0
         Top = 656
         Width = 1005
         Height = 71
         Align = alBottom
         TabOrder = 2
-        object del_usl_d_btn: TButton
+        object del_nom_d_btn: TButton
           Left = 488
           Top = 24
           Width = 75

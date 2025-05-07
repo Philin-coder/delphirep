@@ -38,20 +38,20 @@ type
     upd_nom_btn: TButton;
     upd_noml_lbl: TStaticText;
     upd_nom_id_dbl: TDBLookupComboBox;
-    del_usl_inpBox: TGroupBox;
-    del_usl_dataBox: TGroupBox;
-    del_usl_btn_Box: TGroupBox;
-    del_usl_d_btn: TButton;
-    del_dbl_usl_lbl: TStaticText;
-    del_dbl_usl_dbl: TDBLookupComboBox;
+    del_nom_inpBox: TGroupBox;
+    del_nom_dataBox: TGroupBox;
+    del_nom_btn_Box: TGroupBox;
+    del_nom_d_btn: TButton;
+    del_dbl_nom_lbl: TStaticText;
+    del_dbl_nom_dbl: TDBLookupComboBox;
     nomer_cost_day_inp: TLabeledEdit;
     ins_nom_data_Box: TGroupBox;
     upd_omer_kind_inp: TLabeledEdit;
-    Del_usl_grd: TDBGrid;
     ins_nomGid: TDBGrid;
     nom_type_n__llbl: TStaticText;
     type_nomer_inp: TDBLookupComboBox;
     upd_nom_grd: TDBGrid;
+    del_nom_grd: TDBGrid;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -117,7 +117,7 @@ begin
   'type_nomer',
   'type_image',
   'id_type_nomer',
-   ins_nomGid.DataSource.DataSet.FieldByName('id_type_nomer').AsInteger
+   ins_nomGid.DataSource.DataSet.FieldByName('nomer_id').AsInteger
   );
 
 end;
@@ -157,7 +157,7 @@ try
            Parameters.ParamByName('@nomer_kind').Value :=nomer_kind_inp.Text;
            Parameters.ParamByName('@nomer_cost_day').Value:=PriceValue;
            Parameters.ParamByName('@id_type_nomer').Value:=
-           dm.nom_query.FieldByName('id_type_nomer').AsString;
+           dm.type_nQuery.FieldByName('id_type_nomer').AsString;
            ExecProc;
            dm.nom_query.Close;
            dm.nom_query.Open;
@@ -364,7 +364,7 @@ begin
   'type_nomer',
   'type_image',
   'id_type_nomer',
-   selnomselgrd.DataSource.DataSet.FieldByName('id_type_nomer').AsInteger
+   selnomselgrd.DataSource.DataSet.FieldByName('nomer_id').AsInteger
   );
 end;
 
