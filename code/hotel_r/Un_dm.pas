@@ -26,6 +26,12 @@ type
     upd_usl: TADOStoredProc;
     del_usl: TADOStoredProc;
     sel_usl_by_name: TADOStoredProc;
+    nom_query: TADOQuery;
+    nomDS: TDataSource;
+    sel_nom_by_kind: TADOStoredProc;
+    ins_nom: TADOStoredProc;
+    ADOStoredProc3: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public

@@ -164,12 +164,14 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@type_opis'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end>
     Left = 136
     Top = 176
@@ -183,24 +185,28 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@type_naim'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end
       item
         Name = '@type_opis'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end
       item
         Name = '@type_image'
         Attributes = [paNullable]
         DataType = ftBlob
         Size = 2147483647
+        Value = Null
       end>
     Left = 144
     Top = 232
@@ -214,6 +220,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@id_type_nomer'
@@ -231,5 +238,210 @@ object DM: TDM
       end>
     Left = 160
     Top = 288
+  end
+  object del_type: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'del_type;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@id_type_nomer'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 168
+    Top = 344
+  end
+  object UslQuery: TADOQuery
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      'usluga.usl_id,'
+      'usluga.usl_cost,'
+      'usluga.usl_naim,'
+      'usluga.usl_ed_ism '
+      'from usluga'
+      'where 1=1')
+    Left = 256
+    Top = 64
+  end
+  object uslDS: TDataSource
+    DataSet = UslQuery
+    Left = 264
+    Top = 120
+  end
+  object ins_usl: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'ins_usl;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@usl_cost'
+        Attributes = [paNullable]
+        DataType = ftFloat
+        NumericScale = 2
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@usl_naim'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+        Value = Null
+      end
+      item
+        Name = '@usl_ed_ism'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+        Value = Null
+      end>
+    Left = 288
+    Top = 232
+  end
+  object upd_usl: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_usl;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@usl_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@usl_naim'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+        Value = Null
+      end>
+    Left = 288
+    Top = 288
+  end
+  object del_usl: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'del_usl;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@usl_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 288
+    Top = 352
+  end
+  object sel_usl_by_name: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_usl_by_name;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@usl_naim'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+        Value = Null
+      end>
+    Left = 280
+    Top = 176
+  end
+  object nom_query: TADOQuery
+    Active = True
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      'nomer.id_type_nomer,'
+      'nomer.nomer_kind,'
+      'nomer.nomer_cost_day,'
+      'type_nomer.type_image'
+      'from nomer'
+      
+        'inner join  type_nomer on type_nomer.id_type_nomer=nomer.id_type' +
+        '_nomer'
+      'where 1=1')
+    Left = 360
+    Top = 72
+  end
+  object nomDS: TDataSource
+    DataSet = nom_query
+    Left = 376
+    Top = 128
+  end
+  object sel_nom_by_kind: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_nom_by_kind;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@nomer_kind'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end>
+    Left = 368
+    Top = 184
+  end
+  object ADOStoredProc2: TADOStoredProc
+    Parameters = <>
+    Left = 376
+    Top = 232
+  end
+  object ADOStoredProc3: TADOStoredProc
+    Parameters = <>
+    Left = 368
+    Top = 296
+  end
+  object ADOStoredProc4: TADOStoredProc
+    Parameters = <>
+    Left = 384
+    Top = 352
   end
 end

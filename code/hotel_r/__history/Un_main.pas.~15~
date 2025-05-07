@@ -77,8 +77,8 @@ end;
 
 procedure TFrm_main.Nom_itemClick(Sender: TObject);
 begin
-try
-UpdateFormProperties('Frm_nom', 'Форма работы с  номером',
+    try
+UpdateFormProperties('Frm_om', 'Форма работы с  номером',
 clBtnFace, 1024, 768);
  Frm_nom.ShowModal;
 except

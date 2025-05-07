@@ -406,7 +406,7 @@ object DM: TDM
   end
   object nomDS: TDataSource
     DataSet = nom_query
-    Left = 368
+    Left = 376
     Top = 128
   end
   object sel_nom_by_kind: TADOStoredProc
@@ -425,41 +425,13 @@ object DM: TDM
         DataType = ftWideString
         Size = 1000
       end>
-    Left = 376
-    Top = 176
+    Left = 368
+    Top = 184
   end
-  object ins_nom: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'ins_nom;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@nomer_kind'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 1000
-      end
-      item
-        Name = '@nomer_cost_day'
-        Attributes = [paNullable]
-        DataType = ftFloat
-        NumericScale = 2
-        Precision = 10
-      end
-      item
-        Name = '@id_type_nomer'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = 0
-      end>
+  object ADOStoredProc2: TADOStoredProc
+    Parameters = <>
     Left = 376
-    Top = 240
+    Top = 232
   end
   object ADOStoredProc3: TADOStoredProc
     Parameters = <>

@@ -21,7 +21,7 @@ object Frm_usl: TFrm_usl
     Top = 0
     Width = 1013
     Height = 755
-    ActivePage = insTab
+    ActivePage = delTab
     Align = alClient
     TabOrder = 0
     object seLTab: TTabSheet
