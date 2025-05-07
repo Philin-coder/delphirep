@@ -392,7 +392,7 @@ object DM: TDM
     Parameters = <>
     SQL.Strings = (
       'select '
-      'nomer.id_type_nomer,'
+      'nomer.nomer_id,'
       'nomer.nomer_kind,'
       'nomer.nomer_cost_day,'
       'type_nomer.type_image'
@@ -461,8 +461,29 @@ object DM: TDM
     Left = 376
     Top = 240
   end
-  object ADOStoredProc3: TADOStoredProc
-    Parameters = <>
+  object upd_nom: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_nom;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@nomer_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@nomer_kind'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end>
     Left = 368
     Top = 296
   end

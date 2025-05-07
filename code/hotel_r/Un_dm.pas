@@ -30,7 +30,7 @@ type
     nomDS: TDataSource;
     sel_nom_by_kind: TADOStoredProc;
     ins_nom: TADOStoredProc;
-    ADOStoredProc3: TADOStoredProc;
+    upd_nom: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }

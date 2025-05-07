@@ -63,6 +63,8 @@ type
     procedure nom_reset_radioClick(Sender: TObject);
     procedure ins_uslBtnClick(Sender: TObject);
     procedure ins_nomGidDblClick(Sender: TObject);
+    procedure nomliveQuercBClick(Sender: TObject);
+    procedure nomlqsvBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -164,6 +166,82 @@ try
         ShowMessage('Ошибка: ' + E.Message);
       end;
     end;
+end;
+
+procedure TFrm_nom.nomliveQuercBClick(Sender: TObject);
+begin
+case nomliveQuercB.Checked of
+true:
+begin
+  with dm.nom_query do
+begin
+  Close;
+  LockType:=ltOptimistic;
+  CursorType:= ctKeyset;
+  CursorLocation := clUseClient;
+  open;
+end;
+  ins_nomGid.ReadOnly:=false;
+end;
+false:
+begin
+with dm.nom_query do
+begin
+  Close;
+  LockType:=ltOptimistic;
+  CursorType:= ctStatic;
+  CursorLocation := clUseClient;
+  Open;
+end;
+  ins_nomGid.ReadOnly:=True;
+end;
+
+end;//case
+end;
+
+procedure TFrm_nom.nomlqsvBtnClick(Sender: TObject);
+var
+  UserResponse: Integer;
+begin
+dm.Connection.BeginTrans;
+  try
+    if dm.nom_query.State in [dsEdit, dsInsert] then
+      dm.nom_Query.Post;
+    UserResponse := MessageDlg('Вы хотите cохранить изменения?',
+    mtConfirmation, [mbYes, mbNo], 0);
+    if UserResponse = mrYes then
+    begin
+      dm.Connection.CommitTrans;
+      dm.nom_Query.DisableControls;
+      try
+        dm.nom_Query.Close;
+        dm.nom_Query.SQL.Text :=
+        'select'+' '+
+        'nomer.id_type_nomer,'+' '+
+        'nomer.nomer_kind,'+' '+
+        'nomer.nomer_cost_day,'+' '+
+        'type_nomer.type_image'+' '+
+        'from nomer'+' '+
+    'inner join  type_nomer on type_nomer.id_type_nomer=nomer.id_type_nomer'+' '+
+        'where 1=1';
+        dm.nom_Query.Open;
+      finally
+        dm.nom_Query.EnableControls;
+      end;
+      ShowMessage('Изменения успешно сохроненны');
+    end
+    else
+    begin
+      dm.Connection.RollbackTrans;
+      ShowMessage('Изменения  отменены.');
+    end;
+  except
+    on E: Exception do
+    begin
+      dm.Connection.RollbackTrans;
+      ShowMessage('Ошибка при сохранении данных: ' + E.Message);
+    end;
+  end;
 end;
 
 procedure TFrm_nom.nomselBtnClick(Sender: TObject);

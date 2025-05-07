@@ -32,12 +32,12 @@ type
     nomliveQuercB: TCheckBox;
     nomlqPanel: TPanel;
     nomlqsvBtn: TButton;
-    upd_usl_inp_Box: TGroupBox;
-    upd_usl_btn_Box: TGroupBox;
-    upd_usl_data_box: TGroupBox;
-    upd_uls_btn: TButton;
-    upd_usl_lbl: TStaticText;
-    upd_usl_u_dbl: TDBLookupComboBox;
+    upd_nom_inp_Box: TGroupBox;
+    upd_nom_btn_Box: TGroupBox;
+    upd_nom_data_box: TGroupBox;
+    upd_nom_btn: TButton;
+    upd_noml_lbl: TStaticText;
+    upd_nom_id_dbl: TDBLookupComboBox;
     del_usl_inpBox: TGroupBox;
     del_usl_dataBox: TGroupBox;
     del_usl_btn_Box: TGroupBox;
@@ -46,12 +46,12 @@ type
     del_dbl_usl_dbl: TDBLookupComboBox;
     nomer_cost_day_inp: TLabeledEdit;
     ins_nom_data_Box: TGroupBox;
-    upd_usl_naim_inp: TLabeledEdit;
-    uslGrd: TDBGrid;
+    upd_omer_kind_inp: TLabeledEdit;
     Del_usl_grd: TDBGrid;
     ins_nomGid: TDBGrid;
     nom_type_n__llbl: TStaticText;
     type_nomer_inp: TDBLookupComboBox;
+    upd_nom_grd: TDBGrid;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -61,6 +61,11 @@ type
     procedure nom_Radiocos_adaygrupperClick(Sender: TObject);
     procedure nom_RadiokindgrupperClick(Sender: TObject);
     procedure nom_reset_radioClick(Sender: TObject);
+    procedure ins_uslBtnClick(Sender: TObject);
+    procedure ins_nomGidDblClick(Sender: TObject);
+    procedure nomliveQuercBClick(Sender: TObject);
+    procedure nomlqsvBtnClick(Sender: TObject);
+    procedure upd_nom_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -97,6 +102,153 @@ begin
   UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   LoadFormState(Self);
+   upd_omer_kind_inp.ShowHint:=true;
+   upd_omer_kind_inp.Hint:='Вид номера веутренний'+#10#13+
+  'Вида королевский Люкс, но хотя по типам номеров это обычный люкс';
+  nomer_kind_inp.ShowHint:=true;
+  nomer_kind_inp.Hint:='Вид номера веутренний'+#10#13+
+  'Вида Королевский Люкс, но хотя по типам номеров это обычный люкс';
+end;
+
+procedure TFrm_nom.ins_nomGidDblClick(Sender: TObject);
+begin
+  ShowImageFromDatabase(
+  dm.Connection,
+  'type_nomer',
+  'type_image',
+  'id_type_nomer',
+   ins_nomGid.DataSource.DataSet.FieldByName('id_type_nomer').AsInteger
+  );
+
+end;
+
+procedure TFrm_nom.ins_uslBtnClick(Sender: TObject);
+const
+AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+  PriceText: string;
+  PriceValue: Int64;
+begin
+PriceText:=nomer_cost_day_inp.Text;
+AreFieldsEmpty:=(
+(Trim(nomer_kind_inp.Text)='')or
+(Trim(nomer_cost_day_inp.Text)='')or
+(type_nomer_inp.Text='')
+);
+AreFieldsValid:=(
+ValidateComponentText(nomer_kind_inp,AllowedChars)and
+IsDigitsOnly(nomer_cost_day_inp.Text)
+);
+if AreFieldsEmpty or not AreFieldsValid then
+begin
+  MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+end;
+try
+      with dm.ins_nom do
+      begin
+      PriceValue:=StrToInt64(nomer_cost_day_inp.Text);
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@nomer_kind').Value :=nomer_kind_inp.Text;
+           Parameters.ParamByName('@nomer_cost_day').Value:=PriceValue;
+           Parameters.ParamByName('@id_type_nomer').Value:=
+           dm.nom_query.FieldByName('id_type_nomer').AsString;
+           ExecProc;
+           dm.nom_query.Close;
+           dm.nom_query.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+end;
+
+procedure TFrm_nom.nomliveQuercBClick(Sender: TObject);
+begin
+case nomliveQuercB.Checked of
+true:
+begin
+  with dm.nom_query do
+begin
+  Close;
+  LockType:=ltOptimistic;
+  CursorType:= ctKeyset;
+  CursorLocation := clUseClient;
+  open;
+end;
+  ins_nomGid.ReadOnly:=false;
+end;
+false:
+begin
+with dm.nom_query do
+begin
+  Close;
+  LockType:=ltOptimistic;
+  CursorType:= ctStatic;
+  CursorLocation := clUseClient;
+  Open;
+end;
+  ins_nomGid.ReadOnly:=True;
+end;
+
+end;//case
+end;
+
+procedure TFrm_nom.nomlqsvBtnClick(Sender: TObject);
+var
+  UserResponse: Integer;
+begin
+dm.Connection.BeginTrans;
+  try
+    if dm.nom_query.State in [dsEdit, dsInsert] then
+      dm.nom_Query.Post;
+    UserResponse := MessageDlg('Вы хотите cохранить изменения?',
+    mtConfirmation, [mbYes, mbNo], 0);
+    if UserResponse = mrYes then
+    begin
+      dm.Connection.CommitTrans;
+      dm.nom_Query.DisableControls;
+      try
+        dm.nom_Query.Close;
+        dm.nom_Query.SQL.Text :=
+        'select'+' '+
+        'nomer.id_type_nomer,'+' '+
+        'nomer.nomer_kind,'+' '+
+        'nomer.nomer_cost_day,'+' '+
+        'type_nomer.type_image'+' '+
+        'from nomer'+' '+
+    'inner join  type_nomer on type_nomer.id_type_nomer=nomer.id_type_nomer'+' '+
+        'where 1=1';
+        dm.nom_Query.Open;
+      finally
+        dm.nom_Query.EnableControls;
+      end;
+      ShowMessage('Изменения успешно сохроненны');
+    end
+    else
+    begin
+      dm.Connection.RollbackTrans;
+      ShowMessage('Изменения  отменены.');
+    end;
+  except
+    on E: Exception do
+    begin
+      dm.Connection.RollbackTrans;
+      ShowMessage('Ошибка при сохранении данных: ' + E.Message);
+    end;
+  end;
 end;
 
 procedure TFrm_nom.nomselBtnClick(Sender: TObject);
@@ -237,6 +389,50 @@ except on E: Exception do
   ShowMessage('Ошибка'+' '+E.Message);
   end;
   end;
+end;
+
+procedure TFrm_nom.upd_nom_btnClick(Sender: TObject);
+const
+AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+begin
+AreFieldsEmpty:=(
+(upd_nom_id_dbl.Text='')or
+(Trim(upd_omer_kind_inp.Text)='')
+);
+AreFieldsValid:=(
+ValidateComponentText(upd_omer_kind_inp,AllowedChars)
+);
+if AreFieldsEmpty or not AreFieldsValid then
+begin
+  MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+end;
+try
+      with dm.upd do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@Name_A').Value :=Autor_inp.Text;
+           ExecProc;
+           dm.AutQuery.Close;
+           dm.AutQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
 end;
 
 end.
