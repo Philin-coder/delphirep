@@ -222,7 +222,7 @@ dm.Connection.BeginTrans;
         'nomer.nomer_cost_day,'+' '+
         'type_nomer.type_image'+' '+
         'from nomer'+' '+
-    'inner join  type_nomer on type_nomer.id_type_nomer=nomer.id_type_nomer'+' '+
+        'inner join  type_nomer on type_nomer.id_type_nomer=nomer.id_type_nomer'+
         'where 1=1';
         dm.nom_Query.Open;
       finally

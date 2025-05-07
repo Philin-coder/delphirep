@@ -47,15 +47,19 @@ type
     usl_ed_ism_inp: TLabeledEdit;
     ins_tn_data_Box: TGroupBox;
     upd_usl_naim_inp: TLabeledEdit;
-    ins_usl_grd: TDBGrid;
     usl_cost_inp: TLabeledEdit;
     uslGrd: TDBGrid;
     Del_usl_grd: TDBGrid;
+    DBGrid1: TDBGrid;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure selnomselgrdDblClick(Sender: TObject);
     procedure nomselBtnClick(Sender: TObject);
+    procedure sel_nom_fnd_EditKeyPress(Sender: TObject; var Key: Char);
+    procedure nom_Radiocos_adaygrupperClick(Sender: TObject);
+    procedure nom_RadiokindgrupperClick(Sender: TObject);
+    procedure nom_reset_radioClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -114,6 +118,92 @@ try
   end;
 end;
 
+procedure TFrm_nom.nom_Radiocos_adaygrupperClick(Sender: TObject);
+begin
+  if  nom_Radiocos_adaygrupper.Checked=true then
+  begin
+    try
+     with dm.nom_Query do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+      'select'+' '+
+   'nomer.id_type_nomer,'+' '+
+    'nomer.nomer_kind,'+' '+
+    'nomer.nomer_cost_day,'+' '+
+    'type_nomer.type_image'+' '+
+    'from nomer'+' '+
+    'inner join  type_nomer on type_nomer.id_type_nomer=nomer.id_type_nomer'+' '+
+    'where 1=1'+' '+
+    'order by nomer_cost_day asc';
+      Open;
+     end;
+    except on E: EADOError do
+    begin
+      ShowMessage('Ошибка'+' '+E.Message);
+    end;
+    end;
+  end;
+end;
+
+procedure TFrm_nom.nom_RadiokindgrupperClick(Sender: TObject);
+begin
+  if  nom_Radiokindgrupper.Checked=true then
+  begin
+    try
+     with dm.nom_Query do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+      'select'+' '+
+   'nomer.id_type_nomer,'+' '+
+    'nomer.nomer_kind,'+' '+
+    'nomer.nomer_cost_day,'+' '+
+    'type_nomer.type_image'+' '+
+    'from nomer'+' '+
+    'inner join  type_nomer on type_nomer.id_type_nomer=nomer.id_type_nomer'+' '+
+    'where 1=1'+' '+
+    'order by     nomer.nomer_kind desc';
+      Open;
+     end;
+    except on E: EADOError do
+    begin
+      ShowMessage('Ошибка'+' '+E.Message);
+    end;
+    end;
+  end;
+end;
+
+procedure TFrm_nom.nom_reset_radioClick(Sender: TObject);
+begin
+if  nom_reset_radio.Checked=true then
+  begin
+    try
+     with dm.nom_Query do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+      'select'+' '+
+   'nomer.id_type_nomer,'+' '+
+    'nomer.nomer_kind,'+' '+
+    'nomer.nomer_cost_day,'+' '+
+    'type_nomer.type_image'+' '+
+    'from nomer'+' '+
+    'inner join  type_nomer on type_nomer.id_type_nomer=nomer.id_type_nomer'+' '+
+    'where 1=1';
+      Open;
+     end;
+    except on E: EADOError do
+    begin
+      ShowMessage('Ошибка'+' '+E.Message);
+    end;
+    end;
+  end;
+end;
+
 procedure TFrm_nom.selnomselgrdDblClick(Sender: TObject);
 begin
   ShowImageFromDatabase(
@@ -123,6 +213,29 @@ begin
   'id_type_nomer',
    selnomselgrd.DataSource.DataSet.FieldByName('id_type_nomer').AsInteger
   );
+end;
+
+procedure TFrm_nom.sel_nom_fnd_EditKeyPress(Sender: TObject; var Key: Char);
+begin
+  try
+   dm.nom_query.SQL.Text:=
+   'select'+' '+
+   'nomer.id_type_nomer,'+' '+
+    'nomer.nomer_kind,'+' '+
+    'nomer.nomer_cost_day,'+' '+
+    'type_nomer.type_image'+' '+
+    'from nomer'+' '+
+    'inner join  type_nomer on type_nomer.id_type_nomer=nomer.id_type_nomer'+' '+
+    'where 1=1'+' '+
+   'and nomer.nomer_kind like'+
+   QuotedStr(Concat(sel_nom_fnd_edit.Text,#37));
+   dm.nom_Query.close;
+   dm.nom_Query.Open;
+except on E: Exception do
+  begin
+  ShowMessage('Ошибка'+' '+E.Message);
+  end;
+  end;
 end;
 
 end.

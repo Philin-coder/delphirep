@@ -21,7 +21,7 @@ object Frm_nom: TFrm_nom
     Top = 0
     Width = 1013
     Height = 755
-    ActivePage = seLTab
+    ActivePage = insTab
     Align = alClient
     TabOrder = 0
     object seLTab: TTabSheet
@@ -58,6 +58,7 @@ object Frm_nom: TFrm_nom
           EditLabel.Height = 13
           EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086'  '#1074#1080#1076#1091' '#1085#1086#1084#1077#1088#1072
           TabOrder = 1
+          OnKeyPress = sel_nom_fnd_EditKeyPress
         end
       end
       object m_nom_grupper: TGroupBox
@@ -75,6 +76,7 @@ object Frm_nom: TFrm_nom
           Height = 17
           Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1094#1077#1085#1077' '#1074' '#1076#1077#1085#1100
           TabOrder = 0
+          OnClick = nom_Radiocos_adaygrupperClick
         end
         object nom_Radiokindgrupper: TRadioButton
           Left = 296
@@ -83,6 +85,7 @@ object Frm_nom: TFrm_nom
           Height = 17
           Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1074#1080#1076#1091
           TabOrder = 1
+          OnClick = nom_RadiokindgrupperClick
         end
         object nom_reset_radio: TRadioButton
           Left = 584
@@ -91,6 +94,7 @@ object Frm_nom: TFrm_nom
           Height = 17
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 2
+          OnClick = nom_reset_radioClick
         end
       end
       object selnommbtnBox: TGroupBox
@@ -107,6 +111,7 @@ object Frm_nom: TFrm_nom
           Height = 25
           Caption = #1042#1099#1073#1088#1072#1090#1100
           TabOrder = 0
+          OnClick = nomselBtnClick
         end
       end
       object sel_nom_data_box: TGroupBox
@@ -130,6 +135,7 @@ object Frm_nom: TFrm_nom
           TitleFont.Height = -11
           TitleFont.Name = 'Tahoma'
           TitleFont.Style = []
+          OnDblClick = selnomselgrdDblClick
           Columns = <
             item
               Expanded = False
@@ -162,16 +168,16 @@ object Frm_nom: TFrm_nom
       end
     end
     object insTab: TTabSheet
-      Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1091#1089#1083#1091#1075#1077
+      Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1085#1086#1084#1077#1088#1077
       ImageIndex = 1
-      object ins_tn_dataBox: TGroupBox
+      object ins_nom_dataBox: TGroupBox
         Left = 0
         Top = 225
         Width = 1005
         Height = 431
         Align = alClient
         TabOrder = 0
-        object ins_tn_data_Box: TGroupBox
+        object ins_nom_data_Box: TGroupBox
           Left = 2
           Top = 15
           Width = 1001
@@ -179,52 +185,53 @@ object Frm_nom: TFrm_nom
           Align = alClient
           Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
           TabOrder = 0
-          object ins_usl_grd: TDBGrid
+          object ins_nomGid: TDBGrid
             Left = 2
             Top = 15
             Width = 997
             Height = 397
             Align = alClient
-            DataSource = DM.uslDS
+            DataSource = DM.nomDS
             TabOrder = 0
             TitleFont.Charset = DEFAULT_CHARSET
             TitleFont.Color = clWindowText
             TitleFont.Height = -11
             TitleFont.Name = 'Tahoma'
             TitleFont.Style = []
+            OnDblClick = ins_nomGidDblClick
             Columns = <
               item
                 Expanded = False
-                FieldName = 'usl_id'
+                FieldName = 'id_type_nomer'
                 Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-                Width = 111
+                Width = 141
                 Visible = True
               end
               item
                 Expanded = False
-                FieldName = 'usl_cost'
-                Title.Caption = #1062#1077#1085#1072
-                Width = 140
+                FieldName = 'nomer_kind'
+                Title.Caption = #1042#1080#1076' '#1085#1086#1084#1077#1088#1072
+                Width = 116
                 Visible = True
               end
               item
                 Expanded = False
-                FieldName = 'usl_naim'
-                Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077
-                Width = 99
+                FieldName = 'nomer_cost_day'
+                Title.Caption = #1062#1077#1085#1072' '#1074' '#1076#1077#1085#1100
+                Width = 250
                 Visible = True
               end
               item
                 Expanded = False
-                FieldName = 'usl_ed_ism'
-                Title.Caption = #1045#1076#1080#1085#1080#1094#1072' '#1080#1079#1084#1077#1088#1077#1085#1080#1103
-                Width = 128
+                FieldName = 'type_image'
+                Title.Caption = #1060#1086#1090#1086
+                Width = 212
                 Visible = True
               end>
           end
         end
       end
-      object ins_usl_inpBox: TGroupBox
+      object ins_nom_inpBox: TGroupBox
         Left = 0
         Top = 0
         Width = 1005
@@ -235,18 +242,18 @@ object Frm_nom: TFrm_nom
         DesignSize = (
           1005
           196)
-        object usl_naim_inp: TLabeledEdit
+        object nomer_kind_inp: TLabeledEdit
           Left = 3
           Top = 54
           Width = 999
           Height = 21
           Anchors = [akLeft, akRight]
-          EditLabel.Width = 137
+          EditLabel.Width = 92
           EditLabel.Height = 13
-          EditLabel.Caption = #1042#1074#1086#1076' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1103' '#1091#1089#1083#1091#1075#1080
+          EditLabel.Caption = #1042#1074#1086#1076' '#1074#1080#1076#1072' '#1085#1086#1084#1077#1088#1072
           TabOrder = 0
         end
-        object uslliveQuercB: TCheckBox
+        object nomliveQuercB: TCheckBox
           Left = 368
           Top = 173
           Width = 121
@@ -254,31 +261,41 @@ object Frm_nom: TFrm_nom
           Align = alCustom
           Caption = #1046#1080#1074#1099#1077' '#1079#1072#1087#1088#1086#1086#1089#1099
           TabOrder = 1
+          OnClick = nomliveQuercBClick
         end
-        object usl_ed_ism_inp: TLabeledEdit
+        object nomer_cost_day_inp: TLabeledEdit
           Left = 3
           Top = 98
           Width = 999
           Height = 21
           Anchors = [akLeft, akRight]
-          EditLabel.Width = 129
-          EditLabel.Height = 13
-          EditLabel.Caption = #1042#1074#1086#1076' '#1077#1076#1080#1085#1080#1094#1099' '#1080#1079#1084#1077#1088#1077#1085#1080#1103
-          TabOrder = 2
-        end
-        object usl_cost_inp: TLabeledEdit
-          Left = 3
-          Top = 149
-          Width = 999
-          Height = 21
-          Anchors = [akLeft, akRight]
           EditLabel.Width = 91
           EditLabel.Height = 13
-          EditLabel.Caption = #1042#1074#1086#1076' '#1094#1077#1085#1099' '#1091#1089#1083#1091#1075#1080
+          EditLabel.Caption = #1042#1074#1086#1076' '#1094#1077#1085#1099' '#1074' '#1076#1077#1085#1100
+          TabOrder = 2
+        end
+        object nom_type_n__llbl: TStaticText
+          Left = 3
+          Top = 121
+          Width = 61
+          Height = 17
+          Caption = #1058#1080#1087' '#1085#1086#1084#1077#1088#1072
           TabOrder = 3
         end
+        object type_nomer_inp: TDBLookupComboBox
+          Left = 3
+          Top = 144
+          Width = 999
+          Height = 21
+          Align = alCustom
+          Anchors = [akLeft, akRight]
+          KeyField = 'id_type_nomer'
+          ListField = 'nomer_kind'
+          ListSource = DM.nomDS
+          TabOrder = 4
+        end
       end
-      object ins_usl_btn_Box: TGroupBox
+      object ins_nom_btn_Box: TGroupBox
         Left = 0
         Top = 656
         Width = 1005
@@ -292,16 +309,17 @@ object Frm_nom: TFrm_nom
           Height = 25
           Caption = #1042#1074#1086#1076
           TabOrder = 0
+          OnClick = ins_uslBtnClick
         end
       end
-      object usllqPanel: TPanel
+      object nomlqPanel: TPanel
         Left = 0
         Top = 196
         Width = 1005
         Height = 29
         Align = alTop
         TabOrder = 3
-        object usllqsvBtn: TButton
+        object nomlqsvBtn: TButton
           Left = 400
           Top = 0
           Width = 75

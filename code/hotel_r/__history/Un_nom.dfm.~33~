@@ -21,7 +21,7 @@ object Frm_nom: TFrm_nom
     Top = 0
     Width = 1013
     Height = 755
-    ActivePage = seLTab
+    ActivePage = insTab
     Align = alClient
     TabOrder = 0
     object seLTab: TTabSheet
@@ -58,6 +58,7 @@ object Frm_nom: TFrm_nom
           EditLabel.Height = 13
           EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086'  '#1074#1080#1076#1091' '#1085#1086#1084#1077#1088#1072
           TabOrder = 1
+          OnKeyPress = sel_nom_fnd_EditKeyPress
         end
       end
       object m_nom_grupper: TGroupBox
@@ -75,6 +76,7 @@ object Frm_nom: TFrm_nom
           Height = 17
           Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1094#1077#1085#1077' '#1074' '#1076#1077#1085#1100
           TabOrder = 0
+          OnClick = nom_Radiocos_adaygrupperClick
         end
         object nom_Radiokindgrupper: TRadioButton
           Left = 296
@@ -83,6 +85,7 @@ object Frm_nom: TFrm_nom
           Height = 17
           Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1074#1080#1076#1091
           TabOrder = 1
+          OnClick = nom_RadiokindgrupperClick
         end
         object nom_reset_radio: TRadioButton
           Left = 584
@@ -91,6 +94,7 @@ object Frm_nom: TFrm_nom
           Height = 17
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 2
+          OnClick = nom_reset_radioClick
         end
       end
       object selnommbtnBox: TGroupBox
@@ -107,6 +111,7 @@ object Frm_nom: TFrm_nom
           Height = 25
           Caption = #1042#1099#1073#1088#1072#1090#1100
           TabOrder = 0
+          OnClick = nomselBtnClick
         end
       end
       object sel_nom_data_box: TGroupBox
@@ -163,7 +168,7 @@ object Frm_nom: TFrm_nom
       end
     end
     object insTab: TTabSheet
-      Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1091#1089#1083#1091#1075#1077
+      Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1085#1086#1084#1077#1088#1077
       ImageIndex = 1
       object ins_tn_dataBox: TGroupBox
         Left = 0
@@ -180,13 +185,13 @@ object Frm_nom: TFrm_nom
           Align = alClient
           Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
           TabOrder = 0
-          object ins_usl_grd: TDBGrid
+          object DBGrid1: TDBGrid
             Left = 2
             Top = 15
             Width = 997
             Height = 397
             Align = alClient
-            DataSource = DM.uslDS
+            DataSource = DM.nomDS
             TabOrder = 0
             TitleFont.Charset = DEFAULT_CHARSET
             TitleFont.Color = clWindowText
@@ -196,30 +201,29 @@ object Frm_nom: TFrm_nom
             Columns = <
               item
                 Expanded = False
-                FieldName = 'usl_id'
+                FieldName = 'id_type_nomer'
                 Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-                Width = 111
+                Width = 96
                 Visible = True
               end
               item
                 Expanded = False
-                FieldName = 'usl_cost'
-                Title.Caption = #1062#1077#1085#1072
-                Width = 140
+                FieldName = 'nomer_kind'
+                Title.Caption = #1042#1080#1076' '#1085#1086#1084#1077#1088#1072
+                Width = 116
                 Visible = True
               end
               item
                 Expanded = False
-                FieldName = 'usl_naim'
-                Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077
-                Width = 99
+                FieldName = 'nomer_cost_day'
+                Title.Caption = #1062#1077#1085#1072' '#1074' '#1076#1077#1085#1100
+                Width = 250
                 Visible = True
               end
               item
                 Expanded = False
-                FieldName = 'usl_ed_ism'
-                Title.Caption = #1045#1076#1080#1085#1080#1094#1072' '#1080#1079#1084#1077#1088#1077#1085#1080#1103
-                Width = 128
+                FieldName = 'type_image'
+                Title.Caption = #1060#1086#1090#1086
                 Visible = True
               end>
           end

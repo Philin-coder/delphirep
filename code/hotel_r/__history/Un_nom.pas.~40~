@@ -24,14 +24,14 @@ type
     nom_Radiocos_adaygrupper: TRadioButton;
     nom_Radiokindgrupper: TRadioButton;
     nom_reset_radio: TRadioButton;
-    ins_tn_dataBox: TGroupBox;
-    ins_usl_inpBox: TGroupBox;
-    ins_usl_btn_Box: TGroupBox;
+    ins_nom_dataBox: TGroupBox;
+    ins_nom_inpBox: TGroupBox;
+    ins_nom_btn_Box: TGroupBox;
     ins_uslBtn: TButton;
-    usl_naim_inp: TLabeledEdit;
-    uslliveQuercB: TCheckBox;
-    usllqPanel: TPanel;
-    usllqsvBtn: TButton;
+    nomer_kind_inp: TLabeledEdit;
+    nomliveQuercB: TCheckBox;
+    nomlqPanel: TPanel;
+    nomlqsvBtn: TButton;
     upd_usl_inp_Box: TGroupBox;
     upd_usl_btn_Box: TGroupBox;
     upd_usl_data_box: TGroupBox;
@@ -44,19 +44,23 @@ type
     del_usl_d_btn: TButton;
     del_dbl_usl_lbl: TStaticText;
     del_dbl_usl_dbl: TDBLookupComboBox;
-    usl_ed_ism_inp: TLabeledEdit;
-    ins_tn_data_Box: TGroupBox;
+    nomer_cost_day_inp: TLabeledEdit;
+    ins_nom_data_Box: TGroupBox;
     upd_usl_naim_inp: TLabeledEdit;
-    ins_usl_grd: TDBGrid;
-    usl_cost_inp: TLabeledEdit;
     uslGrd: TDBGrid;
     Del_usl_grd: TDBGrid;
+    ins_nomGid: TDBGrid;
+    nom_type_n__llbl: TStaticText;
+    type_nomer_inp: TDBLookupComboBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure selnomselgrdDblClick(Sender: TObject);
     procedure nomselBtnClick(Sender: TObject);
     procedure sel_nom_fnd_EditKeyPress(Sender: TObject; var Key: Char);
+    procedure nom_Radiocos_adaygrupperClick(Sender: TObject);
+    procedure nom_RadiokindgrupperClick(Sender: TObject);
+    procedure nom_reset_radioClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -115,6 +119,92 @@ try
   end;
 end;
 
+procedure TFrm_nom.nom_Radiocos_adaygrupperClick(Sender: TObject);
+begin
+  if  nom_Radiocos_adaygrupper.Checked=true then
+  begin
+    try
+     with dm.nom_Query do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+      'select'+' '+
+   'nomer.id_type_nomer,'+' '+
+    'nomer.nomer_kind,'+' '+
+    'nomer.nomer_cost_day,'+' '+
+    'type_nomer.type_image'+' '+
+    'from nomer'+' '+
+    'inner join  type_nomer on type_nomer.id_type_nomer=nomer.id_type_nomer'+' '+
+    'where 1=1'+' '+
+    'order by nomer_cost_day asc';
+      Open;
+     end;
+    except on E: EADOError do
+    begin
+      ShowMessage('Ошибка'+' '+E.Message);
+    end;
+    end;
+  end;
+end;
+
+procedure TFrm_nom.nom_RadiokindgrupperClick(Sender: TObject);
+begin
+  if  nom_Radiokindgrupper.Checked=true then
+  begin
+    try
+     with dm.nom_Query do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+      'select'+' '+
+   'nomer.id_type_nomer,'+' '+
+    'nomer.nomer_kind,'+' '+
+    'nomer.nomer_cost_day,'+' '+
+    'type_nomer.type_image'+' '+
+    'from nomer'+' '+
+    'inner join  type_nomer on type_nomer.id_type_nomer=nomer.id_type_nomer'+' '+
+    'where 1=1'+' '+
+    'order by     nomer.nomer_kind desc';
+      Open;
+     end;
+    except on E: EADOError do
+    begin
+      ShowMessage('Ошибка'+' '+E.Message);
+    end;
+    end;
+  end;
+end;
+
+procedure TFrm_nom.nom_reset_radioClick(Sender: TObject);
+begin
+if  nom_reset_radio.Checked=true then
+  begin
+    try
+     with dm.nom_Query do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+      'select'+' '+
+   'nomer.id_type_nomer,'+' '+
+    'nomer.nomer_kind,'+' '+
+    'nomer.nomer_cost_day,'+' '+
+    'type_nomer.type_image'+' '+
+    'from nomer'+' '+
+    'inner join  type_nomer on type_nomer.id_type_nomer=nomer.id_type_nomer'+' '+
+    'where 1=1';
+      Open;
+     end;
+    except on E: EADOError do
+    begin
+      ShowMessage('Ошибка'+' '+E.Message);
+    end;
+    end;
+  end;
+end;
+
 procedure TFrm_nom.selnomselgrdDblClick(Sender: TObject);
 begin
   ShowImageFromDatabase(
@@ -138,7 +228,7 @@ begin
     'from nomer'+' '+
     'inner join  type_nomer on type_nomer.id_type_nomer=nomer.id_type_nomer'+' '+
     'where 1=1'+' '+
-   'and  type_nomer.type_naim like'+
+   'and nomer.nomer_kind like'+
    QuotedStr(Concat(sel_nom_fnd_edit.Text,#37));
    dm.nom_Query.close;
    dm.nom_Query.Open;

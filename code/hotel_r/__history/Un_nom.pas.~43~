@@ -24,14 +24,14 @@ type
     nom_Radiocos_adaygrupper: TRadioButton;
     nom_Radiokindgrupper: TRadioButton;
     nom_reset_radio: TRadioButton;
-    ins_tn_dataBox: TGroupBox;
-    ins_usl_inpBox: TGroupBox;
-    ins_usl_btn_Box: TGroupBox;
+    ins_nom_dataBox: TGroupBox;
+    ins_nom_inpBox: TGroupBox;
+    ins_nom_btn_Box: TGroupBox;
     ins_uslBtn: TButton;
-    usl_naim_inp: TLabeledEdit;
-    uslliveQuercB: TCheckBox;
-    usllqPanel: TPanel;
-    usllqsvBtn: TButton;
+    nomer_kind_inp: TLabeledEdit;
+    nomliveQuercB: TCheckBox;
+    nomlqPanel: TPanel;
+    nomlqsvBtn: TButton;
     upd_usl_inp_Box: TGroupBox;
     upd_usl_btn_Box: TGroupBox;
     upd_usl_data_box: TGroupBox;
@@ -44,13 +44,14 @@ type
     del_usl_d_btn: TButton;
     del_dbl_usl_lbl: TStaticText;
     del_dbl_usl_dbl: TDBLookupComboBox;
-    usl_ed_ism_inp: TLabeledEdit;
-    ins_tn_data_Box: TGroupBox;
+    nomer_cost_day_inp: TLabeledEdit;
+    ins_nom_data_Box: TGroupBox;
     upd_usl_naim_inp: TLabeledEdit;
-    ins_usl_grd: TDBGrid;
-    usl_cost_inp: TLabeledEdit;
     uslGrd: TDBGrid;
     Del_usl_grd: TDBGrid;
+    ins_nomGid: TDBGrid;
+    nom_type_n__llbl: TStaticText;
+    type_nomer_inp: TDBLookupComboBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -59,6 +60,8 @@ type
     procedure sel_nom_fnd_EditKeyPress(Sender: TObject; var Key: Char);
     procedure nom_Radiocos_adaygrupperClick(Sender: TObject);
     procedure nom_RadiokindgrupperClick(Sender: TObject);
+    procedure nom_reset_radioClick(Sender: TObject);
+    procedure ins_uslBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -95,6 +98,35 @@ begin
   UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   LoadFormState(Self);
+end;
+
+procedure TFrm_nom.ins_uslBtnClick(Sender: TObject);
+const
+AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+  PriceText: string;
+  PriceValue: Int64;
+begin
+PriceText:=nomer_cost_day_inp.Text;
+AreFieldsEmpty:=(
+(Trim(nomer_kind_inp.Text)='')or
+(Trim(nomer_cost_day_inp.Text)='')or
+(type_nomer_inp.Text='')
+);
+AreFieldsValid:=(
+ValidateComponentText(nomer_kind_inp,AllowedChars)and
+IsDigitsOnly(nomer_cost_day_inp.Text)
+);
+if AreFieldsEmpty or not AreFieldsValid then
+begin
+  MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+end;
+
 end;
 
 procedure TFrm_nom.nomselBtnClick(Sender: TObject);
@@ -164,7 +196,35 @@ begin
     'from nomer'+' '+
     'inner join  type_nomer on type_nomer.id_type_nomer=nomer.id_type_nomer'+' '+
     'where 1=1'+' '+
-    'order by     nomer.nomer_kind asc';
+    'order by     nomer.nomer_kind desc';
+      Open;
+     end;
+    except on E: EADOError do
+    begin
+      ShowMessage('Ошибка'+' '+E.Message);
+    end;
+    end;
+  end;
+end;
+
+procedure TFrm_nom.nom_reset_radioClick(Sender: TObject);
+begin
+if  nom_reset_radio.Checked=true then
+  begin
+    try
+     with dm.nom_Query do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+      'select'+' '+
+   'nomer.id_type_nomer,'+' '+
+    'nomer.nomer_kind,'+' '+
+    'nomer.nomer_cost_day,'+' '+
+    'type_nomer.type_image'+' '+
+    'from nomer'+' '+
+    'inner join  type_nomer on type_nomer.id_type_nomer=nomer.id_type_nomer'+' '+
+    'where 1=1';
       Open;
      end;
     except on E: EADOError do

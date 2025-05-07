@@ -24,14 +24,14 @@ type
     nom_Radiocos_adaygrupper: TRadioButton;
     nom_Radiokindgrupper: TRadioButton;
     nom_reset_radio: TRadioButton;
-    ins_tn_dataBox: TGroupBox;
-    ins_usl_inpBox: TGroupBox;
-    ins_usl_btn_Box: TGroupBox;
+    ins_nom_dataBox: TGroupBox;
+    ins_nom_inpBox: TGroupBox;
+    ins_nom_btn_Box: TGroupBox;
     ins_uslBtn: TButton;
-    usl_naim_inp: TLabeledEdit;
-    uslliveQuercB: TCheckBox;
-    usllqPanel: TPanel;
-    usllqsvBtn: TButton;
+    nomer_kind_inp: TLabeledEdit;
+    nomliveQuercB: TCheckBox;
+    nomlqPanel: TPanel;
+    nomlqsvBtn: TButton;
     upd_usl_inp_Box: TGroupBox;
     upd_usl_btn_Box: TGroupBox;
     upd_usl_data_box: TGroupBox;
@@ -44,13 +44,14 @@ type
     del_usl_d_btn: TButton;
     del_dbl_usl_lbl: TStaticText;
     del_dbl_usl_dbl: TDBLookupComboBox;
-    usl_ed_ism_inp: TLabeledEdit;
-    ins_tn_data_Box: TGroupBox;
+    nomer_cost_day_inp: TLabeledEdit;
+    ins_nom_data_Box: TGroupBox;
     upd_usl_naim_inp: TLabeledEdit;
-    ins_usl_grd: TDBGrid;
-    usl_cost_inp: TLabeledEdit;
     uslGrd: TDBGrid;
     Del_usl_grd: TDBGrid;
+    ins_nomGid: TDBGrid;
+    nom_type_n__llbl: TStaticText;
+    type_nomer_inp: TDBLookupComboBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -58,6 +59,12 @@ type
     procedure nomselBtnClick(Sender: TObject);
     procedure sel_nom_fnd_EditKeyPress(Sender: TObject; var Key: Char);
     procedure nom_Radiocos_adaygrupperClick(Sender: TObject);
+    procedure nom_RadiokindgrupperClick(Sender: TObject);
+    procedure nom_reset_radioClick(Sender: TObject);
+    procedure ins_uslBtnClick(Sender: TObject);
+    procedure ins_nomGidDblClick(Sender: TObject);
+    procedure nomliveQuercBClick(Sender: TObject);
+    procedure nomlqsvBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -96,6 +103,109 @@ begin
   LoadFormState(Self);
 end;
 
+procedure TFrm_nom.ins_nomGidDblClick(Sender: TObject);
+begin
+  ShowImageFromDatabase(
+  dm.Connection,
+  'type_nomer',
+  'type_image',
+  'id_type_nomer',
+   ins_nomGid.DataSource.DataSet.FieldByName('id_type_nomer').AsInteger
+  );
+
+end;
+
+procedure TFrm_nom.ins_uslBtnClick(Sender: TObject);
+const
+AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+  PriceText: string;
+  PriceValue: Int64;
+begin
+PriceText:=nomer_cost_day_inp.Text;
+AreFieldsEmpty:=(
+(Trim(nomer_kind_inp.Text)='')or
+(Trim(nomer_cost_day_inp.Text)='')or
+(type_nomer_inp.Text='')
+);
+AreFieldsValid:=(
+ValidateComponentText(nomer_kind_inp,AllowedChars)and
+IsDigitsOnly(nomer_cost_day_inp.Text)
+);
+if AreFieldsEmpty or not AreFieldsValid then
+begin
+  MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+end;
+try
+      with dm.ins_nom do
+      begin
+      PriceValue:=StrToInt64(nomer_cost_day_inp.Text);
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@nomer_kind').Value :=nomer_kind_inp.Text;
+           Parameters.ParamByName('@nomer_cost_day').Value:=PriceValue;
+           Parameters.ParamByName('@id_type_nomer').Value:=
+           dm.nom_query.FieldByName('id_type_nomer').AsString;
+           ExecProc;
+           dm.nom_query.Close;
+           dm.nom_query.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+end;
+
+procedure TFrm_nom.nomliveQuercBClick(Sender: TObject);
+begin
+case nomliveQuercB.Checked of
+true:
+begin
+  with dm.nom_query do
+begin
+  Close;
+  LockType:=ltOptimistic;
+  CursorType:= ctKeyset;
+  CursorLocation := clUseClient;
+  open;
+end;
+  ins_nomGid.ReadOnly:=false;
+end;
+false:
+begin
+with dm.nom_query do
+begin
+  Close;
+  LockType:=ltOptimistic;
+  CursorType:= ctStatic;
+  CursorLocation := clUseClient;
+  Open;
+end;
+  ins_nomGid.ReadOnly:=True;
+end;
+
+end;//case
+end;
+
+procedure TFrm_nom.nomlqsvBtnClick(Sender: TObject);
+var
+  UserResponse: Integer;
+begin
+
+end;
+
 procedure TFrm_nom.nomselBtnClick(Sender: TObject);
 begin
 try
@@ -121,7 +231,7 @@ begin
   if  nom_Radiocos_adaygrupper.Checked=true then
   begin
     try
-     with dm.type_nQuery do
+     with dm.nom_Query do
      begin
       close;
       sql.Clear;
@@ -135,6 +245,63 @@ begin
     'inner join  type_nomer on type_nomer.id_type_nomer=nomer.id_type_nomer'+' '+
     'where 1=1'+' '+
     'order by nomer_cost_day asc';
+      Open;
+     end;
+    except on E: EADOError do
+    begin
+      ShowMessage('Ошибка'+' '+E.Message);
+    end;
+    end;
+  end;
+end;
+
+procedure TFrm_nom.nom_RadiokindgrupperClick(Sender: TObject);
+begin
+  if  nom_Radiokindgrupper.Checked=true then
+  begin
+    try
+     with dm.nom_Query do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+      'select'+' '+
+   'nomer.id_type_nomer,'+' '+
+    'nomer.nomer_kind,'+' '+
+    'nomer.nomer_cost_day,'+' '+
+    'type_nomer.type_image'+' '+
+    'from nomer'+' '+
+    'inner join  type_nomer on type_nomer.id_type_nomer=nomer.id_type_nomer'+' '+
+    'where 1=1'+' '+
+    'order by     nomer.nomer_kind desc';
+      Open;
+     end;
+    except on E: EADOError do
+    begin
+      ShowMessage('Ошибка'+' '+E.Message);
+    end;
+    end;
+  end;
+end;
+
+procedure TFrm_nom.nom_reset_radioClick(Sender: TObject);
+begin
+if  nom_reset_radio.Checked=true then
+  begin
+    try
+     with dm.nom_Query do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+      'select'+' '+
+   'nomer.id_type_nomer,'+' '+
+    'nomer.nomer_kind,'+' '+
+    'nomer.nomer_cost_day,'+' '+
+    'type_nomer.type_image'+' '+
+    'from nomer'+' '+
+    'inner join  type_nomer on type_nomer.id_type_nomer=nomer.id_type_nomer'+' '+
+    'where 1=1';
       Open;
      end;
     except on E: EADOError do

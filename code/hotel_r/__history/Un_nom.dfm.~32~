@@ -58,6 +58,7 @@ object Frm_nom: TFrm_nom
           EditLabel.Height = 13
           EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086'  '#1074#1080#1076#1091' '#1085#1086#1084#1077#1088#1072
           TabOrder = 1
+          OnKeyPress = sel_nom_fnd_EditKeyPress
         end
       end
       object m_nom_grupper: TGroupBox
@@ -75,6 +76,7 @@ object Frm_nom: TFrm_nom
           Height = 17
           Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1094#1077#1085#1077' '#1074' '#1076#1077#1085#1100
           TabOrder = 0
+          OnClick = nom_Radiocos_adaygrupperClick
         end
         object nom_Radiokindgrupper: TRadioButton
           Left = 296
@@ -83,6 +85,7 @@ object Frm_nom: TFrm_nom
           Height = 17
           Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1074#1080#1076#1091
           TabOrder = 1
+          OnClick = nom_RadiokindgrupperClick
         end
         object nom_reset_radio: TRadioButton
           Left = 584
@@ -91,6 +94,7 @@ object Frm_nom: TFrm_nom
           Height = 17
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 2
+          OnClick = nom_reset_radioClick
         end
       end
       object selnommbtnBox: TGroupBox
@@ -107,6 +111,7 @@ object Frm_nom: TFrm_nom
           Height = 25
           Caption = #1042#1099#1073#1088#1072#1090#1100
           TabOrder = 0
+          OnClick = nomselBtnClick
         end
       end
       object sel_nom_data_box: TGroupBox
@@ -130,6 +135,7 @@ object Frm_nom: TFrm_nom
           TitleFont.Height = -11
           TitleFont.Name = 'Tahoma'
           TitleFont.Style = []
+          OnDblClick = selnomselgrdDblClick
           Columns = <
             item
               Expanded = False
