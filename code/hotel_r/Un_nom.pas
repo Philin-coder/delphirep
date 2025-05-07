@@ -66,6 +66,7 @@ type
     procedure nomliveQuercBClick(Sender: TObject);
     procedure nomlqsvBtnClick(Sender: TObject);
     procedure upd_nom_btnClick(Sender: TObject);
+    procedure del_nom_d_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -81,6 +82,43 @@ implementation
 uses Un_dm, Un_func;
 
 {$R *.dfm}
+
+procedure TFrm_nom.del_nom_d_btnClick(Sender: TObject);
+var AreFieldsEmpty: Boolean;
+begin
+AreFieldsEmpty:=(
+(del_dbl_nom_dbl.Text='')
+);
+if AreFieldsEmpty then
+begin
+     MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+end;
+try
+      with dm.del_nom do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@nomer_id').Value :=
+           dm.nom_query.FieldByName('nomer_id').AsString;
+           ExecProc;
+           dm.nom_query.Close;
+           dm.nom_query.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+end;
 
 procedure TFrm_nom.FormActivate(Sender: TObject);
 begin

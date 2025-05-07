@@ -470,9 +470,9 @@ object Frm_nom: TFrm_nom
           Height = 21
           Align = alCustom
           Anchors = [akLeft, akRight]
-          KeyField = 'usl_id'
-          ListField = 'usl_naim'
-          ListSource = DM.uslDS
+          KeyField = 'nomer_id'
+          ListField = 'nomer_kind'
+          ListSource = DM.nomDS
           TabOrder = 1
         end
       end
@@ -542,6 +542,7 @@ object Frm_nom: TFrm_nom
           Height = 25
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
+          OnClick = del_nom_d_btnClick
         end
       end
     end
