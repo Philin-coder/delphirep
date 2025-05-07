@@ -158,7 +158,7 @@ DialogName: string; const ContentToSave: string);
 procedure ShowImageFromDatabase(AConnection: TADOConnection;
 const ATableName, AFieldName, AKeyField: string; AKeyValue: Integer);
 procedure ShowDBGridInTreeView(AOwner: TComponent; const DBGridName: string);
-procedure CopyDBGridToTreeView(DBGrid: TDBGrid; TreeView: TTreeView);
+procedure CopyDBGridToTreeView(DBGrid: TDBGrid; TreeView: TTreeView; ImageList: TImageList);
 implementation
 type
   tdata = array [0..15] of DWORD;
@@ -2811,8 +2811,6 @@ begin
     Query.Free;
   end;
 end;
-
-
 procedure ShowDBGridInTreeView(AOwner: TComponent; const DBGridName: string);
 var
   Form: TForm;

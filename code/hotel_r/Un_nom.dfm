@@ -21,7 +21,7 @@ object Frm_nom: TFrm_nom
     Top = 0
     Width = 1013
     Height = 755
-    ActivePage = insTab
+    ActivePage = seLTab
     Align = alClient
     TabOrder = 0
     object seLTab: TTabSheet
@@ -95,6 +95,15 @@ object Frm_nom: TFrm_nom
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 2
           OnClick = nom_reset_radioClick
+        end
+        object treevcb: TCheckBox
+          Left = 656
+          Top = 48
+          Width = 153
+          Height = 17
+          Caption = #1086#1090#1086#1073#1088#1072#1079#1080#1090#1100' trreview'
+          TabOrder = 3
+          OnClick = treevcbClick
         end
       end
       object selnommbtnBox: TGroupBox

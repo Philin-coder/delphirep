@@ -158,7 +158,7 @@ DialogName: string; const ContentToSave: string);
 procedure ShowImageFromDatabase(AConnection: TADOConnection;
 const ATableName, AFieldName, AKeyField: string; AKeyValue: Integer);
 procedure ShowDBGridInTreeView(AOwner: TComponent; const DBGridName: string);
-procedure CopyDBGridToTreeView(DBGrid: TDBGrid; TreeView: TTreeView);
+procedure CopyDBGridToTreeView(DBGrid: TDBGrid; TreeView: TTreeView; ImageList: TImageList);
 implementation
 type
   tdata = array [0..15] of DWORD;
@@ -2811,8 +2811,6 @@ begin
     Query.Free;
   end;
 end;
-
-
 procedure ShowDBGridInTreeView(AOwner: TComponent; const DBGridName: string);
 var
   Form: TForm;
@@ -2848,7 +2846,7 @@ begin
     TreeView.Images := ImageList; // Привязываем ImageList к TreeView
 
     // Заполняем TreeView данными из DBGrid
-    CopyDBGridToTreeView(DBGrid, TreeView);
+    CopyDBGridToTreeView(DBGrid, TreeView, ImageList);
 
     // Показываем форму
     Form.ShowModal;
@@ -2856,15 +2854,13 @@ begin
     Form.Free; // Освобождаем форму после закрытия
   end;
 end;
-
-procedure CopyDBGridToTreeView(DBGrid: TDBGrid; TreeView: TTreeView);
+procedure CopyDBGridToTreeView(DBGrid: TDBGrid; TreeView: TTreeView; ImageList: TImageList);
 var
   DataSet: TDataSet;
   TreeNode: TTreeNode;
-  i: Integer;
+  i, ImageIndex: Integer;
   BlobStream: TStream;
   JPEGImage: TJPEGImage;
-  Image: TImage; // Временный компонент TImage для работы с изображениями
 begin
   // Получаем набор данных, связанный с DBGrid
   DataSet := DBGrid.DataSource.DataSet;
@@ -2894,21 +2890,15 @@ begin
           BlobStream := DataSet.CreateBlobStream(DataSet.Fields[i], bmRead);
           try
             JPEGImage := TJPEGImage.Create;
-            Image := TImage.Create(nil); // Создаем временный TImage
             try
               JPEGImage.LoadFromStream(BlobStream);
-
-              // Присваиваем JPEGImage напрямую в Picture
-              Image.Picture.Assign(JPEGImage);
-
-              // Здесь можно использовать Image.Picture для дальнейшей обработки
-              // Например, сохранить изображение в файл или отобразить его на форме
-
-              // Если нужно, можно добавить текстовый узел с информацией об изображении
-              TreeView.Items.AddChild(TreeNode, 'Изображение загружено');
+              // Добавляем изображение в ImageList
+              ImageIndex := ImageList.Add(JPEGImage, nil);
+              // Устанавливаем изображение для узла
+              TreeNode.ImageIndex := ImageIndex;
+              TreeNode.SelectedIndex := ImageIndex;
             finally
               JPEGImage.Free;
-              Image.Free; // Освобождаем временный TImage
             end;
           finally
             BlobStream.Free;
@@ -2927,6 +2917,10 @@ begin
     DataSet.EnableControls; // Включаем обновление интерфейса
   end;
 end;
+
+
+
+
 initialization
   VisitedStaticTexts := TStringList.Create;
 finalization

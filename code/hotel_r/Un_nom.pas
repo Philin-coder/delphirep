@@ -52,6 +52,7 @@ type
     type_nomer_inp: TDBLookupComboBox;
     upd_nom_grd: TDBGrid;
     del_nom_grd: TDBGrid;
+    treevcb: TCheckBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -67,6 +68,7 @@ type
     procedure nomlqsvBtnClick(Sender: TObject);
     procedure upd_nom_btnClick(Sender: TObject);
     procedure del_nom_d_btnClick(Sender: TObject);
+    procedure treevcbClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -427,6 +429,14 @@ except on E: Exception do
   ShowMessage('Ошибка'+' '+E.Message);
   end;
   end;
+end;
+
+procedure TFrm_nom.treevcbClick(Sender: TObject);
+begin
+ if treevcb.Checked then
+ begin
+       ShowDBGridInTreeView(Self, 'selnomselgrd');
+ end;
 end;
 
 procedure TFrm_nom.upd_nom_btnClick(Sender: TObject);

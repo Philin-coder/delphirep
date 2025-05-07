@@ -2811,8 +2811,6 @@ begin
     Query.Free;
   end;
 end;
-
-
 procedure ShowDBGridInTreeView(AOwner: TComponent; const DBGridName: string);
 var
   Form: TForm;

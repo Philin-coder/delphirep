@@ -157,8 +157,6 @@ procedure ConfigureAndExecuteDialog(Dialog: TCommonDialog; const
 DialogName: string; const ContentToSave: string);
 procedure ShowImageFromDatabase(AConnection: TADOConnection;
 const ATableName, AFieldName, AKeyField: string; AKeyValue: Integer);
-procedure ShowDBGridInTreeView(AOwner: TComponent; const DBGridName: string);
-procedure CopyDBGridToTreeView(DBGrid: TDBGrid; TreeView: TTreeView);
 implementation
 type
   tdata = array [0..15] of DWORD;
@@ -2812,121 +2810,6 @@ begin
   end;
 end;
 
-
-procedure ShowDBGridInTreeView(AOwner: TComponent; const DBGridName: string);
-var
-  Form: TForm;
-  TreeView: TTreeView;
-  ImageList: TImageList;
-  DBGrid: TDBGrid;
-begin
-  // Находим компонент DBGrid по имени
-  DBGrid := TDBGrid(AOwner.FindComponent(DBGridName));
-  if not Assigned(DBGrid) then
-  begin
-    ShowMessage('Компонент DBGrid с именем "' + DBGridName + '" не найден.');
-    Exit;
-  end;
-
-  // Создаем динамическую форму
-  Form := TForm.Create(nil);
-  try
-    // Устанавливаем свойства формы
-    Form.Caption := 'Просмотр данных';
-    Form.Width := 600;
-    Form.Height := 400;
-
-    // Создаем и настраиваем ImageList для хранения изображений
-    ImageList := TImageList.Create(Form);
-    ImageList.Width := 32; // Ширина изображений
-    ImageList.Height := 32; // Высота изображений
-
-    // Создаем и настраиваем TreeView
-    TreeView := TTreeView.Create(Form);
-    TreeView.Parent := Form;
-    TreeView.Align := alClient;
-    TreeView.Images := ImageList; // Привязываем ImageList к TreeView
-
-    // Заполняем TreeView данными из DBGrid
-    CopyDBGridToTreeView(DBGrid, TreeView);
-
-    // Показываем форму
-    Form.ShowModal;
-  finally
-    Form.Free; // Освобождаем форму после закрытия
-  end;
-end;
-
-procedure CopyDBGridToTreeView(DBGrid: TDBGrid; TreeView: TTreeView);
-var
-  DataSet: TDataSet;
-  TreeNode: TTreeNode;
-  i: Integer;
-  BlobStream: TStream;
-  JPEGImage: TJPEGImage;
-  Image: TImage; // Временный компонент TImage для работы с изображениями
-begin
-  // Получаем набор данных, связанный с DBGrid
-  DataSet := DBGrid.DataSource.DataSet;
-
-  // Очищаем TreeView перед заполнением
-  TreeView.Items.Clear;
-
-  // Проверяем, что набор данных открыт
-  if not DataSet.Active then
-    Exit;
-
-  // Перебираем все записи в наборе данных
-  DataSet.DisableControls; // Отключаем обновление интерфейса для ускорения
-  try
-    DataSet.First;
-    while not DataSet.Eof do
-    begin
-      // Создаем корневой узел для каждой записи
-      TreeNode := TreeView.Items.AddChild(nil, DataSet.Fields[0].AsString);
-
-      // Добавляем дочерние узлы для остальных полей
-      for i := 1 to DataSet.FieldCount - 1 do
-      begin
-        if (DataSet.Fields[i].FieldName = 'type_image') and (not DataSet.Fields[i].IsNull) then
-        begin
-          // Загружаем изображение из BLOB-поля
-          BlobStream := DataSet.CreateBlobStream(DataSet.Fields[i], bmRead);
-          try
-            JPEGImage := TJPEGImage.Create;
-            Image := TImage.Create(nil); // Создаем временный TImage
-            try
-              JPEGImage.LoadFromStream(BlobStream);
-
-              // Присваиваем JPEGImage напрямую в Picture
-              Image.Picture.Assign(JPEGImage);
-
-              // Здесь можно использовать Image.Picture для дальнейшей обработки
-              // Например, сохранить изображение в файл или отобразить его на форме
-
-              // Если нужно, можно добавить текстовый узел с информацией об изображении
-              TreeView.Items.AddChild(TreeNode, 'Изображение загружено');
-            finally
-              JPEGImage.Free;
-              Image.Free; // Освобождаем временный TImage
-            end;
-          finally
-            BlobStream.Free;
-          end;
-        end
-        else
-        begin
-          // Добавляем текстовые поля как дочерние узлы
-          TreeView.Items.AddChild(TreeNode, DataSet.Fields[i].DisplayName + ': ' + DataSet.Fields[i].AsString);
-        end;
-      end;
-
-      DataSet.Next;
-    end;
-  finally
-    DataSet.EnableControls; // Включаем обновление интерфейса
-  end;
-end;
 initialization
   VisitedStaticTexts := TStringList.Create;
 finalization

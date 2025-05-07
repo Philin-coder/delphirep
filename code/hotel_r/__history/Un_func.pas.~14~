@@ -2812,7 +2812,6 @@ begin
   end;
 end;
 
-
 procedure ShowDBGridInTreeView(AOwner: TComponent; const DBGridName: string);
 var
   Form: TForm;
@@ -2850,13 +2849,36 @@ begin
     // Заполняем TreeView данными из DBGrid
     CopyDBGridToTreeView(DBGrid, TreeView);
 
+    // Обработчик двойного клика для просмотра изображений
+    TreeView.OnDblClick := procedure(Sender: TObject)
+      var
+        SelectedNode: TTreeNode;
+        KeyField: Integer;
+      begin
+        // Получаем выбранный узел
+        SelectedNode := TreeView.Selected;
+        if not Assigned(SelectedNode) or not Assigned(SelectedNode.Data) then
+          Exit;
+
+        // Извлекаем значение ключевого поля из данных узла
+        KeyField := Integer(SelectedNode.Data);
+
+        // Показываем изображение в отдельной форме
+        ShowImageFromDatabase(
+          DBGrid.DataSource.DataSet.Connection as TADOConnection,
+          'type_nomer', // Имя таблицы
+          'type_image', // Имя поля с изображением
+          'id_type_nomer', // Имя ключевого поля
+          KeyField // Значение ключевого поля
+        );
+      end;
+
     // Показываем форму
     Form.ShowModal;
   finally
     Form.Free; // Освобождаем форму после закрытия
   end;
 end;
-
 procedure CopyDBGridToTreeView(DBGrid: TDBGrid; TreeView: TTreeView);
 var
   DataSet: TDataSet;
@@ -2885,6 +2907,9 @@ begin
       // Создаем корневой узел для каждой записи
       TreeNode := TreeView.Items.AddChild(nil, DataSet.Fields[0].AsString);
 
+      // Сохраняем значение ключевого поля в данных узла
+      TreeNode.Data := Pointer(DataSet.FieldByName('id_type_nomer').AsInteger);
+
       // Добавляем дочерние узлы для остальных полей
       for i := 1 to DataSet.FieldCount - 1 do
       begin
@@ -2900,9 +2925,6 @@ begin
 
               // Присваиваем JPEGImage напрямую в Picture
               Image.Picture.Assign(JPEGImage);
-
-              // Здесь можно использовать Image.Picture для дальнейшей обработки
-              // Например, сохранить изображение в файл или отобразить его на форме
 
               // Если нужно, можно добавить текстовый узел с информацией об изображении
               TreeView.Items.AddChild(TreeNode, 'Изображение загружено');
