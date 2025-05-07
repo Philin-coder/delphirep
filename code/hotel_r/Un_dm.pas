@@ -31,7 +31,7 @@ type
     sel_nom_by_kind: TADOStoredProc;
     ins_nom: TADOStoredProc;
     upd_nom: TADOStoredProc;
-    ADOStoredProc4: TADOStoredProc;
+    del_nom: TADOStoredProc;
   private
     { Private declarations }
   public
