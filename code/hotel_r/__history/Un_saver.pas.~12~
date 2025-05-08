@@ -1,0 +1,117 @@
+unit Un_saver;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs,OpenGL;
+
+type
+  TFrm_saver = class(TForm)
+    procedure FormMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure FormDestroy(Sender: TObject);
+    procedure FormPaint(Sender: TObject);
+    procedure FormResize(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+  private
+    DC: HDC;
+    RC: HGLRC;
+    procedure InitializeOpenGL;
+    procedure renderScene;
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_saver: TFrm_saver;
+
+implementation
+
+{$R *.dfm}
+procedure TFrm_saver.renderScene;
+begin
+glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT); // Очистка буфера экрана
+  glClearColor(0.0, 0.0, 0.0, 1.0);
+  glBegin(GL_QUADS);
+    glColor3f(1.0, 0.0, 0.0);
+    glVertex2f(-0.5, -0.5);
+    glVertex2f(0.5, -0.5);
+    glVertex2f(0.5, 0.5);
+    glVertex2f(-0.5, 0.5);
+  glEnd;
+
+  SwapBuffers(DC); // Обмен буферов для отобра
+end;
+procedure TFrm_saver.InitializeOpenGL;
+var
+  pfd: TPixelFormatDescriptor;
+  PixelFormat: Integer;
+begin
+  // Получаем контекст устройства
+  DC := GetDC(Handle);
+
+  // Настройка пиксельного формата
+  ZeroMemory(@pfd, SizeOf(pfd));
+  pfd.nSize := SizeOf(pfd);
+  pfd.nVersion := 1;
+  pfd.dwFlags := PFD_DRAW_TO_WINDOW or PFD_SUPPORT_OPENGL or PFD_DOUBLEBUFFER;
+  pfd.iPixelType := PFD_TYPE_RGBA;
+  pfd.cColorBits := 32;
+  pfd.cDepthBits := 16;
+
+  // Выбираем подходящий пиксельный формат
+  PixelFormat := ChoosePixelFormat(DC, @pfd);
+  SetPixelFormat(DC, PixelFormat, @pfd);
+
+  // Создаем контекст рендеринга OpenGL
+  RC := wglCreateContext(DC);
+  wglMakeCurrent(DC, RC);
+end;
+
+
+procedure TFrm_saver.FormCreate(Sender: TObject);
+begin
+   InitializeOpenGL; // Инициализируем OpenGL
+FormResize(Self);
+end;
+
+procedure TFrm_saver.FormDestroy(Sender: TObject);
+begin
+  wglMakeCurrent(0, 0); // Отключаем текущий контекст
+  wglDeleteContext(RC); // Удаляем контекст рендеринга
+  ReleaseDC(Handle, DC);
+end;
+
+procedure TFrm_saver.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+Close;
+end;
+
+procedure TFrm_saver.FormMouseDown(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+Close;
+end;
+
+procedure TFrm_saver.FormPaint(Sender: TObject);
+begin
+renderScene;
+end;
+
+procedure TFrm_saver.FormResize(Sender: TObject);
+begin
+   if DC<>0 then
+  begin
+    glViewport(0, 0, ClientWidth, ClientHeight); // Устанавливаем область просмотра
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity;
+    glOrtho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0); 
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity;
+  end;
+end;
+
+end.

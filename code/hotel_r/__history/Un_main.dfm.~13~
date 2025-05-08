@@ -35,7 +35,6 @@ object Frm_main: TFrm_main
     Height = 25
     Caption = #1061#1088#1072#1085#1080#1090#1077#1083#1100' '#1101#1082#1088#1072#1085#1072
     TabOrder = 0
-    OnClick = freeze_btnClick
   end
   object ItemMenu: TMainMenu
     Left = 312
@@ -58,9 +57,7 @@ object Frm_main: TFrm_main
     end
   end
   object freeze_timer: TTimer
-    Enabled = False
     Interval = 10000
-    OnTimer = freeze_timerTimer
     Left = 208
     Top = 104
   end

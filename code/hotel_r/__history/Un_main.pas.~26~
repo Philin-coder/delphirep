@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, Menus, ExtCtrls,jpeg;
+  Dialogs, Menus, ExtCtrls,jpeg, StdCtrls;
 
 type
   TFrm_main = class(TForm)
@@ -13,30 +13,49 @@ type
     admin_item: TMenuItem;
     type_n_item: TMenuItem;
     usl_item: TMenuItem;
+    Nom_item: TMenuItem;
+    freeze_timer: TTimer;
+    freeze_btn: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure admin_itemClick(Sender: TObject);
     procedure type_n_itemClick(Sender: TObject);
     procedure usl_itemClick(Sender: TObject);
+    procedure Nom_itemClick(Sender: TObject);
+    procedure freeze_btnClick(Sender: TObject);
+    procedure freeze_timerTimer(Sender: TObject);
   private
-    { Private declarations }
+procedure ResetInactivityTimer(Sender: TObject; var Done: Boolean);
+procedure HandleApplicationMessage(var Msg: TMsg; var Handled: Boolean);
   public
     { Public declarations }
   end;
 
 var
   Frm_main: TFrm_main;
+  LastActivityTime: Cardinal;
 
 implementation
 
-uses Un_func, Un_dm, Un_fadmin, Un_type_nom, Un_usl;
+uses Un_func, Un_dm, Un_fadmin, Un_type_nom, Un_usl, Un_nom, Un_saver;
 const
   FileName = 'connection_string.txt';
 
 
 
 {$R *.dfm}
+procedure TFrm_main.ResetInactivityTimer(Sender: TObject; var Done: Boolean);
+begin
+  LastActivityTime := GetTickCount;
+  Done := True;
+end;
+
+procedure TFrm_main.HandleApplicationMessage(var Msg: TMsg; var Handled: Boolean);
+begin
+  LastActivityTime := GetTickCount;
+  Handled := False;
+end;
 
 procedure TFrm_main.admin_itemClick(Sender: TObject);
 begin
@@ -59,10 +78,12 @@ procedure TFrm_main.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   main_Image.Picture:=nil;
   SaveFormState(Self);
+  freeze_timer.Enabled:=False;
 end;
 
 procedure TFrm_main.FormCreate(Sender: TObject);
 begin
+  LastActivityTime := GetTickCount;
  SetFormPropertiesIfNeeded;
  with main_Image do
  begin
@@ -71,7 +92,38 @@ begin
  end;
  LoadFormState(Self);
  LoadImageFromResource('BACKGROUND_IMAGE',main_Image);
+ freeze_timer.Interval := 1000;
+ freeze_timer.Enabled:=False;
+ Application.OnIdle := ResetInactivityTimer;
+ Application.OnMessage := HandleApplicationMessage;
 end;
+
+procedure TFrm_main.freeze_btnClick(Sender: TObject);
+begin
+  freeze_timer.Enabled := True;
+end;
+
+procedure TFrm_main.freeze_timerTimer(Sender: TObject);
+begin
+ if GetTickCount - LastActivityTime > 10000 then
+  begin
+    freeze_timer.Enabled := False;
+    Frm_saver.Show; 
+  end;
+end;
+
+procedure TFrm_main.Nom_itemClick(Sender: TObject);
+begin
+try
+UpdateFormProperties('Frm_nom', 'Форма работы с  номером',
+clBtnFace, 1024, 768);
+ Frm_nom.ShowModal;
+except
+Frm_nom.Free;
+raise;
+end;
+end;
+
 
 procedure TFrm_main.type_n_itemClick(Sender: TObject);
 begin

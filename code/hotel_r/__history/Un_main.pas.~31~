@@ -26,6 +26,7 @@ type
     procedure freeze_btnClick(Sender: TObject);
     procedure freeze_timerTimer(Sender: TObject);
   private
+    procedure ResetInactivityTimer(Sender: TObject; var Done: Boolean);
     procedure HandleApplicationMessage(var Msg: TMsg; var Handled: Boolean);
   public
     { Public declarations }
@@ -38,22 +39,22 @@ var
 implementation
 
 uses Un_func, Un_dm, Un_fadmin, Un_type_nom, Un_usl, Un_nom, Un_saver;
-
 const
   FileName = 'connection_string.txt';
 
 {$R *.dfm}
 
+// Сброс времени последней активности
+procedure TFrm_main.ResetInactivityTimer(Sender: TObject; var Done: Boolean);
+begin
+  LastActivityTime := GetTickCount;
+  Done := True;
+end;
+
 // Обработка сообщений Windows для отслеживания активности
 procedure TFrm_main.HandleApplicationMessage(var Msg: TMsg; var Handled: Boolean);
 begin
-  case Msg.message of
-    WM_MOUSEMOVE,
-    WM_LBUTTONDOWN, WM_LBUTTONUP,
-    WM_RBUTTONDOWN, WM_RBUTTONUP,
-    WM_KEYDOWN, WM_KEYUP:
-      LastActivityTime := GetTickCount;
-  end;
+  LastActivityTime := GetTickCount;
   Handled := False;
 end;
 
@@ -81,13 +82,13 @@ procedure TFrm_main.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   main_Image.Picture := nil;
   SaveFormState(Self);
-  freeze_timer.Enabled := False;
+  freeze_timer.Enabled := False; // Останавливаем таймер при закрытии формы
 end;
 
 // Создание формы
 procedure TFrm_main.FormCreate(Sender: TObject);
 begin
-  LastActivityTime := GetTickCount;
+  LastActivityTime := GetTickCount; // Инициализация времени последней активности
 
   SetFormPropertiesIfNeeded;
   with main_Image do
@@ -98,30 +99,37 @@ begin
   LoadFormState(Self);
   LoadImageFromResource('BACKGROUND_IMAGE', main_Image);
 
-  freeze_timer.Interval := 1000;
+  // Настройка таймера
+  freeze_timer.Interval := 1000; // Проверка каждую секунду
   freeze_timer.Enabled := False;
 
+  // Назначение обработчиков событий для отслеживания активности
+  Application.OnIdle := ResetInactivityTimer;
   Application.OnMessage := HandleApplicationMessage;
 end;
 
 // Обработчик нажатия кнопки "Заморозить"
 procedure TFrm_main.freeze_btnClick(Sender: TObject);
 begin
-  LastActivityTime := GetTickCount;
-  freeze_timer.Enabled := True;
+  LastActivityTime := GetTickCount; // Сбрасываем время последней активности
+  freeze_timer.Enabled := True;     // Включаем таймер
+//  ShowMessage(IntToStr(LastActivityTime)); // Отладочное сообщение
 end;
 
 // Обработчик события таймера
 procedure TFrm_main.freeze_timerTimer(Sender: TObject);
 begin
+  ShowMessage('Таймер сработал. Разница: ' + IntToStr(Int64(GetTickCount) - Int64(LastActivityTime)));
+
   if Int64(GetTickCount) - Int64(LastActivityTime) >= 10000 then
   begin
-    freeze_timer.Enabled := False;
+    freeze_timer.Enabled := False; // Останавливаем таймер
 
+    // Проверяем, создана ли форма скринсейвера
     if not Assigned(Frm_saver) then
       Frm_saver := TFrm_saver.Create(nil);
 
-    Frm_saver.Show;
+    Frm_saver.Show; // Показываем форму скринсейвера
   end;
 end;
 

@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, Menus, ExtCtrls,jpeg;
+  Dialogs, Menus, ExtCtrls,jpeg, StdCtrls;
 
 type
   TFrm_main = class(TForm)
@@ -12,11 +12,19 @@ type
     ItemMenu: TMainMenu;
     admin_item: TMenuItem;
     type_n_item: TMenuItem;
+    usl_item: TMenuItem;
+    Nom_item: TMenuItem;
+    freeze_timer: TTimer;
+    freeze_btn: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure admin_itemClick(Sender: TObject);
     procedure type_n_itemClick(Sender: TObject);
+    procedure usl_itemClick(Sender: TObject);
+    procedure Nom_itemClick(Sender: TObject);
+    procedure freeze_btnClick(Sender: TObject);
+    procedure freeze_timerTimer(Sender: TObject);
   private
     { Private declarations }
   public
@@ -28,7 +36,7 @@ var
 
 implementation
 
-uses Un_func, Un_dm, Un_fadmin, Un_type_nom;
+uses Un_func, Un_dm, Un_fadmin, Un_type_nom, Un_usl, Un_nom, Un_saver;
 const
   FileName = 'connection_string.txt';
 
@@ -57,6 +65,7 @@ procedure TFrm_main.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   main_Image.Picture:=nil;
   SaveFormState(Self);
+  freeze_timer.Enabled:=False;
 end;
 
 procedure TFrm_main.FormCreate(Sender: TObject);
@@ -69,11 +78,37 @@ begin
  end;
  LoadFormState(Self);
  LoadImageFromResource('BACKGROUND_IMAGE',main_Image);
+ freeze_timer.Enabled:=False;
 end;
+
+procedure TFrm_main.freeze_btnClick(Sender: TObject);
+begin
+  freeze_timer.Enabled := True;
+end;
+
+procedure TFrm_main.freeze_timerTimer(Sender: TObject);
+begin
+  freeze_timer.Enabled := False;
+  ShowMessage('Прошло 10 секунд!');
+  Frm_saver.Show; 
+end;
+
+procedure TFrm_main.Nom_itemClick(Sender: TObject);
+begin
+try
+UpdateFormProperties('Frm_nom', 'Форма работы с  номером',
+clBtnFace, 1024, 768);
+ Frm_nom.ShowModal;
+except
+Frm_nom.Free;
+raise;
+end;
+end;
+
 
 procedure TFrm_main.type_n_itemClick(Sender: TObject);
 begin
-     try
+try
 UpdateFormProperties('Frm_type_nom', 'Форма работы с типом номера',
 clBtnFace, 1024, 768);
  Frm_type_nom.ShowModal;
@@ -83,4 +118,15 @@ raise;
 end;
 end;
 
+procedure TFrm_main.usl_itemClick(Sender: TObject);
+begin
+try
+UpdateFormProperties('Frm_usl', 'Форма работы с услугой',
+clBtnFace, 1024, 768);
+ Frm_usl.ShowModal;
+except
+Frm_usl.Free;
+raise;
+end;
+end;
 end.
