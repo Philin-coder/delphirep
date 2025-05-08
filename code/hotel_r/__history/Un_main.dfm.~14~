@@ -19,33 +19,23 @@ object Frm_main: TFrm_main
   TextHeight = 13
   object main_image: TImage
     Left = 0
-    Top = 29
+    Top = 0
     Width = 635
-    Height = 330
+    Height = 359
     Align = alClient
     ExplicitLeft = 456
     ExplicitTop = 48
     ExplicitWidth = 105
     ExplicitHeight = 105
   end
-  object saver_tb: TToolBar
-    Left = 0
-    Top = 0
-    Width = 635
-    Height = 29
+  object freeze_btn: TButton
+    Left = 232
+    Top = 256
+    Width = 121
+    Height = 25
+    Caption = #1061#1088#1072#1085#1080#1090#1077#1083#1100' '#1101#1082#1088#1072#1085#1072
     TabOrder = 0
-    ExplicitLeft = 496
-    ExplicitTop = 40
-    ExplicitWidth = 150
-    object savercb: TCheckBox
-      Left = 0
-      Top = 0
-      Width = 145
-      Height = 22
-      Caption = #1061#1088#1072#1085#1080#1090#1077#1083#1100' '#1101#1082#1088#1072#1085#1072
-      TabOrder = 0
-      OnClick = savercbClick
-    end
+    OnClick = freeze_btnClick
   end
   object ItemMenu: TMainMenu
     Left = 312

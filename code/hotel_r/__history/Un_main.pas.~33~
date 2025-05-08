@@ -15,6 +15,7 @@ type
     usl_item: TMenuItem;
     Nom_item: TMenuItem;
     freeze_timer: TTimer;
+    freeze_btn: TButton;
     saver_tb: TToolBar;
     savercb: TCheckBox;
     procedure FormCreate(Sender: TObject);
@@ -24,7 +25,7 @@ type
     procedure type_n_itemClick(Sender: TObject);
     procedure usl_itemClick(Sender: TObject);
     procedure Nom_itemClick(Sender: TObject);
-
+    procedure freeze_btnClick(Sender: TObject);
     procedure freeze_timerTimer(Sender: TObject);
     procedure savercbClick(Sender: TObject);
   private
@@ -107,7 +108,10 @@ begin
 end;
 
 // Обработчик нажатия кнопки "Заморозить"
+procedure TFrm_main.freeze_btnClick(Sender: TObject);
+begin
 
+end;
 
 // Обработчик события таймера
 procedure TFrm_main.freeze_timerTimer(Sender: TObject);
@@ -140,8 +144,7 @@ procedure TFrm_main.savercbClick(Sender: TObject);
 begin
 if savercb.Checked then
 begin
-  LastActivityTime := GetTickCount;
-  freeze_timer.Enabled := True;
+
 end;
 end;
 
