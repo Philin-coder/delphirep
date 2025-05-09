@@ -17,7 +17,6 @@ type
     freeze_timer: TTimer;
     saver_tb: TToolBar;
     savercb: TCheckBox;
-    dog_item: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
@@ -28,7 +27,6 @@ type
 
     procedure freeze_timerTimer(Sender: TObject);
     procedure savercbClick(Sender: TObject);
-    procedure dog_itemClick(Sender: TObject);
   private
     procedure HandleApplicationMessage(var Msg: TMsg; var Handled: Boolean);
   public
@@ -41,7 +39,7 @@ var
 
 implementation
 
-uses Un_func, Un_dm, Un_fadmin, Un_type_nom, Un_usl, Un_nom, Un_saver, Un_dog;
+uses Un_func, Un_dm, Un_fadmin, Un_type_nom, Un_usl, Un_nom, Un_saver;
 
 const
   FileName = 'connection_string.txt';
@@ -75,20 +73,6 @@ begin
 end;
 
 // Активация формы
-procedure TFrm_main.dog_itemClick(Sender: TObject);
-begin
-begin
-  try
-    UpdateFormProperties('Frm_dog', 'Форма работы с договорм',
-      clBtnFace, 1024, 768);
-    Frm_dog.ShowModal;
-  except
-    Frm_dog.Free;
-    raise;
-  end;
-end;
-end;
-
 procedure TFrm_main.FormActivate(Sender: TObject);
 begin
   SaveConnectionStringToFile(FileName, dm.connection.ConnectionString);

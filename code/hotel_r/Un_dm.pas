@@ -32,6 +32,12 @@ type
     ins_nom: TADOStoredProc;
     upd_nom: TADOStoredProc;
     del_nom: TADOStoredProc;
+    dogQuery: TADOQuery;
+    dogDS: TDataSource;
+    ADOStoredProc1: TADOStoredProc;
+    ADOStoredProc2: TADOStoredProc;
+    ADOStoredProc3: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public

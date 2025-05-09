@@ -504,6 +504,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@nomer_id'
@@ -514,5 +515,57 @@ object DM: TDM
       end>
     Left = 384
     Top = 352
+  end
+  object dogQuery: TADOQuery
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      'dogovor.dog_id,'
+      'dogovor.guest_fio,'
+      'dogovor.data_b,'
+      'dogovor.pass_n,'
+      'dogovor.pass_seria,'
+      'dogovor.kem_vid,'
+      'dogovor.mesto_r,'
+      'dogovor.data_reg,'
+      'dogovor.pol,'
+      'dogovor.perpose,'
+      'nomer.nomer_kind,'
+      'dogovor.date_dog,'
+      'dogovor.sr_dog,'
+      'm_admin.fio_admin'
+      'from dogovor '
+      'inner join nomer on  dogovor.nomer_id=nomer.nomer_id'
+      'inner join m_admin on dogovor.id_admin=m_admin.id_admin'
+      'where 1=1')
+    Left = 416
+    Top = 72
+  end
+  object dogDS: TDataSource
+    DataSet = dogQuery
+    Left = 432
+    Top = 128
+  end
+  object ADOStoredProc1: TADOStoredProc
+    Parameters = <>
+    Left = 464
+    Top = 176
+  end
+  object ADOStoredProc2: TADOStoredProc
+    Parameters = <>
+    Left = 456
+    Top = 352
+  end
+  object ADOStoredProc3: TADOStoredProc
+    Parameters = <>
+    Left = 440
+    Top = 296
+  end
+  object ADOStoredProc4: TADOStoredProc
+    Parameters = <>
+    Left = 440
+    Top = 232
   end
 end
