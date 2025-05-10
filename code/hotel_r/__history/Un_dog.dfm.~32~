@@ -283,9 +283,9 @@ object Frm_dog: TFrm_dog
               1021
               269)
             object dog_guest_fio_inp: TLabeledEdit
-              Left = 3
-              Top = 49
-              Width = 1015
+              Left = 0
+              Top = 57
+              Width = 1018
               Height = 21
               Anchors = [akLeft, akRight]
               EditLabel.Width = 90
@@ -294,8 +294,8 @@ object Frm_dog: TFrm_dog
               TabOrder = 0
             end
             object data_b_lbl: TStaticText
-              Left = 3
-              Top = 90
+              Left = 0
+              Top = 77
               Width = 84
               Height = 17
               Caption = #1044#1072#1090#1072' '#1088#1086#1078#1076#1077#1085#1080#1103
@@ -324,7 +324,6 @@ object Frm_dog: TFrm_dog
               EditLabel.Height = 13
               EditLabel.Caption = #1053#1086#1084#1077#1088' '#1087#1072#1089#1089#1087#1086#1088#1090#1072
               TabOrder = 3
-              OnKeyPress = pass_n_inpKeyPress
               ExplicitTop = 154
             end
             object pass_seria_inp: TLabeledEdit
@@ -337,7 +336,6 @@ object Frm_dog: TFrm_dog
               EditLabel.Height = 13
               EditLabel.Caption = #1057#1077#1088#1080#1103' '#1087#1072#1089#1089#1087#1086#1088#1090#1072
               TabOrder = 4
-              OnKeyPress = pass_seria_inpKeyPress
               ExplicitTop = 202
             end
           end

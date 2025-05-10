@@ -23,14 +23,8 @@ type
     dog_Radiofiogrupper: TRadioButton;
     dog_Radiodate_d_grupper: TRadioButton;
     dog_reset_radio: TRadioButton;
-    ins_tn_dataBox: TGroupBox;
-    ins_usl_inpBox: TGroupBox;
-    ins_usl_btn_Box: TGroupBox;
-    ins_uslBtn: TButton;
-    usl_naim_inp: TLabeledEdit;
-    uslliveQuercB: TCheckBox;
-    usllqPanel: TPanel;
-    usllqsvBtn: TButton;
+    ins_dog_btn_Box: TGroupBox;
+    ins_dogBtn: TButton;
     upd_usl_inp_Box: TGroupBox;
     upd_usl_btn_Box: TGroupBox;
     upd_usl_data_box: TGroupBox;
@@ -43,14 +37,43 @@ type
     del_usl_d_btn: TButton;
     del_dbl_usl_lbl: TStaticText;
     del_dbl_usl_dbl: TDBLookupComboBox;
-    usl_ed_ism_inp: TLabeledEdit;
-    ins_tn_data_Box: TGroupBox;
     upd_usl_naim_inp: TLabeledEdit;
-    ins_usl_grd: TDBGrid;
-    usl_cost_inp: TLabeledEdit;
     uslGrd: TDBGrid;
     Del_usl_grd: TDBGrid;
     sel_dogGrd: TDBGrid;
+    about_dog_pc: TPageControl;
+    dogqPanel: TPanel;
+    dogqsvBtn: TButton;
+    ins_dog_dataBox: TGroupBox;
+    ins_tn_data_Box: TGroupBox;
+    ins_dog_grd: TDBGrid;
+    about_dog_tab_one: TTabSheet;
+    ins_dog_inpBox: TGroupBox;
+    dog_guest_fio_inp: TLabeledEdit;
+    dogliveQuercB: TCheckBox;
+    data_b_lbl: TStaticText;
+    date_b_inp: TDateTimePicker;
+    pass_n_inp: TLabeledEdit;
+    pass_seria_inp: TLabeledEdit;
+    about_dog_Tab_two: TTabSheet;
+    about_dog_inpBox: TGroupBox;
+    kem_vid_inp: TLabeledEdit;
+    data_reg_lbl: TStaticText;
+    Data_reg_inp: TDateTimePicker;
+    mesto_r_inp: TLabeledEdit;
+    perpose_inp: TLabeledEdit;
+    about_dog_Tab_three: TTabSheet;
+    about_d_inp_box: TGroupBox;
+    date_dog_lbl: TStaticText;
+    date_dog_inp: TDateTimePicker;
+    pol_lbl: TStaticText;
+    pol_inp: TComboBox;
+    nom_lbl: TStaticText;
+    momer_id_DBL: TDBLookupComboBox;
+    dog_a_lbl: TStaticText;
+    dogamdDBL: TDBLookupComboBox;
+    sr_dog_inp: TLabeledEdit;
+    sr_dog_grader: TUpDown;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -58,6 +81,8 @@ type
     procedure sel_dog_reg_fnd_EditKeyPress(Sender: TObject; var Key: Char);
     procedure dog_RadiofiogrupperClick(Sender: TObject);
     procedure dog_Radiodate_d_grupperClick(Sender: TObject);
+    procedure dog_reset_radioClick(Sender: TObject);
+    procedure ins_dogBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -174,6 +199,63 @@ if  dog_Radiofiogrupper.Checked=true then
   end;
 end;
 
+procedure TFrm_dog.dog_reset_radioClick(Sender: TObject);
+var
+  i,j,c:Integer;
+begin
+ if  dog_reset_radio.Checked=true then
+with Frm_dog do
+    for I := 0 to ComponentCount - 1 do
+     begin
+       if (Components[i] is TLabeledEdit)  then
+        begin
+          (Components[i] as TLabeledEdit).Clear;
+        end;
+     end;
+       with Frm_dog do
+    for c := 0 to ComponentCount - 1 do
+     begin
+       if (Components[c] is TCheckBox)  then
+        begin
+          (Components[c] as TCheckBox).Checked:=False;
+        end;
+     end;
+     with dm.dogQuery do
+     begin
+     Close;
+     sql.Clear;
+       sql.Text:=
+    'select'+' '+
+   'dogovor.dog_id,'+' '+
+    'dogovor.guest_fio,'+' '+
+    'dogovor.data_b,'+' '+
+    'dogovor.pass_n,'+' '+
+    'dogovor.pass_seria,'+' '+
+    'dogovor.kem_vid,'+' '+
+    'dogovor.mesto_r,'+' '+
+    'dogovor.data_reg,'+' '+
+    'dogovor.pol,'+' '+
+    'dogovor.perpose,'+' '+
+    'nomer.nomer_kind,'+' '+
+    'dogovor.date_dog,'+' '+
+    'dogovor.sr_dog,'+' '+
+    'm_admin.fio_admin'+' '+
+    'from dogovor'+' '+
+    'inner join nomer on  dogovor.nomer_id=nomer.nomer_id'+' '+
+    'inner join m_admin on dogovor.id_admin=m_admin.id_admin'+' '+
+    'where 1=1';
+     Open;
+     end;
+    with Frm_dog do
+    for j := 0 to ComponentCount - 1 do
+    begin
+      if(Components[j] is TRadioButton)  then
+      begin
+        (Components[j] as TRadioButton).Checked:=False;
+      end;
+    end;
+end;
+
 procedure TFrm_dog.FormActivate(Sender: TObject);
 begin
   DM.dogQuery.Open;
@@ -195,6 +277,27 @@ begin
   UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   LoadFormState(Self);
+end;
+
+procedure TFrm_dog.ins_dogBtnClick(Sender: TObject);
+const
+AllowedChars: TSysCharSet = ['À'..'ß', 'à'..'ÿ', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+begin
+AreFieldsEmpty:=(
+(Trim(dog_guest_fio_inp.Text)='') or
+(Trim(pass_n_inp.Text)='')or
+(Trim(pass_seria_inp.Text)='')or
+(Trim(kem_vid_inp.Text)='')or
+(Trim(mesto_r_inp.Text)='')or
+(Trim(perpose_inp.Text)='')or
+(pol_inp.Text='')or
+(momer_id_DBL.Text='')or
+(dogamdDBL.Text='')or
+()
+);
 end;
 
 procedure TFrm_dog.sel_dog_reg_fnd_EditKeyPress(Sender: TObject; var Key: Char);

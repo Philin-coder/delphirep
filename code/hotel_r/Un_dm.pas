@@ -37,7 +37,7 @@ type
     sel_dog_by_fio: TADOStoredProc;
     ADOStoredProc2: TADOStoredProc;
     ADOStoredProc3: TADOStoredProc;
-    ADOStoredProc4: TADOStoredProc;
+    ins_dog: TADOStoredProc;
   private
     { Private declarations }
   public

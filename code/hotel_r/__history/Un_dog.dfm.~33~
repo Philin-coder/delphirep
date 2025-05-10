@@ -260,7 +260,7 @@ object Frm_dog: TFrm_dog
         Top = 0
         Width = 1029
         Height = 297
-        ActivePage = about_dog_Tab_three
+        ActivePage = about_dog_tab_one
         Align = alTop
         TabOrder = 1
         object about_dog_tab_one: TTabSheet
@@ -324,7 +324,6 @@ object Frm_dog: TFrm_dog
               EditLabel.Height = 13
               EditLabel.Caption = #1053#1086#1084#1077#1088' '#1087#1072#1089#1089#1087#1086#1088#1090#1072
               TabOrder = 3
-              OnKeyPress = pass_n_inpKeyPress
               ExplicitTop = 154
             end
             object pass_seria_inp: TLabeledEdit
@@ -337,7 +336,6 @@ object Frm_dog: TFrm_dog
               EditLabel.Height = 13
               EditLabel.Caption = #1057#1077#1088#1080#1103' '#1087#1072#1089#1089#1087#1086#1088#1090#1072
               TabOrder = 4
-              OnKeyPress = pass_seria_inpKeyPress
               ExplicitTop = 202
             end
           end
