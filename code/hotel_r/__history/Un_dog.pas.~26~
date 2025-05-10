@@ -196,7 +196,7 @@ with Frm_dog do
           (Components[c] as TCheckBox).Checked:=False;
         end;
      end;
-     with dm.dogQuery do
+     with dm.admQuery do
      begin
      Close;
      sql.Clear;

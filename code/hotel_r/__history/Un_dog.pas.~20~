@@ -8,22 +8,21 @@ uses
 
 type
   TFrm_dog = class(TForm)
-    FuslPC: TPageControl;
+    FdogPC: TPageControl;
     seLTab: TTabSheet;
     insTab: TTabSheet;
     updTab: TTabSheet;
     delTab: TTabSheet;
-    sel_uslcondBox: TGroupBox;
-    m_usl_grupper: TGroupBox;
-    seluslmbtnBox: TGroupBox;
-    sel_usl_data_box: TGroupBox;
-    uslselBtn: TButton;
-    seluslselgrd: TDBGrid;
-    usl_naim_usl_cond_edit: TLabeledEdit;
-    sel_usl_ei_fnd_Edit: TLabeledEdit;
-    usl_Radiocostgrupper: TRadioButton;
-    usl_Radionaimgrupper: TRadioButton;
-    usl_reset_radio: TRadioButton;
+    sel_dog_condBox: TGroupBox;
+    m_dog_grupper: TGroupBox;
+    sel_dog_btnBox: TGroupBox;
+    sel_dog_data_box: TGroupBox;
+    dogselBtn: TButton;
+    dog_fio_cond_edit: TLabeledEdit;
+    sel_dog_reg_fnd_Edit: TLabeledEdit;
+    dog_Radiofiogrupper: TRadioButton;
+    dog_Radiodate_d_grupper: TRadioButton;
+    dog_reset_radio: TRadioButton;
     ins_tn_dataBox: TGroupBox;
     ins_usl_inpBox: TGroupBox;
     ins_usl_btn_Box: TGroupBox;
@@ -51,9 +50,11 @@ type
     usl_cost_inp: TLabeledEdit;
     uslGrd: TDBGrid;
     Del_usl_grd: TDBGrid;
-    procedure FormActivate(Sender: TObject);
+    sel_dogGrd: TDBGrid;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure del_usl_d_btnClick(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure dogselBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -70,53 +71,47 @@ uses Un_dm, Un_func;
 
 {$R *.dfm}
 
-procedure TFrm_dog.del_usl_d_btnClick(Sender: TObject);
-var
-   AreFieldsEmpty: Boolean;
+procedure TFrm_dog.dogselBtnClick(Sender: TObject);
 begin
-AreFieldsEmpty:=(
-(del_dbl_usl_dbl.Text='')
-);
-if AreFieldsEmpty then
-begin
-    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-end;
 try
-with dm.del_usl do
-      begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@usl_id').Value :=
-           dm.UslQuery.FieldByName('usl_id').AsString;
-           ExecProc;
-           dm.uslQuery.Close;
-           dm.uslQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      end;
+    if not DM.Connection.Connected then
+      raise Exception.Create('Cоединение с базой не установлено');
+    with DM.sel_dog_by_fio do
+    begin
+      Close;
+      Parameters.ParamByName('@fio_admin').Value := fio_cond_edit.Text;
+      Open;
+       DM.dogQuery.Recordset:=dm.sel_dog_by_fio.Recordset;
+    end;
+  except
+    on E: EDatabaseError do
+      ShowMessage('Ошибка: ' + E.Message);
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
 end;
 
 procedure TFrm_dog.FormActivate(Sender: TObject);
 begin
-  dm.UslQuery.Open;
+  DM.dogQuery.Open;
+  dm.nom_query.Open;
+  dm.admQuery.Open;
 end;
 
 procedure TFrm_dog.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   SaveFormState(Self);
-  CloseAllQueriesOnDataModule('dm')
+  CloseAllQueriesOnDataModule('dm');
+end;
+
+procedure TFrm_dog.FormCreate(Sender: TObject);
+begin
+  Frm_dog.KeyPreview:=true;
+  Frm_dog.ShowHint:=true;
+  UniformizeButtonsSize(Self,  273, 25);
+  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+  LoadFormState(Self);
 end;
 
 end.

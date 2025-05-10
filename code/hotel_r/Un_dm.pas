@@ -34,7 +34,7 @@ type
     del_nom: TADOStoredProc;
     dogQuery: TADOQuery;
     dogDS: TDataSource;
-    ADOStoredProc1: TADOStoredProc;
+    sel_dog_by_fio: TADOStoredProc;
     ADOStoredProc2: TADOStoredProc;
     ADOStoredProc3: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;

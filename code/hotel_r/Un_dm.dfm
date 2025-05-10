@@ -540,17 +540,31 @@ object DM: TDM
       'inner join nomer on  dogovor.nomer_id=nomer.nomer_id'
       'inner join m_admin on dogovor.id_admin=m_admin.id_admin'
       'where 1=1')
-    Left = 416
+    Left = 456
     Top = 72
   end
   object dogDS: TDataSource
     DataSet = dogQuery
-    Left = 432
+    Left = 456
     Top = 128
   end
-  object ADOStoredProc1: TADOStoredProc
-    Parameters = <>
-    Left = 464
+  object sel_dog_by_fio: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_dog_by_fio;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@guest_fio'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end>
+    Left = 456
     Top = 176
   end
   object ADOStoredProc2: TADOStoredProc

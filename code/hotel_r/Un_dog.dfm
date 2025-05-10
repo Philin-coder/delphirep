@@ -58,6 +58,7 @@ object Frm_dog: TFrm_dog
           EditLabel.Height = 13
           EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1084#1077#1089#1090#1091' '#1088#1077#1075#1080#1089#1090#1088#1072#1094#1080#1080
           TabOrder = 1
+          OnKeyPress = sel_dog_reg_fnd_EditKeyPress
         end
       end
       object m_dog_grupper: TGroupBox
@@ -75,6 +76,7 @@ object Frm_dog: TFrm_dog
           Height = 17
           Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1060#1048#1054
           TabOrder = 0
+          OnClick = dog_RadiofiogrupperClick
         end
         object dog_Radiodate_d_grupper: TRadioButton
           Left = 296
@@ -83,6 +85,7 @@ object Frm_dog: TFrm_dog
           Height = 17
           Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1076#1072#1090#1077' '#1076#1086#1075#1086#1074#1086#1088#1072
           TabOrder = 1
+          OnClick = dog_Radiodate_d_grupperClick
         end
         object dog_reset_radio: TRadioButton
           Left = 584
@@ -91,6 +94,7 @@ object Frm_dog: TFrm_dog
           Height = 17
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 2
+          OnClick = dog_reset_radioClick
         end
       end
       object sel_dog_btnBox: TGroupBox
@@ -107,6 +111,7 @@ object Frm_dog: TFrm_dog
           Height = 25
           Caption = #1042#1099#1073#1088#1072#1090#1100
           TabOrder = 0
+          OnClick = dogselBtnClick
         end
       end
       object sel_dog_data_box: TGroupBox
@@ -214,6 +219,7 @@ object Frm_dog: TFrm_dog
               Expanded = False
               FieldName = 'fio_admin'
               Title.Caption = #1040#1076#1084#1080#1085#1080#1089#1090#1088#1072#1090#1086#1088
+              Width = 100
               Visible = True
             end>
         end
