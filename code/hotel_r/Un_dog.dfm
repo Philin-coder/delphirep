@@ -21,10 +21,9 @@ object Frm_dog: TFrm_dog
     Top = 0
     Width = 1037
     Height = 755
-    ActivePage = insTab
+    ActivePage = delTab
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 1013
     object seLTab: TTabSheet
       Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1076#1086#1075#1086#1074#1086#1088#1077
       ExplicitWidth = 1005
@@ -524,6 +523,7 @@ object Frm_dog: TFrm_dog
               Anchors = [akLeft, akRight]
               EditLabel.Width = 76
               EditLabel.Height = 13
+              EditLabel.Hint = #1057#1088#1086#1082' '#1074' '#1076
               EditLabel.Caption = #1057#1088#1086#1082' '#1076#1086#1075#1086#1074#1086#1088#1072
               TabOrder = 8
               Text = '0'
@@ -556,6 +556,7 @@ object Frm_dog: TFrm_dog
           Height = 25
           Caption = 'C'#1086#1093#1088#1072#1085#1080#1090#1100
           TabOrder = 0
+          OnClick = dogqsvBtnClick
         end
         object dogliveQuercB: TCheckBox
           Left = 230
@@ -565,6 +566,7 @@ object Frm_dog: TFrm_dog
           Align = alCustom
           Caption = #1046#1080#1074#1099#1077' '#1079#1072#1087#1088#1086#1086#1089#1099
           TabOrder = 1
+          OnClick = dogliveQuercBClick
         end
       end
       object ins_dog_dataBox: TGroupBox
@@ -692,10 +694,10 @@ object Frm_dog: TFrm_dog
       end
     end
     object updTab: TTabSheet
-      Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086#1073' '#1091#1089#1083#1091#1075#1077
+      Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1076#1086#1075#1086#1074#1086#1088#1077
       ImageIndex = 2
       ExplicitWidth = 1005
-      object upd_usl_inp_Box: TGroupBox
+      object upd_dog_inp_Box: TGroupBox
         Left = 0
         Top = 0
         Width = 1029
@@ -707,42 +709,42 @@ object Frm_dog: TFrm_dog
         DesignSize = (
           1029
           145)
-        object upd_usl_lbl: TStaticText
+        object upd_dog_lbl: TStaticText
           Left = 3
           Top = 24
-          Width = 85
+          Width = 96
           Height = 17
           Align = alCustom
-          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1091#1089#1083#1091#1075#1091
+          Caption = #1042#1099#1073#1088#1072#1090#1100'  '#1076#1086#1075#1086#1074#1086#1088
           TabOrder = 0
         end
-        object upd_usl_u_dbl: TDBLookupComboBox
+        object upd_dog_d_dbl: TDBLookupComboBox
           Left = 3
           Top = 47
           Width = 1006
           Height = 21
           Align = alCustom
           Anchors = [akLeft, akRight]
-          KeyField = 'usl_id'
-          ListField = 'usl_naim'
-          ListSource = DM.uslDS
+          KeyField = 'dog_id'
+          ListField = 'guest_fio'
+          ListSource = DM.dogDS
           TabOrder = 1
           ExplicitWidth = 982
         end
-        object upd_usl_naim_inp: TLabeledEdit
+        object upd_dogl_perpose_inp: TLabeledEdit
           Left = 3
           Top = 99
           Width = 1006
           Height = 21
           Anchors = [akLeft, akRight]
-          EditLabel.Width = 140
+          EditLabel.Width = 100
           EditLabel.Height = 13
-          EditLabel.Caption = #1042#1074#1086#1076' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1103'  '#1091#1089#1083#1091#1075#1080
+          EditLabel.Caption = #1042#1074#1086#1076' '#1094#1077#1083#1080'  '#1087#1088#1080#1077#1079#1076#1072
           TabOrder = 2
           ExplicitWidth = 982
         end
       end
-      object upd_usl_btn_Box: TGroupBox
+      object upd_dog_btn_Box: TGroupBox
         Left = 0
         Top = 656
         Width = 1029
@@ -750,31 +752,32 @@ object Frm_dog: TFrm_dog
         Align = alBottom
         TabOrder = 1
         ExplicitWidth = 1005
-        object upd_uls_btn: TButton
+        object upd_dog_btn: TButton
           Left = 440
           Top = 24
           Width = 75
           Height = 25
           Caption = #1054#1073#1085#1086#1074#1080#1090#1100
           TabOrder = 0
+          OnClick = upd_dog_btnClick
         end
       end
-      object upd_usl_data_box: TGroupBox
+      object upd_dog_data_box: TGroupBox
         Left = 0
         Top = 145
         Width = 1029
         Height = 511
         Align = alClient
-        Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
         ExplicitWidth = 1005
-        object uslGrd: TDBGrid
+        object upd_dog_grd: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
           Height = 494
           Align = alClient
-          DataSource = DM.uslDS
+          DataSource = DM.dogDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -784,40 +787,98 @@ object Frm_dog: TFrm_dog
           Columns = <
             item
               Expanded = False
-              FieldName = 'usl_id'
+              FieldName = 'dog_id'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-              Width = 111
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'usl_cost'
-              Title.Caption = #1062#1077#1085#1072
-              Width = 140
+              FieldName = 'guest_fio'
+              Title.Caption = #1060#1048#1054' '#1075#1086#1089#1090#1103
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'usl_naim'
-              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077
-              Width = 99
+              FieldName = 'data_b'
+              Title.Caption = #1044#1072#1090#1072' '#1088#1086#1078#1076#1077#1085#1080#1103
+              Width = 95
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'usl_ed_ism'
-              Title.Caption = #1045#1076#1080#1085#1080#1094#1072' '#1080#1079#1084#1077#1088#1077#1085#1080#1103
-              Width = 128
+              FieldName = 'pass_n'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1072#1089#1089#1087#1086#1088#1090#1072
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'pass_seria'
+              Title.Caption = #1057#1077#1088#1080#1103' '#1087#1072#1089#1089#1087#1086#1088#1090#1072
+              Width = 90
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'kem_vid'
+              Title.Caption = #1050#1077#1084' '#1074#1099#1076#1072#1085
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'mesto_r'
+              Title.Caption = #1052#1077#1089#1090#1086' '#1088#1077#1075#1080#1089#1090#1088#1072#1094#1080#1080
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'data_reg'
+              Title.Caption = #1044#1072#1090#1072' '#1088#1077#1075#1080#1089#1090#1088#1072#1094#1080#1080
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'pol'
+              Title.Caption = #1055#1086#1083
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'perpose'
+              Title.Caption = #1062#1077#1083#1100' '#1087#1088#1080#1073#1099#1090#1080#1103
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'nomer_kind'
+              Title.Caption = #1053#1086#1084#1077#1088
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'date_dog'
+              Title.Caption = #1044#1072#1090#1072' '#1079#1072#1082#1083#1102#1095#1077#1085#1080#1103' '#1076#1086#1075#1086#1074#1086#1088#1072
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'sr_dog'
+              Title.Caption = #1057#1088#1086#1082' '#1076#1086#1075#1086#1074#1086#1088#1072
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'fio_admin'
+              Title.Caption = #1040#1076#1084#1080#1085#1080#1089#1090#1088#1072#1090#1086#1088
               Visible = True
             end>
         end
       end
     end
     object delTab: TTabSheet
-      Caption = #1059#1076#1072#1083#1077#1085#1080#1077'  '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1091#1089#1083#1091#1075#1077
+      Caption = #1059#1076#1072#1083#1077#1085#1080#1077'  '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1076#1086#1075#1086#1074#1086#1088#1077
       ImageIndex = 3
       ExplicitWidth = 1005
-      object del_usl_inpBox: TGroupBox
+      object del_dog_inpBox: TGroupBox
         Left = 0
         Top = 0
         Width = 1029
@@ -829,42 +890,42 @@ object Frm_dog: TFrm_dog
         object del_dbl_usl_lbl: TStaticText
           Left = 3
           Top = 24
-          Width = 85
+          Width = 96
           Height = 17
           Align = alCustom
-          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1091#1089#1083#1091#1075#1091
+          Caption = #1042#1099#1073#1088#1072#1090#1100'  '#1076#1086#1075#1086#1074#1086#1088
           TabOrder = 0
         end
-        object del_dbl_usl_dbl: TDBLookupComboBox
+        object del_dbl_dog_dbl: TDBLookupComboBox
           Left = 3
           Top = 37
           Width = 1006
           Height = 21
           Align = alCustom
           Anchors = [akLeft, akRight]
-          KeyField = 'usl_id'
-          ListField = 'usl_naim'
-          ListSource = DM.uslDS
+          KeyField = 'dog_id'
+          ListField = 'guest_fio'
+          ListSource = DM.dogDS
           TabOrder = 1
           ExplicitWidth = 982
         end
       end
-      object del_usl_dataBox: TGroupBox
+      object del_dog_dataBox: TGroupBox
         Left = 0
         Top = 81
         Width = 1029
         Height = 575
         Align = alClient
-        Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
         ExplicitWidth = 1005
-        object Del_usl_grd: TDBGrid
+        object Del_dog_grd: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
           Height = 558
           Align = alClient
-          DataSource = DM.uslDS
+          DataSource = DM.dogDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -874,35 +935,93 @@ object Frm_dog: TFrm_dog
           Columns = <
             item
               Expanded = False
-              FieldName = 'usl_id'
+              FieldName = 'dog_id'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-              Width = 111
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'usl_cost'
-              Title.Caption = #1062#1077#1085#1072
-              Width = 140
+              FieldName = 'guest_fio'
+              Title.Caption = #1060#1048#1054' '#1075#1086#1089#1090#1103
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'usl_naim'
-              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077
-              Width = 99
+              FieldName = 'data_b'
+              Title.Caption = #1044#1072#1090#1072' '#1088#1086#1078#1076#1077#1085#1080#1103
+              Width = 95
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'usl_ed_ism'
-              Title.Caption = #1045#1076#1080#1085#1080#1094#1072' '#1080#1079#1084#1077#1088#1077#1085#1080#1103
-              Width = 128
+              FieldName = 'pass_n'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1072#1089#1089#1087#1086#1088#1090#1072
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'pass_seria'
+              Title.Caption = #1057#1077#1088#1080#1103' '#1087#1072#1089#1089#1087#1086#1088#1090#1072
+              Width = 90
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'kem_vid'
+              Title.Caption = #1050#1077#1084' '#1074#1099#1076#1072#1085
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'mesto_r'
+              Title.Caption = #1052#1077#1089#1090#1086' '#1088#1077#1075#1080#1089#1090#1088#1072#1094#1080#1080
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'data_reg'
+              Title.Caption = #1044#1072#1090#1072' '#1088#1077#1075#1080#1089#1090#1088#1072#1094#1080#1080
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'pol'
+              Title.Caption = #1055#1086#1083
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'perpose'
+              Title.Caption = #1062#1077#1083#1100' '#1087#1088#1080#1073#1099#1090#1080#1103
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'nomer_kind'
+              Title.Caption = #1053#1086#1084#1077#1088
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'date_dog'
+              Title.Caption = #1044#1072#1090#1072' '#1079#1072#1082#1083#1102#1095#1077#1085#1080#1103' '#1076#1086#1075#1086#1074#1086#1088#1072
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'sr_dog'
+              Title.Caption = #1057#1088#1086#1082' '#1076#1086#1075#1086#1074#1086#1088#1072
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'fio_admin'
+              Title.Caption = #1040#1076#1084#1080#1085#1080#1089#1090#1088#1072#1090#1086#1088
               Visible = True
             end>
         end
       end
-      object del_usl_btn_Box: TGroupBox
+      object del_dog_btn_Box: TGroupBox
         Left = 0
         Top = 656
         Width = 1029
@@ -910,13 +1029,14 @@ object Frm_dog: TFrm_dog
         Align = alBottom
         TabOrder = 2
         ExplicitWidth = 1005
-        object del_usl_d_btn: TButton
+        object del_dog_d_btn: TButton
           Left = 488
           Top = 24
           Width = 75
           Height = 25
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
+          OnClick = del_dog_d_btnClick
         end
       end
     end

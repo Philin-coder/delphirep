@@ -82,6 +82,10 @@ type
     procedure dog_RadiofiogrupperClick(Sender: TObject);
     procedure dog_Radiodate_d_grupperClick(Sender: TObject);
     procedure dog_reset_radioClick(Sender: TObject);
+    procedure ins_dogBtnClick(Sender: TObject);
+    procedure pass_n_inpKeyPress(Sender: TObject; var Key: Char);
+    procedure pass_seria_inpKeyPress(Sender: TObject; var Key: Char);
+    procedure dogliveQuercBClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -97,6 +101,37 @@ implementation
 uses Un_dm, Un_func;
 
 {$R *.dfm}
+
+procedure TFrm_dog.dogliveQuercBClick(Sender: TObject);
+begin
+case dogliveQuercB.Checked of
+true:
+begin
+  with dm.dogQuery do
+begin
+  Close;
+  LockType:=ltOptimistic;
+  CursorType:= ctKeyset;
+  CursorLocation := clUseClient;
+  open;
+end;
+  ins_dog_Grd.ReadOnly:=false;
+end;
+false:
+begin
+with dm.dogQuery do
+begin
+  Close;
+  LockType:=ltOptimistic;
+  CursorType:= ctStatic;
+  CursorLocation := clUseClient;
+  Open;
+end;
+  ins_dog_Grd.ReadOnly:=True;
+end;
+
+end;
+end;
 
 procedure TFrm_dog.dogselBtnClick(Sender: TObject);
 begin
@@ -276,6 +311,86 @@ begin
   UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   LoadFormState(Self);
+  sr_dog_inp.ShowHint:=True;
+end;
+
+procedure TFrm_dog.ins_dogBtnClick(Sender: TObject);
+const
+AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+begin
+AreFieldsEmpty:=(
+(Trim(dog_guest_fio_inp.Text)='') or
+(Trim(pass_n_inp.Text)='')or
+(Trim(pass_seria_inp.Text)='')or
+(Trim(kem_vid_inp.Text)='')or
+(Trim(mesto_r_inp.Text)='')or
+(Trim(perpose_inp.Text)='')or
+(pol_inp.Text='')or
+(momer_id_DBL.Text='')or
+(dogamdDBL.Text='')or
+(sr_dog_grader.Position=0)
+);
+AreFieldsValid:=(
+ValidateComponentText(dog_guest_fio_inp,AllowedChars)  and
+ValidateComponentText(kem_vid_inp,AllowedChars)and
+ValidateComponentText(mesto_r_inp,AllowedChars)and
+ValidateComponentText(perpose_inp, AllowedChars)
+);
+if AreFieldsEmpty or not AreFieldsValid then
+ begin
+     MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+ end;
+ try
+      with dm.ins_dog do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@guest_fio').Value :=dog_guest_fio_inp.Text;
+           Parameters.ParamByName('@data_b').Value:=date_b_inp.Date;
+           Parameters.ParamByName('@pass_n').Value:=QuotedStr( pass_n_inp.Text);
+           Parameters.ParamByName('@pass_seria').Value:=pass_seria_inp.Text;
+           Parameters.ParamByName('@kem_vid').Value:=kem_vid_inp.Text;
+           Parameters.ParamByName('@mesto_r').Value:=mesto_r_inp.Text;
+           Parameters.ParamByName('@data_reg').Value:=Data_reg_inp.Date;
+           Parameters.ParamByName('@pol').Value:=pol_inp.Text;
+           Parameters.ParamByName('@perpose').Value:=perpose_inp.Text;
+           Parameters.ParamByName('@nomer_id').Value:=
+           dm.nom_query.FieldByName('nomer_id').AsString;
+           Parameters.ParamByName('@date_dog').Value:=date_dog_inp.Date;
+           Parameters.ParamByName('@sr_dog').Value:=StrToInt(sr_dog_inp.Text);
+           Parameters.ParamByName('@id_admin').Value:=
+           dm.admQuery.FieldByName('id_admin').AsString;
+           ExecProc;
+           dm.dogQuery.Close;
+           dm.dogQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+end;
+
+procedure TFrm_dog.pass_n_inpKeyPress(Sender: TObject; var Key: Char);
+begin
+  if not (Key in ['0'..'9', #8,#189]) then Key := #0;
+end;
+
+procedure TFrm_dog.pass_seria_inpKeyPress(Sender: TObject; var Key: Char);
+begin
+  if not (Key in ['0'..'9', #8,#189]) then Key := #0;
 end;
 
 procedure TFrm_dog.sel_dog_reg_fnd_EditKeyPress(Sender: TObject; var Key: Char);

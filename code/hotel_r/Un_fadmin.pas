@@ -278,7 +278,8 @@ begin
   try
     if dm.admQuery.State in [dsEdit, dsInsert] then
       dm.admQuery.Post;
-    UserResponse := MessageDlg('¬ы уверены, что хотите сохранить изменени€?', mtConfirmation, [mbYes, mbNo], 0);
+    UserResponse := MessageDlg('¬ы уверены, что хотите сохранить изменени€?',
+    mtConfirmation, [mbYes, mbNo], 0);
 
     if UserResponse = mrYes then
     begin

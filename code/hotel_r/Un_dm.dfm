@@ -567,13 +567,49 @@ object DM: TDM
     Left = 456
     Top = 176
   end
-  object ADOStoredProc2: TADOStoredProc
-    Parameters = <>
+  object del_dog: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'del_dog;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@dog_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
     Left = 456
     Top = 352
   end
-  object ADOStoredProc3: TADOStoredProc
-    Parameters = <>
+  object upd_dog: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_dog;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@dog_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@perpose'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end>
     Left = 440
     Top = 296
   end
@@ -610,6 +646,7 @@ object DM: TDM
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end
       item
         Name = '@kem_vid'

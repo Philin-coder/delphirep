@@ -25,21 +25,19 @@ type
     dog_reset_radio: TRadioButton;
     ins_dog_btn_Box: TGroupBox;
     ins_dogBtn: TButton;
-    upd_usl_inp_Box: TGroupBox;
-    upd_usl_btn_Box: TGroupBox;
-    upd_usl_data_box: TGroupBox;
-    upd_uls_btn: TButton;
-    upd_usl_lbl: TStaticText;
-    upd_usl_u_dbl: TDBLookupComboBox;
-    del_usl_inpBox: TGroupBox;
-    del_usl_dataBox: TGroupBox;
-    del_usl_btn_Box: TGroupBox;
-    del_usl_d_btn: TButton;
+    upd_dog_inp_Box: TGroupBox;
+    upd_dog_btn_Box: TGroupBox;
+    upd_dog_data_box: TGroupBox;
+    upd_dog_btn: TButton;
+    upd_dog_lbl: TStaticText;
+    upd_dog_d_dbl: TDBLookupComboBox;
+    del_dog_inpBox: TGroupBox;
+    del_dog_dataBox: TGroupBox;
+    del_dog_btn_Box: TGroupBox;
+    del_dog_d_btn: TButton;
     del_dbl_usl_lbl: TStaticText;
-    del_dbl_usl_dbl: TDBLookupComboBox;
-    upd_usl_naim_inp: TLabeledEdit;
-    uslGrd: TDBGrid;
-    Del_usl_grd: TDBGrid;
+    del_dbl_dog_dbl: TDBLookupComboBox;
+    upd_dogl_perpose_inp: TLabeledEdit;
     sel_dogGrd: TDBGrid;
     about_dog_pc: TPageControl;
     dogqPanel: TPanel;
@@ -74,6 +72,8 @@ type
     dogamdDBL: TDBLookupComboBox;
     sr_dog_inp: TLabeledEdit;
     sr_dog_grader: TUpDown;
+    upd_dog_grd: TDBGrid;
+    Del_dog_grd: TDBGrid;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -85,6 +85,10 @@ type
     procedure ins_dogBtnClick(Sender: TObject);
     procedure pass_n_inpKeyPress(Sender: TObject; var Key: Char);
     procedure pass_seria_inpKeyPress(Sender: TObject; var Key: Char);
+    procedure dogliveQuercBClick(Sender: TObject);
+    procedure dogqsvBtnClick(Sender: TObject);
+    procedure upd_dog_btnClick(Sender: TObject);
+    procedure del_dog_d_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -100,6 +104,131 @@ implementation
 uses Un_dm, Un_func;
 
 {$R *.dfm}
+
+procedure TFrm_dog.del_dog_d_btnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+begin
+AreFieldsEmpty:=(
+(del_dbl_dog_dbl.Text='')
+);
+if AreFieldsEmpty then
+begin
+MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+end;
+try
+      with dm.del_dog do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@dog_id').Value 
+           :=dm.dogQuery.FieldByName('dog_id').AsString;
+           ExecProc;
+           dm.dogQuery.Close;
+           dm.dogQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+end;
+
+procedure TFrm_dog.dogliveQuercBClick(Sender: TObject);
+begin
+case dogliveQuercB.Checked of
+true:
+begin
+  with dm.dogQuery do
+begin
+  Close;
+  LockType:=ltOptimistic;
+  CursorType:= ctKeyset;
+  CursorLocation := clUseClient;
+  open;
+end;
+  ins_dog_Grd.ReadOnly:=false;
+end;
+false:
+begin
+with dm.dogQuery do
+begin
+  Close;
+  LockType:=ltOptimistic;
+  CursorType:= ctStatic;
+  CursorLocation := clUseClient;
+  Open;
+end;
+  ins_dog_Grd.ReadOnly:=True;
+end;
+
+end;
+end;
+
+procedure TFrm_dog.dogqsvBtnClick(Sender: TObject);
+var
+  UserResponse: Integer;
+begin
+  dm.Connection.BeginTrans;
+  try
+    if dm.dogQuery.State in [dsEdit, dsInsert] then
+      dm.dogQuery.Post;
+    UserResponse := MessageDlg('Вы уверены, что хотите сохранить изменения?', 
+    mtConfirmation, [mbYes, mbNo], 0);
+    if UserResponse = mrYes then
+    begin
+      dm.Connection.CommitTrans;
+      dm.dogQuery.DisableControls;
+      try
+        dm.dogQuery.Close;
+        dm.dogQuery.SQL.Text :=
+          'select'+' '+
+    'dogovor.dog_id,'+' '+
+    'dogovor.guest_fio,'+' '+
+    'dogovor.data_b,'+' '+
+    'dogovor.pass_n,'+' '+
+    'dogovor.pass_seria,'+' '+
+    'dogovor.kem_vid,'+' '+
+    'dogovor.mesto_r,'+' '+
+    'dogovor.data_reg,'+' '+
+    'dogovor.pol,'+' '+
+    'dogovor.perpose,'+' '+
+    'nomer.nomer_kind,'+' '+
+    'dogovor.date_dog,'+' '+
+    'dogovor.sr_dog,'+' '+
+    'm_admin.fio_admin'+' '+
+    'from dogovor'+' '+
+    'inner join nomer on  dogovor.nomer_id=nomer.nomer_id'+' '+
+    'inner join m_admin on dogovor.id_admin=m_admin.id_admin'+' '+
+    'where 1=1';
+        dm.dogQuery.Open;
+      finally
+        dm.dogQuery.EnableControls;
+      end;
+      ShowMessage('Изменения успешно сохранены.');
+    end
+    else
+    begin
+      dm.Connection.RollbackTrans;
+      ShowMessage('Изменения успешно сохранены.');
+    end;
+  except
+    on E: Exception do
+    begin
+      dm.Connection.RollbackTrans;
+      ShowMessage('Ошибка при сохранении данных: ' + E.Message);
+    end;
+  end;
+end;
 
 procedure TFrm_dog.dogselBtnClick(Sender: TObject);
 begin
@@ -279,6 +408,7 @@ begin
   UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   LoadFormState(Self);
+  sr_dog_inp.ShowHint:=True;
 end;
 
 procedure TFrm_dog.ins_dogBtnClick(Sender: TObject);
@@ -319,20 +449,17 @@ if AreFieldsEmpty or not AreFieldsValid then
         if not Connection.Connected then
           raise Exception.Create('Соединение с базой не установлено');
            Parameters.ParamByName('@guest_fio').Value :=dog_guest_fio_inp.Text;
-           Parameters.ParamByName('@data_b').Value:=
-           QuotedStr( DateToStr_(date_b_inp.Date));
-           Parameters.ParamByName('@pass_n').Value:=VarToStr( pass_n_inp.Text);
+           Parameters.ParamByName('@data_b').Value:=date_b_inp.Date;
+           Parameters.ParamByName('@pass_n').Value:=QuotedStr( pass_n_inp.Text);
            Parameters.ParamByName('@pass_seria').Value:=pass_seria_inp.Text;
            Parameters.ParamByName('@kem_vid').Value:=kem_vid_inp.Text;
            Parameters.ParamByName('@mesto_r').Value:=mesto_r_inp.Text;
-           Parameters.ParamByName('@data_reg').Value:=
-           QuotedStr(DateToStr_(Data_reg_inp.Date));
+           Parameters.ParamByName('@data_reg').Value:=Data_reg_inp.Date;
            Parameters.ParamByName('@pol').Value:=pol_inp.Text;
            Parameters.ParamByName('@perpose').Value:=perpose_inp.Text;
            Parameters.ParamByName('@nomer_id').Value:=
            dm.nom_query.FieldByName('nomer_id').AsString;
-           Parameters.ParamByName('@date_dog').Value:=
-           QuotedStr(DateToStr_(date_dog_inp.Date));
+           Parameters.ParamByName('@date_dog').Value:=date_dog_inp.Date;
            Parameters.ParamByName('@sr_dog').Value:=StrToInt(sr_dog_inp.Text);
            Parameters.ParamByName('@id_admin').Value:=
            dm.admQuery.FieldByName('id_admin').AsString;
@@ -395,6 +522,52 @@ except on E: Exception do
   ShowMessage('Ошибка'+' '+E.Message);
   end;
   end;
+end;
+
+procedure TFrm_dog.upd_dog_btnClick(Sender: TObject);
+const
+AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+begin
+AreFieldsEmpty:=(
+(upd_dog_d_dbl.Text='')or 
+(Trim(upd_dogl_perpose_inp.Text)='')
+);
+AreFieldsValid:=(
+validateComponentText(upd_dogl_perpose_inp,AllowedChars)
+);
+if AreFieldsEmpty or not AreFieldsValid then
+begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+end;
+try
+      with dm.upd_dog do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@dog_id').Value 
+           :=dm.dogQuery.FieldByName('dog_id').AsString;
+           Parameters.ParamByName('@perpose').Value:=upd_dogl_perpose_inp.Text;
+           ExecProc;
+           dm.dogQuery.Close;
+           dm.dogQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
 end;
 
 end.

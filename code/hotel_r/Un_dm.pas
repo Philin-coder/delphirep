@@ -35,8 +35,8 @@ type
     dogQuery: TADOQuery;
     dogDS: TDataSource;
     sel_dog_by_fio: TADOStoredProc;
-    ADOStoredProc2: TADOStoredProc;
-    ADOStoredProc3: TADOStoredProc;
+    del_dog: TADOStoredProc;
+    upd_dog: TADOStoredProc;
     ins_dog: TADOStoredProc;
   private
     { Private declarations }
