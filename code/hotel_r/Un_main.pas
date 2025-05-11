@@ -19,6 +19,7 @@ type
     savercb: TCheckBox;
     dog_item: TMenuItem;
     pay_item: TMenuItem;
+    feedback_item: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
@@ -31,6 +32,7 @@ type
     procedure savercbClick(Sender: TObject);
     procedure dog_itemClick(Sender: TObject);
     procedure pay_itemClick(Sender: TObject);
+    procedure feedback_itemClick(Sender: TObject);
   private
     procedure HandleApplicationMessage(var Msg: TMsg; var Handled: Boolean);
   public
@@ -44,7 +46,7 @@ var
 implementation
 
 uses Un_func, Un_dm, Un_fadmin, Un_type_nom, Un_usl, Un_nom, Un_saver, Un_dog,
-  Un_pay;
+  Un_pay, Un_feedback;
 
 const
   FileName = 'connection_string.txt';
@@ -87,6 +89,18 @@ begin
     Frm_dog.ShowModal;
   except
     Frm_dog.Free;
+    raise;
+  end;
+end;
+
+procedure TFrm_main.feedback_itemClick(Sender: TObject);
+begin
+  try
+    UpdateFormProperties('Frm_feedback', 'Форма работы с отзывом',
+      clBtnFace, 1024, 768);
+    Frm_feedback.ShowModal;
+  except
+    Frm_feedback.Free;
     raise;
   end;
 end;

@@ -1,0 +1,96 @@
+unit Un_feedback;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ComCtrls, Grids, DBGrids, StdCtrls, ExtCtrls,adodb,db, DBCtrls,jpeg;
+
+type
+  TFrm_feedback = class(TForm)
+    FfeedbackPC: TPageControl;
+    seLTab: TTabSheet;
+    insTab: TTabSheet;
+    updTab: TTabSheet;
+    delTab: TTabSheet;
+    sel_fbcondBox: TGroupBox;
+    m_fb_grupper: TGroupBox;
+    selfbbtnBox: TGroupBox;
+    sel_fb_data_box: TGroupBox;
+    fbselBtn: TButton;
+    selfbselgrd: TDBGrid;
+    usl_fb_cond_edit: TLabeledEdit;
+    sell_fb_fnd_Edit: TLabeledEdit;
+    fb_Radiocostgrupper: TRadioButton;
+    fb_Radionaimgrupper: TRadioButton;
+    fb_reset_radio: TRadioButton;
+    ins_tn_dataBox: TGroupBox;
+    ins_usl_inpBox: TGroupBox;
+    ins_usl_btn_Box: TGroupBox;
+    ins_uslBtn: TButton;
+    usl_naim_inp: TLabeledEdit;
+    uslliveQuercB: TCheckBox;
+    usllqPanel: TPanel;
+    usllqsvBtn: TButton;
+    upd_usl_inp_Box: TGroupBox;
+    upd_usl_btn_Box: TGroupBox;
+    upd_usl_data_box: TGroupBox;
+    upd_uls_btn: TButton;
+    upd_usl_lbl: TStaticText;
+    upd_usl_u_dbl: TDBLookupComboBox;
+    del_usl_inpBox: TGroupBox;
+    del_usl_dataBox: TGroupBox;
+    del_usl_btn_Box: TGroupBox;
+    del_usl_d_btn: TButton;
+    del_dbl_usl_lbl: TStaticText;
+    del_dbl_usl_dbl: TDBLookupComboBox;
+    usl_ed_ism_inp: TLabeledEdit;
+    ins_tn_data_Box: TGroupBox;
+    upd_usl_naim_inp: TLabeledEdit;
+    ins_usl_grd: TDBGrid;
+    usl_cost_inp: TLabeledEdit;
+    uslGrd: TDBGrid;
+    Del_usl_grd: TDBGrid;
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormActivate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_feedback: TFrm_feedback;
+
+
+implementation
+
+uses Un_dm, Un_func;
+
+{$R *.dfm}
+
+procedure TFrm_feedback.FormActivate(Sender: TObject);
+begin
+  dm.dogQuery.Open;
+  dm.fbQuery.Open;
+  AdjustDBGridColumnWidths('Frm_feedback',6000, 10);
+end;
+
+procedure TFrm_feedback.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+   SaveFormState(Self);
+   CloseAllQueriesOnDataModule('dm');
+end;
+
+procedure TFrm_feedback.FormCreate(Sender: TObject);
+begin
+  Frm_feedback.KeyPreview:=true;
+  Frm_feedback.ShowHint:=true;
+  UniformizeButtonsSize(Self,  273, 25);
+  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+  LoadFormState(Self)
+end;
+
+end.

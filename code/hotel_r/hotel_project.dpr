@@ -11,6 +11,7 @@ uses
   Un_pay in 'Un_pay.pas' {Frm_pay},
   Un_saver in 'Un_saver.pas' {Frm_saver},
   Un_dog in 'Un_dog.pas' {Frm_dog},
+  Un_feedback in 'Un_feedback.pas' {Frm_feedback},
   Un_usl in 'Un_usl.pas' {Frm_usl};
 
 {$R *.res}
@@ -26,6 +27,7 @@ begin
   Application.CreateForm(TFrm_pay, Frm_pay);
   Application.CreateForm(TFrm_saver, Frm_saver);
   Application.CreateForm(TFrm_dog, Frm_dog);
+  Application.CreateForm(TFrm_feedback, Frm_feedback);
   Application.CreateForm(TFrm_usl, Frm_usl);
   Application.Run;
 end.

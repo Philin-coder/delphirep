@@ -1,0 +1,205 @@
+unit Un_main;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Menus, ExtCtrls, jpeg, StdCtrls, ToolWin, ComCtrls;
+
+type
+  TFrm_main = class(TForm)
+    main_image: TImage;
+    ItemMenu: TMainMenu;
+    admin_item: TMenuItem;
+    type_n_item: TMenuItem;
+    usl_item: TMenuItem;
+    Nom_item: TMenuItem;
+    freeze_timer: TTimer;
+    saver_tb: TToolBar;
+    savercb: TCheckBox;
+    dog_item: TMenuItem;
+    pay_item: TMenuItem;
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormActivate(Sender: TObject);
+    procedure admin_itemClick(Sender: TObject);
+    procedure type_n_itemClick(Sender: TObject);
+    procedure usl_itemClick(Sender: TObject);
+    procedure Nom_itemClick(Sender: TObject);
+
+    procedure freeze_timerTimer(Sender: TObject);
+    procedure savercbClick(Sender: TObject);
+    procedure dog_itemClick(Sender: TObject);
+    procedure pay_itemClick(Sender: TObject);
+  private
+    procedure HandleApplicationMessage(var Msg: TMsg; var Handled: Boolean);
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_main: TFrm_main;
+  LastActivityTime: Cardinal;
+
+implementation
+
+uses Un_func, Un_dm, Un_fadmin, Un_type_nom, Un_usl, Un_nom, Un_saver, Un_dog,
+  Un_pay;
+
+const
+  FileName = 'connection_string.txt';
+
+{$R *.dfm}
+
+// Обработка сообщений Windows для отслеживания активности
+procedure TFrm_main.HandleApplicationMessage(var Msg: TMsg; var Handled: Boolean);
+begin
+  case Msg.message of
+    WM_MOUSEMOVE,
+    WM_LBUTTONDOWN, WM_LBUTTONUP,
+    WM_RBUTTONDOWN, WM_RBUTTONUP,
+    WM_KEYDOWN, WM_KEYUP:
+      LastActivityTime := GetTickCount;
+  end;
+  Handled := False;
+end;
+
+// Обработчик кнопки администратора
+procedure TFrm_main.admin_itemClick(Sender: TObject);
+begin
+  try
+    UpdateFormProperties('Frm_fadmin', 'Форма работы с данными администратора',
+      clBtnFace, 1024, 768);
+    Frm_fadmin.ShowModal;
+  except
+    Frm_fadmin.Free;
+    raise;
+  end;
+end;
+
+// Активация формы
+procedure TFrm_main.dog_itemClick(Sender: TObject);
+begin
+
+  try
+    UpdateFormProperties('Frm_dog', 'Форма работы с договорм',
+      clBtnFace, 1024, 768);
+    Frm_dog.ShowModal;
+  except
+    Frm_dog.Free;
+    raise;
+  end;
+end;
+
+procedure TFrm_main.FormActivate(Sender: TObject);
+begin
+  SaveConnectionStringToFile(FileName, dm.connection.ConnectionString);
+end;
+
+// Закрытие формы
+procedure TFrm_main.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  main_Image.Picture := nil;
+  SaveFormState(Self);
+  freeze_timer.Enabled := False;
+end;
+
+// Создание формы
+procedure TFrm_main.FormCreate(Sender: TObject);
+begin
+  LastActivityTime := GetTickCount;
+
+  SetFormPropertiesIfNeeded;
+  with main_Image do
+  begin
+    Stretch := True;
+    AutoSize := True;
+  end;
+  LoadFormState(Self);
+  LoadImageFromResource('BACKGROUND_IMAGE', main_Image);
+
+  freeze_timer.Interval := 1000;
+  freeze_timer.Enabled := False;
+
+  Application.OnMessage := HandleApplicationMessage;
+end;
+
+// Обработчик нажатия кнопки "Заморозить"
+
+
+// Обработчик события таймера
+procedure TFrm_main.freeze_timerTimer(Sender: TObject);
+begin
+  if Int64(GetTickCount) - Int64(LastActivityTime) >= 10000 then
+  begin
+    freeze_timer.Enabled := False;
+
+    if not Assigned(Frm_saver) then
+      Frm_saver := TFrm_saver.Create(nil);
+
+    Frm_saver.Show;
+  end;
+end;
+
+// Обработчик кнопки "Номер"
+procedure TFrm_main.Nom_itemClick(Sender: TObject);
+begin
+  try
+    UpdateFormProperties('Frm_nom', 'Форма работы с номером',
+      clBtnFace, 1024, 768);
+    Frm_nom.ShowModal;
+  except
+    Frm_nom.Free;
+    raise;
+  end;
+end;
+
+procedure TFrm_main.pay_itemClick(Sender: TObject);
+begin
+  try
+    UpdateFormProperties('Frm_pay', 'Форма работы с оплатой',
+      clBtnFace, 1024, 768);
+    Frm_pay.ShowModal;
+  except
+    Frm_pay.Free;
+    raise;
+  end;
+
+end;
+
+procedure TFrm_main.savercbClick(Sender: TObject);
+begin
+if savercb.Checked then
+begin
+  LastActivityTime := GetTickCount;
+  freeze_timer.Enabled := True;
+end;
+end;
+
+// Обработчик кнопки "Тип номера"
+procedure TFrm_main.type_n_itemClick(Sender: TObject);
+begin
+  try
+    UpdateFormProperties('Frm_type_nom', 'Форма работы с типом номера',
+      clBtnFace, 1024, 768);
+    Frm_type_nom.ShowModal;
+  except
+    Frm_type_nom.Free;
+    raise;
+  end;
+end;
+
+// Обработчик кнопки "Услуга"
+procedure TFrm_main.usl_itemClick(Sender: TObject);
+begin
+  try
+    UpdateFormProperties('Frm_usl', 'Форма работы с услугой',
+      clBtnFace, 1024, 768);
+    Frm_usl.ShowModal;
+  except
+    Frm_usl.Free;
+    raise;
+  end;
+end;
+
+end.

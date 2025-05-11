@@ -1,7 +1,7 @@
 object DM: TDM
   OldCreateOrder = False
   Height = 431
-  Width = 648
+  Width = 725
   object Connection: TADOConnection
     Connected = True
     ConnectionString = 
@@ -723,7 +723,6 @@ object DM: TDM
     Top = 232
   end
   object PayQuery: TADOQuery
-    Active = True
     Connection = Connection
     CursorType = ctStatic
     Parameters = <>
@@ -757,12 +756,14 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@pay_from'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end>
     Left = 544
     Top = 184
@@ -776,6 +777,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@usl_id'
@@ -803,6 +805,7 @@ object DM: TDM
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end
       item
         Name = '@total_s'
@@ -830,6 +833,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@pay_id'
@@ -843,6 +847,7 @@ object DM: TDM
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end>
     Left = 552
     Top = 296
@@ -856,6 +861,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@pay_id'
@@ -865,6 +871,54 @@ object DM: TDM
         Value = 0
       end>
     Left = 552
+    Top = 360
+  end
+  object fbQuery: TADOQuery
+    Active = True
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      '  feedback.feedback_id,'
+      '  dogovor.guest_fio,'
+      '  feedback.feedback_text,'
+      ' case '
+      '   when  feedback.feeadbackmarck=0 then '#39#1054#1095#1077#1085#1100' '#1087#1083#1086#1093#1086#39
+      '   when  feedback.feeadbackmarck=1 then '#39#1055#1083#1086#1093#1086#39
+      '   when  feedback.feeadbackmarck=2 then '#39#1059#1076#1086#1074#1083#1077#1090#1074#1086#1088#1080#1090#1077#1083#1100#1085#1086#39
+      '   when  feedback.feeadbackmarck=3 then '#39#1061#1086#1088#1086#1096#1086#39
+      '   else '#39#1054#1090#1083#1080#1095#1085#1086#39
+      ' end as fb'
+      'from feedback '
+      'inner join dogovor on dogovor.dog_id=feedback.dog_id'
+      'where 1=1')
+    Left = 632
+    Top = 72
+  end
+  object fbDS: TDataSource
+    DataSet = fbQuery
+    Left = 632
+    Top = 136
+  end
+  object ADOStoredProc1: TADOStoredProc
+    Parameters = <>
+    Left = 640
+    Top = 184
+  end
+  object ADOStoredProc2: TADOStoredProc
+    Parameters = <>
+    Left = 632
+    Top = 248
+  end
+  object ADOStoredProc3: TADOStoredProc
+    Parameters = <>
+    Left = 632
+    Top = 296
+  end
+  object ADOStoredProc4: TADOStoredProc
+    Parameters = <>
+    Left = 632
     Top = 360
   end
 end
