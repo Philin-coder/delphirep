@@ -21,11 +21,12 @@ object Frm_dog: TFrm_dog
     Top = 0
     Width = 1037
     Height = 755
-    ActivePage = insTab
+    ActivePage = delTab
     Align = alClient
     TabOrder = 0
     object seLTab: TTabSheet
       Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1076#1086#1075#1086#1074#1086#1088#1077
+      ExplicitWidth = 1005
       object sel_dog_condBox: TGroupBox
         Left = 0
         Top = 0
@@ -34,6 +35,7 @@ object Frm_dog: TFrm_dog
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
+        ExplicitWidth = 1005
         DesignSize = (
           1029
           105)
@@ -47,6 +49,7 @@ object Frm_dog: TFrm_dog
           EditLabel.Height = 13
           EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086'  '#1060#1048#1054
           TabOrder = 0
+          ExplicitWidth = 999
         end
         object sel_dog_reg_fnd_Edit: TLabeledEdit
           Left = 3
@@ -59,6 +62,7 @@ object Frm_dog: TFrm_dog
           EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1084#1077#1089#1090#1091' '#1088#1077#1075#1080#1089#1090#1088#1072#1094#1080#1080
           TabOrder = 1
           OnKeyPress = sel_dog_reg_fnd_EditKeyPress
+          ExplicitWidth = 999
         end
       end
       object m_dog_grupper: TGroupBox
@@ -69,6 +73,7 @@ object Frm_dog: TFrm_dog
         Align = alTop
         Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072
         TabOrder = 1
+        ExplicitWidth = 1005
         object dog_Radiofiogrupper: TRadioButton
           Left = 40
           Top = 48
@@ -104,6 +109,7 @@ object Frm_dog: TFrm_dog
         Height = 55
         Align = alBottom
         TabOrder = 2
+        ExplicitWidth = 1005
         object dogselBtn: TButton
           Left = 344
           Top = 16
@@ -122,6 +128,7 @@ object Frm_dog: TFrm_dog
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 3
+        ExplicitWidth = 1005
         object sel_dogGrd: TDBGrid
           Left = 2
           Top = 15
@@ -228,6 +235,7 @@ object Frm_dog: TFrm_dog
     object insTab: TTabSheet
       Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1076#1086#1075#1086#1074#1086#1088#1077
       ImageIndex = 1
+      ExplicitWidth = 1005
       object ins_dog_btn_Box: TGroupBox
         Left = 0
         Top = 656
@@ -235,6 +243,7 @@ object Frm_dog: TFrm_dog
         Height = 71
         Align = alBottom
         TabOrder = 0
+        ExplicitWidth = 1005
         object ins_dogBtn: TButton
           Left = 496
           Top = 24
@@ -255,6 +264,8 @@ object Frm_dog: TFrm_dog
         TabOrder = 1
         object about_dog_tab_one: TTabSheet
           Caption = #1054' '#1076#1086#1075#1086#1074#1086#1088#1077
+          ExplicitWidth = 997
+          ExplicitHeight = 241
           object ins_dog_inpBox: TGroupBox
             Left = 0
             Top = 0
@@ -263,6 +274,10 @@ object Frm_dog: TFrm_dog
             Align = alClient
             Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
             TabOrder = 0
+            ExplicitLeft = -3
+            ExplicitTop = -24
+            ExplicitWidth = 997
+            ExplicitHeight = 241
             DesignSize = (
               1021
               269)
@@ -295,6 +310,8 @@ object Frm_dog: TFrm_dog
               Date = 45787.559276863420000000
               Time = 45787.559276863420000000
               TabOrder = 2
+              ExplicitTop = 100
+              ExplicitWidth = 993
             end
             object pass_n_inp: TLabeledEdit
               Left = 3
@@ -307,6 +324,7 @@ object Frm_dog: TFrm_dog
               EditLabel.Caption = #1053#1086#1084#1077#1088' '#1087#1072#1089#1089#1087#1086#1088#1090#1072
               TabOrder = 3
               OnKeyPress = pass_n_inpKeyPress
+              ExplicitTop = 154
             end
             object pass_seria_inp: TLabeledEdit
               Left = 0
@@ -319,12 +337,14 @@ object Frm_dog: TFrm_dog
               EditLabel.Caption = #1057#1077#1088#1080#1103' '#1087#1072#1089#1089#1087#1086#1088#1090#1072
               TabOrder = 4
               OnKeyPress = pass_seria_inpKeyPress
+              ExplicitTop = 202
             end
           end
         end
         object about_dog_Tab_two: TTabSheet
           Caption = #1054' '#1076#1086#1075#1086#1074#1086#1088#1077
           ImageIndex = 1
+          ExplicitHeight = 241
           object about_dog_inpBox: TGroupBox
             Left = 0
             Top = 0
@@ -333,6 +353,10 @@ object Frm_dog: TFrm_dog
             Align = alClient
             Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
             TabOrder = 0
+            ExplicitLeft = -3
+            ExplicitTop = -24
+            ExplicitWidth = 997
+            ExplicitHeight = 241
             DesignSize = (
               1021
               269)
@@ -346,6 +370,7 @@ object Frm_dog: TFrm_dog
               EditLabel.Height = 13
               EditLabel.Caption = #1050#1077#1084' '#1074#1099#1076#1072#1085
               TabOrder = 0
+              ExplicitTop = 50
             end
             object data_reg_lbl: TStaticText
               Left = 3
@@ -365,6 +390,8 @@ object Frm_dog: TFrm_dog
               Date = 45787.559276863420000000
               Time = 45787.559276863420000000
               TabOrder = 2
+              ExplicitTop = 100
+              ExplicitWidth = 993
             end
             object mesto_r_inp: TLabeledEdit
               Left = 3
@@ -376,6 +403,7 @@ object Frm_dog: TFrm_dog
               EditLabel.Height = 13
               EditLabel.Caption = #1052#1077#1089#1090#1086' '#1088#1077#1075#1080#1089#1090#1088#1072#1094#1080#1080
               TabOrder = 3
+              ExplicitTop = 154
             end
             object perpose_inp: TLabeledEdit
               Left = 0
@@ -387,12 +415,14 @@ object Frm_dog: TFrm_dog
               EditLabel.Height = 13
               EditLabel.Caption = #1062#1077#1083#1100' '#1087#1088#1080#1077#1079#1076#1072
               TabOrder = 4
+              ExplicitTop = 202
             end
           end
         end
         object about_dog_Tab_three: TTabSheet
           Caption = #1054' '#1076#1086#1075#1086#1074#1086#1088#1077
           ImageIndex = 2
+          ExplicitHeight = 241
           object about_d_inp_box: TGroupBox
             Left = 0
             Top = 0
@@ -401,6 +431,10 @@ object Frm_dog: TFrm_dog
             Align = alClient
             Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
             TabOrder = 0
+            ExplicitLeft = -3
+            ExplicitTop = -24
+            ExplicitWidth = 997
+            ExplicitHeight = 241
             DesignSize = (
               1021
               269)
@@ -495,7 +529,7 @@ object Frm_dog: TFrm_dog
               Text = '0'
             end
             object sr_dog_grader: TUpDown
-              Left = 995
+              Left = 1001
               Top = 245
               Width = 17
               Height = 21
@@ -513,6 +547,8 @@ object Frm_dog: TFrm_dog
         Height = 44
         Align = alTop
         TabOrder = 2
+        ExplicitTop = 269
+        ExplicitWidth = 1005
         object dogqsvBtn: TButton
           Left = 376
           Top = 13
@@ -540,6 +576,9 @@ object Frm_dog: TFrm_dog
         Height = 315
         Align = alClient
         TabOrder = 3
+        ExplicitTop = 296
+        ExplicitWidth = 1005
+        ExplicitHeight = 431
         object ins_tn_data_Box: TGroupBox
           Left = 2
           Top = 15
@@ -548,6 +587,8 @@ object Frm_dog: TFrm_dog
           Align = alClient
           Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
           TabOrder = 0
+          ExplicitWidth = 1001
+          ExplicitHeight = 414
           object ins_dog_grd: TDBGrid
             Left = 2
             Top = 15
@@ -655,6 +696,7 @@ object Frm_dog: TFrm_dog
     object updTab: TTabSheet
       Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1076#1086#1075#1086#1074#1086#1088#1077
       ImageIndex = 2
+      ExplicitWidth = 1005
       object upd_dog_inp_Box: TGroupBox
         Left = 0
         Top = 0
@@ -663,6 +705,7 @@ object Frm_dog: TFrm_dog
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
+        ExplicitWidth = 1005
         DesignSize = (
           1029
           145)
@@ -686,6 +729,7 @@ object Frm_dog: TFrm_dog
           ListField = 'guest_fio'
           ListSource = DM.dogDS
           TabOrder = 1
+          ExplicitWidth = 982
         end
         object upd_dogl_perpose_inp: TLabeledEdit
           Left = 3
@@ -697,6 +741,7 @@ object Frm_dog: TFrm_dog
           EditLabel.Height = 13
           EditLabel.Caption = #1042#1074#1086#1076' '#1094#1077#1083#1080'  '#1087#1088#1080#1077#1079#1076#1072
           TabOrder = 2
+          ExplicitWidth = 982
         end
       end
       object upd_dog_btn_Box: TGroupBox
@@ -706,6 +751,7 @@ object Frm_dog: TFrm_dog
         Height = 71
         Align = alBottom
         TabOrder = 1
+        ExplicitWidth = 1005
         object upd_dog_btn: TButton
           Left = 440
           Top = 24
@@ -724,6 +770,7 @@ object Frm_dog: TFrm_dog
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
+        ExplicitWidth = 1005
         object upd_dog_grd: TDBGrid
           Left = 2
           Top = 15
@@ -830,6 +877,7 @@ object Frm_dog: TFrm_dog
     object delTab: TTabSheet
       Caption = #1059#1076#1072#1083#1077#1085#1080#1077'  '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1076#1086#1075#1086#1074#1086#1088#1077
       ImageIndex = 3
+      ExplicitWidth = 1005
       object del_dog_inpBox: TGroupBox
         Left = 0
         Top = 0
@@ -838,6 +886,7 @@ object Frm_dog: TFrm_dog
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
+        ExplicitWidth = 1005
         object del_dbl_usl_lbl: TStaticText
           Left = 3
           Top = 24
@@ -858,6 +907,7 @@ object Frm_dog: TFrm_dog
           ListField = 'guest_fio'
           ListSource = DM.dogDS
           TabOrder = 1
+          ExplicitWidth = 982
         end
       end
       object del_dog_dataBox: TGroupBox
@@ -868,6 +918,7 @@ object Frm_dog: TFrm_dog
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
+        ExplicitWidth = 1005
         object Del_dog_grd: TDBGrid
           Left = 2
           Top = 15
@@ -892,7 +943,6 @@ object Frm_dog: TFrm_dog
               Expanded = False
               FieldName = 'guest_fio'
               Title.Caption = #1060#1048#1054' '#1075#1086#1089#1090#1103
-              Width = 144
               Visible = True
             end
             item
@@ -978,6 +1028,7 @@ object Frm_dog: TFrm_dog
         Height = 71
         Align = alBottom
         TabOrder = 2
+        ExplicitWidth = 1005
         object del_dog_d_btn: TButton
           Left = 488
           Top = 24

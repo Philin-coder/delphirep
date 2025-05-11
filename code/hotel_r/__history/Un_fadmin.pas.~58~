@@ -174,7 +174,6 @@ end;
 procedure TFrm_fadmin.FormActivate(Sender: TObject);
 begin
   dm.admQuery.Open;
-  AdjustDBGridColumnWidths('Frm_fadmin',6000, 10);
 end;
 
 procedure TFrm_fadmin.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -192,6 +191,7 @@ Frm_fadmin.KeyPreview:=true;
  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
  LoadFormState(Self);
+   AdjustDBGridColumnWidths('Frm_fadmin',6000, 10);
  sm_st:=0;
 end;
 

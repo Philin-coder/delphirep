@@ -126,7 +126,6 @@ procedure TFrm_nom.FormActivate(Sender: TObject);
 begin
   dm.nom_query.Open;
   dm.type_nQuery.Open;
-  AdjustDBGridColumnWidths('Frm_nom',6000, 10);
 end;
 
 procedure TFrm_nom.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -149,6 +148,7 @@ begin
   nomer_kind_inp.ShowHint:=true;
   nomer_kind_inp.Hint:='Вид номера веутренний'+#10#13+
   'Вида Королевский Люкс, но хотя по типам номеров это обычный люкс';
+     AdjustDBGridColumnWidths('Frm_nom',6000, 10);
 end;
 
 procedure TFrm_nom.ins_nomGidDblClick(Sender: TObject);

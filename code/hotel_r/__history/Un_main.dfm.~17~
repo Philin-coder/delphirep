@@ -1,0 +1,78 @@
+object Frm_main: TFrm_main
+  Left = 0
+  Top = 0
+  Caption = #1043#1083#1074#1085#1072#1103' '#1092#1086#1088#1084#1072' '#1087#1088#1080#1083#1086#1078#1077#1085#1080#1103
+  ClientHeight = 379
+  ClientWidth = 635
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  Menu = ItemMenu
+  OldCreateOrder = False
+  OnActivate = FormActivate
+  OnClose = FormClose
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object main_image: TImage
+    Left = 0
+    Top = 29
+    Width = 635
+    Height = 350
+    Align = alClient
+    ExplicitLeft = 456
+    ExplicitTop = 48
+    ExplicitWidth = 105
+    ExplicitHeight = 105
+  end
+  object saver_tb: TToolBar
+    Left = 0
+    Top = 0
+    Width = 635
+    Height = 29
+    TabOrder = 0
+    object savercb: TCheckBox
+      Left = 0
+      Top = 0
+      Width = 145
+      Height = 22
+      Caption = #1061#1088#1072#1085#1080#1090#1077#1083#1100' '#1101#1082#1088#1072#1085#1072
+      TabOrder = 0
+      OnClick = savercbClick
+    end
+  end
+  object ItemMenu: TMainMenu
+    Left = 312
+    Top = 152
+    object admin_item: TMenuItem
+      Caption = '&'#1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1072#1076#1084#1080#1085#1080#1089#1090#1088#1072#1090#1086#1088#1086#1084
+      OnClick = admin_itemClick
+    end
+    object type_n_item: TMenuItem
+      Caption = '&'#1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1090#1080#1087#1086#1084' '#1085#1086#1084#1077#1088#1072
+      OnClick = type_n_itemClick
+    end
+    object usl_item: TMenuItem
+      Caption = '&'#1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1091#1089#1083#1091#1075#1086#1081
+      OnClick = usl_itemClick
+    end
+    object Nom_item: TMenuItem
+      Caption = '&'#1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1085#1086#1084#1077#1088#1086#1084
+      OnClick = Nom_itemClick
+    end
+    object dog_item: TMenuItem
+      Caption = '&'#1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1076#1086#1075#1086#1074#1086#1086#1088#1086#1084
+      OnClick = dog_itemClick
+    end
+  end
+  object freeze_timer: TTimer
+    Enabled = False
+    Interval = 10000
+    OnTimer = freeze_timerTimer
+    Left = 208
+    Top = 104
+  end
+end

@@ -392,7 +392,6 @@ begin
   DM.dogQuery.Open;
   dm.nom_query.Open;
   dm.admQuery.Open;
-  AdjustDBGridColumnWidths('Frm_dog',6000, 10);
 end;
 
 procedure TFrm_dog.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -409,6 +408,7 @@ begin
   UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   LoadFormState(Self);
+  AdjustDBGridColumnWidths('Frm_dog');
   sr_dog_inp.ShowHint:=True;
 end;
 

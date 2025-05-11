@@ -387,6 +387,7 @@ object DM: TDM
     Top = 176
   end
   object nom_query: TADOQuery
+    Active = True
     Connection = Connection
     CursorType = ctStatic
     Parameters = <>
@@ -516,7 +517,6 @@ object DM: TDM
     Top = 352
   end
   object dogQuery: TADOQuery
-    Active = True
     Connection = Connection
     CursorType = ctStatic
     Parameters = <>
@@ -557,14 +557,12 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@guest_fio'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
-        Value = Null
       end>
     Left = 456
     Top = 176
@@ -578,7 +576,6 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@dog_id'
@@ -599,7 +596,6 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@dog_id'
@@ -613,7 +609,6 @@ object DM: TDM
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
-        Value = Null
       end>
     Left = 440
     Top = 296
@@ -627,28 +622,24 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@guest_fio'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
-        Value = Null
       end
       item
         Name = '@data_b'
         Attributes = [paNullable]
         DataType = ftDateTime
         Size = 10
-        Value = Null
       end
       item
         Name = '@pass_n'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
-        Value = Null
       end
       item
         Name = '@pass_seria'
@@ -662,35 +653,30 @@ object DM: TDM
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
-        Value = Null
       end
       item
         Name = '@mesto_r'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
-        Value = Null
       end
       item
         Name = '@data_reg'
         Attributes = [paNullable]
         DataType = ftDateTime
         Size = 10
-        Value = Null
       end
       item
         Name = '@pol'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
-        Value = Null
       end
       item
         Name = '@perpose'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
-        Value = Null
       end
       item
         Name = '@nomer_id'

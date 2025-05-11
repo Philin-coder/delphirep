@@ -516,7 +516,6 @@ object DM: TDM
     Top = 352
   end
   object dogQuery: TADOQuery
-    Active = True
     Connection = Connection
     CursorType = ctStatic
     Parameters = <>
