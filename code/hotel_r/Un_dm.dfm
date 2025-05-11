@@ -821,10 +821,31 @@ object DM: TDM
     Left = 560
     Top = 232
   end
-  object ADOStoredProc3: TADOStoredProc
-    Parameters = <>
+  object upd_pay: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_pay;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@pay_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@pay_from'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end>
     Left = 552
-    Top = 312
+    Top = 296
   end
   object ADOStoredProc4: TADOStoredProc
     Parameters = <>

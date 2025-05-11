@@ -42,7 +42,7 @@ type
     PayDS: TDataSource;
     sel_pay_by_form: TADOStoredProc;
     ins_pay: TADOStoredProc;
-    ADOStoredProc3: TADOStoredProc;
+    upd_pay: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }

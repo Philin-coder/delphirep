@@ -475,9 +475,9 @@ object Frm_pay: TFrm_pay
       end
     end
     object updTab: TTabSheet
-      Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086#1073' '#1091#1089#1083#1091#1075#1077
+      Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086#1073' '#1086#1087#1083#1072#1090#1077
       ImageIndex = 2
-      object upd_usl_inp_Box: TGroupBox
+      object upd_pay_inp_Box: TGroupBox
         Left = 0
         Top = 0
         Width = 1005
@@ -488,56 +488,57 @@ object Frm_pay: TFrm_pay
         DesignSize = (
           1005
           145)
-        object upd_usl_lbl: TStaticText
+        object upd_pay_lbl: TStaticText
           Left = 3
           Top = 24
-          Width = 85
+          Width = 87
           Height = 17
           Align = alCustom
-          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1091#1089#1083#1091#1075#1091
+          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1086#1087#1083#1072#1090#1072
           TabOrder = 0
         end
-        object upd_usl_u_dbl: TDBLookupComboBox
+        object upd_pay_u_dbl: TDBLookupComboBox
           Left = 3
           Top = 47
           Width = 982
           Height = 21
           Align = alCustom
           Anchors = [akLeft, akRight]
-          KeyField = 'usl_id'
-          ListField = 'usl_naim'
-          ListSource = DM.uslDS
+          KeyField = 'pay_id'
+          ListField = 'guest_fio'
+          ListSource = DM.PayDS
           TabOrder = 1
         end
-        object upd_usl_naim_inp: TLabeledEdit
+        object upd_pay_from_inp: TLabeledEdit
           Left = 3
           Top = 99
           Width = 982
           Height = 21
           Anchors = [akLeft, akRight]
-          EditLabel.Width = 140
+          EditLabel.Width = 103
           EditLabel.Height = 13
-          EditLabel.Caption = #1042#1074#1086#1076' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1103'  '#1091#1089#1083#1091#1075#1080
+          EditLabel.Caption = #1042#1074#1086#1076' '#1092#1086#1088#1084#1099' '#1086#1087#1083#1072#1090#1099
           TabOrder = 2
         end
       end
-      object upd_usl_btn_Box: TGroupBox
+      object upd_pay_btn_Box: TGroupBox
         Left = 0
         Top = 656
         Width = 1005
         Height = 71
         Align = alBottom
         TabOrder = 1
-        object upd_uls_btn: TButton
+        object upd_pay_btn: TButton
           Left = 440
           Top = 24
           Width = 75
           Height = 25
           Caption = #1054#1073#1085#1086#1074#1080#1090#1100
           TabOrder = 0
+          OnClick = upd_pay_btnClick
         end
       end
-      object upd_usl_data_box: TGroupBox
+      object upd_pay_data_box: TGroupBox
         Left = 0
         Top = 145
         Width = 1005
@@ -545,7 +546,7 @@ object Frm_pay: TFrm_pay
         Align = alClient
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        object DBGrid2: TDBGrid
+        object upd_pay_grd: TDBGrid
           Left = 2
           Top = 15
           Width = 1001

@@ -28,12 +28,12 @@ type
     ins_uslBtn: TButton;
     paylqPanel: TPanel;
     paylqsvBtn: TButton;
-    upd_usl_inp_Box: TGroupBox;
-    upd_usl_btn_Box: TGroupBox;
-    upd_usl_data_box: TGroupBox;
-    upd_uls_btn: TButton;
-    upd_usl_lbl: TStaticText;
-    upd_usl_u_dbl: TDBLookupComboBox;
+    upd_pay_inp_Box: TGroupBox;
+    upd_pay_btn_Box: TGroupBox;
+    upd_pay_data_box: TGroupBox;
+    upd_pay_btn: TButton;
+    upd_pay_lbl: TStaticText;
+    upd_pay_u_dbl: TDBLookupComboBox;
     del_usl_inpBox: TGroupBox;
     del_usl_dataBox: TGroupBox;
     del_usl_btn_Box: TGroupBox;
@@ -41,7 +41,7 @@ type
     del_dbl_usl_lbl: TStaticText;
     del_dbl_usl_dbl: TDBLookupComboBox;
     ins_pay_data_Box: TGroupBox;
-    upd_usl_naim_inp: TLabeledEdit;
+    upd_pay_from_inp: TLabeledEdit;
     ins_usl_inpBox: TGroupBox;
     payliveQuercB: TCheckBox;
     ABOUT_PAYpc: TPageControl;
@@ -55,7 +55,7 @@ type
     about_Tab_three: TTabSheet;
     selpayselgrd: TDBGrid;
     ins_payGrd: TDBGrid;
-    DBGrid2: TDBGrid;
+    upd_pay_grd: TDBGrid;
     DBGrid3: TDBGrid;
     pay_d_box2: TGroupBox;
     mdays_inp: TLabeledEdit;
@@ -76,6 +76,7 @@ type
     procedure ins_uslBtnClick(Sender: TObject);
     procedure payliveQuercBClick(Sender: TObject);
     procedure paylqsvBtnClick(Sender: TObject);
+    procedure upd_pay_btnClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -418,6 +419,52 @@ except on E: Exception do
   ShowMessage('Ошибка'+' '+E.Message);
   end;
   end;
+end;
+
+procedure TFrm_pay.upd_pay_btnClick(Sender: TObject);
+const
+AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+begin
+AreFieldsEmpty:=(
+(upd_pay_u_dbl.Text='')or
+(Trim(upd_pay_from_inp.Text)='')
+);
+AreFieldsValid:=(
+ValidateComponentText(upd_pay_from_inp,AllowedChars)
+);
+if AreFieldsEmpty or not AreFieldsValid then
+begin
+MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+end;
+try
+      with dm.upd_pay do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@pay_id').Value :=
+           dm.PayQuery.FieldByName('pay_id').AsString;
+           Parameters.ParamByName('@pay_from').Value:=upd_pay_from_inp.Text;
+           ExecProc;
+           dm.payQuery.Close;
+           dm.payQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
 end;
 
 end.
