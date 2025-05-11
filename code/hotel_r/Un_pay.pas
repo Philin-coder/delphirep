@@ -34,12 +34,12 @@ type
     upd_pay_btn: TButton;
     upd_pay_lbl: TStaticText;
     upd_pay_u_dbl: TDBLookupComboBox;
-    del_usl_inpBox: TGroupBox;
-    del_usl_dataBox: TGroupBox;
-    del_usl_btn_Box: TGroupBox;
-    del_usl_d_btn: TButton;
-    del_dbl_usl_lbl: TStaticText;
-    del_dbl_usl_dbl: TDBLookupComboBox;
+    del_pay_inpBox: TGroupBox;
+    del_pay_dataBox: TGroupBox;
+    del_pay_btn_Box: TGroupBox;
+    del_pay_d_btn: TButton;
+    del_dbl_pay_lbl: TStaticText;
+    del_dbl_pay_dbl: TDBLookupComboBox;
     ins_pay_data_Box: TGroupBox;
     upd_pay_from_inp: TLabeledEdit;
     ins_usl_inpBox: TGroupBox;
@@ -56,7 +56,7 @@ type
     selpayselgrd: TDBGrid;
     ins_payGrd: TDBGrid;
     upd_pay_grd: TDBGrid;
-    DBGrid3: TDBGrid;
+    Delpay_grd: TDBGrid;
     pay_d_box2: TGroupBox;
     mdays_inp: TLabeledEdit;
     pay_from_inp: TLabeledEdit;
@@ -77,6 +77,7 @@ type
     procedure payliveQuercBClick(Sender: TObject);
     procedure paylqsvBtnClick(Sender: TObject);
     procedure upd_pay_btnClick(Sender: TObject);
+    procedure del_pay_d_btnClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -93,6 +94,44 @@ implementation
 uses Un_dm, Un_func;
 
 {$R *.dfm}
+
+procedure TFrm_pay.del_pay_d_btnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (del_dbl_pay_dbl.Text='')
+  );
+  if AreFieldsEmpty then
+  begin
+  MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+    try
+      with dm.del_pay do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@pay_id').Value
+           :=dm.PayQuery.FieldByName('pay_id').AsString;
+           ExecProc;
+           dm.payQuery.Close;
+           dm.payQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+end;
 
 procedure TFrm_pay.FormActivate(Sender: TObject);
 begin

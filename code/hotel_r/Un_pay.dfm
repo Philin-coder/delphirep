@@ -21,7 +21,7 @@ object Frm_pay: TFrm_pay
     Top = 0
     Width = 1013
     Height = 755
-    ActivePage = updTab
+    ActivePage = delTab
     Align = alClient
     TabOrder = 0
     object seLTab: TTabSheet
@@ -606,9 +606,9 @@ object Frm_pay: TFrm_pay
       end
     end
     object delTab: TTabSheet
-      Caption = #1059#1076#1072#1083#1077#1085#1080#1077'  '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1091#1089#1083#1091#1075#1077
+      Caption = #1059#1076#1072#1083#1077#1085#1080#1077'  '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1086#1087#1083#1072#1090#1077
       ImageIndex = 3
-      object del_usl_inpBox: TGroupBox
+      object del_pay_inpBox: TGroupBox
         Left = 0
         Top = 0
         Width = 1005
@@ -616,29 +616,29 @@ object Frm_pay: TFrm_pay
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object del_dbl_usl_lbl: TStaticText
+        object del_dbl_pay_lbl: TStaticText
           Left = 3
           Top = 24
-          Width = 85
+          Width = 87
           Height = 17
           Align = alCustom
-          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1091#1089#1083#1091#1075#1091
+          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1086#1087#1083#1072#1090#1091
           TabOrder = 0
         end
-        object del_dbl_usl_dbl: TDBLookupComboBox
+        object del_dbl_pay_dbl: TDBLookupComboBox
           Left = 3
           Top = 37
           Width = 982
           Height = 21
           Align = alCustom
           Anchors = [akLeft, akRight]
-          KeyField = 'usl_id'
-          ListField = 'usl_naim'
-          ListSource = DM.uslDS
+          KeyField = 'pay_id'
+          ListField = 'guest_fio'
+          ListSource = DM.PayDS
           TabOrder = 1
         end
       end
-      object del_usl_dataBox: TGroupBox
+      object del_pay_dataBox: TGroupBox
         Left = 0
         Top = 81
         Width = 1005
@@ -646,7 +646,7 @@ object Frm_pay: TFrm_pay
         Align = alClient
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
-        object DBGrid3: TDBGrid
+        object Delpay_grd: TDBGrid
           Left = 2
           Top = 15
           Width = 1001
@@ -704,20 +704,21 @@ object Frm_pay: TFrm_pay
             end>
         end
       end
-      object del_usl_btn_Box: TGroupBox
+      object del_pay_btn_Box: TGroupBox
         Left = 0
         Top = 656
         Width = 1005
         Height = 71
         Align = alBottom
         TabOrder = 2
-        object del_usl_d_btn: TButton
+        object del_pay_d_btn: TButton
           Left = 488
           Top = 24
           Width = 75
           Height = 25
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
+          OnClick = del_pay_d_btnClick
         end
       end
     end

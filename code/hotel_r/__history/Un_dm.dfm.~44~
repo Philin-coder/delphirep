@@ -1,7 +1,7 @@
 object DM: TDM
   OldCreateOrder = False
   Height = 431
-  Width = 544
+  Width = 648
   object Connection: TADOConnection
     Connected = True
     ConnectionString = 
@@ -387,7 +387,6 @@ object DM: TDM
     Top = 176
   end
   object nom_query: TADOQuery
-    Active = True
     Connection = Connection
     CursorType = ctStatic
     Parameters = <>
@@ -557,29 +556,300 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@guest_fio'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end>
     Left = 456
     Top = 176
   end
-  object ADOStoredProc2: TADOStoredProc
-    Parameters = <>
+  object del_dog: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'del_dog;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@dog_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
     Left = 456
     Top = 352
   end
-  object ADOStoredProc3: TADOStoredProc
-    Parameters = <>
+  object upd_dog: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_dog;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@dog_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@perpose'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+        Value = Null
+      end>
     Left = 440
+    Top = 296
+  end
+  object ins_dog: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'ins_dog;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@guest_fio'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+        Value = Null
+      end
+      item
+        Name = '@data_b'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+        Value = Null
+      end
+      item
+        Name = '@pass_n'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+        Value = Null
+      end
+      item
+        Name = '@pass_seria'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+        Value = Null
+      end
+      item
+        Name = '@kem_vid'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+        Value = Null
+      end
+      item
+        Name = '@mesto_r'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+        Value = Null
+      end
+      item
+        Name = '@data_reg'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+        Value = Null
+      end
+      item
+        Name = '@pol'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+        Value = Null
+      end
+      item
+        Name = '@perpose'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+        Value = Null
+      end
+      item
+        Name = '@nomer_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@date_dog'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 16
+        Value = Null
+      end
+      item
+        Name = '@sr_dog'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@id_admin'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 456
+    Top = 232
+  end
+  object PayQuery: TADOQuery
+    Active = True
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      '  pay.pay_id,'
+      '  usluga.usl_naim,'
+      '  pay.pay_data,'
+      '  pay.mdays,'
+      '  pay.pay_from,'
+      '  pay.total_s,'
+      '  dogovor.guest_fio'
+      'from pay'
+      'inner join usluga on usluga.usl_id=pay.usl_id'
+      'inner join dogovor on dogovor.dog_id=pay.dog_id'
+      'where 1=1')
+    Left = 528
+    Top = 72
+  end
+  object PayDS: TDataSource
+    DataSet = PayQuery
+    Left = 536
+    Top = 136
+  end
+  object sel_pay_by_form: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_pay_by_form;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@pay_from'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end>
+    Left = 544
+    Top = 184
+  end
+  object ins_pay: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'ins_pay;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@usl_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@pay_data'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+        Value = Null
+      end
+      item
+        Name = '@mdays'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@pay_from'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end
+      item
+        Name = '@total_s'
+        Attributes = [paNullable]
+        DataType = ftFloat
+        Precision = 15
+        Value = 0.000000000000000000
+      end
+      item
+        Name = '@dog_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 560
+    Top = 232
+  end
+  object upd_pay: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_pay;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@pay_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@pay_from'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end>
+    Left = 552
     Top = 296
   end
   object ADOStoredProc4: TADOStoredProc
     Parameters = <>
-    Left = 440
-    Top = 232
+    Left = 552
+    Top = 360
   end
 end

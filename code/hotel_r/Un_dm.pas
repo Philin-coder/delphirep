@@ -43,7 +43,7 @@ type
     sel_pay_by_form: TADOStoredProc;
     ins_pay: TADOStoredProc;
     upd_pay: TADOStoredProc;
-    ADOStoredProc4: TADOStoredProc;
+    del_pay: TADOStoredProc;
   private
     { Private declarations }
   public

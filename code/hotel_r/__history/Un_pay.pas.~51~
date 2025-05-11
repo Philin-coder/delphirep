@@ -26,24 +26,24 @@ type
     ins_tn_dataBox: TGroupBox;
     ins_usl_btn_Box: TGroupBox;
     ins_uslBtn: TButton;
-    usllqPanel: TPanel;
-    usllqsvBtn: TButton;
-    upd_usl_inp_Box: TGroupBox;
-    upd_usl_btn_Box: TGroupBox;
-    upd_usl_data_box: TGroupBox;
-    upd_uls_btn: TButton;
-    upd_usl_lbl: TStaticText;
-    upd_usl_u_dbl: TDBLookupComboBox;
-    del_usl_inpBox: TGroupBox;
-    del_usl_dataBox: TGroupBox;
-    del_usl_btn_Box: TGroupBox;
-    del_usl_d_btn: TButton;
-    del_dbl_usl_lbl: TStaticText;
-    del_dbl_usl_dbl: TDBLookupComboBox;
-    ins_tn_data_Box: TGroupBox;
-    upd_usl_naim_inp: TLabeledEdit;
+    paylqPanel: TPanel;
+    paylqsvBtn: TButton;
+    upd_pay_inp_Box: TGroupBox;
+    upd_pay_btn_Box: TGroupBox;
+    upd_pay_data_box: TGroupBox;
+    upd_pay_btn: TButton;
+    upd_pay_lbl: TStaticText;
+    upd_pay_u_dbl: TDBLookupComboBox;
+    del_pay_inpBox: TGroupBox;
+    del_pay_dataBox: TGroupBox;
+    del_pay_btn_Box: TGroupBox;
+    del_pay_d_btn: TButton;
+    del_dbl_pay_lbl: TStaticText;
+    del_dbl_pay_dbl: TDBLookupComboBox;
+    ins_pay_data_Box: TGroupBox;
+    upd_pay_from_inp: TLabeledEdit;
     ins_usl_inpBox: TGroupBox;
-    uslliveQuercB: TCheckBox;
+    payliveQuercB: TCheckBox;
     ABOUT_PAYpc: TPageControl;
     about_pay_Tab_one: TTabSheet;
     about_pay_Tab_two: TTabSheet;
@@ -55,15 +55,16 @@ type
     about_Tab_three: TTabSheet;
     selpayselgrd: TDBGrid;
     ins_payGrd: TDBGrid;
-    DBGrid2: TDBGrid;
-    DBGrid3: TDBGrid;
-    GroupBox1: TGroupBox;
+    upd_pay_grd: TDBGrid;
+    Delpay_grd: TDBGrid;
+    pay_d_box2: TGroupBox;
     mdays_inp: TLabeledEdit;
     pay_from_inp: TLabeledEdit;
-    total_s_inp: TLabeledEdit;
-    StaticText1: TStaticText;
-    dog_id_inp_DBL: TDBLookupComboBox;
     mdays_grader: TUpDown;
+    pay_inp_gruper_three: TGroupBox;
+    total_s_inp: TLabeledEdit;
+    dog_id_inp_DBL: TDBLookupComboBox;
+    StaticText1: TStaticText;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
@@ -73,6 +74,9 @@ type
     procedure pay_Radio_dateo_grupperClick(Sender: TObject);
     procedure pay_Radio_pay_f_grupperClick(Sender: TObject);
     procedure ins_uslBtnClick(Sender: TObject);
+    procedure payliveQuercBClick(Sender: TObject);
+    procedure paylqsvBtnClick(Sender: TObject);
+    procedure upd_pay_btnClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -145,9 +149,17 @@ begin
     try
       with dm.ins_pay do
       begin
+          PriceValue:=StrToInt64(total_s_inp.Text);
         if not Connection.Connected then
           raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@Name_A').Value :=Autor_inp.Text;
+           Parameters.ParamByName('@usl_id').Value :=
+           dm.UslQuery.FieldByName('usl_id').AsString;
+           Parameters.ParamByName('@pay_data').Value:=Pay_data_inp.Date;
+           Parameters.ParamByName('@mdays').Value:=mdays_grader.Position;
+           Parameters.ParamByName('@pay_from').Value:=pay_from_inp.Text;
+           Parameters.ParamByName('@total_s').Value:=PriceValue;
+           Parameters.ParamByName('@dog_id').Value:=
+           dm.dogQuery.FieldByName('dog_id').AsString;
            ExecProc;
            dm.PayQuery.Close;
            dm.PayQuery.Open;
@@ -164,6 +176,86 @@ begin
       end;
     end;
 
+end;
+
+procedure TFrm_pay.payliveQuercBClick(Sender: TObject);
+begin
+   case payliveQuercB.Checked of
+true:
+begin
+  with dm.payquery do
+begin
+  Close;
+  LockType:=ltOptimistic;
+  CursorType:= ctKeyset;
+  CursorLocation := clUseClient;
+  open;
+end;
+  ins_payGrd.ReadOnly:=false;
+end;
+false:
+begin
+with dm.payquery do
+begin
+  Close;
+  LockType:=ltOptimistic;
+  CursorType:= ctStatic;
+  CursorLocation := clUseClient;
+  Open;
+end;
+  ins_payGrd.ReadOnly:=True;
+end;
+
+end;//case
+end;
+
+procedure TFrm_pay.paylqsvBtnClick(Sender: TObject);
+var
+  UserResponse: Integer;
+begin
+  dm.Connection.BeginTrans;
+  try
+    if dm.payquery.State in [dsEdit, dsInsert] then
+      dm.payQuery.Post;
+    UserResponse := MessageDlg('Вы хотите cохранить изменеия?',
+    mtConfirmation, [mbYes, mbNo], 0);
+    if UserResponse = mrYes then
+    begin
+      dm.Connection.CommitTrans;
+      dm.payQuery.DisableControls;
+      try
+        dm.payQuery.Close;
+        dm.payQuery.SQL.Text :=
+    'select'+' '+
+    'pay.pay_id,'+' '+
+    'usluga.usl_naim,'+' '+
+    'pay.pay_data,'+' '+
+    'pay.mdays,'+' '+
+    'pay.pay_from,'+' '+
+    'pay.total_s,'+' '+
+    'dogovor.guest_fio'+' '+
+    'from pay'+' '+
+    'inner join usluga on usluga.usl_id=pay.usl_id'+' '+
+    'inner join dogovor on dogovor.dog_id=pay.dog_id'+' '+
+    'where 1=1';
+        dm.payQuery.Open;
+      finally
+        dm.payQuery.EnableControls;
+      end;
+      ShowMessage('Изменения внесены.');
+    end
+    else
+    begin
+      dm.Connection.RollbackTrans;
+      ShowMessage('Изменения отменены.');
+    end;
+  except
+    on E: Exception do
+    begin
+      dm.Connection.RollbackTrans;
+      ShowMessage('Ошибка при сохранении данных: ' + E.Message);
+    end;
+  end;
 end;
 
 procedure TFrm_pay.payselBtnClick(Sender: TObject);
@@ -327,6 +419,52 @@ except on E: Exception do
   ShowMessage('Ошибка'+' '+E.Message);
   end;
   end;
+end;
+
+procedure TFrm_pay.upd_pay_btnClick(Sender: TObject);
+const
+AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+begin
+AreFieldsEmpty:=(
+(upd_pay_u_dbl.Text='')or
+(Trim(upd_pay_from_inp.Text)='')
+);
+AreFieldsValid:=(
+ValidateComponentText(upd_pay_from_inp,AllowedChars)
+);
+if AreFieldsEmpty or not AreFieldsValid then
+begin
+MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+end;
+try
+      with dm.upd_pay do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@pay_id').Value :=
+           dm.PayQuery.FieldByName('pay_id').AsString;
+           Parameters.ParamByName('@pay_from').Value:=upd_pay_from_inp.Text;
+           ExecProc;
+           dm.payQuery.Close;
+           dm.payQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
 end;
 
 end.
