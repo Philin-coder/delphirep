@@ -1,7 +1,7 @@
-object Frm_usl: TFrm_usl
+object Frm_pay: TFrm_pay
   Left = 0
   Top = 0
-  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1091#1089#1083#1091#1075#1086#1081
+  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1086#1087#1083#1072#1090#1086#1081
   ClientHeight = 755
   ClientWidth = 1013
   Color = clBtnFace
@@ -25,8 +25,8 @@ object Frm_usl: TFrm_usl
     Align = alClient
     TabOrder = 0
     object seLTab: TTabSheet
-      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1091#1089#1083#1091#1075#1077
-      object sel_uslcondBox: TGroupBox
+      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1086#1087#1083#1072#1090#1077
+      object sel_pay_condBox: TGroupBox
         Left = 0
         Top = 0
         Width = 1005
@@ -37,31 +37,31 @@ object Frm_usl: TFrm_usl
         DesignSize = (
           1005
           105)
-        object usl_naim_usl_cond_edit: TLabeledEdit
+        object pay_form_cond_edit: TLabeledEdit
           Left = 3
           Top = 32
           Width = 999
           Height = 21
           Anchors = [akLeft, akRight]
-          EditLabel.Width = 201
+          EditLabel.Width = 193
           EditLabel.Height = 13
-          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086'  '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077#1102
+          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086'  '#1092#1086#1088#1084#1077' '#1086#1087#1083#1072#1090#1099
           TabOrder = 0
         end
-        object sel_usl_ei_fnd_Edit: TLabeledEdit
+        object sel_pay_fnd_Edit: TLabeledEdit
           Left = 3
           Top = 78
           Width = 999
           Height = 21
           Anchors = [akLeft, akRight]
-          EditLabel.Width = 183
+          EditLabel.Width = 205
           EditLabel.Height = 13
-          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1077#1076#1080#1085#1080#1094#1077' '#1080#1079#1084#1077#1088#1077#1085#1080#1103
+          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1092#1072#1084#1080#1083#1080#1080#1080' '#1086#1087#1083#1072#1090#1080#1074#1097#1077#1075#1086
           TabOrder = 1
-          OnKeyPress = sel_usl_ei_fnd_EditKeyPress
+          OnKeyPress = sel_pay_fnd_EditKeyPress
         end
       end
-      object m_usl_grupper: TGroupBox
+      object m_pay_grupper: TGroupBox
         Left = 0
         Top = 105
         Width = 1005
@@ -69,52 +69,51 @@ object Frm_usl: TFrm_usl
         Align = alTop
         Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072
         TabOrder = 1
-        object usl_Radiocostgrupper: TRadioButton
+        object pay_Radio_pay_f_grupper: TRadioButton
           Left = 40
           Top = 48
           Width = 185
           Height = 17
-          Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1094#1077#1085#1077
+          Caption = #1060#1086#1088#1084#1077' '#1086#1087#1083#1072#1090#1099
           TabOrder = 0
-          OnClick = usl_RadiocostgrupperClick
         end
-        object usl_Radionaimgrupper: TRadioButton
+        object pay_Radio_dateo_grupper: TRadioButton
           Left = 296
           Top = 48
           Width = 177
           Height = 17
-          Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1102
+          Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1076#1072#1090#1077' '#1086#1087#1083#1072#1090#1099
           TabOrder = 1
-          OnClick = usl_RadionaimgrupperClick
+          OnClick = pay_Radio_dateo_grupperClick
         end
-        object usl_reset_radio: TRadioButton
+        object pay_reset_radio: TRadioButton
           Left = 584
           Top = 48
           Width = 113
           Height = 17
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 2
-          OnClick = usl_reset_radioClick
+          OnClick = pay_reset_radioClick
         end
       end
-      object seluslmbtnBox: TGroupBox
+      object selpaymbtnBox: TGroupBox
         Left = 0
         Top = 672
         Width = 1005
         Height = 55
         Align = alBottom
         TabOrder = 2
-        object uslselBtn: TButton
+        object payselBtn: TButton
           Left = 344
           Top = 16
           Width = 75
           Height = 25
           Caption = #1042#1099#1073#1088#1072#1090#1100
           TabOrder = 0
-          OnClick = uslselBtnClick
+          OnClick = payselBtnClick
         end
       end
-      object sel_usl_data_box: TGroupBox
+      object sel_pay_data_box: TGroupBox
         Left = 0
         Top = 210
         Width = 1005
@@ -122,13 +121,13 @@ object Frm_usl: TFrm_usl
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 3
-        object seluslselgrd: TDBGrid
+        object selpayselgrd: TDBGrid
           Left = 2
           Top = 15
           Width = 1001
           Height = 445
           Align = alClient
-          DataSource = DM.uslDS
+          DataSource = DM.PayDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -138,30 +137,44 @@ object Frm_usl: TFrm_usl
           Columns = <
             item
               Expanded = False
-              FieldName = 'usl_id'
+              FieldName = 'pay_id'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-              Width = 111
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'usl_cost'
-              Title.Caption = #1062#1077#1085#1072
-              Width = 140
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'usl_naim'
-              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077
-              Width = 99
+              Title.Caption = #1059#1089#1083#1091#1075#1072
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'usl_ed_ism'
-              Title.Caption = #1045#1076#1080#1085#1080#1094#1072' '#1080#1079#1084#1077#1088#1077#1085#1080#1103
-              Width = 128
+              FieldName = 'pay_data'
+              Title.Caption = #1044#1072#1090#1072' '#1086#1087#1083#1072#1090#1099
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'mdays'
+              Title.Caption = #1050#1086#1083#1080#1095#1077#1089#1090#1074#1086' '#1076#1085#1077#1081
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'pay_from'
+              Title.Caption = #1060#1086#1088#1084#1072' '#1086#1087#1083#1072#1090#1099
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'total_s'
+              Title.Caption = #1042#1089#1077#1075#1086
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'guest_fio'
+              Title.Caption = #1050#1083#1080#1077#1085#1090
               Visible = True
             end>
         end
@@ -260,7 +273,6 @@ object Frm_usl: TFrm_usl
           Align = alCustom
           Caption = #1046#1080#1074#1099#1077' '#1079#1072#1087#1088#1086#1086#1089#1099
           TabOrder = 1
-          OnClick = uslliveQuercBClick
         end
         object usl_ed_ism_inp: TLabeledEdit
           Left = 3
@@ -299,7 +311,6 @@ object Frm_usl: TFrm_usl
           Height = 25
           Caption = #1042#1074#1086#1076
           TabOrder = 0
-          OnClick = ins_uslBtnClick
         end
       end
       object usllqPanel: TPanel
@@ -316,7 +327,6 @@ object Frm_usl: TFrm_usl
           Height = 25
           Caption = 'C'#1086#1093#1088#1072#1085#1080#1090#1100
           TabOrder = 0
-          OnClick = usllqsvBtnClick
         end
       end
     end
@@ -381,7 +391,6 @@ object Frm_usl: TFrm_usl
           Height = 25
           Caption = #1054#1073#1085#1086#1074#1080#1090#1100
           TabOrder = 0
-          OnClick = upd_uls_btnClick
         end
       end
       object upd_usl_data_box: TGroupBox
@@ -440,10 +449,6 @@ object Frm_usl: TFrm_usl
     object delTab: TTabSheet
       Caption = #1059#1076#1072#1083#1077#1085#1080#1077'  '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1091#1089#1083#1091#1075#1077
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object del_usl_inpBox: TGroupBox
         Left = 0
         Top = 0
@@ -540,7 +545,6 @@ object Frm_usl: TFrm_usl
           Height = 25
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
-          OnClick = del_usl_d_btnClick
         end
       end
     end

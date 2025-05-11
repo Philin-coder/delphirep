@@ -121,7 +121,7 @@ end;
 procedure TFrm_usl.FormActivate(Sender: TObject);
 begin
   dm.UslQuery.Open;
-    AdjustDBGridColumnWidths('Frm_usl',6000, 10);
+  AdjustDBGridColumnWidths('Frm_usl',6000, 10);
 end;
 
 procedure TFrm_usl.FormClose(Sender: TObject; var Action: TCloseAction);

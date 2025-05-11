@@ -38,6 +38,12 @@ type
     del_dog: TADOStoredProc;
     upd_dog: TADOStoredProc;
     ins_dog: TADOStoredProc;
+    PayQuery: TADOQuery;
+    PayDS: TDataSource;
+    sel_pay_by_form: TADOStoredProc;
+    ADOStoredProc2: TADOStoredProc;
+    ADOStoredProc3: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public

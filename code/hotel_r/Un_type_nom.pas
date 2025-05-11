@@ -123,6 +123,7 @@ end;
 procedure TFrm_type_nom.FormActivate(Sender: TObject);
 begin
   dm.type_nQuery.Open;
+   AdjustDBGridColumnWidths('Frm_type_nom',6000, 10);
 end;
 
 procedure TFrm_type_nom.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -139,7 +140,7 @@ begin
  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
  LoadFormState(Self);
- AdjustDBGridColumnWidths('Frm_type_nom',6000, 10);
+
 end;
 
 procedure TFrm_type_nom.ins_tnBtnClick(Sender: TObject);

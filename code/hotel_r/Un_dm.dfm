@@ -1,7 +1,7 @@
 object DM: TDM
   OldCreateOrder = False
   Height = 431
-  Width = 544
+  Width = 648
   object Connection: TADOConnection
     Connected = True
     ConnectionString = 
@@ -516,7 +516,6 @@ object DM: TDM
     Top = 352
   end
   object dogQuery: TADOQuery
-    Active = True
     Connection = Connection
     CursorType = ctStatic
     Parameters = <>
@@ -722,5 +721,65 @@ object DM: TDM
       end>
     Left = 456
     Top = 232
+  end
+  object PayQuery: TADOQuery
+    Active = True
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      '  pay.pay_id,'
+      '  usluga.usl_naim,'
+      '  pay.pay_data,'
+      '  pay.mdays,'
+      '  pay.pay_from,'
+      '  pay.total_s,'
+      '  dogovor.guest_fio'
+      'from pay'
+      'inner join usluga on usluga.usl_id=pay.usl_id'
+      'inner join dogovor on dogovor.dog_id=pay.dog_id'
+      'where 1=1')
+    Left = 528
+    Top = 72
+  end
+  object PayDS: TDataSource
+    DataSet = PayQuery
+    Left = 536
+    Top = 136
+  end
+  object sel_pay_by_form: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_pay_by_form;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@pay_from'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end>
+    Left = 544
+    Top = 184
+  end
+  object ADOStoredProc2: TADOStoredProc
+    Parameters = <>
+    Left = 552
+    Top = 256
+  end
+  object ADOStoredProc3: TADOStoredProc
+    Parameters = <>
+    Left = 552
+    Top = 312
+  end
+  object ADOStoredProc4: TADOStoredProc
+    Parameters = <>
+    Left = 552
+    Top = 360
   end
 end

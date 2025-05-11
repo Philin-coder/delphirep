@@ -8,10 +8,9 @@ uses
   Un_nom in 'Un_nom.pas' {Frm_nom},
   Un_fadmin in 'Un_fadmin.pas' {Frm_fadmin},
   Un_type_nom in 'Un_type_nom.pas' {Frm_type_nom},
-  Un_pay in 'Un_pay.pas' {Frm_pay},
+  Un_usl in 'Un_usl.pas' {Frm_usl},
   Un_saver in 'Un_saver.pas' {Frm_saver},
-  Un_dog in 'Un_dog.pas' {Frm_dog},
-  Un_usl in 'Un_usl.pas' {Frm_usl};
+  Un_dog in 'Un_dog.pas' {Frm_dog};
 
 {$R *.res}
 {$R 'resources.RES'}
@@ -23,9 +22,8 @@ begin
   Application.CreateForm(TFrm_nom, Frm_nom);
   Application.CreateForm(TFrm_fadmin, Frm_fadmin);
   Application.CreateForm(TFrm_type_nom, Frm_type_nom);
-  Application.CreateForm(TFrm_pay, Frm_pay);
+  Application.CreateForm(TFrm_usl, Frm_usl);
   Application.CreateForm(TFrm_saver, Frm_saver);
   Application.CreateForm(TFrm_dog, Frm_dog);
-  Application.CreateForm(TFrm_usl, Frm_usl);
   Application.Run;
 end.

@@ -2,7 +2,7 @@ object Frm_main: TFrm_main
   Left = 0
   Top = 0
   Caption = #1043#1083#1074#1085#1072#1103' '#1092#1086#1088#1084#1072' '#1087#1088#1080#1083#1086#1078#1077#1085#1080#1103
-  ClientHeight = 399
+  ClientHeight = 379
   ClientWidth = 635
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -21,7 +21,7 @@ object Frm_main: TFrm_main
     Left = 0
     Top = 29
     Width = 635
-    Height = 370
+    Height = 350
     Align = alClient
     ExplicitLeft = 456
     ExplicitTop = 48
@@ -64,12 +64,8 @@ object Frm_main: TFrm_main
       OnClick = Nom_itemClick
     end
     object dog_item: TMenuItem
-      Caption = '&'#1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1076#1086#1075#1086#1074#1086#1088#1086#1084
+      Caption = '&'#1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1076#1086#1075#1086#1074#1086#1086#1088#1086#1084
       OnClick = dog_itemClick
-    end
-    object pay_item: TMenuItem
-      Caption = '&'#1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1086#1087#1083#1072#1090#1086#1081
-      OnClick = pay_itemClick
     end
   end
   object freeze_timer: TTimer
