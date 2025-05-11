@@ -8,7 +8,7 @@ uses
 
 type
   TFrm_pay = class(TForm)
-    FuslPC: TPageControl;
+    FPAYPC: TPageControl;
     seLTab: TTabSheet;
     insTab: TTabSheet;
     updTab: TTabSheet;
@@ -18,18 +18,14 @@ type
     selpaymbtnBox: TGroupBox;
     sel_pay_data_box: TGroupBox;
     payselBtn: TButton;
-    selpayselgrd: TDBGrid;
     pay_form_cond_edit: TLabeledEdit;
     sel_pay_fnd_Edit: TLabeledEdit;
     pay_Radio_pay_f_grupper: TRadioButton;
     pay_Radio_dateo_grupper: TRadioButton;
     pay_reset_radio: TRadioButton;
     ins_tn_dataBox: TGroupBox;
-    ins_usl_inpBox: TGroupBox;
     ins_usl_btn_Box: TGroupBox;
     ins_uslBtn: TButton;
-    usl_naim_inp: TLabeledEdit;
-    uslliveQuercB: TCheckBox;
     usllqPanel: TPanel;
     usllqsvBtn: TButton;
     upd_usl_inp_Box: TGroupBox;
@@ -44,19 +40,39 @@ type
     del_usl_d_btn: TButton;
     del_dbl_usl_lbl: TStaticText;
     del_dbl_usl_dbl: TDBLookupComboBox;
-    usl_ed_ism_inp: TLabeledEdit;
     ins_tn_data_Box: TGroupBox;
     upd_usl_naim_inp: TLabeledEdit;
-    ins_usl_grd: TDBGrid;
-    usl_cost_inp: TLabeledEdit;
-    uslGrd: TDBGrid;
-    Del_usl_grd: TDBGrid;
+    ins_usl_inpBox: TGroupBox;
+    uslliveQuercB: TCheckBox;
+    ABOUT_PAYpc: TPageControl;
+    about_pay_Tab_one: TTabSheet;
+    about_pay_Tab_two: TTabSheet;
+    ins_grouper_pay: TGroupBox;
+    usl_lbl: TStaticText;
+    pay_usl_DBL: TDBLookupComboBox;
+    data_pay_lbl: TStaticText;
+    Pay_data_inp: TDateTimePicker;
+    about_Tab_three: TTabSheet;
+    selpayselgrd: TDBGrid;
+    ins_payGrd: TDBGrid;
+    DBGrid2: TDBGrid;
+    DBGrid3: TDBGrid;
+    GroupBox1: TGroupBox;
+    mdays_inp: TLabeledEdit;
+    pay_from_inp: TLabeledEdit;
+    total_s_inp: TLabeledEdit;
+    StaticText1: TStaticText;
+    dog_id_inp_DBL: TDBLookupComboBox;
+    mdays_grader: TUpDown;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure payselBtnClick(Sender: TObject);
     procedure sel_pay_fnd_EditKeyPress(Sender: TObject; var Key: Char);
     procedure pay_reset_radioClick(Sender: TObject);
+    procedure pay_Radio_dateo_grupperClick(Sender: TObject);
+    procedure pay_Radio_pay_f_grupperClick(Sender: TObject);
+    procedure ins_uslBtnClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -98,6 +114,64 @@ begin
   LoadFormState(Self);
 end;
 
+procedure TFrm_pay.ins_uslBtnClick(Sender: TObject);
+const
+AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+  PriceText: string;
+  PriceValue: Int64;
+begin
+    PriceText:=total_s_inp.Text;
+    AreFieldsEmpty:=(
+    (pay_usl_DBL.Text='')or
+    (mdays_grader.Position=0) or
+    (Trim(pay_from_inp.Text)='')or
+    (trim(total_s_inp.Text)='')or
+    (dog_id_inp_DBL.Text='')
+    );
+    AreFieldsValid:=(
+    ValidateComponentText(pay_from_inp,AllowedChars)and
+    IsDigitsOnly(total_s_inp.Text)
+    );
+    if AreFieldsEmpty or not AreFieldsValid then
+    begin
+      MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+      mtError, [mbOK], 0);
+      Beep;
+      Exit;
+    end;
+    try
+      with dm.ins_pay do
+      begin
+          PriceValue:=StrToInt64(total_s_inp.Text);
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@usl_id').Value :=
+           dm.UslQuery.FieldByName('usl_id').AsString;
+           Parameters.ParamByName('@pay_data').Value:=Pay_data_inp.Date;
+           Parameters.ParamByName('@mdays').Value:=mdays_grader.Position;
+           Parameters.ParamByName('@pay_from').Value:=pay_from_inp.Text;
+           Parameters.ParamByName('')
+           ExecProc;
+           dm.PayQuery.Close;
+           dm.PayQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+
+end;
+
 procedure TFrm_pay.payselBtnClick(Sender: TObject);
 begin
   try
@@ -118,13 +192,79 @@ begin
   end;
 end;
 
+procedure TFrm_pay.pay_Radio_dateo_grupperClick(Sender: TObject);
+begin
+if  pay_Radio_dateo_grupper.Checked=true then
+  begin
+    try
+     with dm.payQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+     'select'+' '+
+    'pay.pay_id,'+' '+
+    'usluga.usl_naim,'+' '+
+    'pay.pay_data,'+' '+
+    'pay.mdays,'+' '+
+    'pay.pay_from,'+' '+
+    'pay.total_s,'+' '+
+    'dogovor.guest_fio'+' '+
+    'from pay'+' '+
+    'inner join usluga on usluga.usl_id=pay.usl_id'+' '+
+    'inner join dogovor on dogovor.dog_id=pay.dog_id'+' '+
+    'where 1=1'+' '+
+    'order by pay.pay_data asc';
+      Open;
+     end;
+    except on E: EADOError do
+    begin
+      ShowMessage('Ошибка :'+' '+E.Message);
+    end;
+    end;
+  end;
+end;
+
+procedure TFrm_pay.pay_Radio_pay_f_grupperClick(Sender: TObject);
+begin
+  if  pay_Radio_pay_f_grupper.Checked=true then
+  begin
+    try
+     with dm.payQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+      'select'+' '+
+    'pay.pay_id,'+' '+
+    'usluga.usl_naim,'+' '+
+    'pay.pay_data,'+' '+
+    'pay.mdays,'+' '+
+    'pay.pay_from,'+' '+
+    'pay.total_s,'+' '+
+    'dogovor.guest_fio'+' '+
+    'from pay'+' '+
+    'inner join usluga on usluga.usl_id=pay.usl_id'+' '+
+    'inner join dogovor on dogovor.dog_id=pay.dog_id'+' '+
+    'where 1=1'+' '+
+     'order by pay.pay_from asc';
+      Open;
+     end;
+    except on E: EADOError do
+    begin
+      ShowMessage('Ошибка :'+' '+E.Message);
+    end;
+    end;
+  end;
+end;
+
 procedure TFrm_pay.pay_reset_radioClick(Sender: TObject);
   var
   i,j,c:Integer;
 begin
   if  pay_reset_radio.Checked=true then
 with Frm_pay do
-    for I := 0 to ComponentCount - 1 do
+for I := 0 to ComponentCount - 1 do
      begin
        if (Components[i] is TLabeledEdit)  then
         begin
@@ -144,7 +284,7 @@ with Frm_pay do
      Close;
      sql.Clear;
        sql.Text:=
-       'select'+' '+
+    'select'+' '+
     'pay.pay_id,'+' '+
     'usluga.usl_naim,'+' '+
     'pay.pay_data,'+' '+

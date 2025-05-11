@@ -26,8 +26,8 @@ type
     ins_tn_dataBox: TGroupBox;
     ins_usl_btn_Box: TGroupBox;
     ins_uslBtn: TButton;
-    paylqPanel: TPanel;
-    paylqsvBtn: TButton;
+    usllqPanel: TPanel;
+    usllqsvBtn: TButton;
     upd_usl_inp_Box: TGroupBox;
     upd_usl_btn_Box: TGroupBox;
     upd_usl_data_box: TGroupBox;
@@ -40,10 +40,10 @@ type
     del_usl_d_btn: TButton;
     del_dbl_usl_lbl: TStaticText;
     del_dbl_usl_dbl: TDBLookupComboBox;
-    ins_pay_data_Box: TGroupBox;
+    ins_tn_data_Box: TGroupBox;
     upd_usl_naim_inp: TLabeledEdit;
     ins_usl_inpBox: TGroupBox;
-    payliveQuercB: TCheckBox;
+    uslliveQuercB: TCheckBox;
     ABOUT_PAYpc: TPageControl;
     about_pay_Tab_one: TTabSheet;
     about_pay_Tab_two: TTabSheet;
@@ -74,8 +74,6 @@ type
     procedure pay_Radio_dateo_grupperClick(Sender: TObject);
     procedure pay_Radio_pay_f_grupperClick(Sender: TObject);
     procedure ins_uslBtnClick(Sender: TObject);
-    procedure payliveQuercBClick(Sender: TObject);
-    procedure paylqsvBtnClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -175,86 +173,6 @@ begin
       end;
     end;
 
-end;
-
-procedure TFrm_pay.payliveQuercBClick(Sender: TObject);
-begin
-   case payliveQuercB.Checked of
-true:
-begin
-  with dm.payquery do
-begin
-  Close;
-  LockType:=ltOptimistic;
-  CursorType:= ctKeyset;
-  CursorLocation := clUseClient;
-  open;
-end;
-  ins_payGrd.ReadOnly:=false;
-end;
-false:
-begin
-with dm.payquery do
-begin
-  Close;
-  LockType:=ltOptimistic;
-  CursorType:= ctStatic;
-  CursorLocation := clUseClient;
-  Open;
-end;
-  ins_payGrd.ReadOnly:=True;
-end;
-
-end;//case
-end;
-
-procedure TFrm_pay.paylqsvBtnClick(Sender: TObject);
-var
-  UserResponse: Integer;
-begin
-  dm.Connection.BeginTrans;
-  try
-    if dm.payquery.State in [dsEdit, dsInsert] then
-      dm.payQuery.Post;
-    UserResponse := MessageDlg('Вы хотите cохранить изменеия?',
-    mtConfirmation, [mbYes, mbNo], 0);
-    if UserResponse = mrYes then
-    begin
-      dm.Connection.CommitTrans;
-      dm.payQuery.DisableControls;
-      try
-        dm.payQuery.Close;
-        dm.payQuery.SQL.Text :=
-    'select'+' '+
-    'pay.pay_id,'+' '+
-    'usluga.usl_naim,'+' '+
-    'pay.pay_data,'+' '+
-    'pay.mdays,'+' '+
-    'pay.pay_from,'+' '+
-    'pay.total_s,'+' '+
-    'dogovor.guest_fio'+' '+
-    'from pay'+' '+
-    'inner join usluga on usluga.usl_id=pay.usl_id'+' '+
-    'inner join dogovor on dogovor.dog_id=pay.dog_id'+' '+
-    'where 1=1';
-        dm.payQuery.Open;
-      finally
-        dm.payQuery.EnableControls;
-      end;
-      ShowMessage('Изменения внесены.');
-    end
-    else
-    begin
-      dm.Connection.RollbackTrans;
-      ShowMessage('Изменения отменены.');
-    end;
-  except
-    on E: Exception do
-    begin
-      dm.Connection.RollbackTrans;
-      ShowMessage('Ошибка при сохранении данных: ' + E.Message);
-    end;
-  end;
 end;
 
 procedure TFrm_pay.payselBtnClick(Sender: TObject);

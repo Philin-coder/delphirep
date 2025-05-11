@@ -24,8 +24,26 @@ type
     uslDS: TDataSource;
     ins_usl: TADOStoredProc;
     upd_usl: TADOStoredProc;
-    ADOStoredProc4: TADOStoredProc;
+    del_usl: TADOStoredProc;
     sel_usl_by_name: TADOStoredProc;
+    nom_query: TADOQuery;
+    nomDS: TDataSource;
+    sel_nom_by_kind: TADOStoredProc;
+    ins_nom: TADOStoredProc;
+    upd_nom: TADOStoredProc;
+    del_nom: TADOStoredProc;
+    dogQuery: TADOQuery;
+    dogDS: TDataSource;
+    sel_dog_by_fio: TADOStoredProc;
+    del_dog: TADOStoredProc;
+    upd_dog: TADOStoredProc;
+    ins_dog: TADOStoredProc;
+    PayQuery: TADOQuery;
+    PayDS: TDataSource;
+    sel_pay_by_form: TADOStoredProc;
+    ADOStoredProc2: TADOStoredProc;
+    ADOStoredProc3: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public

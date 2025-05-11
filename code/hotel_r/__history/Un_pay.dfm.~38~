@@ -21,7 +21,7 @@ object Frm_pay: TFrm_pay
     Top = 0
     Width = 1013
     Height = 755
-    ActivePage = updTab
+    ActivePage = insTab
     Align = alClient
     TabOrder = 0
     object seLTab: TTabSheet
@@ -293,7 +293,6 @@ object Frm_pay: TFrm_pay
           Height = 25
           Caption = 'C'#1086#1093#1088#1072#1085#1080#1090#1100
           TabOrder = 0
-          OnClick = paylqsvBtnClick
         end
         object payliveQuercB: TCheckBox
           Left = 40

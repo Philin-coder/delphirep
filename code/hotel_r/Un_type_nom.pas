@@ -318,7 +318,7 @@ begin
     on E: Exception do
     begin
       dm.Connection.RollbackTrans;
-      ShowMessage('Ошибка соединения с базой: ' + E.Message);
+      ShowMessage('Ошибка при сохранении данных: ' + E.Message);
     end;
   end;
 end;

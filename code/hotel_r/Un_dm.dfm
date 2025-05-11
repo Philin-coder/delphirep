@@ -767,10 +767,59 @@ object DM: TDM
     Left = 544
     Top = 184
   end
-  object ADOStoredProc2: TADOStoredProc
-    Parameters = <>
-    Left = 552
-    Top = 256
+  object ins_pay: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'ins_pay;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@usl_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@pay_data'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+        Value = Null
+      end
+      item
+        Name = '@mdays'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@pay_from'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end
+      item
+        Name = '@total_s'
+        Attributes = [paNullable]
+        DataType = ftFloat
+        Precision = 15
+        Value = 0.000000000000000000
+      end
+      item
+        Name = '@dog_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 560
+    Top = 232
   end
   object ADOStoredProc3: TADOStoredProc
     Parameters = <>

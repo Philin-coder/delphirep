@@ -252,7 +252,7 @@ begin
     on E: Exception do
     begin
       dm.Connection.RollbackTrans;
-      ShowMessage('Ошибка при сохранении данных: ' + E.Message);
+      ShowMessage('?????? ??? ?????????? ??????: ' + E.Message);
     end;
   end;
 end;

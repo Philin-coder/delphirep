@@ -41,7 +41,7 @@ type
     PayQuery: TADOQuery;
     PayDS: TDataSource;
     sel_pay_by_form: TADOStoredProc;
-    ADOStoredProc2: TADOStoredProc;
+    ins_pay: TADOStoredProc;
     ADOStoredProc3: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;
   private

@@ -21,7 +21,7 @@ object Frm_pay: TFrm_pay
     Top = 0
     Width = 1013
     Height = 755
-    ActivePage = updTab
+    ActivePage = insTab
     Align = alClient
     TabOrder = 0
     object seLTab: TTabSheet

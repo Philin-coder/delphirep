@@ -16,12 +16,12 @@ object Frm_pay: TFrm_pay
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object FuslPC: TPageControl
+  object FPAYPC: TPageControl
     Left = 0
     Top = 0
     Width = 1013
     Height = 755
-    ActivePage = seLTab
+    ActivePage = insTab
     Align = alClient
     TabOrder = 0
     object seLTab: TTabSheet
@@ -186,26 +186,29 @@ object Frm_pay: TFrm_pay
       ImageIndex = 1
       object ins_tn_dataBox: TGroupBox
         Left = 0
-        Top = 225
+        Top = 210
         Width = 1005
-        Height = 431
+        Height = 446
         Align = alClient
         TabOrder = 0
+        ExplicitTop = 225
+        ExplicitHeight = 431
         object ins_tn_data_Box: TGroupBox
           Left = 2
           Top = 15
           Width = 1001
-          Height = 414
+          Height = 429
           Align = alClient
           Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
           TabOrder = 0
-          object ins_usl_grd: TDBGrid
+          ExplicitHeight = 414
+          object ins_payGrd: TDBGrid
             Left = 2
             Top = 15
             Width = 997
-            Height = 397
+            Height = 412
             Align = alClient
-            DataSource = DM.uslDS
+            DataSource = DM.PayDS
             TabOrder = 0
             TitleFont.Charset = DEFAULT_CHARSET
             TitleFont.Color = clWindowText
@@ -215,87 +218,47 @@ object Frm_pay: TFrm_pay
             Columns = <
               item
                 Expanded = False
-                FieldName = 'usl_id'
+                FieldName = 'pay_id'
                 Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-                Width = 111
-                Visible = True
-              end
-              item
-                Expanded = False
-                FieldName = 'usl_cost'
-                Title.Caption = #1062#1077#1085#1072
-                Width = 140
                 Visible = True
               end
               item
                 Expanded = False
                 FieldName = 'usl_naim'
-                Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077
-                Width = 99
+                Title.Caption = #1059#1089#1083#1091#1075#1072
                 Visible = True
               end
               item
                 Expanded = False
-                FieldName = 'usl_ed_ism'
-                Title.Caption = #1045#1076#1080#1085#1080#1094#1072' '#1080#1079#1084#1077#1088#1077#1085#1080#1103
-                Width = 128
+                FieldName = 'pay_data'
+                Title.Caption = #1044#1072#1090#1072' '#1086#1087#1083#1072#1090#1099
+                Visible = True
+              end
+              item
+                Expanded = False
+                FieldName = 'mdays'
+                Title.Caption = #1050#1086#1083#1080#1095#1077#1089#1090#1074#1086' '#1076#1085#1077#1081
+                Visible = True
+              end
+              item
+                Expanded = False
+                FieldName = 'pay_from'
+                Title.Caption = #1060#1086#1088#1084#1072' '#1086#1087#1083#1072#1090#1099
+                Visible = True
+              end
+              item
+                Expanded = False
+                FieldName = 'total_s'
+                Title.Caption = #1042#1089#1077#1075#1086
+                Visible = True
+              end
+              item
+                Expanded = False
+                FieldName = 'guest_fio'
+                Title.Caption = #1050#1083#1080#1077#1085#1090
                 Visible = True
               end>
           end
-        end
-      end
-      object ins_usl_inpBox: TGroupBox
-        Left = 0
-        Top = 0
-        Width = 1005
-        Height = 196
-        Align = alTop
-        Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
-        TabOrder = 1
-        DesignSize = (
-          1005
-          196)
-        object usl_naim_inp: TLabeledEdit
-          Left = 3
-          Top = 54
-          Width = 999
-          Height = 21
-          Anchors = [akLeft, akRight]
-          EditLabel.Width = 137
-          EditLabel.Height = 13
-          EditLabel.Caption = #1042#1074#1086#1076' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1103' '#1091#1089#1083#1091#1075#1080
-          TabOrder = 0
-        end
-        object uslliveQuercB: TCheckBox
-          Left = 368
-          Top = 173
-          Width = 121
-          Height = 17
-          Align = alCustom
-          Caption = #1046#1080#1074#1099#1077' '#1079#1072#1087#1088#1086#1086#1089#1099
-          TabOrder = 1
-        end
-        object usl_ed_ism_inp: TLabeledEdit
-          Left = 3
-          Top = 98
-          Width = 999
-          Height = 21
-          Anchors = [akLeft, akRight]
-          EditLabel.Width = 129
-          EditLabel.Height = 13
-          EditLabel.Caption = #1042#1074#1086#1076' '#1077#1076#1080#1085#1080#1094#1099' '#1080#1079#1084#1077#1088#1077#1085#1080#1103
-          TabOrder = 2
-        end
-        object usl_cost_inp: TLabeledEdit
-          Left = 3
-          Top = 149
-          Width = 999
-          Height = 21
-          Anchors = [akLeft, akRight]
-          EditLabel.Width = 91
-          EditLabel.Height = 13
-          EditLabel.Caption = #1042#1074#1086#1076' '#1094#1077#1085#1099' '#1091#1089#1083#1091#1075#1080
-          TabOrder = 3
         end
       end
       object ins_usl_btn_Box: TGroupBox
@@ -304,7 +267,7 @@ object Frm_pay: TFrm_pay
         Width = 1005
         Height = 71
         Align = alBottom
-        TabOrder = 2
+        TabOrder = 1
         object ins_uslBtn: TButton
           Left = 496
           Top = 24
@@ -312,15 +275,17 @@ object Frm_pay: TFrm_pay
           Height = 25
           Caption = #1042#1074#1086#1076
           TabOrder = 0
+          OnClick = ins_uslBtnClick
         end
       end
       object usllqPanel: TPanel
         Left = 0
-        Top = 196
+        Top = 177
         Width = 1005
-        Height = 29
+        Height = 33
         Align = alTop
-        TabOrder = 3
+        TabOrder = 2
+        ExplicitTop = 192
         object usllqsvBtn: TButton
           Left = 400
           Top = 0
@@ -328,6 +293,182 @@ object Frm_pay: TFrm_pay
           Height = 25
           Caption = 'C'#1086#1093#1088#1072#1085#1080#1090#1100
           TabOrder = 0
+        end
+        object uslliveQuercB: TCheckBox
+          Left = 40
+          Top = 10
+          Width = 121
+          Height = 17
+          Align = alCustom
+          Caption = #1046#1080#1074#1099#1077' '#1079#1072#1087#1088#1086#1086#1089#1099
+          TabOrder = 1
+        end
+      end
+      object ins_usl_inpBox: TGroupBox
+        Left = 0
+        Top = 0
+        Width = 1005
+        Height = 177
+        Align = alTop
+        Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 3
+        object ABOUT_PAYpc: TPageControl
+          Left = 2
+          Top = 15
+          Width = 1001
+          Height = 193
+          ActivePage = about_pay_Tab_two
+          Align = alTop
+          TabOrder = 0
+          object about_pay_Tab_one: TTabSheet
+            Caption = #1054#1073' '#1086#1087#1083#1072#1090#1077
+            object ins_grouper_pay: TGroupBox
+              Left = 0
+              Top = 0
+              Width = 993
+              Height = 145
+              Align = alTop
+              Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+              TabOrder = 0
+              ExplicitWidth = 1005
+              object usl_lbl: TStaticText
+                Left = 3
+                Top = 24
+                Width = 85
+                Height = 17
+                Align = alCustom
+                Caption = #1042#1099#1073#1088#1072#1090#1100' '#1091#1089#1083#1091#1075#1091
+                TabOrder = 0
+              end
+              object pay_usl_DBL: TDBLookupComboBox
+                Left = 3
+                Top = 47
+                Width = 982
+                Height = 21
+                Align = alCustom
+                Anchors = [akLeft, akRight]
+                KeyField = 'usl_id'
+                ListField = 'usl_naim'
+                ListSource = DM.uslDS
+                TabOrder = 1
+              end
+              object data_pay_lbl: TStaticText
+                Left = 0
+                Top = 74
+                Width = 71
+                Height = 17
+                Align = alCustom
+                Caption = #1044#1072#1090#1072' '#1086#1087#1083#1072#1090#1099
+                TabOrder = 2
+              end
+              object Pay_data_inp: TDateTimePicker
+                Left = 3
+                Top = 97
+                Width = 982
+                Height = 21
+                Date = 45788.671643993050000000
+                Time = 45788.671643993050000000
+                TabOrder = 3
+              end
+            end
+          end
+          object about_pay_Tab_two: TTabSheet
+            Caption = #1054#1073' '#1086#1087#1083#1072#1090#1077
+            ImageIndex = 1
+            object pay_d_box2: TGroupBox
+              Left = 0
+              Top = 0
+              Width = 993
+              Height = 145
+              Align = alTop
+              Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+              TabOrder = 0
+              ExplicitTop = 3
+              DesignSize = (
+                993
+                145)
+              object mdays_inp: TLabeledEdit
+                Left = 26
+                Top = 40
+                Width = 976
+                Height = 21
+                Anchors = [akLeft, akRight]
+                EditLabel.Width = 177
+                EditLabel.Height = 13
+                EditLabel.Caption = #1057#1082#1086#1083#1100#1082#1086' '#1076#1085#1077#1081' '#1086#1082#1072#1079#1099#1074#1072#1083#1072#1089#1100' '#1091#1089#1083#1091#1075#1072
+                TabOrder = 0
+                Text = '0'
+              end
+              object pay_from_inp: TLabeledEdit
+                Left = 3
+                Top = 96
+                Width = 999
+                Height = 21
+                Anchors = [akLeft, akRight]
+                EditLabel.Width = 73
+                EditLabel.Height = 13
+                EditLabel.Caption = #1060#1086#1088#1084#1072' '#1086#1087#1083#1072#1090#1099
+                TabOrder = 1
+              end
+              object mdays_grader: TUpDown
+                Left = 3
+                Top = 40
+                Width = 17
+                Height = 21
+                AlignButton = udLeft
+                Associate = mdays_inp
+                TabOrder = 2
+              end
+            end
+          end
+          object about_Tab_three: TTabSheet
+            Caption = #1054#1073' '#1086#1087#1083#1072#1090#1077
+            ImageIndex = 2
+            object pay_inp_gruper_three: TGroupBox
+              Left = 0
+              Top = 0
+              Width = 993
+              Height = 121
+              Align = alTop
+              Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+              TabOrder = 0
+              DesignSize = (
+                993
+                121)
+              object total_s_inp: TLabeledEdit
+                Left = 3
+                Top = 37
+                Width = 1006
+                Height = 21
+                Anchors = [akLeft, akRight]
+                EditLabel.Width = 30
+                EditLabel.Height = 13
+                EditLabel.Caption = #1048#1090#1086#1075#1086
+                TabOrder = 0
+              end
+              object dog_id_inp_DBL: TDBLookupComboBox
+                Left = 3
+                Top = 87
+                Width = 982
+                Height = 21
+                Align = alCustom
+                Anchors = [akLeft, akRight]
+                KeyField = 'dog_id'
+                ListField = 'guest_fio'
+                ListSource = DM.dogDS
+                TabOrder = 1
+              end
+              object StaticText1: TStaticText
+                Left = 3
+                Top = 64
+                Width = 93
+                Height = 17
+                Align = alCustom
+                Caption = #1042#1099#1073#1088#1072#1090#1100' '#1076#1086#1075#1086#1074#1086#1088
+                TabOrder = 2
+              end
+            end
+          end
         end
       end
     end
@@ -402,13 +543,13 @@ object Frm_pay: TFrm_pay
         Align = alClient
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        object uslGrd: TDBGrid
+        object DBGrid2: TDBGrid
           Left = 2
           Top = 15
           Width = 1001
           Height = 494
           Align = alClient
-          DataSource = DM.uslDS
+          DataSource = DM.PayDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -418,30 +559,44 @@ object Frm_pay: TFrm_pay
           Columns = <
             item
               Expanded = False
-              FieldName = 'usl_id'
+              FieldName = 'pay_id'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-              Width = 111
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'usl_cost'
-              Title.Caption = #1062#1077#1085#1072
-              Width = 140
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'usl_naim'
-              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077
-              Width = 99
+              Title.Caption = #1059#1089#1083#1091#1075#1072
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'usl_ed_ism'
-              Title.Caption = #1045#1076#1080#1085#1080#1094#1072' '#1080#1079#1084#1077#1088#1077#1085#1080#1103
-              Width = 128
+              FieldName = 'pay_data'
+              Title.Caption = #1044#1072#1090#1072' '#1086#1087#1083#1072#1090#1099
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'mdays'
+              Title.Caption = #1050#1086#1083#1080#1095#1077#1089#1090#1074#1086' '#1076#1085#1077#1081
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'pay_from'
+              Title.Caption = #1060#1086#1088#1084#1072' '#1086#1087#1083#1072#1090#1099
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'total_s'
+              Title.Caption = #1042#1089#1077#1075#1086
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'guest_fio'
+              Title.Caption = #1050#1083#1080#1077#1085#1090
               Visible = True
             end>
         end
@@ -488,13 +643,13 @@ object Frm_pay: TFrm_pay
         Align = alClient
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
-        object Del_usl_grd: TDBGrid
+        object DBGrid3: TDBGrid
           Left = 2
           Top = 15
           Width = 1001
           Height = 558
           Align = alClient
-          DataSource = DM.uslDS
+          DataSource = DM.PayDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -504,30 +659,44 @@ object Frm_pay: TFrm_pay
           Columns = <
             item
               Expanded = False
-              FieldName = 'usl_id'
+              FieldName = 'pay_id'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-              Width = 111
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'usl_cost'
-              Title.Caption = #1062#1077#1085#1072
-              Width = 140
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'usl_naim'
-              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077
-              Width = 99
+              Title.Caption = #1059#1089#1083#1091#1075#1072
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'usl_ed_ism'
-              Title.Caption = #1045#1076#1080#1085#1080#1094#1072' '#1080#1079#1084#1077#1088#1077#1085#1080#1103
-              Width = 128
+              FieldName = 'pay_data'
+              Title.Caption = #1044#1072#1090#1072' '#1086#1087#1083#1072#1090#1099
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'mdays'
+              Title.Caption = #1050#1086#1083#1080#1095#1077#1089#1090#1074#1086' '#1076#1085#1077#1081
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'pay_from'
+              Title.Caption = #1060#1086#1088#1084#1072' '#1086#1087#1083#1072#1090#1099
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'total_s'
+              Title.Caption = #1042#1089#1077#1075#1086
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'guest_fio'
+              Title.Caption = #1050#1083#1080#1077#1085#1090
               Visible = True
             end>
         end
