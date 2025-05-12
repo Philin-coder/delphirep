@@ -21,7 +21,7 @@ object Frm_feedback: TFrm_feedback
     Top = 0
     Width = 1013
     Height = 755
-    ActivePage = delTab
+    ActivePage = seLTab
     Align = alClient
     TabOrder = 0
     object seLTab: TTabSheet
