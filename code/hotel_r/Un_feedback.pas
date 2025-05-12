@@ -52,6 +52,11 @@ type
     c_Image: TImage;
     b_Image: TImage;
     a_Image: TImage;
+    faceBox: TGroupBox;
+    face_Image: TImage;
+    feedstatic: TStaticText;
+    feedtextbox: TGroupBox;
+    fbRE: TRichEdit;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
@@ -61,6 +66,7 @@ type
     procedure fb_Radio_mark_grupperClick(Sender: TObject);
     procedure fb_reset_radioClick(Sender: TObject);
     procedure marker_tbChange(Sender: TObject);
+    procedure ins_fbBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -232,6 +238,7 @@ begin
    SaveFormState(Self);
    CloseAllQueriesOnDataModule('dm');
    mark_st:=0;
+   face_Image.Visible:=False;
 end;
 
 procedure TFrm_feedback.FormCreate(Sender: TObject);
@@ -253,6 +260,51 @@ begin
   end;
   end;
   mark_st:=0;
+    face_Image.Visible:=False;
+end;
+
+procedure TFrm_feedback.ins_fbBtnClick(Sender: TObject);
+begin
+case mark_st of
+0:
+begin
+  face_Image.Visible:=False;
+  feedstatic.Caption:='';
+end;
+1:
+begin
+ LoadImageFromResource('ONE_IMAGE', face_Image);
+ face_Image.Visible:=true;
+ feedstatic.Caption:='Мы исправимся';
+end;
+2:
+begin
+   LoadImageFromResource('TWO_IMAGE', face_Image);
+   face_Image.Visible:=true;
+   feedstatic.Caption:='Мы будем работать над собой, дайте нам шанс';
+end;
+3:
+begin
+   LoadImageFromResource('THREE_IMAGE', face_Image);
+   face_Image.Visible:=true;
+   feedstatic.Caption:='Мы  исправим недочеты и учтем ошибки';
+end;
+ 4:
+begin
+   LoadImageFromResource('FOUR_IMAGE', face_Image);
+   face_Image.Visible:=true;
+   feedstatic.Caption:='Мы будем более внимательны, надеемся,Вам у нас понравилось ';
+end;
+5:
+begin
+   LoadImageFromResource('FIVE_IMAGE', face_Image);
+   face_Image.Visible:=true;
+      feedstatic.Caption:='Ждем Вас в гости, надеемся, Вам все понравилось)';
+end;
+
+
+end;//case
+
 end;
 
 procedure TFrm_feedback.marker_tbChange(Sender: TObject);
@@ -286,7 +338,7 @@ end;
     c_Image.Visible:=False;
     b_Image.Visible:=False;
     a_Image.Visible:=False;
-      mark_st:=2;
+    mark_st:=2;
  end;
  3:
  begin
@@ -324,7 +376,7 @@ end;
      LoadImageFromResource('STAR_IMAGE', e_Image);
      LoadImageFromResource('STAR_IMAGE', c_Image);
      LoadImageFromResource('STAR_IMAGE', a_Image);
-     mark_st:=5;  
+     mark_st:=5;
   end;
 end; //case
 end;
@@ -348,7 +400,7 @@ begin
     'from feedback'+' '+
     'inner join dogovor on dogovor.dog_id=feedback.dog_id'+' '+
     'where 1=1'+
-   'and dogovor.guest_fio like'+
+   'and feedback.feedback_text like'+
    QuotedStr(Concat(sell_fb_text_fnd_Edit.Text,#37));
    dm.fbQuery.close;
    dm.fbQuery.Open;

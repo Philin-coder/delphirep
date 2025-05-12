@@ -52,6 +52,8 @@ type
     c_Image: TImage;
     b_Image: TImage;
     a_Image: TImage;
+    faceBox: TGroupBox;
+    face_Image: TImage;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
@@ -69,6 +71,7 @@ type
 
 var
   Frm_feedback: TFrm_feedback;
+  mark_st:Integer;
 
 
 implementation
@@ -230,6 +233,7 @@ procedure TFrm_feedback.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
    SaveFormState(Self);
    CloseAllQueriesOnDataModule('dm');
+   mark_st:=0;
 end;
 
 procedure TFrm_feedback.FormCreate(Sender: TObject);
@@ -248,12 +252,9 @@ begin
   begin
       (Components[i] as TImage).Visible:=False;
       (Components[i] as TImage).Proportional:=True;
-
   end;
   end;
-//    LoadImageFromResource('STAR_IMAGE', b_Image);
-//    LoadImageFromResource('STAR_IMAGE', c_Image);
-//    LoadImageFromResource('STAR_IMAGE', a_Image);
+  mark_st:=0;
 end;
 
 procedure TFrm_feedback.marker_tbChange(Sender: TObject);
@@ -261,30 +262,33 @@ begin
 case marker_tb.Position of
 0:
 begin
-e_Image.Visible:=false;
-d_Image.Visible:=False;
-c_Image.Visible:=False;
-b_Image.Visible:=False;
-a_Image.Visible:=False;
-end;
-1:
-begin
-e_Image.Visible:=true;
-d_Image.Visible:=False;
-c_Image.Visible:=False;
-b_Image.Visible:=False;
-a_Image.Visible:=False;
-LoadImageFromResource('STAR_IMAGE', e_Image);
-end;
- 2:
- begin
-  d_Image.Visible:=true;
-  e_Image.Visible:=True;
-  LoadImageFromResource('STAR_IMAGE', d_Image);
-  LoadImageFromResource('STAR_IMAGE', e_Image);
+  e_Image.Visible:=false;
+  d_Image.Visible:=False;
   c_Image.Visible:=False;
   b_Image.Visible:=False;
   a_Image.Visible:=False;
+  mark_st:=0;
+end;
+1:
+begin
+  e_Image.Visible:=true;
+  d_Image.Visible:=False;
+  c_Image.Visible:=False;
+  b_Image.Visible:=False;
+  a_Image.Visible:=False;
+  LoadImageFromResource('STAR_IMAGE', e_Image);
+  mark_st:=1;
+end;
+ 2:
+ begin
+    d_Image.Visible:=true;
+    e_Image.Visible:=True;
+    LoadImageFromResource('STAR_IMAGE', d_Image);
+    LoadImageFromResource('STAR_IMAGE', e_Image);
+    c_Image.Visible:=False;
+    b_Image.Visible:=False;
+    a_Image.Visible:=False;
+    mark_st:=2;
  end;
  3:
  begin
@@ -296,6 +300,7 @@ end;
      LoadImageFromResource('STAR_IMAGE', c_Image);
      b_Image.Visible:=False;
      a_Image.Visible:=False;
+     mark_st:=3;
  end;
   4:
   begin
@@ -308,6 +313,7 @@ end;
      LoadImageFromResource('STAR_IMAGE', c_Image);
      LoadImageFromResource('STAR_IMAGE', b_Image);
      a_Image.Visible:=False;
+     mark_st:=4;
   end;
   5:
   begin
@@ -320,6 +326,7 @@ end;
      LoadImageFromResource('STAR_IMAGE', e_Image);
      LoadImageFromResource('STAR_IMAGE', c_Image);
      LoadImageFromResource('STAR_IMAGE', a_Image);
+     mark_st:=5;
   end;
 end; //case
 end;

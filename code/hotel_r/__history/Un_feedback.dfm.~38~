@@ -21,7 +21,7 @@ object Frm_feedback: TFrm_feedback
     Top = 0
     Width = 1013
     Height = 755
-    ActivePage = seLTab
+    ActivePage = insTab
     Align = alClient
     TabOrder = 0
     object seLTab: TTabSheet
@@ -166,148 +166,124 @@ object Frm_feedback: TFrm_feedback
       end
     end
     object insTab: TTabSheet
-      Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1091#1089#1083#1091#1075#1077
+      Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1086#1090#1079#1099#1074#1077
       ImageIndex = 1
-      object ins_tn_dataBox: TGroupBox
-        Left = 0
-        Top = 225
-        Width = 1005
-        Height = 431
-        Align = alClient
-        TabOrder = 0
-        object ins_tn_data_Box: TGroupBox
-          Left = 2
-          Top = 15
-          Width = 1001
-          Height = 414
-          Align = alClient
-          Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
-          TabOrder = 0
-          object DBGrid1: TDBGrid
-            Left = 2
-            Top = 15
-            Width = 997
-            Height = 397
-            Align = alClient
-            DataSource = DM.fbDS
-            TabOrder = 0
-            TitleFont.Charset = DEFAULT_CHARSET
-            TitleFont.Color = clWindowText
-            TitleFont.Height = -11
-            TitleFont.Name = 'Tahoma'
-            TitleFont.Style = []
-            Columns = <
-              item
-                Expanded = False
-                FieldName = 'feedback_id'
-                Title.Caption = #1053#1086#1084#1077#1088' '#1086#1090#1079#1099#1074#1072
-                Visible = True
-              end
-              item
-                Expanded = False
-                FieldName = 'guest_fio'
-                Title.Caption = #1050#1090#1086' '#1086#1089#1090#1072#1074#1080#1083
-                Visible = True
-              end
-              item
-                Expanded = False
-                FieldName = 'feedback_text'
-                Title.Caption = #1058#1077#1082#1089#1090
-                Visible = True
-              end
-              item
-                Expanded = False
-                FieldName = 'fb'
-                Title.Caption = #1054#1094#1077#1085#1082#1072
-                Visible = True
-              end>
-          end
-        end
-      end
-      object ins_usl_inpBox: TGroupBox
-        Left = 0
-        Top = 0
-        Width = 1005
-        Height = 196
-        Align = alTop
-        Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
-        TabOrder = 1
-        DesignSize = (
-          1005
-          196)
-        object usl_naim_inp: TLabeledEdit
-          Left = 3
-          Top = 54
-          Width = 999
-          Height = 21
-          Anchors = [akLeft, akRight]
-          EditLabel.Width = 137
-          EditLabel.Height = 13
-          EditLabel.Caption = #1042#1074#1086#1076' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1103' '#1091#1089#1083#1091#1075#1080
-          TabOrder = 0
-        end
-        object uslliveQuercB: TCheckBox
-          Left = 368
-          Top = 173
-          Width = 121
-          Height = 17
-          Align = alCustom
-          Caption = #1046#1080#1074#1099#1077' '#1079#1072#1087#1088#1086#1086#1089#1099
-          TabOrder = 1
-        end
-        object usl_ed_ism_inp: TLabeledEdit
-          Left = 3
-          Top = 98
-          Width = 999
-          Height = 21
-          Anchors = [akLeft, akRight]
-          EditLabel.Width = 129
-          EditLabel.Height = 13
-          EditLabel.Caption = #1042#1074#1086#1076' '#1077#1076#1080#1085#1080#1094#1099' '#1080#1079#1084#1077#1088#1077#1085#1080#1103
-          TabOrder = 2
-        end
-        object usl_cost_inp: TLabeledEdit
-          Left = 3
-          Top = 149
-          Width = 999
-          Height = 21
-          Anchors = [akLeft, akRight]
-          EditLabel.Width = 91
-          EditLabel.Height = 13
-          EditLabel.Caption = #1042#1074#1086#1076' '#1094#1077#1085#1099' '#1091#1089#1083#1091#1075#1080
-          TabOrder = 3
-        end
-      end
-      object ins_usl_btn_Box: TGroupBox
+      object ins_fb_btn_Box: TGroupBox
         Left = 0
         Top = 656
         Width = 1005
         Height = 71
         Align = alBottom
-        TabOrder = 2
-        object ins_uslBtn: TButton
+        TabOrder = 0
+        object ins_fbBtn: TButton
           Left = 496
           Top = 24
           Width = 75
           Height = 25
-          Caption = #1042#1074#1086#1076
+          Caption = #1057#1086#1093#1088#1072#1085#1080#1090#1100
           TabOrder = 0
         end
       end
-      object usllqPanel: TPanel
+      object fb_inp_Box: TGroupBox
         Left = 0
-        Top = 196
+        Top = 0
         Width = 1005
-        Height = 29
+        Height = 105
         Align = alTop
-        TabOrder = 3
-        object usllqsvBtn: TButton
-          Left = 400
-          Top = 0
-          Width = 75
-          Height = 25
-          Caption = 'C'#1086#1093#1088#1072#1085#1080#1090#1100
+        Caption = #1054#1073' '#1086#1090#1079#1099#1074#1077
+        TabOrder = 1
+        ExplicitLeft = 464
+        ExplicitTop = 48
+        ExplicitWidth = 185
+        object marker_lbl: TStaticText
+          Left = 3
+          Top = 24
+          Width = 67
+          Height = 17
+          Align = alCustom
+          Caption = #1050#1090#1086' '#1086#1089#1090#1072#1074#1080#1083
           TabOrder = 0
+        end
+        object marker_dbl: TDBLookupComboBox
+          Left = 3
+          Top = 47
+          Width = 982
+          Height = 21
+          Align = alCustom
+          Anchors = [akLeft, akRight]
+          KeyField = 'usl_id'
+          ListField = 'usl_naim'
+          ListSource = DM.uslDS
+          TabOrder = 1
+        end
+      end
+      object tracker_boc: TGroupBox
+        Left = 0
+        Top = 584
+        Width = 1005
+        Height = 72
+        Align = alBottom
+        TabOrder = 2
+        object marker_tb: TTrackBar
+          Left = 49
+          Top = 32
+          Width = 953
+          Height = 45
+          Align = alCustom
+          Anchors = [akLeft, akRight]
+          Max = 5
+          PositionToolTip = ptTop
+          TabOrder = 0
+          OnChange = marker_tbChange
+        end
+      end
+      object astrixBox: TGroupBox
+        Left = 0
+        Top = 440
+        Width = 1005
+        Height = 144
+        Align = alBottom
+        TabOrder = 3
+        object e_Image: TImage
+          Left = 2
+          Top = 15
+          Width = 105
+          Height = 127
+          Align = alLeft
+          ExplicitLeft = 32
+          ExplicitTop = 16
+          ExplicitHeight = 105
+        end
+        object d_Image: TImage
+          Left = 248
+          Top = 16
+          Width = 105
+          Height = 105
+          Align = alCustom
+        end
+        object c_Image: TImage
+          Left = 464
+          Top = 16
+          Width = 105
+          Height = 105
+          Align = alCustom
+        end
+        object b_Image: TImage
+          Left = 720
+          Top = 16
+          Width = 105
+          Height = 105
+          Align = alCustom
+        end
+        object a_Image: TImage
+          Left = 898
+          Top = 15
+          Width = 105
+          Height = 127
+          Align = alRight
+          ExplicitLeft = 897
+          ExplicitTop = 16
+          ExplicitHeight = 105
         end
       end
     end
