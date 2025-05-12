@@ -47,7 +47,7 @@ type
     fbQuery: TADOQuery;
     fbDS: TDataSource;
     sel_feedback_by_fio: TADOStoredProc;
-    ADOStoredProc2: TADOStoredProc;
+    ins_feedback: TADOStoredProc;
     ADOStoredProc3: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;
   private

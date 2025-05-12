@@ -21,7 +21,7 @@ object Frm_feedback: TFrm_feedback
     Top = 0
     Width = 1013
     Height = 755
-    ActivePage = seLTab
+    ActivePage = insTab
     Align = alClient
     TabOrder = 0
     object seLTab: TTabSheet
@@ -213,7 +213,7 @@ object Frm_feedback: TFrm_feedback
           Align = alCustom
           Anchors = [akLeft, akRight]
           KeyField = 'feedback_id'
-          ListField = 'feedback_text'
+          ListField = 'guest_fio'
           ListSource = DM.fbDS
           TabOrder = 1
         end

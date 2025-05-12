@@ -182,6 +182,7 @@ object Frm_feedback: TFrm_feedback
           Height = 25
           Caption = #1057#1086#1093#1088#1072#1085#1080#1090#1100
           TabOrder = 0
+          OnClick = ins_fbBtnClick
         end
       end
       object fb_inp_Box: TGroupBox
@@ -211,9 +212,9 @@ object Frm_feedback: TFrm_feedback
           Height = 21
           Align = alCustom
           Anchors = [akLeft, akRight]
-          KeyField = 'usl_id'
-          ListField = 'usl_naim'
-          ListSource = DM.uslDS
+          KeyField = 'feedback_id'
+          ListField = 'feedback_text'
+          ListSource = DM.fbDS
           TabOrder = 1
         end
       end
@@ -225,17 +226,16 @@ object Frm_feedback: TFrm_feedback
         Align = alBottom
         TabOrder = 2
         object marker_tb: TTrackBar
-          Left = 32
-          Top = 24
+          Left = 49
+          Top = 32
           Width = 953
           Height = 45
           Align = alCustom
           Anchors = [akLeft, akRight]
           Max = 5
-          Min = 1
-          Position = 1
           PositionToolTip = ptTop
           TabOrder = 0
+          OnChange = marker_tbChange
         end
       end
       object astrixBox: TGroupBox
@@ -245,7 +245,7 @@ object Frm_feedback: TFrm_feedback
         Height = 144
         Align = alBottom
         TabOrder = 3
-        object Image1: TImage
+        object e_Image: TImage
           Left = 2
           Top = 15
           Width = 105
@@ -255,36 +255,80 @@ object Frm_feedback: TFrm_feedback
           ExplicitTop = 16
           ExplicitHeight = 105
         end
-        object Image2: TImage
+        object d_Image: TImage
           Left = 248
           Top = 16
           Width = 105
           Height = 105
           Align = alCustom
         end
-        object Image3: TImage
-          Left = 448
+        object c_Image: TImage
+          Left = 464
           Top = 16
           Width = 105
           Height = 105
           Align = alCustom
         end
-        object Image4: TImage
-          Left = 712
+        object b_Image: TImage
+          Left = 720
           Top = 16
           Width = 105
           Height = 105
           Align = alCustom
         end
-        object Image5: TImage
-          Left = 898
+        object a_Image: TImage
+          Left = 880
+          Top = 16
+          Width = 105
+          Height = 105
+          Align = alCustom
+        end
+      end
+      object faceBox: TGroupBox
+        Left = 0
+        Top = 105
+        Width = 1005
+        Height = 152
+        Align = alTop
+        TabOrder = 4
+        object face_Image: TImage
+          Left = 360
+          Top = 6
+          Width = 105
+          Height = 105
+          Align = alCustom
+        end
+        object feedstatic: TStaticText
+          Left = 376
+          Top = 128
+          Width = 4
+          Height = 4
+          TabOrder = 0
+        end
+      end
+      object feedtextbox: TGroupBox
+        Left = 0
+        Top = 257
+        Width = 1005
+        Height = 183
+        Align = alClient
+        Caption = #1058#1077#1082#1089#1090' '#1086#1090#1079#1099#1074#1072
+        TabOrder = 5
+        ExplicitLeft = 152
+        ExplicitTop = 312
+        ExplicitWidth = 185
+        ExplicitHeight = 105
+        object fbRE: TRichEdit
+          Left = 2
           Top = 15
-          Width = 105
-          Height = 127
-          Align = alRight
-          ExplicitLeft = 897
-          ExplicitTop = 16
-          ExplicitHeight = 105
+          Width = 1001
+          Height = 166
+          Align = alClient
+          TabOrder = 0
+          ExplicitLeft = 216
+          ExplicitTop = 48
+          ExplicitWidth = 185
+          ExplicitHeight = 89
         end
       end
     end

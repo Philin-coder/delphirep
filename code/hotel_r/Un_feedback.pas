@@ -264,7 +264,46 @@ begin
 end;
 
 procedure TFrm_feedback.ins_fbBtnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
 begin
+AreFieldsEmpty:=(
+(marker_dbl.Text='')or
+(fbRE.Text='')or
+(marker_tb.Position=0)
+);
+if AreFieldsEmpty then
+begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+end;
+try
+      with dm.ins_feedback do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@dog_id').Value :=
+           dm.dogQuery.FieldByName('dog_id').AsString;
+           Parameters.ParamByName('@feedback_text').Value:=fbRE.Text;
+           Parameters.ParamByName('@feeadbackmarck').Value:=mark_st;
+           ExecProc;
+           dm.fbQuery.Close;
+           dm.fbQuery.Open;
+
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+
 case mark_st of
 0:
 begin
