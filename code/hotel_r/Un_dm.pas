@@ -49,7 +49,7 @@ type
     sel_feedback_by_fio: TADOStoredProc;
     ins_feedback: TADOStoredProc;
     upd_feedback: TADOStoredProc;
-    ADOStoredProc4: TADOStoredProc;
+    del_feedback: TADOStoredProc;
   private
     { Private declarations }
   public

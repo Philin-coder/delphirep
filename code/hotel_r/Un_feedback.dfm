@@ -21,7 +21,7 @@ object Frm_feedback: TFrm_feedback
     Top = 0
     Width = 1013
     Height = 755
-    ActivePage = updTab
+    ActivePage = delTab
     Align = alClient
     TabOrder = 0
     object seLTab: TTabSheet
@@ -335,7 +335,7 @@ object Frm_feedback: TFrm_feedback
     object updTab: TTabSheet
       Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086#1073' '#1086#1090#1079#1099#1074#1077
       ImageIndex = 2
-      object upd_usl_inp_Box: TGroupBox
+      object upd_fb_inp_Box: TGroupBox
         Left = 0
         Top = 0
         Width = 1005
@@ -386,14 +386,14 @@ object Frm_feedback: TFrm_feedback
         Height = 71
         Align = alBottom
         TabOrder = 1
-        object upd_uls_btn: TButton
+        object upd_fb_btn: TButton
           Left = 440
           Top = 24
           Width = 75
           Height = 25
           Caption = #1054#1073#1085#1086#1074#1080#1090#1100
           TabOrder = 0
-          OnClick = upd_uls_btnClick
+          OnClick = upd_fb_btnClick
         end
       end
       object upd_fb_data_box: TGroupBox
@@ -446,9 +446,9 @@ object Frm_feedback: TFrm_feedback
       end
     end
     object delTab: TTabSheet
-      Caption = #1059#1076#1072#1083#1077#1085#1080#1077'  '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1091#1089#1083#1091#1075#1077
+      Caption = #1059#1076#1072#1083#1077#1085#1080#1077'  '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1086#1090#1079#1099#1074#1077
       ImageIndex = 3
-      object del_usl_inpBox: TGroupBox
+      object del_fb_inpBox: TGroupBox
         Left = 0
         Top = 0
         Width = 1005
@@ -456,29 +456,29 @@ object Frm_feedback: TFrm_feedback
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object del_dbl_usl_lbl: TStaticText
+        object del_dbl_fb_lbl: TStaticText
           Left = 3
           Top = 24
-          Width = 85
+          Width = 82
           Height = 17
           Align = alCustom
-          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1091#1089#1083#1091#1075#1091
+          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1086#1090#1079#1099#1074
           TabOrder = 0
         end
-        object del_dbl_usl_dbl: TDBLookupComboBox
+        object del_dbl_fb_dbl: TDBLookupComboBox
           Left = 3
           Top = 37
           Width = 982
           Height = 21
           Align = alCustom
           Anchors = [akLeft, akRight]
-          KeyField = 'usl_id'
-          ListField = 'usl_naim'
-          ListSource = DM.uslDS
+          KeyField = 'feedback_id'
+          ListField = 'feedback_text'
+          ListSource = DM.fbDS
           TabOrder = 1
         end
       end
-      object del_usl_dataBox: TGroupBox
+      object del_fb_dataBox: TGroupBox
         Left = 0
         Top = 81
         Width = 1005
@@ -526,20 +526,21 @@ object Frm_feedback: TFrm_feedback
             end>
         end
       end
-      object del_usl_btn_Box: TGroupBox
+      object del_fb_btn_Box: TGroupBox
         Left = 0
         Top = 656
         Width = 1005
         Height = 71
         Align = alBottom
         TabOrder = 2
-        object del_usl_d_btn: TButton
+        object del_fb_d_btn: TButton
           Left = 488
           Top = 24
           Width = 75
           Height = 25
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
+          OnClick = del_fb_d_btnClick
         end
       end
     end
