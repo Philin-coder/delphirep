@@ -48,7 +48,7 @@ type
     fbDS: TDataSource;
     sel_feedback_by_fio: TADOStoredProc;
     ins_feedback: TADOStoredProc;
-    ADOStoredProc3: TADOStoredProc;
+    upd_feedback: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }

@@ -27,18 +27,18 @@ type
     ins_fb_btn_Box: TGroupBox;
     ins_fbBtn: TButton;
     upd_usl_inp_Box: TGroupBox;
-    upd_usl_btn_Box: TGroupBox;
-    upd_usl_data_box: TGroupBox;
+    upd_fb_btn_Box: TGroupBox;
+    upd_fb_data_box: TGroupBox;
     upd_uls_btn: TButton;
-    upd_usl_lbl: TStaticText;
-    upd_usl_u_dbl: TDBLookupComboBox;
+    upd_fb_lbl: TStaticText;
+    upd_fb_u_dbl: TDBLookupComboBox;
     del_usl_inpBox: TGroupBox;
     del_usl_dataBox: TGroupBox;
     del_usl_btn_Box: TGroupBox;
     del_usl_d_btn: TButton;
     del_dbl_usl_lbl: TStaticText;
     del_dbl_usl_dbl: TDBLookupComboBox;
-    upd_usl_naim_inp: TLabeledEdit;
+    upd_fb_text_inp: TLabeledEdit;
     DBGrid2: TDBGrid;
     DBGrid3: TDBGrid;
     fb_inp_Box: TGroupBox;
@@ -67,6 +67,7 @@ type
     procedure fb_reset_radioClick(Sender: TObject);
     procedure marker_tbChange(Sender: TObject);
     procedure ins_fbBtnClick(Sender: TObject);
+    procedure upd_uls_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -448,6 +449,52 @@ except on E: Exception do
   ShowMessage('Ошибка'+' '+E.Message);
   end;
   end;
+end;
+
+procedure TFrm_feedback.upd_uls_btnClick(Sender: TObject);
+const
+AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+begin
+   AreFieldsEmpty:=(
+   (upd_fb_u_dbl.Text='')or
+   (Trim(upd_fb_text_inp.Text)='')
+   );
+   AreFieldsValid:=(
+   ValidateComponentText(upd_fb_text_inp,AllowedChars)
+   );
+   if AreFieldsEmpty or not AreFieldsValid then
+   begin
+        MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+   end;
+   try
+      with dm.upd_feedback do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@feedback_id').Value
+           :=dm.fbQuery.FieldByName('feedback_id').AsString;
+           Parameters.ParamByName('@feedback_text').Value:=upd_fb_text_inp.Text;
+           ExecProc;
+           dm.fbQuery.Close;
+           dm.fbQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
 end;
 
 end.

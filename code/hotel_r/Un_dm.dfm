@@ -952,8 +952,29 @@ object DM: TDM
     Left = 632
     Top = 248
   end
-  object ADOStoredProc3: TADOStoredProc
-    Parameters = <>
+  object upd_feedback: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_feedback;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@feedback_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@feedback_text'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end>
     Left = 632
     Top = 296
   end

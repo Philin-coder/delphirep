@@ -54,6 +54,9 @@ type
     a_Image: TImage;
     faceBox: TGroupBox;
     face_Image: TImage;
+    feedstatic: TStaticText;
+    feedtextbox: TGroupBox;
+    fbRE: TRichEdit;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
@@ -63,6 +66,7 @@ type
     procedure fb_Radio_mark_grupperClick(Sender: TObject);
     procedure fb_reset_radioClick(Sender: TObject);
     procedure marker_tbChange(Sender: TObject);
+    procedure ins_fbBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -234,6 +238,7 @@ begin
    SaveFormState(Self);
    CloseAllQueriesOnDataModule('dm');
    mark_st:=0;
+   face_Image.Visible:=False;
 end;
 
 procedure TFrm_feedback.FormCreate(Sender: TObject);
@@ -255,6 +260,90 @@ begin
   end;
   end;
   mark_st:=0;
+    face_Image.Visible:=False;
+end;
+
+procedure TFrm_feedback.ins_fbBtnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+begin
+AreFieldsEmpty:=(
+(marker_dbl.Text='')or
+(fbRE.Text='')or
+(marker_tb.Position=0)
+);
+if AreFieldsEmpty then
+begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+end;
+try
+      with dm.ins_feedback do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@dog_id').Value :=
+           dm.dogQuery.FieldByName('dog_id').AsString;
+           Parameters.ParamByName('@feedback_text').Value:=fbRE.Text;
+           Parameters.ParamByName('@feeadbackmarck').Value:=mark_st;
+           ExecProc;
+           dm.fbQuery.Close;
+           dm.fbQuery.Open;
+
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+
+case mark_st of
+0:
+begin
+  face_Image.Visible:=False;
+  feedstatic.Caption:='';
+end;
+1:
+begin
+ LoadImageFromResource('ONE_IMAGE', face_Image);
+ face_Image.Visible:=true;
+ feedstatic.Caption:='Мы исправимся';
+end;
+2:
+begin
+   LoadImageFromResource('TWO_IMAGE', face_Image);
+   face_Image.Visible:=true;
+   feedstatic.Caption:='Мы будем работать над собой, дайте нам шанс';
+end;
+3:
+begin
+   LoadImageFromResource('THREE_IMAGE', face_Image);
+   face_Image.Visible:=true;
+   feedstatic.Caption:='Мы  исправим недочеты и учтем ошибки';
+end;
+ 4:
+begin
+   LoadImageFromResource('FOUR_IMAGE', face_Image);
+   face_Image.Visible:=true;
+   feedstatic.Caption:='Мы будем более внимательны, надеемся,Вам у нас понравилось ';
+end;
+5:
+begin
+   LoadImageFromResource('FIVE_IMAGE', face_Image);
+   face_Image.Visible:=true;
+      feedstatic.Caption:='Ждем Вас в гости, надеемся, Вам все понравилось)';
+end;
+
+
+end;//case
+
 end;
 
 procedure TFrm_feedback.marker_tbChange(Sender: TObject);
@@ -350,7 +439,7 @@ begin
     'from feedback'+' '+
     'inner join dogovor on dogovor.dog_id=feedback.dog_id'+' '+
     'where 1=1'+
-   'and dogovor.guest_fio like'+
+   'and feedback.feedback_text like'+
    QuotedStr(Concat(sell_fb_text_fnd_Edit.Text,#37));
    dm.fbQuery.close;
    dm.fbQuery.Open;
