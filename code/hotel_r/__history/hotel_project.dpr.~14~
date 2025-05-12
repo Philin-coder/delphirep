@@ -16,8 +16,6 @@ uses
 
 {$R *.res}
 {$R 'resources.RES'}
-{$R 'stars.RES'}
-
 
 begin
   Application.Initialize;

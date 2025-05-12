@@ -24,14 +24,8 @@ type
     fb_Radionaim_grupper: TRadioButton;
     fb_Radio_mark_grupper: TRadioButton;
     fb_reset_radio: TRadioButton;
-    ins_tn_dataBox: TGroupBox;
-    ins_usl_inpBox: TGroupBox;
-    ins_usl_btn_Box: TGroupBox;
-    ins_uslBtn: TButton;
-    usl_naim_inp: TLabeledEdit;
-    uslliveQuercB: TCheckBox;
-    usllqPanel: TPanel;
-    usllqsvBtn: TButton;
+    ins_fb_btn_Box: TGroupBox;
+    ins_fbBtn: TButton;
     upd_usl_inp_Box: TGroupBox;
     upd_usl_btn_Box: TGroupBox;
     upd_usl_data_box: TGroupBox;
@@ -44,19 +38,29 @@ type
     del_usl_d_btn: TButton;
     del_dbl_usl_lbl: TStaticText;
     del_dbl_usl_dbl: TDBLookupComboBox;
-    usl_ed_ism_inp: TLabeledEdit;
-    ins_tn_data_Box: TGroupBox;
     upd_usl_naim_inp: TLabeledEdit;
-    usl_cost_inp: TLabeledEdit;
-    DBGrid1: TDBGrid;
     DBGrid2: TDBGrid;
     DBGrid3: TDBGrid;
+    fb_inp_Box: TGroupBox;
+    marker_lbl: TStaticText;
+    marker_dbl: TDBLookupComboBox;
+    tracker_boc: TGroupBox;
+    marker_tb: TTrackBar;
+    astrixBox: TGroupBox;
+    e_Image: TImage;
+    d_Image: TImage;
+    c_Image: TImage;
+    b_Image: TImage;
+    a_Image: TImage;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure fbselBtnClick(Sender: TObject);
     procedure sell_fb_text_fnd_EditKeyPress(Sender: TObject; var Key: Char);
     procedure fb_Radionaim_grupperClick(Sender: TObject);
+    procedure fb_Radio_mark_grupperClick(Sender: TObject);
+    procedure fb_reset_radioClick(Sender: TObject);
+    procedure marker_tbChange(Sender: TObject);
   private
     { Private declarations }
   public
@@ -129,6 +133,92 @@ begin
   end;
 end;
 
+procedure TFrm_feedback.fb_Radio_mark_grupperClick(Sender: TObject);
+begin
+  if  fb_Radio_mark_grupper.Checked=true then
+  begin
+    try
+     with dm.fbQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+    'select'+' '+
+    'feedback.feedback_id,'+' '+
+    'dogovor.guest_fio,'+' '+
+    'feedback.feedback_text,'+' '+
+   'case '+
+   'when  feedback.feeadbackmarck=1 then ''Очень плохо'' '+
+   'when  feedback.feeadbackmarck=2 then ''Плохо'' ' +
+   'when  feedback.feeadbackmarck=3 then ''Удовлетворительно'' '+
+   'when  feedback.feeadbackmarck=4 then ''Хорошо'' '+
+   'else ''Отлично'' '+
+   'end as fb'+' '+
+    'from feedback'+' '+
+    'inner join dogovor on dogovor.dog_id=feedback.dog_id'+' '+
+    'where 1=1'+
+    'order by fb asc';
+      Open;
+     end;
+    except on E: EADOError do
+    begin
+      ShowMessage('Ошибка :'+' '+E.Message);
+    end;
+    end;
+  end;
+end;
+
+procedure TFrm_feedback.fb_reset_radioClick(Sender: TObject);
+  var i,j,c:Integer;
+begin
+    if  fb_reset_radio.Checked=true then
+with Frm_feedback do
+for I := 0 to ComponentCount - 1 do
+     begin
+       if (Components[i] is TLabeledEdit)  then
+        begin
+          (Components[i] as TLabeledEdit).Clear;
+        end;
+     end;
+       with Frm_feedback do
+    for c := 0 to ComponentCount - 1 do
+     begin
+       if (Components[c] is TCheckBox)  then
+        begin
+          (Components[c] as TCheckBox).Checked:=False;
+        end;
+     end;
+     with dm.fbQuery do
+     begin
+     Close;
+     sql.Clear;
+       sql.Text:=
+    'select'+' '+
+    'feedback.feedback_id,'+' '+
+    'dogovor.guest_fio,'+' '+
+    'feedback.feedback_text,'+' '+
+   'case '+
+   'when  feedback.feeadbackmarck=1 then ''Очень плохо'' '+
+   'when  feedback.feeadbackmarck=2 then ''Плохо'' ' +
+   'when  feedback.feeadbackmarck=3 then ''Удовлетворительно'' '+
+   'when  feedback.feeadbackmarck=4 then ''Хорошо'' '+
+   'else ''Отлично'' '+
+   'end as fb'+' '+
+    'from feedback'+' '+
+    'inner join dogovor on dogovor.dog_id=feedback.dog_id'+' '+
+    'where 1=1';
+     Open;
+     end;
+    with Frm_feedback do
+    for j := 0 to ComponentCount - 1 do
+    begin
+      if(Components[j] is TRadioButton)  then
+      begin
+        (Components[j] as TRadioButton).Checked:=False;
+      end;
+    end;
+end;
+
 procedure TFrm_feedback.FormActivate(Sender: TObject);
 begin
   dm.dogQuery.Open;
@@ -143,13 +233,71 @@ begin
 end;
 
 procedure TFrm_feedback.FormCreate(Sender: TObject);
+var i:Integer;
 begin
   Frm_feedback.KeyPreview:=true;
   Frm_feedback.ShowHint:=true;
   UniformizeButtonsSize(Self,  273, 25);
   UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
-  LoadFormState(Self)
+  LoadFormState(Self);
+  with astrixBox do
+  begin
+  for I := 0 to ComponentCount - 1 do
+  if (Components[i] is TImage) then
+  begin
+      (Components[i] as TImage).Visible:=False;
+      (Components[i] as TImage).Proportional:=True;
+
+  end;
+  end;
+//    LoadImageFromResource('STAR_IMAGE', b_Image);
+//    LoadImageFromResource('STAR_IMAGE', c_Image);
+//    LoadImageFromResource('STAR_IMAGE', a_Image);
+end;
+
+procedure TFrm_feedback.marker_tbChange(Sender: TObject);
+begin
+case marker_tb.Position of
+0:
+begin
+e_Image.Visible:=false;
+d_Image.Visible:=False;
+c_Image.Visible:=False;
+b_Image.Visible:=False;
+a_Image.Visible:=False;
+end;
+1:
+begin
+e_Image.Visible:=true;
+d_Image.Visible:=False;
+c_Image.Visible:=False;
+b_Image.Visible:=False;
+a_Image.Visible:=False;
+LoadImageFromResource('STAR_IMAGE', e_Image);
+end;
+ 2:
+ begin
+  d_Image.Visible:=true;
+  e_Image.Visible:=True;
+  LoadImageFromResource('STAR_IMAGE', d_Image);
+  LoadImageFromResource('STAR_IMAGE', e_Image);
+  c_Image.Visible:=False;
+  b_Image.Visible:=False;
+  a_Image.Visible:=False;
+ end;
+ 3:
+ begin
+     d_Image.Visible:=true;
+     e_Image.Visible:=True;
+     c_Image.Visible:=False;
+     LoadImageFromResource('STAR_IMAGE', d_Image);
+     LoadImageFromResource('STAR_IMAGE', e_Image);
+     LoadImageFromResource('STAR_IMAGE', c_Image);
+     b_Image.Visible:=False;
+    a_Image.Visible:=False;
+ end;
+end; //case 
 end;
 
 procedure TFrm_feedback.sell_fb_text_fnd_EditKeyPress(Sender: TObject;
