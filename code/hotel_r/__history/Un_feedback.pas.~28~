@@ -56,9 +56,6 @@ type
     procedure FormActivate(Sender: TObject);
     procedure fbselBtnClick(Sender: TObject);
     procedure sell_fb_text_fnd_EditKeyPress(Sender: TObject; var Key: Char);
-    procedure fb_Radionaim_grupperClick(Sender: TObject);
-    procedure fb_Radio_mark_grupperClick(Sender: TObject);
-    procedure fb_reset_radioClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -94,127 +91,6 @@ try
       ShowMessage('Ощибка: ' + E.Message);
   end;
 
-end;
-
-procedure TFrm_feedback.fb_Radionaim_grupperClick(Sender: TObject);
-begin
-  if  fb_Radionaim_grupper.Checked=true then
-  begin
-    try
-     with dm.fbQuery do
-     begin
-      close;
-      sql.Clear;
-      sql.Text:=
-    'select'+' '+
-    'feedback.feedback_id,'+' '+
-    'dogovor.guest_fio,'+' '+
-    'feedback.feedback_text,'+' '+
-   'case '+
-   'when  feedback.feeadbackmarck=1 then ''Очень плохо'' '+
-   'when  feedback.feeadbackmarck=2 then ''Плохо'' ' +
-   'when  feedback.feeadbackmarck=3 then ''Удовлетворительно'' '+
-   'when  feedback.feeadbackmarck=4 then ''Хорошо'' '+
-   'else ''Отлично'' '+
-   'end as fb'+' '+
-    'from feedback'+' '+
-    'inner join dogovor on dogovor.dog_id=feedback.dog_id'+' '+
-    'where 1=1'+
-    'order by dogovor.guest_fio asc';
-      Open;
-     end;
-    except on E: EADOError do
-    begin
-      ShowMessage('Ошибка :'+' '+E.Message);
-    end;
-    end;
-  end;
-end;
-
-procedure TFrm_feedback.fb_Radio_mark_grupperClick(Sender: TObject);
-begin
-  if  fb_Radio_mark_grupper.Checked=true then
-  begin
-    try
-     with dm.fbQuery do
-     begin
-      close;
-      sql.Clear;
-      sql.Text:=
-    'select'+' '+
-    'feedback.feedback_id,'+' '+
-    'dogovor.guest_fio,'+' '+
-    'feedback.feedback_text,'+' '+
-   'case '+
-   'when  feedback.feeadbackmarck=1 then ''Очень плохо'' '+
-   'when  feedback.feeadbackmarck=2 then ''Плохо'' ' +
-   'when  feedback.feeadbackmarck=3 then ''Удовлетворительно'' '+
-   'when  feedback.feeadbackmarck=4 then ''Хорошо'' '+
-   'else ''Отлично'' '+
-   'end as fb'+' '+
-    'from feedback'+' '+
-    'inner join dogovor on dogovor.dog_id=feedback.dog_id'+' '+
-    'where 1=1'+
-    'order by fb asc';
-      Open;
-     end;
-    except on E: EADOError do
-    begin
-      ShowMessage('Ошибка :'+' '+E.Message);
-    end;
-    end;
-  end;
-end;
-
-procedure TFrm_feedback.fb_reset_radioClick(Sender: TObject);
-  var i,j,c:Integer;
-begin
-    if  fb_reset_radio.Checked=true then
-with Frm_feedback do
-for I := 0 to ComponentCount - 1 do
-     begin
-       if (Components[i] is TLabeledEdit)  then
-        begin
-          (Components[i] as TLabeledEdit).Clear;
-        end;
-     end;
-       with Frm_feedback do
-    for c := 0 to ComponentCount - 1 do
-     begin
-       if (Components[c] is TCheckBox)  then
-        begin
-          (Components[c] as TCheckBox).Checked:=False;
-        end;
-     end;
-     with dm.fbQuery do
-     begin
-     Close;
-     sql.Clear;
-       sql.Text:=
-    'select'+' '+
-    'feedback.feedback_id,'+' '+
-    'dogovor.guest_fio,'+' '+
-    'feedback.feedback_text,'+' '+
-   'case '+
-   'when  feedback.feeadbackmarck=1 then ''Очень плохо'' '+
-   'when  feedback.feeadbackmarck=2 then ''Плохо'' ' +
-   'when  feedback.feeadbackmarck=3 then ''Удовлетворительно'' '+
-   'when  feedback.feeadbackmarck=4 then ''Хорошо'' '+
-   'else ''Отлично'' '+
-   'end as fb'+' '+
-    'from feedback'+' '+
-    'inner join dogovor on dogovor.dog_id=feedback.dog_id'+' '+
-    'where 1=1';
-     Open;
-     end;
-    with Frm_feedback do
-    for j := 0 to ComponentCount - 1 do
-    begin
-      if(Components[j] is TRadioButton)  then
-      begin
-        (Components[j] as TRadioButton).Checked:=False;
-      end;
-    end;
 end;
 
 procedure TFrm_feedback.FormActivate(Sender: TObject);
@@ -259,8 +135,10 @@ begin
     'from feedback'+' '+
     'inner join dogovor on dogovor.dog_id=feedback.dog_id'+' '+
     'where 1=1'+
+
+
    'and dogovor.guest_fio like'+
-   QuotedStr(Concat(sell_fb_text_fnd_Edit.Text,#37));
+   QuotedStr(Concat(sel_pay_fnd_Edit.Text,#37));
    dm.fbQuery.close;
    dm.fbQuery.Open;
 except on E: Exception do

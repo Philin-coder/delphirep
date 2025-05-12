@@ -19,10 +19,10 @@ type
     sel_fb_data_box: TGroupBox;
     fbselBtn: TButton;
     selfbselgrd: TDBGrid;
-    usl_fb_cond_edit: TLabeledEdit;
-    sell_fb_fnd_Edit: TLabeledEdit;
-    fb_Radiocostgrupper: TRadioButton;
-    fb_Radionaimgrupper: TRadioButton;
+    fb_fio_marker_cond_edit: TLabeledEdit;
+    sell_fb_text_fnd_Edit: TLabeledEdit;
+    fb_Radionaim_grupper: TRadioButton;
+    fb_Radio_mark_grupper: TRadioButton;
     fb_reset_radio: TRadioButton;
     ins_tn_dataBox: TGroupBox;
     ins_usl_inpBox: TGroupBox;
@@ -47,11 +47,14 @@ type
     usl_ed_ism_inp: TLabeledEdit;
     ins_tn_data_Box: TGroupBox;
     upd_usl_naim_inp: TLabeledEdit;
-    ins_usl_grd: TDBGrid;
     usl_cost_inp: TLabeledEdit;
-    uslGrd: TDBGrid;
-    Del_usl_grd: TDBGrid;
+    DBGrid1: TDBGrid;
+    DBGrid2: TDBGrid;
+    DBGrid3: TDBGrid;
     procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormActivate(Sender: TObject);
+    procedure fbselBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -67,6 +70,40 @@ implementation
 uses Un_dm, Un_func;
 
 {$R *.dfm}
+
+procedure TFrm_feedback.fbselBtnClick(Sender: TObject);
+begin
+try
+    if not DM.Connection.Connected then
+      raise Exception.Create('Соединение с базой не установлено');
+    with DM.sel_feedback_by_fio do
+    begin
+      Close;
+      Parameters.ParamByName('@guest_fio').Value :=fb_fio_marker_cond_edit.Text;
+      Open;
+       DM.fbQuery.Recordset:=dm.sel_feedback_by_fio.Recordset;
+    end;
+  except
+    on E: EDatabaseError do
+      ShowMessage('Ощибка: ' + E.Message);
+    on E: Exception do
+      ShowMessage('Ощибка: ' + E.Message);
+  end;
+
+end;
+
+procedure TFrm_feedback.FormActivate(Sender: TObject);
+begin
+  dm.dogQuery.Open;
+  dm.fbQuery.Open;
+  AdjustDBGridColumnWidths('Frm_feedback',6000, 10);
+end;
+
+procedure TFrm_feedback.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+   SaveFormState(Self);
+   CloseAllQueriesOnDataModule('dm');
+end;
 
 procedure TFrm_feedback.FormCreate(Sender: TObject);
 begin

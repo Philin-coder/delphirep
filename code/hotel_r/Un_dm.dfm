@@ -874,7 +874,6 @@ object DM: TDM
     Top = 360
   end
   object fbQuery: TADOQuery
-    Active = True
     Connection = Connection
     CursorType = ctStatic
     Parameters = <>
@@ -884,15 +883,15 @@ object DM: TDM
       '  dogovor.guest_fio,'
       '  feedback.feedback_text,'
       ' case '
-      '   when  feedback.feeadbackmarck=0 then '#39#1054#1095#1077#1085#1100' '#1087#1083#1086#1093#1086#39
-      '   when  feedback.feeadbackmarck=1 then '#39#1055#1083#1086#1093#1086#39
-      '   when  feedback.feeadbackmarck=2 then '#39#1059#1076#1086#1074#1083#1077#1090#1074#1086#1088#1080#1090#1077#1083#1100#1085#1086#39
-      '   when  feedback.feeadbackmarck=3 then '#39#1061#1086#1088#1086#1096#1086#39
+      '   when  feedback.feeadbackmarck=1 then '#39#1054#1095#1077#1085#1100' '#1087#1083#1086#1093#1086#39
+      '   when  feedback.feeadbackmarck=2 then '#39#1055#1083#1086#1093#1086#39
+      '   when  feedback.feeadbackmarck=3 then '#39#1059#1076#1086#1074#1083#1077#1090#1074#1086#1088#1080#1090#1077#1083#1100#1085#1086#39
+      '   when  feedback.feeadbackmarck=4 then '#39#1061#1086#1088#1086#1096#1086#39
       '   else '#39#1054#1090#1083#1080#1095#1085#1086#39
       ' end as fb'
       'from feedback '
       'inner join dogovor on dogovor.dog_id=feedback.dog_id'
-      'where 1=1')
+      'where 1=1;')
     Left = 632
     Top = 72
   end
@@ -901,8 +900,22 @@ object DM: TDM
     Left = 632
     Top = 136
   end
-  object ADOStoredProc1: TADOStoredProc
-    Parameters = <>
+  object sel_feedback_by_fio: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_feedback_by_fio;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@guest_fio'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end>
     Left = 640
     Top = 184
   end

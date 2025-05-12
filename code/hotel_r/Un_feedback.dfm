@@ -43,9 +43,9 @@ object Frm_feedback: TFrm_feedback
           Width = 999
           Height = 21
           Anchors = [akLeft, akRight]
-          EditLabel.Width = 201
+          EditLabel.Width = 272
           EditLabel.Height = 13
-          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086'  '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077#1102
+          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1060#1048#1054' '#1090#1086#1075#1086', '#1082#1090#1086' '#1086#1089#1090#1072#1074#1080#1083'  '#1086#1090#1079#1099#1074
           TabOrder = 0
         end
         object sell_fb_text_fnd_Edit: TLabeledEdit
@@ -54,10 +54,11 @@ object Frm_feedback: TFrm_feedback
           Width = 999
           Height = 21
           Anchors = [akLeft, akRight]
-          EditLabel.Width = 183
+          EditLabel.Width = 147
           EditLabel.Height = 13
-          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1077#1076#1080#1085#1080#1094#1077' '#1080#1079#1084#1077#1088#1077#1085#1080#1103
+          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082'  '#1090#1077#1082#1089#1090#1091' '#1086#1090#1079#1099#1074#1072
           TabOrder = 1
+          OnKeyPress = sell_fb_text_fnd_EditKeyPress
         end
       end
       object m_fb_grupper: TGroupBox
@@ -69,12 +70,13 @@ object Frm_feedback: TFrm_feedback
         Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072
         TabOrder = 1
         object fb_Radionaim_grupper: TRadioButton
-          Left = 40
+          Left = 24
           Top = 48
-          Width = 185
+          Width = 217
           Height = 17
           Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1080#1084#1077#1085#1080' '#1086#1089#1090#1072#1074#1084#1080#1074#1096#1077#1075#1086' '
           TabOrder = 0
+          OnClick = fb_Radionaim_grupperClick
         end
         object fb_Radio_mark_grupper: TRadioButton
           Left = 296
@@ -83,6 +85,7 @@ object Frm_feedback: TFrm_feedback
           Height = 17
           Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1086#1094#1077#1085#1082#1077
           TabOrder = 1
+          OnClick = fb_Radio_mark_grupperClick
         end
         object fb_reset_radio: TRadioButton
           Left = 584
@@ -91,6 +94,7 @@ object Frm_feedback: TFrm_feedback
           Height = 17
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 2
+          OnClick = fb_reset_radioClick
         end
       end
       object selfbbtnBox: TGroupBox
@@ -107,6 +111,7 @@ object Frm_feedback: TFrm_feedback
           Height = 25
           Caption = #1042#1099#1073#1088#1072#1090#1100
           TabOrder = 0
+          OnClick = fbselBtnClick
         end
       end
       object sel_fb_data_box: TGroupBox
@@ -147,12 +152,14 @@ object Frm_feedback: TFrm_feedback
               Expanded = False
               FieldName = 'feedback_text'
               Title.Caption = #1058#1077#1082#1089#1090
+              Width = 112
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'fb'
               Title.Caption = #1054#1094#1077#1085#1082#1072
+              Width = 104
               Visible = True
             end>
         end
