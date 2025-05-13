@@ -29,29 +29,44 @@ type
     ins_nom_btn_Box: TGroupBox;
     ins_uslBtn: TButton;
     nomer_kind_inp: TLabeledEdit;
-    nomliveQuercB: TCheckBox;
     nomlqPanel: TPanel;
     nomlqsvBtn: TButton;
-    upd_nom_inp_Box: TGroupBox;
     upd_nom_btn_Box: TGroupBox;
     upd_nom_data_box: TGroupBox;
     upd_nom_btn: TButton;
-    upd_noml_lbl: TStaticText;
-    upd_nom_id_dbl: TDBLookupComboBox;
-    del_usl_inpBox: TGroupBox;
-    del_usl_dataBox: TGroupBox;
-    del_usl_btn_Box: TGroupBox;
-    del_usl_d_btn: TButton;
-    del_dbl_usl_lbl: TStaticText;
-    del_dbl_usl_dbl: TDBLookupComboBox;
+    del_nom_inpBox: TGroupBox;
+    del_nom_dataBox: TGroupBox;
+    del_nom_btn_Box: TGroupBox;
+    del_nom_d_btn: TButton;
+    del_dbl_nom_lbl: TStaticText;
+    del_dbl_nom_dbl: TDBLookupComboBox;
     nomer_cost_day_inp: TLabeledEdit;
     ins_nom_data_Box: TGroupBox;
-    upd_omer_kind_inp: TLabeledEdit;
-    Del_usl_grd: TDBGrid;
     ins_nomGid: TDBGrid;
     nom_type_n__llbl: TStaticText;
     type_nomer_inp: TDBLookupComboBox;
     upd_nom_grd: TDBGrid;
+    del_nom_grd: TDBGrid;
+    treevcb: TCheckBox;
+    nomliveQuercB: TCheckBox;
+    St_nom_lbl: TStaticText;
+    nom_st_combo: TComboBox;
+    freeroomscb: TCheckBox;
+    Nom_upd_PC: TPageControl;
+    nomer_kind_tab: TTabSheet;
+    checoutTab: TTabSheet;
+    upd_nom_inp_Box: TGroupBox;
+    upd_noml_lbl: TStaticText;
+    upd_nom_id_dbl: TDBLookupComboBox;
+    upd_omer_kind_inp: TLabeledEdit;
+    checkoudinpBox: TGroupBox;
+    checkout_nom_lbl: TStaticText;
+    checkout_nomDBL: TDBLookupComboBox;
+    upd_nom_st_lbl: TStaticText;
+    checkout_st_combo: TComboBox;
+    checkout_btnPanel: TPanel;
+    checkutBtn: TButton;
+    Checkoutcb: TCheckBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -66,6 +81,13 @@ type
     procedure nomliveQuercBClick(Sender: TObject);
     procedure nomlqsvBtnClick(Sender: TObject);
     procedure upd_nom_btnClick(Sender: TObject);
+    procedure del_nom_d_btnClick(Sender: TObject);
+    procedure treevcbClick(Sender: TObject);
+    procedure nom_st_comboChange(Sender: TObject);
+    procedure freeroomscbClick(Sender: TObject);
+    procedure CheckoutcbClick(Sender: TObject);
+    procedure checkout_st_comboChange(Sender: TObject);
+    procedure checkutBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -74,6 +96,7 @@ type
 
 var
   Frm_nom: TFrm_nom;
+  nom_st:Integer;
 
 
 implementation
@@ -82,16 +105,232 @@ uses Un_dm, Un_func;
 
 {$R *.dfm}
 
+procedure TFrm_nom.CheckoutcbClick(Sender: TObject);
+begin
+case Checkoutcb.Checked of
+    true:
+  begin
+    try
+     with dm.nom_Query do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+      'select'+' '+
+   'nomer.nomer_id,'+' '+
+    'nomer.nomer_kind,'+' '+
+    'nomer.nomer_cost_day,'+' '+
+    'type_nomer.type_image,'+' '+
+    'case '+
+  'when nomer.nomer_st=0 then ''Занят'' '+
+  'else ''Свободен'' '+
+ 'end as nom_st'+' '+
+    'from nomer'+' '+
+    'inner join  type_nomer on type_nomer.id_type_nomer=nomer.id_type_nomer'+' '+
+    'where 1=1 and nomer.nomer_st=1';
+      Open;
+     end;
+    except on E: EADOError do
+    begin
+      ShowMessage('Ошибка'+' '+E.Message);
+    end;
+    end;
+  end;
+  false:
+  begin
+    try
+     with dm.nom_Query do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+      'select'+' '+
+   'nomer.nomer_id,'+' '+
+    'nomer.nomer_kind,'+' '+
+    'nomer.nomer_cost_day,'+' '+
+    'type_nomer.type_image,'+' '+
+    'case '+
+  'when nomer.nomer_st=0 then ''Занят'' '+
+  'else ''Свободен'' '+
+ 'end as nom_st'+' '+
+    'from nomer'+' '+
+    'inner join  type_nomer on type_nomer.id_type_nomer=nomer.id_type_nomer'+' '+
+    'where 1=1 and nomer.nomer_st=0';
+      Open;
+     end;
+    except on E: EADOError do
+    begin
+      ShowMessage('Ошибка'+' '+E.Message);
+    end;
+    end;
+  end;
+end; //case
+end;
+
+procedure TFrm_nom.checkout_st_comboChange(Sender: TObject);
+begin
+  case  checkout_st_combo.ItemIndex of
+  0:
+  begin
+    nom_st:=0;
+    checkutBtn.Caption:='Освободить';
+     try
+     with dm.nom_Query do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+      'select'+' '+
+   'nomer.nomer_id,'+' '+
+    'nomer.nomer_kind,'+' '+
+    'nomer.nomer_cost_day,'+' '+
+    'type_nomer.type_image,'+' '+
+    'case '+
+  'when nomer.nomer_st=0 then ''Занят'' '+
+  'else ''Свободен'' '+
+ 'end as nom_st'+' '+
+    'from nomer'+' '+
+    'inner join  type_nomer on type_nomer.id_type_nomer=nomer.id_type_nomer'+' '+
+    'where 1=1 and nomer.nomer_st=0';
+      Open;
+     end;
+    except on E: EADOError do
+    begin
+      ShowMessage('Ошибка'+' '+E.Message);
+    end;
+    end;
+  end;
+  1:
+  begin
+    nom_st:=1;
+    checkutBtn.Caption:='Заселить';
+       try
+     with dm.nom_Query do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+      'select'+' '+
+   'nomer.nomer_id,'+' '+
+    'nomer.nomer_kind,'+' '+
+    'nomer.nomer_cost_day,'+' '+
+    'type_nomer.type_image,'+' '+
+    'case '+
+  'when nomer.nomer_st=0 then ''Занят'' '+
+  'else ''Свободен'' '+
+ 'end as nom_st'+' '+
+    'from nomer'+' '+
+    'inner join  type_nomer on type_nomer.id_type_nomer=nomer.id_type_nomer'+' '+
+    'where 1=1 and nomer.nomer_st=1';
+      Open;
+     end;
+    except on E: EADOError do
+    begin
+      ShowMessage('Ошибка'+' '+E.Message);
+    end;
+    end;
+  end;
+  end; //case
+end;
+
+procedure TFrm_nom.checkutBtnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+begin
+case checkout_st_combo.ItemIndex of
+0:
+begin
+ AreFieldsEmpty:=(
+ (checkout_nomDBL.Text='')or
+ (checkout_st_combo.Text='')
+ );
+ if AreFieldsEmpty then
+ begin
+      MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+ end;
+ try
+      with dm.check_out do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@nomer_id').Value
+           :=dm.nom_query.FieldByName('nomer_id').AsString;
+           ExecProc;
+           dm.nom_query.Close;
+           dm.nom_Query.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+
+end;
+1:
+begin
+
+end;
+end;//case
+end;
+
+procedure TFrm_nom.del_nom_d_btnClick(Sender: TObject);
+var AreFieldsEmpty: Boolean;
+begin
+AreFieldsEmpty:=(
+(del_dbl_nom_dbl.Text='')
+);
+if AreFieldsEmpty then
+begin
+     MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+end;
+try
+      with dm.del_nom do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@nomer_id').Value :=
+           dm.nom_query.FieldByName('nomer_id').AsString;
+           ExecProc;
+           dm.nom_query.Close;
+           dm.nom_query.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+end;
+
 procedure TFrm_nom.FormActivate(Sender: TObject);
 begin
   dm.nom_query.Open;
   dm.type_nQuery.Open;
+  AdjustDBGridColumnWidths('Frm_nom',6000, 10);
 end;
 
 procedure TFrm_nom.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   SaveFormState(Self);
   CloseAllQueriesOnDataModule('dm');
+  nom_st:=0;
 end;
 
 procedure TFrm_nom.FormCreate(Sender: TObject);
@@ -108,6 +347,69 @@ begin
   nomer_kind_inp.ShowHint:=true;
   nomer_kind_inp.Hint:='Вид номера веутренний'+#10#13+
   'Вида Королевский Люкс, но хотя по типам номеров это обычный люкс';
+  nom_st:=0;
+end;
+
+procedure TFrm_nom.freeroomscbClick(Sender: TObject);
+begin
+    case  freeroomscb.Checked of
+    true:
+  begin
+    try
+     with dm.nom_Query do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+      'select'+' '+
+   'nomer.nomer_id,'+' '+
+    'nomer.nomer_kind,'+' '+
+    'nomer.nomer_cost_day,'+' '+
+    'type_nomer.type_image,'+' '+
+    'case '+
+  'when nomer.nomer_st=0 then ''Занят'' '+
+  'else ''Свободен'' '+
+ 'end as nom_st'+' '+
+    'from nomer'+' '+
+    'inner join  type_nomer on type_nomer.id_type_nomer=nomer.id_type_nomer'+' '+
+    'where 1=1 and nomer.nomer_st=1';
+      Open;
+     end;
+    except on E: EADOError do
+    begin
+      ShowMessage('Ошибка'+' '+E.Message);
+    end;
+    end;
+  end;
+  false:
+  begin
+    try
+     with dm.nom_Query do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+      'select'+' '+
+   'nomer.nomer_id,'+' '+
+    'nomer.nomer_kind,'+' '+
+    'nomer.nomer_cost_day,'+' '+
+    'type_nomer.type_image,'+' '+
+    'case '+
+  'when nomer.nomer_st=0 then ''Занят'' '+
+  'else ''Свободен'' '+
+ 'end as nom_st'+' '+
+    'from nomer'+' '+
+    'inner join  type_nomer on type_nomer.id_type_nomer=nomer.id_type_nomer'+' '+
+    'where 1=1 and nomer.nomer_st=0';
+      Open;
+     end;
+    except on E: EADOError do
+    begin
+      ShowMessage('Ошибка'+' '+E.Message);
+    end;
+    end;
+  end;
+   end;//case
 end;
 
 procedure TFrm_nom.ins_nomGidDblClick(Sender: TObject);
@@ -117,12 +419,13 @@ begin
   'type_nomer',
   'type_image',
   'id_type_nomer',
-   ins_nomGid.DataSource.DataSet.FieldByName('id_type_nomer').AsInteger
+   ins_nomGid.DataSource.DataSet.FieldByName('nomer_id').AsInteger
   );
 
 end;
 
 procedure TFrm_nom.ins_uslBtnClick(Sender: TObject);
+//todo: fix status
 const
 AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
 var
@@ -135,7 +438,8 @@ PriceText:=nomer_cost_day_inp.Text;
 AreFieldsEmpty:=(
 (Trim(nomer_kind_inp.Text)='')or
 (Trim(nomer_cost_day_inp.Text)='')or
-(type_nomer_inp.Text='')
+(type_nomer_inp.Text='')or
+(nom_st_combo.Text='')
 );
 AreFieldsValid:=(
 ValidateComponentText(nomer_kind_inp,AllowedChars)and
@@ -157,7 +461,8 @@ try
            Parameters.ParamByName('@nomer_kind').Value :=nomer_kind_inp.Text;
            Parameters.ParamByName('@nomer_cost_day').Value:=PriceValue;
            Parameters.ParamByName('@id_type_nomer').Value:=
-           dm.nom_query.FieldByName('id_type_nomer').AsString;
+           dm.type_nQuery.FieldByName('id_type_nomer').AsString;
+           Parameters.ParamByName('@nomer_st').Value:=nom_st;
            ExecProc;
            dm.nom_query.Close;
            dm.nom_query.Open;
@@ -224,10 +529,14 @@ dm.Connection.BeginTrans;
         dm.nom_Query.Close;
         dm.nom_Query.SQL.Text :=
         'select'+' '+
-        'nomer.id_type_nomer,'+' '+
+        'nomer.nomer_id,'+' '+
         'nomer.nomer_kind,'+' '+
         'nomer.nomer_cost_day,'+' '+
-        'type_nomer.type_image'+' '+
+        'type_nomer.type_image,'+' '+
+        'case '+
+       'when nomer.nomer_st=0 then ''Занят'' '+
+      'else ''Свободен'' '+
+        'end as nom_st'+' '+
         'from nomer'+' '+
     'inner join  type_nomer on type_nomer.id_type_nomer=nomer.id_type_nomer'+' '+
         'where 1=1';
@@ -282,10 +591,14 @@ begin
       sql.Clear;
       sql.Text:=
       'select'+' '+
-   'nomer.id_type_nomer,'+' '+
+   'nomer.nomer_id,'+' '+
     'nomer.nomer_kind,'+' '+
     'nomer.nomer_cost_day,'+' '+
-    'type_nomer.type_image'+' '+
+    'type_nomer.type_image,'+' '+
+    'case '+
+  'when nomer.nomer_st=0 then ''Занят'' '+
+  'else ''Свободен'' '+
+ 'end as nom_st'+' '+
     'from nomer'+' '+
     'inner join  type_nomer on type_nomer.id_type_nomer=nomer.id_type_nomer'+' '+
     'where 1=1'+' '+
@@ -311,10 +624,14 @@ begin
       sql.Clear;
       sql.Text:=
       'select'+' '+
-   'nomer.id_type_nomer,'+' '+
+   'nomer.nomer_id,'+' '+
     'nomer.nomer_kind,'+' '+
     'nomer.nomer_cost_day,'+' '+
-    'type_nomer.type_image'+' '+
+    'type_nomer.type_image,'+' '+
+    'case '+
+  'when nomer.nomer_st=0 then ''Занят'' '+
+  'else ''Свободен'' '+
+ 'end as nom_st'+' '+
     'from nomer'+' '+
     'inner join  type_nomer on type_nomer.id_type_nomer=nomer.id_type_nomer'+' '+
     'where 1=1'+' '+
@@ -340,10 +657,14 @@ if  nom_reset_radio.Checked=true then
       sql.Clear;
       sql.Text:=
       'select'+' '+
-   'nomer.id_type_nomer,'+' '+
+   'nomer.nomer_id,'+' '+
     'nomer.nomer_kind,'+' '+
     'nomer.nomer_cost_day,'+' '+
-    'type_nomer.type_image'+' '+
+    'type_nomer.type_image,'+' '+
+    'case '+
+  'when nomer.nomer_st=0 then ''Занят'' '+
+  'else ''Свободен'' '+
+ 'end as nom_st'+' '+
     'from nomer'+' '+
     'inner join  type_nomer on type_nomer.id_type_nomer=nomer.id_type_nomer'+' '+
     'where 1=1';
@@ -357,6 +678,12 @@ if  nom_reset_radio.Checked=true then
   end;
 end;
 
+procedure TFrm_nom.nom_st_comboChange(Sender: TObject);
+begin
+if nom_st_combo.ItemIndex=0 then nom_st:=0
+  else nom_st:=1;
+end;
+
 procedure TFrm_nom.selnomselgrdDblClick(Sender: TObject);
 begin
   ShowImageFromDatabase(
@@ -364,7 +691,7 @@ begin
   'type_nomer',
   'type_image',
   'id_type_nomer',
-   selnomselgrd.DataSource.DataSet.FieldByName('id_type_nomer').AsInteger
+   selnomselgrd.DataSource.DataSet.FieldByName('nomer_id').AsInteger
   );
 end;
 
@@ -373,10 +700,14 @@ begin
   try
    dm.nom_query.SQL.Text:=
    'select'+' '+
-   'nomer.id_type_nomer,'+' '+
+   'nomer.nomer_id,'+' '+
     'nomer.nomer_kind,'+' '+
     'nomer.nomer_cost_day,'+' '+
-    'type_nomer.type_image'+' '+
+    'type_nomer.type_image,'+' '+
+    'case '+
+  'when nomer.nomer_st=0 then ''Занят'' '+
+  'else ''Свободен'' '+' '+
+ 'end as nom_st'+' '+
     'from nomer'+' '+
     'inner join  type_nomer on type_nomer.id_type_nomer=nomer.id_type_nomer'+' '+
     'where 1=1'+' '+
@@ -389,6 +720,14 @@ except on E: Exception do
   ShowMessage('Ошибка'+' '+E.Message);
   end;
   end;
+end;
+
+procedure TFrm_nom.treevcbClick(Sender: TObject);
+begin
+ if treevcb.Checked then
+ begin
+       ShowDBGridInTreeView(Self, 'selnomselgrd');
+ end;
 end;
 
 procedure TFrm_nom.upd_nom_btnClick(Sender: TObject);
@@ -413,14 +752,16 @@ begin
     Exit;
 end;
 try
-      with dm.ins_autor do
+      with dm.upd_nom do
       begin
         if not Connection.Connected then
           raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@Name_A').Value :=Autor_inp.Text;
+           Parameters.ParamByName('@nomer_id').Value :=
+           dm.nom_query.FieldByName('nomer_id').AsString;
+           Parameters.ParamByName('@nomer_kind').Value:=upd_omer_kind_inp.Text;
            ExecProc;
-           dm.AutQuery.Close;
-           dm.AutQuery.Open;
+           dm.nom_Query.Close;
+           dm.nom_Query.Open;
         MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
       end;
     except

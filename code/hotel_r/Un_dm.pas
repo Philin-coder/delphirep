@@ -53,6 +53,8 @@ type
     reportQuery: TADOQuery;
     report1: TADOStoredProc;
     reportDS: TDataSource;
+    check_out: TADOStoredProc;
+    check_in: TADOStoredProc;
   private
     { Private declarations }
   public

@@ -2,7 +2,7 @@ object Frm_nom: TFrm_nom
   Left = 0
   Top = 0
   Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1085#1086#1084#1077#1088#1086#1084
-  ClientHeight = 755
+  ClientHeight = 857
   ClientWidth = 1013
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -20,12 +20,14 @@ object Frm_nom: TFrm_nom
     Left = 0
     Top = 0
     Width = 1013
-    Height = 755
+    Height = 857
     ActivePage = insTab
     Align = alClient
     TabOrder = 0
+    ExplicitHeight = 755
     object seLTab: TTabSheet
       Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1085#1086#1084#1077#1088#1077
+      ExplicitHeight = 727
       object sel_nomcondBox: TGroupBox
         Left = 0
         Top = 0
@@ -96,14 +98,24 @@ object Frm_nom: TFrm_nom
           TabOrder = 2
           OnClick = nom_reset_radioClick
         end
+        object treevcb: TCheckBox
+          Left = 656
+          Top = 48
+          Width = 153
+          Height = 17
+          Caption = #1086#1090#1086#1073#1088#1072#1079#1080#1090#1100' trreview'
+          TabOrder = 3
+          OnClick = treevcbClick
+        end
       end
       object selnommbtnBox: TGroupBox
         Left = 0
-        Top = 672
+        Top = 774
         Width = 1005
         Height = 55
         Align = alBottom
         TabOrder = 2
+        ExplicitTop = 672
         object nomselBtn: TButton
           Left = 344
           Top = 16
@@ -118,15 +130,16 @@ object Frm_nom: TFrm_nom
         Left = 0
         Top = 210
         Width = 1005
-        Height = 462
+        Height = 564
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 3
+        ExplicitHeight = 462
         object selnomselgrd: TDBGrid
           Left = 2
           Top = 15
           Width = 1001
-          Height = 445
+          Height = 547
           Align = alClient
           DataSource = DM.nomDS
           TabOrder = 0
@@ -163,6 +176,12 @@ object Frm_nom: TFrm_nom
               FieldName = 'type_image'
               Title.Caption = #1060#1086#1090#1086
               Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'nom_st'
+              Title.Caption = #1057#1090#1072#1090#1091#1089' '#1085#1086#1084#1077#1088#1072
+              Visible = True
             end>
         end
       end
@@ -170,26 +189,30 @@ object Frm_nom: TFrm_nom
     object insTab: TTabSheet
       Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1085#1086#1084#1077#1088#1077
       ImageIndex = 1
+      ExplicitHeight = 727
       object ins_nom_dataBox: TGroupBox
         Left = 0
-        Top = 225
+        Top = 263
         Width = 1005
-        Height = 431
+        Height = 495
         Align = alClient
         TabOrder = 0
+        ExplicitTop = 225
+        ExplicitHeight = 533
         object ins_nom_data_Box: TGroupBox
           Left = 2
           Top = 15
           Width = 1001
-          Height = 414
+          Height = 478
           Align = alClient
           Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
           TabOrder = 0
+          ExplicitHeight = 516
           object ins_nomGid: TDBGrid
             Left = 2
             Top = 15
             Width = 997
-            Height = 397
+            Height = 461
             Align = alClient
             DataSource = DM.nomDS
             TabOrder = 0
@@ -223,6 +246,12 @@ object Frm_nom: TFrm_nom
                 FieldName = 'type_image'
                 Title.Caption = #1060#1086#1090#1086
                 Visible = True
+              end
+              item
+                Expanded = False
+                FieldName = 'nom_st'
+                Title.Caption = #1057#1090#1072#1090#1091#1089' '#1085#1086#1084#1077#1088#1072
+                Visible = True
               end>
           end
         end
@@ -231,16 +260,18 @@ object Frm_nom: TFrm_nom
         Left = 0
         Top = 0
         Width = 1005
-        Height = 196
+        Height = 234
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
+        ExplicitLeft = 3
+        ExplicitTop = -6
         DesignSize = (
           1005
-          196)
+          234)
         object nomer_kind_inp: TLabeledEdit
           Left = 3
-          Top = 54
+          Top = 38
           Width = 999
           Height = 21
           Anchors = [akLeft, akRight]
@@ -248,39 +279,31 @@ object Frm_nom: TFrm_nom
           EditLabel.Height = 13
           EditLabel.Caption = #1042#1074#1086#1076' '#1074#1080#1076#1072' '#1085#1086#1084#1077#1088#1072
           TabOrder = 0
-        end
-        object nomliveQuercB: TCheckBox
-          Left = 368
-          Top = 173
-          Width = 121
-          Height = 17
-          Align = alCustom
-          Caption = #1046#1080#1074#1099#1077' '#1079#1072#1087#1088#1086#1086#1089#1099
-          TabOrder = 1
-          OnClick = nomliveQuercBClick
+          ExplicitTop = 30
         end
         object nomer_cost_day_inp: TLabeledEdit
           Left = 3
-          Top = 98
+          Top = 100
           Width = 999
           Height = 21
           Anchors = [akLeft, akRight]
           EditLabel.Width = 91
           EditLabel.Height = 13
           EditLabel.Caption = #1042#1074#1086#1076' '#1094#1077#1085#1099' '#1074' '#1076#1077#1085#1100
-          TabOrder = 2
+          TabOrder = 1
+          ExplicitTop = 82
         end
         object nom_type_n__llbl: TStaticText
           Left = 3
-          Top = 121
+          Top = 127
           Width = 61
           Height = 17
           Caption = #1058#1080#1087' '#1085#1086#1084#1077#1088#1072
-          TabOrder = 3
+          TabOrder = 2
         end
         object type_nomer_inp: TDBLookupComboBox
           Left = 3
-          Top = 144
+          Top = 150
           Width = 999
           Height = 21
           Align = alCustom
@@ -288,16 +311,39 @@ object Frm_nom: TFrm_nom
           KeyField = 'id_type_nomer'
           ListField = 'type_naim'
           ListSource = DM.TYpe_nDS
+          TabOrder = 3
+        end
+        object St_nom_lbl: TStaticText
+          Left = 3
+          Top = 177
+          Width = 79
+          Height = 17
+          Caption = 'C'#1090#1072#1090#1091#1089' '#1085#1086#1084#1077#1088#1072
           TabOrder = 4
+        end
+        object nom_st_combo: TComboBox
+          Left = 3
+          Top = 200
+          Width = 999
+          Height = 21
+          Align = alCustom
+          Anchors = [akLeft, akRight]
+          ItemHeight = 13
+          TabOrder = 5
+          OnChange = nom_st_comboChange
+          Items.Strings = (
+            #1047#1072#1085#1103#1090
+            #1057#1074#1086#1073#1086#1076#1077#1085)
         end
       end
       object ins_nom_btn_Box: TGroupBox
         Left = 0
-        Top = 656
+        Top = 758
         Width = 1005
         Height = 71
         Align = alBottom
         TabOrder = 2
+        ExplicitTop = 656
         object ins_uslBtn: TButton
           Left = 496
           Top = 24
@@ -310,11 +356,12 @@ object Frm_nom: TFrm_nom
       end
       object nomlqPanel: TPanel
         Left = 0
-        Top = 196
+        Top = 234
         Width = 1005
         Height = 29
         Align = alTop
         TabOrder = 3
+        ExplicitTop = 196
         object nomlqsvBtn: TButton
           Left = 400
           Top = 0
@@ -324,11 +371,22 @@ object Frm_nom: TFrm_nom
           TabOrder = 0
           OnClick = nomlqsvBtnClick
         end
+        object nomliveQuercB: TCheckBox
+          Left = 96
+          Top = 6
+          Width = 121
+          Height = 17
+          Align = alCustom
+          Caption = #1046#1080#1074#1099#1077' '#1079#1072#1087#1088#1086#1086#1089#1099
+          TabOrder = 1
+          OnClick = nomliveQuercBClick
+        end
       end
     end
     object updTab: TTabSheet
       Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1085#1086#1084#1077#1088#1077
       ImageIndex = 2
+      ExplicitHeight = 727
       object upd_nom_inp_Box: TGroupBox
         Left = 0
         Top = 0
@@ -375,11 +433,12 @@ object Frm_nom: TFrm_nom
       end
       object upd_nom_btn_Box: TGroupBox
         Left = 0
-        Top = 656
+        Top = 758
         Width = 1005
         Height = 71
         Align = alBottom
         TabOrder = 1
+        ExplicitTop = 656
         object upd_nom_btn: TButton
           Left = 440
           Top = 24
@@ -394,15 +453,16 @@ object Frm_nom: TFrm_nom
         Left = 0
         Top = 145
         Width = 1005
-        Height = 511
+        Height = 613
         Align = alClient
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
+        ExplicitHeight = 511
         object upd_nom_grd: TDBGrid
           Left = 2
           Top = 15
           Width = 1001
-          Height = 494
+          Height = 596
           Align = alClient
           DataSource = DM.nomDS
           TabOrder = 0
@@ -439,6 +499,12 @@ object Frm_nom: TFrm_nom
               Title.Caption = #1060#1086#1090#1086
               Width = 212
               Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'nom_st'
+              Title.Caption = #1057#1090#1072#1090#1091#1089' '#1085#1086#1084#1077#1088#1072
+              Visible = True
             end>
         end
       end
@@ -446,6 +512,7 @@ object Frm_nom: TFrm_nom
     object delTab: TTabSheet
       Caption = #1059#1076#1072#1083#1077#1085#1080#1077'  '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1085#1086#1084#1077#1088#1077
       ImageIndex = 3
+      ExplicitHeight = 727
       object del_nom_inpBox: TGroupBox
         Left = 0
         Top = 0
@@ -470,9 +537,9 @@ object Frm_nom: TFrm_nom
           Height = 21
           Align = alCustom
           Anchors = [akLeft, akRight]
-          KeyField = 'usl_id'
-          ListField = 'usl_naim'
-          ListSource = DM.uslDS
+          KeyField = 'nomer_id'
+          ListField = 'nomer_kind'
+          ListSource = DM.nomDS
           TabOrder = 1
         end
       end
@@ -480,15 +547,16 @@ object Frm_nom: TFrm_nom
         Left = 0
         Top = 81
         Width = 1005
-        Height = 575
+        Height = 677
         Align = alClient
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
+        ExplicitHeight = 575
         object del_nom_grd: TDBGrid
           Left = 2
           Top = 15
           Width = 1001
-          Height = 558
+          Height = 660
           Align = alClient
           DataSource = DM.nomDS
           TabOrder = 0
@@ -525,16 +593,23 @@ object Frm_nom: TFrm_nom
               Title.Caption = #1060#1086#1090#1086
               Width = 212
               Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'nom_st'
+              Title.Caption = #1057#1090#1072#1090#1091#1089' '#1085#1086#1084#1077#1088#1072
+              Visible = True
             end>
         end
       end
       object del_nom_btn_Box: TGroupBox
         Left = 0
-        Top = 656
+        Top = 758
         Width = 1005
         Height = 71
         Align = alBottom
         TabOrder = 2
+        ExplicitTop = 656
         object del_nom_d_btn: TButton
           Left = 488
           Top = 24
@@ -542,6 +617,7 @@ object Frm_nom: TFrm_nom
           Height = 25
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
+          OnClick = del_nom_d_btnClick
         end
       end
     end

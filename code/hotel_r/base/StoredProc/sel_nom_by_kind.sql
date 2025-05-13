@@ -1,7 +1,7 @@
 USE [hotel_r]
 GO
 
-/****** Object:  StoredProcedure [dbo].[sel_nom_by_kind]    Script Date: 07.05.2025 15:23:21 ******/
+/****** Object:  StoredProcedure [dbo].[sel_nom_by_kind]    Script Date: 13.05.2025 14:56:22 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -16,7 +16,11 @@ select
 nomer.nomer_id,
 nomer.nomer_kind,
 nomer.nomer_cost_day,
-type_nomer.type_image
+type_nomer.type_image,
+case 
+  when nomer.nomer_st=0 then 'Занят'
+  else 'Свободен'
+ end as nom_st
 from nomer
 inner join  type_nomer on type_nomer.id_type_nomer=nomer.id_type_nomer
 where 1=1
