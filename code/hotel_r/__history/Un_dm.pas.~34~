@@ -35,9 +35,21 @@ type
     dogQuery: TADOQuery;
     dogDS: TDataSource;
     sel_dog_by_fio: TADOStoredProc;
-    ADOStoredProc2: TADOStoredProc;
-    ADOStoredProc3: TADOStoredProc;
+    del_dog: TADOStoredProc;
+    upd_dog: TADOStoredProc;
     ins_dog: TADOStoredProc;
+    PayQuery: TADOQuery;
+    PayDS: TDataSource;
+    sel_pay_by_form: TADOStoredProc;
+    ins_pay: TADOStoredProc;
+    upd_pay: TADOStoredProc;
+    del_pay: TADOStoredProc;
+    fbQuery: TADOQuery;
+    fbDS: TDataSource;
+    sel_feedback_by_fio: TADOStoredProc;
+    ins_feedback: TADOStoredProc;
+    upd_feedback: TADOStoredProc;
+    del_feedback: TADOStoredProc;
   private
     { Private declarations }
   public

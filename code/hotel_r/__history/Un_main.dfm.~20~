@@ -2,7 +2,7 @@ object Frm_main: TFrm_main
   Left = 0
   Top = 0
   Caption = #1043#1083#1074#1085#1072#1103' '#1092#1086#1088#1084#1072' '#1087#1088#1080#1083#1086#1078#1077#1085#1080#1103
-  ClientHeight = 339
+  ClientHeight = 419
   ClientWidth = 635
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -19,14 +19,30 @@ object Frm_main: TFrm_main
   TextHeight = 13
   object main_image: TImage
     Left = 0
-    Top = 0
+    Top = 29
     Width = 635
-    Height = 339
+    Height = 390
     Align = alClient
     ExplicitLeft = 456
     ExplicitTop = 48
     ExplicitWidth = 105
     ExplicitHeight = 105
+  end
+  object saver_tb: TToolBar
+    Left = 0
+    Top = 0
+    Width = 635
+    Height = 29
+    TabOrder = 0
+    object savercb: TCheckBox
+      Left = 0
+      Top = 0
+      Width = 145
+      Height = 22
+      Caption = #1061#1088#1072#1085#1080#1090#1077#1083#1100' '#1101#1082#1088#1072#1085#1072
+      TabOrder = 0
+      OnClick = savercbClick
+    end
   end
   object ItemMenu: TMainMenu
     Left = 312
@@ -43,5 +59,28 @@ object Frm_main: TFrm_main
       Caption = '&'#1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1091#1089#1083#1091#1075#1086#1081
       OnClick = usl_itemClick
     end
+    object Nom_item: TMenuItem
+      Caption = '&'#1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1085#1086#1084#1077#1088#1086#1084
+      OnClick = Nom_itemClick
+    end
+    object dog_item: TMenuItem
+      Caption = '&'#1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1076#1086#1075#1086#1074#1086#1088#1086#1084
+      OnClick = dog_itemClick
+    end
+    object pay_item: TMenuItem
+      Caption = '&'#1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1086#1087#1083#1072#1090#1086#1081
+      OnClick = pay_itemClick
+    end
+    object feedback_item: TMenuItem
+      Caption = '&'#1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1086#1090#1079#1099#1074#1086#1084
+      OnClick = feedback_itemClick
+    end
+  end
+  object freeze_timer: TTimer
+    Enabled = False
+    Interval = 10000
+    OnTimer = freeze_timerTimer
+    Left = 208
+    Top = 104
   end
 end

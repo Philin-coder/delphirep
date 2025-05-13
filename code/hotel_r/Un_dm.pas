@@ -50,6 +50,9 @@ type
     ins_feedback: TADOStoredProc;
     upd_feedback: TADOStoredProc;
     del_feedback: TADOStoredProc;
+    reportQuery: TADOQuery;
+    report1: TADOStoredProc;
+    reportDS: TDataSource;
   private
     { Private declarations }
   public

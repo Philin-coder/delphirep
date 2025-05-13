@@ -1,7 +1,7 @@
 object DM: TDM
   OldCreateOrder = False
   Height = 431
-  Width = 725
+  Width = 860
   object Connection: TADOConnection
     Connected = True
     ConnectionString = 
@@ -909,12 +909,14 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@guest_fio'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end>
     Left = 640
     Top = 184
@@ -928,6 +930,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@dog_id'
@@ -941,6 +944,7 @@ object DM: TDM
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end
       item
         Name = '@feeadbackmarck'
@@ -961,6 +965,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@feedback_id'
@@ -974,6 +979,7 @@ object DM: TDM
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end>
     Left = 632
     Top = 296
@@ -987,6 +993,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@feedback_id'
@@ -997,5 +1004,53 @@ object DM: TDM
       end>
     Left = 632
     Top = 360
+  end
+  object reportQuery: TADOQuery
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      
+        'select dogovor.dog_id, dogovor.data_b,  dogovor.pass_n, dogovor.' +
+        'pass_seria,dogovor.kem_vid,dogovor.mesto_r,dogovor.data_reg,'
+      
+        'dogovor.pol,dogovor.perpose,dogovor.guest_fio,nomer.nomer_kind, ' +
+        'dogovor.date_dog, dogovor.sr_dog,fio_admin'
+      'from dogovor'
+      'inner join nomer on dogovor.nomer_id=nomer.nomer_id '
+      'inner join m_admin on dogovor.id_admin=m_admin.id_admin'
+      'where 1=1')
+    Left = 704
+    Top = 72
+  end
+  object report1: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'report1;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@d1'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end
+      item
+        Name = '@d2'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end>
+    Left = 720
+    Top = 184
+  end
+  object reportDS: TDataSource
+    DataSet = reportQuery
+    Left = 712
+    Top = 136
   end
 end
