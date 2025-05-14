@@ -44,7 +44,7 @@ begin
         if not Connection.Connected then
           raise Exception.Create('Соединение с базой не установлено');
         Close;
-        Parameters.ParamByName('@id_admin').Value := FNumber;
+        Parameters.ParamByName('@id').Value := FNumber;
         Open;
       end;
 
