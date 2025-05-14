@@ -14,8 +14,6 @@ type
     tw_btn_box: TGroupBox;
     Btn_save1: TButton;
     loadfromuserinicb: TCheckBox;
-    form_cd: TColorDialog;
-    form_fd: TFontDialog;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure Btn_save1Click(Sender: TObject);
@@ -48,10 +46,6 @@ begin
 end;
 
 procedure Tfrm_twiker.Btn_save1Click(Sender: TObject);
-var 
-  SelectedColor: TColor;
-  SelectedFontName: string;
-  SelectedFontSize: Integer;
 begin
   if init_str = '' then
   begin
@@ -61,32 +55,9 @@ begin
 
   try
     CreateUserFolder(TransliterateToLatin( init_str));
-    // Открываем диалог выбора цвета
-    if form_cd.Execute then
-      SelectedColor := form_cd.Color
-    else
-    begin
-      ShowMessage('Цвет не выбран. Используется цвет по умолчанию.');
-      SelectedColor := clWhite; // Цвет по умолчанию
-    end;
-
-    // Открываем диалог выбора шрифта
-    if form_fd.Execute then
-    begin
-      SelectedFontName := form_fd.Font.Name;
-      SelectedFontSize := form_fd.Font.Size;
-    end
-    else
-    begin
-      ShowMessage('Шрифт не выбран. Используется шрифт по умолчанию.');
-      SelectedFontName := 'Arial'; // Шрифт по умолчанию
-      SelectedFontSize := 10;      // Размер шрифта по умолчанию
-    end;
-
       WriteUserIniFile(TransliterateToLatin(init_str),
       TransliterateToLatin(init_str), StrToInt(width_inp.Text),
-      StrToInt(height_inp.Text),form_cd.Color,
-      form_fd.Font.Name, form_fd.Font.Size);
+      StrToInt(height_inp.Text));
   except
     on E: Exception do
       ShowMessage('Ошибка: ' + E.Message);
@@ -191,38 +162,20 @@ end;
 
 procedure Tfrm_twiker.loadfromuserinicbClick(Sender: TObject);
 var
-    LoadedInitString: string;
+  LoadedInitString: string;
   LoadedWidth, LoadedHeight: Integer;
-  LoadedColor: TColor;
-  LoadedFontName: string;
-  LoadedFontSize: Integer;
-
 begin
 if loadfromuserinicb.Checked then
 begin
 try
       // Загружаем настройки из файла
-      LoadUserIniFile(
-        TransliterateToLatin(init_str), // Имя пользователя
-        LoadedInitString,               // Загружаем InitString
-        LoadedWidth,                    // Загружаем ширину формы
-        LoadedHeight,                   // Загружаем высоту формы
-        LoadedColor,                    // Загружаем цвет формы
-        LoadedFontName,                 // Загружаем название шрифта
-        LoadedFontSize                  // Загружаем размер шрифта
-      );
-
+      LoadUserIniFile(TransliterateToLatin( init_str),
+      LoadedInitString, LoadedWidth, LoadedHeight);
 
       // Применяем загруженные настройки
-       init_str := LoadedInitString;    // Применяем InitString
-      Self.Width := LoadedWidth;       // Применяем ширину формы
-      Self.Height := LoadedHeight;     // Применяем высоту формы
-      Self.Color := LoadedColor;       // Применяем цвет формы
-      Self.Font.Name := LoadedFontName; // Применяем название шрифта
-      Self.Font.Size := LoadedFontSize; 
-
-
-
+      init_str := LoadedInitString;
+      Self.Width := LoadedWidth;
+      Self.Height := LoadedHeight;
 
       ShowMessage('Настройки успешно применены.');
     except

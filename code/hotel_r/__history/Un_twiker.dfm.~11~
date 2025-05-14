@@ -51,16 +51,6 @@ object frm_twiker: Tfrm_twiker
       EditLabel.Caption = #1042#1099#1089#1086#1090#1072
       TabOrder = 1
     end
-    object loadfromuserinicb: TCheckBox
-      Left = 256
-      Top = 15
-      Width = 153
-      Height = 17
-      Align = alCustom
-      Caption = #1047#1072#1075#1088#1091#1079#1080#1090#1100' '#1085#1072#1089#1090#1088#1086#1081#1082#1080
-      TabOrder = 2
-      OnClick = loadfromuserinicbClick
-    end
   end
   object tw_btn_box: TGroupBox
     Left = 0
@@ -78,18 +68,5 @@ object frm_twiker: Tfrm_twiker
       TabOrder = 0
       OnClick = Btn_save1Click
     end
-  end
-  object form_cd: TColorDialog
-    Left = 560
-    Top = 8
-  end
-  object form_fd: TFontDialog
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    Left = 608
-    Top = 16
   end
 end

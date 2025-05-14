@@ -228,6 +228,8 @@ try
            dm.admQuery.Close;
            dm.admQuery.Open;
         MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+        dm.sel_adm_by_id_q.Close;
+        dm.sel_adm_by_id_q.Open
       end;
     except
       on E: EADOError do
@@ -302,6 +304,8 @@ begin
         dm.admQuery.Open;
       finally
         dm.admQuery.EnableControls;
+        dm.sel_adm_by_id_q.Close;
+        dm.sel_adm_by_id_q.Open;
       end;
       ShowMessage('Изменения успешно сохранены.');
     end
@@ -348,6 +352,7 @@ begin
         dm.admQuery.Open;
   except
     frm_twiker.Free;
+
     raise;
   end;
  end

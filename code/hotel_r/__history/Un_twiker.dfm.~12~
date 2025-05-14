@@ -53,7 +53,7 @@ object frm_twiker: Tfrm_twiker
     end
     object loadfromuserinicb: TCheckBox
       Left = 256
-      Top = 15
+      Top = 16
       Width = 153
       Height = 17
       Align = alCustom
@@ -78,18 +78,5 @@ object frm_twiker: Tfrm_twiker
       TabOrder = 0
       OnClick = Btn_save1Click
     end
-  end
-  object form_cd: TColorDialog
-    Left = 560
-    Top = 8
-  end
-  object form_fd: TFontDialog
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    Left = 608
-    Top = 16
   end
 end

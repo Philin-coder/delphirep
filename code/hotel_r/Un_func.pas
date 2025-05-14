@@ -161,6 +161,20 @@ procedure ShowDBGridInTreeView(AOwner: TComponent; const DBGridName: string);
 procedure CopyDBGridToTreeView(DBGrid: TDBGrid; TreeView: TTreeView);
 procedure AdjustDBGridColumnWidths(const FormName: string;
 MaxWidth: Integer; Divider: Integer);
+function TransliterateToLatin( CyrillicName: string): string;
+function GetAppDirectory: string;
+procedure CreateUserFolder(const UserName: string);
+procedure WriteUserIniFile(const UserName, InitString: string;
+FormWidth, FormHeight: Integer;
+  FormColor: TColor;
+  FontName: string;
+  FontSize: Integer);
+procedure LoadUserIniFile(const UserName: string; var InitString: string;
+var FormWidth, FormHeight: Integer;
+ var FormColor: TColor;
+  var FontName: string;
+  var FontSize: Integer);
+
 implementation
 type
   tdata = array [0..15] of DWORD;
@@ -2942,6 +2956,174 @@ begin
         ShowMessage('DBGrid "' + DBGrid.Name + '" не имеет связанного DataSource.');
       end;
     end;
+  end;
+end;
+function TransliterateToLatin( CyrillicName: string): string;
+var
+  i: Integer;
+  TranslitMap: array[Char] of string;
+  Ch: Char;
+begin
+  TranslitMap['А'] := 'A'; TranslitMap['а'] := 'a';
+  TranslitMap['Б'] := 'B'; TranslitMap['б'] := 'b';
+  TranslitMap['В'] := 'V'; TranslitMap['в'] := 'v';
+  TranslitMap['Г'] := 'G'; TranslitMap['г'] := 'g';
+  TranslitMap['Д'] := 'D'; TranslitMap['д'] := 'd';
+  TranslitMap['Е'] := 'E'; TranslitMap['е'] := 'e';
+  TranslitMap['Ё'] := 'Yo'; TranslitMap['ё'] := 'yo';
+  TranslitMap['Ж'] := 'Zh'; TranslitMap['ж'] := 'zh';
+  TranslitMap['З'] := 'Z'; TranslitMap['з'] := 'z';
+  TranslitMap['И'] := 'I'; TranslitMap['и'] := 'i';
+  TranslitMap['Й'] := 'Y'; TranslitMap['й'] := 'y';
+  TranslitMap['К'] := 'K'; TranslitMap['к'] := 'k';
+  TranslitMap['Л'] := 'L'; TranslitMap['л'] := 'l';
+  TranslitMap['М'] := 'M'; TranslitMap['м'] := 'm';
+  TranslitMap['Н'] := 'N'; TranslitMap['н'] := 'n';
+  TranslitMap['О'] := 'O'; TranslitMap['о'] := 'o';
+  TranslitMap['П'] := 'P'; TranslitMap['п'] := 'p';
+  TranslitMap['Р'] := 'R'; TranslitMap['р'] := 'r';
+  TranslitMap['С'] := 'S'; TranslitMap['с'] := 's';
+  TranslitMap['Т'] := 'T'; TranslitMap['т'] := 't';
+  TranslitMap['У'] := 'U'; TranslitMap['у'] := 'u';
+  TranslitMap['Ф'] := 'F'; TranslitMap['ф'] := 'f';
+  TranslitMap['Х'] := 'Kh'; TranslitMap['х'] := 'kh';
+  TranslitMap['Ц'] := 'Ts'; TranslitMap['ц'] := 'ts';
+  TranslitMap['Ч'] := 'Ch'; TranslitMap['ч'] := 'ch';
+  TranslitMap['Ш'] := 'Sh'; TranslitMap['ш'] := 'sh';
+  TranslitMap['Щ'] := 'Sch'; TranslitMap['щ'] := 'sch';
+  TranslitMap['Ъ'] := ''; TranslitMap['ъ'] := '';
+  TranslitMap['Ы'] := 'Y'; TranslitMap['ы'] := 'y';
+  TranslitMap['Ь'] := ''; TranslitMap['ь'] := '';
+  TranslitMap['Э'] := 'E'; TranslitMap['э'] := 'e';
+  TranslitMap['Ю'] := 'Yu'; TranslitMap['ю'] := 'yu';
+  TranslitMap['Я'] := 'Ya'; TranslitMap['я'] := 'ya';
+  CyrillicName := Trim(CyrillicName);
+  CyrillicName := StringReplace(CyrillicName, #9, '', [rfReplaceAll]);
+  CyrillicName := StringReplace(CyrillicName, #10, '', [rfReplaceAll]);
+  CyrillicName := StringReplace(CyrillicName, #13, '', [rfReplaceAll]);
+  Result := '';
+  for i := 1 to Length(CyrillicName) do
+  begin
+    Ch := CyrillicName[i];
+    if Ch in ['A'..'Z', 'a'..'z', '0'..'9'] then
+      Result := Result + Ch // Латинские буквы и цифры остаются без изменений
+    else if Ch = ' ' then
+      Continue // Пропускаем пробелы
+    else if TranslitMap[Ch] <> '' then
+      Result := Result + TranslitMap[Ch] // Кириллические символы заменяются
+    else
+      Result := Result + '_'; // Все остальные символы заменяются на "_"
+  end;
+end;
+function GetAppDirectory: string;
+begin
+  Result := IncludeTrailingPathDelimiter(ExtractFilePath(ParamStr(0)));
+end;
+  procedure CreateUserFolder(const UserName: string);
+var
+  AppDir, UserSettingsDir, UserFolder: string;
+begin
+  if Trim(UserName) = '' then
+    raise Exception.Create('Имя пользователя не может быть пустым.');
+  AppDir := GetAppDirectory;
+  UserSettingsDir := IncludeTrailingPathDelimiter(AppDir + 'UserSettings');
+  if not DirectoryExists(UserSettingsDir) then
+  begin
+    if not CreateDir(UserSettingsDir) then
+      raise Exception.Create('Не удалось создать папку UserSettings.');
+  end;
+  UserFolder := IncludeTrailingPathDelimiter(UserSettingsDir + UserName);
+  if not DirectoryExists(UserFolder) then
+  begin
+    if not CreateDir(UserFolder) then
+      raise Exception.CreateFmt('Не удалось создать папку пользователя: %s', [UserFolder]);
+  end;
+
+
+  ShowMessage(Format('Папка пользователя "%s" успешно создана.', [UserName]));
+end;
+procedure WriteUserIniFile(const UserName, InitString: string;
+FormWidth, FormHeight: Integer;
+  FormColor: TColor;
+  FontName: string;
+  FontSize: Integer);
+var
+  AppDir, UserSettingsDir, UserFolder, IniFilePath: string;
+  IniFile: TIniFile;
+begin
+  if Trim(UserName) = '' then
+    raise Exception.Create('Имя пользователя не может быть пустым.');
+  if Trim(InitString) = '' then
+    raise Exception.Create('Строка InitString не может быть пустой.');
+  AppDir := IncludeTrailingPathDelimiter(ExtractFilePath(ParamStr(0)));
+  UserSettingsDir := IncludeTrailingPathDelimiter(AppDir + 'UserSettings');
+  UserFolder := IncludeTrailingPathDelimiter(UserSettingsDir + UserName);
+  if not DirectoryExists(UserFolder) then
+    raise Exception.CreateFmt('Папка пользователя "%s" не существует.', [UserName]);
+  IniFilePath := UserFolder + UserName + '.ini';
+  IniFile := TIniFile.Create(IniFilePath);
+  try
+    IniFile.WriteString('User', 'Name', UserName); // Записываем имя пользователя
+    IniFile.WriteString('User', 'InitString', InitString); // Записываем значение InitString
+    IniFile.WriteInteger('FormSettings', 'Width', FormWidth); // Ширина формы
+    IniFile.WriteInteger('FormSettings', 'Height', FormHeight); // Высота формы
+    IniFile.WriteInteger('FormSettings', 'Color', ColorToRGB(FormColor)); // Цвет формы (код RGB)
+    IniFile.WriteString('FontSettings', 'Name', FontName); // Название шрифта
+    IniFile.WriteInteger('FontSettings', 'Size', FontSize); // Размер шрифта
+    ShowMessage(Format('Файл "%s" успешно создан.', [IniFilePath]));
+  finally
+
+    IniFile.Free;
+  end;
+end;
+procedure LoadUserIniFile(const UserName: string; var InitString: string;
+var FormWidth, FormHeight: Integer;
+ var FormColor: TColor;
+  var FontName: string;
+  var FontSize: Integer);
+var
+  AppDir, UserSettingsDir, UserFolder, IniFilePath: string;
+  IniFile: TIniFile;
+begin
+  // Проверяем, что имя пользователя не пустое
+  if Trim(UserName) = '' then
+    raise Exception.Create('Имя пользователя не может быть пустым.');
+
+  // Получаем путь к папке приложения
+  AppDir := IncludeTrailingPathDelimiter(ExtractFilePath(ParamStr(0)));
+
+  // Определяем путь к папке UserSettings
+  UserSettingsDir := IncludeTrailingPathDelimiter(AppDir + 'UserSettings');
+
+  // Определяем путь к папке пользователя
+  UserFolder := IncludeTrailingPathDelimiter(UserSettingsDir + UserName);
+
+  // Проверяем, существует ли папка пользователя
+  if not DirectoryExists(UserFolder) then
+    raise Exception.CreateFmt('Папка пользователя "%s" не существует.', [UserName]);
+
+  // Определяем путь к файлу .ini
+  IniFilePath := UserFolder + UserName + '.ini';
+
+  // Проверяем, существует ли файл .ini
+  if not FileExists(IniFilePath) then
+    raise Exception.CreateFmt('Файл "%s" не найден.', [IniFilePath]);
+
+  // Создаем объект TIniFile
+  IniFile := TIniFile.Create(IniFilePath);
+  try
+    // Читаем данные из файла .ini
+    InitString := IniFile.ReadString('User', 'InitString', ''); // Читаем значение InitString
+    FormWidth := IniFile.ReadInteger('FormSettings', 'Width', 800); // Читаем ширину формы
+    FormHeight := IniFile.ReadInteger('FormSettings', 'Height', 600); // Читаем высоту формы
+    FormColor := IniFile.ReadInteger('FormSettings', 'Color', clWhite); // Читаем цвет формы
+    FontName := IniFile.ReadString('FontSettings', 'Name', 'Arial'); // Читаем название шрифта
+    FontSize := IniFile.ReadInteger('FontSettings', 'Size', 10);
+
+    ShowMessage(Format('Настройки успешно загружены из файла "%s".', [IniFilePath]));
+  finally
+    // Освобождаем ресурсы
+    IniFile.Free;
   end;
 end;
 

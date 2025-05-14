@@ -21,11 +21,11 @@ object Frm_fadmin: TFrm_fadmin
     Top = 0
     Width = 1013
     Height = 755
-    ActivePage = TabSheet3
+    ActivePage = seLTab
     Align = alClient
     TabOrder = 0
     object seLTab: TTabSheet
-      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1091#1095#1072#1089#1090#1085#1080#1082#1077
+      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1072#1076#1084#1080#1085#1080#1089#1090#1088#1072#1090#1086#1088#1077
       object sel_admincondBox: TGroupBox
         Left = 0
         Top = 0
@@ -135,6 +135,7 @@ object Frm_fadmin: TFrm_fadmin
           TitleFont.Height = -11
           TitleFont.Name = 'Tahoma'
           TitleFont.Style = []
+          OnDblClick = m_addminselgrdDblClick
           Columns = <
             item
               Expanded = False
@@ -169,8 +170,6 @@ object Frm_fadmin: TFrm_fadmin
         Height = 469
         Align = alClient
         TabOrder = 0
-        ExplicitTop = 184
-        ExplicitHeight = 472
         object ins_adm_dataGid: TDBGrid
           Left = 2
           Top = 15
@@ -228,7 +227,6 @@ object Frm_fadmin: TFrm_fadmin
           EditLabel.Height = 13
           EditLabel.Caption = #1042#1074#1086#1076' '#1060#1048#1054' '#1072#1076#1084#1080#1085#1080#1089#1090#1088#1072#1090#1086#1088#1072
           TabOrder = 0
-          ExplicitTop = 32
         end
         object sm_inp_lbl: TStaticText
           Left = 11
@@ -289,9 +287,6 @@ object Frm_fadmin: TFrm_fadmin
         Height = 41
         Align = alTop
         TabOrder = 3
-        ExplicitLeft = 72
-        ExplicitTop = 152
-        ExplicitWidth = 185
         object lqsvBtn: TButton
           Left = 440
           Top = 7
@@ -303,7 +298,7 @@ object Frm_fadmin: TFrm_fadmin
         end
       end
     end
-    object TabSheet3: TTabSheet
+    object updTab: TTabSheet
       Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077' '#1080#1085#1092#1086#1088#1084#1072#1081#1080#1080' '#1086#1073' '#1072#1076#1084#1080#1085#1080#1089#1090#1088#1072#1090#1086#1088#1077
       ImageIndex = 2
       object upd_adm_inp_Box: TGroupBox
@@ -333,6 +328,9 @@ object Frm_fadmin: TFrm_fadmin
           Height = 21
           Align = alCustom
           Anchors = [akLeft, akRight]
+          KeyField = 'id_admin'
+          ListField = 'fio_admin'
+          ListSource = DM.admDS
           TabOrder = 1
         end
         object upd_adm_ulbl: TStaticText
@@ -353,6 +351,7 @@ object Frm_fadmin: TFrm_fadmin
           ItemHeight = 13
           TabOrder = 3
           OnChange = upd_adm_sm_inpChange
+          OnKeyPress = upd_adm_sm_inpKeyPress
           Items.Strings = (
             #1053#1086#1095#1085#1072#1103
             #1044#1085#1077#1074#1085#1072#1103' '
@@ -374,6 +373,7 @@ object Frm_fadmin: TFrm_fadmin
           Height = 25
           Caption = #1054#1073#1085#1086#1074#1080#1090#1100
           TabOrder = 0
+          OnClick = upd_adm_btnClick
         end
       end
       object upd_adm_data_box: TGroupBox
@@ -384,10 +384,6 @@ object Frm_fadmin: TFrm_fadmin
         Align = alClient
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        ExplicitLeft = 624
-        ExplicitTop = 304
-        ExplicitWidth = 185
-        ExplicitHeight = 105
         object upd_adm_grd: TDBGrid
           Left = 2
           Top = 15
@@ -425,9 +421,100 @@ object Frm_fadmin: TFrm_fadmin
         end
       end
     end
-    object TabSheet4: TTabSheet
-      Caption = 'TabSheet4'
+    object delTab: TTabSheet
+      Caption = #1059#1076#1072#1083#1077#1085#1080#1077'  '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1072#1076#1084#1080#1085#1080#1089#1090#1088#1072#1090#1086#1088#1077
       ImageIndex = 3
+      object del_adm_inpBox: TGroupBox
+        Left = 0
+        Top = 0
+        Width = 1005
+        Height = 81
+        Align = alTop
+        Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 0
+        object del_dbl_adm_lbl: TStaticText
+          Left = 3
+          Top = 24
+          Width = 135
+          Height = 17
+          Align = alCustom
+          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1072#1076#1084#1080#1085#1080#1089#1090#1088#1072#1090#1086#1088#1072
+          TabOrder = 0
+        end
+        object del_dbl_adm_dbl: TDBLookupComboBox
+          Left = 3
+          Top = 37
+          Width = 982
+          Height = 21
+          Align = alCustom
+          Anchors = [akLeft, akRight]
+          KeyField = 'id_admin'
+          ListField = 'fio_admin'
+          ListSource = DM.admDS
+          TabOrder = 1
+        end
+      end
+      object del_adm_dataBox: TGroupBox
+        Left = 0
+        Top = 81
+        Width = 1005
+        Height = 575
+        Align = alClient
+        Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 1
+        object del_adm_d_gr: TDBGrid
+          Left = 2
+          Top = 15
+          Width = 1001
+          Height = 558
+          Align = alClient
+          DataSource = DM.admDS
+          TabOrder = 0
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWindowText
+          TitleFont.Height = -11
+          TitleFont.Name = 'Tahoma'
+          TitleFont.Style = []
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'id_admin'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Width = 175
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'fio_admin'
+              Title.Caption = #1060#1048#1054
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'smena'
+              Title.Caption = #1057#1084#1077#1085#1072
+              Width = 166
+              Visible = True
+            end>
+        end
+      end
+      object del_adm_btn_Box: TGroupBox
+        Left = 0
+        Top = 656
+        Width = 1005
+        Height = 71
+        Align = alBottom
+        TabOrder = 2
+        object del_adm_d_btn: TButton
+          Left = 488
+          Top = 24
+          Width = 75
+          Height = 25
+          Caption = #1059#1076#1072#1083#1080#1090#1100
+          TabOrder = 0
+          OnClick = del_adm_d_btnClick
+        end
+      end
     end
   end
 end

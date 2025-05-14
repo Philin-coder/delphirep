@@ -191,35 +191,25 @@ end;
 
 procedure Tfrm_twiker.loadfromuserinicbClick(Sender: TObject);
 var
-    LoadedInitString: string;
+  LoadedInitString: string;
   LoadedWidth, LoadedHeight: Integer;
-  LoadedColor: TColor;
-  LoadedFontName: string;
-  LoadedFontSize: Integer;
 
 begin
 if loadfromuserinicb.Checked then
 begin
 try
       // Загружаем настройки из файла
-      LoadUserIniFile(
-        TransliterateToLatin(init_str), // Имя пользователя
-        LoadedInitString,               // Загружаем InitString
-        LoadedWidth,                    // Загружаем ширину формы
-        LoadedHeight,                   // Загружаем высоту формы
-        LoadedColor,                    // Загружаем цвет формы
-        LoadedFontName,                 // Загружаем название шрифта
-        LoadedFontSize                  // Загружаем размер шрифта
+      LoadUserIniFile(TransliterateToLatin( init_str),
+      LoadedInitString, LoadedWidth, LoadedHeight
+
       );
-
-
       // Применяем загруженные настройки
-       init_str := LoadedInitString;    // Применяем InitString
-      Self.Width := LoadedWidth;       // Применяем ширину формы
-      Self.Height := LoadedHeight;     // Применяем высоту формы
-      Self.Color := LoadedColor;       // Применяем цвет формы
-      Self.Font.Name := LoadedFontName; // Применяем название шрифта
-      Self.Font.Size := LoadedFontSize; 
+      init_str := LoadedInitString;
+      Self.Width := LoadedWidth;
+      Self.Height := LoadedHeight;
+      Self.Color := form_cd.Color;
+      Self.Font.name := form_fd.font.name;
+      Self.Font.size := form_fd.font.size;
 
 
 

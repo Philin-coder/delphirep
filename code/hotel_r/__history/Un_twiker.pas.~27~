@@ -1,0 +1,158 @@
+unit Un_twiker;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs,adodb,db;
+
+type
+  Tfrm_twiker = class(TForm)
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    FNumber: Integer;
+    procedure SetNumber(const value:Integer);
+    procedure FindClosestExistingID(const TargetID: Integer);
+    procedure LoadAdminInfo;
+  public
+    property Number:Integer read Fnumber  write setNumber;
+  end;
+
+var
+  frm_twiker: Tfrm_twiker;
+  init_str:string;
+  ResultString: string;
+
+implementation
+
+uses Un_dm, Un_fadmin, Un_func;
+
+{$R *.dfm}
+procedure Tfrm_twiker.SetNumber(const value:Integer);
+begin
+    FNumber := value;
+    ResultString := '';
+    init_str:='';
+    LoadAdminInfo;
+end;
+
+procedure Tfrm_twiker.FindClosestExistingID(const TargetID: Integer);
+var
+  i: Integer;
+begin
+  dm.sel_adm_by_id_q.Close;
+  dm.sel_adm_by_id_q.SQL.Text :=
+    'SELECT ' +
+    '  m_admin.id_admin, ' +
+    '  m_admin.fio_admin ' +
+    'FROM ' +
+    '  m_admin ' +
+    'ORDER BY m_admin.id_admin';
+  dm.sel_adm_by_id_q.Open;
+
+  for i := 0 to dm.sel_adm_by_id_q.RecordCount - 1 do
+  begin
+    if dm.sel_adm_by_id_q.FieldByName('id_admin').AsInteger = TargetID then
+    begin
+      ResultString := VarToStr(dm.sel_adm_by_id_q.FieldByName('fio_admin').Value);
+      init_str := ResultString;
+      ShowMessage(init_str);
+      Exit;
+    end;
+  end;
+  if dm.sel_adm_by_id_q.RecordCount > 0 then
+  begin
+    dm.sel_adm_by_id_q.First;
+    while not dm.sel_adm_by_id_q.Eof do
+    begin
+      if dm.sel_adm_by_id_q.FieldByName('id_admin').AsInteger > TargetID then
+      begin
+        // Найден следующий существующий ID
+        ResultString := VarToStr(dm.sel_adm_by_id_q.FieldByName('fio_admin').Value);
+        init_str := ResultString;
+        ShowMessage(init_str);
+        Exit;
+      end;
+      dm.sel_adm_by_id_q.Next;
+    end;
+  end;
+  ShowMessage('Пользователь с указанным ID не найден.');
+end;
+
+procedure Tfrm_twiker.LoadAdminInfo;
+begin
+  init_str := '';
+  ResultString := '';
+
+  if FNumber <= 0 then
+  begin
+    ShowMessage('Некорректный ID пользователя.');
+    Exit;
+  end;
+
+  try
+    dm.sel_adm_by_id_q.Close;
+    if not dm.Connection.Connected then
+    begin
+      dm.Connection.Connected := True;
+      if not dm.Connection.Connected then
+        raise Exception.Create('Не удалось установить соединение с БД.');
+    end;
+
+    with dm.sel_adm_by_id do
+    begin
+      Close;
+      Parameters.ParamByName('@id_admin').Value := FNumber;
+      Open;
+    end;
+
+    dm.sel_adm_by_id_q.Recordset := dm.sel_adm_by_id.Recordset;
+
+    if not dm.sel_adm_by_id_q.IsEmpty then
+    begin
+      ResultString := VarToStr(dm.sel_adm_by_id_q.FieldByName('fio_admin').Value);
+      init_str := ResultString;
+      ShowMessage(init_str);
+    end
+    else
+    begin
+      FindClosestExistingID(FNumber);
+    end;
+
+  except
+    on E: EADOError do
+      ShowMessage('Ошибка ADO: ' + E.Message);
+    on E: Exception do
+      ShowMessage('Общая ошибка: ' + E.Message);
+  end;
+end;
+
+
+
+
+
+
+procedure Tfrm_twiker.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  SaveFormState(Self);
+  CloseAllQueriesOnDataModule('dm');
+    init_str:='';
+    ResultString:='';
+      FNumber:=0;
+
+end;
+
+procedure Tfrm_twiker.FormCreate(Sender: TObject);
+begin
+
+  frm_twiker.KeyPreview:=true;
+  frm_twiker.ShowHint:=true;
+  UniformizeButtonsSize(Self,  273, 25);
+  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+  LoadFormState(Self);
+  FNumber:=0;
+end;
+
+end.
