@@ -1,0 +1,38 @@
+unit Un_twiker;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs,adodb,db;
+
+type
+  Tfrm_twiker = class(TForm)
+    procedure FormCreate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_twiker: Tfrm_twiker;
+
+implementation
+
+uses Un_dm, Un_fadmin, Un_func;
+
+{$R *.dfm}
+
+procedure Tfrm_twiker.FormCreate(Sender: TObject);
+begin
+  frm_twiker.KeyPreview:=true;
+  frm_twiker.ShowHint:=true;
+  UniformizeButtonsSize(Self,  273, 25);
+  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+  LoadFormState(Self);
+
+end;
+
+end.

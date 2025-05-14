@@ -21,15 +21,11 @@ object Frm_fadmin: TFrm_fadmin
     Top = 0
     Width = 1013
     Height = 755
-    ActivePage = insTab
+    ActivePage = seLTab
     Align = alClient
     TabOrder = 0
     object seLTab: TTabSheet
       Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1072#1076#1084#1080#1085#1080#1089#1090#1088#1072#1090#1086#1088#1077
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object sel_admincondBox: TGroupBox
         Left = 0
         Top = 0
@@ -139,6 +135,7 @@ object Frm_fadmin: TFrm_fadmin
           TitleFont.Height = -11
           TitleFont.Name = 'Tahoma'
           TitleFont.Style = []
+          OnDblClick = m_addminselgrdDblClick
           Columns = <
             item
               Expanded = False
@@ -304,10 +301,6 @@ object Frm_fadmin: TFrm_fadmin
     object updTab: TTabSheet
       Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077' '#1080#1085#1092#1086#1088#1084#1072#1081#1080#1080' '#1086#1073' '#1072#1076#1084#1080#1085#1080#1089#1090#1088#1072#1090#1086#1088#1077
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object upd_adm_inp_Box: TGroupBox
         Left = 0
         Top = 0
@@ -355,7 +348,7 @@ object Frm_fadmin: TFrm_fadmin
           Width = 982
           Height = 21
           Anchors = [akLeft, akRight]
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 3
           OnChange = upd_adm_sm_inpChange
           OnKeyPress = upd_adm_sm_inpKeyPress
@@ -431,10 +424,6 @@ object Frm_fadmin: TFrm_fadmin
     object delTab: TTabSheet
       Caption = #1059#1076#1072#1083#1077#1085#1080#1077'  '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1072#1076#1084#1080#1085#1080#1089#1090#1088#1072#1090#1086#1088#1077
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object del_adm_inpBox: TGroupBox
         Left = 0
         Top = 0

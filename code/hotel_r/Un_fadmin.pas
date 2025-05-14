@@ -68,6 +68,7 @@ type
     procedure upd_adm_sm_inpKeyPress(Sender: TObject; var Key: Char);
     procedure upd_adm_btnClick(Sender: TObject);
     procedure del_adm_d_btnClick(Sender: TObject);
+    procedure m_addminselgrdDblClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -80,7 +81,7 @@ var
 
 implementation
 
-uses Un_dm, Un_func;
+uses Un_dm, Un_func, Un_twiker;
 
 {$R *.dfm}
 
@@ -320,6 +321,18 @@ begin
 
 end;
 
+
+procedure TFrm_fadmin.m_addminselgrdDblClick(Sender: TObject);
+begin
+  try
+    UpdateFormProperties('frm_twiker', 'Форма работы с настройками',
+      clBtnFace, 1024, 768);
+    frm_twiker.ShowModal;
+  except
+    frm_twiker.Free;
+    raise;
+  end;
+end;
 
 procedure TFrm_fadmin.m_adminsekBtnClick(Sender: TObject);
 begin

@@ -1,7 +1,7 @@
 object DM: TDM
   OldCreateOrder = False
   Height = 431
-  Width = 860
+  Width = 893
   object Connection: TADOConnection
     Connected = True
     ConnectionString = 
@@ -444,12 +444,14 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@nomer_kind'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end
       item
         Name = '@nomer_cost_day'
@@ -457,6 +459,7 @@ object DM: TDM
         DataType = ftFloat
         NumericScale = 2
         Precision = 10
+        Value = Null
       end
       item
         Name = '@id_type_nomer'
@@ -1041,18 +1044,21 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@d1'
         Attributes = [paNullable]
         DataType = ftDateTime
         Size = 10
+        Value = Null
       end
       item
         Name = '@d2'
         Attributes = [paNullable]
         DataType = ftDateTime
         Size = 10
+        Value = Null
       end>
     Left = 720
     Top = 184
@@ -1071,6 +1077,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@nomer_id'
@@ -1091,6 +1098,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@nomer_id'
