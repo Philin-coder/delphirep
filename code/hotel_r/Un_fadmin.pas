@@ -323,16 +323,42 @@ end;
 
 
 procedure TFrm_fadmin.m_addminselgrdDblClick(Sender: TObject);
+   var SelectedRowNumber:Integer;
 begin
+ if (m_addminselgrd.DataSource.DataSet.Active)and
+ not(m_addminselgrd.DataSource.DataSet.IsEmpty)  then
+ begin
+     SelectedRowNumber := m_addminselgrd.DataSource.DataSet.RecNo;
   try
     UpdateFormProperties('frm_twiker', 'Форма работы с настройками',
       clBtnFace, 1024, 768);
+      frm_twiker.Number:=SelectedRowNumber;
     frm_twiker.ShowModal;
+      dm.admQuery.Close;
+        dm.admQuery.SQL.Text :=
+          'select' + ' ' +
+          'm_admin.id_admin,' +
+          'm_admin.fio_admin,' +
+          'case when m_admin.smena=0 then ''Ночная'' when m_admin.smena=1' + ' ' +
+          'then ''Дневная'' when m_admin.smena=2' + ' ' +
+          'then ''Вечерняя''  else ''Утренняя'' end as smena' + ' ' +
+          'from' + ' ' +
+          'm_admin' + ' ' +
+          'where 1=1';
+        dm.admQuery.Open;
   except
     frm_twiker.Free;
     raise;
   end;
-end;
+ end
+  else
+  begin
+      ShowMessage('Набор данных пуст');
+       Exit;
+  end;
+
+  end;
+
 
 procedure TFrm_fadmin.m_adminsekBtnClick(Sender: TObject);
 begin

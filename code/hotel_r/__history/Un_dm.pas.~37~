@@ -42,8 +42,19 @@ type
     PayDS: TDataSource;
     sel_pay_by_form: TADOStoredProc;
     ins_pay: TADOStoredProc;
-    ADOStoredProc3: TADOStoredProc;
-    ADOStoredProc4: TADOStoredProc;
+    upd_pay: TADOStoredProc;
+    del_pay: TADOStoredProc;
+    fbQuery: TADOQuery;
+    fbDS: TDataSource;
+    sel_feedback_by_fio: TADOStoredProc;
+    ins_feedback: TADOStoredProc;
+    upd_feedback: TADOStoredProc;
+    del_feedback: TADOStoredProc;
+    reportQuery: TADOQuery;
+    report1: TADOStoredProc;
+    reportDS: TDataSource;
+    check_out: TADOStoredProc;
+    check_in: TADOStoredProc;
   private
     { Private declarations }
   public

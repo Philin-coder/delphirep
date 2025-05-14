@@ -14,7 +14,7 @@ type
     FNumber: Integer;
     procedure SetNumber(const value:Integer);
   public
-    property Number:Integer read Fnumber  write setNumber;
+    { Public declarations }
   end;
 
 var

@@ -1110,4 +1110,48 @@ object DM: TDM
     Left = 736
     Top = 312
   end
+  object sel_adm_by_id_q: TADOQuery
+    Connection = Connection
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      '  m_admin.id_admin,'
+      '  m_admin.fio_admin,'
+      '  case  '
+      '  when m_admin.smena=0 then '#39#1053#1086#1095#1085#1072#1103#39'  '
+      '  when m_admin.smena=1 then '#39#1044#1085#1077#1074#1085#1072#1103#39#9
+      '  when m_admin.smena=2 then '#39#1042#1077#1095#1077#1088#1085#1103#1103#39#9
+      '  else '#39#1059#1090#1088#1077#1085#1085#1103#1103#39
+      '  end as smena'
+      'from '
+      'm_admin '
+      'where 1=1')
+    Left = 744
+    Top = 368
+  end
+  object sel_adm_by_id_ds: TDataSource
+    DataSet = sel_adm_by_id_q
+    Left = 776
+    Top = 72
+  end
+  object sel_adm_by_id: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_adm_by_id;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@id_admin'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 808
+    Top = 136
+  end
 end

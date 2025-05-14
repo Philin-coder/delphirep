@@ -55,6 +55,9 @@ type
     reportDS: TDataSource;
     check_out: TADOStoredProc;
     check_in: TADOStoredProc;
+    sel_adm_by_id_q: TADOQuery;
+    sel_adm_by_id_ds: TDataSource;
+    sel_adm_by_id: TADOStoredProc;
   private
     { Private declarations }
   public

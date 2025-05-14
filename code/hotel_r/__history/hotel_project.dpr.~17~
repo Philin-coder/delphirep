@@ -13,8 +13,7 @@ uses
   Un_dog in 'Un_dog.pas' {Frm_dog},
   Un_feedback in 'Un_feedback.pas' {Frm_feedback},
   Un_report in 'Un_report.pas' {Frm_report},
-  Un_usl in 'Un_usl.pas' {Frm_usl},
-  Un_twiker in 'Un_twiker.pas' {frm_twiker};
+  Un_usl in 'Un_usl.pas' {Frm_usl};
 
 {$R *.res}
 {$R 'resources.RES'}
@@ -35,6 +34,5 @@ begin
   Application.CreateForm(TFrm_feedback, Frm_feedback);
   Application.CreateForm(TFrm_report, Frm_report);
   Application.CreateForm(TFrm_usl, Frm_usl);
-  Application.CreateForm(Tfrm_twiker, frm_twiker);
   Application.Run;
 end.
