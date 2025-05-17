@@ -19,7 +19,7 @@ var
 
 implementation
 
-uses Un_func;
+uses Un_func, Un_dm;
 
 {$R *.dfm}
 

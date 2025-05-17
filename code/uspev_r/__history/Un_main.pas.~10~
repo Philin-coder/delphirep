@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ExtCtrls,jpeg, Menus;
+  Dialogs, ExtCtrls;
 
 const
   FileName = 'connection_string.txt';
@@ -13,12 +13,9 @@ const
 type
   TFrm_main = class(TForm)
     main_Image: TImage;
-    ItemMenu: TMainMenu;
-    teacher_item: TMenuItem;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure teacher_itemClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -30,7 +27,7 @@ var
 
 implementation
 
-uses Un_func, Un_dm, Un_teacher;
+uses Un_func, Un_dm;
 
 {$R *.dfm}
 
@@ -55,18 +52,6 @@ begin
   end;
   LoadFormState(Self);
   LoadImageFromResource('BACKGROUND_IMAGE', main_Image);
-end;
-
-procedure TFrm_main.teacher_itemClick(Sender: TObject);
-begin
-   try
-    UpdateFormProperties('Frm_teacher', 'Форма работы с данными преподавателя',
-      clBtnFace, 1024, 768);
-    Frm_teacher.ShowModal;
-  except
-    Frm_teacher.Free;
-    raise;
-  end;
 end;
 
 end.

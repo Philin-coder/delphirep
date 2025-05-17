@@ -8,7 +8,7 @@ object DM: TDM
       'fo=False;Initial Catalog=uspev_r'
     LoginPrompt = False
     Provider = 'SQLOLEDB.1'
-    Left = 24
-    Top = 8
+    Left = 8
+    Top = 16
   end
 end

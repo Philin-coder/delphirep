@@ -4,16 +4,14 @@ uses
   Forms,
   Un_func in 'Un_func.pas',
   Un_main in 'Un_main.pas' {Frm_main},
-  Un_dm in 'Un_dm.pas' {DM: TDataModule},
-  Un_teacher in 'Un_teacher.pas' {Frm_teacher};
+  Un_dm in 'Un_dm.pas' {DM: TDataModule};
 
 {$R *.res}
- {$R 'resources.RES'}
+
 begin
   Application.Initialize;
   Application.CreateForm(TFrm_main, Frm_main);
   Application.CreateForm(TFrm_main, Frm_main);
   Application.CreateForm(TDM, DM);
-  Application.CreateForm(TFrm_teacher, Frm_teacher);
   Application.Run;
 end.

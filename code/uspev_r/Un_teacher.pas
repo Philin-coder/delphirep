@@ -1,4 +1,4 @@
-unit Un_main;
+unit Un_teacher;
 
 interface
 
@@ -7,7 +7,7 @@ uses
   Dialogs;
 
 type
-  TFrm_main = class(TForm)
+  TFrm_teacher = class(TForm)
   private
     { Private declarations }
   public
@@ -15,9 +15,11 @@ type
   end;
 
 var
-  Frm_main: TFrm_main;
+  Frm_teacher: TFrm_teacher;
 
 implementation
+
+uses Un_dm, Un_func;
 
 {$R *.dfm}
 

@@ -3,11 +3,10 @@ unit Un_dm;
 interface
 
 uses
-  SysUtils, Classes, DB, ADODB;
+  SysUtils, Classes;
 
 type
   TDM = class(TDataModule)
-    Connection: TADOConnection;
   private
     { Private declarations }
   public
