@@ -8,9 +8,9 @@ uses
 
 type
   TFrm_teacher = class(TForm)
-    teacher_pc: TPageControl;
+    teacherPC: TPageControl;
     selTab: TTabSheet;
-    insTab: TTabSheet;
+    TabSheet2: TTabSheet;
     TabSheet3: TTabSheet;
     TabSheet4: TTabSheet;
     teacher_data_box: TGroupBox;
@@ -26,13 +26,6 @@ type
     teacherGrid: TDBGrid;
     showsbdatabox: TGroupBox;
     showsbDBLList: TDBLookupListBox;
-    teacher_btn_Box: TGroupBox;
-    teacher_inp_Box: TGroupBox;
-    insBtn: TButton;
-    ins_teacher_data_box: TGroupBox;
-    teacher_ins_Grid: TDBGrid;
-    fio_inp: TLabeledEdit;
-    dep_inp: TLabeledEdit;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -41,7 +34,6 @@ type
     procedure teacher_fio_RadioClick(Sender: TObject);
     procedure teacher_dep_RadioClick(Sender: TObject);
     procedure teacher_reset_RadioClick(Sender: TObject);
-    procedure insBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -77,52 +69,6 @@ begin
   UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   LoadFormState(Self);
-end;
-
-procedure TFrm_teacher.insBtnClick(Sender: TObject);
-const
-AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
-var
-  AreFieldsEmpty: Boolean;
-  AreFieldsValid: Boolean;
-begin
-   AreFieldsEmpty:=(
- (Trim(fio_inp.Text)='')or
- (Trim(dep_inp.Text)='')
-   );
-   AreFieldsValid:=(
-   ValidateComponentText(fio_inp,AllowedChars)and
-   ValidateComponentText(dep_inp,AllowedChars)
-   );
-   if AreFieldsEmpty or not AreFieldsValid then
-   begin
-       MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-   end;
-   try
-      with dm.ins_teacher do
-      begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@fio').Value :=fio_inp.Text;
-           Parameters.ParamByName('@department').Value:=dep_inp.Text;
-           ExecProc;
-           dm.teacherQuery.Close;
-           dm.teacherQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-    end;
 end;
 
 procedure TFrm_teacher.teacher_dep_RadioClick(Sender: TObject);

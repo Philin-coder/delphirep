@@ -1,7 +1,7 @@
 object DM: TDM
   OldCreateOrder = False
-  Height = 326
-  Width = 518
+  Height = 278
+  Width = 215
   object Connection: TADOConnection
     Connected = True
     ConnectionString = 
@@ -40,41 +40,14 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@fio'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 255
-        Value = Null
       end>
     Left = 48
     Top = 176
-  end
-  object ins_teacher: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'ins_teacher;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@fio'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = '@department'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 100
-      end>
-    Left = 48
-    Top = 240
   end
 end
