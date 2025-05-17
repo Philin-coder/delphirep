@@ -1,0 +1,17 @@
+program uspevProject;
+
+uses
+  Forms,
+  Un_func in 'Un_func.pas',
+  Un_main in 'Un_main.pas' {Frm_main},
+  Un_dm in 'Un_dm.pas' {DM: TDataModule};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.CreateForm(TFrm_main, Frm_main);
+  Application.CreateForm(TFrm_main, Frm_main);
+  Application.CreateForm(TDM, DM);
+  Application.Run;
+end.

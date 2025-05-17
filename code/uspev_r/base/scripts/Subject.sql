@@ -1,0 +1,21 @@
+USE [uspev_r]
+GO
+
+/****** Object:  Table [dbo].[Subject]    Script Date: 17.05.2025 11:29:31 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Subject](
+	[id_subject] [int] IDENTITY(1,1) NOT NULL,
+	[name] [varchar](100) NOT NULL,
+	[credits] [int] NOT NULL,
+ CONSTRAINT [PK__Subject__8F848F608906CED1] PRIMARY KEY CLUSTERED 
+(
+	[id_subject] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
