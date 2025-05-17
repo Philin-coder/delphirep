@@ -108,7 +108,6 @@ object Frm_teacher: TFrm_teacher
           Align = alCustom
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 2
-          OnClick = teacher_reset_RadioClick
         end
       end
       object TeacherbtnBox: TGroupBox

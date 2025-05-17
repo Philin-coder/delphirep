@@ -88,7 +88,6 @@ object Frm_teacher: TFrm_teacher
           Align = alCustom
           Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1060#1048#1054
           TabOrder = 0
-          OnClick = teacher_fio_RadioClick
         end
         object teacher_dep_Radio: TRadioButton
           Left = 376
@@ -98,7 +97,6 @@ object Frm_teacher: TFrm_teacher
           Align = alCustom
           Caption = #1055#1086' '#1085#1072#1087#1088#1072#1074#1083#1077#1085#1080#1102
           TabOrder = 1
-          OnClick = teacher_dep_RadioClick
         end
         object teacher_reset_Radio: TRadioButton
           Left = 776
@@ -108,7 +106,6 @@ object Frm_teacher: TFrm_teacher
           Align = alCustom
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 2
-          OnClick = teacher_reset_RadioClick
         end
       end
       object TeacherbtnBox: TGroupBox

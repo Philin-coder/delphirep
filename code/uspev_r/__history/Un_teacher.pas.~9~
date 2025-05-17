@@ -1,0 +1,52 @@
+unit Un_teacher;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ComCtrls, StdCtrls, ExtCtrls, Grids, DBGrids, DBCtrls;
+
+type
+  TFrm_teacher = class(TForm)
+    teacherPC: TPageControl;
+    selTab: TTabSheet;
+    TabSheet2: TTabSheet;
+    TabSheet3: TTabSheet;
+    TabSheet4: TTabSheet;
+    teacher_data_box: TGroupBox;
+    teacher_gr_box: TGroupBox;
+    TeacherbtnBox: TGroupBox;
+    TeacherinpBox: TGroupBox;
+    teacher_sel_btn: TButton;
+    teacher_fio_Radio: TRadioButton;
+    teacher_dep_Radio: TRadioButton;
+    teacher_reset_Radio: TRadioButton;
+    teacher_fnd_edit: TLabeledEdit;
+    teacher_cond_edit: TLabeledEdit;
+    teacherGrid: TDBGrid;
+    showdepdatabox: TGroupBox;
+    showdepDBLList: TDBLookupListBox;
+    procedure FormActivate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_teacher: TFrm_teacher;
+
+implementation
+
+uses Un_dm, Un_func;
+
+{$R *.dfm}
+
+procedure TFrm_teacher.FormActivate(Sender: TObject);
+begin
+  dm.teacherQuery.Open;
+  dm.depQuery.open;
+  AdjustDBGridColumnWidths('Frm_teacher',6000, 10);
+end;
+
+end.

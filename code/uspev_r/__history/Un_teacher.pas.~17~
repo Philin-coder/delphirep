@@ -33,7 +33,6 @@ type
     procedure teacher_fnd_editKeyPress(Sender: TObject; var Key: Char);
     procedure teacher_fio_RadioClick(Sender: TObject);
     procedure teacher_dep_RadioClick(Sender: TObject);
-    procedure teacher_reset_RadioClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -86,7 +85,6 @@ begin
   'Teacher.fio,'+' '+
   'Teacher.department'+' '+
   'from Teacher'+' '+
-    'where 1=1'+' '+
     'order by Teacher.department asc';
       Open;
      end;
@@ -113,7 +111,6 @@ begin
   'Teacher.fio,'+' '+
   'Teacher.department'+' '+
   'from Teacher'+' '+
-    'where 1=1'+' '+
     'order by Teacher.fio asc';
       Open;
      end;
@@ -134,7 +131,7 @@ begin
   'Teacher.fio,'+' '+
   'Teacher.department'+' '+
   'from Teacher'+' '+
-  'where 1=1'+' '+
+  'where 1=1'+
     'and Teacher.department like'+
    QuotedStr(Concat(teacher_fnd_edit.Text,#37));
    dm.teacherQuery.close;
@@ -144,49 +141,6 @@ except on E: Exception do
   ShowMessage('Ошибка'+' '+E.Message);
   end;
   end;
-end;
-
-procedure TFrm_teacher.teacher_reset_RadioClick(Sender: TObject);
-  var i,j,c:Integer;
-begin
-   if  teacher_reset_radio.Checked=true then
-with Frm_teacher do
-    for I := 0 to ComponentCount - 1 do
-     begin
-       if (Components[i] is TLabeledEdit)  then
-        begin
-          (Components[i] as TLabeledEdit).Clear;
-        end;
-     end;
-       with Frm_teacher do
-    for c := 0 to ComponentCount - 1 do
-     begin
-       if (Components[c] is TCheckBox)  then
-        begin
-          (Components[c] as TCheckBox).Checked:=False;
-        end;
-     end;
-     with dm.teacherQuery do
-     begin
-     Close;
-     sql.Clear;
-       sql.Text:=
-    'select'+' '+
-  'Teacher.id_teacher,'+' '+
-  'Teacher.fio,'+' '+
-  'Teacher.department'+' '+
-  'from Teacher'+' '+
-  'where 1=1';
-     Open;
-     end;
-    with Frm_teacher do
-    for j := 0 to ComponentCount - 1 do
-    begin
-      if(Components[j] is TRadioButton)  then
-      begin
-        (Components[j] as TRadioButton).Checked:=False;
-      end;
-    end;
 end;
 
 procedure TFrm_teacher.teacher_sel_btnClick(Sender: TObject);

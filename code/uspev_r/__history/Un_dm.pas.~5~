@@ -10,7 +10,8 @@ type
     Connection: TADOConnection;
     teacherQuery: TADOQuery;
     teacherDS: TDataSource;
-    sel_teacher_by_fio: TADOStoredProc;
+    depQuery: TADOQuery;
+    depDS: TDataSource;
   private
     { Private declarations }
   public

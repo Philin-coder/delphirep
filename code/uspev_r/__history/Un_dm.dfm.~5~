@@ -1,0 +1,35 @@
+object DM: TDM
+  OldCreateOrder = False
+  Height = 278
+  Width = 215
+  object Connection: TADOConnection
+    ConnectionString = 
+      'Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security In' +
+      'fo=False;Initial Catalog=uspev_r'
+    LoginPrompt = False
+    Provider = 'SQLOLEDB.1'
+    Left = 24
+    Top = 8
+  end
+  object teacherQuery: TADOQuery
+    Parameters = <>
+    Left = 40
+    Top = 64
+  end
+  object teacherDS: TDataSource
+    DataSet = teacherQuery
+    Left = 40
+    Top = 120
+  end
+  object depQuery: TADOQuery
+    Connection = Connection
+    Parameters = <>
+    Left = 112
+    Top = 64
+  end
+  object depDS: TDataSource
+    DataSet = depQuery
+    Left = 120
+    Top = 120
+  end
+end

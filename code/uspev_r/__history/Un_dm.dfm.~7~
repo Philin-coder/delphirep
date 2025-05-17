@@ -3,7 +3,6 @@ object DM: TDM
   Height = 278
   Width = 215
   object Connection: TADOConnection
-    Connected = True
     ConnectionString = 
       'Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security In' +
       'fo=False;Initial Catalog=uspev_r'
@@ -29,24 +28,5 @@ object DM: TDM
     DataSet = teacherQuery
     Left = 40
     Top = 120
-  end
-  object sel_teacher_by_fio: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'sel_teacher_by_fio;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@fio'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 255
-      end>
-    Left = 48
-    Top = 176
   end
 end
