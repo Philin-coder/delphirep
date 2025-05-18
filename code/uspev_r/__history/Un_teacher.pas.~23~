@@ -12,7 +12,7 @@ type
     selTab: TTabSheet;
     insTab: TTabSheet;
     UpdTab: TTabSheet;
-    delTab: TTabSheet;
+    TabSheet4: TTabSheet;
     teacher_data_box: TGroupBox;
     teacher_gr_box: TGroupBox;
     TeacherbtnBox: TGroupBox;
@@ -40,7 +40,6 @@ type
     upd_teacher_Grid: TDBGrid;
     upd_teacher_t_lbl: TStaticText;
     upd_teacher_DBL: TDBLookupComboBox;
-    upd_teacher_dep_inp: TLabeledEdit;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -50,7 +49,6 @@ type
     procedure teacher_dep_RadioClick(Sender: TObject);
     procedure teacher_reset_RadioClick(Sender: TObject);
     procedure insBtnClick(Sender: TObject);
-    procedure teacher_upd_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -274,51 +272,5 @@ try
 end;
 end;
 
-
-procedure TFrm_teacher.teacher_upd_btnClick(Sender: TObject);
-const
-  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
-var
-  AreFieldsEmpty: Boolean;
-  AreFieldsValid: Boolean;
-begin
-  AreFieldsEmpty:=(
-  (upd_teacher_DBL.Text='')or
-   (Trim(upd_teacher_dep_inp.Text)='')
-  );
-  AreFieldsValid:=(
-  ValidateComponentText(upd_teacher_dep_inp,AllowedChars)
-  );
-  if AreFieldsEmpty or not AreFieldsValid then
-  begin
-    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-  try
-      with dm.upd_teacher do
-      begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-          Parameters.ParamByName('@department').Value :=upd_teacher_dep_inp.Text;
-          Parameters.ParamByName('@id_teacher').Value:=
-          dm.teacherQuery.FieldByName('id_teacher').AsString;
-           ExecProc;
-           dm.teacherQuery.Close;
-           dm.teacherQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-    end;
-end;
 
 end.

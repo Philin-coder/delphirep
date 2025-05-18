@@ -8,10 +8,10 @@ uses
 
 type
   TFrm_teacher = class(TForm)
-    teacherPC: TPageControl;
+    teacher_pc: TPageControl;
     selTab: TTabSheet;
-    TabSheet2: TTabSheet;
-    TabSheet3: TTabSheet;
+    insTab: TTabSheet;
+    UpdTab: TTabSheet;
     TabSheet4: TTabSheet;
     teacher_data_box: TGroupBox;
     teacher_gr_box: TGroupBox;
@@ -26,6 +26,21 @@ type
     teacherGrid: TDBGrid;
     showsbdatabox: TGroupBox;
     showsbDBLList: TDBLookupListBox;
+    teacher_btn_Box: TGroupBox;
+    teacher_inp_Box: TGroupBox;
+    insBtn: TButton;
+    ins_teacher_data_box: TGroupBox;
+    teacher_ins_Grid: TDBGrid;
+    fio_inp: TLabeledEdit;
+    dep_inp: TLabeledEdit;
+    upd_teacher_dataBox: TGroupBox;
+    upd_teacher_btnBox: TGroupBox;
+    upd_teacher_inpBox: TGroupBox;
+    teacher_upd_btn: TButton;
+    upd_teacher_Grid: TDBGrid;
+    upd_teacher_t_lbl: TStaticText;
+    upd_teacher_DBL: TDBLookupComboBox;
+    upd_teacher_dep_inp: TLabeledEdit;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -33,6 +48,8 @@ type
     procedure teacher_fnd_editKeyPress(Sender: TObject; var Key: Char);
     procedure teacher_fio_RadioClick(Sender: TObject);
     procedure teacher_dep_RadioClick(Sender: TObject);
+    procedure teacher_reset_RadioClick(Sender: TObject);
+    procedure insBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -70,6 +87,52 @@ begin
   LoadFormState(Self);
 end;
 
+procedure TFrm_teacher.insBtnClick(Sender: TObject);
+const
+AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+begin
+   AreFieldsEmpty:=(
+ (Trim(fio_inp.Text)='')or
+ (Trim(dep_inp.Text)='')
+   );
+   AreFieldsValid:=(
+   ValidateComponentText(fio_inp,AllowedChars)and
+   ValidateComponentText(dep_inp,AllowedChars)
+   );
+   if AreFieldsEmpty or not AreFieldsValid then
+   begin
+       MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+   end;
+   try
+      with dm.ins_teacher do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@fio').Value :=fio_inp.Text;
+           Parameters.ParamByName('@department').Value:=dep_inp.Text;
+           ExecProc;
+           dm.teacherQuery.Close;
+           dm.teacherQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+end;
+
 procedure TFrm_teacher.teacher_dep_RadioClick(Sender: TObject);
 begin
   if  teacher_dep_Radio.Checked=true then
@@ -85,6 +148,7 @@ begin
   'Teacher.fio,'+' '+
   'Teacher.department'+' '+
   'from Teacher'+' '+
+    'where 1=1'+' '+
     'order by Teacher.department asc';
       Open;
      end;
@@ -111,6 +175,7 @@ begin
   'Teacher.fio,'+' '+
   'Teacher.department'+' '+
   'from Teacher'+' '+
+    'where 1=1'+' '+
     'order by Teacher.fio asc';
       Open;
      end;
@@ -131,7 +196,7 @@ begin
   'Teacher.fio,'+' '+
   'Teacher.department'+' '+
   'from Teacher'+' '+
-  'where 1=1'+
+  'where 1=1'+' '+
     'and Teacher.department like'+
    QuotedStr(Concat(teacher_fnd_edit.Text,#37));
    dm.teacherQuery.close;
@@ -141,6 +206,49 @@ except on E: Exception do
   ShowMessage('Ошибка'+' '+E.Message);
   end;
   end;
+end;
+
+procedure TFrm_teacher.teacher_reset_RadioClick(Sender: TObject);
+  var i,j,c:Integer;
+begin
+   if  teacher_reset_radio.Checked=true then
+with Frm_teacher do
+    for I := 0 to ComponentCount - 1 do
+     begin
+       if (Components[i] is TLabeledEdit)  then
+        begin
+          (Components[i] as TLabeledEdit).Clear;
+        end;
+     end;
+       with Frm_teacher do
+    for c := 0 to ComponentCount - 1 do
+     begin
+       if (Components[c] is TCheckBox)  then
+        begin
+          (Components[c] as TCheckBox).Checked:=False;
+        end;
+     end;
+     with dm.teacherQuery do
+     begin
+     Close;
+     sql.Clear;
+       sql.Text:=
+    'select'+' '+
+  'Teacher.id_teacher,'+' '+
+  'Teacher.fio,'+' '+
+  'Teacher.department'+' '+
+  'from Teacher'+' '+
+  'where 1=1';
+     Open;
+     end;
+    with Frm_teacher do
+    for j := 0 to ComponentCount - 1 do
+    begin
+      if(Components[j] is TRadioButton)  then
+      begin
+        (Components[j] as TRadioButton).Checked:=False;
+      end;
+    end;
 end;
 
 procedure TFrm_teacher.teacher_sel_btnClick(Sender: TObject);

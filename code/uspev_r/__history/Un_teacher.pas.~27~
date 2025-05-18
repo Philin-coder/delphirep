@@ -12,7 +12,7 @@ type
     selTab: TTabSheet;
     insTab: TTabSheet;
     UpdTab: TTabSheet;
-    delTab: TTabSheet;
+    TabSheet4: TTabSheet;
     teacher_data_box: TGroupBox;
     teacher_gr_box: TGroupBox;
     TeacherbtnBox: TGroupBox;

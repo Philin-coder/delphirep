@@ -12,7 +12,7 @@ type
     selTab: TTabSheet;
     insTab: TTabSheet;
     UpdTab: TTabSheet;
-    delTab: TTabSheet;
+    TabSheet4: TTabSheet;
     teacher_data_box: TGroupBox;
     teacher_gr_box: TGroupBox;
     TeacherbtnBox: TGroupBox;
@@ -283,8 +283,8 @@ var
   AreFieldsValid: Boolean;
 begin
   AreFieldsEmpty:=(
-  (upd_teacher_DBL.Text='')or
-   (Trim(upd_teacher_dep_inp.Text)='')
+  (upd_teacher_DBL.Text)or
+  (Trim(upd_teacher_dep_inp.Text)='')
   );
   AreFieldsValid:=(
   ValidateComponentText(upd_teacher_dep_inp,AllowedChars)
@@ -301,12 +301,10 @@ begin
       begin
         if not Connection.Connected then
           raise Exception.Create('Соединение с базой не установлено');
-          Parameters.ParamByName('@department').Value :=upd_teacher_dep_inp.Text;
-          Parameters.ParamByName('@id_teacher').Value:=
-          dm.teacherQuery.FieldByName('id_teacher').AsString;
+           Parameters.ParamByName('@Name_A').Value :=Autor_inp.Text;
            ExecProc;
-           dm.teacherQuery.Close;
-           dm.teacherQuery.Open;
+           dm.AutQuery.Close;
+           dm.AutQuery.Open;
         MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
       end;
     except
