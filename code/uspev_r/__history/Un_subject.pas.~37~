@@ -91,15 +91,14 @@ begin
     Exit;
   end;
   try
-      with dm.del_sub do
+      with dm.ins_autor do
       begin
         if not Connection.Connected then
           raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@id_subject').Value :=
-           dm.subjQuery.FieldByName('id_subject').AsString;
+           Parameters.ParamByName('@Name_A').Value :=Autor_inp.Text;
            ExecProc;
-           dm.subjQuery.Close;
-           dm.subjQuery.Open;
+           dm.AutQuery.Close;
+           dm.AutQuery.Open;
         MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
       end;
     except

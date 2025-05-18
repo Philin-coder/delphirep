@@ -13,7 +13,7 @@ type
     insTab: TTabSheet;
     UpdTab: TTabSheet;
     delTab: TTabSheet;
-    subj_data_box: TGroupBox;
+    sel_subj_data_box: TGroupBox;
     subj_gr_box: TGroupBox;
     subj_btnBox: TGroupBox;
     subj_inp_Box: TGroupBox;
@@ -26,19 +26,19 @@ type
     subj_Grid: TDBGrid;
     showsbdatabox: TGroupBox;
     showsbDBLList: TDBLookupListBox;
-    teacher_btn_Box: TGroupBox;
-    teacher_inp_Box: TGroupBox;
-    insBtn: TButton;
-    ins_teacher_data_box: TGroupBox;
-    fio_inp: TLabeledEdit;
-    dep_inp: TLabeledEdit;
-    upd_teacher_dataBox: TGroupBox;
-    upd_teacher_btnBox: TGroupBox;
-    upd_teacher_inpBox: TGroupBox;
-    teacher_upd_btn: TButton;
-    upd_teacher_t_lbl: TStaticText;
-    upd_teacher_DBL: TDBLookupComboBox;
-    upd_teacher_dep_inp: TLabeledEdit;
+    ins_subj_btn_Box: TGroupBox;
+    ins_subj_inp_Box: TGroupBox;
+    ins_subj_Btn: TButton;
+    ins_subj_data_box: TGroupBox;
+    subj_name_inp: TLabeledEdit;
+    subj_credit_inp: TLabeledEdit;
+    upd_subj_dataBox: TGroupBox;
+    upd_subj_btnBox: TGroupBox;
+    upd_subj_inpBox: TGroupBox;
+    subj_upd_btn: TButton;
+    upd_subj_s_lbl: TStaticText;
+    upd_subj_DBL: TDBLookupComboBox;
+    upd_subj_cred_inp: TLabeledEdit;
     del_teacher_dataBox: TGroupBox;
     del_teacher_btnBox: TGroupBox;
     del_teacher_inpBox: TGroupBox;
@@ -48,12 +48,18 @@ type
     subj_insGrid: TDBGrid;
     subj_upd_Grid: TDBGrid;
     subj_del_grid: TDBGrid;
+    credit_grader: TUpDown;
+    Upd_subj_cred_grader: TUpDown;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure subj_sel_btnClick(Sender: TObject);
     procedure subj_fnd_editKeyPress(Sender: TObject; var Key: Char);
     procedure subj_name_RadioClick(Sender: TObject);
+    procedure subj_credit_RadioClick(Sender: TObject);
+    procedure subj_reset_RadioClick(Sender: TObject);
+    procedure ins_subj_BtnClick(Sender: TObject);
+    procedure subj_upd_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -89,6 +95,78 @@ begin
   UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   LoadFormState(Self);
+end;
+
+procedure TFrm_subject.ins_subj_BtnClick(Sender: TObject);
+const
+  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+begin
+  AreFieldsEmpty:=(
+   (Trim(subj_name_inp.Text)='')or
+   (credit_grader.Position=0)
+  );
+  AreFieldsValid:=(
+  ValidateComponentText(subj_name_inp,AllowedChars)
+  );
+  if AreFieldsEmpty or not AreFieldsValid then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.ins_subject do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@Name').Value :=subj_name_inp.Text;
+           Parameters.ParamByName('@credits').Value:=credit_grader.Position;
+           ExecProc;
+           dm.subjQuery.Close;
+           dm.subjQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+end;
+
+procedure TFrm_subject.subj_credit_RadioClick(Sender: TObject);
+begin
+  if  subj_credit_Radio.Checked=true then
+  begin
+    try
+     with dm.subjQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+       'select'+' '+
+       'Subject.id_subject,'+' '+
+       'Subject.name,'+' '+
+       'Subject.credits'+' '+
+       'from Subject'+' '+
+        'where 1=1'+' '+
+    'order by Subject.credits asc';
+      Open;
+     end;
+    except on E: EADOError do
+    begin
+      ShowMessage('Ощибка :'+' '+E.Message);
+    end;
+    end;
+  end;
 end;
 
 procedure TFrm_subject.subj_fnd_editKeyPress(Sender: TObject; var Key: Char);
@@ -139,6 +217,50 @@ begin
   end;
 end;
 
+procedure TFrm_subject.subj_reset_RadioClick(Sender: TObject);
+var i,j,c:Integer;
+begin
+  if  subj_reset_Radio.Checked=true then
+with Frm_subject do
+    for I := 0 to ComponentCount - 1 do
+     begin
+       if (Components[i] is TLabeledEdit)  then
+        begin
+          (Components[i] as TLabeledEdit).Clear;
+        end;
+     end;
+       with Frm_subject do
+    for c := 0 to ComponentCount - 1 do
+     begin
+       if (Components[c] is TCheckBox)  then
+        begin
+          (Components[c] as TCheckBox).Checked:=False;
+        end;
+     end;
+     with dm.subjQuery do
+     begin
+     Close;
+     sql.Clear;
+     sql.Text:=
+    'select'+' '+
+    'Subject.id_subject,'+' '+
+  'Subject.name,'+' '+
+  'Subject.credits'+' '+
+  'from Subject'+' '+
+  'where 1=1';
+  Open;
+     end;
+    with Frm_subject do
+    for j := 0 to ComponentCount - 1 do
+    begin
+      if(Components[j] is TRadioButton)  then
+      begin
+        (Components[j] as TRadioButton).Checked:=False;
+      end;
+    end;
+end;
+
+
 procedure TFrm_subject.subj_sel_btnClick(Sender: TObject);
 begin
   try
@@ -159,5 +281,12 @@ begin
   end;
 end;
 
+
+procedure TFrm_subject.subj_upd_btnClick(Sender: TObject);
+ var
+  AreFieldsEmpty: Boolean;
+begin
+
+end;
 
 end.

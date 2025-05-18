@@ -17,7 +17,7 @@ type
     subjQuery: TADOQuery;
     subjDS: TDataSource;
     sel_sub: TADOStoredProc;
-    del_sub: TADOStoredProc;
+    ADOStoredProc2: TADOStoredProc;
     upd_subject: TADOStoredProc;
     ins_subject: TADOStoredProc;
   private
