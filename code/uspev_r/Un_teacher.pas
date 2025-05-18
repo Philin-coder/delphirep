@@ -117,6 +117,8 @@ procedure TFrm_teacher.FormActivate(Sender: TObject);
 begin
   dm.teacherQuery.Open;
   dm.subjQuery.Open;
+  dm.StudQuery.Open;
+  dm.gradeQuery.Open;
   AdjustDBGridColumnWidths('Frm_teacher',6000, 10);
 end;
 

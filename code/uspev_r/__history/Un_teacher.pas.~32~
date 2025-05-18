@@ -11,8 +11,8 @@ type
     teacher_pc: TPageControl;
     selTab: TTabSheet;
     insTab: TTabSheet;
-    TabSheet3: TTabSheet;
-    TabSheet4: TTabSheet;
+    UpdTab: TTabSheet;
+    delTab: TTabSheet;
     teacher_data_box: TGroupBox;
     teacher_gr_box: TGroupBox;
     TeacherbtnBox: TGroupBox;
@@ -33,6 +33,21 @@ type
     teacher_ins_Grid: TDBGrid;
     fio_inp: TLabeledEdit;
     dep_inp: TLabeledEdit;
+    upd_teacher_dataBox: TGroupBox;
+    upd_teacher_btnBox: TGroupBox;
+    upd_teacher_inpBox: TGroupBox;
+    teacher_upd_btn: TButton;
+    upd_teacher_Grid: TDBGrid;
+    upd_teacher_t_lbl: TStaticText;
+    upd_teacher_DBL: TDBLookupComboBox;
+    upd_teacher_dep_inp: TLabeledEdit;
+    del_teacher_dataBox: TGroupBox;
+    del_teacher_btnBox: TGroupBox;
+    del_teacher_inpBox: TGroupBox;
+    del_teacher_delBtn: TButton;
+    del_teacher_delGrid: TDBGrid;
+    del_teacher_t_lbl: TStaticText;
+    del_teacher_t_dbl: TDBLookupComboBox;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -42,6 +57,8 @@ type
     procedure teacher_dep_RadioClick(Sender: TObject);
     procedure teacher_reset_RadioClick(Sender: TObject);
     procedure insBtnClick(Sender: TObject);
+    procedure teacher_upd_btnClick(Sender: TObject);
+    procedure del_teacher_delBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -57,9 +74,49 @@ uses Un_dm, Un_func;
 
 {$R *.dfm}
 
+procedure TFrm_teacher.del_teacher_delBtnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (del_teacher_t_dbl.Text='')
+  );
+  if AreFieldsEmpty then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+    try
+      with dm.del_teacher do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@id_teacher').Value
+           :=dm.teacherQuery.FieldByName('id_teacher').AsString;
+           ExecProc;
+           dm.teacherQuery.Close;
+           dm.teacherQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+
+end;
+
 procedure TFrm_teacher.FormActivate(Sender: TObject);
 begin
   dm.teacherQuery.Open;
+  dm.subjQuery.Open;
   AdjustDBGridColumnWidths('Frm_teacher',6000, 10);
 end;
 
@@ -245,7 +302,6 @@ end;
 
 procedure TFrm_teacher.teacher_sel_btnClick(Sender: TObject);
 begin
-  begin
 try
     if not DM.Connection.Connected then
       raise Exception.Create('Соединнение с базой не установлено');
@@ -263,7 +319,53 @@ try
       ShowMessage('Ошибка: ' + E.Message);
   end;
 end;
-end;
 
+
+
+procedure TFrm_teacher.teacher_upd_btnClick(Sender: TObject);
+const
+  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (upd_teacher_DBL.Text='')or
+   (Trim(upd_teacher_dep_inp.Text)='')
+  );
+  AreFieldsValid:=(
+  ValidateComponentText(upd_teacher_dep_inp,AllowedChars)
+  );
+  if AreFieldsEmpty or not AreFieldsValid then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.upd_teacher do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+          Parameters.ParamByName('@department').Value :=upd_teacher_dep_inp.Text;
+          Parameters.ParamByName('@id_teacher').Value:=
+          dm.teacherQuery.FieldByName('id_teacher').AsString;
+           ExecProc;
+           dm.teacherQuery.Close;
+           dm.teacherQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+end;
 
 end.
