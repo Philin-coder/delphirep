@@ -26,6 +26,12 @@ type
     ins_stud: TADOStoredProc;
     upd_stud: TADOStoredProc;
     del_stud: TADOStoredProc;
+    gradeQuery: TADOQuery;
+    gradeds: TDataSource;
+    sel_grade_by_t_fio: TADOStoredProc;
+    ADOStoredProc2: TADOStoredProc;
+    ADOStoredProc3: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public

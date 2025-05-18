@@ -375,22 +375,20 @@ object DM: TDM
   end
   object gradeQuery: TADOQuery
     Connection = Connection
-    CursorType = ctStatic
     Parameters = <>
     SQL.Strings = (
       'select '
       ' Grade.id_grade,'
-      ' Student.fio as stud_fio,'
+      ' Student.fio,'
       ' Subject.name,'
-      ' Teacher.fio as teacher_fio,'
+      ' Teacher.fio,'
       ' Grade.grade_value,'
       ' Grade.date '
       'from Grade '
       'inner join Student on Student.id_student=Grade.id_student'
       'inner join Subject on Grade.id_subject=Subject.id_subject'
       'inner join Teacher on Teacher.id_teacher=grade.id_teacher'
-      'where 1=1'
-      '')
+      'where 1=1')
     Left = 360
     Top = 72
   end
@@ -399,22 +397,8 @@ object DM: TDM
     Left = 368
     Top = 136
   end
-  object sel_grade_by_t_fio: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'sel_grade_by_t_fio;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@fio'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 255
-      end>
+  object ADOStoredProc1: TADOStoredProc
+    Parameters = <>
     Left = 384
     Top = 192
   end
