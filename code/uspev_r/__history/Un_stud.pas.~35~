@@ -127,7 +127,7 @@ begin
           raise Exception.Create('Соединение с базой не установлено');
            Parameters.ParamByName('@fio').Value :=stud_fio_inp.Text;
            Parameters.ParamByName('@group_name').Value:=stud_grup_inp.Text;
-           Parameters.ParamByName('@email').Value:=stud_mail_inp.Text;
+
            ExecProc;
            dm.studQuery.Close;
            dm.studQuery.Open;

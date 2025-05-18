@@ -21,11 +21,15 @@ object Frm_subject: TFrm_subject
     Top = 0
     Width = 1037
     Height = 594
-    ActivePage = UpdTab
+    ActivePage = insTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
       Caption = #1042#1099#1073#1086#1088' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1087#1088#1077#1076#1084#1077#1090#1077
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object sel_subj_data_box: TGroupBox
         Left = 0
         Top = 331
@@ -178,7 +182,7 @@ object Frm_subject: TFrm_subject
       end
     end
     object insTab: TTabSheet
-      Caption = #1042#1074#1086#1076' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1087#1088#1077#1087#1086#1076#1072#1074#1072#1090#1077#1083#1077
+      Caption = #1042#1074#1086#1076' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1087#1088#1077#1076#1084#1077#1090#1077
       ImageIndex = 1
       object ins_subj_data_box: TGroupBox
         Left = 0
@@ -403,6 +407,10 @@ object Frm_subject: TFrm_subject
     object delTab: TTabSheet
       Caption = #1059#1076#1072#1083#1077#1085#1080#1077'  '#1080#1085#1092#1086#1088#1080#1084#1072#1094#1080#1080' '#1086' '#1087#1088#1077#1076#1084#1077#1090#1077
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object del_subj_dataBox: TGroupBox
         Left = 0
         Top = 105

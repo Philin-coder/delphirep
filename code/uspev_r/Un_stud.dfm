@@ -21,11 +21,15 @@ object Frm_stud: TFrm_stud
     Top = 0
     Width = 1037
     Height = 594
-    ActivePage = selTab
+    ActivePage = insTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
       Caption = #1042#1099#1073#1086#1088' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1089#1090#1091#1076#1077#1085#1090#1077
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object sel_stud_data_box: TGroupBox
         Left = 0
         Top = 331
@@ -184,13 +188,13 @@ object Frm_stud: TFrm_stud
       end
     end
     object insTab: TTabSheet
-      Caption = #1042#1074#1086#1076' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1087#1088#1077#1087#1086#1076#1072#1074#1072#1090#1077#1083#1077
+      Caption = #1042#1074#1086#1076' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1089#1090#1091#1076#1077#1085#1090#1077
       ImageIndex = 1
-      object ins_subj_data_box: TGroupBox
+      object ins_stud_data_box: TGroupBox
         Left = 0
-        Top = 105
+        Top = 146
         Width = 1029
-        Height = 399
+        Height = 358
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
@@ -198,7 +202,7 @@ object Frm_stud: TFrm_stud
           Left = 2
           Top = 15
           Width = 1025
-          Height = 382
+          Height = 341
           Align = alClient
           DataSource = DM.StudDS
           TabOrder = 0
@@ -234,63 +238,65 @@ object Frm_stud: TFrm_stud
             end>
         end
       end
-      object ins_subj_btn_Box: TGroupBox
+      object ins_stud_btn_Box: TGroupBox
         Left = 0
         Top = 504
         Width = 1029
         Height = 62
         Align = alBottom
         TabOrder = 1
-        object ins_subj_Btn: TButton
+        object ins_stud_Btn: TButton
           Left = 480
           Top = 32
           Width = 75
           Height = 25
           Caption = #1042#1074#1086#1076
           TabOrder = 0
+          OnClick = ins_stud_BtnClick
         end
       end
-      object ins_subj_inp_Box: TGroupBox
+      object ins_stud_inp_Box: TGroupBox
         Left = 0
         Top = 0
         Width = 1029
-        Height = 105
+        Height = 146
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
         DesignSize = (
           1029
-          105)
-        object subj_name_inp: TLabeledEdit
-          Left = 3
-          Top = 32
+          146)
+        object stud_fio_inp: TLabeledEdit
+          Left = 0
+          Top = 40
           Width = 1006
           Height = 21
           Anchors = [akLeft, akRight]
-          EditLabel.Width = 152
+          EditLabel.Width = 102
           EditLabel.Height = 13
-          EditLabel.Caption = #1042#1074#1086#1076' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1103' '#1087#1088#1077#1076#1084#1077#1090#1072
+          EditLabel.Caption = #1042#1074#1086#1076' '#1060#1048#1054' '#1089#1090#1091#1076#1077#1085#1090#1072
           TabOrder = 0
         end
-        object subj_credit_inp: TLabeledEdit
+        object stud_grup_inp: TLabeledEdit
           Left = 3
           Top = 78
-          Width = 982
+          Width = 1006
           Height = 21
           Anchors = [akLeft, akRight]
-          EditLabel.Width = 74
+          EditLabel.Width = 140
           EditLabel.Height = 13
-          EditLabel.Caption = #1042#1074#1086#1076' '#1085#1072#1075#1088#1091#1079#1082#1080
+          EditLabel.Caption = #1042#1074#1086#1076' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1103' '#1075#1088#1091#1087#1087#1099
           TabOrder = 1
-          Text = '0'
         end
-        object credit_grader: TUpDown
-          Left = 985
-          Top = 78
-          Width = 17
+        object stud_mail_inp: TLabeledEdit
+          Left = 2
+          Top = 125
+          Width = 1006
           Height = 21
-          Anchors = []
-          Associate = subj_credit_inp
+          Anchors = [akLeft, akRight]
+          EditLabel.Width = 52
+          EditLabel.Height = 13
+          EditLabel.Caption = #1042#1074#1086#1076' email'
           TabOrder = 2
         end
       end
@@ -298,6 +304,10 @@ object Frm_stud: TFrm_stud
     object UpdTab: TTabSheet
       Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1088#1077#1076#1084#1077#1090#1077
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object upd_subj_dataBox: TGroupBox
         Left = 0
         Top = 123
@@ -419,6 +429,10 @@ object Frm_stud: TFrm_stud
     object delTab: TTabSheet
       Caption = #1059#1076#1072#1083#1077#1085#1080#1077'  '#1080#1085#1092#1086#1088#1080#1084#1072#1094#1080#1080' '#1086' '#1087#1088#1077#1076#1084#1077#1090#1077
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object del_subj_dataBox: TGroupBox
         Left = 0
         Top = 105

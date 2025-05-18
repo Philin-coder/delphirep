@@ -158,14 +158,12 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@name'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 255
-        Value = Null
       end>
     Left = 192
     Top = 184
@@ -179,7 +177,6 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@id_subject'
@@ -200,7 +197,6 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@id_subject'
@@ -228,14 +224,12 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@name'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 255
-        Value = Null
       end
       item
         Name = '@credits'
@@ -277,46 +271,18 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@group_name'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 255
-        Value = Null
       end>
     Left = 280
     Top = 200
   end
-  object ins_stud: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'ins_stud;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@fio'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = '@group_name'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = '@email'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 255
-      end>
+  object ADOStoredProc2: TADOStoredProc
+    Parameters = <>
     Left = 280
     Top = 248
   end

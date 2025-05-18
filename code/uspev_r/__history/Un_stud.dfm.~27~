@@ -11,6 +11,7 @@ object Frm_stud: TFrm_stud
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnActivate = FormActivate
   OnClose = FormClose
   OnCreate = FormCreate
   PixelsPerInch = 96
@@ -20,7 +21,7 @@ object Frm_stud: TFrm_stud
     Top = 0
     Width = 1037
     Height = 594
-    ActivePage = selTab
+    ActivePage = insTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
@@ -39,13 +40,38 @@ object Frm_stud: TFrm_stud
           Width = 1025
           Height = 156
           Align = alClient
-          DataSource = DM.subjDS
+          DataSource = DM.StudDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
           TitleFont.Height = -11
           TitleFont.Name = 'Tahoma'
           TitleFont.Style = []
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'id_student'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'fio'
+              Title.Caption = #1060#1048#1054' '#1089#1090#1091#1076#1077#1085#1090#1072
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'group_name'
+              Title.Caption = #1043#1088#1091#1087#1087#1072
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'email'
+              Title.Caption = #1077#1084#1072#1081#1083
+              Visible = True
+            end>
         end
       end
       object stud_gr_box: TGroupBox
@@ -62,17 +88,19 @@ object Frm_stud: TFrm_stud
           Width = 137
           Height = 17
           Align = alCustom
-          Caption = #1055#1086' '#1085#1072#1080#1084#1080#1086#1074#1072#1085#1080#1102
+          Caption = #1055#1086' '#1060#1048#1054
           TabOrder = 0
+          OnClick = stud_name_RadioClick
         end
-        object stud_credit_Radio: TRadioButton
+        object stud_group_name_Radio: TRadioButton
           Left = 376
           Top = 40
           Width = 113
           Height = 17
           Align = alCustom
-          Caption = #1055#1086' '#1085#1072#1075#1088#1091#1079#1082#1077
+          Caption = #1055#1086' '#1075#1088#1091#1087#1087#1077
           TabOrder = 1
+          OnClick = stud_group_name_RadioClick
         end
         object stud_reset_Radio: TRadioButton
           Left = 776
@@ -82,6 +110,7 @@ object Frm_stud: TFrm_stud
           Align = alCustom
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 2
+          OnClick = stud_reset_RadioClick
         end
       end
       object stud_btnBox: TGroupBox
@@ -98,6 +127,7 @@ object Frm_stud: TFrm_stud
           Height = 25
           Caption = #1042#1099#1073#1088#1072#1090#1100
           TabOrder = 0
+          OnClick = stud_sel_btnClick
         end
       end
       object stud_inp_Box: TGroupBox
@@ -121,6 +151,7 @@ object Frm_stud: TFrm_stud
           EditLabel.Height = 13
           EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1060#1048#1054' '#1089#1090#1091#1076#1077#1085#1085#1090#1072
           TabOrder = 0
+          OnKeyPress = stud_fnd_editKeyPress
         end
         object stud_cond_edit: TLabeledEdit
           Left = 3
@@ -153,7 +184,7 @@ object Frm_stud: TFrm_stud
       end
     end
     object insTab: TTabSheet
-      Caption = #1042#1074#1086#1076' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1087#1088#1077#1087#1086#1076#1072#1074#1072#1090#1077#1083#1077
+      Caption = #1042#1074#1086#1076' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1089#1090#1091#1076#1077#1085#1090#1077
       ImageIndex = 1
       object ins_subj_data_box: TGroupBox
         Left = 0
@@ -163,13 +194,13 @@ object Frm_stud: TFrm_stud
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object subj_insGrid: TDBGrid
+        object ins_studGrid: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
           Height = 382
           Align = alClient
-          DataSource = DM.subjDS
+          DataSource = DM.StudDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -179,32 +210,38 @@ object Frm_stud: TFrm_stud
           Columns = <
             item
               Expanded = False
-              FieldName = 'id_subject'
+              FieldName = 'id_student'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'name'
-              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077
+              FieldName = 'fio'
+              Title.Caption = #1060#1048#1054' '#1089#1090#1091#1076#1077#1085#1090#1072
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'credits'
-              Title.Caption = #1053#1072#1075#1088#1091#1079#1082#1072
+              FieldName = 'group_name'
+              Title.Caption = #1043#1088#1091#1087#1087#1072
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'email'
+              Title.Caption = #1077#1084#1072#1081#1083
               Visible = True
             end>
         end
       end
-      object ins_subj_btn_Box: TGroupBox
+      object ins_stud_btn_Box: TGroupBox
         Left = 0
         Top = 504
         Width = 1029
         Height = 62
         Align = alBottom
         TabOrder = 1
-        object ins_subj_Btn: TButton
+        object ins_stud_Btn: TButton
           Left = 480
           Top = 32
           Width = 75
@@ -238,7 +275,7 @@ object Frm_stud: TFrm_stud
         object subj_credit_inp: TLabeledEdit
           Left = 3
           Top = 78
-          Width = 982
+          Width = 1006
           Height = 21
           Anchors = [akLeft, akRight]
           EditLabel.Width = 74
@@ -246,15 +283,6 @@ object Frm_stud: TFrm_stud
           EditLabel.Caption = #1042#1074#1086#1076' '#1085#1072#1075#1088#1091#1079#1082#1080
           TabOrder = 1
           Text = '0'
-        end
-        object credit_grader: TUpDown
-          Left = 985
-          Top = 78
-          Width = 17
-          Height = 21
-          Anchors = []
-          Associate = subj_credit_inp
-          TabOrder = 2
         end
       end
     end
@@ -269,13 +297,13 @@ object Frm_stud: TFrm_stud
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object subj_upd_Grid: TDBGrid
+        object upd_stud_Grid: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
           Height = 372
           Align = alClient
-          DataSource = DM.subjDS
+          DataSource = DM.StudDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -285,20 +313,26 @@ object Frm_stud: TFrm_stud
           Columns = <
             item
               Expanded = False
-              FieldName = 'id_subject'
+              FieldName = 'id_student'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'name'
-              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077
+              FieldName = 'fio'
+              Title.Caption = #1060#1048#1054' '#1089#1090#1091#1076#1077#1085#1090#1072
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'credits'
-              Title.Caption = #1053#1072#1075#1088#1091#1079#1082#1072
+              FieldName = 'group_name'
+              Title.Caption = #1043#1088#1091#1087#1087#1072
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'email'
+              Title.Caption = #1077#1084#1072#1081#1083
               Visible = True
             end>
         end
@@ -384,13 +418,13 @@ object Frm_stud: TFrm_stud
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object subj_del_grid: TDBGrid
+        object del_stud_Grid: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
           Height = 366
           Align = alClient
-          DataSource = DM.subjDS
+          DataSource = DM.StudDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -400,20 +434,26 @@ object Frm_stud: TFrm_stud
           Columns = <
             item
               Expanded = False
-              FieldName = 'id_subject'
+              FieldName = 'id_student'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'name'
-              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077
+              FieldName = 'fio'
+              Title.Caption = #1060#1048#1054' '#1089#1090#1091#1076#1077#1085#1090#1072
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'credits'
-              Title.Caption = #1053#1072#1075#1088#1091#1079#1082#1072
+              FieldName = 'group_name'
+              Title.Caption = #1043#1088#1091#1087#1087#1072
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'email'
+              Title.Caption = #1077#1084#1072#1081#1083
               Visible = True
             end>
         end
