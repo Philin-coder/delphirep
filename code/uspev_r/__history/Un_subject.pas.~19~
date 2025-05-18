@@ -70,6 +70,7 @@ procedure TFrm_subject.FormActivate(Sender: TObject);
 begin
   dm.subjQuery.Open;
   AdjustDBGridColumnWidths('Frm_subject',6000, 10);
+
 end;
 
 procedure TFrm_subject.FormClose(Sender: TObject; var Action: TCloseAction);
