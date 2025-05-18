@@ -30,14 +30,12 @@ type
     teacher_inp_Box: TGroupBox;
     insBtn: TButton;
     ins_teacher_data_box: TGroupBox;
-    teacher_ins_Grid: TDBGrid;
     fio_inp: TLabeledEdit;
     dep_inp: TLabeledEdit;
     upd_teacher_dataBox: TGroupBox;
     upd_teacher_btnBox: TGroupBox;
     upd_teacher_inpBox: TGroupBox;
     teacher_upd_btn: TButton;
-    upd_teacher_Grid: TDBGrid;
     upd_teacher_t_lbl: TStaticText;
     upd_teacher_DBL: TDBLookupComboBox;
     upd_teacher_dep_inp: TLabeledEdit;
@@ -45,13 +43,19 @@ type
     del_teacher_btnBox: TGroupBox;
     del_teacher_inpBox: TGroupBox;
     del_teacher_delBtn: TButton;
-    del_teacher_delGrid: TDBGrid;
     del_teacher_t_lbl: TStaticText;
     del_teacher_t_dbl: TDBLookupComboBox;
+    subj_insGrid: TDBGrid;
+    subj_upd_Grid: TDBGrid;
+    subj_del_grid: TDBGrid;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure subj_sel_btnClick(Sender: TObject);
+    procedure subj_fnd_editKeyPress(Sender: TObject; var Key: Char);
+    procedure subj_name_RadioClick(Sender: TObject);
+    procedure subj_credit_RadioClick(Sender: TObject);
+    procedure subj_reset_RadioClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -88,6 +92,125 @@ begin
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   LoadFormState(Self);
 end;
+
+procedure TFrm_subject.subj_credit_RadioClick(Sender: TObject);
+begin
+  if  subj_credit_Radio.Checked=true then
+  begin
+    try
+     with dm.subjQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+       'select'+' '+
+       'Subject.id_subject,'+' '+
+       'Subject.name,'+' '+
+       'Subject.credits'+' '+
+       'from Subject'+' '+
+        'where 1=1'+' '+
+    'order by Subject.credits asc';
+      Open;
+     end;
+    except on E: EADOError do
+    begin
+      ShowMessage('Œ˘Ë·Í‡ :'+' '+E.Message);
+    end;
+    end;
+  end;
+end;
+
+procedure TFrm_subject.subj_fnd_editKeyPress(Sender: TObject; var Key: Char);
+begin
+     try
+   dm.subjQuery.SQL.Text:=
+  'select'+' '+
+  'Subject.id_subject,'+' '+
+  'Subject.name,'+' '+
+  'Subject.credits'+' '+
+  'from Subject'+' '+
+  'where 1=1'+' '+
+  'and Subject.name like'+
+   QuotedStr(Concat(subj_fnd_edit.Text,#37));
+   dm.subjQuery.close;
+   dm.subjQuery.Open;
+except on E: Exception do
+  begin
+  ShowMessage('Œ¯Ë·Í‡'+' '+E.Message);
+  end;
+  end;
+end;
+
+procedure TFrm_subject.subj_name_RadioClick(Sender: TObject);
+begin
+  if subj_name_Radio.Checked=true then
+  begin
+    try
+     with dm.subjQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+    'select'+' '+
+    'Subject.id_subject,'+' '+
+  'Subject.name,'+' '+
+  'Subject.credits'+' '+
+  'from Subject'+' '+
+  'where 1=1'+' '+
+    'order by Subject.name asc';
+      Open;
+     end;
+    except on E: EADOError do
+    begin
+      ShowMessage('Œ¯Ë·Í‡'+' '+E.Message);
+    end;
+    end;
+  end;
+end;
+
+procedure TFrm_subject.subj_reset_RadioClick(Sender: TObject);
+var i,j,c:Integer;
+begin
+  if  subj_reset_Radio.Checked=true then
+with Frm_subject do
+    for I := 0 to ComponentCount - 1 do
+     begin
+       if (Components[i] is TLabeledEdit)  then
+        begin
+          (Components[i] as TLabeledEdit).Clear;
+        end;
+     end;
+       with Frm_subject do
+    for c := 0 to ComponentCount - 1 do
+     begin
+       if (Components[c] is TCheckBox)  then
+        begin
+          (Components[c] as TCheckBox).Checked:=False;
+        end;
+     end;
+     with dm.subjQuery do
+     begin
+     Close;
+     sql.Clear;
+     sql.Text:=
+    'select'+' '+
+    'Subject.id_subject,'+' '+
+  'Subject.name,'+' '+
+  'Subject.credits'+' '+
+  'from Subject'+' '+
+  'where 1=1';
+  Open;
+     end;
+    with Frm_subject do
+    for j := 0 to ComponentCount - 1 do
+    begin
+      if(Components[j] is TRadioButton)  then
+      begin
+        (Components[j] as TRadioButton).Checked:=False;
+      end;
+    end;
+end;
+
 
 procedure TFrm_subject.subj_sel_btnClick(Sender: TObject);
 begin

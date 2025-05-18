@@ -21,12 +21,12 @@ object Frm_subject: TFrm_subject
     Top = 0
     Width = 1037
     Height = 594
-    ActivePage = selTab
+    ActivePage = insTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
       Caption = #1042#1099#1073#1086#1088' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1087#1088#1077#1076#1084#1077#1090#1077
-      object subj_data_box: TGroupBox
+      object sel_subj_data_box: TGroupBox
         Left = 0
         Top = 331
         Width = 1029
@@ -84,6 +84,7 @@ object Frm_subject: TFrm_subject
           Align = alCustom
           Caption = #1055#1086' '#1085#1072#1080#1084#1080#1086#1074#1072#1085#1080#1102
           TabOrder = 0
+          OnClick = subj_name_RadioClick
         end
         object subj_credit_Radio: TRadioButton
           Left = 376
@@ -93,6 +94,7 @@ object Frm_subject: TFrm_subject
           Align = alCustom
           Caption = #1055#1086' '#1085#1072#1075#1088#1091#1079#1082#1077
           TabOrder = 1
+          OnClick = subj_credit_RadioClick
         end
         object subj_reset_Radio: TRadioButton
           Left = 776
@@ -102,6 +104,7 @@ object Frm_subject: TFrm_subject
           Align = alCustom
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 2
+          OnClick = subj_reset_RadioClick
         end
       end
       object subj_btnBox: TGroupBox
@@ -118,6 +121,7 @@ object Frm_subject: TFrm_subject
           Height = 25
           Caption = #1042#1099#1073#1088#1072#1090#1100
           TabOrder = 0
+          OnClick = subj_sel_btnClick
         end
       end
       object subj_inp_Box: TGroupBox
@@ -141,6 +145,7 @@ object Frm_subject: TFrm_subject
           EditLabel.Height = 13
           EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1102' '#1087#1088#1077#1076#1084#1077#1090#1072
           TabOrder = 0
+          OnKeyPress = subj_fnd_editKeyPress
         end
         object subj_cond_edit: TLabeledEdit
           Left = 3
@@ -175,7 +180,7 @@ object Frm_subject: TFrm_subject
     object insTab: TTabSheet
       Caption = #1042#1074#1086#1076' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1087#1088#1077#1087#1086#1076#1072#1074#1072#1090#1077#1083#1077
       ImageIndex = 1
-      object ins_teacher_data_box: TGroupBox
+      object ins_subj_data_box: TGroupBox
         Left = 0
         Top = 105
         Width = 1029
@@ -183,13 +188,13 @@ object Frm_subject: TFrm_subject
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object teacher_ins_Grid: TDBGrid
+        object subj_insGrid: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
           Height = 382
           Align = alClient
-          DataSource = DM.teacherDS
+          DataSource = DM.subjDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -199,34 +204,32 @@ object Frm_subject: TFrm_subject
           Columns = <
             item
               Expanded = False
-              FieldName = 'id_teacher'
+              FieldName = 'id_subject'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'fio'
-              Title.Caption = #1060#1048#1054' '#1087#1088#1077#1087#1086#1076#1072#1074#1072#1090#1077#1083#1103
-              Width = 129
+              FieldName = 'name'
+              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'department'
-              Title.Caption = #1053#1072#1087#1088#1072#1074#1083#1077#1085#1080#1077
-              Width = 135
+              FieldName = 'credits'
+              Title.Caption = #1053#1072#1075#1088#1091#1079#1082#1072
               Visible = True
             end>
         end
       end
-      object teacher_btn_Box: TGroupBox
+      object ins_subj_btn_Box: TGroupBox
         Left = 0
         Top = 504
         Width = 1029
         Height = 62
         Align = alBottom
         TabOrder = 1
-        object insBtn: TButton
+        object ins_subj_Btn: TButton
           Left = 480
           Top = 32
           Width = 75
@@ -235,7 +238,7 @@ object Frm_subject: TFrm_subject
           TabOrder = 0
         end
       end
-      object teacher_inp_Box: TGroupBox
+      object ins_subj_inp_Box: TGroupBox
         Left = 0
         Top = 0
         Width = 1029
@@ -246,7 +249,7 @@ object Frm_subject: TFrm_subject
         DesignSize = (
           1029
           105)
-        object fio_inp: TLabeledEdit
+        object subj_name_inp: TLabeledEdit
           Left = 3
           Top = 32
           Width = 1006
@@ -257,16 +260,25 @@ object Frm_subject: TFrm_subject
           EditLabel.Caption = #1042#1074#1086#1076' '#1060#1048#1054
           TabOrder = 0
         end
-        object dep_inp: TLabeledEdit
+        object subj_credit_inp: TLabeledEdit
           Left = 3
           Top = 78
-          Width = 1006
+          Width = 982
           Height = 21
           Anchors = [akLeft, akRight]
           EditLabel.Width = 94
           EditLabel.Height = 13
           EditLabel.Caption = #1042#1074#1086#1076' '#1085#1072#1087#1088#1072#1074#1083#1077#1085#1080#1103
           TabOrder = 1
+          Text = '0'
+        end
+        object credit_grader: TUpDown
+          Left = 985
+          Top = 78
+          Width = 17
+          Height = 21
+          Associate = subj_credit_inp
+          TabOrder = 2
         end
       end
     end
@@ -281,13 +293,13 @@ object Frm_subject: TFrm_subject
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object upd_teacher_Grid: TDBGrid
+        object subj_upd_Grid: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
           Height = 372
           Align = alClient
-          DataSource = DM.teacherDS
+          DataSource = DM.subjDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -297,22 +309,20 @@ object Frm_subject: TFrm_subject
           Columns = <
             item
               Expanded = False
-              FieldName = 'id_teacher'
+              FieldName = 'id_subject'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'fio'
-              Title.Caption = #1060#1048#1054' '#1087#1088#1077#1087#1086#1076#1072#1074#1072#1090#1077#1083#1103
-              Width = 129
+              FieldName = 'name'
+              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'department'
-              Title.Caption = #1053#1072#1087#1088#1072#1074#1083#1077#1085#1080#1077
-              Width = 135
+              FieldName = 'credits'
+              Title.Caption = #1053#1072#1075#1088#1091#1079#1082#1072
               Visible = True
             end>
         end
@@ -388,13 +398,13 @@ object Frm_subject: TFrm_subject
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object del_teacher_delGrid: TDBGrid
+        object subj_del_grid: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
           Height = 366
           Align = alClient
-          DataSource = DM.teacherDS
+          DataSource = DM.subjDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -404,22 +414,20 @@ object Frm_subject: TFrm_subject
           Columns = <
             item
               Expanded = False
-              FieldName = 'id_teacher'
+              FieldName = 'id_subject'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'fio'
-              Title.Caption = #1060#1048#1054' '#1087#1088#1077#1087#1086#1076#1072#1074#1072#1090#1077#1083#1103
-              Width = 129
+              FieldName = 'name'
+              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'department'
-              Title.Caption = #1053#1072#1087#1088#1072#1074#1083#1077#1085#1080#1077
-              Width = 135
+              FieldName = 'credits'
+              Title.Caption = #1053#1072#1075#1088#1091#1079#1082#1072
               Visible = True
             end>
         end

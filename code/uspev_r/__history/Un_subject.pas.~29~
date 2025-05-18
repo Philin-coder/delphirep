@@ -57,7 +57,6 @@ type
     procedure subj_name_RadioClick(Sender: TObject);
     procedure subj_credit_RadioClick(Sender: TObject);
     procedure subj_reset_RadioClick(Sender: TObject);
-    procedure ins_subj_BtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -93,51 +92,6 @@ begin
   UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   LoadFormState(Self);
-end;
-
-procedure TFrm_subject.ins_subj_BtnClick(Sender: TObject);
-const
-  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
-var
-  AreFieldsEmpty: Boolean;
-  AreFieldsValid: Boolean;
-begin
-  AreFieldsEmpty:=(
-   (Trim(subj_name_inp.Text)='')or
-   (credit_grader.Position=0)
-  );
-  AreFieldsValid:=(
-  ValidateComponentText(subj_name_inp,AllowedChars)
-  );
-  if AreFieldsEmpty or not AreFieldsValid then
-  begin
-    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-  try
-      with dm.ins_subject do
-      begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@Name').Value :=subj_name_inp.Text;
-           Parameters.ParamByName('@credits').Value:=credit_grader.Position;
-           ExecProc;
-           dm.subjQuery.Close;
-           dm.subjQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-    end;
 end;
 
 procedure TFrm_subject.subj_credit_RadioClick(Sender: TObject);
