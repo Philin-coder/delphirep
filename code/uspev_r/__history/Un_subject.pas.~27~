@@ -192,7 +192,7 @@ with Frm_subject do
      begin
      Close;
      sql.Clear;
-     sql.Text:=
+       sql.Text:=
     'select'+' '+
     'Subject.id_subject,'+' '+
   'Subject.name,'+' '+
