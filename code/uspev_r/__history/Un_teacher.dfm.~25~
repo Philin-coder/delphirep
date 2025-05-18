@@ -21,7 +21,7 @@ object Frm_teacher: TFrm_teacher
     Top = 0
     Width = 1037
     Height = 594
-    ActivePage = selTab
+    ActivePage = delTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
@@ -289,6 +289,8 @@ object Frm_teacher: TFrm_teacher
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
+        ExplicitTop = 114
+        ExplicitHeight = 398
         object upd_teacher_Grid: TDBGrid
           Left = 2
           Top = 15
@@ -372,6 +374,7 @@ object Frm_teacher: TFrm_teacher
           ListField = 'fio'
           ListSource = DM.teacherDS
           TabOrder = 1
+          ExplicitTop = 32
         end
         object upd_teacher_dep_inp: TLabeledEdit
           Left = 16
@@ -397,6 +400,10 @@ object Frm_teacher: TFrm_teacher
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
+        ExplicitLeft = 480
+        ExplicitTop = 200
+        ExplicitWidth = 185
+        ExplicitHeight = 105
         object del_teacher_delGrid: TDBGrid
           Left = 2
           Top = 15
@@ -458,6 +465,9 @@ object Frm_teacher: TFrm_teacher
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
+        ExplicitLeft = 496
+        ExplicitTop = 216
+        ExplicitWidth = 185
         object del_teacher_t_lbl: TStaticText
           Left = 16
           Top = 24

@@ -89,14 +89,12 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@department'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 255
-        Value = Null
       end
       item
         Name = '@id_teacher'
@@ -117,7 +115,6 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@id_teacher'
@@ -130,7 +127,6 @@ object DM: TDM
     Top = 360
   end
   object subjQuery: TADOQuery
-    Active = True
     Connection = Connection
     CursorType = ctStatic
     Parameters = <>

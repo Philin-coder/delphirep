@@ -1,0 +1,66 @@
+unit Un_subject;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ComCtrls, StdCtrls, ExtCtrls, Grids, DBGrids, DBCtrls,db,ADODB;
+
+type
+  TFrm_subject = class(TForm)
+    teacher_pc: TPageControl;
+    selTab: TTabSheet;
+    insTab: TTabSheet;
+    UpdTab: TTabSheet;
+    delTab: TTabSheet;
+    teacher_data_box: TGroupBox;
+    teacher_gr_box: TGroupBox;
+    TeacherbtnBox: TGroupBox;
+    TeacherinpBox: TGroupBox;
+    teacher_sel_btn: TButton;
+    teacher_fio_Radio: TRadioButton;
+    teacher_dep_Radio: TRadioButton;
+    teacher_reset_Radio: TRadioButton;
+    teacher_fnd_edit: TLabeledEdit;
+    teacher_cond_edit: TLabeledEdit;
+    teacherGrid: TDBGrid;
+    showsbdatabox: TGroupBox;
+    showsbDBLList: TDBLookupListBox;
+    teacher_btn_Box: TGroupBox;
+    teacher_inp_Box: TGroupBox;
+    insBtn: TButton;
+    ins_teacher_data_box: TGroupBox;
+    teacher_ins_Grid: TDBGrid;
+    fio_inp: TLabeledEdit;
+    dep_inp: TLabeledEdit;
+    upd_teacher_dataBox: TGroupBox;
+    upd_teacher_btnBox: TGroupBox;
+    upd_teacher_inpBox: TGroupBox;
+    teacher_upd_btn: TButton;
+    upd_teacher_Grid: TDBGrid;
+    upd_teacher_t_lbl: TStaticText;
+    upd_teacher_DBL: TDBLookupComboBox;
+    upd_teacher_dep_inp: TLabeledEdit;
+    del_teacher_dataBox: TGroupBox;
+    del_teacher_btnBox: TGroupBox;
+    del_teacher_inpBox: TGroupBox;
+    del_teacher_delBtn: TButton;
+    del_teacher_delGrid: TDBGrid;
+    del_teacher_t_lbl: TStaticText;
+    del_teacher_t_dbl: TDBLookupComboBox;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_subject: TFrm_subject;
+
+implementation
+
+uses Un_dm, Un_func;
+
+{$R *.dfm}
+
+end.

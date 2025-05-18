@@ -175,6 +175,9 @@ object Frm_teacher: TFrm_teacher
           Width = 1025
           Height = 82
           Align = alClient
+          KeyField = 'id_subject'
+          ListField = 'name'
+          ListSource = DM.subjDS
           TabOrder = 0
         end
       end

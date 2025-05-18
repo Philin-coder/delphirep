@@ -8,5 +8,7 @@
     <Transaction>2025.05.17 12:20:55.037.dfm,F:\code\Result\delphi\code\uspev_r\Unit1.dfm=F:\code\Result\delphi\code\uspev_r\Un_dm.dfm</Transaction>
     <Transaction>2025.05.17 13:21:15.710.pas,F:\code\Result\delphi\code\uspev_r\Unit1.pas=F:\code\Result\delphi\code\uspev_r\Un_teacher.pas</Transaction>
     <Transaction>2025.05.17 13:21:15.710.dfm,F:\code\Result\delphi\code\uspev_r\Unit1.dfm=F:\code\Result\delphi\code\uspev_r\Un_teacher.dfm</Transaction>
+    <Transaction>2025.05.18 11:13:22.969.pas,F:\code\Result\delphi\code\uspev_r\Un_teacher.pas=F:\code\Result\delphi\code\uspev_r\Un_subject.pas</Transaction>
+    <Transaction>2025.05.18 11:13:22.970.dfm,F:\code\Result\delphi\code\uspev_r\Un_teacher.dfm=F:\code\Result\delphi\code\uspev_r\Un_subject.dfm</Transaction>
   </Transactions>
 </BorlandProject>

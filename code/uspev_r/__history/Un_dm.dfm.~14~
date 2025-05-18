@@ -1,6 +1,6 @@
 object DM: TDM
   OldCreateOrder = False
-  Height = 565
+  Height = 409
   Width = 518
   object Connection: TADOConnection
     Connected = True
@@ -89,14 +89,12 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@department'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 255
-        Value = Null
       end
       item
         Name = '@id_teacher'
@@ -117,7 +115,6 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@id_teacher'
@@ -128,45 +125,5 @@ object DM: TDM
       end>
     Left = 104
     Top = 360
-  end
-  object subjQuery: TADOQuery
-    Active = True
-    Connection = Connection
-    CursorType = ctStatic
-    Parameters = <>
-    SQL.Strings = (
-      'select '
-      '  Subject.id_subject, '
-      '  Subject.name, '
-      '  Subject.credits '
-      '  from Subject '
-      '  where 1=1 ')
-    Left = 192
-    Top = 64
-  end
-  object subjDS: TDataSource
-    DataSet = subjQuery
-    Left = 192
-    Top = 120
-  end
-  object ADOStoredProc1: TADOStoredProc
-    Parameters = <>
-    Left = 192
-    Top = 184
-  end
-  object ADOStoredProc2: TADOStoredProc
-    Parameters = <>
-    Left = 224
-    Top = 360
-  end
-  object ADOStoredProc3: TADOStoredProc
-    Parameters = <>
-    Left = 216
-    Top = 304
-  end
-  object ADOStoredProc4: TADOStoredProc
-    Parameters = <>
-    Left = 208
-    Top = 248
   end
 end

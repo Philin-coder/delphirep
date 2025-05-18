@@ -1,7 +1,7 @@
-object Frm_teacher: TFrm_teacher
+object Frm_subject: TFrm_subject
   Left = 0
   Top = 0
-  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1076#1072#1085#1085#1099#1084#1080' '#1087#1088#1077#1087#1086#1076#1072#1074#1072#1090#1077#1083#1103
+  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1076#1072#1085#1085#1099#1084#1080' '#1087#1088#1077#1076#1084#1077#1090#1072
   ClientHeight = 594
   ClientWidth = 1037
   Color = clBtnFace
@@ -11,12 +11,9 @@ object Frm_teacher: TFrm_teacher
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
-  OnActivate = FormActivate
-  OnClose = FormClose
-  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object teacher_pc: TPageControl
+  object subj_pc: TPageControl
     Left = 0
     Top = 0
     Width = 1037
@@ -25,8 +22,8 @@ object Frm_teacher: TFrm_teacher
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
-      Caption = #1042#1099#1073#1086#1088' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1087#1088#1077#1087#1086#1076#1072#1074#1072#1090#1077#1083#1077
-      object teacher_data_box: TGroupBox
+      Caption = #1042#1099#1073#1086#1088' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1087#1088#1077#1076#1084#1077#1090#1077
+      object subj_data_box: TGroupBox
         Left = 0
         Top = 331
         Width = 1029
@@ -34,13 +31,13 @@ object Frm_teacher: TFrm_teacher
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object teacherGrid: TDBGrid
+        object subj_Grid: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
           Height = 156
           Align = alClient
-          DataSource = DM.teacherDS
+          DataSource = DM.subjDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -50,27 +47,25 @@ object Frm_teacher: TFrm_teacher
           Columns = <
             item
               Expanded = False
-              FieldName = 'id_teacher'
+              FieldName = 'id_subject'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'fio'
-              Title.Caption = #1060#1048#1054' '#1087#1088#1077#1087#1086#1076#1072#1074#1072#1090#1077#1083#1103
-              Width = 129
+              FieldName = 'name'
+              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'department'
-              Title.Caption = #1053#1072#1087#1088#1072#1074#1083#1077#1085#1080#1077
-              Width = 135
+              FieldName = 'credits'
+              Title.Caption = #1053#1072#1075#1088#1091#1079#1082#1072
               Visible = True
             end>
         end
       end
-      object teacher_gr_box: TGroupBox
+      object subj_gr_box: TGroupBox
         Left = 0
         Top = 121
         Width = 1029
@@ -78,27 +73,25 @@ object Frm_teacher: TFrm_teacher
         Align = alTop
         Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1072#1074#1082#1072' '#1087#1086' '
         TabOrder = 1
-        object teacher_fio_Radio: TRadioButton
+        object subj_name_Radio: TRadioButton
           Left = 56
           Top = 40
           Width = 137
           Height = 17
           Align = alCustom
-          Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1060#1048#1054
+          Caption = #1055#1086' '#1085#1072#1080#1084#1080#1086#1074#1072#1085#1080#1102
           TabOrder = 0
-          OnClick = teacher_fio_RadioClick
         end
-        object teacher_dep_Radio: TRadioButton
+        object subj_credit_Radio: TRadioButton
           Left = 376
           Top = 40
           Width = 113
           Height = 17
           Align = alCustom
-          Caption = #1055#1086' '#1085#1072#1087#1088#1072#1074#1083#1077#1085#1080#1102
+          Caption = #1055#1086' '#1085#1072#1075#1088#1091#1079#1082#1077
           TabOrder = 1
-          OnClick = teacher_dep_RadioClick
         end
-        object teacher_reset_Radio: TRadioButton
+        object subj_reset_Radio: TRadioButton
           Left = 776
           Top = 40
           Width = 113
@@ -106,27 +99,25 @@ object Frm_teacher: TFrm_teacher
           Align = alCustom
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 2
-          OnClick = teacher_reset_RadioClick
         end
       end
-      object TeacherbtnBox: TGroupBox
+      object subj_btnBox: TGroupBox
         Left = 0
         Top = 504
         Width = 1029
         Height = 62
         Align = alBottom
         TabOrder = 2
-        object teacher_sel_btn: TButton
+        object subj_sel_btn: TButton
           Left = 504
           Top = 32
           Width = 75
           Height = 25
           Caption = #1042#1099#1073#1088#1072#1090#1100
           TabOrder = 0
-          OnClick = teacher_sel_btnClick
         end
       end
-      object TeacherinpBox: TGroupBox
+      object subj_inp_Box: TGroupBox
         Left = 0
         Top = 0
         Width = 1029
@@ -137,27 +128,26 @@ object Frm_teacher: TFrm_teacher
         DesignSize = (
           1029
           121)
-        object teacher_fnd_edit: TLabeledEdit
+        object subj_fnd_edit: TLabeledEdit
           Left = 3
           Top = 94
           Width = 1006
           Height = 21
           Anchors = [akLeft, akRight]
-          EditLabel.Width = 153
+          EditLabel.Width = 211
           EditLabel.Height = 13
-          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1085#1072#1087#1088#1072#1074#1083#1077#1085#1080#1102
+          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1102' '#1087#1088#1077#1076#1084#1077#1090#1072
           TabOrder = 0
-          OnKeyPress = teacher_fnd_editKeyPress
         end
-        object teacher_cond_edit: TLabeledEdit
+        object subj_cond_edit: TLabeledEdit
           Left = 3
           Top = 32
           Width = 1006
           Height = 21
           Anchors = [akLeft, akRight]
-          EditLabel.Width = 140
+          EditLabel.Width = 244
           EditLabel.Height = 13
-          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1060#1048#1054
+          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1102' '#1087#1088#1077#1076#1084#1077#1090#1072
           TabOrder = 1
         end
       end
@@ -240,7 +230,6 @@ object Frm_teacher: TFrm_teacher
           Height = 25
           Caption = #1042#1074#1086#1076
           TabOrder = 0
-          OnClick = insBtnClick
         end
       end
       object teacher_inp_Box: TGroupBox
@@ -339,7 +328,6 @@ object Frm_teacher: TFrm_teacher
           Height = 25
           Caption = #1048#1079#1084#1077#1085#1080#1090#1100
           TabOrder = 0
-          OnClick = teacher_upd_btnClick
         end
       end
       object upd_teacher_inpBox: TGroupBox
@@ -447,7 +435,6 @@ object Frm_teacher: TFrm_teacher
           Height = 25
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
-          OnClick = del_teacher_delBtnClick
         end
       end
       object del_teacher_inpBox: TGroupBox
