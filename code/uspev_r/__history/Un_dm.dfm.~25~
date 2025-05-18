@@ -346,24 +346,9 @@ object DM: TDM
     Left = 288
     Top = 304
   end
-  object del_stud: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'del_stud;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@id_student'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = 0
-      end>
-    Left = 288
-    Top = 360
+  object ADOStoredProc4: TADOStoredProc
+    Parameters = <>
+    Left = 280
+    Top = 368
   end
 end

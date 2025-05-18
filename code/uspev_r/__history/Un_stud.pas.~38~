@@ -38,12 +38,12 @@ type
     upd_stud_st_lbl: TStaticText;
     upd_stud_DBL: TDBLookupComboBox;
     upd_stud_mail_inp: TLabeledEdit;
-    del_stud_dataBox: TGroupBox;
-    del_stud_btnBox: TGroupBox;
-    del_stud_inpBox: TGroupBox;
-    del_stud_delBtn: TButton;
-    del_stud_s_lbl: TStaticText;
-    del_stud_st_dbl: TDBLookupComboBox;
+    del_subj_dataBox: TGroupBox;
+    del_subj_btnBox: TGroupBox;
+    del_subj_inpBox: TGroupBox;
+    del_subj_delBtn: TButton;
+    del_subj_s_lbl: TStaticText;
+    del_subj_s_dbl: TDBLookupComboBox;
     ins_studGrid: TDBGrid;
     upd_stud_Grid: TDBGrid;
     del_stud_Grid: TDBGrid;
@@ -59,7 +59,6 @@ type
     procedure stud_reset_RadioClick(Sender: TObject);
     procedure ins_stud_BtnClick(Sender: TObject);
     procedure stud_upd_btnClick(Sender: TObject);
-    procedure del_stud_delBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -74,45 +73,6 @@ implementation
 uses Un_dm, Un_func;
 
 {$R *.dfm}
-
-procedure TFrm_stud.del_stud_delBtnClick(Sender: TObject);
-  var
-  AreFieldsEmpty: Boolean;
-begin
-  AreFieldsEmpty:=(
-  (del_stud_st_dbl.Text='')
-  );
-  if AreFieldsEmpty then
-  begin
-      MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-   try
-      with dm.del_stud do
-      begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@id_student').Value :=
-           dm.StudQuery.FieldByName('id_student').AsString;
-           ExecProc;
-           dm.studQuery.Close;
-           dm.studQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-    end;
-
-end;
 
 procedure TFrm_stud.FormActivate(Sender: TObject);
 begin
@@ -353,7 +313,7 @@ begin
           raise Exception.Create('Соединение с базой не установлено');
            Parameters.ParamByName('@id_student').Value :=
            dm.StudQuery.FieldByName('id_student').AsString;
-           Parameters.ParamByName('@email').Value:=upd_stud_mail_inp.Text;
+           Parameters.ParamByName('').Value:=upd_stud_mail_inp.Text;
            ExecProc;
            dm.studQuery.Close;
            dm.studQuery.Open;

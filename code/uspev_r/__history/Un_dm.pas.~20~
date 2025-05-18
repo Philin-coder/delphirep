@@ -13,6 +13,19 @@ type
     sel_teacher_by_fio: TADOStoredProc;
     ins_teacher: TADOStoredProc;
     upd_teacher: TADOStoredProc;
+    del_teacher: TADOStoredProc;
+    subjQuery: TADOQuery;
+    subjDS: TDataSource;
+    sel_sub: TADOStoredProc;
+    del_sub: TADOStoredProc;
+    upd_subject: TADOStoredProc;
+    ins_subject: TADOStoredProc;
+    StudQuery: TADOQuery;
+    StudDS: TDataSource;
+    sel_stud: TADOStoredProc;
+    ins_stud: TADOStoredProc;
+    upd_stud: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public

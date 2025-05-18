@@ -26,29 +26,29 @@ type
     sel_stud_Grid: TDBGrid;
     showsbdatabox: TGroupBox;
     showsbDBLList: TDBLookupListBox;
-    ins_subj_btn_Box: TGroupBox;
-    ins_subj_inp_Box: TGroupBox;
-    ins_subj_Btn: TButton;
-    ins_subj_data_box: TGroupBox;
-    subj_name_inp: TLabeledEdit;
-    subj_credit_inp: TLabeledEdit;
-    upd_subj_dataBox: TGroupBox;
-    upd_subj_btnBox: TGroupBox;
-    upd_subj_inpBox: TGroupBox;
-    subj_upd_btn: TButton;
-    upd_subj_s_lbl: TStaticText;
-    upd_subj_DBL: TDBLookupComboBox;
-    upd_subj_cred_inp: TLabeledEdit;
-    del_subj_dataBox: TGroupBox;
-    del_subj_btnBox: TGroupBox;
-    del_subj_inpBox: TGroupBox;
-    del_subj_delBtn: TButton;
-    del_subj_s_lbl: TStaticText;
-    del_subj_s_dbl: TDBLookupComboBox;
-    Upd_subj_cred_grader: TUpDown;
+    ins_stud_btn_Box: TGroupBox;
+    ins_stud_inp_Box: TGroupBox;
+    ins_stud_Btn: TButton;
+    ins_stud_data_box: TGroupBox;
+    stud_fio_inp: TLabeledEdit;
+    upd_stud_dataBox: TGroupBox;
+    upd_stud_btnBox: TGroupBox;
+    upd_stud_inpBox: TGroupBox;
+    stud_upd_btn: TButton;
+    upd_stud_st_lbl: TStaticText;
+    upd_stud_DBL: TDBLookupComboBox;
+    upd_stud_mail_inp: TLabeledEdit;
+    del_stud_dataBox: TGroupBox;
+    del_stud_btnBox: TGroupBox;
+    del_stud_inpBox: TGroupBox;
+    del_stud_delBtn: TButton;
+    del_stud_s_lbl: TStaticText;
+    del_stud_st_dbl: TDBLookupComboBox;
     ins_studGrid: TDBGrid;
     upd_stud_Grid: TDBGrid;
     del_stud_Grid: TDBGrid;
+    stud_grup_inp: TLabeledEdit;
+    stud_mail_inp: TLabeledEdit;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
@@ -57,6 +57,8 @@ type
     procedure stud_name_RadioClick(Sender: TObject);
     procedure stud_group_name_RadioClick(Sender: TObject);
     procedure stud_reset_RadioClick(Sender: TObject);
+    procedure ins_stud_BtnClick(Sender: TObject);
+    procedure stud_upd_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -92,6 +94,55 @@ begin
   UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   LoadFormState(Self);
+end;
+
+procedure TFrm_stud.ins_stud_BtnClick(Sender: TObject);
+  const
+AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (Trim(stud_fio_inp.Text)='')or
+  (Trim(stud_grup_inp.Text)='')or
+  (Trim(stud_mail_inp.Text)='')
+  );
+  AreFieldsValid:=(
+  ValidateComponentText(stud_fio_inp,AllowedChars)and
+  ValidateComponentText(stud_grup_inp,AllowedChars)and
+  IsValidEmail(stud_mail_inp.Text)
+  );
+  if AreFieldsEmpty or not AreFieldsValid then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.ins_stud do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@fio').Value :=stud_fio_inp.Text;
+           Parameters.ParamByName('@group_name').Value:=stud_grup_inp.Text;
+           Parameters.ParamByName('@email').Value:=stud_mail_inp.Text;
+           ExecProc;
+           dm.studQuery.Close;
+           dm.studQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
 end;
 
 procedure TFrm_stud.stud_fnd_editKeyPress(Sender: TObject; var Key: Char);
@@ -234,6 +285,50 @@ begin
     on E: Exception do
       ShowMessage('Ошибка: ' + E.Message);
   end;
+end;
+
+procedure TFrm_stud.stud_upd_btnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (upd_stud_DBL.Text='')or
+  (Trim(upd_stud_mail_inp.Text)='')
+  );
+  AreFieldsValid:=(
+  IsValidEmail(upd_stud_mail_inp.Text)
+  );
+  if AreFieldsEmpty or not AreFieldsValid then
+  begin
+      MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.upd_stud do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@id_student').Value :=
+           dm.StudQuery.FieldByName('id_student').AsString;
+           Parameters.ParamByName('@email').Value:=upd_stud_mail_inp.Text;
+           ExecProc;
+           dm.studQuery.Close;
+           dm.studQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
 end;
 
 end.
