@@ -6,8 +6,7 @@ uses
   Un_main in 'Un_main.pas' {Frm_main},
   Un_dm in 'Un_dm.pas' {DM: TDataModule},
   Un_stud in 'Un_stud.pas' {Frm_stud},
-  Un_teacher in 'Un_teacher.pas' {Frm_teacher},
-  Un_subject in 'Un_subject.pas' {Frm_subject};
+  Un_teacher in 'Un_teacher.pas' {Frm_teacher};
 
 {$R *.res}
  {$R 'resources.RES'}
@@ -18,6 +17,5 @@ begin
   Application.CreateForm(TDM, DM);
   Application.CreateForm(TFrm_stud, Frm_stud);
   Application.CreateForm(TFrm_teacher, Frm_teacher);
-  Application.CreateForm(TFrm_subject, Frm_subject);
   Application.Run;
 end.

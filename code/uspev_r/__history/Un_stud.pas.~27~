@@ -1,0 +1,166 @@
+unit Un_stud;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ComCtrls, StdCtrls, ExtCtrls, Grids, DBGrids, DBCtrls,db,ADODB;
+
+type
+  TFrm_stud = class(TForm)
+    stud_pc: TPageControl;
+    selTab: TTabSheet;
+    insTab: TTabSheet;
+    UpdTab: TTabSheet;
+    delTab: TTabSheet;
+    sel_stud_data_box: TGroupBox;
+    stud_gr_box: TGroupBox;
+    stud_btnBox: TGroupBox;
+    stud_inp_Box: TGroupBox;
+    stud_sel_btn: TButton;
+    stud_name_Radio: TRadioButton;
+    stud_group_name_Radio: TRadioButton;
+    stud_reset_Radio: TRadioButton;
+    stud_fnd_edit: TLabeledEdit;
+    stud_cond_edit: TLabeledEdit;
+    sel_stud_Grid: TDBGrid;
+    showsbdatabox: TGroupBox;
+    showsbDBLList: TDBLookupListBox;
+    ins_subj_btn_Box: TGroupBox;
+    ins_subj_inp_Box: TGroupBox;
+    ins_subj_Btn: TButton;
+    ins_subj_data_box: TGroupBox;
+    subj_name_inp: TLabeledEdit;
+    subj_credit_inp: TLabeledEdit;
+    upd_subj_dataBox: TGroupBox;
+    upd_subj_btnBox: TGroupBox;
+    upd_subj_inpBox: TGroupBox;
+    subj_upd_btn: TButton;
+    upd_subj_s_lbl: TStaticText;
+    upd_subj_DBL: TDBLookupComboBox;
+    upd_subj_cred_inp: TLabeledEdit;
+    del_subj_dataBox: TGroupBox;
+    del_subj_btnBox: TGroupBox;
+    del_subj_inpBox: TGroupBox;
+    del_subj_delBtn: TButton;
+    del_subj_s_lbl: TStaticText;
+    del_subj_s_dbl: TDBLookupComboBox;
+    credit_grader: TUpDown;
+    Upd_subj_cred_grader: TUpDown;
+    ins_studGrid: TDBGrid;
+    upd_stud_Grid: TDBGrid;
+    del_stud_Grid: TDBGrid;
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormActivate(Sender: TObject);
+    procedure stud_sel_btnClick(Sender: TObject);
+    procedure stud_fnd_editKeyPress(Sender: TObject; var Key: Char);
+    procedure stud_name_RadioClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_stud: TFrm_stud;
+
+implementation
+
+uses Un_dm, Un_func;
+
+{$R *.dfm}
+
+procedure TFrm_stud.FormActivate(Sender: TObject);
+begin
+  dm.StudQuery.Open;
+  AdjustDBGridColumnWidths('Frm_stud',6000, 10);
+end;
+
+procedure TFrm_stud.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  SaveFormState(Self);
+  CloseAllQueriesOnDataModule('dm');
+end;
+
+procedure TFrm_stud.FormCreate(Sender: TObject);
+begin
+  Frm_stud.KeyPreview:=true;
+  Frm_stud.ShowHint:=true;
+  UniformizeButtonsSize(Self,  273, 25);
+  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+  LoadFormState(Self);
+end;
+
+procedure TFrm_stud.stud_fnd_editKeyPress(Sender: TObject; var Key: Char);
+begin
+    try
+   dm.studQuery.SQL.Text:=
+  'select'+' '+
+  'Student.id_student,'+' '+
+   'Student.fio,'+' '+
+   'Student.group_name,'+' '+
+  'Student.email'+' '+
+  'from Student'+' '+
+    'where 1=1'+' '+
+  'and Student.fio like'+
+   QuotedStr(Concat(stud_fnd_edit.Text,#37));
+   dm.studQuery.close;
+   dm.studQuery.Open;
+except on E: Exception do
+  begin
+  ShowMessage('Ошибка'+' '+E.Message);
+  end;
+  end;
+end;
+
+procedure TFrm_stud.stud_name_RadioClick(Sender: TObject);
+begin
+  if  stud_name_Radio.Checked=true then
+  begin
+    try
+     with dm.studQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+       'select'+' '+
+       'Student.id_student,'+' '+
+      'Student.fio,'+' '+
+     'Student.group_name,'+' '+
+     'Student.email'+' '+
+     'from Student'+' '+
+     'where 1=1'+' '+' '+
+    'order by Student.fio asc';
+      Open;
+     end;
+    except on E: EADOError do
+    begin
+      ShowMessage('Ошибка :'+' '+E.Message);
+    end;
+    end;
+  end;
+end;
+
+procedure TFrm_stud.stud_sel_btnClick(Sender: TObject);
+begin
+  try
+    if not DM.Connection.Connected then
+      raise Exception.Create('Соединение с базой не установлено');
+    with DM.sel_stud do
+    begin
+      Close;
+      Parameters.ParamByName('@group_name').Value :=stud_cond_edit.Text;
+      Open;
+       DM.studQuery.Recordset:=dm.sel_stud.Recordset;
+    end;
+  except
+    on E: EDatabaseError do
+      ShowMessage('Ошибка: ' + E.Message);
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
+end;
+
+end.

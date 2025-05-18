@@ -22,7 +22,7 @@ type
     ins_subject: TADOStoredProc;
     StudQuery: TADOQuery;
     StudDS: TDataSource;
-    sel_stud: TADOStoredProc;
+    ADOStoredProc1: TADOStoredProc;
     ADOStoredProc2: TADOStoredProc;
     ADOStoredProc3: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;

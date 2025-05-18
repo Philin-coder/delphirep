@@ -16,13 +16,11 @@ type
     ItemMenu: TMainMenu;
     teacher_item: TMenuItem;
     subjet_item: TMenuItem;
-    stud_item: TMenuItem;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure teacher_itemClick(Sender: TObject);
     procedure subjet_itemClick(Sender: TObject);
-    procedure stud_itemClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -34,7 +32,7 @@ var
 
 implementation
 
-uses Un_func, Un_dm, Un_teacher, Un_subject, Un_stud;
+uses Un_func, Un_dm, Un_teacher, Un_subject;
 
 {$R *.dfm}
 
@@ -59,18 +57,6 @@ begin
   end;
   LoadFormState(Self);
   LoadImageFromResource('BACKGROUND_IMAGE', main_Image);
-end;
-
-procedure TFrm_main.stud_itemClick(Sender: TObject);
-begin
-  try
-    UpdateFormProperties('Frm_stud', 'Форма работы с данными студента',
-      clBtnFace, 1024, 768);
-    Frm_stud.ShowModal;
-  except
-    Frm_stud.Free;
-    raise;
-  end;
 end;
 
 procedure TFrm_main.subjet_itemClick(Sender: TObject);

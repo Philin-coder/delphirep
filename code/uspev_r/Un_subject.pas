@@ -112,7 +112,6 @@ begin
         ShowMessage('Ошибка: ' + E.Message);
       end;
     end;
-
 end;
 
 procedure TFrm_subject.FormActivate(Sender: TObject);

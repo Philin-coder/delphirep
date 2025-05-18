@@ -262,22 +262,8 @@ object DM: TDM
     Left = 280
     Top = 136
   end
-  object sel_stud: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'sel_stud;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@group_name'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 255
-      end>
+  object ADOStoredProc1: TADOStoredProc
+    Parameters = <>
     Left = 280
     Top = 200
   end
