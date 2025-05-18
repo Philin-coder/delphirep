@@ -302,7 +302,6 @@ end;
 
 procedure TFrm_teacher.teacher_sel_btnClick(Sender: TObject);
 begin
-  begin
 try
     if not DM.Connection.Connected then
       raise Exception.Create('Соединнение с базой не установлено');
@@ -320,7 +319,7 @@ try
       ShowMessage('Ошибка: ' + E.Message);
   end;
 end;
-end;
+
 
 
 procedure TFrm_teacher.teacher_upd_btnClick(Sender: TObject);
