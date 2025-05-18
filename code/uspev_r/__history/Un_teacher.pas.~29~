@@ -46,8 +46,6 @@ type
     del_teacher_inpBox: TGroupBox;
     del_teacher_delBtn: TButton;
     del_teacher_delGrid: TDBGrid;
-    del_teacher_t_lbl: TStaticText;
-    del_teacher_t_dbl: TDBLookupComboBox;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -58,7 +56,6 @@ type
     procedure teacher_reset_RadioClick(Sender: TObject);
     procedure insBtnClick(Sender: TObject);
     procedure teacher_upd_btnClick(Sender: TObject);
-    procedure del_teacher_delBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -73,45 +70,6 @@ implementation
 uses Un_dm, Un_func;
 
 {$R *.dfm}
-
-procedure TFrm_teacher.del_teacher_delBtnClick(Sender: TObject);
-var
-  AreFieldsEmpty: Boolean;
-begin
-  AreFieldsEmpty:=(
-  (del_teacher_t_dbl.Text='')
-  );
-  if AreFieldsEmpty then
-  begin
-    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-    try
-      with dm.del_teacher do
-      begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@id_teacher').Value
-           :=dm.teacherQuery.FieldByName('id_teacher').AsString;
-           ExecProc;
-           dm.teacherQuery.Close;
-           dm.teacherQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-    end;
-
-end;
 
 procedure TFrm_teacher.FormActivate(Sender: TObject);
 begin

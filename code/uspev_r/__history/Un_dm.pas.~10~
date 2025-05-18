@@ -13,7 +13,6 @@ type
     sel_teacher_by_fio: TADOStoredProc;
     ins_teacher: TADOStoredProc;
     upd_teacher: TADOStoredProc;
-    del_teacher: TADOStoredProc;
   private
     { Private declarations }
   public
