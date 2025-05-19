@@ -1,7 +1,7 @@
 object Frm_grade: TFrm_grade
   Left = 0
   Top = 0
-  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1076#1072#1085#1085#1099#1084#1080' '#1087#1088#1077#1087#1086#1076#1072#1074#1072#1090#1077#1083#1103
+  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1076#1072#1085#1085#1099#1084#1080' '#1086#1073' '#1086#1094#1077#1085#1082#1077
   ClientHeight = 594
   ClientWidth = 1037
   Color = clBtnFace
@@ -26,6 +26,10 @@ object Frm_grade: TFrm_grade
     TabOrder = 0
     object selTab: TTabSheet
       Caption = #1042#1099#1073#1086#1088' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086#1073' '#1086#1094#1077#1085#1082#1077
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object grade_data_box: TGroupBox
         Left = 0
         Top = 331
@@ -204,6 +208,10 @@ object Frm_grade: TFrm_grade
     object insTab: TTabSheet
       Caption = #1042#1074#1086#1076' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086#1073' '#1086#1094#1077#1085#1082#1077
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object ins_grade_data_box: TGroupBox
         Left = 0
         Top = 321
@@ -326,7 +334,7 @@ object Frm_grade: TFrm_grade
           Left = 16
           Top = 118
           Width = 84
-          Height = 21
+          Height = 17
           Caption = #1055#1088#1077#1087#1086#1076#1072#1074#1072#1090#1077#1083#1100
           TabOrder = 3
         end
@@ -400,6 +408,10 @@ object Frm_grade: TFrm_grade
     object UpdTab: TTabSheet
       Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1086#1094#1077#1085#1082#1077
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object upd_grade_dataBox: TGroupBox
         Left = 0
         Top = 123

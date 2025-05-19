@@ -8,6 +8,7 @@ uses
   Un_stud in 'Un_stud.pas' {Frm_stud},
   Un_grade in 'Un_grade.pas' {Frm_grade},
   Un_subject in 'Un_subject.pas' {Frm_subject},
+  Un_report in 'Un_report.pas' {Frm_report},
   Un_teacher in 'Un_teacher.pas' {Frm_teacher};
 
 {$R *.res}
@@ -20,6 +21,7 @@ begin
   Application.CreateForm(TFrm_stud, Frm_stud);
   Application.CreateForm(TFrm_grade, Frm_grade);
   Application.CreateForm(TFrm_subject, Frm_subject);
+  Application.CreateForm(TFrm_report, Frm_report);
   Application.CreateForm(TFrm_teacher, Frm_teacher);
   Application.Run;
 end.
