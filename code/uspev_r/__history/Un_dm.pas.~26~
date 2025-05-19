@@ -20,6 +20,18 @@ type
     del_sub: TADOStoredProc;
     upd_subject: TADOStoredProc;
     ins_subject: TADOStoredProc;
+    StudQuery: TADOQuery;
+    StudDS: TDataSource;
+    sel_stud: TADOStoredProc;
+    ins_stud: TADOStoredProc;
+    upd_stud: TADOStoredProc;
+    del_stud: TADOStoredProc;
+    gradeQuery: TADOQuery;
+    gradeds: TDataSource;
+    sel_grade_by_t_fio: TADOStoredProc;
+    ins_grade: TADOStoredProc;
+    upd_grade: TADOStoredProc;
+    del_grade: TADOStoredProc;
   private
     { Private declarations }
   public

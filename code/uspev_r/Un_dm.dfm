@@ -514,4 +514,54 @@ object DM: TDM
     Left = 376
     Top = 368
   end
+  object reportQuery: TADOQuery
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      ' Grade.id_grade,'
+      ' Student.fio as stud_fio,'
+      ' Subject.name,'
+      ' Teacher.fio as teacher_fio,'
+      ' Grade.grade_value,'
+      ' Grade.date '
+      'from Grade '
+      'inner join Student on Student.id_student=Grade.id_student'
+      'inner join Subject on Grade.id_subject=Subject.id_subject'
+      'inner join Teacher on Teacher.id_teacher=grade.id_teacher'
+      'where 1=1')
+    Left = 440
+    Top = 72
+  end
+  object reportDS: TDataSource
+    DataSet = reportQuery
+    Left = 456
+    Top = 144
+  end
+  object report1: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'report1;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@d1'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end
+      item
+        Name = '@d2'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end>
+    Left = 472
+    Top = 208
+  end
 end

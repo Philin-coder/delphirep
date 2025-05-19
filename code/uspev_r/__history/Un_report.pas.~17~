@@ -1,0 +1,48 @@
+unit Un_report;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ComCtrls, StdCtrls, ExtCtrls, Grids, DBGrids, DBCtrls,db,ADODB;
+
+type
+  TFrm_report = class(TForm)
+    report_pc: TPageControl;
+    delTab: TTabSheet;
+    report_dataBox: TGroupBox;
+    report_btnBox: TGroupBox;
+    repoer_inpBox: TGroupBox;
+    report_selBtn: TButton;
+    reportGrid: TDBGrid;
+    report_data_b_lbl: TStaticText;
+    report_data_b_inp: TDateTimePicker;
+    report_data_e_lbl: TStaticText;
+    report_data_e_inp: TDateTimePicker;
+    procedure FormActivate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_report: TFrm_report;
+
+implementation
+
+uses Un_dm, Un_func;
+
+{$R *.dfm}
+
+procedure TFrm_report.FormActivate(Sender: TObject);
+begin
+  dm.reportQuery.Open;
+  dm.subjQuery.Open;
+  dm.gradeQuery.Open;
+  dm.teacherQuery.Open;
+  dm.StudQuery.Open;
+  AdjustDBGridColumnWidths('Frm_report',6000, 10);
+end;
+
+end.

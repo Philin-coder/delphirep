@@ -158,12 +158,14 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@name'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 255
+        Value = Null
       end>
     Left = 192
     Top = 184
@@ -177,6 +179,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@id_subject'
@@ -197,6 +200,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@id_subject'
@@ -224,12 +228,14 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@name'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 255
+        Value = Null
       end
       item
         Name = '@credits'
@@ -271,29 +277,289 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@group_name'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 255
+        Value = Null
       end>
     Left = 280
     Top = 200
   end
-  object ADOStoredProc2: TADOStoredProc
-    Parameters = <>
+  object ins_stud: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'ins_stud;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@fio'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 255
+        Value = Null
+      end
+      item
+        Name = '@group_name'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 255
+        Value = Null
+      end
+      item
+        Name = '@email'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 255
+        Value = Null
+      end>
     Left = 280
     Top = 248
   end
-  object ADOStoredProc3: TADOStoredProc
-    Parameters = <>
+  object upd_stud: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_stud;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@id_student'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@email'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 255
+        Value = Null
+      end>
     Left = 288
     Top = 304
   end
-  object ADOStoredProc4: TADOStoredProc
+  object del_stud: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'del_stud;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@id_student'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 288
+    Top = 360
+  end
+  object gradeQuery: TADOQuery
+    Connection = Connection
+    CursorType = ctStatic
     Parameters = <>
-    Left = 280
+    SQL.Strings = (
+      'select '
+      ' Grade.id_grade,'
+      ' Student.fio as stud_fio,'
+      ' Subject.name,'
+      ' Teacher.fio as teacher_fio,'
+      ' Grade.grade_value,'
+      ' Grade.date '
+      'from Grade '
+      'inner join Student on Student.id_student=Grade.id_student'
+      'inner join Subject on Grade.id_subject=Subject.id_subject'
+      'inner join Teacher on Teacher.id_teacher=grade.id_teacher'
+      'where 1=1'
+      '')
+    Left = 360
+    Top = 72
+  end
+  object gradeds: TDataSource
+    DataSet = gradeQuery
+    Left = 368
+    Top = 136
+  end
+  object sel_grade_by_t_fio: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_grade_by_t_fio;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@fio'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 255
+        Value = Null
+      end>
+    Left = 384
+    Top = 192
+  end
+  object ins_grade: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'ins_grade;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@id_student'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@id_subject'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@id_teacher'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@grade_value'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@date'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end>
+    Left = 368
+    Top = 256
+  end
+  object upd_grade: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_grade;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@id_grade'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@grade_value'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 368
+    Top = 312
+  end
+  object del_grade: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'del_grade;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@id_grade'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 376
     Top = 368
+  end
+  object reportQuery: TADOQuery
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      ' Grade.id_grade,'
+      ' Student.fio as stud_fio,'
+      ' Subject.name,'
+      ' Teacher.fio as teacher_fio,'
+      ' Grade.grade_value,'
+      ' Grade.date '
+      'from Grade '
+      'inner join Student on Student.id_student=Grade.id_student'
+      'inner join Subject on Grade.id_subject=Subject.id_subject'
+      'inner join Teacher on Teacher.id_teacher=grade.id_teacher'
+      'where 1=1')
+    Left = 440
+    Top = 72
+  end
+  object reportDS: TDataSource
+    DataSet = reportQuery
+    Left = 456
+    Top = 144
+  end
+  object report1: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'report1;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@d1'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end
+      item
+        Name = '@d2'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end>
+    Left = 472
+    Top = 208
   end
 end

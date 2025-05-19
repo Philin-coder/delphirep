@@ -1,0 +1,128 @@
+unit Un_report;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ComCtrls, StdCtrls, ExtCtrls, Grids, DBGrids, DBCtrls,db,ADODB;
+
+type
+  TFrm_report = class(TForm)
+    teacher_pc: TPageControl;
+    selTab: TTabSheet;
+    insTab: TTabSheet;
+    UpdTab: TTabSheet;
+    delTab: TTabSheet;
+    teacher_data_box: TGroupBox;
+    teacher_gr_box: TGroupBox;
+    TeacherbtnBox: TGroupBox;
+    TeacherinpBox: TGroupBox;
+    teacher_sel_btn: TButton;
+    teacher_fio_Radio: TRadioButton;
+    teacher_dep_Radio: TRadioButton;
+    teacher_reset_Radio: TRadioButton;
+    teacher_fnd_edit: TLabeledEdit;
+    teacher_cond_edit: TLabeledEdit;
+    teacherGrid: TDBGrid;
+    showsbdatabox: TGroupBox;
+    showsbDBLList: TDBLookupListBox;
+    teacher_btn_Box: TGroupBox;
+    teacher_inp_Box: TGroupBox;
+    insBtn: TButton;
+    ins_teacher_data_box: TGroupBox;
+    teacher_ins_Grid: TDBGrid;
+    fio_inp: TLabeledEdit;
+    dep_inp: TLabeledEdit;
+    upd_teacher_dataBox: TGroupBox;
+    upd_teacher_btnBox: TGroupBox;
+    upd_teacher_inpBox: TGroupBox;
+    teacher_upd_btn: TButton;
+    upd_teacher_Grid: TDBGrid;
+    upd_teacher_t_lbl: TStaticText;
+    upd_teacher_DBL: TDBLookupComboBox;
+    upd_teacher_dep_inp: TLabeledEdit;
+    del_teacher_dataBox: TGroupBox;
+    del_teacher_btnBox: TGroupBox;
+    del_teacher_inpBox: TGroupBox;
+    del_teacher_delBtn: TButton;
+    del_teacher_delGrid: TDBGrid;
+    del_teacher_t_lbl: TStaticText;
+    del_teacher_t_dbl: TDBLookupComboBox;
+    procedure FormActivate(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure del_teacher_delBtnClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_report: TFrm_report;
+
+implementation
+
+uses Un_dm, Un_func;
+
+{$R *.dfm}
+
+procedure TFrm_report.del_teacher_delBtnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (del_teacher_t_dbl.Text='')
+  );
+  if AreFieldsEmpty then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+    try
+      with dm.del_teacher do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@id_teacher').Value
+           :=dm.teacherQuery.FieldByName('id_teacher').AsString;
+           ExecProc;
+           dm.teacherQuery.Close;
+           dm.teacherQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+
+end;
+
+procedure TFrm_report.FormActivate(Sender: TObject);
+begin
+  dm.teacherQuery.Open;
+  dm.subjQuery.Open;
+  dm.StudQuery.Open;
+  dm.gradeQuery.Open;
+  AdjustDBGridColumnWidths('Frm_teacher',6000, 10);
+end;
+
+procedure TFrm_report.FormCreate(Sender: TObject);
+begin
+  Frm_teacher.KeyPreview:=true;
+  Frm_teacher.ShowHint:=true;
+  UniformizeButtonsSize(Self,  273, 25);
+  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+  UniformizeDBLookupListBox(Self, 'Arial', 10, clBlack, clWhite);
+  LoadFormState(Self);
+end;
+
+end.

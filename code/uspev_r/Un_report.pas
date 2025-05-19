@@ -1,0 +1,91 @@
+unit Un_report;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ComCtrls, StdCtrls, ExtCtrls, Grids, DBGrids, DBCtrls,db,ADODB;
+
+type
+  TFrm_report = class(TForm)
+    report_pc: TPageControl;
+    delTab: TTabSheet;
+    report_dataBox: TGroupBox;
+    report_btnBox: TGroupBox;
+    repoer_inpBox: TGroupBox;
+    report_selBtn: TButton;
+    reportGrid: TDBGrid;
+    report_data_b_lbl: TStaticText;
+    report_data_b_inp: TDateTimePicker;
+    report_data_e_lbl: TStaticText;
+    report_data_e_inp: TDateTimePicker;
+    procedure FormActivate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure report_selBtnClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_report: TFrm_report;
+
+implementation
+
+uses Un_dm, Un_func;
+
+{$R *.dfm}
+
+procedure TFrm_report.FormActivate(Sender: TObject);
+begin
+  dm.reportQuery.Open;
+  dm.subjQuery.Open;
+  dm.gradeQuery.Open;
+  dm.teacherQuery.Open;
+  dm.StudQuery.Open;
+  AdjustDBGridColumnWidths('Frm_report',6000, 10);
+end;
+
+procedure TFrm_report.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  SaveFormState(Self);
+  CloseAllQueriesOnDataModule('dm');
+end;
+
+procedure TFrm_report.FormCreate(Sender: TObject);
+begin
+  Frm_report.KeyPreview:=true;
+  Frm_report.ShowHint:=true;
+  UniformizeButtonsSize(Self,  273, 25);
+  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+  LoadFormState(Self);
+end;
+
+procedure TFrm_report.report_selBtnClick(Sender: TObject);
+begin
+   try
+    if not DM.Connection.Connected then
+      raise Exception.Create('Соединение с базой не установлено');
+
+    with DM.report1 do
+    begin
+      Close;
+           Parameters.ParamByName('@d1').Value
+           :=DateToStr_(report_data_b_inp.Date);
+           Parameters.ParamByName('@d2').Value
+           :=DateToStr_(report_data_e_inp.Date);
+      Open;
+       DM.reportQuery.Recordset:=dm.report1.Recordset;
+    end;
+  except
+    on E: EDatabaseError do
+      ShowMessage('Ошибка: ' + E.Message);
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
+end;
+
+end.

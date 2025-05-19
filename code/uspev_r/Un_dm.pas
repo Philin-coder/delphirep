@@ -32,6 +32,9 @@ type
     ins_grade: TADOStoredProc;
     upd_grade: TADOStoredProc;
     del_grade: TADOStoredProc;
+    reportQuery: TADOQuery;
+    reportDS: TDataSource;
+    report1: TADOStoredProc;
   private
     { Private declarations }
   public
