@@ -21,7 +21,7 @@ object Frm_grade: TFrm_grade
     Top = 0
     Width = 1037
     Height = 594
-    ActivePage = UpdTab
+    ActivePage = delTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
@@ -534,9 +534,9 @@ object Frm_grade: TFrm_grade
       end
     end
     object delTab: TTabSheet
-      Caption = #1059#1076#1072#1083#1077#1085#1080#1077'  '#1080#1085#1092#1086#1088#1080#1084#1072#1094#1080#1080' '#1086' '#1087#1088#1077#1087#1086#1076#1072#1074#1072#1090#1077#1083#1077
+      Caption = #1059#1076#1072#1083#1077#1085#1080#1077'  '#1080#1085#1092#1086#1088#1080#1084#1072#1094#1080#1080' '#1086#1073' '#1086#1094#1077#1085#1082#1077' '
       ImageIndex = 3
-      object del_teacher_dataBox: TGroupBox
+      object del_grade_dataBox: TGroupBox
         Left = 0
         Top = 105
         Width = 1029
@@ -599,23 +599,24 @@ object Frm_grade: TFrm_grade
             end>
         end
       end
-      object del_teacher_btnBox: TGroupBox
+      object del_grade_btnBox: TGroupBox
         Left = 0
         Top = 488
         Width = 1029
         Height = 78
         Align = alBottom
         TabOrder = 1
-        object del_teacher_delBtn: TButton
+        object del_grade_delBtn: TButton
           Left = 448
           Top = 40
           Width = 75
           Height = 25
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
+          OnClick = del_grade_delBtnClick
         end
       end
-      object del_teacher_inpBox: TGroupBox
+      object del_grade_inpBox: TGroupBox
         Left = 0
         Top = 0
         Width = 1029
@@ -623,24 +624,24 @@ object Frm_grade: TFrm_grade
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        object del_teacher_t_lbl: TStaticText
+        object del_grade_t_lbl: TStaticText
           Left = 16
           Top = 24
-          Width = 130
+          Width = 87
           Height = 17
-          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1087#1088#1077#1087#1086#1076#1072#1074#1072#1090#1077#1083#1103
+          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1086#1094#1077#1085#1082#1091
           TabOrder = 0
         end
-        object del_teacher_t_dbl: TDBLookupComboBox
+        object del_grade_t_dbl: TDBLookupComboBox
           Left = 16
           Top = 55
           Width = 1010
           Height = 21
           Align = alCustom
           Anchors = [akLeft, akRight]
-          KeyField = 'id_teacher'
-          ListField = 'fio'
-          ListSource = DM.teacherDS
+          KeyField = 'id_grade'
+          ListField = 'name'
+          ListSource = DM.gradeds
           TabOrder = 1
         end
       end

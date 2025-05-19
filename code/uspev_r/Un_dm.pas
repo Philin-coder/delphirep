@@ -31,7 +31,7 @@ type
     sel_grade_by_t_fio: TADOStoredProc;
     ins_grade: TADOStoredProc;
     upd_grade: TADOStoredProc;
-    ADOStoredProc4: TADOStoredProc;
+    del_grade: TADOStoredProc;
   private
     { Private declarations }
   public
