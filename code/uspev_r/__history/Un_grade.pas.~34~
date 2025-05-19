@@ -56,7 +56,6 @@ type
     grade_v_inp: TLabeledEdit;
     grade_v_grader: TUpDown;
     ins_date_grade_inp: TDateTimePicker;
-    Upd_grade_grader: TUpDown;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
@@ -66,7 +65,6 @@ type
     procedure grade_RadioClick(Sender: TObject);
     procedure grade_reset_RadioClick(Sender: TObject);
     procedure ins_grade_BtnClick(Sender: TObject);
-    procedure grade_upd_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -268,47 +266,6 @@ begin
     on E: Exception do
       ShowMessage('Ошибка: ' + E.Message);
   end;
-end;
-
-procedure TFrm_grade.grade_upd_btnClick(Sender: TObject);
-var
-  AreFieldsEmpty: Boolean;
-begin
-  AreFieldsEmpty:=(
-  (upd_grade_DBL.Text='')or
-  (Upd_grade_grader.Position=0)
-  );
-  if AreFieldsEmpty then
-  begin
-    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-    try
-      with dm.upd_grade do
-      begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@id_grade').Value :=
-           dm.gradeQuery.FieldByName('id_grade').AsString;
-           Parameters.ParamByName('@grade_value').Value:=
-           Upd_grade_grader.Position;
-           ExecProc;
-           dm.gradeQuery.Close;
-           dm.gradeQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-    end;
 end;
 
 procedure TFrm_grade.ins_grade_BtnClick(Sender: TObject);

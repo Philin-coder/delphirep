@@ -285,30 +285,7 @@ begin
     Beep;
     Exit;
   end;
-    try
-      with dm.upd_grade do
-      begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@id_grade').Value :=
-           dm.gradeQuery.FieldByName('id_grade').AsString;
-           Parameters.ParamByName('@grade_value').Value:=
-           Upd_grade_grader.Position;
-           ExecProc;
-           dm.gradeQuery.Close;
-           dm.gradeQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-    end;
+  
 end;
 
 procedure TFrm_grade.ins_grade_BtnClick(Sender: TObject);

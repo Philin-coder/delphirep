@@ -290,10 +290,7 @@ begin
       begin
         if not Connection.Connected then
           raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@id_grade').Value :=
-           dm.gradeQuery.FieldByName('id_grade').AsString;
-           Parameters.ParamByName('@grade_value').Value:=
-           Upd_grade_grader.Position;
+           Parameters.ParamByName('@Name_A').Value :=Autor_inp.Text;
            ExecProc;
            dm.gradeQuery.Close;
            dm.gradeQuery.Open;

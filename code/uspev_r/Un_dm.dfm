@@ -467,9 +467,31 @@ object DM: TDM
     Left = 368
     Top = 256
   end
-  object ADOStoredProc3: TADOStoredProc
-    Parameters = <>
-    Left = 384
+  object upd_grade: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_grade;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@id_grade'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@grade_value'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 368
     Top = 312
   end
   object ADOStoredProc4: TADOStoredProc

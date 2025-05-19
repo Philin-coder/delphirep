@@ -398,9 +398,9 @@ object Frm_grade: TFrm_grade
       end
     end
     object UpdTab: TTabSheet
-      Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1088#1077#1088#1086#1076#1072#1074#1072#1090#1077#1083#1077
+      Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1086#1094#1077#1085#1082#1077
       ImageIndex = 2
-      object upd_teacher_dataBox: TGroupBox
+      object upd_grade_dataBox: TGroupBox
         Left = 0
         Top = 123
         Width = 1029
@@ -463,23 +463,24 @@ object Frm_grade: TFrm_grade
             end>
         end
       end
-      object upd_teacher_btnBox: TGroupBox
+      object upd_grade_btnBox: TGroupBox
         Left = 0
         Top = 512
         Width = 1029
         Height = 54
         Align = alBottom
         TabOrder = 1
-        object teacher_upd_btn: TButton
+        object grade_upd_btn: TButton
           Left = 424
           Top = 16
           Width = 75
           Height = 25
           Caption = #1048#1079#1084#1077#1085#1080#1090#1100
           TabOrder = 0
+          OnClick = grade_upd_btnClick
         end
       end
-      object upd_teacher_inpBox: TGroupBox
+      object upd_grade_inpBox: TGroupBox
         Left = 0
         Top = 0
         Width = 1029
@@ -490,36 +491,45 @@ object Frm_grade: TFrm_grade
         DesignSize = (
           1029
           123)
-        object upd_teacher_t_lbl: TStaticText
+        object upd_grade_lbl: TStaticText
           Left = 16
           Top = 16
-          Width = 130
+          Width = 94
           Height = 17
-          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1087#1088#1077#1087#1086#1076#1072#1074#1072#1090#1077#1083#1103
+          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1087#1088#1077#1076#1084#1077#1090
           TabOrder = 0
         end
-        object upd_teacher_DBL: TDBLookupComboBox
+        object upd_grade_DBL: TDBLookupComboBox
           Left = 16
           Top = 39
           Width = 1010
           Height = 21
           Align = alCustom
           Anchors = [akLeft, akRight]
-          KeyField = 'id_teacher'
-          ListField = 'fio'
-          ListSource = DM.teacherDS
+          KeyField = 'id_grade'
+          ListField = 'name'
+          ListSource = DM.gradeds
           TabOrder = 1
         end
-        object upd_teacher_dep_inp: TLabeledEdit
+        object upd_grade_inp: TLabeledEdit
           Left = 16
           Top = 84
-          Width = 1010
+          Width = 978
           Height = 21
           Anchors = [akLeft, akRight]
-          EditLabel.Width = 67
+          EditLabel.Width = 38
           EditLabel.Height = 13
-          EditLabel.Caption = #1053#1072#1087#1088#1072#1074#1083#1077#1085#1080#1077
+          EditLabel.Caption = #1054#1094#1077#1085#1082#1072
           TabOrder = 2
+          Text = '0'
+        end
+        object Upd_grade_grader: TUpDown
+          Left = 994
+          Top = 84
+          Width = 16
+          Height = 21
+          Associate = upd_grade_inp
+          TabOrder = 3
         end
       end
     end
