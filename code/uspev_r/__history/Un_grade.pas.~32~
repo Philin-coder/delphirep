@@ -285,34 +285,7 @@ begin
     Beep;
     Exit;
   end;
-   try
-      with dm.ins_grade do
-      begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@id_student').Value :=
-           dm.StudQuery.FieldByName('id_student').AsString;
-           Parameters.ParamByName('@id_subject').Value:=
-           dm.subjQuery.FieldByName('id_subject').AsString;
-           Parameters.ParamByName('@id_teacher').Value:=
-           dm.teacherQuery.FieldByName('id_teacher').AsString;
-           Parameters.ParamByName('@grade_value').Value:=grade_v_grader.Position;
-           Parameters.ParamByName('@date').Value:=ins_date_grade_inp.Date;
-           ExecProc;
-           dm.gradeQuery.Close;
-           dm.gradeQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-    end;
+
 end;
 
 end.

@@ -408,18 +408,62 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@fio'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 255
+        Value = Null
       end>
     Left = 384
     Top = 192
   end
-  object ADOStoredProc2: TADOStoredProc
-    Parameters = <>
+  object ins_grade: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'ins_grade;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@id_student'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@id_subject'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@id_teacher'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@grade_value'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@date'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end>
     Left = 368
     Top = 256
   end

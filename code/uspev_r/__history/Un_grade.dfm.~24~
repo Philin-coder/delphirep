@@ -100,20 +100,22 @@ object Frm_grade: TFrm_grade
         object grade_fio_Radio: TRadioButton
           Left = 56
           Top = 40
-          Width = 137
+          Width = 201
           Height = 17
           Align = alCustom
-          Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1060#1048#1054
+          Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '#1060#1048#1054' c'#1090#1091#1076#1077#1085#1090#1072
           TabOrder = 0
+          OnClick = grade_fio_RadioClick
         end
-        object grade_dep_Radio: TRadioButton
+        object grade_Radio: TRadioButton
           Left = 376
           Top = 40
           Width = 113
           Height = 17
           Align = alCustom
-          Caption = #1055#1086' '#1085#1072#1087#1088#1072#1074#1083#1077#1085#1080#1102
+          Caption = #1055#1086' '#1086#1094#1077#1085#1082#1077
           TabOrder = 1
+          OnClick = grade_RadioClick
         end
         object grade_reset_Radio: TRadioButton
           Left = 776
@@ -123,6 +125,7 @@ object Frm_grade: TFrm_grade
           Align = alCustom
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 2
+          OnClick = grade_reset_RadioClick
         end
       end
       object gradebtnBox: TGroupBox
@@ -163,6 +166,7 @@ object Frm_grade: TFrm_grade
           EditLabel.Height = 13
           EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1060#1048#1054' '#1089#1090#1091#1076#1077#1085#1090#1072
           TabOrder = 0
+          OnKeyPress = grade_fnd_editKeyPress
         end
         object grade_cond_edit: TLabeledEdit
           Left = 3
@@ -190,6 +194,9 @@ object Frm_grade: TFrm_grade
           Width = 1025
           Height = 82
           Align = alClient
+          KeyField = 'id_grade'
+          ListField = 'stud_fio;grade_value; date'
+          ListSource = DM.gradeds
           TabOrder = 0
         end
       end

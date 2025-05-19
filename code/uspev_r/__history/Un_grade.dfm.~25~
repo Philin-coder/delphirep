@@ -21,7 +21,7 @@ object Frm_grade: TFrm_grade
     Top = 0
     Width = 1037
     Height = 594
-    ActivePage = selTab
+    ActivePage = insTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
@@ -107,14 +107,15 @@ object Frm_grade: TFrm_grade
           TabOrder = 0
           OnClick = grade_fio_RadioClick
         end
-        object grade_dep_Radio: TRadioButton
+        object grade_Radio: TRadioButton
           Left = 376
           Top = 40
           Width = 113
           Height = 17
           Align = alCustom
-          Caption = #1055#1086' '#1085#1072#1087#1088#1072#1074#1083#1077#1085#1080#1102
+          Caption = #1055#1086' '#1086#1094#1077#1085#1082#1077
           TabOrder = 1
+          OnClick = grade_RadioClick
         end
         object grade_reset_Radio: TRadioButton
           Left = 776
@@ -124,6 +125,7 @@ object Frm_grade: TFrm_grade
           Align = alCustom
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 2
+          OnClick = grade_reset_RadioClick
         end
       end
       object gradebtnBox: TGroupBox
@@ -192,6 +194,9 @@ object Frm_grade: TFrm_grade
           Width = 1025
           Height = 82
           Align = alClient
+          KeyField = 'id_grade'
+          ListField = 'stud_fio;grade_value; date'
+          ListSource = DM.gradeds
           TabOrder = 0
         end
       end
@@ -297,6 +302,10 @@ object Frm_grade: TFrm_grade
     object UpdTab: TTabSheet
       Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1088#1077#1088#1086#1076#1072#1074#1072#1090#1077#1083#1077
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object upd_teacher_dataBox: TGroupBox
         Left = 0
         Top = 123
@@ -404,6 +413,10 @@ object Frm_grade: TFrm_grade
     object delTab: TTabSheet
       Caption = #1059#1076#1072#1083#1077#1085#1080#1077'  '#1080#1085#1092#1086#1088#1080#1084#1072#1094#1080#1080' '#1086' '#1087#1088#1077#1087#1086#1076#1072#1074#1072#1090#1077#1083#1077
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object del_teacher_dataBox: TGroupBox
         Left = 0
         Top = 105

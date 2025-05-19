@@ -23,17 +23,21 @@ type
     grade_reset_Radio: TRadioButton;
     grade_fnd_edit: TLabeledEdit;
     grade_cond_edit: TLabeledEdit;
-    sel_gradeGrid: TDBGrid;
+    gradeGrid: TDBGrid;
     showsbdatabox: TGroupBox;
     showsbDBLList: TDBLookupListBox;
-    grade_btn_Box: TGroupBox;
-    grade_inp_Box: TGroupBox;
-    ins_grade_Btn: TButton;
-    ins_grade_data_box: TGroupBox;
+    teacher_btn_Box: TGroupBox;
+    teacher_inp_Box: TGroupBox;
+    insBtn: TButton;
+    ins_teacher_data_box: TGroupBox;
+    teacher_ins_Grid: TDBGrid;
+    fio_inp: TLabeledEdit;
+    dep_inp: TLabeledEdit;
     upd_teacher_dataBox: TGroupBox;
     upd_teacher_btnBox: TGroupBox;
     upd_teacher_inpBox: TGroupBox;
     teacher_upd_btn: TButton;
+    upd_teacher_Grid: TDBGrid;
     upd_teacher_t_lbl: TStaticText;
     upd_teacher_DBL: TDBLookupComboBox;
     upd_teacher_dep_inp: TLabeledEdit;
@@ -41,21 +45,9 @@ type
     del_teacher_btnBox: TGroupBox;
     del_teacher_inpBox: TGroupBox;
     del_teacher_delBtn: TButton;
+    del_teacher_delGrid: TDBGrid;
     del_teacher_t_lbl: TStaticText;
     del_teacher_t_dbl: TDBLookupComboBox;
-    ins_grade_Grid: TDBGrid;
-    upd_grade_Grid: TDBGrid;
-    Del_grade_Grid: TDBGrid;
-    id_stud_lbl: TStaticText;
-    ins_grade_dater_lbl: TStaticText;
-    ins_grade_subj_lbl: TStaticText;
-    ins_grade_teacher_lbl: TStaticText;
-    ins_stud_grade_inp: TDBLookupComboBox;
-    ins_subj_grade_inp: TDBLookupComboBox;
-    ins_teacher_grade_inp: TDBLookupComboBox;
-    grade_v_inp: TLabeledEdit;
-    grade_v_grader: TUpDown;
-    ins_date_grade_inp: TDateTimePicker;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
@@ -64,7 +56,6 @@ type
     procedure grade_fio_RadioClick(Sender: TObject);
     procedure grade_RadioClick(Sender: TObject);
     procedure grade_reset_RadioClick(Sender: TObject);
-    procedure ins_grade_BtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -266,53 +257,6 @@ begin
     on E: Exception do
       ShowMessage('Ошибка: ' + E.Message);
   end;
-end;
-
-procedure TFrm_grade.ins_grade_BtnClick(Sender: TObject);
-var
-  AreFieldsEmpty: Boolean;
-begin
-  AreFieldsEmpty:=(
-  (ins_stud_grade_inp.Text='') or
-  (ins_subj_grade_inp.Text='')or
-  (ins_teacher_grade_inp.Text='')or
-  (grade_v_grader.Position=0)
-  );
-  if AreFieldsEmpty then
-  begin
-    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-   try
-      with dm.ins_grade do
-      begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@id_student').Value :=
-           dm.StudQuery.FieldByName('id_student').AsString;
-           Parameters.ParamByName('@id_subject').Value:=
-           dm.subjQuery.FieldByName('id_subject').AsString;
-           Parameters.ParamByName('@id_teacher').Value:=
-           dm.teacherQuery.FieldByName('id_teacher').AsString;
-           Parameters.ParamByName('@grade_value').Value:=grade_v_grader.Position;
-           Parameters.ParamByName('@date').Value:=ins_date_grade_inp.Date;
-           ExecProc;
-           dm.gradeQuery.Close;
-           dm.gradeQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-    end;
 end;
 
 end.

@@ -29,7 +29,7 @@ type
     gradeQuery: TADOQuery;
     gradeds: TDataSource;
     sel_grade_by_t_fio: TADOStoredProc;
-    ADOStoredProc2: TADOStoredProc;
+    ins_grade: TADOStoredProc;
     ADOStoredProc3: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;
   private
