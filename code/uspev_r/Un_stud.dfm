@@ -21,7 +21,7 @@ object Frm_stud: TFrm_stud
     Top = 0
     Width = 1037
     Height = 594
-    ActivePage = delTab
+    ActivePage = selTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
@@ -171,7 +171,7 @@ object Frm_stud: TFrm_stud
         Width = 1029
         Height = 105
         Align = alTop
-        Caption = #1055#1088#1086#1089#1084#1086#1090#1088' '#1096#1090#1072#1090#1072'  '#1087#1086' '#1087#1088#1077#1076#1084#1077#1090#1072#1084
+        Caption = #1055#1088#1086#1089#1084#1086#1090#1088' '#1089#1090#1091#1076#1077#1085#1090#1086#1074'  '#1087#1086' '#1082#1086#1085#1090#1072#1082#1090#1085#1099#1084' '#1076#1072#1085#1085#1099#1084
         TabOrder = 4
         object showsbDBLList: TDBLookupListBox
           Left = 2
@@ -179,6 +179,9 @@ object Frm_stud: TFrm_stud
           Width = 1025
           Height = 82
           Align = alClient
+          KeyField = 'id_student'
+          ListField = ' email'
+          ListSource = DM.StudDS
           TabOrder = 0
         end
       end

@@ -21,15 +21,11 @@ object Frm_subject: TFrm_subject
     Top = 0
     Width = 1037
     Height = 594
-    ActivePage = insTab
+    ActivePage = selTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
       Caption = #1042#1099#1073#1086#1088' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1087#1088#1077#1076#1084#1077#1090#1077
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object sel_subj_data_box: TGroupBox
         Left = 0
         Top = 331
@@ -169,7 +165,7 @@ object Frm_subject: TFrm_subject
         Width = 1029
         Height = 105
         Align = alTop
-        Caption = #1055#1088#1086#1089#1084#1086#1090#1088' '#1096#1090#1072#1090#1072'  '#1087#1086' '#1087#1088#1077#1076#1084#1077#1090#1072#1084
+        Caption = #1055#1088#1086#1089#1084#1086#1090#1088' '#1096#1090#1072#1090#1072'  '#1087#1086' '#1085#1072#1075#1091#1088#1091#1079#1082#1077
         TabOrder = 4
         object showsbDBLList: TDBLookupListBox
           Left = 2
@@ -177,6 +173,9 @@ object Frm_subject: TFrm_subject
           Width = 1025
           Height = 82
           Align = alClient
+          KeyField = 'id_subject'
+          ListField = 'name; credits'
+          ListSource = DM.subjDS
           TabOrder = 0
         end
       end
@@ -407,10 +406,6 @@ object Frm_subject: TFrm_subject
     object delTab: TTabSheet
       Caption = #1059#1076#1072#1083#1077#1085#1080#1077'  '#1080#1085#1092#1086#1088#1080#1084#1072#1094#1080#1080' '#1086' '#1087#1088#1077#1076#1084#1077#1090#1077
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object del_subj_dataBox: TGroupBox
         Left = 0
         Top = 105

@@ -194,6 +194,9 @@ object Frm_grade: TFrm_grade
           Width = 1025
           Height = 82
           Align = alClient
+          KeyField = 'id_grade'
+          ListField = 'stud_fio;grade_value; date'
+          ListSource = DM.gradeds
           TabOrder = 0
         end
       end
