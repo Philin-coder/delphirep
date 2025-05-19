@@ -174,8 +174,6 @@ var FormWidth, FormHeight: Integer;
  var FormColor: TColor;
   var FontName: string;
   var FontSize: Integer);
-  procedure UniformizeDBLookupListBox(AForm: TForm; const FontName: string;
-   FontSize: Integer; FontColor: TColor; BkColor: TColor);
 
 implementation
 type
@@ -3128,21 +3126,28 @@ begin
     IniFile.Free;
   end;
 end;
-   procedure UniformizeDBLookupListBox(AForm: TForm; const FontName: string;
-   FontSize: Integer; FontColor: TColor; BkColor: TColor);
+   procedure UniformizeDBLookupListBox(AForm: TForm; const FontName: string; FontSize: Integer; FontColor: TColor; BkColor: TColor);
 var
   i: Integer;
   DBLookupListBox: TDBLookupListBox;
 begin
+  // Проходим по всем компонентам формы
   for i := 0 to AForm.ComponentCount - 1 do
   begin
+    // Проверяем, является ли компонент TDBLookupListBox
     if AForm.Components[i] is TDBLookupListBox then
     begin
       DBLookupListBox := TDBLookupListBox(AForm.Components[i]);
+
+      // Устанавливаем настройки шрифта
       DBLookupListBox.Font.Name := FontName;
       DBLookupListBox.Font.Size := FontSize;
       DBLookupListBox.Font.Color := FontColor;
+
+      // Устанавливаем цвет фона
       DBLookupListBox.Color := BkColor;
+
+      // Обновляем компонент
       DBLookupListBox.Refresh;
     end;
   end;

@@ -136,6 +136,7 @@ begin
   UniformizeButtonsSize(Self,  273, 25);
   UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+  UniformizeDBLookupListBox(Self, 'Arial', 10, clBlack, clWhite);
   LoadFormState(Self);
 end;
 
