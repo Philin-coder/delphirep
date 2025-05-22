@@ -1,0 +1,46 @@
+unit Un_user;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs,DB,ADODB;
+
+type
+  TFrm_user = class(TForm)
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_user: TFrm_user;
+
+implementation
+
+uses Un_dm, Un_func;
+
+{$R *.dfm}
+
+procedure TFrm_user.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+   SaveFormState(Self);
+   CloseAllQueriesOnDataModule('dm');
+   Action := caFree;
+end;
+
+procedure TFrm_user.FormCreate(Sender: TObject);
+begin
+  Frm_user.KeyPreview:=true;
+  Frm_user.ShowHint:=true;
+  UniformizeButtonsSize(Self,  273, 25);
+  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+  UniformizeDBLookupListBox(Self, 'Arial', 10, clBlack, clWhite);
+  LoadFormState(Self);
+end;
+
+end.

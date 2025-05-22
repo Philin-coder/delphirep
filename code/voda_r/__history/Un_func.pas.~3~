@@ -174,9 +174,9 @@ var FormWidth, FormHeight: Integer;
  var FormColor: TColor;
   var FontName: string;
   var FontSize: Integer);
-  procedure UniformizeDBLookupListBox(AForm: TForm; const FontName: string;
+procedure UniformizeDBLookupListBox(AForm: TForm; const FontName: string;
    FontSize: Integer; FontColor: TColor; BkColor: TColor);
-procedure AdjustChildFormSize(AForm: TForm; AMDIForm: TForm);
+procedure AdjustChildFormSize(const AForm: TForm; const AMDIFormName: string);
 implementation
 type
   tdata = array [0..15] of DWORD;
@@ -3147,29 +3147,35 @@ begin
     end;
   end;
 end;
-
-procedure AdjustChildFormSize(AForm: TForm; AMDIForm: TForm);
+procedure CreateAndShowMDIChildForm(const FormName, CaptionText: string;
+  Color: TColor; Width, Height: Integer);
+var
+  ChildForm: TForm;
 begin
-  if not Assigned(AForm) or not Assigned(AMDIForm) then
-    raise Exception.Create('Форма или MDI-контейнер не назначены.');
+  try
+    // Создание экземпляра формы
+    ChildForm := TForm.Create(Application);
+    try
+      // Настройка свойств формы
+      UpdateFormProperties(FormName, CaptionText, Color, Width, Height);
+      ChildForm.FormStyle := fsMDIChild;
 
-  // Устанавливаем максимальный размер дочерней формы
-  AForm.Width := Min(AMDIForm.ClientWidth, AForm.Width);
-  AForm.Height := Min(AMDIForm.ClientHeight, AForm.Height);
-
-  // Устанавливаем позицию дочерней формы внутри MDI-контейнера
-  AForm.Left := (AMDIForm.ClientWidth - AForm.Width) div 2;
-  AForm.Top := (AMDIForm.ClientHeight - AForm.Height) div 2;
-
-  // Если форма должна быть развернута, проверяем её размеры
-  if AForm.WindowState = wsMaximized then
-  begin
-    AForm.Width := AMDIForm.ClientWidth;
-    AForm.Height := AMDIForm.ClientHeight;
-    AForm.Left := 0;
-    AForm.Top := 0;
+      // Отображение формы
+      ChildForm.Show;
+    except
+      // В случае ошибки освобождаем форму
+      ChildForm.Free;
+      raise;
+    end;
+  except
+    on E: Exception do
+    begin
+      // Обработка ошибки
+      ShowMessage('Ошибка при создании формы: ' + E.Message);
+    end;
   end;
 end;
+
 initialization
   VisitedStaticTexts := TStringList.Create;
 finalization

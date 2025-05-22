@@ -15,7 +15,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure user_itemClick(Sender: TObject);
   private
-procedure CreateAndShowChildForm;
+    { Private declarations }
   public
     { Public declarations }
   end;
@@ -31,23 +31,6 @@ const
 
 
 {$R *.dfm}
-procedure TFrm_main.CreateAndShowChildForm;
-begin
-  try
-    UpdateFormProperties('Frm_user', 'Форма работы с данными пользователя',
-      clBtnFace, 1024, 768);
-    Frm_user.FormStyle := fsMDIChild;
-    Frm_user.Show;
-
-    AdjustChildFormSize(Frm_user, Self);
-  except
-    on E: Exception do
-    begin
-      ShowMessage('Ошибка: ' + E.Message);
-      Frm_user.Release;
-    end;
-  end;
-end;
 
 procedure TFrm_main.FormActivate(Sender: TObject);
 begin
@@ -67,7 +50,18 @@ end;
 
 procedure TFrm_main.user_itemClick(Sender: TObject);
 begin
-    CreateAndShowChildForm;
+  try
+  UpdateFormProperties('Frm_user', 'Форма работы с данными пользователя',
+    clBtnFace, 1024, 768);
+  Frm_user.FormStyle := fsMDIChild;
+  Frm_user.Show;
+except
+  on E: Exception do
+  begin
+    ShowMessage('Ошибка: ' + E.Message);
+    Frm_user.Release; 
+  end;
+end;
 end;
 
 end.

@@ -32,20 +32,20 @@ const
 
 {$R *.dfm}
 procedure TFrm_main.CreateAndShowChildForm;
+var
+  ChildForm: TForm;
 begin
+  ChildForm := TForm.Create(Self);
   try
-    UpdateFormProperties('Frm_user', 'Форма работы с данными пользователя',
-      clBtnFace, 1024, 768);
-    Frm_user.FormStyle := fsMDIChild;
-    Frm_user.Show;
+    ChildForm.FormStyle := fsMDIChild;
+    ChildForm.Caption := 'Дочерняя форма';
+    ChildForm.Show;
 
-    AdjustChildFormSize(Frm_user, Self);
+    // Корректируем размер дочерней формы
+    AdjustChildFormSize(ChildForm, Self); // Self — это MDI-контейнер
   except
-    on E: Exception do
-    begin
-      ShowMessage('Ошибка: ' + E.Message);
-      Frm_user.Release;
-    end;
+    ChildForm.Free;
+    raise;
   end;
 end;
 
@@ -67,7 +67,18 @@ end;
 
 procedure TFrm_main.user_itemClick(Sender: TObject);
 begin
-    CreateAndShowChildForm;
+  try
+  UpdateFormProperties('Frm_user', 'Форма работы с данными пользователя',
+    clBtnFace, 1024, 768);
+  Frm_user.FormStyle := fsMDIChild;
+  Frm_user.Show;
+except
+  on E: Exception do
+  begin
+    ShowMessage('Ошибка: ' + E.Message);
+    Frm_user.Release; 
+  end;
+end;
 end;
 
 end.

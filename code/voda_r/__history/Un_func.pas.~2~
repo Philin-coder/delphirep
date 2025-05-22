@@ -174,9 +174,9 @@ var FormWidth, FormHeight: Integer;
  var FormColor: TColor;
   var FontName: string;
   var FontSize: Integer);
-  procedure UniformizeDBLookupListBox(AForm: TForm; const FontName: string;
+procedure UniformizeDBLookupListBox(AForm: TForm; const FontName: string;
    FontSize: Integer; FontColor: TColor; BkColor: TColor);
-procedure AdjustChildFormSize(AForm: TForm; AMDIForm: TForm);
+procedure AdjustChildFormSize(const AForm: TForm; const AMDIFormName: string);
 implementation
 type
   tdata = array [0..15] of DWORD;
@@ -3147,21 +3147,22 @@ begin
     end;
   end;
 end;
-
-procedure AdjustChildFormSize(AForm: TForm; AMDIForm: TForm);
+procedure AdjustChildFormSize(const AForm: TForm; const AMDIFormName: string);
+var
+  AMDIForm: TForm;
 begin
-  if not Assigned(AForm) or not Assigned(AMDIForm) then
-    raise Exception.Create('‘орма или MDI-контейнер не назначены.');
+  if not Assigned(AForm) then
+    raise Exception.Create('ƒочерн€€ форма не назначена.');
+  AMDIForm := FindFormByName(AMDIFormName);
+  if not Assigned(AMDIForm) then
+    raise Exception.CreateFmt('MDI-форма с именем "%s" не найдена.', [AMDIFormName]);
 
-  // ”станавливаем максимальный размер дочерней формы
   AForm.Width := Min(AMDIForm.ClientWidth, AForm.Width);
   AForm.Height := Min(AMDIForm.ClientHeight, AForm.Height);
-
-  // ”станавливаем позицию дочерней формы внутри MDI-контейнера
   AForm.Left := (AMDIForm.ClientWidth - AForm.Width) div 2;
   AForm.Top := (AMDIForm.ClientHeight - AForm.Height) div 2;
 
-  // ≈сли форма должна быть развернута, провер€ем еЄ размеры
+
   if AForm.WindowState = wsMaximized then
   begin
     AForm.Width := AMDIForm.ClientWidth;
@@ -3170,6 +3171,8 @@ begin
     AForm.Top := 0;
   end;
 end;
+
+
 initialization
   VisitedStaticTexts := TStringList.Create;
 finalization
