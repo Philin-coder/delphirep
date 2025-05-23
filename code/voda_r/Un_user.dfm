@@ -269,6 +269,39 @@ object Frm_user: TFrm_user
         ExplicitTop = 216
         ExplicitWidth = 185
         ExplicitHeight = 105
+        object u_upd_Grd: TDBGrid
+          Left = 2
+          Top = 15
+          Width = 1020
+          Height = 438
+          Align = alClient
+          DataSource = DM.userDS
+          TabOrder = 0
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWindowText
+          TitleFont.Height = -11
+          TitleFont.Name = 'Tahoma'
+          TitleFont.Style = []
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'userid'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'user_name'
+              Title.Caption = #1051#1086#1075#1080#1085
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'user_pass'
+              Title.Caption = #1055#1072#1088#1086#1083#1100
+              Visible = True
+            end>
+        end
       end
       object uupd_inpBox: TGroupBox
         Left = 0
@@ -278,6 +311,9 @@ object Frm_user: TFrm_user
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
+        DesignSize = (
+          1024
+          161)
         object u_username_lbl: TStaticText
           Left = 16
           Top = 32
@@ -285,6 +321,28 @@ object Frm_user: TFrm_user
           Height = 17
           Caption = #1042#1099#1073#1088#1072#1090#1100' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1103
           TabOrder = 0
+        end
+        object U_upd_DBL: TDBLookupComboBox
+          Left = 32
+          Top = 56
+          Width = 977
+          Height = 21
+          Anchors = [akLeft, akRight]
+          KeyField = 'userid'
+          ListField = 'user_name'
+          ListSource = DM.userDS
+          TabOrder = 1
+        end
+        object U_upd_pass_inp: TLabeledEdit
+          Left = 32
+          Top = 96
+          Width = 977
+          Height = 21
+          Anchors = [akLeft, akRight]
+          EditLabel.Width = 132
+          EditLabel.Height = 13
+          EditLabel.Caption = #1042#1074#1086#1076' '#1080#1084#1077#1085#1080' '#1087#1086#1083#1100#1079#1086#1074#1072#1077#1090#1083#1103
+          TabOrder = 2
         end
       end
       object useru_btntBox: TGroupBox
@@ -301,6 +359,7 @@ object Frm_user: TFrm_user
           Height = 25
           Caption = #1054#1073#1085#1086#1074#1080#1090#1100
           TabOrder = 0
+          OnClick = u_upd_BtnClick
         end
       end
     end
