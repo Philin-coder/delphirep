@@ -12,7 +12,7 @@ type
     userDS: TDataSource;
     upd_user: TADOStoredProc;
     ins_user: TADOStoredProc;
-    del_user: TADOStoredProc;
+    ADOStoredProc3: TADOStoredProc;
     sel_user_by_login: TADOStoredProc;
   private
     { Private declarations }

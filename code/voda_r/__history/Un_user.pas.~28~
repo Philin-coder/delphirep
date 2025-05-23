@@ -39,14 +39,6 @@ type
     u_upd_Grd: TDBGrid;
     U_upd_DBL: TDBLookupComboBox;
     U_upd_pass_inp: TLabeledEdit;
-    GroupBox1: TGroupBox;
-    U_delbtnBox: TGroupBox;
-    u_del_data_Box: TGroupBox;
-    U_del_lbl: TStaticText;
-    u_delDBL: TDBLookupComboBox;
-    StaticText1: TStaticText;
-    u_del_btn: TButton;
-    u_del_Grd: TDBGrid;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -57,7 +49,6 @@ type
     procedure resteRadioClick(Sender: TObject);
     procedure user_insBtnClick(Sender: TObject);
     procedure u_upd_BtnClick(Sender: TObject);
-    procedure u_del_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -271,44 +262,6 @@ begin
     on E: Exception do
       ShowMessage('Ошибка: ' + E.Message);
   end;
-end;
-
-procedure TFrm_user.u_del_btnClick(Sender: TObject);
-var
-  AreFieldsEmpty: Boolean;
-begin
-  AreFieldsEmpty:=(
-  (u_delDBL.Text='')
-  );
-  if AreFieldsEmpty then
-  begin
-    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-  try
-      with dm.del_user do
-      begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@userid').Value
-           :=dm.userQuery.FieldByName('userid').AsString;
-           ExecProc;
-           dm.userQuery.Close;
-           dm.userQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-    end;
 end;
 
 procedure TFrm_user.u_upd_BtnClick(Sender: TObject);
