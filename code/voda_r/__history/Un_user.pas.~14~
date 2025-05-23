@@ -4,18 +4,30 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs,DB,ADODB, ComCtrls;
+  Dialogs,DB,ADODB, ComCtrls, StdCtrls, ExtCtrls, Grids, DBGrids;
 
 type
   TFrm_user = class(TForm)
     userPC: TPageControl;
-    TabSheet1: TTabSheet;
+    selTab: TTabSheet;
     TabSheet2: TTabSheet;
     TabSheet3: TTabSheet;
-    TabSheet4: TTabSheet;
+    delTab: TTabSheet;
+    User_inp_boxBox: TGroupBox;
+    user_data_box: TGroupBox;
+    User_grouper: TGroupBox;
+    User_btn_Box: TGroupBox;
+    UserCondEdit: TLabeledEdit;
+    USERFNDEdit: TLabeledEdit;
+    User_sel_Btn: TButton;
+    sel_user_GRD: TDBGrid;
+    PassRadio: TRadioButton;
+    logRadio: TRadioButton;
+    resteRadio: TRadioButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
+    procedure User_sel_BtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -51,8 +63,27 @@ begin
   UniformizeButtonsSize(Self,  273, 25);
   UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
-  UniformizeDBLookupListBox(Self, 'Arial', 10, clBlack, clWhite);
   LoadFormState(Self);
+end;
+
+procedure TFrm_user.User_sel_BtnClick(Sender: TObject);
+begin
+   try
+    if not DM.Connection.Connected then
+      raise Exception.Create('Соединение с базой не установелено');
+    with DM.sel_user_by_login do
+    begin
+      Close;
+      Parameters.ParamByName('@user_name').Value :=usercondedit.Text;
+      Open;
+       DM.userQuery.Recordset:=dm.sel_user_by_login.Recordset;
+    end;
+  except
+    on E: EDatabaseError do
+      ShowMessage('Ошибка: ' + E.Message);
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
 end;
 
 end.

@@ -143,7 +143,6 @@ object Frm_user: TFrm_user
           Height = 17
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 2
-          OnClick = resteRadioClick
         end
       end
       object User_btn_Box: TGroupBox

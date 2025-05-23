@@ -134,7 +134,6 @@ object Frm_user: TFrm_user
           Height = 17
           Caption = #1055#1086' '#1083#1086#1075#1080#1085#1091
           TabOrder = 1
-          OnClick = logRadioClick
         end
         object resteRadio: TRadioButton
           Left = 664
@@ -143,7 +142,6 @@ object Frm_user: TFrm_user
           Height = 17
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 2
-          OnClick = resteRadioClick
         end
       end
       object User_btn_Box: TGroupBox

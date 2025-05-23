@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs,DB,ADODB, ComCtrls, StdCtrls;
+  Dialogs,DB,ADODB, ComCtrls, StdCtrls, ExtCtrls, Grids, DBGrids;
 
 type
   TFrm_user = class(TForm)
@@ -14,9 +14,13 @@ type
     TabSheet3: TTabSheet;
     delTab: TTabSheet;
     User_inp_boxBox: TGroupBox;
-    GroupBox2: TGroupBox;
-    GroupBox3: TGroupBox;
-    GroupBox4: TGroupBox;
+    user_data_box: TGroupBox;
+    User_grouper: TGroupBox;
+    User_btn_Box: TGroupBox;
+    UserCondEdit: TLabeledEdit;
+    USERFNDEdit: TLabeledEdit;
+    User_sel_Btn: TButton;
+    sel_user_GRD: TDBGrid;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -55,7 +59,6 @@ begin
   UniformizeButtonsSize(Self,  273, 25);
   UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
-  UniformizeDBLookupListBox(Self, 'Arial', 10, clBlack, clWhite);
   LoadFormState(Self);
 end;
 

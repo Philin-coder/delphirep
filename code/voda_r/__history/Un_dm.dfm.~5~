@@ -1,7 +1,7 @@
 object DM: TDM
   OldCreateOrder = False
   Height = 288
-  Width = 567
+  Width = 215
   object Connection: TADOConnection
     Connected = True
     ConnectionString = 
@@ -14,7 +14,6 @@ object DM: TDM
   end
   object userQuery: TADOQuery
     Connection = Connection
-    CursorType = ctStatic
     Parameters = <>
     SQL.Strings = (
       'select '
@@ -26,43 +25,29 @@ object DM: TDM
     Left = 56
     Top = 72
   end
-  object userDS: TDataSource
+  object DataSource1: TDataSource
     DataSet = userQuery
     Left = 64
     Top = 136
   end
   object ADOStoredProc1: TADOStoredProc
     Parameters = <>
-    Left = 168
-    Top = 232
+    Left = 80
+    Top = 192
   end
   object ADOStoredProc2: TADOStoredProc
     Parameters = <>
-    Left = 152
-    Top = 176
+    Left = 80
+    Top = 192
   end
   object ADOStoredProc3: TADOStoredProc
     Parameters = <>
-    Left = 152
-    Top = 80
+    Left = 80
+    Top = 192
   end
-  object sel_user_by_login: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'sel_user_by_login;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@user_name'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 1000
-      end>
-    Left = 72
-    Top = 200
+  object ADOStoredProc4: TADOStoredProc
+    Parameters = <>
+    Left = 80
+    Top = 192
   end
 end

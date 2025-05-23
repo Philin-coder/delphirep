@@ -4,12 +4,25 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs,DB,ADODB;
+  Dialogs,DB,ADODB, ComCtrls, StdCtrls, ExtCtrls;
 
 type
   TFrm_user = class(TForm)
+    userPC: TPageControl;
+    selTab: TTabSheet;
+    TabSheet2: TTabSheet;
+    TabSheet3: TTabSheet;
+    delTab: TTabSheet;
+    User_inp_boxBox: TGroupBox;
+    GroupBox2: TGroupBox;
+    GroupBox3: TGroupBox;
+    User_btn_Box: TGroupBox;
+    UserCondEdit: TLabeledEdit;
+    USERFNDEdit: TLabeledEdit;
+    User_sel_Btn: TButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -25,6 +38,12 @@ uses Un_dm, Un_func;
 
 {$R *.dfm}
 
+procedure TFrm_user.FormActivate(Sender: TObject);
+begin
+  dm.userQuery.Open;
+  AdjustDBGridColumnWidths('Frm_user',6000, 10)
+end;
+
 procedure TFrm_user.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
    SaveFormState(Self);
@@ -39,7 +58,6 @@ begin
   UniformizeButtonsSize(Self,  273, 25);
   UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
-  UniformizeDBLookupListBox(Self, 'Arial', 10, clBlack, clWhite);
   LoadFormState(Self);
 end;
 

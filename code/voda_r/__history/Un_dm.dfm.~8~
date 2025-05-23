@@ -1,7 +1,7 @@
 object DM: TDM
   OldCreateOrder = False
   Height = 288
-  Width = 567
+  Width = 215
   object Connection: TADOConnection
     Connected = True
     ConnectionString = 
@@ -33,18 +33,18 @@ object DM: TDM
   end
   object ADOStoredProc1: TADOStoredProc
     Parameters = <>
-    Left = 168
-    Top = 232
+    Left = 80
+    Top = 192
   end
   object ADOStoredProc2: TADOStoredProc
     Parameters = <>
-    Left = 152
-    Top = 176
+    Left = 80
+    Top = 192
   end
   object ADOStoredProc3: TADOStoredProc
     Parameters = <>
-    Left = 152
-    Top = 80
+    Left = 80
+    Top = 192
   end
   object sel_user_by_login: TADOStoredProc
     Connection = Connection
@@ -62,7 +62,7 @@ object DM: TDM
         DataType = ftWideString
         Size = 1000
       end>
-    Left = 72
-    Top = 200
+    Left = 80
+    Top = 192
   end
 end

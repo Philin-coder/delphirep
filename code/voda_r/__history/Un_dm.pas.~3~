@@ -9,11 +9,11 @@ type
   TDM = class(TDataModule)
     Connection: TADOConnection;
     userQuery: TADOQuery;
-    userDS: TDataSource;
+    DataSource1: TDataSource;
     ADOStoredProc1: TADOStoredProc;
     ADOStoredProc2: TADOStoredProc;
     ADOStoredProc3: TADOStoredProc;
-    sel_user_by_login: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public
@@ -24,8 +24,6 @@ var
   DM: TDM;
 
 implementation
-
-uses Un_user;
 
 {$R *.dfm}
 
