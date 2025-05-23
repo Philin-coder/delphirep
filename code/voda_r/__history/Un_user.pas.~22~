@@ -11,7 +11,7 @@ type
     userPC: TPageControl;
     selTab: TTabSheet;
     insTab: TTabSheet;
-    updTab: TTabSheet;
+    TabSheet3: TTabSheet;
     delTab: TTabSheet;
     User_inp_boxBox: TGroupBox;
     user_data_box: TGroupBox;
@@ -31,11 +31,6 @@ type
     user_log_inp: TLabeledEdit;
     user_pass_inp: TLabeledEdit;
     user_datagrd: TDBGrid;
-    u_upd_datapBox: TGroupBox;
-    uupd_inpBox: TGroupBox;
-    useru_btntBox: TGroupBox;
-    u_upd_Btn: TButton;
-    u_username_lbl: TStaticText;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);

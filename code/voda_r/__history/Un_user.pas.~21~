@@ -10,7 +10,7 @@ type
   TFrm_user = class(TForm)
     userPC: TPageControl;
     selTab: TTabSheet;
-    TabSheet2: TTabSheet;
+    insTab: TTabSheet;
     TabSheet3: TTabSheet;
     delTab: TTabSheet;
     User_inp_boxBox: TGroupBox;
@@ -24,11 +24,22 @@ type
     PassRadio: TRadioButton;
     logRadio: TRadioButton;
     resteRadio: TRadioButton;
+    user_gata_Box: TGroupBox;
+    userbtnBox: TGroupBox;
+    user_inp_Box: TGroupBox;
+    user_insBtn: TButton;
+    user_log_inp: TLabeledEdit;
+    user_pass_inp: TLabeledEdit;
+    user_datagrd: TDBGrid;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure User_sel_BtnClick(Sender: TObject);
     procedure USERFNDEditKeyPress(Sender: TObject; var Key: Char);
+    procedure PassRadioClick(Sender: TObject);
+    procedure logRadioClick(Sender: TObject);
+    procedure resteRadioClick(Sender: TObject);
+    procedure user_insBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -67,6 +78,103 @@ begin
   LoadFormState(Self);
 end;
 
+procedure TFrm_user.logRadioClick(Sender: TObject);
+begin
+  if  logRadio.Checked=true then
+  begin
+    try
+     with dm.userQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+     'select'+' '+
+   'usver.userid,'+' '+
+   'usver.user_name,'+' '+
+   'usver.user_pass'+' '+
+    'from usver'+' '+
+    'where 1=1'+' '+
+    'order by usver.user_name asc';
+      Open;
+     end;
+    except on E: EADOError do
+    begin
+      ShowMessage('Ошибка :'+' '+E.Message);
+    end;
+    end;
+  end;
+end;
+
+procedure TFrm_user.PassRadioClick(Sender: TObject);
+begin
+    if  passRadio.Checked=true then
+  begin
+    try
+     with dm.userQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+     'select'+' '+
+   'usver.userid,'+' '+
+   'usver.user_name,'+' '+
+   'usver.user_pass'+' '+
+    'from usver'+' '+
+    'where 1=1'+' '+
+    'order by usver.user_pass asc';
+      Open;
+     end;
+    except on E: EADOError do
+    begin
+      ShowMessage('Ошибка :'+' '+E.Message);
+    end;
+    end;
+  end;
+end;
+
+procedure TFrm_user.resteRadioClick(Sender: TObject);
+var i,j,c:Integer;
+begin
+  if resteRadio.Checked=true then
+with Frm_user do
+    for I := 0 to ComponentCount - 1 do
+     begin
+       if (Components[i] is TLabeledEdit)  then
+        begin
+          (Components[i] as TLabeledEdit).Clear;
+        end;
+     end;
+       with Frm_user do
+    for c := 0 to ComponentCount - 1 do
+     begin
+       if (Components[c] is TCheckBox)  then
+        begin
+          (Components[c] as TCheckBox).Checked:=False;
+        end;
+     end;
+     with dm.userQuery do
+     begin
+     Close;
+     sql.Clear;
+     sql.Text:=
+   'select'+' '+
+   'usver.userid,'+' '+
+   'usver.user_name,'+' '+
+   'usver.user_pass'+' '+
+    'from usver'+' '+
+    'where 1=1';
+  Open;
+     end;
+    with Frm_user do
+    for j := 0 to ComponentCount - 1 do
+    begin
+      if(Components[j] is TRadioButton)  then
+      begin
+        (Components[j] as TRadioButton).Checked:=False;
+      end;
+    end;
+end;
+
 procedure TFrm_user.USERFNDEditKeyPress(Sender: TObject; var Key: Char);
 begin
     try
@@ -76,7 +184,7 @@ begin
    'usver.user_name,'+' '+
    'usver.user_pass'+' '+
     'from usver'+' '+
-    'where 1=1'+
+    'where 1=1'+' '+
    'and usver.user_pass like'+
    QuotedStr(Concat(userfndedit.Text,#37));
    dm.userQuery.close;
@@ -86,6 +194,13 @@ except on E: Exception do
   ShowMessage('Ошибка'+' '+E.Message);
   end;
   end;
+end;
+
+procedure TFrm_user.user_insBtnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+begin
+
 end;
 
 procedure TFrm_user.User_sel_BtnClick(Sender: TObject);

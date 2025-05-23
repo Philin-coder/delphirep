@@ -31,7 +31,7 @@ type
     user_log_inp: TLabeledEdit;
     user_pass_inp: TLabeledEdit;
     user_datagrd: TDBGrid;
-    u_upd_datapBox: TGroupBox;
+    GroupBox1: TGroupBox;
     uupd_inpBox: TGroupBox;
     useru_btntBox: TGroupBox;
     u_upd_Btn: TButton;

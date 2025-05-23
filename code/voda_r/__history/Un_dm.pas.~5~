@@ -11,7 +11,7 @@ type
     userQuery: TADOQuery;
     userDS: TDataSource;
     ADOStoredProc1: TADOStoredProc;
-    ins_user: TADOStoredProc;
+    ADOStoredProc2: TADOStoredProc;
     ADOStoredProc3: TADOStoredProc;
     sel_user_by_login: TADOStoredProc;
   private
