@@ -18,7 +18,7 @@ type
     typeDS: TDataSource;
     sel_by_opis: TADOStoredProc;
     ADOStoredProc2: TADOStoredProc;
-    ins_type: TADOStoredProc;
+    ADOStoredProc3: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }

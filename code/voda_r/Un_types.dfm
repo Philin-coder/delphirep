@@ -21,7 +21,7 @@ object Frm_types: TFrm_types
     Top = 0
     Width = 1032
     Height = 708
-    ActivePage = selTab
+    ActivePage = insTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
@@ -167,19 +167,21 @@ object Frm_types: TFrm_types
     object insTab: TTabSheet
       Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1077
       ImageIndex = 1
-      object user_gata_Box: TGroupBox
+      object ins_type_data_Box: TGroupBox
         Left = 0
-        Top = 105
+        Top = 177
         Width = 1024
-        Height = 511
+        Height = 439
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object DBGrid1: TDBGrid
+        ExplicitTop = 105
+        ExplicitHeight = 511
+        object ins_type_Grd: TDBGrid
           Left = 2
           Top = 15
           Width = 1020
-          Height = 494
+          Height = 422
           Align = alClient
           DataSource = DM.typeDS
           TabOrder = 0
@@ -229,40 +231,52 @@ object Frm_types: TFrm_types
           Height = 25
           Caption = #1042#1074#1086#1076
           TabOrder = 0
+          OnClick = user_insBtnClick
         end
       end
-      object user_inp_Box: TGroupBox
+      object ins_type_inp_Box: TGroupBox
         Left = 0
         Top = 0
         Width = 1024
-        Height = 105
+        Height = 177
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1085#1085#1099#1093
         TabOrder = 2
         DesignSize = (
           1024
-          105)
-        object user_log_inp: TLabeledEdit
-          Left = 0
-          Top = 32
+          177)
+        object ins_type_opis_inp: TLabeledEdit
+          Left = 3
+          Top = 45
           Width = 977
           Height = 21
           Anchors = [akLeft, akRight]
-          EditLabel.Width = 132
+          EditLabel.Width = 125
           EditLabel.Height = 13
-          EditLabel.Caption = #1042#1074#1086#1076' '#1080#1084#1077#1085#1080' '#1087#1086#1083#1100#1079#1086#1074#1072#1077#1090#1083#1103
+          EditLabel.Caption = #1042#1074#1086#1076' '#1086#1087#1080#1089#1072#1085#1080#1103' '#1089#1095#1077#1090#1095#1080#1082#1072
           TabOrder = 0
         end
-        object user_pass_inp: TLabeledEdit
-          Left = 0
-          Top = 72
+        object ins_type_mechan_inp: TLabeledEdit
+          Left = 3
+          Top = 88
           Width = 977
           Height = 21
           Anchors = [akLeft, akRight]
-          EditLabel.Width = 144
+          EditLabel.Width = 108
           EditLabel.Height = 13
-          EditLabel.Caption = #1042#1074#1086#1074#1076' '#1087#1072#1088#1086#1083#1103' '#1087#1086#1083#1100#1079#1086#1074#1072#1077#1090#1083#1103
+          EditLabel.Caption = #1042#1074#1086#1076' '#1090#1080#1087#1072' '#1084#1077#1093#1072#1085#1080#1079#1084#1072
           TabOrder = 1
+        end
+        object ins_type_tochn_inp: TLabeledEdit
+          Left = 2
+          Top = 134
+          Width = 977
+          Height = 21
+          Anchors = [akLeft, akRight]
+          EditLabel.Width = 75
+          EditLabel.Height = 13
+          EditLabel.Caption = #1042#1074#1086#1076' '#1090#1086#1095#1085#1086#1089#1090#1080
+          TabOrder = 2
         end
       end
     end

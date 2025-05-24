@@ -24,12 +24,12 @@ type
     type_opisRadio: TRadioButton;
     type_m_Radio: TRadioButton;
     type_resetRadio: TRadioButton;
-    ins_type_data_Box: TGroupBox;
+    user_gata_Box: TGroupBox;
     userbtnBox: TGroupBox;
-    ins_type_inp_Box: TGroupBox;
+    user_inp_Box: TGroupBox;
     user_insBtn: TButton;
-    ins_type_opis_inp: TLabeledEdit;
-    ins_type_mechan_inp: TLabeledEdit;
+    user_log_inp: TLabeledEdit;
+    user_pass_inp: TLabeledEdit;
     u_upd_datapBox: TGroupBox;
     uupd_inpBox: TGroupBox;
     useru_btntBox: TGroupBox;
@@ -44,10 +44,9 @@ type
     u_delDBL: TDBLookupComboBox;
     StaticText1: TStaticText;
     u_del_btn: TButton;
-    ins_type_Grd: TDBGrid;
+    DBGrid1: TDBGrid;
     DBGrid2: TDBGrid;
     DBGrid3: TDBGrid;
-    ins_type_tochn_inp: TLabeledEdit;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -56,7 +55,6 @@ type
     procedure type_opisRadioClick(Sender: TObject);
     procedure type_m_RadioClick(Sender: TObject);
     procedure type_resetRadioClick(Sender: TObject);
-    procedure user_insBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -236,56 +234,6 @@ begin
     on E: Exception do
       ShowMessage('Ошибка: ' + E.Message);
   end;
-end;
-
-procedure TFrm_types.user_insBtnClick(Sender: TObject);
-const
-  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
-var
-  AreFieldsEmpty: Boolean;
-  AreFieldsValid: Boolean;
-
-begin
-  AreFieldsEmpty:=(
-  (Trim(ins_type_opis_inp.Text)='')or
-  (Trim(ins_type_mechan_inp.Text)='')or
-  (Trim(ins_type_tochn_inp.Text)='')
-  );
-  AreFieldsValid:=(
-  ValidateComponentText(ins_type_opis_inp,AllowedChars)and
-  ValidateComponentText(ins_type_mechan_inp,AllowedChars)AND
-  ValidateComponentText(ins_type_tochn_inp,AllowedChars)
-  );
-  if AreFieldsEmpty or not AreFieldsValid  then
-  begin
-    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-  try
-      with dm.ins_type do
-      begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@typr_opis').Value :=ins_type_opis_inp.Text;
-           Parameters.ParamByName('@mechan').Value:=ins_type_mechan_inp.Text;
-           Parameters.ParamByName('@tochn').Value:=ins_type_tochn_inp.Text;
-           ExecProc;
-           dm.typeQuery.Close;
-           dm.typeQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-    end;
 end;
 
 end.
