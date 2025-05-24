@@ -77,12 +77,7 @@ begin
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   UniformizeDBLookupListBox(Self, 'Arial', 10, clBlack, clWhite);
   LoadFormState(Self);
-  with main_Image do
-  begin
-      Stretch:=True;
-      AutoSize:=true;
-  end;
-     LoadImageFromResource('BACKGROUND_IMAGE', main_Image);
+
 end;
 
 end.

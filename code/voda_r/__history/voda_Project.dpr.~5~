@@ -10,7 +10,6 @@ uses
   Un_autorize in 'Un_autorize.pas' {Frm_autor};
 
 {$R *.res}
-{$R 'resources.RES'}
 
 begin
   Application.Initialize;

@@ -82,7 +82,7 @@ begin
       Stretch:=True;
       AutoSize:=true;
   end;
-     LoadImageFromResource('BACKGROUND_IMAGE', main_Image);
+
 end;
 
 end.
