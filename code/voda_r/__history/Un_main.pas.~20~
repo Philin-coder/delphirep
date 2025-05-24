@@ -16,7 +16,6 @@ type
     procedure FormCreate(Sender: TObject);
     procedure user_itemClick(Sender: TObject);
     procedure types_itemClick(Sender: TObject);
-    procedure FormShow(Sender: TObject);
   private
 procedure CreateAndShowChildForm_user;
 procedure CreateAndShowChildForm_type;
@@ -29,7 +28,7 @@ var
 
 implementation
 
-uses Un_func, Un_dm, Un_user, Un_types, Un_autorize;
+uses Un_func, Un_dm, Un_user, Un_types;
 const
   FileName = 'connection_string.txt';
 
@@ -84,19 +83,6 @@ procedure TFrm_main.FormCreate(Sender: TObject);
 begin
   SetFormPropertiesIfNeeded;
   LoadFormState(Self);
-end;
-
-procedure TFrm_main.FormShow(Sender: TObject);
-begin
-  try
-    UpdateFormProperties('Frm_autor', 'Форма авторизации',
-      clBtnFace, 1024, 768);
-    Frm_autor.ShowModal;
-  except
-    Frm_autor.Free;
-    raise;
-  end;
-
 end;
 
 procedure TFrm_main.types_itemClick(Sender: TObject);
