@@ -44,7 +44,7 @@ type
     u_del_data_Box: TGroupBox;
     U_del_lbl: TStaticText;
     u_delDBL: TDBLookupComboBox;
-    StaticText1: TStaticText;
+    del_user_lbl: TStaticText;
     u_del_btn: TButton;
     u_del_Grd: TDBGrid;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);

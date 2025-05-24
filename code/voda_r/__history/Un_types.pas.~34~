@@ -260,7 +260,7 @@ begin
         if not Connection.Connected then
           raise Exception.Create('Соединение с базой не установлено');
            Parameters.ParamByName('@type_id').Value :=
-           dm.typeQuery.FieldByName('type_id').AsString;
+           dm.ty
            ExecProc;
            dm.typeQuery.Close;
            dm.typeQuery.Open;

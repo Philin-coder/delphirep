@@ -17,7 +17,7 @@ type
     typeQuery: TADOQuery;
     typeDS: TDataSource;
     sel_by_opis: TADOStoredProc;
-    del_type: TADOStoredProc;
+    ADOStoredProc2: TADOStoredProc;
     ins_type: TADOStoredProc;
     upd_type: TADOStoredProc;
   private

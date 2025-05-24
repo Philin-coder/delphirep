@@ -37,16 +37,16 @@ type
     u_type_lbl: TStaticText;
     t_upd_DBL: TDBLookupComboBox;
     t_upd_opis_inp: TLabeledEdit;
-    del_type_inpBox: TGroupBox;
-    t_delbtnBox: TGroupBox;
+    GroupBox1: TGroupBox;
+    U_delbtnBox: TGroupBox;
     u_del_data_Box: TGroupBox;
-    t_del_lbl: TStaticText;
-    t_delDBL: TDBLookupComboBox;
-    del_type_lbl: TStaticText;
-    t_del_btn: TButton;
+    U_del_lbl: TStaticText;
+    u_delDBL: TDBLookupComboBox;
+    StaticText1: TStaticText;
+    u_del_btn: TButton;
     ins_type_Grd: TDBGrid;
     upd_type_Grd: TDBGrid;
-    t_delGrd: TDBGrid;
+    DBGrid3: TDBGrid;
     ins_type_tochn_inp: TLabeledEdit;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -58,7 +58,6 @@ type
     procedure type_resetRadioClick(Sender: TObject);
     procedure user_insBtnClick(Sender: TObject);
     procedure t_upd_BtnClick(Sender: TObject);
-    procedure t_del_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -238,45 +237,6 @@ begin
     on E: Exception do
       ShowMessage('Ошибка: ' + E.Message);
   end;
-end;
-
-procedure TFrm_types.t_del_btnClick(Sender: TObject);
-var
-  AreFieldsEmpty: Boolean;
-begin
-  AreFieldsEmpty:=(
-  (t_deldbl.Text='')
-  );
-  if AreFieldsEmpty then
-  begin
-    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-  try
-      with dm.del_type do
-      begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@type_id').Value :=
-           dm.typeQuery.FieldByName('type_id').AsString;
-           ExecProc;
-           dm.typeQuery.Close;
-           dm.typeQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-    end;
-
 end;
 
 procedure TFrm_types.t_upd_BtnClick(Sender: TObject);
