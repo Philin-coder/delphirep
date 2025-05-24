@@ -35,31 +35,12 @@ uses Un_dm, Un_func;
 
 procedure TFrm_autor.enter_btnClick(Sender: TObject);
 begin
-if(autorlogindEdit.Text=dm.userQuery.FieldByName('user_name').AsString)and
-(autorpassEdit.Text=dm.userQuery.FieldByName('user_pass').AsString)  then
-begin
   Close;
-end
-else
-begin
-    ShowMessage('wrong passwd');
-    exit;
-end;
 end;
 
 procedure TFrm_autor.FormActivate(Sender: TObject);
- var i:Integer;
 begin
   dm.userQuery.Open;
-   with Frm_autor do
-    begin
-  for I := 0 to ComponentCount - 1 do
-if (Components[i]is  TLabeledEdit) then
-begin
-  (Components[i]as TLabeledEdit).Text:='test';
-  (Components[i]as TLabeledEdit).PasswordChar:='*';
-end;
-  end;
 end;
 
 procedure TFrm_autor.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -70,14 +51,13 @@ end;
 
 procedure TFrm_autor.FormCreate(Sender: TObject);
 begin
-  Frm_autor.KeyPreview:=true;
+   Frm_autor.KeyPreview:=true;
   Frm_autor.ShowHint:=true;
   UniformizeButtonsSize(Self,  273, 25);
   UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
-  UniformizeDBLookupListBox(Self, 'Arial', 10, clBlack, clWhite);
+   UniformizeDBLookupListBox(Self, 'Arial', 10, clBlack, clWhite);
   LoadFormState(Self);
-
 end;
 
 end.
