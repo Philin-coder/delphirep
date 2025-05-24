@@ -10,12 +10,15 @@ type
   TFrm_main = class(TForm)
     ItemMenu: TMainMenu;
     user_item: TMenuItem;
+    types_item: TMenuItem;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure user_itemClick(Sender: TObject);
+    procedure types_itemClick(Sender: TObject);
   private
-procedure CreateAndShowChildForm;
+procedure CreateAndShowChildForm_user;
+procedure CreateAndShowChildForm_type;
   public
     { Public declarations }
   end;
@@ -25,13 +28,13 @@ var
 
 implementation
 
-uses Un_func, Un_dm, Un_user;
+uses Un_func, Un_dm, Un_user, Un_types;
 const
   FileName = 'connection_string.txt';
 
 
 {$R *.dfm}
-procedure TFrm_main.CreateAndShowChildForm;
+procedure TFrm_main.CreateAndShowChildForm_user;
 begin
   try
     UpdateFormProperties('Frm_user', 'Форма работы с данными пользователя',
@@ -45,6 +48,23 @@ begin
     begin
       ShowMessage('Ошибка: ' + E.Message);
       Frm_user.Release;
+    end;
+  end;
+end;
+procedure TFrm_main.CreateAndShowChildForm_type;
+begin
+  try
+    UpdateFormProperties('Frm_types', 'Форма работы с данными о счетчике',
+      clBtnFace, 1024, 768);
+    Frm_types.FormStyle := fsMDIChild;
+    Frm_types.Show;
+
+    AdjustChildFormSize(Frm_types, Self);
+  except
+    on E: Exception do
+    begin
+      ShowMessage('Ошибка: ' + E.Message);
+      Frm_types.Release;
     end;
   end;
 end;
@@ -65,9 +85,14 @@ begin
   LoadFormState(Self);
 end;
 
+procedure TFrm_main.types_itemClick(Sender: TObject);
+begin
+    CreateAndShowChildForm_type;
+end;
+
 procedure TFrm_main.user_itemClick(Sender: TObject);
 begin
-    CreateAndShowChildForm;
+    CreateAndShowChildForm_user;
 end;
 
 end.

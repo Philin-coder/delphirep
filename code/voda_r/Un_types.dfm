@@ -1,7 +1,7 @@
-object Frm_user: TFrm_user
+object Frm_types: TFrm_types
   Left = 0
   Top = 0
-  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1076#1072#1085#1085#1099#1084#1080' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1103
+  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1076#1072#1085#1085#1099#1084#1080' '#1089#1095#1077#1090#1095#1080#1082#1072
   ClientHeight = 708
   ClientWidth = 1032
   Color = clBtnFace
@@ -16,21 +16,17 @@ object Frm_user: TFrm_user
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object userPC: TPageControl
+  object typePC: TPageControl
     Left = 0
     Top = 0
     Width = 1032
     Height = 708
-    ActivePage = delTab
+    ActivePage = selTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
-      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1077
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
-      object User_inp_boxBox: TGroupBox
+      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1089#1095#1077#1090#1095#1080#1082#1077
+      object type_inp_boxBox: TGroupBox
         Left = 0
         Top = 0
         Width = 1024
@@ -41,7 +37,7 @@ object Frm_user: TFrm_user
         DesignSize = (
           1024
           105)
-        object UserCondEdit: TLabeledEdit
+        object typeCondEdit: TLabeledEdit
           Left = 0
           Top = 32
           Width = 977
@@ -52,7 +48,7 @@ object Frm_user: TFrm_user
           EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1077#1076#1077#1085#1080#1077' '#1087#1086' '#1080#1084#1077#1085#1080' '#1087#1086#1083#1100#1079#1086#1074#1072#1077#1090#1083#1103
           TabOrder = 0
         end
-        object USERFNDEdit: TLabeledEdit
+        object typeFNDEdit: TLabeledEdit
           Left = 3
           Top = 72
           Width = 977
@@ -62,10 +58,9 @@ object Frm_user: TFrm_user
           EditLabel.Height = 13
           EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1087#1072#1088#1086#1083#1102
           TabOrder = 1
-          OnKeyPress = USERFNDEditKeyPress
         end
       end
-      object user_data_box: TGroupBox
+      object type_data_box: TGroupBox
         Left = 0
         Top = 210
         Width = 1024
@@ -73,13 +68,13 @@ object Frm_user: TFrm_user
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1079
         TabOrder = 1
-        object sel_user_GRD: TDBGrid
+        object sel_type_GRD: TDBGrid
           Left = 2
           Top = 15
           Width = 1020
           Height = 397
           Align = alClient
-          DataSource = DM.userDS
+          DataSource = DM.typeDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -89,25 +84,31 @@ object Frm_user: TFrm_user
           Columns = <
             item
               Expanded = False
-              FieldName = 'userid'
+              FieldName = 'type_id'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'user_name'
-              Title.Caption = #1051#1086#1075#1080#1085
+              FieldName = 'typr_opis'
+              Title.Caption = #1054#1087#1080#1089#1072#1085#1080#1077
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'user_pass'
-              Title.Caption = #1055#1072#1088#1086#1083#1100
+              FieldName = 'mechan'
+              Title.Caption = #1052#1077#1093#1072#1085#1080#1079#1084
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'tochn'
+              Title.Caption = #1058#1086#1095#1085#1086#1089#1090#1100
               Visible = True
             end>
         end
       end
-      object User_grouper: TGroupBox
+      object type_grouper: TGroupBox
         Left = 0
         Top = 105
         Width = 1024
@@ -115,59 +116,51 @@ object Frm_user: TFrm_user
         Align = alTop
         Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '
         TabOrder = 2
-        object PassRadio: TRadioButton
+        object type_opisRadio: TRadioButton
           Left = 64
           Top = 40
           Width = 113
           Height = 17
-          Caption = #1055#1086' '#1087#1072#1088#1086#1083#1102
+          Caption = #1055#1086' '#1086#1087#1080#1089#1072#1085#1080#1102
           TabOrder = 0
-          OnClick = PassRadioClick
         end
-        object logRadio: TRadioButton
+        object type_m_Radio: TRadioButton
           Left = 288
           Top = 40
           Width = 113
           Height = 17
-          Caption = #1055#1086' '#1083#1086#1075#1080#1085#1091
+          Caption = #1055#1086' '#1084#1077#1093#1072#1085#1080#1079#1084#1091
           TabOrder = 1
-          OnClick = logRadioClick
         end
-        object resteRadio: TRadioButton
+        object type_resetRadio: TRadioButton
           Left = 664
           Top = 40
           Width = 113
           Height = 17
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 2
-          OnClick = resteRadioClick
         end
       end
-      object User_btn_Box: TGroupBox
+      object type_btn_Box: TGroupBox
         Left = 0
         Top = 624
         Width = 1024
         Height = 56
         Align = alBottom
         TabOrder = 3
-        object User_sel_Btn: TButton
+        object type_sel_Btn: TButton
           Left = 416
           Top = 24
           Width = 75
           Height = 25
           Caption = #1042#1099#1073#1086#1088
           TabOrder = 0
-          OnClick = User_sel_BtnClick
         end
       end
     end
     object insTab: TTabSheet
       Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1077
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object user_gata_Box: TGroupBox
         Left = 0
         Top = 105
@@ -176,13 +169,13 @@ object Frm_user: TFrm_user
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object user_datagrd: TDBGrid
+        object DBGrid1: TDBGrid
           Left = 2
           Top = 15
           Width = 1020
           Height = 494
           Align = alClient
-          DataSource = DM.userDS
+          DataSource = DM.typeDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -192,20 +185,26 @@ object Frm_user: TFrm_user
           Columns = <
             item
               Expanded = False
-              FieldName = 'userid'
+              FieldName = 'type_id'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'user_name'
-              Title.Caption = #1051#1086#1075#1080#1085
+              FieldName = 'typr_opis'
+              Title.Caption = #1054#1087#1080#1089#1072#1085#1080#1077
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'user_pass'
-              Title.Caption = #1055#1072#1088#1086#1083#1100
+              FieldName = 'mechan'
+              Title.Caption = #1052#1077#1093#1072#1085#1080#1079#1084
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'tochn'
+              Title.Caption = #1058#1086#1095#1085#1086#1089#1090#1100
               Visible = True
             end>
         end
@@ -224,7 +223,6 @@ object Frm_user: TFrm_user
           Height = 25
           Caption = #1042#1074#1086#1076
           TabOrder = 0
-          OnClick = user_insBtnClick
         end
       end
       object user_inp_Box: TGroupBox
@@ -265,10 +263,6 @@ object Frm_user: TFrm_user
     object updTab: TTabSheet
       Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1077
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object u_upd_datapBox: TGroupBox
         Left = 0
         Top = 161
@@ -277,17 +271,13 @@ object Frm_user: TFrm_user
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        ExplicitLeft = 344
-        ExplicitTop = 216
-        ExplicitWidth = 185
-        ExplicitHeight = 105
-        object u_upd_Grd: TDBGrid
+        object DBGrid2: TDBGrid
           Left = 2
           Top = 15
           Width = 1020
           Height = 438
           Align = alClient
-          DataSource = DM.userDS
+          DataSource = DM.typeDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -297,20 +287,26 @@ object Frm_user: TFrm_user
           Columns = <
             item
               Expanded = False
-              FieldName = 'userid'
+              FieldName = 'type_id'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'user_name'
-              Title.Caption = #1051#1086#1075#1080#1085
+              FieldName = 'typr_opis'
+              Title.Caption = #1054#1087#1080#1089#1072#1085#1080#1077
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'user_pass'
-              Title.Caption = #1055#1072#1088#1086#1083#1100
+              FieldName = 'mechan'
+              Title.Caption = #1052#1077#1093#1072#1085#1080#1079#1084
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'tochn'
+              Title.Caption = #1058#1086#1095#1085#1086#1089#1090#1100
               Visible = True
             end>
         end
@@ -371,14 +367,13 @@ object Frm_user: TFrm_user
           Height = 25
           Caption = #1054#1073#1085#1086#1074#1080#1090#1100
           TabOrder = 0
-          OnClick = u_upd_BtnClick
         end
       end
     end
     object delTab: TTabSheet
       Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1077
       ImageIndex = 3
-      object u_del_inpBox: TGroupBox
+      object GroupBox1: TGroupBox
         Left = 0
         Top = 0
         Width = 1024
@@ -431,7 +426,6 @@ object Frm_user: TFrm_user
           Height = 25
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
-          OnClick = u_del_btnClick
         end
       end
       object u_del_data_Box: TGroupBox
@@ -442,13 +436,13 @@ object Frm_user: TFrm_user
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        object u_del_Grd: TDBGrid
+        object DBGrid3: TDBGrid
           Left = 2
           Top = 15
           Width = 1020
           Height = 478
           Align = alClient
-          DataSource = DM.userDS
+          DataSource = DM.typeDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -458,20 +452,26 @@ object Frm_user: TFrm_user
           Columns = <
             item
               Expanded = False
-              FieldName = 'userid'
+              FieldName = 'type_id'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'user_name'
-              Title.Caption = #1051#1086#1075#1080#1085
+              FieldName = 'typr_opis'
+              Title.Caption = #1054#1087#1080#1089#1072#1085#1080#1077
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'user_pass'
-              Title.Caption = #1055#1072#1088#1086#1083#1100
+              FieldName = 'mechan'
+              Title.Caption = #1052#1077#1093#1072#1085#1080#1079#1084
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'tochn'
+              Title.Caption = #1058#1086#1095#1085#1086#1089#1090#1100
               Visible = True
             end>
         end

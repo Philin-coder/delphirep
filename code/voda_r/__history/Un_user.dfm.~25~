@@ -26,10 +26,6 @@ object Frm_user: TFrm_user
     TabOrder = 0
     object selTab: TTabSheet
       Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1077
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object User_inp_boxBox: TGroupBox
         Left = 0
         Top = 0
@@ -164,10 +160,6 @@ object Frm_user: TFrm_user
     object insTab: TTabSheet
       Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1077
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object user_gata_Box: TGroupBox
         Left = 0
         Top = 105
@@ -265,10 +257,6 @@ object Frm_user: TFrm_user
     object updTab: TTabSheet
       Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1077
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object u_upd_datapBox: TGroupBox
         Left = 0
         Top = 161
@@ -378,7 +366,9 @@ object Frm_user: TFrm_user
     object delTab: TTabSheet
       Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1077
       ImageIndex = 3
-      object u_del_inpBox: TGroupBox
+      ExplicitLeft = 0
+      ExplicitTop = 48
+      object GroupBox1: TGroupBox
         Left = 0
         Top = 0
         Width = 1024
@@ -442,6 +432,10 @@ object Frm_user: TFrm_user
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
+        ExplicitLeft = 408
+        ExplicitTop = 224
+        ExplicitWidth = 185
+        ExplicitHeight = 105
         object u_del_Grd: TDBGrid
           Left = 2
           Top = 15

@@ -40,7 +40,6 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@userid'
@@ -54,7 +53,6 @@ object DM: TDM
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
-        Value = Null
       end>
     Left = 72
     Top = 360
@@ -96,7 +94,6 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@userid'
@@ -128,45 +125,5 @@ object DM: TDM
       end>
     Left = 72
     Top = 200
-  end
-  object typeQuery: TADOQuery
-    Connection = Connection
-    CursorType = ctStatic
-    Parameters = <>
-    SQL.Strings = (
-      'select '
-      '  type_s.type_id,'
-      '  type_s.typr_opis,'
-      '  type_s.mechan,'
-      '  type_s.tochn '
-      'from type_s '
-      'where 1=1 ')
-    Left = 208
-    Top = 72
-  end
-  object typeDS: TDataSource
-    DataSet = typeQuery
-    Left = 208
-    Top = 160
-  end
-  object ADOStoredProc1: TADOStoredProc
-    Parameters = <>
-    Left = 224
-    Top = 240
-  end
-  object ADOStoredProc2: TADOStoredProc
-    Parameters = <>
-    Left = 232
-    Top = 416
-  end
-  object ADOStoredProc3: TADOStoredProc
-    Parameters = <>
-    Left = 232
-    Top = 288
-  end
-  object ADOStoredProc4: TADOStoredProc
-    Parameters = <>
-    Left = 216
-    Top = 344
   end
 end

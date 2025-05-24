@@ -1,7 +1,7 @@
-object Frm_user: TFrm_user
+object Frm_types: TFrm_types
   Left = 0
   Top = 0
-  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1076#1072#1085#1085#1099#1084#1080' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1103
+  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1076#1072#1085#1085#1099#1084#1080' '#1089#1095#1077#1090#1095#1080#1082#1072
   ClientHeight = 708
   ClientWidth = 1032
   Color = clBtnFace
@@ -11,9 +11,6 @@ object Frm_user: TFrm_user
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
-  OnActivate = FormActivate
-  OnClose = FormClose
-  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object userPC: TPageControl
@@ -21,15 +18,11 @@ object Frm_user: TFrm_user
     Top = 0
     Width = 1032
     Height = 708
-    ActivePage = delTab
+    ActivePage = selTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
-      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1077
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
+      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1089#1095#1077#1090#1095#1080#1082#1077
       object User_inp_boxBox: TGroupBox
         Left = 0
         Top = 0
@@ -62,7 +55,6 @@ object Frm_user: TFrm_user
           EditLabel.Height = 13
           EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1087#1072#1088#1086#1083#1102
           TabOrder = 1
-          OnKeyPress = USERFNDEditKeyPress
         end
       end
       object user_data_box: TGroupBox
@@ -122,7 +114,6 @@ object Frm_user: TFrm_user
           Height = 17
           Caption = #1055#1086' '#1087#1072#1088#1086#1083#1102
           TabOrder = 0
-          OnClick = PassRadioClick
         end
         object logRadio: TRadioButton
           Left = 288
@@ -131,7 +122,6 @@ object Frm_user: TFrm_user
           Height = 17
           Caption = #1055#1086' '#1083#1086#1075#1080#1085#1091
           TabOrder = 1
-          OnClick = logRadioClick
         end
         object resteRadio: TRadioButton
           Left = 664
@@ -140,7 +130,6 @@ object Frm_user: TFrm_user
           Height = 17
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 2
-          OnClick = resteRadioClick
         end
       end
       object User_btn_Box: TGroupBox
@@ -157,17 +146,12 @@ object Frm_user: TFrm_user
           Height = 25
           Caption = #1042#1099#1073#1086#1088
           TabOrder = 0
-          OnClick = User_sel_BtnClick
         end
       end
     end
     object insTab: TTabSheet
       Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1077
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object user_gata_Box: TGroupBox
         Left = 0
         Top = 105
@@ -224,7 +208,6 @@ object Frm_user: TFrm_user
           Height = 25
           Caption = #1042#1074#1086#1076
           TabOrder = 0
-          OnClick = user_insBtnClick
         end
       end
       object user_inp_Box: TGroupBox
@@ -265,10 +248,6 @@ object Frm_user: TFrm_user
     object updTab: TTabSheet
       Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1077
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object u_upd_datapBox: TGroupBox
         Left = 0
         Top = 161
@@ -371,14 +350,13 @@ object Frm_user: TFrm_user
           Height = 25
           Caption = #1054#1073#1085#1086#1074#1080#1090#1100
           TabOrder = 0
-          OnClick = u_upd_BtnClick
         end
       end
     end
     object delTab: TTabSheet
       Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1077
       ImageIndex = 3
-      object u_del_inpBox: TGroupBox
+      object GroupBox1: TGroupBox
         Left = 0
         Top = 0
         Width = 1024
@@ -431,7 +409,6 @@ object Frm_user: TFrm_user
           Height = 25
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
-          OnClick = u_del_btnClick
         end
       end
       object u_del_data_Box: TGroupBox

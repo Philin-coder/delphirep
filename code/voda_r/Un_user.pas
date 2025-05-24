@@ -39,7 +39,7 @@ type
     u_upd_Grd: TDBGrid;
     U_upd_DBL: TDBLookupComboBox;
     U_upd_pass_inp: TLabeledEdit;
-    GroupBox1: TGroupBox;
+    u_del_inpBox: TGroupBox;
     U_delbtnBox: TGroupBox;
     u_del_data_Box: TGroupBox;
     U_del_lbl: TStaticText;

@@ -1,0 +1,73 @@
+unit Un_types;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs,DB,ADODB, ComCtrls, StdCtrls, ExtCtrls, Grids, DBGrids, DBCtrls;
+
+type
+  TFrm_types = class(TForm)
+    userPC: TPageControl;
+    selTab: TTabSheet;
+    insTab: TTabSheet;
+    updTab: TTabSheet;
+    delTab: TTabSheet;
+    User_inp_boxBox: TGroupBox;
+    user_data_box: TGroupBox;
+    User_grouper: TGroupBox;
+    User_btn_Box: TGroupBox;
+    UserCondEdit: TLabeledEdit;
+    USERFNDEdit: TLabeledEdit;
+    User_sel_Btn: TButton;
+    sel_user_GRD: TDBGrid;
+    PassRadio: TRadioButton;
+    logRadio: TRadioButton;
+    resteRadio: TRadioButton;
+    user_gata_Box: TGroupBox;
+    userbtnBox: TGroupBox;
+    user_inp_Box: TGroupBox;
+    user_insBtn: TButton;
+    user_log_inp: TLabeledEdit;
+    user_pass_inp: TLabeledEdit;
+    user_datagrd: TDBGrid;
+    u_upd_datapBox: TGroupBox;
+    uupd_inpBox: TGroupBox;
+    useru_btntBox: TGroupBox;
+    u_upd_Btn: TButton;
+    u_username_lbl: TStaticText;
+    u_upd_Grd: TDBGrid;
+    U_upd_DBL: TDBLookupComboBox;
+    U_upd_pass_inp: TLabeledEdit;
+    GroupBox1: TGroupBox;
+    U_delbtnBox: TGroupBox;
+    u_del_data_Box: TGroupBox;
+    U_del_lbl: TStaticText;
+    u_delDBL: TDBLookupComboBox;
+    StaticText1: TStaticText;
+    u_del_btn: TButton;
+    u_del_Grd: TDBGrid;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_types: TFrm_types;
+
+implementation
+
+uses Un_dm, Un_func;
+
+{$R *.dfm}
+
+procedure TFrm_types.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  SaveFormState(Self);
+   CloseAllQueriesOnDataModule('dm');
+   Action := caFree;
+end;
+
+end.

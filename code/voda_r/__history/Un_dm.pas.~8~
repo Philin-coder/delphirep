@@ -14,12 +14,6 @@ type
     ins_user: TADOStoredProc;
     del_user: TADOStoredProc;
     sel_user_by_login: TADOStoredProc;
-    typeQuery: TADOQuery;
-    typeDS: TDataSource;
-    ADOStoredProc1: TADOStoredProc;
-    ADOStoredProc2: TADOStoredProc;
-    ADOStoredProc3: TADOStoredProc;
-    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public
