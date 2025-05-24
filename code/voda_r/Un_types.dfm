@@ -43,9 +43,9 @@ object Frm_types: TFrm_types
           Width = 977
           Height = 21
           Anchors = [akLeft, akRight]
-          EditLabel.Width = 227
+          EditLabel.Width = 173
           EditLabel.Height = 13
-          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1077#1076#1077#1085#1080#1077' '#1087#1086' '#1080#1084#1077#1085#1080' '#1087#1086#1083#1100#1079#1086#1074#1072#1077#1090#1083#1103
+          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1077#1076#1077#1085#1080#1077' '#1087#1086' '#1086#1087#1080#1089#1072#1085#1080#1102
           TabOrder = 0
         end
         object typeFNDEdit: TLabeledEdit
@@ -54,10 +54,11 @@ object Frm_types: TFrm_types
           Width = 977
           Height = 21
           Anchors = [akLeft, akRight]
-          EditLabel.Width = 123
+          EditLabel.Width = 137
           EditLabel.Height = 13
-          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1087#1072#1088#1086#1083#1102
+          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1084#1077#1093#1072#1085#1080#1079#1084#1091
           TabOrder = 1
+          OnKeyPress = typeFNDEditKeyPress
         end
       end
       object type_data_box: TGroupBox
@@ -86,6 +87,7 @@ object Frm_types: TFrm_types
               Expanded = False
               FieldName = 'type_id'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Width = 80
               Visible = True
             end
             item
@@ -123,6 +125,7 @@ object Frm_types: TFrm_types
           Height = 17
           Caption = #1055#1086' '#1086#1087#1080#1089#1072#1085#1080#1102
           TabOrder = 0
+          OnClick = type_opisRadioClick
         end
         object type_m_Radio: TRadioButton
           Left = 288
@@ -131,6 +134,7 @@ object Frm_types: TFrm_types
           Height = 17
           Caption = #1055#1086' '#1084#1077#1093#1072#1085#1080#1079#1084#1091
           TabOrder = 1
+          OnClick = type_m_RadioClick
         end
         object type_resetRadio: TRadioButton
           Left = 664
@@ -139,6 +143,7 @@ object Frm_types: TFrm_types
           Height = 17
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 2
+          OnClick = type_resetRadioClick
         end
       end
       object type_btn_Box: TGroupBox
@@ -155,6 +160,7 @@ object Frm_types: TFrm_types
           Height = 25
           Caption = #1042#1099#1073#1086#1088
           TabOrder = 0
+          OnClick = type_sel_BtnClick
         end
       end
     end

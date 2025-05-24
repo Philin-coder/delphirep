@@ -53,8 +53,6 @@ type
     procedure type_sel_BtnClick(Sender: TObject);
     procedure typeFNDEditKeyPress(Sender: TObject; var Key: Char);
     procedure type_opisRadioClick(Sender: TObject);
-    procedure type_m_RadioClick(Sender: TObject);
-    procedure type_resetRadioClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -115,37 +113,9 @@ except on E: Exception do
   end;
 end;
 
-procedure TFrm_types.type_m_RadioClick(Sender: TObject);
-begin
-  if  type_m_Radio.Checked=true then
-  begin
-    try
-     with dm.typeQuery do
-     begin
-      close;
-      sql.Clear;
-      sql.Text:=
-  'select'+' '+
-  'type_s.type_id,'+' '+
-  'type_s.typr_opis,'+' '+
-  'type_s.mechan,'+' '+
-  'type_s.tochn'+' '+
-  'from type_s'+' '+
-  'where 1=1'+' '+
-    'order by type_s.mechan asc';
-      Open;
-     end;
-    except on E: EADOError do
-    begin
-      ShowMessage('Ошибка :'+' '+E.Message);
-    end;
-    end;
-  end;
-end;
-
 procedure TFrm_types.type_opisRadioClick(Sender: TObject);
 begin
-  if  type_opisRadio.Checked=true then
+  if  logRadio.Checked=true then
   begin
     try
      with dm.typeQuery do
@@ -153,7 +123,7 @@ begin
       close;
       sql.Clear;
       sql.Text:=
-  'select'+' '+
+      'select'+' '+
   'type_s.type_id,'+' '+
   'type_s.typr_opis,'+' '+
   'type_s.mechan,'+' '+
@@ -169,51 +139,6 @@ begin
     end;
     end;
   end;
-end;
-
-procedure TFrm_types.type_resetRadioClick(Sender: TObject);
-var
-  i,j,c:Integer;
-begin
-   if type_resetRadio.Checked=true then
-with Frm_types do
-    for I := 0 to ComponentCount - 1 do
-     begin
-       if (Components[i] is TLabeledEdit)  then
-        begin
-          (Components[i] as TLabeledEdit).Clear;
-        end;
-     end;
-       with Frm_types do
-    for c := 0 to ComponentCount - 1 do
-     begin
-       if (Components[c] is TCheckBox)  then
-        begin
-          (Components[c] as TCheckBox).Checked:=False;
-        end;
-     end;
-     with dm.typeQuery do
-     begin
-     Close;
-     sql.Clear;
-     sql.Text:=
-   'select'+' '+
-  'type_s.type_id,'+' '+
-  'type_s.typr_opis,'+' '+
-  'type_s.mechan,'+' '+
-  'type_s.tochn'+' '+
-  'from type_s'+' '+
-  'where 1=1';
-  Open;
-     end;
-    with Frm_types do
-    for j := 0 to ComponentCount - 1 do
-    begin
-      if(Components[j] is TRadioButton)  then
-      begin
-        (Components[j] as TRadioButton).Checked:=False;
-      end;
-    end;
 end;
 
 procedure TFrm_types.type_sel_BtnClick(Sender: TObject);

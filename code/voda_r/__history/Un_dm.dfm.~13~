@@ -127,7 +127,7 @@ object DM: TDM
         Value = Null
       end>
     Left = 72
-    Top = 216
+    Top = 200
   end
   object typeQuery: TADOQuery
     Connection = Connection
@@ -149,24 +149,10 @@ object DM: TDM
     Left = 208
     Top = 160
   end
-  object sel_by_opis: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'sel_by_opis;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@typr_opis'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 1000
-      end>
-    Left = 216
-    Top = 216
+  object ADOStoredProc1: TADOStoredProc
+    Parameters = <>
+    Left = 224
+    Top = 240
   end
   object ADOStoredProc2: TADOStoredProc
     Parameters = <>

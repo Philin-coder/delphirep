@@ -16,7 +16,7 @@ type
     sel_user_by_login: TADOStoredProc;
     typeQuery: TADOQuery;
     typeDS: TDataSource;
-    sel_by_opis: TADOStoredProc;
+    ADOStoredProc1: TADOStoredProc;
     ADOStoredProc2: TADOStoredProc;
     ADOStoredProc3: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;
