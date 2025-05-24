@@ -260,29 +260,8 @@ begin
     Beep;
     Exit;
   end;
-  try
-      with dm.upd_type do
-      begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@type_id').Value :=
-           dm.typeQuery.FieldByName('type_id').AsString;
-           Parameters.ParamByName('@typr_opis').Value:=t_upd_opis_inp.Text;
-           ExecProc;
-           dm.typeQuery.Close;
-           dm.typeQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-    end;
+  
+
 end;
 
 procedure TFrm_types.user_insBtnClick(Sender: TObject);

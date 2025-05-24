@@ -21,7 +21,7 @@ object Frm_types: TFrm_types
     Top = 0
     Width = 1032
     Height = 708
-    ActivePage = insTab
+    ActivePage = updTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
@@ -281,9 +281,9 @@ object Frm_types: TFrm_types
       end
     end
     object updTab: TTabSheet
-      Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1077
+      Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1089#1095#1077#1090#1095#1080#1082#1077
       ImageIndex = 2
-      object u_upd_datapBox: TGroupBox
+      object t_upd_datapBox: TGroupBox
         Left = 0
         Top = 161
         Width = 1024
@@ -291,7 +291,7 @@ object Frm_types: TFrm_types
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object DBGrid2: TDBGrid
+        object upd_type_Grd: TDBGrid
           Left = 2
           Top = 15
           Width = 1020
@@ -331,7 +331,7 @@ object Frm_types: TFrm_types
             end>
         end
       end
-      object uupd_inpBox: TGroupBox
+      object tupd_inpBox: TGroupBox
         Left = 0
         Top = 0
         Width = 1024
@@ -342,51 +342,52 @@ object Frm_types: TFrm_types
         DesignSize = (
           1024
           161)
-        object u_username_lbl: TStaticText
+        object u_type_lbl: TStaticText
           Left = 16
           Top = 32
-          Width = 122
+          Width = 119
           Height = 17
-          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1103
+          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1090#1080#1087' '#1089#1095#1077#1090#1095#1080#1082#1072
           TabOrder = 0
         end
-        object U_upd_DBL: TDBLookupComboBox
+        object t_upd_DBL: TDBLookupComboBox
           Left = 32
           Top = 56
           Width = 977
           Height = 21
           Anchors = [akLeft, akRight]
-          KeyField = 'userid'
-          ListField = 'user_name'
-          ListSource = DM.userDS
+          KeyField = 'type_id'
+          ListField = 'typr_opis'
+          ListSource = DM.typeDS
           TabOrder = 1
         end
-        object U_upd_pass_inp: TLabeledEdit
+        object t_upd_opis_inp: TLabeledEdit
           Left = 32
           Top = 96
           Width = 977
           Height = 21
           Anchors = [akLeft, akRight]
-          EditLabel.Width = 132
+          EditLabel.Width = 113
           EditLabel.Height = 13
-          EditLabel.Caption = #1042#1074#1086#1076' '#1080#1084#1077#1085#1080' '#1087#1086#1083#1100#1079#1086#1074#1072#1077#1090#1083#1103
+          EditLabel.Caption = #1042#1074#1086#1076' '#1085#1086#1074#1086#1075#1086' '#1086#1087#1080#1089#1072#1085#1080#1103
           TabOrder = 2
         end
       end
-      object useru_btntBox: TGroupBox
+      object typeu_btntBox: TGroupBox
         Left = 0
         Top = 616
         Width = 1024
         Height = 64
         Align = alBottom
         TabOrder = 2
-        object u_upd_Btn: TButton
+        object t_upd_Btn: TButton
           Left = 432
           Top = 16
           Width = 75
           Height = 25
           Caption = #1054#1073#1085#1086#1074#1080#1090#1100
           TabOrder = 0
+          OnClick = t_upd_BtnClick
         end
       end
     end

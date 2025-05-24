@@ -19,7 +19,7 @@ type
     sel_by_opis: TADOStoredProc;
     ADOStoredProc2: TADOStoredProc;
     ins_type: TADOStoredProc;
-    upd_type: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public

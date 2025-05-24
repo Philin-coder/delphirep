@@ -265,8 +265,8 @@ begin
       begin
         if not Connection.Connected then
           raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@type_id').Value :=
-           dm.typeQuery.FieldByName('type_id').AsString;
+           Parameters.ParamByName('@Name_A').Value :=
+           dm.typeQuery.FieldByName('Name_A').AsString;
            Parameters.ParamByName('@typr_opis').Value:=t_upd_opis_inp.Text;
            ExecProc;
            dm.typeQuery.Close;
@@ -283,6 +283,8 @@ begin
         ShowMessage('Ошибка: ' + E.Message);
       end;
     end;
+
+
 end;
 
 procedure TFrm_types.user_insBtnClick(Sender: TObject);

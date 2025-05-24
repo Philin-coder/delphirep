@@ -283,6 +283,8 @@ begin
         ShowMessage('Ошибка: ' + E.Message);
       end;
     end;
+
+
 end;
 
 procedure TFrm_types.user_insBtnClick(Sender: TObject);
