@@ -59,8 +59,6 @@ type
     procedure schet_sel_BtnClick(Sender: TObject);
     procedure schetfndEditKeyPress(Sender: TObject; var Key: Char);
     procedure schet_d_ust_RadioClick(Sender: TObject);
-    procedure schet_vrem_p_RadioClick(Sender: TObject);
-    procedure schet_resetRadioClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -136,7 +134,7 @@ begin
       close;
       sql.Clear;
       sql.Text:=
-  'select'+' '+
+      'select'+' '+
   'schet.schet_id,'+' '+
   'schet.d_ust,'+' '+
   'schet.vrem_p,'+' '+
@@ -157,54 +155,6 @@ begin
   end;
 end;
 
-procedure TFrm_schet.schet_resetRadioClick(Sender: TObject);
-  var
-   i,j,c:Integer;
-begin
-  if  schet_resetRadio.Checked=true then
-with Frm_schet do
-    for I := 0 to ComponentCount - 1 do
-     begin
-       if (Components[i] is TLabeledEdit)  then
-        begin
-          (Components[i] as TLabeledEdit).Clear;
-        end;
-     end;
-       with Frm_schet do
-    for c := 0 to ComponentCount - 1 do
-     begin
-       if (Components[c] is TCheckBox)  then
-        begin
-          (Components[c] as TCheckBox).Checked:=False;
-        end;
-     end;
-     with dm.schetQuery do
-     begin
-     Close;
-     sql.Clear;
-     sql.Text:=
-  'select'+' '+
-  'schet.schet_id,'+' '+
-  'schet.d_ust,'+' '+
-  'schet.vrem_p,'+' '+
-  'schet.vrem_sp,'+' '+
-  'schet.Nomer,'+' '+
-  'type_s.typr_opis'+' '+
-  'from schet'+' '+
-  'inner join type_s on type_s.type_id=schet.type_id'+' '+
-  'where 1=1';
-    Open;
-     end;
-    with Frm_schet do
-    for j := 0 to ComponentCount - 1 do
-    begin
-      if(Components[j] is TRadioButton)  then
-      begin
-        (Components[j] as TRadioButton).Checked:=False;
-      end;
-    end;
-end;
-
 procedure TFrm_schet.schet_sel_BtnClick(Sender: TObject);
 begin
    try
@@ -222,37 +172,6 @@ begin
       ShowMessage('Ошибка: ' + E.Message);
     on E: Exception do
       ShowMessage('Ошибка: ' + E.Message);
-  end;
-end;
-
-procedure TFrm_schet.schet_vrem_p_RadioClick(Sender: TObject);
-begin
-   if  schet_vrem_p_Radio.Checked=true then
-  begin
-    try
-     with dm.schetQuery do
-     begin
-      close;
-      sql.Clear;
-      sql.Text:=
-      'select'+' '+
-  'schet.schet_id,'+' '+
-  'schet.d_ust,'+' '+
-  'schet.vrem_p,'+' '+
-  'schet.vrem_sp,'+' '+
-  'schet.Nomer,'+' '+
-  'type_s.typr_opis'+' '+
-  'from schet'+' '+
-  'inner join type_s on type_s.type_id=schet.type_id'+' '+
-  'where 1=1'+' '+
-    'order by schet.vrem_p asc';
-      Open;
-     end;
-    except on E: EADOError do
-    begin
-      ShowMessage('Ошибка :'+' '+E.Message);
-    end;
-    end;
   end;
 end;
 

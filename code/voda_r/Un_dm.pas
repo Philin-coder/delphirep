@@ -32,9 +32,9 @@ type
     ins_oper: TADOStoredProc;
     upd_oper: TADOStoredProc;
     del_oper: TADOStoredProc;
-    scherQuery: TADOQuery;
+    schetQuery: TADOQuery;
     schetDS: TDataSource;
-    ADOStoredProc1: TADOStoredProc;
+    sel_schet: TADOStoredProc;
     ADOStoredProc2: TADOStoredProc;
     ADOStoredProc3: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;

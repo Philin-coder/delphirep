@@ -502,7 +502,7 @@ object DM: TDM
     Left = 416
     Top = 408
   end
-  object scherQuery: TADOQuery
+  object schetQuery: TADOQuery
     Active = True
     Connection = Connection
     CursorType = ctStatic
@@ -522,12 +522,26 @@ object DM: TDM
     Top = 80
   end
   object schetDS: TDataSource
-    DataSet = scherQuery
+    DataSet = schetQuery
     Left = 488
     Top = 144
   end
-  object ADOStoredProc1: TADOStoredProc
-    Parameters = <>
+  object sel_schet: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_schet;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@Nomer'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end>
     Left = 504
     Top = 208
   end
