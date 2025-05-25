@@ -27,22 +27,20 @@ type
     ins_master_data_Box: TGroupBox;
     ins_masterbtnBox: TGroupBox;
     ins_master_insBtn: TButton;
-    u_upd_datapBox: TGroupBox;
-    uupd_inpBox: TGroupBox;
-    useru_btntBox: TGroupBox;
-    u_upd_Btn: TButton;
-    u_username_lbl: TStaticText;
-    u_upd_Grd: TDBGrid;
-    U_upd_DBL: TDBLookupComboBox;
-    U_upd_pass_inp: TLabeledEdit;
-    u_del_inpBox: TGroupBox;
-    U_delbtnBox: TGroupBox;
-    u_del_data_Box: TGroupBox;
-    U_del_lbl: TStaticText;
-    u_delDBL: TDBLookupComboBox;
-    del_user_lbl: TStaticText;
-    u_del_btn: TButton;
-    u_del_Grd: TDBGrid;
+    m_upd_datapBox: TGroupBox;
+    m_upd_inpBox: TGroupBox;
+    masterr_u_btntBox: TGroupBox;
+    m_upd_Btn: TButton;
+    m_username_lbl: TStaticText;
+    M_upd_DBL: TDBLookupComboBox;
+    M_upd_kont_data_inp: TLabeledEdit;
+    m_del_inpBox: TGroupBox;
+    m_delbtnBox: TGroupBox;
+    m_del_data_Box: TGroupBox;
+    m_del_lbl: TStaticText;
+    m_delDBL: TDBLookupComboBox;
+    del_master_lbl: TStaticText;
+    m_del_btn: TButton;
     ins_masterGrd: TDBGrid;
     about_masterPC: TPageControl;
     about_master_Tab_one: TTabSheet;
@@ -57,6 +55,8 @@ type
     dns_inp: TDateTimePicker;
     userid_lbl: TStaticText;
     userDBL: TDBLookupComboBox;
+    m_upd_Grid: TDBGrid;
+    del_master_grd: TDBGrid;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -66,6 +66,8 @@ type
     procedure master_dnr_RadioClick(Sender: TObject);
     procedure master_resetRadioClick(Sender: TObject);
     procedure ins_master_insBtnClick(Sender: TObject);
+    procedure m_upd_BtnClick(Sender: TObject);
+    procedure m_del_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -311,6 +313,88 @@ begin
     on E: Exception do
       ShowMessage('Ошибка ' + E.Message);
   end;
+end;
+
+procedure TFrm_master.m_del_btnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (m_delDBL.Text='')
+  );
+  if AreFieldsEmpty then
+  begin
+      MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+   try
+      with dm.del_master do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@id_master').Value :=
+           dm.masterQuery.FieldByName('id_master').AsString;
+           ExecProc;
+           dm.masterQuery.Close;
+           dm.masterQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+end;
+
+procedure TFrm_master.m_upd_BtnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (M_upd_DBL.Text='')or
+  (Trim(M_upd_kont_data_inp.Text)='')
+  );
+  AreFieldsValid:=(
+  IsValidEmail(M_upd_kont_data_inp.Text)
+  );
+  if AreFieldsEmpty or not AreFieldsValid then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.upd_master do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@id_master').Value :=
+           dm.masterQuery.FieldByName('id_master').AsString;
+           Parameters.ParamByName('@kont_d').Value:=M_upd_kont_data_inp.Text;
+           ExecProc;
+           dm.masterQuery.Close;
+           dm.masterQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
 end;
 
 end.

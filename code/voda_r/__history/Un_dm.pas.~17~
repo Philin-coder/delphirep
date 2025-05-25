@@ -25,7 +25,7 @@ type
     sel_master_by_fio: TADOStoredProc;
     ins_master: TADOStoredProc;
     upd_master: TADOStoredProc;
-    del_master: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public

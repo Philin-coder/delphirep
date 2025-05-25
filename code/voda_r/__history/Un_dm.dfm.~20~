@@ -293,8 +293,8 @@ object DM: TDM
         DataType = ftWideString
         Size = 1000
       end>
-    Left = 304
-    Top = 200
+    Left = 328
+    Top = 216
   end
   object ins_master: TADOStoredProc
     Connection = Connection
@@ -338,49 +338,13 @@ object DM: TDM
     Left = 320
     Top = 280
   end
-  object upd_master: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'upd_master;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@id_master'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = 0
-      end
-      item
-        Name = '@kont_d'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 1000
-      end>
+  object ADOStoredProc3: TADOStoredProc
+    Parameters = <>
     Left = 320
     Top = 352
   end
-  object del_master: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'del_master;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@id_master'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = 0
-      end>
+  object ADOStoredProc4: TADOStoredProc
+    Parameters = <>
     Left = 328
     Top = 408
   end

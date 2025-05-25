@@ -21,7 +21,7 @@ object Frm_master: TFrm_master
     Top = 0
     Width = 1032
     Height = 708
-    ActivePage = insTab
+    ActivePage = delTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
@@ -263,7 +263,7 @@ object Frm_master: TFrm_master
         Top = 0
         Width = 1024
         Height = 217
-        ActivePage = about_master_Tab_one
+        ActivePage = about_master_Tab_two
         Align = alTop
         TabOrder = 2
         object about_master_Tab_one: TTabSheet
@@ -381,9 +381,9 @@ object Frm_master: TFrm_master
       end
     end
     object updTab: TTabSheet
-      Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1077
+      Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1084#1072#1089#1090#1077#1088#1077
       ImageIndex = 2
-      object u_upd_datapBox: TGroupBox
+      object m_upd_datapBox: TGroupBox
         Left = 0
         Top = 161
         Width = 1024
@@ -391,13 +391,13 @@ object Frm_master: TFrm_master
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object u_upd_Grd: TDBGrid
+        object m_upd_Grid: TDBGrid
           Left = 2
           Top = 15
           Width = 1020
           Height = 438
           Align = alClient
-          DataSource = DM.userDS
+          DataSource = DM.masterDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -407,25 +407,43 @@ object Frm_master: TFrm_master
           Columns = <
             item
               Expanded = False
-              FieldName = 'userid'
+              FieldName = 'id_master'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'user_name'
-              Title.Caption = #1051#1086#1075#1080#1085
+              FieldName = 'fio_master'
+              Title.Caption = #1060#1048#1054' '#1084#1072#1089#1090#1077#1088#1072
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'user_pass'
-              Title.Caption = #1055#1072#1088#1086#1083#1100
+              FieldName = 'kont_d'
+              Title.Caption = #1050#1086#1085#1090#1072#1082#1090#1085#1099#1077' '#1076#1072#1085#1085#1099#1077
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'dnr'
+              Title.Caption = #1044#1072#1090#1072' '#1085#1072#1095#1072#1083#1072' '#1088#1072#1073#1086#1090#1099
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'dns'
+              Title.Caption = #1044#1072#1090#1072' '#1085#1072#1095#1072#1083#1072' '#1089#1084#1077#1085#1099
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'user_name'
+              Title.Caption = #1051#1086#1075#1080#1085' '#1074' '#1041#1044
               Visible = True
             end>
         end
       end
-      object uupd_inpBox: TGroupBox
+      object m_upd_inpBox: TGroupBox
         Left = 0
         Top = 0
         Width = 1024
@@ -436,58 +454,59 @@ object Frm_master: TFrm_master
         DesignSize = (
           1024
           161)
-        object u_username_lbl: TStaticText
+        object m_username_lbl: TStaticText
           Left = 16
           Top = 32
-          Width = 122
+          Width = 92
           Height = 17
-          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1103
+          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1084#1072#1089#1090#1077#1088#1072
           TabOrder = 0
         end
-        object U_upd_DBL: TDBLookupComboBox
+        object M_upd_DBL: TDBLookupComboBox
           Left = 32
           Top = 56
           Width = 977
           Height = 21
           Anchors = [akLeft, akRight]
-          KeyField = 'userid'
-          ListField = 'user_name'
-          ListSource = DM.userDS
+          KeyField = 'id_master'
+          ListField = 'fio_master'
+          ListSource = DM.masterDS
           TabOrder = 1
         end
-        object U_upd_pass_inp: TLabeledEdit
+        object M_upd_kont_data_inp: TLabeledEdit
           Left = 32
-          Top = 96
+          Top = 120
           Width = 977
           Height = 21
           Anchors = [akLeft, akRight]
-          EditLabel.Width = 132
+          EditLabel.Width = 140
           EditLabel.Height = 13
-          EditLabel.Caption = #1042#1074#1086#1076' '#1080#1084#1077#1085#1080' '#1087#1086#1083#1100#1079#1086#1074#1072#1077#1090#1083#1103
+          EditLabel.Caption = #1053#1086#1074#1099#1077' '#1082#1086#1085#1090#1072#1082#1090#1085#1099#1077' '#1076#1072#1085#1085#1099#1077
           TabOrder = 2
         end
       end
-      object useru_btntBox: TGroupBox
+      object masterr_u_btntBox: TGroupBox
         Left = 0
         Top = 616
         Width = 1024
         Height = 64
         Align = alBottom
         TabOrder = 2
-        object u_upd_Btn: TButton
+        object m_upd_Btn: TButton
           Left = 432
           Top = 16
           Width = 75
           Height = 25
           Caption = #1054#1073#1085#1086#1074#1080#1090#1100
           TabOrder = 0
+          OnClick = m_upd_BtnClick
         end
       end
     end
     object delTab: TTabSheet
-      Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1077
+      Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081'  '#1086' '#1084#1072#1089#1090#1077#1088#1077
       ImageIndex = 3
-      object u_del_inpBox: TGroupBox
+      object m_del_inpBox: TGroupBox
         Left = 0
         Top = 0
         Width = 1024
@@ -498,7 +517,7 @@ object Frm_master: TFrm_master
         DesignSize = (
           1024
           121)
-        object U_del_lbl: TStaticText
+        object m_del_lbl: TStaticText
           Left = 3
           Top = 16
           Width = 122
@@ -506,18 +525,18 @@ object Frm_master: TFrm_master
           Caption = #1042#1099#1073#1088#1072#1090#1100' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1103
           TabOrder = 0
         end
-        object u_delDBL: TDBLookupComboBox
+        object m_delDBL: TDBLookupComboBox
           Left = 16
           Top = 55
           Width = 977
           Height = 21
           Anchors = [akLeft, akRight]
-          KeyField = 'userid'
-          ListField = 'user_name'
-          ListSource = DM.userDS
+          KeyField = 'id_master'
+          ListField = 'fio_master'
+          ListSource = DM.masterDS
           TabOrder = 1
         end
-        object del_user_lbl: TStaticText
+        object del_master_lbl: TStaticText
           Left = 16
           Top = 32
           Width = 122
@@ -526,23 +545,24 @@ object Frm_master: TFrm_master
           TabOrder = 2
         end
       end
-      object U_delbtnBox: TGroupBox
+      object m_delbtnBox: TGroupBox
         Left = 0
         Top = 616
         Width = 1024
         Height = 64
         Align = alBottom
         TabOrder = 1
-        object u_del_btn: TButton
+        object m_del_btn: TButton
           Left = 368
           Top = 6
           Width = 75
           Height = 25
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
+          OnClick = m_del_btnClick
         end
       end
-      object u_del_data_Box: TGroupBox
+      object m_del_data_Box: TGroupBox
         Left = 0
         Top = 121
         Width = 1024
@@ -550,13 +570,13 @@ object Frm_master: TFrm_master
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        object u_del_Grd: TDBGrid
+        object del_master_grd: TDBGrid
           Left = 2
           Top = 15
           Width = 1020
           Height = 478
           Align = alClient
-          DataSource = DM.userDS
+          DataSource = DM.masterDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -566,20 +586,38 @@ object Frm_master: TFrm_master
           Columns = <
             item
               Expanded = False
-              FieldName = 'userid'
+              FieldName = 'id_master'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'user_name'
-              Title.Caption = #1051#1086#1075#1080#1085
+              FieldName = 'fio_master'
+              Title.Caption = #1060#1048#1054' '#1084#1072#1089#1090#1077#1088#1072
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'user_pass'
-              Title.Caption = #1055#1072#1088#1086#1083#1100
+              FieldName = 'kont_d'
+              Title.Caption = #1050#1086#1085#1090#1072#1082#1090#1085#1099#1077' '#1076#1072#1085#1085#1099#1077
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'dnr'
+              Title.Caption = #1044#1072#1090#1072' '#1085#1072#1095#1072#1083#1072' '#1088#1072#1073#1086#1090#1099
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'dns'
+              Title.Caption = #1044#1072#1090#1072' '#1085#1072#1095#1072#1083#1072' '#1089#1084#1077#1085#1099
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'user_name'
+              Title.Caption = #1051#1086#1075#1080#1085' '#1074' '#1041#1044
               Visible = True
             end>
         end

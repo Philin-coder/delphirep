@@ -12,8 +12,20 @@ type
     userDS: TDataSource;
     upd_user: TADOStoredProc;
     ins_user: TADOStoredProc;
-    ADOStoredProc3: TADOStoredProc;
+    del_user: TADOStoredProc;
     sel_user_by_login: TADOStoredProc;
+    typeQuery: TADOQuery;
+    typeDS: TDataSource;
+    sel_by_opis: TADOStoredProc;
+    del_type: TADOStoredProc;
+    ins_type: TADOStoredProc;
+    upd_type: TADOStoredProc;
+    masterQuery: TADOQuery;
+    masterDS: TDataSource;
+    sel_master_by_fio: TADOStoredProc;
+    ins_master: TADOStoredProc;
+    ADOStoredProc3: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public
