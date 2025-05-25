@@ -1,0 +1,208 @@
+unit Un_oper;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs,DB,ADODB, ComCtrls, StdCtrls, ExtCtrls, Grids, DBGrids, DBCtrls;
+
+type
+  TFrm_oper = class(TForm)
+    operPC: TPageControl;
+    selTab: TTabSheet;
+    insTab: TTabSheet;
+    updTab: TTabSheet;
+    delTab: TTabSheet;
+    oper_inp_boxBox: TGroupBox;
+    oper_data_box: TGroupBox;
+    oper_grouper: TGroupBox;
+    oper_btn_Box: TGroupBox;
+    operCondEdit: TLabeledEdit;
+    operfndEdit: TLabeledEdit;
+    oper_sel_Btn: TButton;
+    oper_naim_Radio: TRadioButton;
+    oper_smdata_Radio: TRadioButton;
+    oper_resetRadio: TRadioButton;
+    ins_master_data_Box: TGroupBox;
+    ins_masterbtnBox: TGroupBox;
+    ins_master_insBtn: TButton;
+    m_upd_datapBox: TGroupBox;
+    m_upd_inpBox: TGroupBox;
+    masterr_u_btntBox: TGroupBox;
+    m_upd_Btn: TButton;
+    m_username_lbl: TStaticText;
+    M_upd_DBL: TDBLookupComboBox;
+    M_upd_kont_data_inp: TLabeledEdit;
+    m_del_inpBox: TGroupBox;
+    m_delbtnBox: TGroupBox;
+    m_del_data_Box: TGroupBox;
+    m_del_lbl: TStaticText;
+    m_delDBL: TDBLookupComboBox;
+    del_master_lbl: TStaticText;
+    m_del_btn: TButton;
+    about_masterPC: TPageControl;
+    about_master_Tab_one: TTabSheet;
+    about_master_Tab_two: TTabSheet;
+    ins_master_inp_Box: TGroupBox;
+    master_fio_inp: TLabeledEdit;
+    master_kont_data_inp: TLabeledEdit;
+    ins_master_inpBox_two: TGroupBox;
+    dnr_lbl: TStaticText;
+    dnr_inp: TDateTimePicker;
+    dns_lbl: TStaticText;
+    dns_inp: TDateTimePicker;
+    userid_lbl: TStaticText;
+    userDBL: TDBLookupComboBox;
+    del_master_grd: TDBGrid;
+    DBGrid1: TDBGrid;
+    DBGrid2: TDBGrid;
+    oper_sel_Grid: TDBGrid;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure oper_sel_BtnClick(Sender: TObject);
+    procedure operfndEditKeyPress(Sender: TObject; var Key: Char);
+    procedure oper_naim_RadioClick(Sender: TObject);
+    procedure oper_smdata_RadioClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_oper: TFrm_oper;
+
+implementation
+
+uses Un_dm, Un_func;
+
+{$R *.dfm}
+
+procedure TFrm_oper.FormActivate(Sender: TObject);
+begin
+  dm.userQuery.Open;
+  dm.operQuery.OPEN;
+  AdjustDBGridColumnWidths('Frm_oper',6000, 10);
+end;
+
+procedure TFrm_oper.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+   SaveFormState(Self);
+   CloseAllQueriesOnDataModule('dm');
+   Action := caFree;
+end;
+
+procedure TFrm_oper.FormCreate(Sender: TObject);
+begin
+  Frm_oper.KeyPreview:=true;
+  Frm_oper.ShowHint:=true;
+  UniformizeButtonsSize(Self,  273, 25);
+  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+  LoadFormState(Self);
+
+end;
+
+procedure TFrm_oper.operfndEditKeyPress(Sender: TObject; var Key: Char);
+begin
+   try
+   dm.operQuery.SQL.Text:=
+  'select'+''+
+  'operator.oper_id,'+' '+
+  'operator.oper_naim,'+' '+
+  'usver.user_name,'+' '+
+  'operator.smdata'+' '+
+  'from operator'+' '+
+  'inner join usver on usver.userid=operator.userid'+' '+
+  'where 1=1'+' '+
+   'and usver.user_name like'+
+   QuotedStr(Concat(operfndEdit.Text,#37));
+   dm.operQuery.close;
+   dm.operQuery.Open;
+except on E: Exception do
+  begin
+  ShowMessage('Ошибка'+' '+E.Message);
+  end;
+  end;
+end;
+
+procedure TFrm_oper.oper_naim_RadioClick(Sender: TObject);
+begin
+   if  oper_naim_Radio.Checked=true then
+  begin
+    try
+     with dm.operQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+      'select'+''+
+  'operator.oper_id,'+' '+
+  'operator.oper_naim,'+' '+
+  'usver.user_name,'+' '+
+  'operator.smdata'+' '+
+  'from operator'+' '+
+  'inner join usver on usver.userid=operator.userid'+' '+
+  'where 1=1'+' '+
+  'order by operator.oper_naim asc';
+      Open;
+     end;
+    except on E: EADOError do
+    begin
+      ShowMessage('Ошибка :'+' '+E.Message);
+    end;
+    end;
+  end;
+end;
+
+procedure TFrm_oper.oper_sel_BtnClick(Sender: TObject);
+begin
+  try
+    if not DM.Connection.Connected then
+      raise Exception.Create('Соединение с базой не установленр');
+    with DM.sel_oper do
+    begin
+      Close;
+      Parameters.ParamByName('@oper_naim').Value :=operCondEdit.Text;
+      Open;
+       DM.operQuery.Recordset:=dm.sel_oper.Recordset;
+    end;
+  except
+    on E: EDatabaseError do
+      ShowMessage('Ошибка: ' + E.Message);
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
+end;
+
+procedure TFrm_oper.oper_smdata_RadioClick(Sender: TObject);
+begin
+   if  oper_smdata_Radio.Checked=true then
+  begin
+    try
+     with dm.operQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+      'select'+''+
+  'operator.oper_id,'+' '+
+  'operator.oper_naim,'+' '+
+  'usver.user_name,'+' '+
+  'operator.smdata'+' '+
+  'from operator'+' '+
+  'inner join usver on usver.userid=operator.userid'+' '+
+  'where 1=1'+' '+
+    'order by operator.smdata asc';
+      Open;
+     end;
+    except on E: EADOError do
+    begin
+      ShowMessage('Ошибка :'+' '+E.Message);
+    end;
+    end;
+  end;
+end;
+
+end.

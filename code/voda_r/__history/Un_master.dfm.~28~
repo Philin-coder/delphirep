@@ -553,8 +553,8 @@ object Frm_master: TFrm_master
         Align = alBottom
         TabOrder = 1
         object m_del_btn: TButton
-          Left = 360
-          Top = 22
+          Left = 368
+          Top = 6
           Width = 75
           Height = 25
           Caption = #1059#1076#1072#1083#1080#1090#1100

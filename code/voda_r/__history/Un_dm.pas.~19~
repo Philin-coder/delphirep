@@ -16,6 +16,18 @@ type
     sel_user_by_login: TADOStoredProc;
     typeQuery: TADOQuery;
     typeDS: TDataSource;
+    sel_by_opis: TADOStoredProc;
+    del_type: TADOStoredProc;
+    ins_type: TADOStoredProc;
+    upd_type: TADOStoredProc;
+    masterQuery: TADOQuery;
+    masterDS: TDataSource;
+    sel_master_by_fio: TADOStoredProc;
+    ins_master: TADOStoredProc;
+    upd_master: TADOStoredProc;
+    del_master: TADOStoredProc;
+    operQuery: TADOQuery;
+    operDS: TDataSource;
     ADOStoredProc1: TADOStoredProc;
     ADOStoredProc2: TADOStoredProc;
     ADOStoredProc3: TADOStoredProc;

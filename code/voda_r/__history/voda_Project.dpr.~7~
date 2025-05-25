@@ -6,10 +6,9 @@ uses
   Un_func in 'Un_func.pas',
   Un_dm in 'Un_dm.pas' {DM: TDataModule},
   Un_types in 'Un_types.pas' {Frm_types},
-  Un_oper in 'Un_oper.pas' {Frm_oper},
+  Un_master in 'Un_master.pas' {Frm_master},
   Un_autorize in 'Un_autorize.pas' {Frm_autor},
-  Un_user in 'Un_user.pas' {Frm_user},
-  Un_master in 'Un_master.pas' {Frm_master};
+  Un_user in 'Un_user.pas' {Frm_user};
 
 {$R *.res}
 {$R 'resources.RES'}
@@ -19,9 +18,8 @@ begin
   Application.CreateForm(TFrm_main, Frm_main);
   Application.CreateForm(TDM, DM);
   Application.CreateForm(TFrm_types, Frm_types);
-  Application.CreateForm(TFrm_oper, Frm_oper);
+  Application.CreateForm(TFrm_master, Frm_master);
   Application.CreateForm(TFrm_autor, Frm_autor);
   Application.CreateForm(TFrm_user, Frm_user);
-  Application.CreateForm(TFrm_master, Frm_master);
   Application.Run;
 end.
