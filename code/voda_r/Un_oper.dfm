@@ -21,7 +21,7 @@ object Frm_oper: TFrm_oper
     Top = 0
     Width = 1032
     Height = 708
-    ActivePage = insTab
+    ActivePage = delTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
@@ -314,9 +314,9 @@ object Frm_oper: TFrm_oper
       end
     end
     object updTab: TTabSheet
-      Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1084#1072#1089#1090#1077#1088#1077
+      Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1086#1087#1077#1088#1072#1090#1086#1088#1077
       ImageIndex = 2
-      object m_upd_datapBox: TGroupBox
+      object o_upd_datapBox: TGroupBox
         Left = 0
         Top = 161
         Width = 1024
@@ -324,7 +324,7 @@ object Frm_oper: TFrm_oper
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object DBGrid1: TDBGrid
+        object oper_upd_Grid: TDBGrid
           Left = 2
           Top = 15
           Width = 1020
@@ -364,7 +364,7 @@ object Frm_oper: TFrm_oper
             end>
         end
       end
-      object m_upd_inpBox: TGroupBox
+      object o_upd_inpBox: TGroupBox
         Left = 0
         Top = 0
         Width = 1024
@@ -375,69 +375,76 @@ object Frm_oper: TFrm_oper
         DesignSize = (
           1024
           161)
-        object m_username_lbl: TStaticText
-          Left = 16
-          Top = 32
-          Width = 92
+        object o_username_lbl: TStaticText
+          Left = 32
+          Top = 33
+          Width = 105
           Height = 17
-          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1084#1072#1089#1090#1077#1088#1072
+          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1086#1087#1077#1088#1072#1090#1086#1088#1072
           TabOrder = 0
         end
-        object M_upd_DBL: TDBLookupComboBox
+        object o_upd_DBL: TDBLookupComboBox
           Left = 32
           Top = 56
           Width = 977
           Height = 21
           Anchors = [akLeft, akRight]
-          KeyField = 'id_master'
-          ListField = 'fio_master'
-          ListSource = DM.masterDS
+          KeyField = 'oper_id'
+          ListField = 'oper_naim'
+          ListSource = DM.operDS
           TabOrder = 1
         end
-        object M_upd_kont_data_inp: TLabeledEdit
+        object upd_o_Smdatalbl: TStaticText
           Left = 32
-          Top = 120
-          Width = 977
-          Height = 21
-          Anchors = [akLeft, akRight]
-          EditLabel.Width = 140
-          EditLabel.Height = 13
-          EditLabel.Caption = #1053#1086#1074#1099#1077' '#1082#1086#1085#1090#1072#1082#1090#1085#1099#1077' '#1076#1072#1085#1085#1099#1077
+          Top = 98
+          Width = 122
+          Height = 17
+          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1103
           TabOrder = 2
         end
+        object oper_sm_data_inp: TDateTimePicker
+          Left = 32
+          Top = 121
+          Width = 977
+          Height = 21
+          Date = 45802.754818043980000000
+          Time = 45802.754818043980000000
+          TabOrder = 3
+        end
       end
-      object masterr_u_btntBox: TGroupBox
+      object oper_u_btntBox: TGroupBox
         Left = 0
         Top = 616
         Width = 1024
         Height = 64
         Align = alBottom
         TabOrder = 2
-        object m_upd_Btn: TButton
+        object o_upd_Btn: TButton
           Left = 432
           Top = 16
           Width = 75
           Height = 25
           Caption = #1054#1073#1085#1086#1074#1080#1090#1100
           TabOrder = 0
+          OnClick = o_upd_BtnClick
         end
       end
     end
     object delTab: TTabSheet
-      Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081'  '#1086' '#1084#1072#1089#1090#1077#1088#1077
+      Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081'  '#1086#1073' '#1086#1087#1077#1088#1072#1090#1086#1088#1077
       ImageIndex = 3
-      object m_del_inpBox: TGroupBox
+      object o_del_inpBox: TGroupBox
         Left = 0
         Top = 0
         Width = 1024
-        Height = 121
+        Height = 113
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1074#1085#1085#1099#1093
         TabOrder = 0
         DesignSize = (
           1024
-          121)
-        object m_del_lbl: TStaticText
+          113)
+        object o_del_lbl: TStaticText
           Left = 3
           Top = 16
           Width = 122
@@ -445,55 +452,58 @@ object Frm_oper: TFrm_oper
           Caption = #1042#1099#1073#1088#1072#1090#1100' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1103
           TabOrder = 0
         end
-        object m_delDBL: TDBLookupComboBox
+        object o_delDBL: TDBLookupComboBox
           Left = 16
-          Top = 55
+          Top = 63
           Width = 977
           Height = 21
           Anchors = [akLeft, akRight]
-          KeyField = 'id_master'
-          ListField = 'fio_master'
-          ListSource = DM.masterDS
+          KeyField = 'oper_id'
+          ListField = 'oper_naim'
+          ListSource = DM.operDS
           TabOrder = 1
         end
-        object del_master_lbl: TStaticText
+        object del_oper_lbl: TStaticText
           Left = 16
           Top = 32
-          Width = 122
+          Width = 105
           Height = 17
-          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1103
+          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1086#1087#1077#1088#1072#1090#1086#1088#1072
           TabOrder = 2
         end
       end
-      object m_delbtnBox: TGroupBox
+      object o_delbtnBox: TGroupBox
         Left = 0
         Top = 616
         Width = 1024
         Height = 64
         Align = alBottom
         TabOrder = 1
-        object m_del_btn: TButton
+        object o_del_btn: TButton
           Left = 360
           Top = 22
           Width = 75
           Height = 25
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
+          OnClick = o_del_btnClick
         end
       end
-      object m_del_data_Box: TGroupBox
+      object o_del_data_Box: TGroupBox
         Left = 0
-        Top = 121
+        Top = 113
         Width = 1024
-        Height = 495
+        Height = 503
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        object del_master_grd: TDBGrid
+        ExplicitTop = 121
+        ExplicitHeight = 495
+        object del_oper_grd: TDBGrid
           Left = 2
           Top = 15
           Width = 1020
-          Height = 478
+          Height = 486
           Align = alClient
           DataSource = DM.operDS
           TabOrder = 0

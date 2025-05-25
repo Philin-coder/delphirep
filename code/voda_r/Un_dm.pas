@@ -30,8 +30,8 @@ type
     operDS: TDataSource;
     sel_oper: TADOStoredProc;
     ins_oper: TADOStoredProc;
-    ADOStoredProc3: TADOStoredProc;
-    ADOStoredProc4: TADOStoredProc;
+    upd_oper: TADOStoredProc;
+    del_oper: TADOStoredProc;
   private
     { Private declarations }
   public

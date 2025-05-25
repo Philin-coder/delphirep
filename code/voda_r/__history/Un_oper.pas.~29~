@@ -23,16 +23,15 @@ type
     oper_naim_Radio: TRadioButton;
     oper_smdata_Radio: TRadioButton;
     oper_resetRadio: TRadioButton;
-    ins_master_data_Box: TGroupBox;
+    ins_oper_data_Box: TGroupBox;
     ins_masterbtnBox: TGroupBox;
-    ins_master_insBtn: TButton;
-    m_upd_datapBox: TGroupBox;
-    m_upd_inpBox: TGroupBox;
-    masterr_u_btntBox: TGroupBox;
-    m_upd_Btn: TButton;
-    m_username_lbl: TStaticText;
-    M_upd_DBL: TDBLookupComboBox;
-    M_upd_kont_data_inp: TLabeledEdit;
+    ins_oper_insBtn: TButton;
+    o_upd_datapBox: TGroupBox;
+    o_upd_inpBox: TGroupBox;
+    oper_u_btntBox: TGroupBox;
+    o_upd_Btn: TButton;
+    o_username_lbl: TStaticText;
+    o_upd_DBL: TDBLookupComboBox;
     m_del_inpBox: TGroupBox;
     m_delbtnBox: TGroupBox;
     m_del_data_Box: TGroupBox;
@@ -40,23 +39,20 @@ type
     m_delDBL: TDBLookupComboBox;
     del_master_lbl: TStaticText;
     m_del_btn: TButton;
-    about_masterPC: TPageControl;
-    about_master_Tab_one: TTabSheet;
-    about_master_Tab_two: TTabSheet;
-    ins_master_inp_Box: TGroupBox;
-    master_fio_inp: TLabeledEdit;
-    master_kont_data_inp: TLabeledEdit;
-    ins_master_inpBox_two: TGroupBox;
-    dnr_lbl: TStaticText;
-    dnr_inp: TDateTimePicker;
-    dns_lbl: TStaticText;
-    dns_inp: TDateTimePicker;
-    userid_lbl: TStaticText;
-    userDBL: TDBLookupComboBox;
+    about_operPC: TPageControl;
+    about_oper_Tab_one: TTabSheet;
+    ins_oper_inp_Box: TGroupBox;
+    ins_oper_naim_inp: TLabeledEdit;
     del_master_grd: TDBGrid;
-    DBGrid1: TDBGrid;
-    DBGrid2: TDBGrid;
+    oper_upd_Grid: TDBGrid;
+    ins_oper_Grd: TDBGrid;
     oper_sel_Grid: TDBGrid;
+    user_lbl: TStaticText;
+    ins_user_u_DBL: TDBLookupComboBox;
+    smdatalbl: TStaticText;
+    smdatainp: TDateTimePicker;
+    upd_o_Smdatalbl: TStaticText;
+    oper_sm_data_inp: TDateTimePicker;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -64,6 +60,9 @@ type
     procedure operfndEditKeyPress(Sender: TObject; var Key: Char);
     procedure oper_naim_RadioClick(Sender: TObject);
     procedure oper_smdata_RadioClick(Sender: TObject);
+    procedure oper_resetRadioClick(Sender: TObject);
+    procedure ins_oper_insBtnClick(Sender: TObject);
+    procedure o_upd_BtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -104,11 +103,58 @@ begin
 
 end;
 
+procedure TFrm_oper.ins_oper_insBtnClick(Sender: TObject);
+const
+  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (Trim(ins_oper_naim_inp.Text)='')or
+  (ins_user_u_DBL.Text='')
+  );
+  AreFieldsValid:=(
+  ValidateComponentText(ins_oper_naim_inp,AllowedChars)
+  );
+  if AreFieldsEmpty or not AreFieldsValid then
+  begin
+        MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.ins_oper do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@oper_naim').Value :=ins_oper_naim_inp.text;
+           Parameters.ParamByName('@userid').Value:=
+           dm.userQuery.FieldByName('userid').AsString;
+           Parameters.ParamByName('@smdata').Value:=smdatainp.Date;
+           ExecProc;
+           dm.operQuery.Close;
+           dm.operQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+end;
+
 procedure TFrm_oper.operfndEditKeyPress(Sender: TObject; var Key: Char);
 begin
    try
    dm.operQuery.SQL.Text:=
-  'select'+''+
+  'select'+' '+
   'operator.oper_id,'+' '+
   'operator.oper_naim,'+' '+
   'usver.user_name,'+' '+
@@ -137,7 +183,7 @@ begin
       close;
       sql.Clear;
       sql.Text:=
-      'select'+''+
+      'select'+' '+
   'operator.oper_id,'+' '+
   'operator.oper_naim,'+' '+
   'usver.user_name,'+' '+
@@ -154,6 +200,51 @@ begin
     end;
     end;
   end;
+end;
+
+procedure TFrm_oper.oper_resetRadioClick(Sender: TObject);
+  var i,j,c:Integer;
+begin
+    if  oper_resetRadio.Checked=true then
+with Frm_oper do
+    for I := 0 to ComponentCount - 1 do
+     begin
+       if (Components[i] is TLabeledEdit)  then
+        begin
+          (Components[i] as TLabeledEdit).Clear;
+        end;
+     end;
+       with Frm_oper do
+    for c := 0 to ComponentCount - 1 do
+     begin
+       if (Components[c] is TCheckBox)  then
+        begin
+          (Components[c] as TCheckBox).Checked:=False;
+        end;
+     end;
+     with dm.operQuery do
+     begin
+     Close;
+     sql.Clear;
+     sql.Text:=
+  'select'+' '+
+  'operator.oper_id,'+' '+
+  'operator.oper_naim,'+' '+
+  'usver.user_name,'+' '+
+  'operator.smdata'+' '+
+  'from operator'+' '+
+  'inner join usver on usver.userid=operator.userid'+' '+
+  'where 1=1';
+  Open;
+     end;
+    with Frm_oper do
+    for j := 0 to ComponentCount - 1 do
+    begin
+      if(Components[j] is TRadioButton)  then
+      begin
+        (Components[j] as TRadioButton).Checked:=False;
+      end;
+    end;
 end;
 
 procedure TFrm_oper.oper_sel_BtnClick(Sender: TObject);
@@ -186,7 +277,7 @@ begin
       close;
       sql.Clear;
       sql.Text:=
-      'select'+''+
+  'select'+' '+
   'operator.oper_id,'+' '+
   'operator.oper_naim,'+' '+
   'usver.user_name,'+' '+
@@ -203,6 +294,23 @@ begin
     end;
     end;
   end;
+end;
+
+procedure TFrm_oper.o_upd_BtnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (o_upd_DBL.Text='')
+  );
+  if AreFieldsEmpty then
+ begin
+  MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+ end;
+ 
 end;
 
 end.
