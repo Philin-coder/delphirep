@@ -24,9 +24,13 @@ type
     master_fio_Radio: TRadioButton;
     master_dnr_Radio: TRadioButton;
     master_resetRadio: TRadioButton;
-    ins_master_data_Box: TGroupBox;
-    ins_masterbtnBox: TGroupBox;
-    ins_master_insBtn: TButton;
+    user_gata_Box: TGroupBox;
+    userbtnBox: TGroupBox;
+    user_inp_Box: TGroupBox;
+    user_insBtn: TButton;
+    user_log_inp: TLabeledEdit;
+    user_pass_inp: TLabeledEdit;
+    user_datagrd: TDBGrid;
     u_upd_datapBox: TGroupBox;
     uupd_inpBox: TGroupBox;
     useru_btntBox: TGroupBox;
@@ -43,20 +47,6 @@ type
     del_user_lbl: TStaticText;
     u_del_btn: TButton;
     u_del_Grd: TDBGrid;
-    ins_masterGrd: TDBGrid;
-    about_masterPC: TPageControl;
-    about_master_Tab_one: TTabSheet;
-    about_master_Tab_two: TTabSheet;
-    ins_master_inp_Box: TGroupBox;
-    master_fio_inp: TLabeledEdit;
-    master_kont_data_inp: TLabeledEdit;
-    ins_master_inpBox_two: TGroupBox;
-    dnr_lbl: TStaticText;
-    dnr_inp: TDateTimePicker;
-    dns_lbl: TStaticText;
-    dns_inp: TDateTimePicker;
-    userid_lbl: TStaticText;
-    userDBL: TDBLookupComboBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -65,7 +55,6 @@ type
     procedure master_fio_RadioClick(Sender: TObject);
     procedure master_dnr_RadioClick(Sender: TObject);
     procedure master_resetRadioClick(Sender: TObject);
-    procedure ins_master_insBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -103,59 +92,6 @@ begin
   UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   LoadFormState(Self);
-  dnr_inp.Format := 'dd/MM/yyyy hh:mm:ss';
-  dns_inp.Format := 'dd/MM/yyyy hh:mm:ss';
-end;
-
-procedure TFrm_master.ins_master_insBtnClick(Sender: TObject);
-const
-  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
-var
-  AreFieldsEmpty: Boolean;
-  AreFieldsValid: Boolean;
-begin
-  AreFieldsEmpty:=(
-  (Trim(master_fio_inp.Text)='')or
-  (Trim(master_kont_data_inp.Text)='')or
-  (userDBL.Text='')
-  );
-  AreFieldsValid:=(
-  ValidateComponentText(master_fio_inp,AllowedChars)and
-  IsValidEmail(master_kont_data_inp.Text)
-  );
-  if AreFieldsEmpty or not AreFieldsValid then
-  begin
-    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-    try
-      with dm.ins_master do
-      begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@fio_master').Value :=master_fio_inp.Text;
-           Parameters.ParamByName('@kont_d').Value:=master_kont_data_inp.Text;
-           Parameters.ParamByName('@dnr').Value:=dnr_inp.DateTime;
-           Parameters.ParamByName('@dns').Value:=dns_inp.DateTime;
-           Parameters.ParamByName('@userid').Value:=
-           dm.userQuery.FieldByName('userid').AsString;
-           ExecProc;
-           dm.masterQuery.Close;
-           dm.masterQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-    end;
 end;
 
 procedure TFrm_master.masterfndEditKeyPress(Sender: TObject; var Key: Char);

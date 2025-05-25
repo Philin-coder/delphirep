@@ -23,7 +23,7 @@ type
     masterQuery: TADOQuery;
     masterDS: TDataSource;
     sel_master_by_fio: TADOStoredProc;
-    ins_master: TADOStoredProc;
+    ADOStoredProc2: TADOStoredProc;
     ADOStoredProc3: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;
   private

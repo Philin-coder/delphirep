@@ -296,45 +296,8 @@ object DM: TDM
     Left = 328
     Top = 216
   end
-  object ins_master: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'ins_master;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@fio_master'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 1000
-      end
-      item
-        Name = '@kont_d'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 1000
-      end
-      item
-        Name = '@dnr'
-        Attributes = [paNullable]
-        DataType = ftDateTime
-      end
-      item
-        Name = '@dns'
-        Attributes = [paNullable]
-        DataType = ftDateTime
-      end
-      item
-        Name = '@userid'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = 0
-      end>
+  object ADOStoredProc2: TADOStoredProc
+    Parameters = <>
     Left = 320
     Top = 280
   end

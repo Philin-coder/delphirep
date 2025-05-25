@@ -121,7 +121,7 @@ begin
   );
   AreFieldsValid:=(
   ValidateComponentText(master_fio_inp,AllowedChars)and
-  IsValidEmail(master_kont_data_inp.Text)
+  ValidateComponentText(master_kont_data_inp,AllowedChars)
   );
   if AreFieldsEmpty or not AreFieldsValid then
   begin
