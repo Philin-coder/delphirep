@@ -35,8 +35,8 @@ type
     schetQuery: TADOQuery;
     schetDS: TDataSource;
     sel_schet: TADOStoredProc;
-    ADOStoredProc2: TADOStoredProc;
-    ADOStoredProc3: TADOStoredProc;
+    ins_schet: TADOStoredProc;
+    upd_shchet: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }

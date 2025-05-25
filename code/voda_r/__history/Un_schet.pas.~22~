@@ -46,7 +46,7 @@ type
     d_ustlbl: TStaticText;
     d_ust_inp: TDateTimePicker;
     upd_sh_vrem_splbl: TStaticText;
-    shvrem_sp_inp: TDateTimePicker;
+    oper_sm_data_inp: TDateTimePicker;
     DBGrid1: TDBGrid;
     sh_updGrid: TDBGrid;
     DBGrid3: TDBGrid;
@@ -326,7 +326,7 @@ begin
           raise Exception.Create('Соединение с базой не установлено');
            Parameters.ParamByName('@schet_id').Value :=
            dm.schetQuery.FieldByName('schet_id').AsString;
-           Parameters.ParamByName('@vrem_sp').Value:=shvrem_sp_inp.Date;
+           Parameters.ParamByName('@vrem_sp').Value:=vrem_sp_inp.Date;
            ExecProc;
            dm.schetQuery.Close;
            dm.schetQuery.Open;

@@ -1,7 +1,7 @@
 object DM: TDM
   OldCreateOrder = False
   Height = 529
-  Width = 567
+  Width = 671
   object Connection: TADOConnection
     Connected = True
     ConnectionString = 
@@ -293,8 +293,8 @@ object DM: TDM
         DataType = ftWideString
         Size = 1000
       end>
-    Left = 328
-    Top = 216
+    Left = 304
+    Top = 200
   end
   object ins_master: TADOStoredProc
     Connection = Connection
@@ -338,14 +338,226 @@ object DM: TDM
     Left = 320
     Top = 280
   end
-  object ADOStoredProc3: TADOStoredProc
-    Parameters = <>
+  object upd_master: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_master;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@id_master'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@kont_d'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end>
     Left = 320
     Top = 352
   end
-  object ADOStoredProc4: TADOStoredProc
-    Parameters = <>
+  object del_master: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'del_master;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@id_master'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
     Left = 328
     Top = 408
+  end
+  object operQuery: TADOQuery
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      '  operator.oper_id,'
+      '  operator.oper_naim,'
+      '  usver.user_name,'
+      '  operator.smdata '
+      '  from operator '
+      '  inner join usver on usver.userid=operator.userid'
+      '  where 1=1')
+    Left = 376
+    Top = 72
+  end
+  object operDS: TDataSource
+    DataSet = operQuery
+    Left = 384
+    Top = 128
+  end
+  object sel_oper: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_oper;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@oper_naim'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end>
+    Left = 408
+    Top = 200
+  end
+  object ins_oper: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'ins_oper;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@oper_naim'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end
+      item
+        Name = '@userid'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@smdata'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end>
+    Left = 408
+    Top = 272
+  end
+  object upd_oper: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_oper;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@oper_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@smdata'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end>
+    Left = 416
+    Top = 320
+  end
+  object del_oper: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'del_oper;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@oper_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 416
+    Top = 408
+  end
+  object schetQuery: TADOQuery
+    Active = True
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select  '
+      '  schet.schet_id,'
+      '  schet.d_ust,'
+      '  schet.vrem_p,'
+      '  schet.vrem_sp,'
+      '  schet.Nomer,'
+      '  type_s.typr_opis'
+      '  from schet'
+      '  inner join type_s on type_s.type_id=schet.type_id'
+      '  where 1=1')
+    Left = 472
+    Top = 80
+  end
+  object schetDS: TDataSource
+    DataSet = schetQuery
+    Left = 488
+    Top = 144
+  end
+  object sel_schet: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_schet;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@Nomer'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end>
+    Left = 504
+    Top = 208
+  end
+  object ADOStoredProc2: TADOStoredProc
+    Parameters = <>
+    Left = 496
+    Top = 280
+  end
+  object ADOStoredProc3: TADOStoredProc
+    Parameters = <>
+    Left = 496
+    Top = 328
+  end
+  object ADOStoredProc4: TADOStoredProc
+    Parameters = <>
+    Left = 504
+    Top = 400
   end
 end

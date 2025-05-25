@@ -21,7 +21,7 @@ object Frm_oper: TFrm_oper
     Top = 0
     Width = 1032
     Height = 708
-    ActivePage = delTab
+    ActivePage = updTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
@@ -178,8 +178,6 @@ object Frm_oper: TFrm_oper
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        ExplicitTop = 280
-        ExplicitHeight = 336
         object ins_oper_Grd: TDBGrid
           Left = 2
           Top = 15
@@ -227,7 +225,6 @@ object Frm_oper: TFrm_oper
         Height = 64
         Align = alBottom
         TabOrder = 1
-        ExplicitTop = 622
         object ins_oper_insBtn: TButton
           Left = 448
           Top = 24
@@ -248,7 +245,6 @@ object Frm_oper: TFrm_oper
         TabOrder = 2
         object about_oper_Tab_one: TTabSheet
           Caption = #1054#1073' '#1086#1087#1077#1088#1072#1090#1086#1088#1077
-          ExplicitHeight = 165
           object ins_oper_inp_Box: TGroupBox
             Left = 0
             Top = 0
@@ -270,7 +266,6 @@ object Frm_oper: TFrm_oper
               EditLabel.Height = 13
               EditLabel.Caption = #1042#1074#1086#1076' '#1060#1048#1054' '#1086#1087#1077#1088#1072#1090#1086#1088#1072
               TabOrder = 0
-              ExplicitTop = 29
             end
             object user_lbl: TStaticText
               Left = 3
@@ -397,9 +392,9 @@ object Frm_oper: TFrm_oper
         object upd_o_Smdatalbl: TStaticText
           Left = 32
           Top = 98
-          Width = 122
+          Width = 110
           Height = 17
-          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1103
+          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1076#1072#1090#1091' '#1089#1084#1077#1085#1099
           TabOrder = 2
         end
         object oper_sm_data_inp: TDateTimePicker
@@ -497,8 +492,6 @@ object Frm_oper: TFrm_oper
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        ExplicitTop = 121
-        ExplicitHeight = 495
         object del_oper_grd: TDBGrid
           Left = 2
           Top = 15

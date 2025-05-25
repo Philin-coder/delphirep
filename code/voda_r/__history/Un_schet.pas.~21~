@@ -26,12 +26,12 @@ type
     ins_schet_data_Box: TGroupBox;
     ins_schetrbtnBox: TGroupBox;
     ins_schet_insBtn: TButton;
-    sh_upd_datapBox: TGroupBox;
-    sh_upd_inpBox: TGroupBox;
-    schet_u_btntBox: TGroupBox;
-    sh_upd_Btn: TButton;
-    sh_s_lbl: TStaticText;
-    sh_upd_DBL: TDBLookupComboBox;
+    o_upd_datapBox: TGroupBox;
+    o_upd_inpBox: TGroupBox;
+    oper_u_btntBox: TGroupBox;
+    o_upd_Btn: TButton;
+    o_username_lbl: TStaticText;
+    o_upd_DBL: TDBLookupComboBox;
     o_del_inpBox: TGroupBox;
     o_delbtnBox: TGroupBox;
     o_del_data_Box: TGroupBox;
@@ -45,10 +45,10 @@ type
     schet_sel_Grid: TDBGrid;
     d_ustlbl: TStaticText;
     d_ust_inp: TDateTimePicker;
-    upd_sh_vrem_splbl: TStaticText;
-    shvrem_sp_inp: TDateTimePicker;
+    upd_o_Smdatalbl: TStaticText;
+    oper_sm_data_inp: TDateTimePicker;
     DBGrid1: TDBGrid;
-    sh_updGrid: TDBGrid;
+    DBGrid2: TDBGrid;
     DBGrid3: TDBGrid;
     vrem_p_lbl: TStaticText;
     vrem_p_inp: TDateTimePicker;
@@ -66,7 +66,6 @@ type
     procedure schet_vrem_p_RadioClick(Sender: TObject);
     procedure schet_resetRadioClick(Sender: TObject);
     procedure ins_schet_insBtnClick(Sender: TObject);
-    procedure sh_upd_BtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -303,45 +302,6 @@ begin
     end;
     end;
   end;
-end;
-
-procedure TFrm_schet.sh_upd_BtnClick(Sender: TObject);
-var
-  AreFieldsEmpty: Boolean;
-begin
-  AreFieldsEmpty:=(
-  (sh_upd_DBL.Text='')
-  );
-  if AreFieldsEmpty then
-  begin
-    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-    try
-      with dm.upd_shchet do
-      begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@schet_id').Value :=
-           dm.schetQuery.FieldByName('schet_id').AsString;
-           Parameters.ParamByName('@vrem_sp').Value:=shvrem_sp_inp.Date;
-           ExecProc;
-           dm.schetQuery.Close;
-           dm.schetQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-    end;
 end;
 
 end.

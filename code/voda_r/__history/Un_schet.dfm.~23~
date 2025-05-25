@@ -16,17 +16,17 @@ object Frm_schet: TFrm_schet
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object operPC: TPageControl
+  object schetPC: TPageControl
     Left = 0
     Top = 0
     Width = 1032
     Height = 708
-    ActivePage = selTab
+    ActivePage = updTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
-      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1086#1087#1077#1088#1072#1090#1086#1088#1077
-      object oper_inp_boxBox: TGroupBox
+      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1089#1095#1077#1090#1095#1080#1082#1077
+      object schet_inp_boxBox: TGroupBox
         Left = 0
         Top = 0
         Width = 1024
@@ -37,30 +37,31 @@ object Frm_schet: TFrm_schet
         DesignSize = (
           1024
           105)
-        object operCondEdit: TLabeledEdit
+        object schetCondEdit: TLabeledEdit
           Left = 0
           Top = 32
           Width = 977
           Height = 21
           Anchors = [akLeft, akRight]
-          EditLabel.Width = 206
+          EditLabel.Width = 159
           EditLabel.Height = 13
-          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1077#1076#1077#1085#1080#1077' '#1087#1086' '#1060#1048#1054'  '#1086#1087#1077#1088#1072#1090#1086#1088#1072
+          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1077#1076#1077#1085#1080#1077' '#1087#1086' '#1085#1086#1084#1077#1088#1091
           TabOrder = 0
         end
-        object operfndEdit: TLabeledEdit
+        object schetfndEdit: TLabeledEdit
           Left = 3
           Top = 72
           Width = 977
           Height = 21
           Anchors = [akLeft, akRight]
-          EditLabel.Width = 119
+          EditLabel.Width = 108
           EditLabel.Height = 13
-          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1083#1086#1075#1080#1085#1091
+          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1090#1080#1087#1091
           TabOrder = 1
+          OnKeyPress = schetfndEditKeyPress
         end
       end
-      object oper_data_box: TGroupBox
+      object schet_data_box: TGroupBox
         Left = 0
         Top = 210
         Width = 1024
@@ -68,7 +69,7 @@ object Frm_schet: TFrm_schet
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1079
         TabOrder = 1
-        object oper_sel_Grid: TDBGrid
+        object schet_sel_Grid: TDBGrid
           Left = 2
           Top = 15
           Width = 1020
@@ -120,7 +121,7 @@ object Frm_schet: TFrm_schet
             end>
         end
       end
-      object oper_grouper: TGroupBox
+      object schet_grouper: TGroupBox
         Left = 0
         Top = 105
         Width = 1024
@@ -128,66 +129,72 @@ object Frm_schet: TFrm_schet
         Align = alTop
         Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '
         TabOrder = 2
-        object oper_naim_Radio: TRadioButton
+        object schet_d_ust_Radio: TRadioButton
           Left = 64
           Top = 40
-          Width = 113
+          Width = 129
           Height = 17
-          Caption = #1055#1086' '#1060#1048#1054
+          Caption = #1055#1086' '#1076#1072#1090#1077' '#1091#1089#1090#1072#1085#1086#1074#1082#1080
           TabOrder = 0
+          OnClick = schet_d_ust_RadioClick
         end
-        object oper_smdata_Radio: TRadioButton
+        object schet_vrem_p_Radio: TRadioButton
           Left = 288
           Top = 40
           Width = 161
           Height = 17
-          Caption = #1055#1086' '#1076#1072#1090#1077' '#1089#1084#1077#1085#1099
+          Caption = #1055#1086' '#1076#1072#1090#1077' '#1087#1086#1083#1086#1084#1082#1080
           TabOrder = 1
+          OnClick = schet_vrem_p_RadioClick
         end
-        object oper_resetRadio: TRadioButton
+        object schet_resetRadio: TRadioButton
           Left = 664
           Top = 40
           Width = 113
           Height = 17
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 2
+          OnClick = schet_resetRadioClick
         end
       end
-      object oper_btn_Box: TGroupBox
+      object schet_btn_Box: TGroupBox
         Left = 0
         Top = 624
         Width = 1024
         Height = 56
         Align = alBottom
         TabOrder = 3
-        object oper_sel_Btn: TButton
+        object schet_sel_Btn: TButton
           Left = 416
           Top = 24
           Width = 75
           Height = 25
           Caption = #1042#1099#1073#1086#1088
           TabOrder = 0
+          OnClick = schet_sel_BtnClick
         end
       end
     end
     object insTab: TTabSheet
-      Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1086#1087#1077#1088#1072#1090#1086#1088#1077
+      Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' c'#1095#1077#1090#1095#1080#1082#1077
       ImageIndex = 1
-      object ins_oper_data_Box: TGroupBox
+      object ins_schet_data_Box: TGroupBox
         Left = 0
-        Top = 217
+        Top = 297
         Width = 1024
-        Height = 399
+        Height = 319
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object ins_oper_Grd: TDBGrid
+        ExplicitTop = 312
+        ExplicitHeight = 304
+        object DBGrid1: TDBGrid
           Left = 2
           Top = 15
           Width = 1020
-          Height = 382
+          Height = 302
           Align = alClient
-          DataSource = DM.operDS
+          DataSource = DM.schetDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -197,123 +204,176 @@ object Frm_schet: TFrm_schet
           Columns = <
             item
               Expanded = False
-              FieldName = 'oper_id'
+              FieldName = 'schet_id'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'oper_naim'
-              Title.Caption = #1060#1048#1054' '#1086#1087#1077#1088#1072#1090#1086#1088#1072
+              FieldName = 'd_ust'
+              Title.Caption = #1044#1072#1090#1072' '#1091#1089#1090#1072#1085#1086#1074#1082#1080
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'user_name'
-              Title.Caption = #1051#1086#1075#1080#1085' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1103
+              FieldName = 'vrem_p'
+              Title.Caption = #1042#1088#1077#1084#1103' '#1087#1086#1083#1086#1084#1082#1080
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'smdata'
-              Title.Caption = #1044#1072#1090#1072' '#1089#1084#1077#1085#1099
+              FieldName = 'vrem_sp'
+              Title.Caption = #1042#1088#1077#1084#1103' '#1091#1089#1090#1088#1072#1085#1077#1085#1080#1103
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'Nomer'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1089#1095#1077#1090#1095#1080#1082#1072
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'typr_opis'
+              Title.Caption = #1054#1087#1080#1089#1072#1085#1080#1077' '#1090#1080#1087#1072
               Visible = True
             end>
         end
       end
-      object ins_masterbtnBox: TGroupBox
+      object ins_schetrbtnBox: TGroupBox
         Left = 0
         Top = 616
         Width = 1024
         Height = 64
         Align = alBottom
         TabOrder = 1
-        object ins_oper_insBtn: TButton
+        object ins_schet_insBtn: TButton
           Left = 448
           Top = 24
           Width = 75
           Height = 25
           Caption = #1042#1074#1086#1076
           TabOrder = 0
+          OnClick = ins_schet_insBtnClick
         end
       end
-      object about_operPC: TPageControl
+      object about_schetPC: TPageControl
         Left = 0
         Top = 0
         Width = 1024
-        Height = 217
-        ActivePage = about_oper_Tab_one
+        Height = 297
+        ActivePage = about_schet_Tab_one
         Align = alTop
         TabOrder = 2
-        object about_oper_Tab_one: TTabSheet
-          Caption = #1054#1073' '#1086#1087#1077#1088#1072#1090#1086#1088#1077
-          object ins_oper_inp_Box: TGroupBox
+        object about_schet_Tab_one: TTabSheet
+          Caption = #1054'  '#1089#1095#1077#1090#1095#1080#1082#1077
+          ExplicitHeight = 238
+          object ins_schet_inp_Box: TGroupBox
             Left = 0
             Top = 0
             Width = 1016
-            Height = 177
+            Height = 266
             Align = alTop
             Caption = #1042#1074#1086#1076' '#1076#1085#1085#1099#1093
             TabOrder = 0
+            ExplicitLeft = -3
             DesignSize = (
               1016
-              177)
-            object ins_oper_naim_inp: TLabeledEdit
+              266)
+            object d_ustlbl: TStaticText
               Left = 3
-              Top = 40
-              Width = 977
-              Height = 21
-              Anchors = [akLeft, akRight]
-              EditLabel.Width = 108
-              EditLabel.Height = 13
-              EditLabel.Caption = #1042#1074#1086#1076' '#1060#1048#1054' '#1086#1087#1077#1088#1072#1090#1086#1088#1072
+              Top = 19
+              Width = 86
+              Height = 17
+              Caption = #1044#1072#1090#1072' '#1091#1089#1090#1072#1085#1086#1074#1082#1080
               TabOrder = 0
             end
-            object user_lbl: TStaticText
+            object d_ust_inp: TDateTimePicker
               Left = 3
-              Top = 73
-              Width = 122
-              Height = 17
-              Caption = #1042#1099#1073#1088#1072#1090#1100' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1103
-              TabOrder = 1
-            end
-            object ins_user_u_DBL: TDBLookupComboBox
-              Left = 3
-              Top = 96
-              Width = 977
-              Height = 21
-              Anchors = [akLeft, akRight]
-              KeyField = 'userid'
-              ListField = 'user_name'
-              ListSource = DM.userDS
-              TabOrder = 2
-            end
-            object smdatalbl: TStaticText
-              Left = 3
-              Top = 123
-              Width = 64
-              Height = 17
-              Caption = #1044#1072#1090#1072' '#1089#1084#1077#1085#1099
-              TabOrder = 3
-            end
-            object smdatainp: TDateTimePicker
-              Left = 3
-              Top = 146
+              Top = 42
               Width = 977
               Height = 21
               Anchors = [akLeft, akRight]
               Date = 45802.728369340280000000
               Time = 45802.728369340280000000
+              TabOrder = 1
+            end
+            object vrem_p_lbl: TStaticText
+              Left = 3
+              Top = 61
+              Width = 75
+              Height = 17
+              Caption = #1044#1072#1090#1072' '#1087#1086#1083#1086#1084#1082#1080
+              TabOrder = 2
+            end
+            object vrem_p_inp: TDateTimePicker
+              Left = 0
+              Top = 84
+              Width = 977
+              Height = 21
+              Anchors = [akLeft, akRight]
+              Date = 45802.728369340280000000
+              Time = 45802.728369340280000000
+              TabOrder = 3
+            end
+            object vrem_sp_lbl: TStaticText
+              Left = 0
+              Top = 119
+              Width = 92
+              Height = 17
+              Caption = #1044#1072#1090#1072' '#1091#1089#1090#1088#1072#1085#1077#1085#1080#1103
               TabOrder = 4
+            end
+            object vrem_sp_inp: TDateTimePicker
+              Left = 3
+              Top = 142
+              Width = 977
+              Height = 21
+              Anchors = [akLeft, akRight]
+              Date = 45802.728369340280000000
+              Time = 45802.728369340280000000
+              TabOrder = 5
+              ExplicitTop = 124
+            end
+            object ins_s_Nomer_inp: TLabeledEdit
+              Left = 3
+              Top = 186
+              Width = 977
+              Height = 21
+              Anchors = [akLeft, akRight]
+              EditLabel.Width = 81
+              EditLabel.Height = 13
+              EditLabel.Caption = #1053#1086#1084#1077#1088' '#1089#1095#1077#1090#1095#1080#1082#1072
+              TabOrder = 6
+              ExplicitTop = 168
+            end
+            object ins_type_lbl: TStaticText
+              Left = 3
+              Top = 213
+              Width = 72
+              Height = 17
+              Caption = #1058#1080#1087' '#1089#1095#1077#1090#1095#1080#1082#1072
+              TabOrder = 7
+            end
+            object s_type_id_DBL: TDBLookupComboBox
+              Left = 3
+              Top = 236
+              Width = 980
+              Height = 21
+              Anchors = [akLeft, akRight]
+              KeyField = 'type_id'
+              ListField = 'typr_opis'
+              ListSource = DM.typeDS
+              TabOrder = 8
             end
           end
         end
       end
     end
     object updTab: TTabSheet
-      Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1086#1087#1077#1088#1072#1090#1086#1088#1077
+      Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1089#1095#1077#1090#1095#1080#1082#1077
       ImageIndex = 2
-      object o_upd_datapBox: TGroupBox
+      object sh_upd_datapBox: TGroupBox
         Left = 0
         Top = 161
         Width = 1024
@@ -321,13 +381,13 @@ object Frm_schet: TFrm_schet
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object oper_upd_Grid: TDBGrid
+        object sh_updGrid: TDBGrid
           Left = 2
           Top = 15
           Width = 1020
           Height = 438
           Align = alClient
-          DataSource = DM.operDS
+          DataSource = DM.schetDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -337,31 +397,43 @@ object Frm_schet: TFrm_schet
           Columns = <
             item
               Expanded = False
-              FieldName = 'oper_id'
+              FieldName = 'schet_id'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'oper_naim'
-              Title.Caption = #1060#1048#1054' '#1086#1087#1077#1088#1072#1090#1086#1088#1072
+              FieldName = 'd_ust'
+              Title.Caption = #1044#1072#1090#1072' '#1091#1089#1090#1072#1085#1086#1074#1082#1080
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'user_name'
-              Title.Caption = #1051#1086#1075#1080#1085' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1103
+              FieldName = 'vrem_p'
+              Title.Caption = #1042#1088#1077#1084#1103' '#1087#1086#1083#1086#1084#1082#1080
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'smdata'
-              Title.Caption = #1044#1072#1090#1072' '#1089#1084#1077#1085#1099
+              FieldName = 'vrem_sp'
+              Title.Caption = #1042#1088#1077#1084#1103' '#1091#1089#1090#1088#1072#1085#1077#1085#1080#1103
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'Nomer'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1089#1095#1077#1090#1095#1080#1082#1072
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'typr_opis'
+              Title.Caption = #1054#1087#1080#1089#1072#1085#1080#1077' '#1090#1080#1087#1072
               Visible = True
             end>
         end
       end
-      object o_upd_inpBox: TGroupBox
+      object sh_upd_inpBox: TGroupBox
         Left = 0
         Top = 0
         Width = 1024
@@ -372,15 +444,15 @@ object Frm_schet: TFrm_schet
         DesignSize = (
           1024
           161)
-        object o_username_lbl: TStaticText
+        object sh_s_lbl: TStaticText
           Left = 32
           Top = 33
-          Width = 105
+          Width = 92
           Height = 17
-          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1086#1087#1077#1088#1072#1090#1086#1088#1072
+          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1089#1095#1077#1090#1095#1080#1082
           TabOrder = 0
         end
-        object o_upd_DBL: TDBLookupComboBox
+        object sh_upd_DBL: TDBLookupComboBox
           Left = 32
           Top = 56
           Width = 977
@@ -391,12 +463,12 @@ object Frm_schet: TFrm_schet
           ListSource = DM.operDS
           TabOrder = 1
         end
-        object upd_o_Smdatalbl: TStaticText
+        object upd_sh_vrem_splbl: TStaticText
           Left = 32
           Top = 98
-          Width = 122
+          Width = 121
           Height = 17
-          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1103
+          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1076#1072#1090#1091' '#1087#1086#1095#1080#1085#1082#1080
           TabOrder = 2
         end
         object oper_sm_data_inp: TDateTimePicker
@@ -409,20 +481,21 @@ object Frm_schet: TFrm_schet
           TabOrder = 3
         end
       end
-      object oper_u_btntBox: TGroupBox
+      object schet_u_btntBox: TGroupBox
         Left = 0
         Top = 616
         Width = 1024
         Height = 64
         Align = alBottom
         TabOrder = 2
-        object o_upd_Btn: TButton
+        object sh_upd_Btn: TButton
           Left = 432
           Top = 16
           Width = 75
           Height = 25
           Caption = #1054#1073#1085#1086#1074#1080#1090#1100
           TabOrder = 0
+          OnClick = sh_upd_BtnClick
         end
       end
     end
@@ -492,13 +565,14 @@ object Frm_schet: TFrm_schet
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        object del_oper_grd: TDBGrid
+        ExplicitTop = 107
+        object DBGrid3: TDBGrid
           Left = 2
           Top = 15
           Width = 1020
           Height = 486
           Align = alClient
-          DataSource = DM.operDS
+          DataSource = DM.schetDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -508,26 +582,38 @@ object Frm_schet: TFrm_schet
           Columns = <
             item
               Expanded = False
-              FieldName = 'oper_id'
+              FieldName = 'schet_id'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'oper_naim'
-              Title.Caption = #1060#1048#1054' '#1086#1087#1077#1088#1072#1090#1086#1088#1072
+              FieldName = 'd_ust'
+              Title.Caption = #1044#1072#1090#1072' '#1091#1089#1090#1072#1085#1086#1074#1082#1080
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'user_name'
-              Title.Caption = #1051#1086#1075#1080#1085' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1103
+              FieldName = 'vrem_p'
+              Title.Caption = #1042#1088#1077#1084#1103' '#1087#1086#1083#1086#1084#1082#1080
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'smdata'
-              Title.Caption = #1044#1072#1090#1072' '#1089#1084#1077#1085#1099
+              FieldName = 'vrem_sp'
+              Title.Caption = #1042#1088#1077#1084#1103' '#1091#1089#1090#1088#1072#1085#1077#1085#1080#1103
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'Nomer'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1089#1095#1077#1090#1095#1080#1082#1072
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'typr_opis'
+              Title.Caption = #1054#1087#1080#1089#1072#1085#1080#1077' '#1090#1080#1087#1072
               Visible = True
             end>
         end
