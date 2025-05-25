@@ -16,5 +16,7 @@
     <Transaction>2025.05.25 09:18:56.761.dfm,F:\code\Result\delphi\code\voda_r\Un_user.dfm=F:\code\Result\delphi\code\voda_r\Un_master.dfm</Transaction>
     <Transaction>2025.05.25 14:25:57.440.pas,F:\code\Result\delphi\code\voda_r\Un_master.pas=F:\code\Result\delphi\code\voda_r\Un_oper.pas</Transaction>
     <Transaction>2025.05.25 14:25:57.440.dfm,F:\code\Result\delphi\code\voda_r\Un_master.dfm=F:\code\Result\delphi\code\voda_r\Un_oper.dfm</Transaction>
+    <Transaction>2025.05.25 19:39:04.052.pas,F:\code\Result\delphi\code\voda_r\Un_oper.pas=F:\code\Result\delphi\code\voda_r\Un_schet.pas</Transaction>
+    <Transaction>2025.05.25 19:39:04.052.dfm,F:\code\Result\delphi\code\voda_r\Un_oper.dfm=F:\code\Result\delphi\code\voda_r\Un_schet.dfm</Transaction>
   </Transactions>
 </BorlandProject>

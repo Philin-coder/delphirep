@@ -32,6 +32,12 @@ type
     ins_oper: TADOStoredProc;
     upd_oper: TADOStoredProc;
     del_oper: TADOStoredProc;
+    scherQuery: TADOQuery;
+    schetDS: TDataSource;
+    ADOStoredProc1: TADOStoredProc;
+    ADOStoredProc2: TADOStoredProc;
+    ADOStoredProc3: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public

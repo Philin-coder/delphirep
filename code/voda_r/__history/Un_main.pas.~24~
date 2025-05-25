@@ -13,7 +13,6 @@ type
     types_item: TMenuItem;
     master_item: TMenuItem;
     oper_item: TMenuItem;
-    schetItem: TMenuItem;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -22,13 +21,11 @@ type
     procedure FormShow(Sender: TObject);
     procedure master_itemClick(Sender: TObject);
     procedure oper_itemClick(Sender: TObject);
-    procedure schetItemClick(Sender: TObject);
   private
 procedure CreateAndShowChildForm_user;
 procedure CreateAndShowChildForm_type;
 procedure CreateAndShowChildForm_master;
 procedure CreateAndShowChildForm_oper;
-procedure CreateAndShowChildForm_schet;
   public
     { Public declarations }
   end;
@@ -38,8 +35,7 @@ var
 
 implementation
 
-uses Un_func, Un_dm, Un_user, Un_types, Un_autorize, Un_master, Un_oper,
-  Un_schet;
+uses Un_func, Un_dm, Un_user, Un_types, Un_autorize, Un_master, Un_oper;
 const
   FileName = 'connection_string.txt';
 
@@ -61,23 +57,6 @@ begin
     end;
   end;
 end;
-procedure TFrm_main.CreateAndShowChildForm_schet;
-begin
-  try
-    UpdateFormProperties('Frm_user', 'Форма работы с данными счетчика',
-      clBtnFace, 1024, 768);
-    Frm_schet.FormStyle := fsMDIChild;
-    Frm_schet.Show;
-    AdjustChildFormSize(Frm_schet, Self);
-  except
-    on E: Exception do
-    begin
-      ShowMessage('Ошибка: ' + E.Message);
-      Frm_schet.Release;
-    end;
-  end;
-end;
-
 procedure TFrm_main.CreateAndShowChildForm_oper;
 begin
   try
@@ -168,11 +147,6 @@ end;
 procedure TFrm_main.oper_itemClick(Sender: TObject);
 begin
    CreateAndShowChildForm_oper;
-end;
-
-procedure TFrm_main.schetItemClick(Sender: TObject);
-begin
-  CreateAndShowChildForm_schet;
 end;
 
 procedure TFrm_main.types_itemClick(Sender: TObject);

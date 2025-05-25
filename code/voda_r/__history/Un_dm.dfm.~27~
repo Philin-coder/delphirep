@@ -503,9 +503,6 @@ object DM: TDM
     Top = 408
   end
   object scherQuery: TADOQuery
-    Active = True
-    Connection = Connection
-    CursorType = ctStatic
     Parameters = <>
     SQL.Strings = (
       'select  '

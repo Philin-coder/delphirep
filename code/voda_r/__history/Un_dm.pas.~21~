@@ -17,9 +17,21 @@ type
     typeQuery: TADOQuery;
     typeDS: TDataSource;
     sel_by_opis: TADOStoredProc;
-    ADOStoredProc2: TADOStoredProc;
+    del_type: TADOStoredProc;
     ins_type: TADOStoredProc;
-    ADOStoredProc4: TADOStoredProc;
+    upd_type: TADOStoredProc;
+    masterQuery: TADOQuery;
+    masterDS: TDataSource;
+    sel_master_by_fio: TADOStoredProc;
+    ins_master: TADOStoredProc;
+    upd_master: TADOStoredProc;
+    del_master: TADOStoredProc;
+    operQuery: TADOQuery;
+    operDS: TDataSource;
+    sel_oper: TADOStoredProc;
+    ins_oper: TADOStoredProc;
+    upd_oper: TADOStoredProc;
+    del_oper: TADOStoredProc;
   private
     { Private declarations }
   public
