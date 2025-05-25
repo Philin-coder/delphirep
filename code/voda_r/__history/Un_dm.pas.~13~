@@ -20,12 +20,6 @@ type
     del_type: TADOStoredProc;
     ins_type: TADOStoredProc;
     upd_type: TADOStoredProc;
-    masterQuery: TADOQuery;
-    masterDS: TDataSource;
-    ADOStoredProc1: TADOStoredProc;
-    ADOStoredProc2: TADOStoredProc;
-    ADOStoredProc3: TADOStoredProc;
-    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public

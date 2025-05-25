@@ -11,18 +11,15 @@ type
     ItemMenu: TMainMenu;
     user_item: TMenuItem;
     types_item: TMenuItem;
-    master_item: TMenuItem;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure user_itemClick(Sender: TObject);
     procedure types_itemClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure master_itemClick(Sender: TObject);
   private
 procedure CreateAndShowChildForm_user;
 procedure CreateAndShowChildForm_type;
-procedure CreateAndShowChildForm_master;
   public
     { Public declarations }
   end;
@@ -32,7 +29,7 @@ var
 
 implementation
 
-uses Un_func, Un_dm, Un_user, Un_types, Un_autorize, Un_master;
+uses Un_func, Un_dm, Un_user, Un_types, Un_autorize;
 const
   FileName = 'connection_string.txt';
 
@@ -45,6 +42,7 @@ begin
       clBtnFace, 1024, 768);
     Frm_user.FormStyle := fsMDIChild;
     Frm_user.Show;
+
     AdjustChildFormSize(Frm_user, Self);
   except
     on E: Exception do
@@ -54,23 +52,6 @@ begin
     end;
   end;
 end;
- procedure TFrm_main.CreateAndShowChildForm_master;
-begin
-  try
-    UpdateFormProperties('Frm_master', 'Форма работы с данными мастера',
-      clBtnFace, 1024, 768);
-    Frm_master.FormStyle := fsMDIChild;
-    Frm_master.Show;
-    AdjustChildFormSize(Frm_master, Self);
-  except
-    on E: Exception do
-    begin
-      ShowMessage('Ошибка: ' + E.Message);
-      Frm_master.Release;
-    end;
-  end;
-end;
-
 procedure TFrm_main.CreateAndShowChildForm_type;
 begin
   try
@@ -116,11 +97,6 @@ begin
     raise;
   end;
 
-end;
-
-procedure TFrm_main.master_itemClick(Sender: TObject);
-begin
-  CreateAndShowChildForm_master;
 end;
 
 procedure TFrm_main.types_itemClick(Sender: TObject);

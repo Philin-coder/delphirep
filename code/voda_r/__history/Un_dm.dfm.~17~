@@ -158,14 +158,12 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@typr_opis'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
-        Value = Null
       end>
     Left = 216
     Top = 216
@@ -179,7 +177,6 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@type_id'
@@ -200,28 +197,24 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@typr_opis'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
-        Value = Null
       end
       item
         Name = '@mechan'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
-        Value = Null
       end
       item
         Name = '@tochn'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
-        Value = Null
       end>
     Left = 216
     Top = 280
@@ -235,7 +228,6 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@type_id'
@@ -249,50 +241,8 @@ object DM: TDM
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
-        Value = Null
       end>
     Left = 216
     Top = 344
-  end
-  object masterQuery: TADOQuery
-    Parameters = <>
-    SQL.Strings = (
-      'select '
-      '  m_master.id_master, '
-      '  m_master.fio_master,'
-      '  m_master.kont_d,'
-      '  m_master.dnr,'
-      '  m_master.dns,'
-      '  usver.user_name'
-      '  from m_master'
-      '  inner join usver on usver.userid=m_master.userid '
-      '  where 1=1')
-    Left = 288
-    Top = 72
-  end
-  object masterDS: TDataSource
-    DataSet = masterQuery
-    Left = 304
-    Top = 136
-  end
-  object ADOStoredProc1: TADOStoredProc
-    Parameters = <>
-    Left = 328
-    Top = 216
-  end
-  object ADOStoredProc2: TADOStoredProc
-    Parameters = <>
-    Left = 320
-    Top = 280
-  end
-  object ADOStoredProc3: TADOStoredProc
-    Parameters = <>
-    Left = 320
-    Top = 352
-  end
-  object ADOStoredProc4: TADOStoredProc
-    Parameters = <>
-    Left = 328
-    Top = 408
   end
 end
