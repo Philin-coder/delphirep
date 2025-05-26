@@ -8,11 +8,10 @@ uses
   Un_types in 'Un_types.pas' {Frm_types},
   Un_klient in 'Un_klient.pas' {Frm_klient},
   Un_autorize in 'Un_autorize.pas' {Frm_autor},
-  Un_report in 'Un_report.pas' {Frm_report},
+  Un_user in 'Un_user.pas' {Frm_user},
   Un_master in 'Un_master.pas' {Frm_master},
   Un_oper in 'Un_oper.pas' {Frm_oper},
-  Un_schet in 'Un_schet.pas' {Frm_schet},
-  Un_user in 'Un_user.pas' {Frm_user};
+  Un_schet in 'Un_schet.pas' {Frm_schet};
 
 {$R *.res}
 {$R 'resources.RES'}
@@ -24,10 +23,9 @@ begin
   Application.CreateForm(TFrm_types, Frm_types);
   Application.CreateForm(TFrm_klient, Frm_klient);
   Application.CreateForm(TFrm_autor, Frm_autor);
-  Application.CreateForm(TFrm_report, Frm_report);
+  Application.CreateForm(TFrm_user, Frm_user);
   Application.CreateForm(TFrm_master, Frm_master);
   Application.CreateForm(TFrm_oper, Frm_oper);
   Application.CreateForm(TFrm_schet, Frm_schet);
-  Application.CreateForm(TFrm_user, Frm_user);
   Application.Run;
 end.

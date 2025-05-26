@@ -15,7 +15,6 @@ type
     oper_item: TMenuItem;
     schetItem: TMenuItem;
     klient_item: TMenuItem;
-    report_item: TMenuItem;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -26,7 +25,6 @@ type
     procedure oper_itemClick(Sender: TObject);
     procedure schetItemClick(Sender: TObject);
     procedure klient_itemClick(Sender: TObject);
-    procedure report_itemClick(Sender: TObject);
   private
 procedure CreateAndShowChildForm_user;
 procedure CreateAndShowChildForm_type;
@@ -213,11 +211,6 @@ end;
 procedure TFrm_main.oper_itemClick(Sender: TObject);
 begin
    CreateAndShowChildForm_oper;
-end;
-
-procedure TFrm_main.report_itemClick(Sender: TObject);
-begin
-    CreateAndShowChildForm_report;
 end;
 
 procedure TFrm_main.schetItemClick(Sender: TObject);

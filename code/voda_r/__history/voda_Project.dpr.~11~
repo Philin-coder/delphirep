@@ -12,7 +12,7 @@ uses
   Un_master in 'Un_master.pas' {Frm_master},
   Un_oper in 'Un_oper.pas' {Frm_oper},
   Un_schet in 'Un_schet.pas' {Frm_schet},
-  Un_user in 'Un_user.pas' {Frm_user};
+  Un_user in 'Un_user.pas';
 
 {$R *.res}
 {$R 'resources.RES'}
@@ -28,6 +28,5 @@ begin
   Application.CreateForm(TFrm_master, Frm_master);
   Application.CreateForm(TFrm_oper, Frm_oper);
   Application.CreateForm(TFrm_schet, Frm_schet);
-  Application.CreateForm(TFrm_user, Frm_user);
   Application.Run;
 end.

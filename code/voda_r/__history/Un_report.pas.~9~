@@ -1,45 +1,31 @@
-unit Un_user;
+unit Un_report;
 
 interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs,DB,ADODB, ComCtrls, StdCtrls, ExtCtrls, Grids, DBGrids;
+  Dialogs,DB,ADODB, ComCtrls, StdCtrls, ExtCtrls, Grids, DBGrids, DBCtrls;
 
 type
-  TFrm_user = class(TForm)
-    userPC: TPageControl;
-    selTab: TTabSheet;
-    insTab: TTabSheet;
-    TabSheet3: TTabSheet;
+  TFrm_report = class(TForm)
+    reportPC: TPageControl;
     delTab: TTabSheet;
-    User_inp_boxBox: TGroupBox;
-    user_data_box: TGroupBox;
-    User_grouper: TGroupBox;
-    User_btn_Box: TGroupBox;
-    UserCondEdit: TLabeledEdit;
-    USERFNDEdit: TLabeledEdit;
-    User_sel_Btn: TButton;
-    sel_user_GRD: TDBGrid;
-    PassRadio: TRadioButton;
-    logRadio: TRadioButton;
-    resteRadio: TRadioButton;
-    user_gata_Box: TGroupBox;
-    userbtnBox: TGroupBox;
-    user_inp_Box: TGroupBox;
-    user_insBtn: TButton;
-    user_log_inp: TLabeledEdit;
-    user_pass_inp: TLabeledEdit;
-    user_datagrd: TDBGrid;
+    rp_del_inpBox: TGroupBox;
+    rp_delbtnBox: TGroupBox;
+    rp_data_Box: TGroupBox;
+    rp_datab_lbl: TStaticText;
+    rp_del_btn: TButton;
+    rp_del_Grd: TDBGrid;
+    rp_datae_lbl: TStaticText;
+    rp_data_b_inp: TDateTimePicker;
+    rp_data_e_inp: TDateTimePicker;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
-    procedure User_sel_BtnClick(Sender: TObject);
     procedure USERFNDEditKeyPress(Sender: TObject; var Key: Char);
     procedure PassRadioClick(Sender: TObject);
     procedure logRadioClick(Sender: TObject);
     procedure resteRadioClick(Sender: TObject);
-    procedure user_insBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -47,7 +33,7 @@ type
   end;
 
 var
-  Frm_user: TFrm_user;
+  Frm_report: TFrm_report;
 
 implementation
 
@@ -55,20 +41,20 @@ uses Un_dm, Un_func;
 
 {$R *.dfm}
 
-procedure TFrm_user.FormActivate(Sender: TObject);
+procedure TFrm_report.FormActivate(Sender: TObject);
 begin
   dm.userQuery.Open;
   AdjustDBGridColumnWidths('Frm_user',6000, 10)
 end;
 
-procedure TFrm_user.FormClose(Sender: TObject; var Action: TCloseAction);
+procedure TFrm_report.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
    SaveFormState(Self);
    CloseAllQueriesOnDataModule('dm');
    Action := caFree;
 end;
 
-procedure TFrm_user.FormCreate(Sender: TObject);
+procedure TFrm_report.FormCreate(Sender: TObject);
 begin
   Frm_user.KeyPreview:=true;
   Frm_user.ShowHint:=true;
@@ -78,7 +64,7 @@ begin
   LoadFormState(Self);
 end;
 
-procedure TFrm_user.logRadioClick(Sender: TObject);
+procedure TFrm_report.logRadioClick(Sender: TObject);
 begin
   if  logRadio.Checked=true then
   begin
@@ -105,7 +91,7 @@ begin
   end;
 end;
 
-procedure TFrm_user.PassRadioClick(Sender: TObject);
+procedure TFrm_report.PassRadioClick(Sender: TObject);
 begin
     if  passRadio.Checked=true then
   begin
@@ -132,7 +118,7 @@ begin
   end;
 end;
 
-procedure TFrm_user.resteRadioClick(Sender: TObject);
+procedure TFrm_report.resteRadioClick(Sender: TObject);
 var i,j,c:Integer;
 begin
   if resteRadio.Checked=true then
@@ -175,7 +161,7 @@ with Frm_user do
     end;
 end;
 
-procedure TFrm_user.USERFNDEditKeyPress(Sender: TObject; var Key: Char);
+procedure TFrm_report.USERFNDEditKeyPress(Sender: TObject; var Key: Char);
 begin
     try
    dm.userQuery.SQL.Text:=
@@ -193,65 +179,6 @@ except on E: Exception do
   begin
   ShowMessage('Ошибка'+' '+E.Message);
   end;
-  end;
-end;
-
-procedure TFrm_user.user_insBtnClick(Sender: TObject);
-var
-  AreFieldsEmpty: Boolean;
-begin
-  AreFieldsEmpty:=(
-  (Trim(user_log_inp.Text)='')or
-  (Trim(user_pass_inp.Text)='')
-  );
-  if AreFieldsEmpty then
-  begin
-       MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-  try
-      with dm.ins_user do
-      begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@user_name').Value :=user_log_inp.Text;
-           Parameters.ParamByName('@user_pass').Value:=user_pass_inp.Text;
-           ExecProc;
-           dm.userQuery.Close;
-           dm.userQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-    end;
-end;
-
-procedure TFrm_user.User_sel_BtnClick(Sender: TObject);
-begin
-   try
-    if not DM.Connection.Connected then
-      raise Exception.Create('Соединение с базой не установелено');
-    with DM.sel_user_by_login do
-    begin
-      Close;
-      Parameters.ParamByName('@user_name').Value :=usercondedit.Text;
-      Open;
-       DM.userQuery.Recordset:=dm.sel_user_by_login.Recordset;
-    end;
-  except
-    on E: EDatabaseError do
-      ShowMessage('Ошибка: ' + E.Message);
-    on E: Exception do
-      ShowMessage('Ошибка: ' + E.Message);
   end;
 end;
 

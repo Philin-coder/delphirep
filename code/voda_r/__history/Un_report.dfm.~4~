@@ -1,0 +1,108 @@
+object Frm_report: TFrm_report
+  Left = 0
+  Top = 0
+  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1076#1072#1085#1085#1099#1084#1080' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1103
+  ClientHeight = 708
+  ClientWidth = 1032
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  OnActivate = FormActivate
+  OnClose = FormClose
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object reportPC: TPageControl
+    Left = 0
+    Top = 0
+    Width = 1032
+    Height = 708
+    ActivePage = delTab
+    Align = alClient
+    TabOrder = 0
+    object delTab: TTabSheet
+      Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1077
+      ImageIndex = 3
+      object rp_del_inpBox: TGroupBox
+        Left = 0
+        Top = 0
+        Width = 1024
+        Height = 121
+        Align = alTop
+        Caption = #1042#1074#1086#1076' '#1076#1074#1085#1085#1099#1093
+        TabOrder = 0
+        object rp_lbl: TStaticText
+          Left = 3
+          Top = 48
+          Width = 122
+          Height = 17
+          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1103
+          TabOrder = 0
+        end
+      end
+      object rp_delbtnBox: TGroupBox
+        Left = 0
+        Top = 616
+        Width = 1024
+        Height = 64
+        Align = alBottom
+        TabOrder = 1
+        object rp_del_btn: TButton
+          Left = 368
+          Top = 6
+          Width = 75
+          Height = 25
+          Caption = #1059#1076#1072#1083#1080#1090#1100
+          TabOrder = 0
+          OnClick = rp_del_btnClick
+        end
+      end
+      object rp_data_Box: TGroupBox
+        Left = 0
+        Top = 121
+        Width = 1024
+        Height = 495
+        Align = alClient
+        Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 2
+        object rp_del_Grd: TDBGrid
+          Left = 2
+          Top = 15
+          Width = 1020
+          Height = 478
+          Align = alClient
+          DataSource = DM.userDS
+          TabOrder = 0
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWindowText
+          TitleFont.Height = -11
+          TitleFont.Name = 'Tahoma'
+          TitleFont.Style = []
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'userid'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'user_name'
+              Title.Caption = #1051#1086#1075#1080#1085
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'user_pass'
+              Title.Caption = #1055#1072#1088#1086#1083#1100
+              Visible = True
+            end>
+        end
+      end
+    end
+  end
+end

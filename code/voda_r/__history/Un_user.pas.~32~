@@ -42,6 +42,7 @@ type
     u_del_inpBox: TGroupBox;
     U_delbtnBox: TGroupBox;
     u_del_data_Box: TGroupBox;
+    U_del_lbl: TStaticText;
     u_delDBL: TDBLookupComboBox;
     del_user_lbl: TStaticText;
     u_del_btn: TButton;

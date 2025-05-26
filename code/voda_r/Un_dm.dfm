@@ -1,7 +1,7 @@
 object DM: TDM
   OldCreateOrder = False
   Height = 529
-  Width = 671
+  Width = 794
   object Connection: TADOConnection
     Connected = True
     ConnectionString = 
@@ -651,6 +651,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@schet_id'
@@ -700,12 +701,14 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@fio'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end>
     Left = 568
     Top = 208
@@ -719,36 +722,42 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@fio'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end
       item
         Name = '@adr'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end
       item
         Name = '@prim'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end
       item
         Name = '@kont_d'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end
       item
         Name = '@tel'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end
       item
         Name = '@pokaz'
@@ -790,6 +799,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@klient_id'
@@ -803,6 +813,7 @@ object DM: TDM
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end>
     Left = 560
     Top = 328
@@ -816,6 +827,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@klient_id'
@@ -826,5 +838,54 @@ object DM: TDM
       end>
     Left = 568
     Top = 408
+  end
+  object reportQuery: TADOQuery
+    Active = True
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select  '
+      '  schet.schet_id,'
+      '  schet.d_ust,'
+      '  schet.vrem_p,'
+      '  schet.vrem_sp,'
+      '  schet.Nomer,'
+      '  type_s.typr_opis'
+      '  from schet'
+      '  inner join type_s on type_s.type_id=schet.type_id'
+      '  where 1=1')
+    Left = 616
+    Top = 88
+  end
+  object reportDS: TDataSource
+    DataSet = reportQuery
+    Left = 640
+    Top = 152
+  end
+  object report1: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'report1;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@d1'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end
+      item
+        Name = '@d2'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end>
+    Left = 640
+    Top = 216
   end
 end
