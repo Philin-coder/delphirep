@@ -32,13 +32,13 @@ type
     sh_upd_Btn: TButton;
     sh_s_lbl: TStaticText;
     sh_upd_DBL: TDBLookupComboBox;
-    sh_del_inpBox: TGroupBox;
-    sh_delbtnBox: TGroupBox;
-    sh_del_data_Box: TGroupBox;
-    sh_del_lbl: TStaticText;
-    sh_delDBL: TDBLookupComboBox;
-    del_sh_lbl: TStaticText;
-    sh_del_btn: TButton;
+    o_del_inpBox: TGroupBox;
+    o_delbtnBox: TGroupBox;
+    o_del_data_Box: TGroupBox;
+    o_del_lbl: TStaticText;
+    o_delDBL: TDBLookupComboBox;
+    del_oper_lbl: TStaticText;
+    o_del_btn: TButton;
     about_schetPC: TPageControl;
     about_schet_Tab_one: TTabSheet;
     ins_schet_inp_Box: TGroupBox;
@@ -49,7 +49,7 @@ type
     shvrem_sp_inp: TDateTimePicker;
     DBGrid1: TDBGrid;
     sh_updGrid: TDBGrid;
-    sh_del_Grid: TDBGrid;
+    DBGrid3: TDBGrid;
     vrem_p_lbl: TStaticText;
     vrem_p_inp: TDateTimePicker;
     vrem_sp_lbl: TStaticText;
@@ -67,7 +67,6 @@ type
     procedure schet_resetRadioClick(Sender: TObject);
     procedure ins_schet_insBtnClick(Sender: TObject);
     procedure sh_upd_BtnClick(Sender: TObject);
-    procedure sh_del_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -304,44 +303,6 @@ begin
     end;
     end;
   end;
-end;
-
-procedure TFrm_schet.sh_del_btnClick(Sender: TObject);
-var
-  AreFieldsEmpty: Boolean;
-begin
-  AreFieldsEmpty:=(
-  (sh_delDBL.Text='')
-  );
-  if AreFieldsEmpty then
-  begin
-    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-  try
-      with dm.del_shcet do
-      begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@schet_id').Value :=
-           dm.schetQuery.FieldByName('schet_id').AsString;
-           ExecProc;
-           dm.schetQuery.Close;
-           dm.schetQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-    end;
 end;
 
 procedure TFrm_schet.sh_upd_BtnClick(Sender: TObject);

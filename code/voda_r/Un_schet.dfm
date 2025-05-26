@@ -21,7 +21,7 @@ object Frm_schet: TFrm_schet
     Top = 0
     Width = 1032
     Height = 708
-    ActivePage = updTab
+    ActivePage = delTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
@@ -186,8 +186,6 @@ object Frm_schet: TFrm_schet
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        ExplicitTop = 312
-        ExplicitHeight = 304
         object DBGrid1: TDBGrid
           Left = 2
           Top = 15
@@ -267,7 +265,6 @@ object Frm_schet: TFrm_schet
         TabOrder = 2
         object about_schet_Tab_one: TTabSheet
           Caption = #1054'  '#1089#1095#1077#1090#1095#1080#1082#1077
-          ExplicitHeight = 238
           object ins_schet_inp_Box: TGroupBox
             Left = 0
             Top = 0
@@ -276,7 +273,6 @@ object Frm_schet: TFrm_schet
             Align = alTop
             Caption = #1042#1074#1086#1076' '#1076#1085#1085#1099#1093
             TabOrder = 0
-            ExplicitLeft = -3
             DesignSize = (
               1016
               266)
@@ -333,7 +329,6 @@ object Frm_schet: TFrm_schet
               Date = 45802.728369340280000000
               Time = 45802.728369340280000000
               TabOrder = 5
-              ExplicitTop = 124
             end
             object ins_s_Nomer_inp: TLabeledEdit
               Left = 3
@@ -345,7 +340,6 @@ object Frm_schet: TFrm_schet
               EditLabel.Height = 13
               EditLabel.Caption = #1053#1086#1084#1077#1088' '#1089#1095#1077#1090#1095#1080#1082#1072
               TabOrder = 6
-              ExplicitTop = 168
             end
             object ins_type_lbl: TStaticText
               Left = 3
@@ -500,20 +494,20 @@ object Frm_schet: TFrm_schet
       end
     end
     object delTab: TTabSheet
-      Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081'  '#1086#1073' '#1086#1087#1077#1088#1072#1090#1086#1088#1077
+      Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081'  '#1086' c'#1095#1077#1090#1077
       ImageIndex = 3
-      object o_del_inpBox: TGroupBox
+      object sh_del_inpBox: TGroupBox
         Left = 0
         Top = 0
         Width = 1024
         Height = 113
         Align = alTop
-        Caption = #1042#1074#1086#1076' '#1076#1074#1085#1085#1099#1093
+        Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
         DesignSize = (
           1024
           113)
-        object o_del_lbl: TStaticText
+        object sh_del_lbl: TStaticText
           Left = 3
           Top = 16
           Width = 122
@@ -521,18 +515,18 @@ object Frm_schet: TFrm_schet
           Caption = #1042#1099#1073#1088#1072#1090#1100' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1103
           TabOrder = 0
         end
-        object o_delDBL: TDBLookupComboBox
+        object sh_delDBL: TDBLookupComboBox
           Left = 16
           Top = 63
           Width = 977
           Height = 21
           Anchors = [akLeft, akRight]
-          KeyField = 'oper_id'
-          ListField = 'oper_naim'
-          ListSource = DM.operDS
+          KeyField = 'schet_id'
+          ListField = 'Nomer'
+          ListSource = DM.schetDS
           TabOrder = 1
         end
-        object del_oper_lbl: TStaticText
+        object del_sh_lbl: TStaticText
           Left = 16
           Top = 32
           Width = 105
@@ -541,23 +535,24 @@ object Frm_schet: TFrm_schet
           TabOrder = 2
         end
       end
-      object o_delbtnBox: TGroupBox
+      object sh_delbtnBox: TGroupBox
         Left = 0
         Top = 616
         Width = 1024
         Height = 64
         Align = alBottom
         TabOrder = 1
-        object o_del_btn: TButton
+        object sh_del_btn: TButton
           Left = 360
           Top = 22
           Width = 75
           Height = 25
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
+          OnClick = sh_del_btnClick
         end
       end
-      object o_del_data_Box: TGroupBox
+      object sh_del_data_Box: TGroupBox
         Left = 0
         Top = 113
         Width = 1024
@@ -565,8 +560,7 @@ object Frm_schet: TFrm_schet
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        ExplicitTop = 107
-        object DBGrid3: TDBGrid
+        object sh_del_Grid: TDBGrid
           Left = 2
           Top = 15
           Width = 1020

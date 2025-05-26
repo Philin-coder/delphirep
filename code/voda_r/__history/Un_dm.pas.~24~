@@ -22,9 +22,21 @@ type
     upd_type: TADOStoredProc;
     masterQuery: TADOQuery;
     masterDS: TDataSource;
-    ADOStoredProc1: TADOStoredProc;
-    ADOStoredProc2: TADOStoredProc;
-    ADOStoredProc3: TADOStoredProc;
+    sel_master_by_fio: TADOStoredProc;
+    ins_master: TADOStoredProc;
+    upd_master: TADOStoredProc;
+    del_master: TADOStoredProc;
+    operQuery: TADOQuery;
+    operDS: TDataSource;
+    sel_oper: TADOStoredProc;
+    ins_oper: TADOStoredProc;
+    upd_oper: TADOStoredProc;
+    del_oper: TADOStoredProc;
+    schetQuery: TADOQuery;
+    schetDS: TDataSource;
+    sel_schet: TADOStoredProc;
+    ins_schet: TADOStoredProc;
+    upd_shchet: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }

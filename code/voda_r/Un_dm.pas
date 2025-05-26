@@ -37,7 +37,7 @@ type
     sel_schet: TADOStoredProc;
     ins_schet: TADOStoredProc;
     upd_shchet: TADOStoredProc;
-    ADOStoredProc4: TADOStoredProc;
+    del_shcet: TADOStoredProc;
   private
     { Private declarations }
   public
