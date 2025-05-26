@@ -156,14 +156,7 @@ begin
            Parameters.ParamByName('@adr').Value :=ins_klient_adr_inp.Text;
            Parameters.ParamByName('@prim').Value :=ins_klient_prin_inp.Text;
            Parameters.ParamByName('@kont_d').Value :=ins_klient_mail_inp.Text;
-           Parameters.ParamByName('@tel').Value :=klient_phone_inp.Text;
-           Parameters.ParamByName('@pokaz').Value :=pokaz_grader.Position;
-           Parameters.ParamByName('@oper_id').Value:=
-           dm.operQuery.FieldByName('oper_id').AsString;
-           Parameters.ParamByName('@schet_id').Value:=
-           dm.schetQuery.FieldByName('schet_id').AsString;
-           Parameters.ParamByName('@id_master').Value:=
-           dm.masterQuery.FieldByName('id_master').AsString;
+           
            ExecProc;
            dm.klientQuery.Close;
            dm.klientQuery.Open;

@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs,DB,ADODB, ComCtrls, StdCtrls, ExtCtrls, Grids, DBGrids, DBCtrls, Mask;
+  Dialogs,DB,ADODB, ComCtrls, StdCtrls, ExtCtrls, Grids, DBGrids, DBCtrls;
 
 type
   TFrm_klient = class(TForm)
@@ -23,9 +23,9 @@ type
     klient_fio_Radio: TRadioButton;
     klient_adr_Radio: TRadioButton;
     klient_resetRadio: TRadioButton;
-    ins_klient_data_Box: TGroupBox;
-    ins_klientrbtnBox: TGroupBox;
-    ins_klient_insBtn: TButton;
+    ins_schet_data_Box: TGroupBox;
+    ins_schetrbtnBox: TGroupBox;
+    ins_schet_insBtn: TButton;
     sh_upd_datapBox: TGroupBox;
     sh_upd_inpBox: TGroupBox;
     schet_u_btntBox: TGroupBox;
@@ -39,31 +39,24 @@ type
     sh_delDBL: TDBLookupComboBox;
     del_sh_lbl: TStaticText;
     sh_del_btn: TButton;
-    about_klientPC: TPageControl;
-    about_klient_Tab_one: TTabSheet;
-    ins_klient_inp_Box: TGroupBox;
+    about_schetPC: TPageControl;
+    about_schet_Tab_one: TTabSheet;
+    ins_schet_inp_Box: TGroupBox;
     klient_sel_Grid: TDBGrid;
+    d_ustlbl: TStaticText;
+    d_ust_inp: TDateTimePicker;
     upd_sh_vrem_splbl: TStaticText;
     shvrem_sp_inp: TDateTimePicker;
-    ins_klient_fio_inp: TLabeledEdit;
-    ins_klient_Grid: TDBGrid;
+    vrem_p_lbl: TStaticText;
+    vrem_p_inp: TDateTimePicker;
+    vrem_sp_lbl: TStaticText;
+    vrem_sp_inp: TDateTimePicker;
+    ins_s_Nomer_inp: TLabeledEdit;
+    ins_type_lbl: TStaticText;
+    s_type_id_DBL: TDBLookupComboBox;
+    DBGrid1: TDBGrid;
     DBGrid2: TDBGrid;
     DBGrid3: TDBGrid;
-    ins_klient_adr_inp: TLabeledEdit;
-    ins_klient_prin_inp: TLabeledEdit;
-    ins_klient_mail_inp: TLabeledEdit;
-    klient_phone_lbl: TStaticText;
-    klient_phone_inp: TMaskEdit;
-    About_client_tab_two: TTabSheet;
-    ins_klient_inp_Box_two: TGroupBox;
-    klient_pokaz_inp: TLabeledEdit;
-    pokaz_grader: TUpDown;
-    oper_lbl: TStaticText;
-    schet_lbl: TStaticText;
-    master_lbl: TStaticText;
-    kl_operDBL: TDBLookupComboBox;
-    kl_schetDBL: TDBLookupComboBox;
-    kl_masterDBL: TDBLookupComboBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -72,8 +65,6 @@ type
     procedure klient_fio_RadioClick(Sender: TObject);
     procedure klient_adr_RadioClick(Sender: TObject);
     procedure klient_resetRadioClick(Sender: TObject);
-    procedure ins_klient_insBtnClick(Sender: TObject);
-    procedure klient_phone_inpExit(Sender: TObject);
   private
     { Private declarations }
   public
@@ -112,74 +103,7 @@ begin
   UniformizeButtonsSize(Self,  273, 25);
   UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
-  klient_phone_inp.EditMask := '!+7 \(999\) 000-00-00;1;_';
   LoadFormState(Self);
-end;
-
-procedure TFrm_klient.ins_klient_insBtnClick(Sender: TObject);
-const
-  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
-var
-  AreFieldsEmpty: Boolean;
-  AreFieldsValid: Boolean;
-begin
-  AreFieldsEmpty:=(
-  (Trim(ins_klient_fio_inp.Text)='')or
-  (Trim(ins_klient_adr_inp.Text)='')or
-  (Trim(ins_klient_prin_inp.Text)='')or
-  (Trim(ins_klient_mail_inp.Text)='')or
-  (Trim(klient_phone_inp.Text)='')or
-  (pokaz_grader.Position=0)or
-  (kl_operDBL.Text='')or
-  (kl_schetDBL.Text='')or
-  (kl_masterDBL.Text='')
-  );
-  AreFieldsValid:=(
-  ValidateComponentText(ins_klient_fio_inp,AllowedChars)and
-  ValidateComponentText(ins_klient_adr_inp,AllowedChars)and
-  ValidateComponentText(ins_klient_prin_inp,AllowedChars)and
-  IsValidEmail(ins_klient_mail_inp.Text)
-  );
-  if AreFieldsEmpty or not AreFieldsValid then
-  begin
-  MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-  try
-      with dm.ins_klient do
-      begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@fio').Value :=ins_klient_fio_inp.Text;
-           Parameters.ParamByName('@adr').Value :=ins_klient_adr_inp.Text;
-           Parameters.ParamByName('@prim').Value :=ins_klient_prin_inp.Text;
-           Parameters.ParamByName('@kont_d').Value :=ins_klient_mail_inp.Text;
-           Parameters.ParamByName('@tel').Value :=klient_phone_inp.Text;
-           Parameters.ParamByName('@pokaz').Value :=pokaz_grader.Position;
-           Parameters.ParamByName('@oper_id').Value:=
-           dm.operQuery.FieldByName('oper_id').AsString;
-           Parameters.ParamByName('@schet_id').Value:=
-           dm.schetQuery.FieldByName('schet_id').AsString;
-           Parameters.ParamByName('@id_master').Value:=
-           dm.masterQuery.FieldByName('id_master').AsString;
-           ExecProc;
-           dm.klientQuery.Close;
-           dm.klientQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-    end;
-  
 end;
 
 procedure TFrm_klient.klientfndEditKeyPress(Sender: TObject; var Key: Char);
@@ -285,19 +209,6 @@ begin
     end;
     end;
   end;
-end;
-
-procedure TFrm_klient.klient_phone_inpExit(Sender: TObject);
-begin
-   if IsMaskEditEmpty(klient_phone_inp) then
-  begin
-    klient_phone_inp.Color := clRed;
-    ShowMessage('Телефон нужно заполнить');
-    klient_phone_inp.SetFocus;
-  end
-  else
-    klient_phone_inp.Color := clWindow;
-
 end;
 
 procedure TFrm_klient.klient_resetRadioClick(Sender: TObject);

@@ -40,8 +40,8 @@ type
     del_shcet: TADOStoredProc;
     klientQuery: TADOQuery;
     klientDS: TDataSource;
-    ADOStoredProc1: TADOStoredProc;
-    ADOStoredProc2: TADOStoredProc;
+    sel_klient: TADOStoredProc;
+    ins_klient: TADOStoredProc;
     ADOStoredProc3: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;
   private
