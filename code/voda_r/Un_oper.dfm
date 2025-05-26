@@ -21,7 +21,7 @@ object Frm_oper: TFrm_oper
     Top = 0
     Width = 1032
     Height = 708
-    ActivePage = updTab
+    ActivePage = delTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
@@ -439,14 +439,6 @@ object Frm_oper: TFrm_oper
         DesignSize = (
           1024
           113)
-        object o_del_lbl: TStaticText
-          Left = 3
-          Top = 16
-          Width = 122
-          Height = 17
-          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1103
-          TabOrder = 0
-        end
         object o_delDBL: TDBLookupComboBox
           Left = 16
           Top = 63
@@ -456,15 +448,15 @@ object Frm_oper: TFrm_oper
           KeyField = 'oper_id'
           ListField = 'oper_naim'
           ListSource = DM.operDS
-          TabOrder = 1
+          TabOrder = 0
         end
         object del_oper_lbl: TStaticText
           Left = 16
-          Top = 32
+          Top = 40
           Width = 105
           Height = 17
           Caption = #1042#1099#1073#1088#1072#1090#1100' '#1086#1087#1077#1088#1072#1090#1086#1088#1072
-          TabOrder = 2
+          TabOrder = 1
         end
       end
       object o_delbtnBox: TGroupBox

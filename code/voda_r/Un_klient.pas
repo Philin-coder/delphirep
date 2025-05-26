@@ -33,12 +33,11 @@ type
     klient_s_lbl: TStaticText;
     klient_upd_DBL: TDBLookupComboBox;
     sh_del_inpBox: TGroupBox;
-    sh_delbtnBox: TGroupBox;
-    sh_del_data_Box: TGroupBox;
-    sh_del_lbl: TStaticText;
-    sh_delDBL: TDBLookupComboBox;
-    del_sh_lbl: TStaticText;
-    sh_del_btn: TButton;
+    klient_delbtnBox: TGroupBox;
+    klient_del_data_Box: TGroupBox;
+    klient_del_lbl: TStaticText;
+    klient_delDBL: TDBLookupComboBox;
+    klient_del_btn: TButton;
     about_klientPC: TPageControl;
     about_klient_Tab_one: TTabSheet;
     ins_klient_inp_Box: TGroupBox;
@@ -46,7 +45,7 @@ type
     ins_klient_fio_inp: TLabeledEdit;
     ins_klient_Grid: TDBGrid;
     klient_data_grid: TDBGrid;
-    DBGrid3: TDBGrid;
+    Del_klient_data_Grid: TDBGrid;
     ins_klient_adr_inp: TLabeledEdit;
     ins_klient_prin_inp: TLabeledEdit;
     ins_klient_mail_inp: TLabeledEdit;
@@ -74,6 +73,7 @@ type
     procedure ins_klient_insBtnClick(Sender: TObject);
     procedure klient_phone_inpExit(Sender: TObject);
     procedure klient_upd_BtnClick(Sender: TObject);
+    procedure klient_del_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -248,6 +248,44 @@ begin
     end;
     end;
   end;
+end;
+
+procedure TFrm_klient.klient_del_btnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (klient_delDBL.Text='')
+  );
+  if AreFieldsEmpty then
+  begin
+      MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.del_klient do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@klient_id').Value :=
+           dm.klientQuery.FieldByName('klient_id').AsString;
+           ExecProc;
+           dm.klientQuery.Close;
+           dm.klientQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
 end;
 
 procedure TFrm_klient.klient_fio_RadioClick(Sender: TObject);

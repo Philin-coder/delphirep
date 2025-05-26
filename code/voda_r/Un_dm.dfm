@@ -807,8 +807,23 @@ object DM: TDM
     Left = 560
     Top = 328
   end
-  object ADOStoredProc4: TADOStoredProc
-    Parameters = <>
+  object del_klient: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'del_klient;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@klient_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
     Left = 568
     Top = 408
   end

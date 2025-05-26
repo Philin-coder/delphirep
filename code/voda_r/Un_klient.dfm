@@ -21,7 +21,7 @@ object Frm_klient: TFrm_klient
     Top = 0
     Width = 1032
     Height = 708
-    ActivePage = updTab
+    ActivePage = delTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
@@ -633,7 +633,7 @@ object Frm_klient: TFrm_klient
       end
     end
     object delTab: TTabSheet
-      Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081'  '#1086' c'#1095#1077#1090#1077
+      Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081'  '#1086' '#1082#1083#1080#1077#1085#1090#1077
       ImageIndex = 3
       object sh_del_inpBox: TGroupBox
         Left = 0
@@ -646,51 +646,44 @@ object Frm_klient: TFrm_klient
         DesignSize = (
           1024
           113)
-        object sh_del_lbl: TStaticText
-          Left = 3
-          Top = 16
-          Width = 122
+        object klient_del_lbl: TStaticText
+          Left = 16
+          Top = 40
+          Width = 93
           Height = 17
-          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1103
+          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1082#1083#1080#1077#1085#1090#1072
           TabOrder = 0
         end
-        object sh_delDBL: TDBLookupComboBox
+        object klient_delDBL: TDBLookupComboBox
           Left = 16
           Top = 63
           Width = 977
           Height = 21
           Anchors = [akLeft, akRight]
-          KeyField = 'schet_id'
-          ListField = 'Nomer'
-          ListSource = DM.schetDS
+          KeyField = 'klient_id'
+          ListField = 'fio'
+          ListSource = DM.klientDS
           TabOrder = 1
         end
-        object del_sh_lbl: TStaticText
-          Left = 16
-          Top = 32
-          Width = 105
-          Height = 17
-          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1086#1087#1077#1088#1072#1090#1086#1088#1072
-          TabOrder = 2
-        end
       end
-      object sh_delbtnBox: TGroupBox
+      object klient_delbtnBox: TGroupBox
         Left = 0
         Top = 616
         Width = 1024
         Height = 64
         Align = alBottom
         TabOrder = 1
-        object sh_del_btn: TButton
+        object klient_del_btn: TButton
           Left = 360
           Top = 22
           Width = 75
           Height = 25
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
+          OnClick = klient_del_btnClick
         end
       end
-      object sh_del_data_Box: TGroupBox
+      object klient_del_data_Box: TGroupBox
         Left = 0
         Top = 113
         Width = 1024
@@ -698,7 +691,7 @@ object Frm_klient: TFrm_klient
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        object DBGrid3: TDBGrid
+        object Del_klient_data_Grid: TDBGrid
           Left = 2
           Top = 15
           Width = 1020
