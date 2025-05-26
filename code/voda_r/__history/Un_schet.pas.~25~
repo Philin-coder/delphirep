@@ -35,6 +35,7 @@ type
     sh_del_inpBox: TGroupBox;
     sh_delbtnBox: TGroupBox;
     sh_del_data_Box: TGroupBox;
+    sh_del_lbl: TStaticText;
     sh_delDBL: TDBLookupComboBox;
     del_sh_lbl: TStaticText;
     sh_del_btn: TButton;
