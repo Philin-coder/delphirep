@@ -43,6 +43,8 @@ type
     about_klient_Tab_one: TTabSheet;
     ins_klient_inp_Box: TGroupBox;
     klient_sel_Grid: TDBGrid;
+    upd_klient_lbl: TStaticText;
+    klient_sp_inp: TDateTimePicker;
     ins_klient_fio_inp: TLabeledEdit;
     ins_klient_Grid: TDBGrid;
     klient_data_grid: TDBGrid;
@@ -62,7 +64,6 @@ type
     kl_operDBL: TDBLookupComboBox;
     kl_schetDBL: TDBLookupComboBox;
     kl_masterDBL: TDBLookupComboBox;
-    kl_upd_kont_data: TLabeledEdit;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -73,7 +74,6 @@ type
     procedure klient_resetRadioClick(Sender: TObject);
     procedure ins_klient_insBtnClick(Sender: TObject);
     procedure klient_phone_inpExit(Sender: TObject);
-    procedure klient_upd_BtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -371,50 +371,6 @@ begin
     on E: Exception do
       ShowMessage('Ошибка: ' + E.Message);
   end;
-end;
-
-procedure TFrm_klient.klient_upd_BtnClick(Sender: TObject);
-var
-  AreFieldsEmpty: Boolean;
-  AreFieldsValid: Boolean;
-begin
-  AreFieldsEmpty:=(
-  (klient_upd_DBL.Text='')or
-  (Trim(kl_upd_kont_data.Text)='')
-  );
-  AreFieldsValid:=(
-  IsValidEmail(kl_upd_kont_data.Text)
-  );
-  if AreFieldsEmpty or not AreFieldsValid then
-  begin
-      MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-  try
-      with dm.upd_klient do
-      begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@klient_id').Value :=
-           dm.klientQuery.FieldByName('klient_id').AsString;
-           Parameters.ParamByName('@kont_d').Value :=kl_upd_kont_data.Text;
-           ExecProc;
-           dm.klientQuery.Close;
-           dm.klientQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-    end;
 end;
 
 end.

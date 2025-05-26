@@ -21,7 +21,7 @@ object Frm_klient: TFrm_klient
     Top = 0
     Width = 1032
     Height = 708
-    ActivePage = insTab
+    ActivePage = updTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
@@ -308,7 +308,7 @@ object Frm_klient: TFrm_klient
         Top = 0
         Width = 1024
         Height = 297
-        ActivePage = About_client_tab_two
+        ActivePage = about_klient_Tab_one
         Align = alTop
         TabOrder = 2
         object about_klient_Tab_one: TTabSheet
@@ -486,9 +486,9 @@ object Frm_klient: TFrm_klient
       end
     end
     object updTab: TTabSheet
-      Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1089#1095#1077#1090#1095#1080#1082#1077
+      Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1082#1083#1080#1077#1085#1090#1077
       ImageIndex = 2
-      object sh_upd_datapBox: TGroupBox
+      object klient_upd_datapBox: TGroupBox
         Left = 0
         Top = 161
         Width = 1024
@@ -496,7 +496,7 @@ object Frm_klient: TFrm_klient
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object DBGrid2: TDBGrid
+        object klient_data_grid: TDBGrid
           Left = 2
           Top = 15
           Width = 1020
@@ -572,7 +572,7 @@ object Frm_klient: TFrm_klient
             end>
         end
       end
-      object sh_upd_inpBox: TGroupBox
+      object klient_upd_inpBox: TGroupBox
         Left = 0
         Top = 0
         Width = 1024
@@ -583,57 +583,52 @@ object Frm_klient: TFrm_klient
         DesignSize = (
           1024
           161)
-        object sh_s_lbl: TStaticText
+        object klient_s_lbl: TStaticText
           Left = 32
           Top = 33
-          Width = 92
+          Width = 93
           Height = 17
-          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1089#1095#1077#1090#1095#1080#1082
+          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1082#1083#1080#1077#1085#1090#1072
           TabOrder = 0
         end
-        object sh_upd_DBL: TDBLookupComboBox
+        object klient_upd_DBL: TDBLookupComboBox
           Left = 32
           Top = 56
           Width = 977
           Height = 21
           Anchors = [akLeft, akRight]
-          KeyField = 'schet_id'
-          ListField = 'Nomer'
-          ListSource = DM.schetDS
+          KeyField = 'klient_id'
+          ListField = 'fio'
+          ListSource = DM.klientDS
           TabOrder = 1
         end
-        object upd_sh_vrem_splbl: TStaticText
+        object kl_upd_kont_data: TLabeledEdit
           Left = 32
-          Top = 98
-          Width = 121
-          Height = 17
-          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1076#1072#1090#1091' '#1087#1086#1095#1080#1085#1082#1080
-          TabOrder = 2
-        end
-        object shvrem_sp_inp: TDateTimePicker
-          Left = 32
-          Top = 121
+          Top = 108
           Width = 977
           Height = 21
-          Date = 45802.754818043980000000
-          Time = 45802.754818043980000000
-          TabOrder = 3
+          Anchors = [akLeft, akRight]
+          EditLabel.Width = 24
+          EditLabel.Height = 13
+          EditLabel.Caption = 'Email'
+          TabOrder = 2
         end
       end
-      object schet_u_btntBox: TGroupBox
+      object klient_u_btntBox: TGroupBox
         Left = 0
         Top = 616
         Width = 1024
         Height = 64
         Align = alBottom
         TabOrder = 2
-        object sh_upd_Btn: TButton
+        object klient_upd_Btn: TButton
           Left = 432
           Top = 16
           Width = 75
           Height = 25
           Caption = #1054#1073#1085#1086#1074#1080#1090#1100
           TabOrder = 0
+          OnClick = klient_upd_BtnClick
         end
       end
     end
