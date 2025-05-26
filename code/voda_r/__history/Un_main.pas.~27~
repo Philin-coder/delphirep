@@ -24,14 +24,12 @@ type
     procedure master_itemClick(Sender: TObject);
     procedure oper_itemClick(Sender: TObject);
     procedure schetItemClick(Sender: TObject);
-    procedure klient_itemClick(Sender: TObject);
   private
 procedure CreateAndShowChildForm_user;
 procedure CreateAndShowChildForm_type;
 procedure CreateAndShowChildForm_master;
 procedure CreateAndShowChildForm_oper;
 procedure CreateAndShowChildForm_schet;
-procedure CreateAndShowChildForm_klient;
   public
     { Public declarations }
   end;
@@ -134,24 +132,6 @@ begin
   end;
 end;
 
-procedure TFrm_main.CreateAndShowChildForm_klient;
-begin
-  try
-    UpdateFormProperties('Frm_klient', 'Форма работы с данными клиента',
-      clBtnFace, 1024, 768);
-    Frm_klient.FormStyle := fsMDIChild;
-    Frm_klient.Show;
-    AdjustChildFormSize(Frm_klient, Self);
-  except
-    on E: Exception do
-    begin
-      ShowMessage('Ошибка: ' + E.Message);
-      Frm_klient.Release;
-    end;
-  end;
-end;
-
-
 procedure TFrm_main.FormActivate(Sender: TObject);
 begin
   SaveConnectionStringToFile(FileName, dm.connection.ConnectionString);
@@ -179,11 +159,6 @@ begin
     raise;
   end;
 
-end;
-
-procedure TFrm_main.klient_itemClick(Sender: TObject);
-begin
-  CreateAndShowChildForm_klient;
 end;
 
 procedure TFrm_main.master_itemClick(Sender: TObject);

@@ -38,6 +38,12 @@ type
     ins_schet: TADOStoredProc;
     upd_shchet: TADOStoredProc;
     del_shcet: TADOStoredProc;
+    klientQuery: TADOQuery;
+    klientDS: TDataSource;
+    ADOStoredProc1: TADOStoredProc;
+    ADOStoredProc2: TADOStoredProc;
+    ADOStoredProc3: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public

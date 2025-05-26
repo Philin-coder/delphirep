@@ -21,7 +21,7 @@ object Frm_schet: TFrm_schet
     Top = 0
     Width = 1032
     Height = 708
-    ActivePage = insTab
+    ActivePage = delTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet

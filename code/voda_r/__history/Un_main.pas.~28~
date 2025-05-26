@@ -24,7 +24,6 @@ type
     procedure master_itemClick(Sender: TObject);
     procedure oper_itemClick(Sender: TObject);
     procedure schetItemClick(Sender: TObject);
-    procedure klient_itemClick(Sender: TObject);
   private
 procedure CreateAndShowChildForm_user;
 procedure CreateAndShowChildForm_type;
@@ -133,7 +132,6 @@ begin
     end;
   end;
 end;
-
 procedure TFrm_main.CreateAndShowChildForm_klient;
 begin
   try
@@ -179,11 +177,6 @@ begin
     raise;
   end;
 
-end;
-
-procedure TFrm_main.klient_itemClick(Sender: TObject);
-begin
-  CreateAndShowChildForm_klient;
 end;
 
 procedure TFrm_main.master_itemClick(Sender: TObject);

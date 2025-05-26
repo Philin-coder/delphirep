@@ -1,7 +1,7 @@
-object Frm_schet: TFrm_schet
+object Frm_klient: TFrm_klient
   Left = 0
   Top = 0
-  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1076#1072#1085#1085#1099#1084#1080' '#1086' '#1089#1095#1077#1090#1095#1080#1082#1077
+  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1076#1072#1085#1085#1099#1084#1080'  '#1086' '#1082#1083#1080#1077#1085#1090#1077
   ClientHeight = 708
   ClientWidth = 1032
   Color = clBtnFace
@@ -16,17 +16,17 @@ object Frm_schet: TFrm_schet
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object schetPC: TPageControl
+  object klientPC: TPageControl
     Left = 0
     Top = 0
     Width = 1032
     Height = 708
-    ActivePage = insTab
+    ActivePage = selTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
-      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1089#1095#1077#1090#1095#1080#1082#1077
-      object schet_inp_boxBox: TGroupBox
+      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081'  '#1086' '#1082#1083#1080#1077#1085#1090#1077
+      object klient_inp_boxBox: TGroupBox
         Left = 0
         Top = 0
         Width = 1024
@@ -37,31 +37,31 @@ object Frm_schet: TFrm_schet
         DesignSize = (
           1024
           105)
-        object schetCondEdit: TLabeledEdit
+        object klientCondEdit: TLabeledEdit
           Left = 0
           Top = 32
           Width = 977
           Height = 21
           Anchors = [akLeft, akRight]
-          EditLabel.Width = 159
+          EditLabel.Width = 146
           EditLabel.Height = 13
-          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1077#1076#1077#1085#1080#1077' '#1087#1086' '#1085#1086#1084#1077#1088#1091
+          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1077#1076#1077#1085#1080#1077' '#1087#1086' '#1060#1048#1054
           TabOrder = 0
         end
-        object schetfndEdit: TLabeledEdit
+        object klientfndEdit: TLabeledEdit
           Left = 3
           Top = 72
           Width = 977
           Height = 21
           Anchors = [akLeft, akRight]
-          EditLabel.Width = 108
+          EditLabel.Width = 120
           EditLabel.Height = 13
-          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1090#1080#1087#1091
+          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1072#1076#1088#1077#1089#1091
           TabOrder = 1
-          OnKeyPress = schetfndEditKeyPress
+          OnKeyPress = klientfndEditKeyPress
         end
       end
-      object schet_data_box: TGroupBox
+      object klient_data_box: TGroupBox
         Left = 0
         Top = 210
         Width = 1024
@@ -69,13 +69,13 @@ object Frm_schet: TFrm_schet
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1079
         TabOrder = 1
-        object schet_sel_Grid: TDBGrid
+        object klient_sel_Grid: TDBGrid
           Left = 2
           Top = 15
           Width = 1020
           Height = 397
           Align = alClient
-          DataSource = DM.schetDS
+          DataSource = DM.klientDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -85,43 +85,67 @@ object Frm_schet: TFrm_schet
           Columns = <
             item
               Expanded = False
-              FieldName = 'schet_id'
+              FieldName = 'klient_id'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'd_ust'
-              Title.Caption = #1044#1072#1090#1072' '#1091#1089#1090#1072#1085#1086#1074#1082#1080
+              FieldName = 'fio'
+              Title.Caption = #1060#1048#1054' '#1082#1083#1080#1077#1085#1090#1072
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'vrem_p'
-              Title.Caption = #1042#1088#1077#1084#1103' '#1087#1086#1083#1086#1084#1082#1080
+              FieldName = 'adr'
+              Title.Caption = #1040#1076#1088#1077#1089
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'vrem_sp'
-              Title.Caption = #1042#1088#1077#1084#1103' '#1091#1089#1090#1088#1072#1085#1077#1085#1080#1103
+              FieldName = 'prim'
+              Title.Caption = #1055#1088#1080#1084#1077#1095#1072#1085#1080#1103
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'kont_d'
+              Title.Caption = #1050#1086#1085#1090#1072#1082#1090#1085#1099#1077' '#1076#1072#1085#1085#1099#1077
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'tel'
+              Title.Caption = #1058#1077#1083#1077#1092#1086#1085
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'pokaz'
+              Title.Caption = #1055#1086#1082#1072#1079#1072#1085#1080#1103
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'oper_naim'
+              Title.Caption = #1048#1084#1103' '#1086#1087#1077#1088#1072#1090#1086#1088#1072
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'Nomer'
-              Title.Caption = #1053#1086#1084#1077#1088' '#1089#1095#1077#1090#1095#1080#1082#1072
+              Title.Caption = #1053#1086#1084#1077#1088'  '#1089#1095#1077#1090#1095#1080#1082#1072
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'typr_opis'
-              Title.Caption = #1054#1087#1080#1089#1072#1085#1080#1077' '#1090#1080#1087#1072
+              FieldName = 'fio_master'
+              Title.Caption = #1060#1048#1054' '#1084#1072#1089#1090#1077#1088#1072
               Visible = True
             end>
         end
       end
-      object schet_grouper: TGroupBox
+      object klient_grouper: TGroupBox
         Left = 0
         Top = 105
         Width = 1024
@@ -129,49 +153,48 @@ object Frm_schet: TFrm_schet
         Align = alTop
         Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '
         TabOrder = 2
-        object schet_d_ust_Radio: TRadioButton
+        object klient_fio_Radio: TRadioButton
           Left = 64
           Top = 40
           Width = 129
           Height = 17
-          Caption = #1055#1086' '#1076#1072#1090#1077' '#1091#1089#1090#1072#1085#1086#1074#1082#1080
+          Caption = #1055#1086' '#1060#1048#1054
           TabOrder = 0
-          OnClick = schet_d_ust_RadioClick
+          OnClick = klient_fio_RadioClick
         end
-        object schet_vrem_p_Radio: TRadioButton
+        object klient_adr_Radio: TRadioButton
           Left = 288
           Top = 40
           Width = 161
           Height = 17
-          Caption = #1055#1086' '#1076#1072#1090#1077' '#1087#1086#1083#1086#1084#1082#1080
+          Caption = #1055#1086' '#1072#1076#1088#1077#1089#1091
           TabOrder = 1
-          OnClick = schet_vrem_p_RadioClick
+          OnClick = klient_adr_RadioClick
         end
-        object schet_resetRadio: TRadioButton
+        object klient_resetRadio: TRadioButton
           Left = 664
           Top = 40
           Width = 113
           Height = 17
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 2
-          OnClick = schet_resetRadioClick
         end
       end
-      object schet_btn_Box: TGroupBox
+      object klient_btn_Box: TGroupBox
         Left = 0
         Top = 624
         Width = 1024
         Height = 56
         Align = alBottom
         TabOrder = 3
-        object schet_sel_Btn: TButton
+        object klient_sel_Btn: TButton
           Left = 416
           Top = 24
           Width = 75
           Height = 25
           Caption = #1042#1099#1073#1086#1088
           TabOrder = 0
-          OnClick = schet_sel_BtnClick
+          OnClick = klient_sel_BtnClick
         end
       end
     end
@@ -192,7 +215,7 @@ object Frm_schet: TFrm_schet
           Width = 1020
           Height = 302
           Align = alClient
-          DataSource = DM.schetDS
+          DataSource = DM.klientDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -202,38 +225,62 @@ object Frm_schet: TFrm_schet
           Columns = <
             item
               Expanded = False
-              FieldName = 'schet_id'
+              FieldName = 'klient_id'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'd_ust'
-              Title.Caption = #1044#1072#1090#1072' '#1091#1089#1090#1072#1085#1086#1074#1082#1080
+              FieldName = 'fio'
+              Title.Caption = #1060#1048#1054' '#1082#1083#1080#1077#1085#1090#1072
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'vrem_p'
-              Title.Caption = #1042#1088#1077#1084#1103' '#1087#1086#1083#1086#1084#1082#1080
+              FieldName = 'adr'
+              Title.Caption = #1040#1076#1088#1077#1089
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'vrem_sp'
-              Title.Caption = #1042#1088#1077#1084#1103' '#1091#1089#1090#1088#1072#1085#1077#1085#1080#1103
+              FieldName = 'prim'
+              Title.Caption = #1055#1088#1080#1084#1077#1095#1072#1085#1080#1103
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'kont_d'
+              Title.Caption = #1050#1086#1085#1090#1072#1082#1090#1085#1099#1077' '#1076#1072#1085#1085#1099#1077
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'tel'
+              Title.Caption = #1058#1077#1083#1077#1092#1086#1085
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'pokaz'
+              Title.Caption = #1055#1086#1082#1072#1079#1072#1085#1080#1103
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'oper_naim'
+              Title.Caption = #1048#1084#1103' '#1086#1087#1077#1088#1072#1090#1086#1088#1072
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'Nomer'
-              Title.Caption = #1053#1086#1084#1077#1088' '#1089#1095#1077#1090#1095#1080#1082#1072
+              Title.Caption = #1053#1086#1084#1077#1088'  '#1089#1095#1077#1090#1095#1080#1082#1072
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'typr_opis'
-              Title.Caption = #1054#1087#1080#1089#1072#1085#1080#1077' '#1090#1080#1087#1072
+              FieldName = 'fio_master'
+              Title.Caption = #1060#1048#1054' '#1084#1072#1089#1090#1077#1088#1072
               Visible = True
             end>
         end
@@ -252,7 +299,6 @@ object Frm_schet: TFrm_schet
           Height = 25
           Caption = #1042#1074#1086#1076
           TabOrder = 0
-          OnClick = ins_schet_insBtnClick
         end
       end
       object about_schetPC: TPageControl
@@ -375,13 +421,13 @@ object Frm_schet: TFrm_schet
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object sh_updGrid: TDBGrid
+        object DBGrid2: TDBGrid
           Left = 2
           Top = 15
           Width = 1020
           Height = 438
           Align = alClient
-          DataSource = DM.schetDS
+          DataSource = DM.klientDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -391,38 +437,62 @@ object Frm_schet: TFrm_schet
           Columns = <
             item
               Expanded = False
-              FieldName = 'schet_id'
+              FieldName = 'klient_id'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'd_ust'
-              Title.Caption = #1044#1072#1090#1072' '#1091#1089#1090#1072#1085#1086#1074#1082#1080
+              FieldName = 'fio'
+              Title.Caption = #1060#1048#1054' '#1082#1083#1080#1077#1085#1090#1072
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'vrem_p'
-              Title.Caption = #1042#1088#1077#1084#1103' '#1087#1086#1083#1086#1084#1082#1080
+              FieldName = 'adr'
+              Title.Caption = #1040#1076#1088#1077#1089
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'vrem_sp'
-              Title.Caption = #1042#1088#1077#1084#1103' '#1091#1089#1090#1088#1072#1085#1077#1085#1080#1103
+              FieldName = 'prim'
+              Title.Caption = #1055#1088#1080#1084#1077#1095#1072#1085#1080#1103
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'kont_d'
+              Title.Caption = #1050#1086#1085#1090#1072#1082#1090#1085#1099#1077' '#1076#1072#1085#1085#1099#1077
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'tel'
+              Title.Caption = #1058#1077#1083#1077#1092#1086#1085
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'pokaz'
+              Title.Caption = #1055#1086#1082#1072#1079#1072#1085#1080#1103
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'oper_naim'
+              Title.Caption = #1048#1084#1103' '#1086#1087#1077#1088#1072#1090#1086#1088#1072
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'Nomer'
-              Title.Caption = #1053#1086#1084#1077#1088' '#1089#1095#1077#1090#1095#1080#1082#1072
+              Title.Caption = #1053#1086#1084#1077#1088'  '#1089#1095#1077#1090#1095#1080#1082#1072
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'typr_opis'
-              Title.Caption = #1054#1087#1080#1089#1072#1085#1080#1077' '#1090#1080#1087#1072
+              FieldName = 'fio_master'
+              Title.Caption = #1060#1048#1054' '#1084#1072#1089#1090#1077#1088#1072
               Visible = True
             end>
         end
@@ -489,7 +559,6 @@ object Frm_schet: TFrm_schet
           Height = 25
           Caption = #1054#1073#1085#1086#1074#1080#1090#1100
           TabOrder = 0
-          OnClick = sh_upd_BtnClick
         end
       end
     end
@@ -549,7 +618,6 @@ object Frm_schet: TFrm_schet
           Height = 25
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
-          OnClick = sh_del_btnClick
         end
       end
       object sh_del_data_Box: TGroupBox
@@ -560,13 +628,13 @@ object Frm_schet: TFrm_schet
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        object sh_del_Grid: TDBGrid
+        object DBGrid3: TDBGrid
           Left = 2
           Top = 15
           Width = 1020
           Height = 486
           Align = alClient
-          DataSource = DM.schetDS
+          DataSource = DM.klientDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -576,38 +644,62 @@ object Frm_schet: TFrm_schet
           Columns = <
             item
               Expanded = False
-              FieldName = 'schet_id'
+              FieldName = 'klient_id'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'd_ust'
-              Title.Caption = #1044#1072#1090#1072' '#1091#1089#1090#1072#1085#1086#1074#1082#1080
+              FieldName = 'fio'
+              Title.Caption = #1060#1048#1054' '#1082#1083#1080#1077#1085#1090#1072
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'vrem_p'
-              Title.Caption = #1042#1088#1077#1084#1103' '#1087#1086#1083#1086#1084#1082#1080
+              FieldName = 'adr'
+              Title.Caption = #1040#1076#1088#1077#1089
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'vrem_sp'
-              Title.Caption = #1042#1088#1077#1084#1103' '#1091#1089#1090#1088#1072#1085#1077#1085#1080#1103
+              FieldName = 'prim'
+              Title.Caption = #1055#1088#1080#1084#1077#1095#1072#1085#1080#1103
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'kont_d'
+              Title.Caption = #1050#1086#1085#1090#1072#1082#1090#1085#1099#1077' '#1076#1072#1085#1085#1099#1077
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'tel'
+              Title.Caption = #1058#1077#1083#1077#1092#1086#1085
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'pokaz'
+              Title.Caption = #1055#1086#1082#1072#1079#1072#1085#1080#1103
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'oper_naim'
+              Title.Caption = #1048#1084#1103' '#1086#1087#1077#1088#1072#1090#1086#1088#1072
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'Nomer'
-              Title.Caption = #1053#1086#1084#1077#1088' '#1089#1095#1077#1090#1095#1080#1082#1072
+              Title.Caption = #1053#1086#1084#1077#1088'  '#1089#1095#1077#1090#1095#1080#1082#1072
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'typr_opis'
-              Title.Caption = #1054#1087#1080#1089#1072#1085#1080#1077' '#1090#1080#1087#1072
+              FieldName = 'fio_master'
+              Title.Caption = #1060#1048#1054' '#1084#1072#1089#1090#1077#1088#1072
               Visible = True
             end>
         end

@@ -14,7 +14,6 @@ type
     master_item: TMenuItem;
     oper_item: TMenuItem;
     schetItem: TMenuItem;
-    klient_item: TMenuItem;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -24,14 +23,12 @@ type
     procedure master_itemClick(Sender: TObject);
     procedure oper_itemClick(Sender: TObject);
     procedure schetItemClick(Sender: TObject);
-    procedure klient_itemClick(Sender: TObject);
   private
 procedure CreateAndShowChildForm_user;
 procedure CreateAndShowChildForm_type;
 procedure CreateAndShowChildForm_master;
 procedure CreateAndShowChildForm_oper;
 procedure CreateAndShowChildForm_schet;
-procedure CreateAndShowChildForm_klient;
   public
     { Public declarations }
   end;
@@ -42,7 +39,7 @@ var
 implementation
 
 uses Un_func, Un_dm, Un_user, Un_types, Un_autorize, Un_master, Un_oper,
-  Un_schet, Un_klient;
+  Un_schet;
 const
   FileName = 'connection_string.txt';
 
@@ -134,24 +131,6 @@ begin
   end;
 end;
 
-procedure TFrm_main.CreateAndShowChildForm_klient;
-begin
-  try
-    UpdateFormProperties('Frm_klient', 'Форма работы с данными клиента',
-      clBtnFace, 1024, 768);
-    Frm_klient.FormStyle := fsMDIChild;
-    Frm_klient.Show;
-    AdjustChildFormSize(Frm_klient, Self);
-  except
-    on E: Exception do
-    begin
-      ShowMessage('Ошибка: ' + E.Message);
-      Frm_klient.Release;
-    end;
-  end;
-end;
-
-
 procedure TFrm_main.FormActivate(Sender: TObject);
 begin
   SaveConnectionStringToFile(FileName, dm.connection.ConnectionString);
@@ -179,11 +158,6 @@ begin
     raise;
   end;
 
-end;
-
-procedure TFrm_main.klient_itemClick(Sender: TObject);
-begin
-  CreateAndShowChildForm_klient;
 end;
 
 procedure TFrm_main.master_itemClick(Sender: TObject);

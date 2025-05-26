@@ -662,4 +662,53 @@ object DM: TDM
     Left = 504
     Top = 408
   end
+  object klientQuery: TADOQuery
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      '   klient.klient_id,'
+      '   klient.fio,'
+      '   klient.adr,'
+      '   klient.prim,'
+      '   klient.kont_d,'
+      '   klient.tel,'
+      '   klient.pokaz,'
+      '   operator.oper_naim,'
+      '   schet.Nomer,'
+      '   m_master.fio_master'
+      '  from klient '
+      '  inner join operator on operator.oper_id=klient.oper_id'
+      '  inner join schet on schet.schet_id=klient.schet_id'
+      '  inner join m_master on m_master.id_master=klient.id_master'
+      '  where 1=1')
+    Left = 544
+    Top = 80
+  end
+  object klientDS: TDataSource
+    DataSet = klientQuery
+    Left = 560
+    Top = 136
+  end
+  object ADOStoredProc1: TADOStoredProc
+    Parameters = <>
+    Left = 568
+    Top = 192
+  end
+  object ADOStoredProc2: TADOStoredProc
+    Parameters = <>
+    Left = 560
+    Top = 280
+  end
+  object ADOStoredProc3: TADOStoredProc
+    Parameters = <>
+    Left = 560
+    Top = 344
+  end
+  object ADOStoredProc4: TADOStoredProc
+    Parameters = <>
+    Left = 568
+    Top = 408
+  end
 end
