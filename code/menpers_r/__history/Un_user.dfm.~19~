@@ -58,7 +58,6 @@ object Frm_user: TFrm_user
           EditLabel.Height = 13
           EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1087#1072#1088#1086#1083#1102
           TabOrder = 1
-          OnKeyPress = userfndEditKeyPress
         end
       end
       object selUserbtnBox: TGroupBox
@@ -75,7 +74,6 @@ object Frm_user: TFrm_user
           Height = 25
           Caption = #1042#1099#1073#1086#1088
           TabOrder = 0
-          OnClick = selUser_btnClick
         end
       end
       object selUsergrouperBox: TGroupBox
@@ -91,21 +89,19 @@ object Frm_user: TFrm_user
         ExplicitWidth = 185
         object selUserlogradio: TRadioButton
           Left = 56
-          Top = 40
+          Top = 32
           Width = 113
           Height = 17
           Caption = #1055#1086' '#1083#1086#1075#1080#1085#1091
           TabOrder = 0
-          OnClick = selUserlogradioClick
         end
-        object selUserpasradio: TRadioButton
+        object selUserpasradioselUserlogradio: TRadioButton
           Left = 344
           Top = 40
           Width = 113
           Height = 17
           Caption = #1055#1086' '#1087#1072#1088#1086#1083#1102
           TabOrder = 1
-          OnClick = selUserpasradioClick
         end
         object selUserresetradio: TRadioButton
           Left = 664
@@ -114,7 +110,6 @@ object Frm_user: TFrm_user
           Height = 17
           Caption = 'C'#1073#1088#1086#1089
           TabOrder = 2
-          OnClick = selUserresetradioClick
         end
       end
       object selUserdataBox: TGroupBox

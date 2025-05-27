@@ -10,7 +10,7 @@ type
     Connection: TADOConnection;
     userQuery: TADOQuery;
     userDS: TDataSource;
-    sel_user_by_fio: TADOStoredProc;
+    ADOStoredProc1: TADOStoredProc;
     ADOStoredProc2: TADOStoredProc;
     ADOStoredProc3: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;

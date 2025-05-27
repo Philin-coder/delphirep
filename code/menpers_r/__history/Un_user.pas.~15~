@@ -4,12 +4,29 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs;
+  Dialogs, ComCtrls, StdCtrls, ExtCtrls, Grids, DBGrids;
 
 type
   TFrm_user = class(TForm)
+    userPC: TPageControl;
+    selTab: TTabSheet;
+    TabSheet2: TTabSheet;
+    TabSheet3: TTabSheet;
+    TabSheet4: TTabSheet;
+    selUserInpBox: TGroupBox;
+    selUserbtnBox: TGroupBox;
+    selUsergrouperBox: TGroupBox;
+    selUserdataBox: TGroupBox;
+    usercondEdit: TLabeledEdit;
+    userfndEdit: TLabeledEdit;
+    selUser_btn: TButton;
+    selUser_grd: TDBGrid;
+    selUserlogradio: TRadioButton;
+    selUserpasradioselUserlogradio: TRadioButton;
+    selUserresetradio: TRadioButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -25,6 +42,12 @@ uses Un_dm, Un_func;
 
 {$R *.dfm}
 
+procedure TFrm_user.FormActivate(Sender: TObject);
+begin
+  dm.userQuery.Open;
+  AdjustDBGridColumnWidths('Frm_user',6000, 10);
+end;
+
 procedure TFrm_user.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
    SaveFormState(Self);
@@ -37,6 +60,7 @@ begin
   UniformizeButtonsSize(Self,  273, 25);
   UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+  UniformizeComponentAnchors(Self);
   LoadFormState(Self);
 end;
 

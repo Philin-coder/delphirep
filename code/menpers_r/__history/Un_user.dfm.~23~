@@ -114,7 +114,6 @@ object Frm_user: TFrm_user
           Height = 17
           Caption = 'C'#1073#1088#1086#1089
           TabOrder = 2
-          OnClick = selUserresetradioClick
         end
       end
       object selUserdataBox: TGroupBox

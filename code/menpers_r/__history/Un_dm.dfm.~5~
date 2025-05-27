@@ -31,22 +31,8 @@ object DM: TDM
     Left = 104
     Top = 128
   end
-  object sel_user_by_fio: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'sel_user_by_fio;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@usver_name'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 1000
-      end>
+  object ADOStoredProc1: TADOStoredProc
+    Parameters = <>
     Left = 112
     Top = 184
   end

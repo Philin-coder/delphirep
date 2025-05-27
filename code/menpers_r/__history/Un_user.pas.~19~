@@ -31,7 +31,6 @@ type
     procedure userfndEditKeyPress(Sender: TObject; var Key: Char);
     procedure selUserlogradioClick(Sender: TObject);
     procedure selUserpasradioClick(Sender: TObject);
-    procedure selUserresetradioClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -121,50 +120,6 @@ begin
     end;
     end;
   end;
-end;
-
-procedure TFrm_user.selUserresetradioClick(Sender: TObject);
- var
-   i,j,c:Integer;
-begin
-    if  selUserresetradio.Checked=true then
-  with Frm_user do
-    for I := 0 to ComponentCount - 1 do
-     begin
-       if (Components[i] is TLabeledEdit)  then
-        begin
-          (Components[i] as TLabeledEdit).Clear;
-        end;
-     end;
-       with Frm_user do
-     for c := 0 to ComponentCount - 1 do
-     begin
-       if (Components[c] is TCheckBox)  then
-        begin
-          (Components[c] as TCheckBox).Checked:=False;
-        end;
-     end;
-     with dm.userQuery do
-     begin
-     Close;
-     sql.Clear;
-     sql.Text:=
-     'select'+' '+
-    'usver_r.user_id,'+' '+
-    'usver_r.user_pas,'+' '+
-    'usver_r.usver_name'+' '+
-    'from usver_r'+' '+
-    'where 1=1';
-     Open;
-     end;
-    with Frm_user do
-    for j := 0 to ComponentCount - 1 do
-    begin
-      if(Components[j] is TRadioButton)  then
-      begin
-        (Components[j] as TRadioButton).Checked:=False;
-      end;
-    end;
 end;
 
 procedure TFrm_user.selUser_btnClick(Sender: TObject);

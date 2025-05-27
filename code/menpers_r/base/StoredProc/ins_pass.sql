@@ -1,7 +1,7 @@
-USE [men_pers]
+USE [men_pers_r]
 GO
 
-/****** Object:  StoredProcedure [dbo].[ins_pass]    Script Date: 08.11.2020 12:48:13 ******/
+/****** Object:  StoredProcedure [dbo].[ins_pass]    Script Date: 27.05.2025 16:25:15 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -13,7 +13,7 @@ CREATE proc  [dbo].[ins_pass]
 @usver_name varchar(100)
 as
 begin
-insert into usver(user_pas,usver_name) values(@user_pass, @usver_name)
+insert into usver_r(user_pas,usver_name) values(@user_pass, @usver_name)
 end
 GO
 
