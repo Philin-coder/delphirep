@@ -43,9 +43,9 @@ object Frm_manager: TFrm_manager
           Top = 48
           Width = 1054
           Height = 21
-          EditLabel.Width = 227
+          EditLabel.Width = 140
           EditLabel.Height = 13
-          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1080#1084#1077#1085#1080#1077' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1103
+          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1060#1048#1054
           TabOrder = 0
         end
         object manfndEdit: TLabeledEdit
@@ -53,10 +53,11 @@ object Frm_manager: TFrm_manager
           Top = 104
           Width = 1030
           Height = 21
-          EditLabel.Width = 123
+          EditLabel.Width = 104
           EditLabel.Height = 13
-          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1087#1072#1088#1086#1083#1102
+          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1083#1086#1075#1080#1085#1091
           TabOrder = 1
+          OnKeyPress = manfndEditKeyPress
         end
       end
       object selmanrbtnBox: TGroupBox
@@ -73,6 +74,7 @@ object Frm_manager: TFrm_manager
           Height = 25
           Caption = #1042#1099#1073#1086#1088
           TabOrder = 0
+          OnClick = selman_btnClick
         end
       end
       object selmangrouperBox: TGroupBox
@@ -93,14 +95,16 @@ object Frm_manager: TFrm_manager
           Height = 17
           Caption = #1055#1086' '#1060#1048#1054
           TabOrder = 0
+          OnClick = selmanfioradioClick
         end
-        object selmanpasradio: TRadioButton
+        object selmanlogradio: TRadioButton
           Left = 344
           Top = 40
           Width = 113
           Height = 17
-          Caption = #1055#1086' '#1087#1072#1088#1086#1083#1102
+          Caption = #1055#1086' '#1083#1086#1075#1080#1085#1091
           TabOrder = 1
+          OnClick = selmanlogradioClick
         end
         object selmanresetradio: TRadioButton
           Left = 664
@@ -109,6 +113,7 @@ object Frm_manager: TFrm_manager
           Height = 17
           Caption = 'C'#1073#1088#1086#1089
           TabOrder = 2
+          OnClick = selmanresetradioClick
         end
       end
       object selmandataBox: TGroupBox
@@ -129,7 +134,7 @@ object Frm_manager: TFrm_manager
           Width = 1025
           Height = 269
           Align = alClient
-          DataSource = DM.userDS
+          DataSource = DM.manDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -139,14 +144,32 @@ object Frm_manager: TFrm_manager
           Columns = <
             item
               Expanded = False
-              FieldName = 'user_id'
+              FieldName = 'maneger_id'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'user_pas'
-              Title.Caption = #1055#1072#1088#1086#1083#1100
+              FieldName = 'fio'
+              Title.Caption = #1060#1048#1054
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'cont'
+              Title.Caption = #1050#1086#1085#1090#1072#1082#1090#1085#1099#1077' '#1076#1072#1085#1085#1099#1077
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'email'
+              Title.Caption = 'E-mail'
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'phone'
+              Title.Caption = #1058#1077#1083#1077#1092#1086#1085
               Visible = True
             end
             item

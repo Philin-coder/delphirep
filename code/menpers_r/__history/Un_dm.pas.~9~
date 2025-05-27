@@ -16,7 +16,7 @@ type
     del_pass: TADOStoredProc;
     manQuery: TADOQuery;
     manDS: TDataSource;
-    sel_man_by_fio: TADOStoredProc;
+    ADOStoredProc1: TADOStoredProc;
     ADOStoredProc2: TADOStoredProc;
     ADOStoredProc3: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;

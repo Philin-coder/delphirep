@@ -22,7 +22,7 @@ type
     selman_btn: TButton;
     selman_grd: TDBGrid;
     selmanfioradio: TRadioButton;
-    selmanlogradio: TRadioButton;
+    selmanpasradio: TRadioButton;
     selmanresetradio: TRadioButton;
     User_data_box: TGroupBox;
     User_btn_box: TGroupBox;
@@ -51,9 +51,6 @@ type
     procedure FormActivate(Sender: TObject);
     procedure selman_btnClick(Sender: TObject);
     procedure manfndEditKeyPress(Sender: TObject; var Key: Char);
-    procedure selmanfioradioClick(Sender: TObject);
-    procedure selmanlogradioClick(Sender: TObject);
-    procedure selmanresetradioClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -105,8 +102,8 @@ begin
     'usver_r.usver_name'+' '+
     'from manager'+' '+
     'inner join usver_r on usver_r.user_id=manager.user_id'+' '+
-    'where 1=1'+' '+
-  'and usver_r.usver_name like'+
+    'where 1=1'+' '+' '+
+  'and manager.fio like'+
    QuotedStr(Concat(manfndedit.Text,#37));
    dm.manQuery.close;
    dm.manQuery.Open;
@@ -115,115 +112,6 @@ except on E: Exception do
   ShowMessage('Ошибка'+' '+E.Message);
   end;
   end;
-end;
-
-procedure TFrm_manager.selmanfioradioClick(Sender: TObject);
-begin
-  if  selmanfioradio.Checked=true then
-  begin
-    try
-     with dm.manQuery do
-     begin
-      close;
-      sql.Clear;
-      sql.Text:=
-     'select'+' '+
-    'manager.maneger_id,'+' '+
-    'manager.fio,'+' '+
-    'manager.cont,'+' '+' '+
-    'manager.email,'+' '+' '+
-    'manager.phone,'+' '+
-    'usver_r.usver_name'+' '+
-    'from manager'+' '+
-    'inner join usver_r on usver_r.user_id=manager.user_id'+' '+
-    'where 1=1'+' '+
-    'order by manager.fio asc';
-      Open;
-     end;
-    except on E: EADOError do
-    begin
-      ShowMessage('Ошибка :'+' '+E.Message);
-    end;
-    end;
-  end;
-end;
-
-procedure TFrm_manager.selmanlogradioClick(Sender: TObject);
-begin
-  if  selmanlogradio.Checked=true then
-  begin
-    try
-     with dm.manQuery do
-     begin
-      close;
-      sql.Clear;
-      sql.Text:=
-    'select'+' '+
-    'manager.maneger_id,'+' '+
-    'manager.fio,'+' '+
-    'manager.cont,'+' '+' '+
-    'manager.email,'+' '+' '+
-    'manager.phone,'+' '+
-    'usver_r.usver_name'+' '+
-    'from manager'+' '+
-    'inner join usver_r on usver_r.user_id=manager.user_id'+' '+
-    'where 1=1'+' '+
-    'order by usver_r.usver_name asc';
-      Open;
-     end;
-    except on E: EADOError do
-    begin
-      ShowMessage('Ошибка :'+' '+E.Message);
-    end;
-    end;
-  end;
-end;
-
-procedure TFrm_manager.selmanresetradioClick(Sender: TObject);
-var i,j,c:Integer;
-begin
-  if  selmanresetradio.Checked=true then
-with Frm_manager do
-    for I := 0 to ComponentCount - 1 do
-     begin
-       if (Components[i] is TLabeledEdit)  then
-        begin
-          (Components[i] as TLabeledEdit).Clear;
-        end;
-     end;
-       with Frm_manager do
-    for c := 0 to ComponentCount - 1 do
-     begin
-       if (Components[c] is TCheckBox)  then
-        begin
-          (Components[c] as TCheckBox).Checked:=False;
-        end;
-     end;
-     with dm.manQuery do
-     begin
-     Close;
-     sql.Clear;
-     sql.Text:=
-     'select'+' '+
-    'manager.maneger_id,'+' '+
-    'manager.fio,'+' '+
-    'manager.cont,'+' '+' '+
-    'manager.email,'+' '+' '+
-    'manager.phone,'+' '+
-    'usver_r.usver_name'+' '+
-    'from manager'+' '+
-    'inner join usver_r on usver_r.user_id=manager.user_id'+' '+
-    'where 1=1';
-    Open;
-     end;
-    with Frm_manager do
-    for j := 0 to ComponentCount - 1 do
-    begin
-      if(Components[j] is TRadioButton)  then
-      begin
-        (Components[j] as TRadioButton).Checked:=False;
-      end;
-    end;
 end;
 
 procedure TFrm_manager.selman_btnClick(Sender: TObject);

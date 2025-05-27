@@ -8,22 +8,22 @@ uses
 
 type
   TFrm_manager = class(TForm)
-    userPC: TPageControl;
+    manPC: TPageControl;
     selTab: TTabSheet;
     InsTab: TTabSheet;
     updTab: TTabSheet;
     delTab: TTabSheet;
-    selUserInpBox: TGroupBox;
-    selUserbtnBox: TGroupBox;
-    selUsergrouperBox: TGroupBox;
-    selUserdataBox: TGroupBox;
-    usercondEdit: TLabeledEdit;
-    userfndEdit: TLabeledEdit;
-    selUser_btn: TButton;
-    selUser_grd: TDBGrid;
-    selUserlogradio: TRadioButton;
-    selUserpasradio: TRadioButton;
-    selUserresetradio: TRadioButton;
+    semanInpBox: TGroupBox;
+    selmanrbtnBox: TGroupBox;
+    selmangrouperBox: TGroupBox;
+    selmandataBox: TGroupBox;
+    mancondEdit: TLabeledEdit;
+    manfndEdit: TLabeledEdit;
+    selman_btn: TButton;
+    selman_grd: TDBGrid;
+    selmanfioradio: TRadioButton;
+    selmanpasradio: TRadioButton;
+    selmanresetradio: TRadioButton;
     User_data_box: TGroupBox;
     User_btn_box: TGroupBox;
     Ins_user_inp_box: TGroupBox;
@@ -49,8 +49,9 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
-    procedure selUserlogradioClick(Sender: TObject);
-    procedure del_user_btnClick(Sender: TObject);
+    procedure selman_btnClick(Sender: TObject);
+    procedure manfndEditKeyPress(Sender: TObject; var Key: Char);
+    procedure selmanfioradioClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -66,48 +67,11 @@ uses Un_dm, Un_func;
 
 {$R *.dfm}
 
-procedure TFrm_manager.del_user_btnClick(Sender: TObject);
-var
-  AreFieldsEmpty: Boolean;
-begin
- AreFieldsEmpty:=(
- (del_user_id_inp_DBL.Text='')
- );
- if AreFieldsEmpty then
- begin
-     MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
- end;
- try
-      with dm.del_pass do
-      begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@user_id').Value :=
-           dm.userQuery.FieldByName('user_id').AsString;
-           ExecProc;
-           dm.userQuery.Close;
-           dm.userQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-    end;
-end;
-
 procedure TFrm_manager.FormActivate(Sender: TObject);
 begin
   dm.userQuery.Open;
-  AdjustDBGridColumnWidths('Frm_user',6000, 10);
+  dm.manQuery.Open;
+  AdjustDBGridColumnWidths('Frm_manager',6000, 10);
 end;
 
 procedure TFrm_manager.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -118,7 +82,7 @@ end;
 
 procedure TFrm_manager.FormCreate(Sender: TObject);
 begin
-  UpdateFormShowHint('Frm_user');
+  UpdateFormShowHint('Frm_manager');
   UniformizeButtonsSize(Self,  273, 25);
   UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
@@ -126,23 +90,43 @@ begin
   LoadFormState(Self);
 end;
 
-procedure TFrm_manager.selUserlogradioClick(Sender: TObject);
+procedure TFrm_manager.manfndEditKeyPress(Sender: TObject; var Key: Char);
 begin
-  if  selUserlogradio.Checked=true then
+   try
+   dm.manQuery.SQL.Text:=
+   'select'+' '+
+    'manager.maneger_id,'+' '+
+    'manager.fio,'+' '+
+    'manager.cont,'+' '+' '+
+    'manager.email,'+' '+' '+
+    'manager.phone,'+' '+
+    'usver_r.usver_name'+' '+
+    'from manager'+' '+
+    'inner join usver_r on usver_r.user_id=manager.user_id'+' '+
+    'where 1=1'+' '+
+  'and usver_r.usver_name like'+
+   QuotedStr(Concat(manfndedit.Text,#37));
+   dm.manQuery.close;
+   dm.manQuery.Open;
+except on E: Exception do
+  begin
+  ShowMessage('Ошибка'+' '+E.Message);
+  end;
+  end;
+end;
+
+procedure TFrm_manager.selmanfioradioClick(Sender: TObject);
+begin
+  if  selmanfioradio.Checked=true then
   begin
     try
-     with dm.userQuery do
+     with dm.manQuery do
      begin
       close;
       sql.Clear;
       sql.Text:=
-     'select'+' '+
-    'usver_r.user_id,'+' '+
-    'usver_r.user_pas,'+' '+
-    'usver_r.usver_name'+' '+
-    'from usver_r'+' '+
-    'where 1=1'+' '+
-    'order by usver_r.usver_name asc';
+
+    'order by Student.fio asc';
       Open;
      end;
     except on E: EADOError do
@@ -150,6 +134,26 @@ begin
       ShowMessage('Ошибка :'+' '+E.Message);
     end;
     end;
+  end;
+end;
+
+procedure TFrm_manager.selman_btnClick(Sender: TObject);
+begin
+   try
+    if not DM.Connection.Connected then
+      raise Exception.Create('Cоединение с базой не установлено');
+    with DM.sel_man_by_fio do
+    begin
+      Close;
+      Parameters.ParamByName('@fio').Value :=mancondEdit.Text;
+      Open;
+       DM.manQuery.Recordset:=dm.sel_man_by_fio.Recordset;
+    end;
+  except
+    on E: EDatabaseError do
+      ShowMessage('Ошибка: ' + E.Message);
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
   end;
 end;
 

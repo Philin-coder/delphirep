@@ -8,22 +8,22 @@ uses
 
 type
   TFrm_manager = class(TForm)
-    userPC: TPageControl;
+    manPC: TPageControl;
     selTab: TTabSheet;
     InsTab: TTabSheet;
     updTab: TTabSheet;
     delTab: TTabSheet;
-    selUserInpBox: TGroupBox;
-    selUserbtnBox: TGroupBox;
-    selUsergrouperBox: TGroupBox;
-    selUserdataBox: TGroupBox;
-    usercondEdit: TLabeledEdit;
-    userfndEdit: TLabeledEdit;
-    selUser_btn: TButton;
-    selUser_grd: TDBGrid;
-    selUserlogradio: TRadioButton;
-    selUserpasradio: TRadioButton;
-    selUserresetradio: TRadioButton;
+    semanInpBox: TGroupBox;
+    selmanrbtnBox: TGroupBox;
+    selmangrouperBox: TGroupBox;
+    selmandataBox: TGroupBox;
+    mancondEdit: TLabeledEdit;
+    manfndEdit: TLabeledEdit;
+    selman_btn: TButton;
+    selman_grd: TDBGrid;
+    selmanfioradio: TRadioButton;
+    selmanpasradio: TRadioButton;
+    selmanresetradio: TRadioButton;
     User_data_box: TGroupBox;
     User_btn_box: TGroupBox;
     Ins_user_inp_box: TGroupBox;
@@ -49,7 +49,6 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
-    procedure del_user_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -65,48 +64,10 @@ uses Un_dm, Un_func;
 
 {$R *.dfm}
 
-procedure TFrm_manager.del_user_btnClick(Sender: TObject);
-var
-  AreFieldsEmpty: Boolean;
-begin
- AreFieldsEmpty:=(
- (del_user_id_inp_DBL.Text='')
- );
- if AreFieldsEmpty then
- begin
-     MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
- end;
- try
-      with dm.del_pass do
-      begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@user_id').Value :=
-           dm.userQuery.FieldByName('user_id').AsString;
-           ExecProc;
-           dm.userQuery.Close;
-           dm.userQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-    end;
-end;
-
 procedure TFrm_manager.FormActivate(Sender: TObject);
 begin
   dm.userQuery.Open;
-  AdjustDBGridColumnWidths('Frm_user',6000, 10);
+  AdjustDBGridColumnWidths('Frm_manager',6000, 10);
 end;
 
 procedure TFrm_manager.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -117,7 +78,7 @@ end;
 
 procedure TFrm_manager.FormCreate(Sender: TObject);
 begin
-  UpdateFormShowHint('Frm_user');
+  UpdateFormShowHint('Frm_manager');
   UniformizeButtonsSize(Self,  273, 25);
   UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
