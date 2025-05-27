@@ -39,7 +39,6 @@ type
     procedure selUserlogradioClick(Sender: TObject);
     procedure selUserpasradioClick(Sender: TObject);
     procedure selUserresetradioClick(Sender: TObject);
-    procedure User_ins_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -214,45 +213,6 @@ except on E: Exception do
   ShowMessage('Ошибка'+' '+E.Message);
   end;
   end;
-end;
-
-procedure TFrm_user.User_ins_btnClick(Sender: TObject);
-var
-  AreFieldsEmpty: Boolean;
-begin
-  AreFieldsEmpty:=(
- (Trim(User_log_inp.Text)='')or
- (Trim(User_pas_inp.Text)='')
-  );
-  if AreFieldsEmpty then
-  begin
-      MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-  try
-      with dm.ins_pass do
-      begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@user_pass').Value :=User_pas_inp.Text;
-           Parameters.ParamByName('@usver_name').Value:=User_log_inp.Text;
-           ExecProc;
-           dm.userQuery.Close;
-           dm.userQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-    end;
 end;
 
 end.
