@@ -3185,6 +3185,72 @@ begin
     AImage.AutoSize := True;
   end;
 end;
+procedure UniformizeComponentAnchors(AComponent: TComponent);
+var
+  i: Integer;
+  Control: TControl;
+begin
+  // Проверяем, является ли компонент контролом
+  if AComponent is TControl then
+  begin
+    Control := TControl(AComponent);
+
+    // Обновляем Anchors для всех типов контролов
+    if Control is TLabeledEdit then
+    begin
+      UpdateAnchors(Control);
+    end
+    else if Control is TEdit then
+    begin
+      UpdateAnchors(Control);
+    end
+    else if Control is TDBLookupComboBox then
+    begin
+      UpdateAnchors(Control);
+    end
+    else if Control is TDateTimePicker then
+    begin
+      UpdateAnchors(Control);
+    end
+    else if Control is TDBComboBox then
+    begin
+      UpdateAnchors(Control);
+    end
+    else if Control is TMaskEdit then
+    begin
+      UpdateAnchors(Control);
+    end
+    else if Control is TComboBox then
+    begin
+      UpdateAnchors(Control);
+    end;
+  end;
+
+  // Если компонент является контейнером (TWinControl), рекурсивно обрабатываем его дочерние элементы
+  if AComponent is TWinControl then
+  begin
+    for i := 0 to TWinControl(AComponent).ControlCount - 1 do
+    begin
+      UniformizeComponentAnchors(TWinControl(AComponent).Controls[i]);
+    end;
+  end;
+end;
+
+// Вспомогательная процедура для обновления якорей
+procedure UpdateAnchors(AControl: TControl);
+begin
+  // Добавляем akLeft и akRight, если они отсутствуют
+  if not (akLeft in AControl.Anchors) then
+    AControl.Anchors := AControl.Anchors + [akLeft];
+  if not (akRight in AControl.Anchors) then
+    AControl.Anchors := AControl.Anchors + [akRight];
+
+  // Удаляем akTop и akBottom, если они установлены
+  if akTop in AControl.Anchors then
+    AControl.Anchors := AControl.Anchors - [akTop];
+  if akBottom in AControl.Anchors then
+    AControl.Anchors := AControl.Anchors - [akBottom];
+end;
 
 procedure UpdateFormShowHint(const FormName: string);
 var
@@ -3242,57 +3308,8 @@ begin
     end;
   end;
 end;
-procedure UniformizeComponentAnchors(AComponent: TComponent);
-var
-  i: Integer;
-  Control: TControl;
-begin
-  // Проверяем, является ли компонент контролом
-  if AComponent is TControl then
-  begin
-    Control := TControl(AComponent);
 
-    // Проверяем начальное состояние Anchors только для указанных типов контролов
-    if (Control is TLabeledEdit) or
-       (Control is TEdit) or
-       (Control is TDBLookupComboBox) or
-       (Control is TDateTimePicker) or
-       (Control is TDBComboBox) or
-       (Control is TMaskEdit) or
-       (Control is TComboBox) then
-    begin
-      if ([akLeft, akTop] * Control.Anchors) <> [akLeft, akTop] then
-      begin
-        // Если начальное состояние не соответствует ожидаемому (akLeft и akTop = True),
-        // выводим сообщение об ошибке или предупреждение.
-        raise Exception.Create('Начальное состояние Anchors для компонента ' + Control.Name +
-          ' не соответствует ожидаемому.');
-      end;
 
-      // Обновляем Anchors для всех типов контролов
-      UpdateAnchors(Control);
-    end;
-  end;
-
-  // Если компонент является контейнером (TWinControl), рекурсивно обрабатываем его дочерние элементы
-  if AComponent is TWinControl then
-  begin
-    for i := 0 to TWinControl(AComponent).ControlCount - 1 do
-    begin
-      UniformizeComponentAnchors(TWinControl(AComponent).Controls[i]);
-    end;
-  end;
-end;
-
-// Вспомогательная процедура для обновления якорей
-procedure UpdateAnchors(AControl: TControl);
-begin
-  // Устанавливаем akLeft и akRight в True
-  AControl.Anchors := [akLeft, akRight];
-
-  // Сбрасываем akTop и akBottom в False
-  AControl.Anchors := AControl.Anchors - [akTop, akBottom];
-end;
 initialization
   VisitedStaticTexts := TStringList.Create;
 finalization

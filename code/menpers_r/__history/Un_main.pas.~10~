@@ -12,11 +12,9 @@ type
   TFrm_main = class(TForm)
     main_Image: TImage;
     ItemMenu: TMainMenu;
-    usver_item: TMenuItem;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure usver_itemClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -28,7 +26,7 @@ var
 
 implementation
 
-uses Un_func, Un_dm, Un_user;
+uses Un_func, Un_dm;
 
 {$R *.dfm}
 
@@ -49,18 +47,6 @@ begin
   AdjustImageProperties(main_Image);
   LoadFormState(Self);
   LoadImageFromResource('BACKGROUND_IMAGE', main_Image);
-end;
-
-procedure TFrm_main.usver_itemClick(Sender: TObject);
-begin
-  try
-    UpdateFormProperties('Frm_user', 'Форма работы с данными пользователя',
-      clBtnFace, 1024, 768);
-    Frm_user.ShowModal;
-  except
-    Frm_user.Free;
-    raise;
-  end;
 end;
 
 end.

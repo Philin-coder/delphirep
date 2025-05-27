@@ -3252,26 +3252,29 @@ begin
   begin
     Control := TControl(AComponent);
 
-    // ѕровер€ем начальное состо€ние Anchors только дл€ указанных типов контролов
-    if (Control is TLabeledEdit) or
-       (Control is TEdit) or
-       (Control is TDBLookupComboBox) or
-       (Control is TDateTimePicker) or
-       (Control is TDBComboBox) or
-       (Control is TMaskEdit) or
-       (Control is TComboBox) then
+    // ѕровер€ем начальное состо€ние Anchors
+    if ([akLeft, akTop] * Control.Anchors) <> [akLeft, akTop] then
     begin
-      if ([akLeft, akTop] * Control.Anchors) <> [akLeft, akTop] then
-      begin
-        // ≈сли начальное состо€ние не соответствует ожидаемому (akLeft и akTop = True),
-        // выводим сообщение об ошибке или предупреждение.
-        raise Exception.Create('Ќачальное состо€ние Anchors дл€ компонента ' + Control.Name +
-          ' не соответствует ожидаемому.');
-      end;
-
-      // ќбновл€ем Anchors дл€ всех типов контролов
-      UpdateAnchors(Control);
+      // ≈сли начальное состо€ние не соответствует ожидаемому (akLeft и akTop = True),
+      // выводим сообщение об ошибке или предупреждение.
+      raise Exception.Create('Ќачальное состо€ние Anchors дл€ компонента не соответствует ожидаемому.');
     end;
+
+    // ќбновл€ем Anchors дл€ всех типов контролов
+    if Control is TLabeledEdit then
+      UpdateAnchors(Control)
+    else if Control is TEdit then
+      UpdateAnchors(Control)
+    else if Control is TDBLookupComboBox then
+      UpdateAnchors(Control)
+    else if Control is TDateTimePicker then
+      UpdateAnchors(Control)
+    else if Control is TDBComboBox then
+      UpdateAnchors(Control)
+    else if Control is TMaskEdit then
+      UpdateAnchors(Control)
+    else if Control is TComboBox then
+      UpdateAnchors(Control);
   end;
 
   // ≈сли компонент €вл€етс€ контейнером (TWinControl), рекурсивно обрабатываем его дочерние элементы
@@ -3293,6 +3296,7 @@ begin
   // —брасываем akTop и akBottom в False
   AControl.Anchors := AControl.Anchors - [akTop, akBottom];
 end;
+
 initialization
   VisitedStaticTexts := TStringList.Create;
 finalization
