@@ -177,7 +177,6 @@ var FormWidth, FormHeight: Integer;
   procedure UniformizeDBLookupListBox(AForm: TForm; const FontName: string;
    FontSize: Integer; FontColor: TColor; BkColor: TColor);
 procedure AdjustChildFormSize(AForm: TForm; AMDIForm: TForm);
-procedure AdjustImageProperties(const AImage: TImage);
 implementation
 type
   tdata = array [0..15] of DWORD;
@@ -3169,16 +3168,6 @@ begin
     AForm.Height := AMDIForm.ClientHeight;
     AForm.Left := 0;
     AForm.Top := 0;
-  end;
-end;
-procedure AdjustImageProperties(const AImage: TImage);
-begin
-  if not Assigned(AImage) then
-    Exit;
-  if (not AImage.Stretch) and (not AImage.AutoSize) then
-  begin
-    AImage.Stretch := True;
-    AImage.AutoSize := True;
   end;
 end;
 initialization

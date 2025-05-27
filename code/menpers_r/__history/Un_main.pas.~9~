@@ -44,7 +44,11 @@ end;
 procedure TFrm_main.FormCreate(Sender: TObject);
 begin
   SetFormPropertiesIfNeeded;
-  AdjustImageProperties(main_Image);
+  with main_Image do
+  begin
+    Stretch := True;
+    AutoSize := True;
+  end;
   LoadFormState(Self);
   LoadImageFromResource('BACKGROUND_IMAGE', main_Image);
 end;
