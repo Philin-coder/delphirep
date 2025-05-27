@@ -11,9 +11,9 @@ type
     userQuery: TADOQuery;
     userDS: TDataSource;
     sel_user_by_fio: TADOStoredProc;
-    ins_pass: TADOStoredProc;
-    upd_pas: TADOStoredProc;
-    del_pass: TADOStoredProc;
+    ADOStoredProc2: TADOStoredProc;
+    ADOStoredProc3: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public

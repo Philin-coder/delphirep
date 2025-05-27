@@ -13,7 +13,7 @@ type
     sel_user_by_fio: TADOStoredProc;
     ins_pass: TADOStoredProc;
     upd_pas: TADOStoredProc;
-    del_pass: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public

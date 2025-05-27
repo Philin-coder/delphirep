@@ -101,23 +101,8 @@ object DM: TDM
     Left = 128
     Top = 304
   end
-  object del_pass: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'del_pass;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@user_id'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = 0
-      end>
+  object ADOStoredProc4: TADOStoredProc
+    Parameters = <>
     Left = 128
     Top = 376
   end

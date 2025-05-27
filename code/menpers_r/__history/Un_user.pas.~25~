@@ -12,7 +12,7 @@ type
     selTab: TTabSheet;
     InsTab: TTabSheet;
     updTab: TTabSheet;
-    delTab: TTabSheet;
+    TabSheet4: TTabSheet;
     selUserInpBox: TGroupBox;
     selUserbtnBox: TGroupBox;
     selUsergrouperBox: TGroupBox;
@@ -37,15 +37,8 @@ type
     user_upd_pas_lbl: TStaticText;
     user_id_inp: TDBLookupComboBox;
     user_upd_btn: TButton;
-    User_upd_grd: TDBGrid;
+    DBGrid1: TDBGrid;
     user_pass_inp: TLabeledEdit;
-    del_user_data_box: TGroupBox;
-    del_user_inp_box: TGroupBox;
-    del_user_btn_box: TGroupBox;
-    del_user_btn: TButton;
-    User_del_grd: TDBGrid;
-    del_user_usr_lbl: TStaticText;
-    del_user_id_inp_DBL: TDBLookupComboBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -56,7 +49,6 @@ type
     procedure selUserresetradioClick(Sender: TObject);
     procedure User_ins_btnClick(Sender: TObject);
     procedure user_upd_btnClick(Sender: TObject);
-    procedure del_user_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -71,44 +63,6 @@ implementation
 uses Un_dm, Un_func;
 
 {$R *.dfm}
-
-procedure TFrm_user.del_user_btnClick(Sender: TObject);
-var
-  AreFieldsEmpty: Boolean;
-begin
- AreFieldsEmpty:=(
- (del_user_id_inp_DBL.Text='')
- );
- if AreFieldsEmpty then
- begin
-     MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
- end;
- try
-      with dm.del_pass do
-      begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@user_id').Value :=
-           dm.userQuery.FieldByName('user_id').AsString;
-           ExecProc;
-           dm.userQuery.Close;
-           dm.userQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-    end;
-end;
 
 procedure TFrm_user.FormActivate(Sender: TObject);
 begin

@@ -12,7 +12,7 @@ type
     selTab: TTabSheet;
     InsTab: TTabSheet;
     updTab: TTabSheet;
-    delTab: TTabSheet;
+    TabSheet4: TTabSheet;
     selUserInpBox: TGroupBox;
     selUserbtnBox: TGroupBox;
     selUsergrouperBox: TGroupBox;
@@ -31,21 +31,11 @@ type
     User_pas_inp: TLabeledEdit;
     User_ins_btn: TButton;
     User_ins_grd: TDBGrid;
-    user_upd_data_Box: TGroupBox;
-    user_upd_btn_Box: TGroupBox;
+    GroupBox1: TGroupBox;
+    GroupBox2: TGroupBox;
     user_upd_inp_Box: TGroupBox;
     user_upd_pas_lbl: TStaticText;
-    user_id_inp: TDBLookupComboBox;
-    user_upd_btn: TButton;
-    User_upd_grd: TDBGrid;
-    user_pass_inp: TLabeledEdit;
-    del_user_data_box: TGroupBox;
-    del_user_inp_box: TGroupBox;
-    del_user_btn_box: TGroupBox;
-    del_user_btn: TButton;
-    User_del_grd: TDBGrid;
-    del_user_usr_lbl: TStaticText;
-    del_user_id_inp_DBL: TDBLookupComboBox;
+    user_upd_usr_DBL: TDBLookupComboBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -55,8 +45,6 @@ type
     procedure selUserpasradioClick(Sender: TObject);
     procedure selUserresetradioClick(Sender: TObject);
     procedure User_ins_btnClick(Sender: TObject);
-    procedure user_upd_btnClick(Sender: TObject);
-    procedure del_user_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -71,44 +59,6 @@ implementation
 uses Un_dm, Un_func;
 
 {$R *.dfm}
-
-procedure TFrm_user.del_user_btnClick(Sender: TObject);
-var
-  AreFieldsEmpty: Boolean;
-begin
- AreFieldsEmpty:=(
- (del_user_id_inp_DBL.Text='')
- );
- if AreFieldsEmpty then
- begin
-     MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
- end;
- try
-      with dm.del_pass do
-      begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@user_id').Value :=
-           dm.userQuery.FieldByName('user_id').AsString;
-           ExecProc;
-           dm.userQuery.Close;
-           dm.userQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-    end;
-end;
 
 procedure TFrm_user.FormActivate(Sender: TObject);
 begin
@@ -293,46 +243,6 @@ begin
           raise Exception.Create('Соединение с базой не установлено');
            Parameters.ParamByName('@user_pass').Value :=User_pas_inp.Text;
            Parameters.ParamByName('@usver_name').Value:=User_log_inp.Text;
-           ExecProc;
-           dm.userQuery.Close;
-           dm.userQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-    end;
-end;
-
-procedure TFrm_user.user_upd_btnClick(Sender: TObject);
-var
-  AreFieldsEmpty: Boolean;
-begin
-  AreFieldsEmpty:=(
-  (user_id_inp.Text='')or
-  (Trim(user_pass_inp.Text)='')
-  );
-  if AreFieldsEmpty then
-  begin
-    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-  try
-  with dm.upd_pas do
-      begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@user_id').Value :=
-           dm.userQuery.FieldByName('user_id').AsString;
-           Parameters.ParamByName('@user_pas').Value:=user_pass_inp.Text;
            ExecProc;
            dm.userQuery.Close;
            dm.userQuery.Open;

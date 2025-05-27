@@ -465,7 +465,6 @@ object Frm_user: TFrm_user
           Height = 25
           Caption = 'del_user_btn'
           TabOrder = 0
-          OnClick = del_user_btnClick
         end
       end
     end
