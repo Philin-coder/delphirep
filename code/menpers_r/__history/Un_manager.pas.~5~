@@ -1,0 +1,250 @@
+unit Un_manager;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ComCtrls, StdCtrls, ExtCtrls, Grids, DBGrids,DB,adodb, DBCtrls;
+
+type
+  TFrm_manager = class(TForm)
+    userPC: TPageControl;
+    selTab: TTabSheet;
+    InsTab: TTabSheet;
+    updTab: TTabSheet;
+    delTab: TTabSheet;
+    selUserInpBox: TGroupBox;
+    selUserbtnBox: TGroupBox;
+    selUsergrouperBox: TGroupBox;
+    selUserdataBox: TGroupBox;
+    usercondEdit: TLabeledEdit;
+    userfndEdit: TLabeledEdit;
+    selUser_btn: TButton;
+    selUser_grd: TDBGrid;
+    selUserlogradio: TRadioButton;
+    selUserpasradio: TRadioButton;
+    selUserresetradio: TRadioButton;
+    User_data_box: TGroupBox;
+    User_btn_box: TGroupBox;
+    Ins_user_inp_box: TGroupBox;
+    User_log_inp: TLabeledEdit;
+    User_pas_inp: TLabeledEdit;
+    User_ins_btn: TButton;
+    User_ins_grd: TDBGrid;
+    user_upd_data_Box: TGroupBox;
+    user_upd_btn_Box: TGroupBox;
+    user_upd_inp_Box: TGroupBox;
+    user_upd_pas_lbl: TStaticText;
+    user_id_inp: TDBLookupComboBox;
+    user_upd_btn: TButton;
+    User_upd_grd: TDBGrid;
+    user_pass_inp: TLabeledEdit;
+    del_user_data_box: TGroupBox;
+    del_user_inp_box: TGroupBox;
+    del_user_btn_box: TGroupBox;
+    del_user_btn: TButton;
+    User_del_grd: TDBGrid;
+    del_user_usr_lbl: TStaticText;
+    del_user_id_inp_DBL: TDBLookupComboBox;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure selUser_btnClick(Sender: TObject);
+    procedure selUserlogradioClick(Sender: TObject);
+    procedure selUserpasradioClick(Sender: TObject);
+    procedure selUserresetradioClick(Sender: TObject);
+    procedure del_user_btnClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_manager: TFrm_manager;
+
+implementation
+
+uses Un_dm, Un_func;
+
+{$R *.dfm}
+
+procedure TFrm_manager.del_user_btnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+begin
+ AreFieldsEmpty:=(
+ (del_user_id_inp_DBL.Text='')
+ );
+ if AreFieldsEmpty then
+ begin
+     MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+ end;
+ try
+      with dm.del_pass do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@user_id').Value :=
+           dm.userQuery.FieldByName('user_id').AsString;
+           ExecProc;
+           dm.userQuery.Close;
+           dm.userQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+end;
+
+procedure TFrm_manager.FormActivate(Sender: TObject);
+begin
+  dm.userQuery.Open;
+  AdjustDBGridColumnWidths('Frm_user',6000, 10);
+end;
+
+procedure TFrm_manager.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+   SaveFormState(Self);
+   CloseAllQueriesOnDataModule('dm');
+end;
+
+procedure TFrm_manager.FormCreate(Sender: TObject);
+begin
+  UpdateFormShowHint('Frm_user');
+  UniformizeButtonsSize(Self,  273, 25);
+  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+  UniformizeComponentAnchors(Self);
+  LoadFormState(Self);
+end;
+
+procedure TFrm_manager.selUserlogradioClick(Sender: TObject);
+begin
+  if  selUserlogradio.Checked=true then
+  begin
+    try
+     with dm.userQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+     'select'+' '+
+    'usver_r.user_id,'+' '+
+    'usver_r.user_pas,'+' '+
+    'usver_r.usver_name'+' '+
+    'from usver_r'+' '+
+    'where 1=1'+' '+
+    'order by usver_r.usver_name asc';
+      Open;
+     end;
+    except on E: EADOError do
+    begin
+      ShowMessage('Ошибка :'+' '+E.Message);
+    end;
+    end;
+  end;
+end;
+
+procedure TFrm_manager.selUserpasradioClick(Sender: TObject);
+begin
+   if  selUserpasradio.Checked=true then
+  begin
+    try
+     with dm.userQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+      'select'+' '+
+    'usver_r.user_id,'+' '+
+    'usver_r.user_pas,'+' '+
+    'usver_r.usver_name'+' '+
+    'from usver_r'+' '+
+    'where 1=1'+' '+
+    'order by usver_r.user_pas asc';
+      Open;
+     end;
+    except on E: EADOError do
+    begin
+      ShowMessage('Ошибка :'+' '+E.Message);
+    end;
+    end;
+  end;
+end;
+
+procedure TFrm_manager.selUserresetradioClick(Sender: TObject);
+ var
+   i,j,c:Integer;
+begin
+    if  selUserresetradio.Checked=true then
+  with Frm_user do
+    for I := 0 to ComponentCount - 1 do
+     begin
+       if (Components[i] is TLabeledEdit)  then
+        begin
+          (Components[i] as TLabeledEdit).Clear;
+        end;
+     end;
+       with Frm_user do
+     for c := 0 to ComponentCount - 1 do
+     begin
+       if (Components[c] is TCheckBox)  then
+        begin
+          (Components[c] as TCheckBox).Checked:=False;
+        end;
+     end;
+     with dm.userQuery do
+     begin
+     Close;
+     sql.Clear;
+     sql.Text:=
+     'select'+' '+
+    'usver_r.user_id,'+' '+
+    'usver_r.user_pas,'+' '+
+    'usver_r.usver_name'+' '+
+    'from usver_r'+' '+
+    'where 1=1';
+     Open;
+     end;
+    with Frm_user do
+    for j := 0 to ComponentCount - 1 do
+    begin
+      if(Components[j] is TRadioButton)  then
+      begin
+        (Components[j] as TRadioButton).Checked:=False;
+      end;
+    end;
+end;
+
+procedure TFrm_manager.selUser_btnClick(Sender: TObject);
+begin
+  try
+    if not DM.Connection.Connected then
+      raise Exception.Create('Соединение с базой  не установлено');
+    with DM.sel_user_by_fio do
+    begin
+      Close;
+      Parameters.ParamByName('@usver_name').Value :=usercondEdit.Text;
+      Open;
+       DM.userQuery.Recordset:=dm.sel_user_by_fio.Recordset;
+    end;
+  except
+    on E: EDatabaseError do
+      ShowMessage('Ошибка: ' + E.Message);
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
+end;
+
+end.

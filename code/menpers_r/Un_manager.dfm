@@ -1,7 +1,7 @@
-object Frm_user: TFrm_user
+object Frm_manager: TFrm_manager
   Left = 0
   Top = 0
-  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1076#1072#1085#1085#1099#1084#1080' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1103
+  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1076#1072#1085#1085#1099#1084#1080'  '#1084#1077#1085#1077#1076#1078#1077#1088#1072
   ClientHeight = 632
   ClientWidth = 1037
   Color = clBtnFace
@@ -16,20 +16,20 @@ object Frm_user: TFrm_user
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object userPC: TPageControl
+  object manPC: TPageControl
     Left = 0
     Top = 0
     Width = 1037
     Height = 632
-    ActivePage = delTab
+    ActivePage = selTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
-      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1077
+      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1084#1077#1085#1077#1076#1078#1077#1088#1072
       ExplicitLeft = 8
       ExplicitTop = 0
       ExplicitWidth = 919
-      object selUserInpBox: TGroupBox
+      object semanInpBox: TGroupBox
         Left = 0
         Top = 0
         Width = 1029
@@ -38,7 +38,7 @@ object Frm_user: TFrm_user
         Anchors = [akTop, akRight]
         Caption = #1055#1086#1080#1089#1082' '#1087#1086':'
         TabOrder = 0
-        object usercondEdit: TLabeledEdit
+        object mancondEdit: TLabeledEdit
           Left = 0
           Top = 48
           Width = 1054
@@ -48,7 +48,7 @@ object Frm_user: TFrm_user
           EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1080#1084#1077#1085#1080#1077' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1103
           TabOrder = 0
         end
-        object userfndEdit: TLabeledEdit
+        object manfndEdit: TLabeledEdit
           Left = 3
           Top = 104
           Width = 1030
@@ -57,27 +57,25 @@ object Frm_user: TFrm_user
           EditLabel.Height = 13
           EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1087#1072#1088#1086#1083#1102
           TabOrder = 1
-          OnKeyPress = userfndEditKeyPress
         end
       end
-      object selUserbtnBox: TGroupBox
+      object selmanrbtnBox: TGroupBox
         Left = 0
         Top = 544
         Width = 1029
         Height = 60
         Align = alBottom
         TabOrder = 1
-        object selUser_btn: TButton
+        object selman_btn: TButton
           Left = 432
           Top = 16
           Width = 75
           Height = 25
           Caption = #1042#1099#1073#1086#1088
           TabOrder = 0
-          OnClick = selUser_btnClick
         end
       end
-      object selUsergrouperBox: TGroupBox
+      object selmangrouperBox: TGroupBox
         Left = 0
         Top = 153
         Width = 1029
@@ -88,35 +86,32 @@ object Frm_user: TFrm_user
         ExplicitLeft = 536
         ExplicitTop = 176
         ExplicitWidth = 185
-        object selUserlogradio: TRadioButton
+        object selmanfioradio: TRadioButton
           Left = 56
           Top = 40
           Width = 113
           Height = 17
-          Caption = #1055#1086' '#1083#1086#1075#1080#1085#1091
+          Caption = #1055#1086' '#1060#1048#1054
           TabOrder = 0
-          OnClick = selUserlogradioClick
         end
-        object selUserpasradio: TRadioButton
+        object selmanpasradio: TRadioButton
           Left = 344
           Top = 40
           Width = 113
           Height = 17
           Caption = #1055#1086' '#1087#1072#1088#1086#1083#1102
           TabOrder = 1
-          OnClick = selUserpasradioClick
         end
-        object selUserresetradio: TRadioButton
+        object selmanresetradio: TRadioButton
           Left = 664
           Top = 40
           Width = 113
           Height = 17
           Caption = 'C'#1073#1088#1086#1089
           TabOrder = 2
-          OnClick = selUserresetradioClick
         end
       end
-      object selUserdataBox: TGroupBox
+      object selmandataBox: TGroupBox
         Left = 0
         Top = 258
         Width = 1029
@@ -128,7 +123,7 @@ object Frm_user: TFrm_user
         ExplicitTop = 264
         ExplicitWidth = 185
         ExplicitHeight = 105
-        object selUser_grd: TDBGrid
+        object selman_grd: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
@@ -228,7 +223,6 @@ object Frm_user: TFrm_user
           Height = 25
           Caption = #1044#1086#1073#1072#1074#1080#1090#1100
           TabOrder = 0
-          OnClick = User_ins_btnClick
         end
       end
       object Ins_user_inp_box: TGroupBox
@@ -329,7 +323,6 @@ object Frm_user: TFrm_user
           Height = 25
           Caption = #1054#1073#1085#1086#1074#1080#1090#1100
           TabOrder = 0
-          OnClick = user_upd_btnClick
         end
       end
       object user_upd_inp_Box: TGroupBox
@@ -465,7 +458,6 @@ object Frm_user: TFrm_user
           Height = 25
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
-          OnClick = del_user_btnClick
         end
       end
     end
