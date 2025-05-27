@@ -3157,10 +3157,16 @@ procedure AdjustChildFormSize(AForm: TForm; AMDIForm: TForm);
 begin
   if not Assigned(AForm) or not Assigned(AMDIForm) then
     raise Exception.Create('Форма или MDI-контейнер не назначены.');
+
+  // Устанавливаем максимальный размер дочерней формы
   AForm.Width := Min(AMDIForm.ClientWidth, AForm.Width);
   AForm.Height := Min(AMDIForm.ClientHeight, AForm.Height);
+
+  // Устанавливаем позицию дочерней формы внутри MDI-контейнера
   AForm.Left := (AMDIForm.ClientWidth - AForm.Width) div 2;
   AForm.Top := (AMDIForm.ClientHeight - AForm.Height) div 2;
+
+  // Если форма должна быть развернута, проверяем её размеры
   if AForm.WindowState = wsMaximized then
   begin
     AForm.Width := AMDIForm.ClientWidth;
@@ -3185,26 +3191,39 @@ var
   Form: TForm;
   i: Integer;
 begin
+  // Находим форму по имени
   Form := FindFormByName(FormName);
   if not Assigned(Form) then
   begin
     ShowMessageFmt('Форма "%s" не найдена!', [FormName]);
     Exit;
   end;
+
+  // Устанавливаем ShowHint для самой формы
   if not Form.ShowHint then
     Form.ShowHint := True;
+
+  // Устанавливаем KeyPreview для формы
   Form.KeyPreview := True;
+
+  // Обрабатываем все компоненты на форме
   for i := 0 to Form.ComponentCount - 1 do
   begin
     if Form.Components[i] is TControl then
     begin
+      // Устанавливаем ShowHint для каждого контрола
       if not TControl(Form.Components[i]).ShowHint then
         TControl(Form.Components[i]).ShowHint := True;
+
+      // Если компонент является контейнером (например, TPanel, TGroupBox),
+      // рекурсивно обрабатываем его дочерние элементы
       if Form.Components[i] is TWinControl then
         UpdateControlsShowHint(TWinControl(Form.Components[i]));
     end;
   end;
 end;
+
+// Вспомогательная рекурсивная процедура для обработки дочерних контролов
 procedure UpdateControlsShowHint(ParentControl: TWinControl);
 var
   i: Integer;
@@ -3213,8 +3232,11 @@ begin
   begin
     if ParentControl.Controls[i] is TControl then
     begin
+      // Устанавливаем ShowHint для каждого контрола
       if not TControl(ParentControl.Controls[i]).ShowHint then
         TControl(ParentControl.Controls[i]).ShowHint := True;
+
+      // Если контрол является контейнером, рекурсивно обрабатываем его дочерние элементы
       if ParentControl.Controls[i] is TWinControl then
         UpdateControlsShowHint(TWinControl(ParentControl.Controls[i]));
     end;
@@ -3225,9 +3247,12 @@ var
   i: Integer;
   Control: TControl;
 begin
+  // Проверяем, является ли компонент контролом
   if AComponent is TControl then
   begin
     Control := TControl(AComponent);
+
+    // Проверяем начальное состояние Anchors только для указанных типов контролов
     if (Control is TLabeledEdit) or
        (Control is TEdit) or
        (Control is TDBLookupComboBox) or
@@ -3238,12 +3263,18 @@ begin
     begin
       if ([akLeft, akTop] * Control.Anchors) <> [akLeft, akTop] then
       begin
+        // Если начальное состояние не соответствует ожидаемому (akLeft и akTop = True),
+        // выводим сообщение об ошибке или предупреждение.
         raise Exception.Create('Начальное состояние Anchors для компонента ' + Control.Name +
           ' не соответствует ожидаемому.');
       end;
+
+      // Обновляем Anchors для всех типов контролов
       UpdateAnchors(Control);
     end;
   end;
+
+  // Если компонент является контейнером (TWinControl), рекурсивно обрабатываем его дочерние элементы
   if AComponent is TWinControl then
   begin
     for i := 0 to TWinControl(AComponent).ControlCount - 1 do
@@ -3252,9 +3283,14 @@ begin
     end;
   end;
 end;
+
+// Вспомогательная процедура для обновления якорей
 procedure UpdateAnchors(AControl: TControl);
 begin
+  // Устанавливаем akLeft и akRight в True
   AControl.Anchors := [akLeft, akRight];
+
+  // Сбрасываем akTop и akBottom в False
   AControl.Anchors := AControl.Anchors - [akTop, akBottom];
 end;
 initialization

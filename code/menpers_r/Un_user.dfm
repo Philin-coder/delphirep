@@ -11,6 +11,7 @@ object Frm_user: TFrm_user
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnActivate = FormActivate
   OnClose = FormClose
   OnCreate = FormCreate
   PixelsPerInch = 96
@@ -40,7 +41,7 @@ object Frm_user: TFrm_user
         TabOrder = 0
         object usercondEdit: TLabeledEdit
           Left = 0
-          Top = 16
+          Top = 48
           Width = 1054
           Height = 21
           EditLabel.Width = 227
@@ -48,50 +49,114 @@ object Frm_user: TFrm_user
           EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1080#1084#1077#1085#1080#1077' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1103
           TabOrder = 0
         end
-        object LabeledEdit1: TLabeledEdit
+        object userfndEdit: TLabeledEdit
           Left = 3
-          Top = 64
+          Top = 104
           Width = 1030
           Height = 21
-          EditLabel.Width = 61
+          EditLabel.Width = 123
           EditLabel.Height = 13
-          EditLabel.Caption = 'LabeledEdit1'
+          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1087#1072#1088#1086#1083#1102
           TabOrder = 1
         end
-        object LabeledEdit2: TLabeledEdit
-          Left = 3
-          Top = 112
-          Width = 1030
-          Height = 21
-          EditLabel.Width = 61
-          EditLabel.Height = 13
-          EditLabel.Caption = 'LabeledEdit1'
+      end
+      object selUserbtnBox: TGroupBox
+        Left = 0
+        Top = 544
+        Width = 1029
+        Height = 60
+        Align = alBottom
+        TabOrder = 1
+        object selUser_btn: TButton
+          Left = 432
+          Top = 16
+          Width = 75
+          Height = 25
+          Caption = #1042#1099#1073#1086#1088
+          TabOrder = 0
+        end
+      end
+      object selUsergrouperBox: TGroupBox
+        Left = 0
+        Top = 153
+        Width = 1029
+        Height = 105
+        Align = alTop
+        Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '
+        TabOrder = 2
+        ExplicitLeft = 536
+        ExplicitTop = 176
+        ExplicitWidth = 185
+        object selUserlogradio: TRadioButton
+          Left = 56
+          Top = 32
+          Width = 113
+          Height = 17
+          Caption = #1055#1086' '#1083#1086#1075#1080#1085#1091
+          TabOrder = 0
+        end
+        object selUserpasradioselUserlogradio: TRadioButton
+          Left = 344
+          Top = 40
+          Width = 113
+          Height = 17
+          Caption = #1055#1086' '#1087#1072#1088#1086#1083#1102
+          TabOrder = 1
+        end
+        object selUserresetradio: TRadioButton
+          Left = 664
+          Top = 40
+          Width = 113
+          Height = 17
+          Caption = 'C'#1073#1088#1086#1089
           TabOrder = 2
         end
       end
-      object GroupBox2: TGroupBox
-        Left = 40
-        Top = 176
-        Width = 185
-        Height = 105
-        Caption = 'GroupBox1'
-        TabOrder = 1
-      end
-      object GroupBox3: TGroupBox
-        Left = 536
-        Top = 176
-        Width = 185
-        Height = 105
-        Caption = 'GroupBox1'
-        TabOrder = 2
-      end
-      object GroupBox4: TGroupBox
-        Left = 272
-        Top = 264
-        Width = 185
-        Height = 105
-        Caption = 'GroupBox1'
+      object selUserdataBox: TGroupBox
+        Left = 0
+        Top = 258
+        Width = 1029
+        Height = 286
+        Align = alClient
+        Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1099#1093' '
         TabOrder = 3
+        ExplicitLeft = 272
+        ExplicitTop = 264
+        ExplicitWidth = 185
+        ExplicitHeight = 105
+        object selUser_grd: TDBGrid
+          Left = 2
+          Top = 15
+          Width = 1025
+          Height = 269
+          Align = alClient
+          DataSource = DM.userDS
+          TabOrder = 0
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWindowText
+          TitleFont.Height = -11
+          TitleFont.Name = 'Tahoma'
+          TitleFont.Style = []
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'user_id'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'user_pas'
+              Title.Caption = #1055#1072#1088#1086#1083#1100
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'usver_name'
+              Title.Caption = #1051#1086#1075#1080#1085
+              Visible = True
+            end>
+        end
       end
     end
     object TabSheet2: TTabSheet

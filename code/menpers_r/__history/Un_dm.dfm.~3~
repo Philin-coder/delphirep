@@ -3,7 +3,6 @@ object DM: TDM
   Height = 472
   Width = 645
   object Connection: TADOConnection
-    Connected = True
     ConnectionString = 
       'Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security In' +
       'fo=False;Initial Catalog=men_pers_r'
@@ -14,7 +13,6 @@ object DM: TDM
   end
   object userQuery: TADOQuery
     Connection = Connection
-    CursorType = ctStatic
     Parameters = <>
     SQL.Strings = (
       'select'
@@ -26,7 +24,7 @@ object DM: TDM
     Left = 104
     Top = 72
   end
-  object userDS: TDataSource
+  object DataSource1: TDataSource
     DataSet = userQuery
     Left = 104
     Top = 128

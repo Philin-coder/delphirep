@@ -9,7 +9,7 @@ type
   TDM = class(TDataModule)
     Connection: TADOConnection;
     userQuery: TADOQuery;
-    userDS: TDataSource;
+    DataSource1: TDataSource;
     ADOStoredProc1: TADOStoredProc;
     ADOStoredProc2: TADOStoredProc;
     ADOStoredProc3: TADOStoredProc;

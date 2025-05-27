@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, StdCtrls, ExtCtrls, Grids, DBGrids;
+  Dialogs, ComCtrls, StdCtrls, ExtCtrls;
 
 type
   TFrm_user = class(TForm)
@@ -14,19 +14,14 @@ type
     TabSheet3: TTabSheet;
     TabSheet4: TTabSheet;
     selUserInpBox: TGroupBox;
-    selUserbtnBox: TGroupBox;
-    selUsergrouperBox: TGroupBox;
-    selUserdataBox: TGroupBox;
+    GroupBox2: TGroupBox;
+    GroupBox3: TGroupBox;
+    GroupBox4: TGroupBox;
     usercondEdit: TLabeledEdit;
-    userfndEdit: TLabeledEdit;
-    selUser_btn: TButton;
-    selUser_grd: TDBGrid;
-    selUserlogradio: TRadioButton;
-    selUserpasradioselUserlogradio: TRadioButton;
-    selUserresetradio: TRadioButton;
+    LabeledEdit1: TLabeledEdit;
+    LabeledEdit2: TLabeledEdit;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
-    procedure FormActivate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -41,12 +36,6 @@ implementation
 uses Un_dm, Un_func;
 
 {$R *.dfm}
-
-procedure TFrm_user.FormActivate(Sender: TObject);
-begin
-  dm.userQuery.Open;
-  AdjustDBGridColumnWidths('Frm_user',6000, 10);
-end;
 
 procedure TFrm_user.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
