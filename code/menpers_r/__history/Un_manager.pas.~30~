@@ -170,15 +170,10 @@ begin
       begin
         if not Connection.Connected then
           raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@fio').Value :=man_fio_inp.Text;
-           Parameters.ParamByName('@cont').Value:=mancontinp.Text;
-           Parameters.ParamByName('@email').Value:=manmailinp.Text;
-           Parameters.ParamByName('@phone').Value:=man_phone_inp.Text;
-           Parameters.ParamByName('@User_Id').Value:=
-           dm.userQuery.FieldByName('User_Id').AsString;
+           Parameters.ParamByName('@Name_A').Value :=Autor_inp.Text;
            ExecProc;
-           dm.manQuery.Close;
-           dm.manQuery.Open;
+           dm.AutQuery.Close;
+           dm.AutQuery.Open;
         MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
       end;
     except

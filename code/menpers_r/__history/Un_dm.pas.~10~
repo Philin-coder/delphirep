@@ -17,7 +17,7 @@ type
     manQuery: TADOQuery;
     manDS: TDataSource;
     sel_man_by_fio: TADOStoredProc;
-    ins_manager: TADOStoredProc;
+    ADOStoredProc2: TADOStoredProc;
     ADOStoredProc3: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;
   private

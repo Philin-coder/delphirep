@@ -172,10 +172,10 @@ begin
           raise Exception.Create('Соединение с базой не установлено');
            Parameters.ParamByName('@fio').Value :=man_fio_inp.Text;
            Parameters.ParamByName('@cont').Value:=mancontinp.Text;
-           Parameters.ParamByName('@email').Value:=manmailinp.Text;
+           Parameters.ParamByName('email').Value:=manmailinp.Text;
            Parameters.ParamByName('@phone').Value:=man_phone_inp.Text;
-           Parameters.ParamByName('@User_Id').Value:=
-           dm.userQuery.FieldByName('User_Id').AsString;
+           Parameters.ParamByName('@Usir_Id').Value:=
+           dm.userQuery.FieldByName('Usir_Id').AsString;
            ExecProc;
            dm.manQuery.Close;
            dm.manQuery.Open;

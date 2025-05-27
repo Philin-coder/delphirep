@@ -21,7 +21,7 @@ object Frm_manager: TFrm_manager
     Top = 0
     Width = 1037
     Height = 632
-    ActivePage = selTab
+    ActivePage = InsTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
@@ -186,25 +186,25 @@ object Frm_manager: TFrm_manager
       ImageIndex = 1
       ExplicitLeft = 8
       ExplicitTop = 28
-      object User_data_box: TGroupBox
+      object man_data_box: TGroupBox
         Left = 0
-        Top = 105
+        Top = 265
         Width = 1029
-        Height = 431
+        Height = 271
         Align = alClient
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        ExplicitLeft = 392
-        ExplicitTop = 136
+        ExplicitLeft = 352
+        ExplicitTop = 312
         ExplicitWidth = 185
         ExplicitHeight = 105
-        object User_ins_grd: TDBGrid
+        object ins_man_grd: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
-          Height = 414
+          Height = 254
           Align = alClient
-          DataSource = DM.userDS
+          DataSource = DM.manDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -214,14 +214,32 @@ object Frm_manager: TFrm_manager
           Columns = <
             item
               Expanded = False
-              FieldName = 'user_id'
+              FieldName = 'maneger_id'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'user_pas'
-              Title.Caption = #1055#1072#1088#1086#1083#1100
+              FieldName = 'fio'
+              Title.Caption = #1060#1048#1054
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'cont'
+              Title.Caption = #1050#1086#1085#1090#1072#1082#1090#1085#1099#1077' '#1076#1072#1085#1085#1099#1077
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'email'
+              Title.Caption = 'E-mail'
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'phone'
+              Title.Caption = #1058#1077#1083#1077#1092#1086#1085
               Visible = True
             end
             item
@@ -232,52 +250,100 @@ object Frm_manager: TFrm_manager
             end>
         end
       end
-      object User_btn_box: TGroupBox
+      object man_btn_box: TGroupBox
         Left = 0
         Top = 536
         Width = 1029
         Height = 68
         Align = alBottom
         TabOrder = 1
-        object User_ins_btn: TButton
+        object man_ins_btn: TButton
           Left = 400
           Top = 24
           Width = 75
           Height = 25
           Caption = #1044#1086#1073#1072#1074#1080#1090#1100
           TabOrder = 0
+          OnClick = man_ins_btnClick
         end
       end
-      object Ins_user_inp_box: TGroupBox
+      object Ins_man_inp_box: TGroupBox
         Left = 0
         Top = 0
         Width = 1029
-        Height = 105
+        Height = 265
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        ExplicitLeft = 408
-        ExplicitTop = 152
-        ExplicitWidth = 185
-        object User_log_inp: TLabeledEdit
+        object man_fio_inp: TLabeledEdit
           Left = 3
           Top = 32
           Width = 1033
           Height = 21
-          EditLabel.Width = 30
+          EditLabel.Width = 23
           EditLabel.Height = 13
-          EditLabel.Caption = #1051#1086#1075#1080#1085
+          EditLabel.Caption = #1060#1048#1054
           TabOrder = 0
         end
-        object User_pas_inp: TLabeledEdit
+        object man_cont_lbl: TStaticText
           Left = 3
-          Top = 75
-          Width = 1023
-          Height = 21
-          EditLabel.Width = 37
-          EditLabel.Height = 13
-          EditLabel.Caption = #1055#1072#1088#1086#1083#1100
+          Top = 59
+          Width = 109
+          Height = 17
+          Caption = #1050#1086#1085#1090#1072#1082#1090#1085#1099#1077' '#1076#1072#1085#1085#1099#1077
           TabOrder = 1
+        end
+        object mancontinp: TMaskEdit
+          Left = 3
+          Top = 82
+          Width = 1022
+          Height = 21
+          TabOrder = 2
+          OnExit = mancontinpExit
+        end
+        object manmailinp: TLabeledEdit
+          Left = 3
+          Top = 136
+          Width = 1033
+          Height = 21
+          EditLabel.Width = 24
+          EditLabel.Height = 13
+          EditLabel.Caption = 'email'
+          TabOrder = 3
+        end
+        object man_phone_lbl: TStaticText
+          Left = 3
+          Top = 163
+          Width = 90
+          Height = 17
+          Caption = #1051#1080#1095#1085#1099#1081' '#1090#1077#1083#1077#1092#1086#1085
+          TabOrder = 4
+        end
+        object man_phone_inp: TMaskEdit
+          Left = 4
+          Top = 186
+          Width = 1022
+          Height = 21
+          TabOrder = 5
+          OnExit = man_phone_inpExit
+        end
+        object manloglbl: TStaticText
+          Left = 3
+          Top = 213
+          Width = 34
+          Height = 17
+          Caption = #1051#1086#1075#1080#1085
+          TabOrder = 6
+        end
+        object m_user_id_dbl: TDBLookupComboBox
+          Left = 2
+          Top = 236
+          Width = 1024
+          Height = 21
+          KeyField = 'user_id'
+          ListField = 'usver_name'
+          ListSource = DM.userDS
+          TabOrder = 7
         end
       end
     end

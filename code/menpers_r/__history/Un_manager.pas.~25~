@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, StdCtrls, ExtCtrls, Grids, DBGrids,DB,adodb, DBCtrls;
+  Dialogs, ComCtrls, StdCtrls, ExtCtrls, Grids, DBGrids,DB,adodb, DBCtrls, Mask;
 
 type
   TFrm_manager = class(TForm)
@@ -24,13 +24,11 @@ type
     selmanfioradio: TRadioButton;
     selmanlogradio: TRadioButton;
     selmanresetradio: TRadioButton;
-    User_data_box: TGroupBox;
-    User_btn_box: TGroupBox;
-    Ins_user_inp_box: TGroupBox;
-    User_log_inp: TLabeledEdit;
-    User_pas_inp: TLabeledEdit;
-    User_ins_btn: TButton;
-    User_ins_grd: TDBGrid;
+    man_data_box: TGroupBox;
+    man_btn_box: TGroupBox;
+    Ins_man_inp_box: TGroupBox;
+    man_fio_inp: TLabeledEdit;
+    man_ins_btn: TButton;
     user_upd_data_Box: TGroupBox;
     user_upd_btn_Box: TGroupBox;
     user_upd_inp_Box: TGroupBox;
@@ -46,6 +44,14 @@ type
     User_del_grd: TDBGrid;
     del_user_usr_lbl: TStaticText;
     del_user_id_inp_DBL: TDBLookupComboBox;
+    ins_man_grd: TDBGrid;
+    man_cont_lbl: TStaticText;
+    mancontinp: TMaskEdit;
+    manmailinp: TLabeledEdit;
+    man_phone_lbl: TStaticText;
+    man_phone_inp: TMaskEdit;
+    manloglbl: TStaticText;
+    m_user_id_dbl: TDBLookupComboBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -53,6 +59,8 @@ type
     procedure manfndEditKeyPress(Sender: TObject; var Key: Char);
     procedure selmanfioradioClick(Sender: TObject);
     procedure selmanlogradioClick(Sender: TObject);
+    procedure selmanresetradioClick(Sender: TObject);
+    procedure mancontinpExit(Sender: TObject);
   private
     { Private declarations }
   public
@@ -89,6 +97,21 @@ begin
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   UniformizeComponentAnchors(Self);
   LoadFormState(Self);
+  mancontinp.EditMask := '!+7 \(999\) 000-00-00;1;_';
+  man_phone_inp.EditMask := '!+7 \(999\) 000-00-00;1;_';
+end;
+
+procedure TFrm_manager.mancontinpExit(Sender: TObject);
+begin
+   if IsMaskEditEmpty(mancontinp) then
+  begin
+    mancontinp.Color := clRed;
+    ShowMessage('Данное поле нужно запол');
+    mancontinp.SetFocus;
+  end
+  else
+    mancontinp.Color := clWindow;
+
 end;
 
 procedure TFrm_manager.manfndEditKeyPress(Sender: TObject; var Key: Char);
@@ -157,7 +180,7 @@ begin
       close;
       sql.Clear;
       sql.Text:=
-       'select'+' '+
+    'select'+' '+
     'manager.maneger_id,'+' '+
     'manager.fio,'+' '+
     'manager.cont,'+' '+' '+
@@ -176,6 +199,53 @@ begin
     end;
     end;
   end;
+end;
+
+procedure TFrm_manager.selmanresetradioClick(Sender: TObject);
+var i,j,c:Integer;
+begin
+  if  selmanresetradio.Checked=true then
+with Frm_manager do
+    for I := 0 to ComponentCount - 1 do
+     begin
+       if (Components[i] is TLabeledEdit)  then
+        begin
+          (Components[i] as TLabeledEdit).Clear;
+        end;
+     end;
+       with Frm_manager do
+    for c := 0 to ComponentCount - 1 do
+     begin
+       if (Components[c] is TCheckBox)  then
+        begin
+          (Components[c] as TCheckBox).Checked:=False;
+        end;
+     end;
+     with dm.manQuery do
+     begin
+     Close;
+     sql.Clear;
+     sql.Text:=
+     'select'+' '+
+    'manager.maneger_id,'+' '+
+    'manager.fio,'+' '+
+    'manager.cont,'+' '+' '+
+    'manager.email,'+' '+' '+
+    'manager.phone,'+' '+
+    'usver_r.usver_name'+' '+
+    'from manager'+' '+
+    'inner join usver_r on usver_r.user_id=manager.user_id'+' '+
+    'where 1=1';
+    Open;
+     end;
+    with Frm_manager do
+    for j := 0 to ComponentCount - 1 do
+    begin
+      if(Components[j] is TRadioButton)  then
+      begin
+        (Components[j] as TRadioButton).Checked:=False;
+      end;
+    end;
 end;
 
 procedure TFrm_manager.selman_btnClick(Sender: TObject);

@@ -61,8 +61,6 @@ type
     procedure selmanlogradioClick(Sender: TObject);
     procedure selmanresetradioClick(Sender: TObject);
     procedure mancontinpExit(Sender: TObject);
-    procedure man_phone_inpExit(Sender: TObject);
-    procedure man_ins_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -138,71 +136,6 @@ except on E: Exception do
   ShowMessage('Ошибка'+' '+E.Message);
   end;
   end;
-end;
-
-procedure TFrm_manager.man_ins_btnClick(Sender: TObject);
-const
-  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
-var
-  AreFieldsEmpty: Boolean;
-  AreFieldsValid: Boolean;
-begin
-  AreFieldsEmpty:=(
-  (Trim(man_fio_inp.Text)='')or
-  (Trim(manmailinp.Text)='')or
-  (Trim(mancontinp.Text)='')or
-  (Trim(man_phone_inp.Text)='')or
-  (m_user_id_dbl.Text='')
-  );
-  AreFieldsValid:=(
-  ValidateComponentText(man_fio_inp,AllowedChars)and
-  IsValidEmail(manmailinp.Text)
-  );
-  if AreFieldsEmpty or not AreFieldsValid then
-  begin
-      MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-  try
-      with dm.ins_manager do
-      begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@fio').Value :=man_fio_inp.Text;
-           Parameters.ParamByName('@cont').Value:=mancontinp.Text;
-           Parameters.ParamByName('@email').Value:=manmailinp.Text;
-           Parameters.ParamByName('@phone').Value:=man_phone_inp.Text;
-           Parameters.ParamByName('@User_Id').Value:=
-           dm.userQuery.FieldByName('User_Id').AsString;
-           ExecProc;
-           dm.manQuery.Close;
-           dm.manQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-    end;
-end;
-
-procedure TFrm_manager.man_phone_inpExit(Sender: TObject);
-begin
-   if IsMaskEditEmpty(man_phone_inp) then
-  begin
-    man_phone_inp.Color := clRed;
-    ShowMessage('Данное поле нужно заполнить');
-    man_phone_inp.SetFocus;
-  end
-  else
-  man_phone_inp.Color := clWindow;
 end;
 
 procedure TFrm_manager.selmanfioradioClick(Sender: TObject);
