@@ -19,7 +19,7 @@ type
     sel_man_by_fio: TADOStoredProc;
     ins_manager: TADOStoredProc;
     upd_man: TADOStoredProc;
-    del_men: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public

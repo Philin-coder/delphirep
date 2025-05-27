@@ -36,13 +36,12 @@ type
     u_man_id_inp: TDBLookupComboBox;
     man_upd_btn: TButton;
     u_man_mail_inp: TLabeledEdit;
-    del_user_data_box: TGroupBox;
-    del_user_inp_box: TGroupBox;
-    del_user_btn_box: TGroupBox;
-    del_user_btn: TButton;
-    User_del_grd: TDBGrid;
-    del_user_usr_lbl: TStaticText;
-    del_user_id_inp_DBL: TDBLookupComboBox;
+    del_man_data_box: TGroupBox;
+    del_man_inp_box: TGroupBox;
+    del_man_btn_box: TGroupBox;
+    del_man_btn: TButton;
+    del_man_usr_lbl: TStaticText;
+    del_man_id_inp_DBL: TDBLookupComboBox;
     ins_man_grd: TDBGrid;
     man_cont_lbl: TStaticText;
     mancontinp: TMaskEdit;
@@ -52,6 +51,7 @@ type
     manloglbl: TStaticText;
     m_user_id_dbl: TDBLookupComboBox;
     man_upd_grd: TDBGrid;
+    Del_men_grd: TDBGrid;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -64,6 +64,7 @@ type
     procedure man_phone_inpExit(Sender: TObject);
     procedure man_ins_btnClick(Sender: TObject);
     procedure man_upd_btnClick(Sender: TObject);
+    procedure del_man_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -78,6 +79,44 @@ implementation
 uses Un_dm, Un_func;
 
 {$R *.dfm}
+
+procedure TFrm_manager.del_man_btnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (del_man_id_inp_DBL.Text='')
+  );
+  if AreFieldsEmpty then
+  begin
+      MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.del_men do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@maneger_id').Value :=
+           dm.manQuery.FieldByName('maneger_id').AsString;
+           ExecProc;
+           dm.manQuery.Close;
+           dm.manQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+end;
 
 procedure TFrm_manager.FormActivate(Sender: TObject);
 begin
