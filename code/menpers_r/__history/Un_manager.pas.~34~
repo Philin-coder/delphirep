@@ -29,14 +29,13 @@ type
     Ins_man_inp_box: TGroupBox;
     man_fio_inp: TLabeledEdit;
     man_ins_btn: TButton;
-    user_upd_data_Box: TGroupBox;
-    user_upd_btn_Box: TGroupBox;
-    user_upd_inp_Box: TGroupBox;
-    user_upd_pas_lbl: TStaticText;
-    user_id_inp: TDBLookupComboBox;
-    user_upd_btn: TButton;
-    User_upd_grd: TDBGrid;
-    user_pass_inp: TLabeledEdit;
+    man_upd_data_Box: TGroupBox;
+    man_upd_btn_Box: TGroupBox;
+    man_upd_inp_Box: TGroupBox;
+    man_upd_pas_lbl: TStaticText;
+    man_id_inp: TDBLookupComboBox;
+    man_upd_btn: TButton;
+    man_mail_inp: TLabeledEdit;
     del_user_data_box: TGroupBox;
     del_user_inp_box: TGroupBox;
     del_user_btn_box: TGroupBox;
@@ -50,6 +49,9 @@ type
     manmailinp: TLabeledEdit;
     man_phone_lbl: TStaticText;
     man_phone_inp: TMaskEdit;
+    manloglbl: TStaticText;
+    m_user_id_dbl: TDBLookupComboBox;
+    man_upd_grd: TDBGrid;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -58,6 +60,10 @@ type
     procedure selmanfioradioClick(Sender: TObject);
     procedure selmanlogradioClick(Sender: TObject);
     procedure selmanresetradioClick(Sender: TObject);
+    procedure mancontinpExit(Sender: TObject);
+    procedure man_phone_inpExit(Sender: TObject);
+    procedure man_ins_btnClick(Sender: TObject);
+    procedure man_upd_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -98,6 +104,18 @@ begin
   man_phone_inp.EditMask := '!+7 \(999\) 000-00-00;1;_';
 end;
 
+procedure TFrm_manager.mancontinpExit(Sender: TObject);
+begin
+   if IsMaskEditEmpty(mancontinp) then
+  begin
+    mancontinp.Color := clRed;
+    ShowMessage('Данное поле нужно заполнить');
+    mancontinp.SetFocus;
+  end
+  else
+    mancontinp.Color := clWindow;
+end;
+
 procedure TFrm_manager.manfndEditKeyPress(Sender: TObject; var Key: Char);
 begin
    try
@@ -121,6 +139,94 @@ except on E: Exception do
   ShowMessage('Ошибка'+' '+E.Message);
   end;
   end;
+end;
+
+procedure TFrm_manager.man_ins_btnClick(Sender: TObject);
+const
+  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (Trim(man_fio_inp.Text)='')or
+  (Trim(manmailinp.Text)='')or
+  (Trim(mancontinp.Text)='')or
+  (Trim(man_phone_inp.Text)='')or
+  (m_user_id_dbl.Text='')
+  );
+  AreFieldsValid:=(
+  ValidateComponentText(man_fio_inp,AllowedChars)and
+  IsValidEmail(manmailinp.Text)
+  );
+  if AreFieldsEmpty or not AreFieldsValid then
+  begin
+      MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.ins_manager do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@fio').Value :=man_fio_inp.Text;
+           Parameters.ParamByName('@cont').Value:=mancontinp.Text;
+           Parameters.ParamByName('@email').Value:=manmailinp.Text;
+           Parameters.ParamByName('@phone').Value:=man_phone_inp.Text;
+           Parameters.ParamByName('@User_Id').Value:=
+           dm.userQuery.FieldByName('User_Id').AsString;
+           ExecProc;
+           dm.manQuery.Close;
+           dm.manQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+end;
+
+procedure TFrm_manager.man_phone_inpExit(Sender: TObject);
+begin
+   if IsMaskEditEmpty(man_phone_inp) then
+  begin
+    man_phone_inp.Color := clRed;
+    ShowMessage('Данное поле нужно заполнить');
+    man_phone_inp.SetFocus;
+  end
+  else
+  man_phone_inp.Color := clWindow;
+end;
+
+procedure TFrm_manager.man_upd_btnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+
+begin
+  AreFieldsEmpty:=(
+  (man_id_inp.Text='')or
+  (Trim(man_mail_inp.Text)='')
+  );
+  AreFieldsValid:=(
+  IsValidEmail(man_mail_inp.Text)
+  );
+  if AreFieldsEmpty or not  AreFieldsValid then
+  begin
+       MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  
 end;
 
 procedure TFrm_manager.selmanfioradioClick(Sender: TObject);

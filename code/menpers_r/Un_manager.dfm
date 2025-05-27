@@ -21,7 +21,7 @@ object Frm_manager: TFrm_manager
     Top = 0
     Width = 1037
     Height = 632
-    ActivePage = InsTab
+    ActivePage = updTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
@@ -352,7 +352,7 @@ object Frm_manager: TFrm_manager
       ImageIndex = 2
       ExplicitWidth = 281
       ExplicitHeight = 165
-      object user_upd_data_Box: TGroupBox
+      object man_upd_data_Box: TGroupBox
         Left = 0
         Top = 137
         Width = 1029
@@ -364,13 +364,13 @@ object Frm_manager: TFrm_manager
         ExplicitTop = 88
         ExplicitWidth = 185
         ExplicitHeight = 105
-        object User_upd_grd: TDBGrid
+        object man_upd_grd: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
           Height = 382
           Align = alClient
-          DataSource = DM.userDS
+          DataSource = DM.manDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -380,14 +380,32 @@ object Frm_manager: TFrm_manager
           Columns = <
             item
               Expanded = False
-              FieldName = 'user_id'
+              FieldName = 'maneger_id'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'user_pas'
-              Title.Caption = #1055#1072#1088#1086#1083#1100
+              FieldName = 'fio'
+              Title.Caption = #1060#1048#1054
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'cont'
+              Title.Caption = #1050#1086#1085#1090#1072#1082#1090#1085#1099#1077' '#1076#1072#1085#1085#1099#1077
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'email'
+              Title.Caption = 'E-mail'
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'phone'
+              Title.Caption = #1058#1077#1083#1077#1092#1086#1085
               Visible = True
             end
             item
@@ -398,23 +416,24 @@ object Frm_manager: TFrm_manager
             end>
         end
       end
-      object user_upd_btn_Box: TGroupBox
+      object man_upd_btn_Box: TGroupBox
         Left = 0
         Top = 536
         Width = 1029
         Height = 68
         Align = alBottom
         TabOrder = 1
-        object user_upd_btn: TButton
+        object man_upd_btn: TButton
           Left = 416
           Top = 24
           Width = 75
           Height = 25
           Caption = #1054#1073#1085#1086#1074#1080#1090#1100
           TabOrder = 0
+          OnClick = man_upd_btnClick
         end
       end
-      object user_upd_inp_Box: TGroupBox
+      object man_upd_inp_Box: TGroupBox
         Left = 0
         Top = 0
         Width = 1029
@@ -422,32 +441,32 @@ object Frm_manager: TFrm_manager
         Align = alTop
         Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        object user_upd_pas_lbl: TStaticText
+        object man_upd_pas_lbl: TStaticText
           Left = 24
           Top = 24
-          Width = 122
+          Width = 108
           Height = 17
-          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1103
+          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1084#1077#1085#1077#1076#1078#1077#1088#1072
           TabOrder = 0
         end
-        object user_id_inp: TDBLookupComboBox
-          Left = 24
+        object u_man_id_inp: TDBLookupComboBox
+          Left = 32
           Top = 47
           Width = 994
           Height = 21
-          KeyField = 'usver_name'
-          ListField = 'usver_name'
-          ListSource = DM.userDS
+          KeyField = 'maneger_id'
+          ListField = 'fio'
+          ListSource = DM.manDS
           TabOrder = 1
         end
-        object user_pass_inp: TLabeledEdit
+        object u_man_mail_inp: TLabeledEdit
           Left = 24
           Top = 91
           Width = 994
           Height = 21
-          EditLabel.Width = 37
+          EditLabel.Width = 28
           EditLabel.Height = 13
-          EditLabel.Caption = #1055#1072#1088#1086#1083#1100
+          EditLabel.Caption = 'e-mail'
           TabOrder = 2
         end
       end

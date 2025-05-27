@@ -29,14 +29,13 @@ type
     Ins_man_inp_box: TGroupBox;
     man_fio_inp: TLabeledEdit;
     man_ins_btn: TButton;
-    user_upd_data_Box: TGroupBox;
-    user_upd_btn_Box: TGroupBox;
-    user_upd_inp_Box: TGroupBox;
-    user_upd_pas_lbl: TStaticText;
-    user_id_inp: TDBLookupComboBox;
-    user_upd_btn: TButton;
-    User_upd_grd: TDBGrid;
-    user_pass_inp: TLabeledEdit;
+    man_upd_data_Box: TGroupBox;
+    man_upd_btn_Box: TGroupBox;
+    man_upd_inp_Box: TGroupBox;
+    man_upd_pas_lbl: TStaticText;
+    u_man_id_inp: TDBLookupComboBox;
+    man_upd_btn: TButton;
+    u_man_mail_inp: TLabeledEdit;
     del_user_data_box: TGroupBox;
     del_user_inp_box: TGroupBox;
     del_user_btn_box: TGroupBox;
@@ -52,6 +51,7 @@ type
     man_phone_inp: TMaskEdit;
     manloglbl: TStaticText;
     m_user_id_dbl: TDBLookupComboBox;
+    man_upd_grd: TDBGrid;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -63,6 +63,7 @@ type
     procedure mancontinpExit(Sender: TObject);
     procedure man_phone_inpExit(Sender: TObject);
     procedure man_ins_btnClick(Sender: TObject);
+    procedure man_upd_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -203,6 +204,52 @@ begin
   end
   else
   man_phone_inp.Color := clWindow;
+end;
+
+procedure TFrm_manager.man_upd_btnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+
+begin
+  AreFieldsEmpty:=(
+  (u_man_id_inp.Text='')or
+  (Trim(u_man_mail_inp.Text)='')
+  );
+  AreFieldsValid:=(
+  IsValidEmail(u_man_mail_inp.Text)
+  );
+  if AreFieldsEmpty or not  AreFieldsValid then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+    try
+      with dm.upd_man do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@maneger_id').Value :=
+           dm.manQuery.FieldByName('maneger_id').AsString;
+           Parameters.ParamByName('@m_email').Value:=u_man_mail_inp.Text;
+           ExecProc;
+           dm.manQuery.Close;
+           dm.manQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+
 end;
 
 procedure TFrm_manager.selmanfioradioClick(Sender: TObject);

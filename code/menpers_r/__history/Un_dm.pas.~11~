@@ -18,7 +18,7 @@ type
     manDS: TDataSource;
     sel_man_by_fio: TADOStoredProc;
     ins_manager: TADOStoredProc;
-    upd_man: TADOStoredProc;
+    ADOStoredProc3: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
