@@ -1,0 +1,28 @@
+unit Un_main;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, Menus;
+
+type
+  TFrm_main = class(TForm)
+    main_Image: TImage;
+    ItemMenu: TMainMenu;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_main: TFrm_main;
+
+implementation
+
+uses Un_func, Un_dm;
+
+{$R *.dfm}
+
+end.

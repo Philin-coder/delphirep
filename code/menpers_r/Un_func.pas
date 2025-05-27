@@ -1,0 +1,3179 @@
+unit Un_func;
+
+interface
+uses
+dateUtils,
+sysUtils,
+Controls,
+Classes,
+Graphics,
+Dialogs,
+Forms,
+StdCtrls,
+IniFiles,
+ComCtrls,
+DBCtrls,
+Windows,
+mask,
+dbgrids,
+StrUtils,
+variants,
+JPEG,
+ImgList,
+db,
+adodb,
+ComObj,
+math,
+ExtCtrls;
+function AddNumbers(num1, num2: Integer): Integer; stdcall;
+  external 'mylib.dll' name 'AddNumbers';
+const
+  crMyAnimatedCursor = 1;
+const
+  EM_LINEINDEX = $BB;
+type
+  TSysCharSet = set of Char;
+  type
+    TEncryptionMode = (emLatin, emRussian, emMixed);
+  type
+    TMorseMode = (mmRussian, mmEnglish, mmMixed);
+var
+  symcount:Integer;
+var
+  VisitedStaticTexts: TStringList;
+function  DateToStr_(Dat : TDate): String;
+function  CommaPoint (X: String) : String;
+function  FindFormByName(const AName: string): TForm;
+procedure SaveFormState(AForm: TForm);
+procedure LoadFormState(AForm: TForm);
+procedure UpdateFormProperties(const FormName: string;
+  NewCaption: string = '';
+  NewColor: TColor = clNone;
+  NewWidth: Integer = -1;
+  NewHeight: Integer = -1);
+ procedure UniformizeComponentSizes(AComponent: TComponent; AWidth, AHeight:
+ Integer; AColor: TColor; AFontName: string; AFontSize: Integer);
+ procedure SaveConnectionStringToFile(const FileName, ConnectionString: string);
+ function min3(a, b, c: integer): integer;
+ function LeveDist(s, t: string): integer;
+ function levi_checker(Str_one,str_two:string):Boolean;
+ function NormalizeStringAndExtractParams2(var InputString: string;
+ out p1, p2: string): Boolean;
+ function NormalizeStringAndExtractParams3(var InputString: string; out p1, p2, p3:
+ string): Boolean;
+ function Capitalizer(str:string; mode:integer=0):string;
+ function adr_fixer(str:string;  mode:Integer=0):string;
+ procedure UniformizeDBGrids(AForm: TForm; const FontName: string;
+ FontSize: Integer; FontColor: TColor; BkColor: TColor);
+ function ValidateComponentText(AComponent: TWinControl;
+ const AllowedChars: TSysCharSet): Boolean;
+ function IsEnglishText(const Text: string): Boolean;
+ Function IsValidEmail(const Email: string): Boolean;
+ procedure LoadIconFromResource(const ResourceName: string;
+ Action: Integer; ImageList: TImageList = nil);
+ procedure HandleAnimatedCursor(Action: Integer; const FileName: string = '');
+ procedure LoadImageFromResource(const ResourceName: string; Image: TImage);
+ procedure CreateToolBarWithButtons(Form: TForm; ImageList: TImageList;
+ const ButtonCaptions: array of string; const ButtonClicks: array of TNotifyEvent);
+ function GetTimeOfDay: string;
+ procedure ExtractResFile;
+function FileExistsInAppDirectory(const FileName: string): string;
+procedure UniformizeButtonsSize(AWinControl: TWinControl; AWidth,
+AHeight: Integer);
+function IsDigitsOnly(const Text: string): Boolean;
+function is_cost_correct(var str: string): Boolean;
+function GetCurrentDateTime: TDateTime;
+function IsMaskEditEmpty(MaskEdit: TMaskEdit): Boolean;
+procedure SetFormPropertiesIfNeeded;
+function FindDataModuleByName(const AName: string): TDataModule;
+procedure CloseAllQueriesOnDataModule(const DataModuleName: string);
+procedure GenerateCSVFile(const FileName: string);
+procedure GenerateXMLFile(const FileName: string);
+procedure GenerateJSONFile(const FileName: string);
+function SplitString(const S: string; const Delimiter: Char;
+var ResultArray: array of string): Integer;
+procedure LoadCSVToTableFromDialog(
+  OpenDialog: TOpenDialog;
+  const TableName: string;
+  const FieldIdName, FieldNaimName, FieldPriceName: string;
+  Query: TADOQuery
+);
+procedure LoadXMLToTableFromDialog(
+  OpenDialog: TOpenDialog;
+  const TableName: string;
+  const FieldIdName, FieldNaimName, FieldPriceName: string;
+  Query: TADOQuery
+);
+function RemoveXMLComments(const FileName: string): string;
+procedure LoadJSONToTableFromDialog(
+  OpenDialog: TOpenDialog;
+  const TableName: string;
+  const FieldIdName, FieldNaimName, FieldPriceName: string;
+  Query: TADOQuery
+);
+procedure LoadTextFromResource(const ResourceName: string;
+RichTextEdit: TRichEdit);
+procedure FormatRichText(RichEdit: TRichEdit; FontSize: Integer; FontName: string;
+TextColor: TColor; BulletStyle: Boolean; ReadOnly: Boolean; ScrollBars: TScrollStyle);
+procedure MakeStaticTextLookLikeLink(
+  AForm: TForm;
+  const StaticTextName: string;
+  OnMouseEnterEvent: TNotifyEvent;
+  OnMouseLeaveEvent: TNotifyEvent;
+  OnClickEvent: TNotifyEvent
+);
+procedure AlignComponentsVertically(AContainer: TWinControl;
+Spacing: Integer = 5);
+procedure CheckAndCreateHelpFolder;
+procedure SaveRichEditToFile(RichEdit: TRichEdit; SaveDialog: TSaveDialog);
+procedure AppendRichEditToIniFile(RichEdit: TRichEdit; const FileName: string);
+procedure LoadTextFromFile(const FileName: string; RichTextEdit: TRichEdit);
+ procedure GenerateMathQuiz(CaptchaLabel: TLabel; ResultLabel: TStaticText);
+ procedure FormatPanelCaption(const PanelName: string; AForm: TForm;
+  FontName: string; FontSize: Integer; FontColor: TColor);
+  procedure CheckMathQuizAnswer(CaptchaLabel: TLabel; InputBox: TLabeledEdit;
+ ResultLabel: TStaticText);
+function get_rnd_char(symcount:Integer):string;
+procedure FormatLabel(const LabelName: string; AForm: TForm;
+  FontSize: Integer; FontName: string; FontColor: TColor);
+  function EncryptCaesarFromComponent(AComponent: TControl; Shift: Integer;
+  Mode: TEncryptionMode): string;
+  function ShiftChar(Ch: Char; Shift: Integer; Alphabet: string): Char;
+procedure SetFormSizeAndPosition(const FormName: string;
+NewWidth, NewHeight: Integer);
+function FindFormByName_new(const AName: string): TForm;
+function DecryptCaesarFromComponent(AComponent: TControl; Shift: Integer;
+Mode: TEncryptionMode): string;
+function GetMorseChar(Ch: Char; Mode: TMorseMode): string;
+function TextToMorse(const Input: string; Mode: TMorseMode): string;
+function FindChar(const MorseCode: string; Mode: TMorseMode): string;
+function MorseToText(const Input: string; Mode: TMorseMode): string;
+function Decrypt(const S: AnsiString; Key: Word): AnsiString;
+function Encrypt(const S: AnsiString; Key: Word): AnsiString;
+function md5UTF8(const S: UTF8String): AnsiString;
+function md5 (buf: AnsiString): AnsiString;
+function ConvertToUTF8(const AInput: string): string;
+procedure ConfigureAndExecuteDialog(Dialog: TCommonDialog; const
+DialogName: string; const ContentToSave: string);
+procedure ShowImageFromDatabase(AConnection: TADOConnection;
+const ATableName, AFieldName, AKeyField: string; AKeyValue: Integer);
+procedure ShowDBGridInTreeView(AOwner: TComponent; const DBGridName: string);
+procedure CopyDBGridToTreeView(DBGrid: TDBGrid; TreeView: TTreeView);
+procedure AdjustDBGridColumnWidths(const FormName: string;
+MaxWidth: Integer; Divider: Integer);
+function TransliterateToLatin( CyrillicName: string): string;
+function GetAppDirectory: string;
+procedure CreateUserFolder(const UserName: string);
+procedure WriteUserIniFile(const UserName, InitString: string;
+FormWidth, FormHeight: Integer;
+  FormColor: TColor;
+  FontName: string;
+  FontSize: Integer);
+procedure LoadUserIniFile(const UserName: string; var InitString: string;
+var FormWidth, FormHeight: Integer;
+ var FormColor: TColor;
+  var FontName: string;
+  var FontSize: Integer);
+  procedure UniformizeDBLookupListBox(AForm: TForm; const FontName: string;
+   FontSize: Integer; FontColor: TColor; BkColor: TColor);
+procedure AdjustChildFormSize(AForm: TForm; AMDIForm: TForm);
+implementation
+type
+  tdata = array [0..15] of DWORD;
+  tcur = array[0..3] of DWord;
+var HEX: array[Word] of AnsiString;
+const
+  EnglishLetters: array['A'..'Z'] of string = (
+    '.-', '-...', '-.-.', '-..', '.', '..-.', '--.', '....', '..', '.---',
+    '-.-', '.-..', '--', '-.', '---', '.--.', '--.-', '.-.', '...', '-',
+    '..-', '...-', '.--', '-..-', '-.--', '--..'
+  );
+ const
+  EnglishDigits: array['0'..'9'] of string = (
+    '-----', '.----', '..---', '...--', '....-', '.....',
+    '-....', '--...', '---..', '----.'
+  );
+
+  const
+  RussianLetters: array['А'..'Я'] of string = (
+    '.-',    // А
+    '-...',  // Б
+    '.--',   // В
+    '--.',   // Г
+    '-..',   // Д
+    '.',     // Е
+    '...-',  // Ж
+    '--..',  // З
+    '..',    // И
+    '.---',  // Й
+    '-.-',   // К
+    '.-..',  // Л
+    '--',    // М
+    '-.',    // Н
+    '---',   // О
+    '.--.',  // П
+    '.-.',   // Р
+    '...',   // С
+    '-',     // Т
+    '..-',   // У
+    '..-.',  // Ф
+    '....',  // Х
+    '-.-.',  // Ц
+    '---.',  // Ч
+    '----',  // Ш
+    '--.-',  // Щ
+    '--.--', // Ъ
+    '-.--',  // Ы
+    '-..-',  // Ь
+    '..-..', // Э
+    '..--',  // Ю
+    '.-.-'   // Я
+  );
+  const
+  RussianLetterYo: string = '.--.-';
+  const
+  C1 = 52845;
+  C2 = 22719;
+
+ var
+  hAniCursor: HCURSOR = 0;
+
+function    CommaPoint (X: String) : String;
+var iii : Integer;
+begin
+ iii:=pos(',',X) ;
+ if iii<>0 then
+ Result:=copy(X,1,iii-1)+'.'+copy(X,iii+1,5)
+ else
+ Result:=x;
+end;
+
+function DateToStr_(Dat : TDate): String;
+begin
+  Result:= IntToStr(MonthOf(Dat))+'.'
+  +IntToStr(DayOf(Dat))+'.'
+  +IntToStr(YearOf(Dat));
+end;
+
+function FindFormByName(const AName: string): TForm;
+var
+  i: Integer;
+begin
+  Result := nil;
+  for i := 0 to Screen.FormCount - 1 do
+  begin
+    if SameText(Screen.Forms[i].Name, AName) then
+    begin
+      Result := Screen.Forms[i];
+      Break;
+    end;
+  end;
+end;
+
+procedure UpdateFormProperties(const FormName: string;
+  NewCaption: string;
+  NewColor: TColor;
+  NewWidth: Integer;
+  NewHeight: Integer);
+var
+  Form: TForm;
+          var l:Integer;
+          var b:Integer;
+          var d:Integer;
+begin
+  Form := FindFormByName(FormName);
+  if not Assigned(Form) then
+  begin
+    ShowMessageFmt('Форма "%s" не найдена!', [FormName]);
+    Exit;
+  end;
+
+   with Form do
+  begin
+    if NewCaption <> '' then
+      Caption := NewCaption;
+
+    if NewColor <> clNone then
+      Color := NewColor;
+
+    if NewWidth > 0 then
+      Width := NewWidth;
+
+    if NewHeight > 0 then
+      Height := NewHeight;
+      form.Position:=poScreenCenter;
+      for l := 0 to ComponentCount - 1 do
+      begin
+        if (Components[l] is TLabeledEdit ) then
+        begin
+          (Components[l] as TLabeledEdit).Clear;
+        end;
+  for b := 0 to ComponentCount - 1 do
+  begin
+    if (Components[b] is TButton) then
+    begin
+      (Components[b] as TButton).Anchors:=[akLeft,akRight];
+    end;
+      for d := 0 to ComponentCount - 1 do
+  begin
+    if (Components[d] is TDateTimePicker ) then
+    begin
+      (Components[d] as TDateTimePicker).Date:=Now;
+    end;
+
+  end;
+      end;
+    end;
+
+
+  end;
+end;
+  procedure SaveFormState(AForm: TForm);
+var
+  IniFile: TIniFile;
+  FileName: string;
+begin
+
+  FileName := ChangeFileExt(Application.ExeName, '.ini');
+
+  IniFile := TIniFile.Create(FileName);
+  try
+    IniFile.WriteInteger(AForm.Name, 'Left', AForm.Left);
+    IniFile.WriteInteger(AForm.Name, 'Top', AForm.Top);
+    IniFile.WriteInteger(AForm.Name, 'Width', AForm.Width);
+    IniFile.WriteInteger(AForm.Name, 'Height', AForm.Height);
+  finally
+    IniFile.Free;
+  end;
+end;
+
+procedure LoadFormState(AForm: TForm);
+var
+  IniFile: TIniFile;
+  FileName: string;
+begin
+  FileName := ChangeFileExt(Application.ExeName, '.ini');
+  if not FileExists(FileName) then Exit;
+  IniFile := TIniFile.Create(FileName);
+  try
+    AForm.Left := IniFile.ReadInteger(AForm.Name, 'Left', AForm.Left);
+    AForm.Top := IniFile.ReadInteger(AForm.Name, 'Top', AForm.Top);
+    AForm.Width := IniFile.ReadInteger(AForm.Name, 'Width', AForm.Width);
+    AForm.Height := IniFile.ReadInteger(AForm.Name, 'Height', AForm.Height);
+  finally
+    IniFile.Free;
+  end;
+end;
+ procedure UniformizeComponentSizes(AComponent: TComponent; AWidth,
+ AHeight: Integer; AColor: TColor; AFontName: string; AFontSize: Integer);
+var
+  i: Integer;
+  Control: TControl;
+begin
+  if AComponent is TControl then
+  begin
+    Control := TControl(AComponent);
+    if Control is TLabeledEdit then
+    begin
+      TLabeledEdit(Control).Width := AWidth;
+      TLabeledEdit(Control).Height := AHeight;
+      TLabeledEdit(Control).Color := AColor;
+      TLabeledEdit(Control).Font.Name := AFontName;
+      TLabeledEdit(Control).Font.Size := AFontSize;
+    end
+    else if Control is TEdit then
+    begin
+      TEdit(Control).Width := AWidth;
+      TEdit(Control).Height := AHeight;
+      TEdit(Control).Color := AColor;
+      TEdit(Control).Font.Name := AFontName;
+      TEdit(Control).Font.Size := AFontSize;
+    end
+    else if Control is TDBLookupComboBox then
+    begin
+      TDBLookupComboBox(Control).Width := AWidth;
+      TDBLookupComboBox(Control).Height := AHeight;
+      TDBLookupComboBox(Control).Color := AColor;
+      TDBLookupComboBox(Control).Font.Name := AFontName;
+      TDBLookupComboBox(Control).Font.Size := AFontSize;
+    end
+    else if Control is TDateTimePicker then
+    begin
+      TDateTimePicker(Control).Width := AWidth;
+      TDateTimePicker(Control).Height := AHeight;
+      TDateTimePicker(Control).Color := AColor;
+      TDateTimePicker(Control).Font.Name := AFontName;
+      TDateTimePicker(Control).Font.Size := AFontSize;
+    end
+     else if Control  is TDBComboBox then
+          begin
+          TDBComboBox(Control).Width := AWidth;
+          TDBComboBox(Control).Height := AHeight;
+          TDBComboBox(Control).Color := AColor;
+          TDBComboBox(Control).Font.Name := AFontName;
+          TDBComboBox(Control).Font.Size := AFontSize;
+          end
+     else if Control  is TMaskEdit then
+          begin
+          TMaskEdit(Control).Width := AWidth;
+          TMaskEdit(Control).Height := AHeight;
+          TMaskEdit(Control).Color := AColor;
+          TMaskEdit(Control).Font.Name := AFontName;
+          TMaskEdit(Control).Font.Size := AFontSize;
+     end
+     else if Control  is TComboBox then
+          begin
+          TComboBox(Control).Width := AWidth;
+          TComboBox(Control).Height := AHeight;
+          TComboBox(Control).Color := AColor;
+          TComboBox(Control).Font.Name := AFontName;
+          TComboBox(Control).Font.Size := AFontSize;
+          end;
+  end;
+  if AComponent is TWinControl then
+  begin
+    for i := 0 to TWinControl(AComponent).ControlCount - 1 do
+    begin
+      UniformizeComponentSizes(TWinControl(AComponent).Controls[i], AWidth,
+      AHeight, AColor, AFontName, AFontSize);
+    end;
+  end;
+end;
+
+procedure SaveConnectionStringToFile(const FileName, ConnectionString: string);
+var
+  MFileStream: TextFile;
+begin
+  AssignFile(MFileStream, FileName);
+  try
+    Rewrite(MFileStream);
+    Writeln(MFileStream, ConnectionString);
+  finally
+    CloseFile(MFileStream);
+  end;
+end;
+const
+ cuthalf = 100; // константа, ограничивающая макс. длину
+  // обрабатываемых строк
+
+var
+  buf: array[0..((cuthalf * 2) - 1)] of integer; // рабочий буфер, заменяет
+  // матрицу, представленную
+  // в описании
+
+function min3(a, b, c: integer): integer;
+begin
+  Result := a;
+  if b < Result then
+    Result := b;
+  if c < Result then
+    Result := c;
+end;
+
+// реализация функции в принципе соответствует описанию с одной оговоркой:
+// матрица из описания заменена статическим буфером, длина которого
+// равна удвоенной максимальной длине строк
+// это сделано для 1) экономии памяти и во избежание её перераспределений
+// 2) повышения быстродействия (у меня функция работает
+// в обработчике onfilterRecord)
+// таким образом, в реализации половинами буфера представлены только
+// две последние строки матрицы, которые меняются местами каждую
+// итерацию внешнего цикла (по i)... для определения того, какая из половин
+// буфера является "нижней строкой", служит переменная flip
+// т. е. при flip = false первая половина буфера является предпоследней
+// строкой, а вторая - последней; при flip = true наоборот,
+// первая половина - последняя строка, вторая половина - предпоследняя
+
+function LeveDist(s, t: string): integer;
+var
+  i, j, m, n: integer;
+  cost: integer;
+  flip: boolean;
+begin
+  s := copy(s, 1, cuthalf - 1);
+  t := copy(t, 1, cuthalf - 1);
+  m := length(s);
+  n := length(t);
+  if m = 0 then
+    Result := n
+  else if n = 0 then
+    Result := m
+  else
+  begin
+    flip := false;
+    for i := 0 to n do
+      buf[i] := i;
+    for i := 1 to m do
+    begin
+      if flip then
+        buf[0] := i
+      else
+        buf[cuthalf] := i;
+      for j := 1 to n do
+      begin
+        if s[i] = t[j] then
+          cost := 0
+        else
+          cost := 1;
+        if flip then
+          buf[j] := min3((buf[cuthalf + j] + 1),
+            (buf[j - 1] + 1),
+            (buf[cuthalf + j - 1] + cost))
+        else
+          buf[cuthalf + j] := min3((buf[j] + 1),
+            (buf[cuthalf + j - 1] + 1),
+            (buf[j - 1] + cost));
+      end;
+      flip := not flip;
+    end;
+    if flip then
+      Result := buf[cuthalf + n]
+    else
+      Result := buf[n];
+  end;
+end;
+
+function levi_checker(Str_one,str_two:string):Boolean;
+begin
+ if (Trim(Str_one) = '') or (Trim(Str_two) = '') then
+  begin
+    Result := False;
+    Exit;
+  end;
+  if LeveDist(Str_one, Str_two) = 0 then
+    Result := True
+  else
+    Result := False;
+end;
+
+
+function NormalizeStringAndExtractParams2(var InputString: string; out p1, p2: string): Boolean;
+var
+  l: TStringList;
+  i: Integer;
+  NormalizedString: string;
+begin
+  Result := False;
+  if Trim(InputString) = '' then
+  begin
+    MessageDlg('Строка пуста', mtError, [mbOK], 0);
+    Exit;
+  end;
+  l := TStringList.Create;
+  try
+    l.Delimiter := ' ';
+    l.StrictDelimiter := True;
+    l.DelimitedText := InputString;
+    NormalizedString := '';
+    for i := 0 to l.Count - 1 do
+    begin
+      if Trim(l[i]) <> '' then
+        NormalizedString := NormalizedString + ' ' + Trim(l[i]);
+    end;
+    NormalizedString := Trim(NormalizedString);
+    if NormalizedString = '' then
+    begin
+      MessageDlg('Строка должна содержать минимум одно слово', mtError, [mbOK], 0);
+      Exit;
+    end;
+    l.DelimitedText := NormalizedString;
+    if l.Count >= 1 then p1 := l.Strings[0] else p1 := '';
+    if l.Count >= 2 then p2 := l.Strings[1] else p2 := '';
+    InputString := NormalizedString;
+    Result := True;
+  finally
+    FreeAndNil(l);
+  end;
+end;
+
+function NormalizeStringAndExtractParams3(var InputString: string; out p1, p2, p3:
+string): Boolean;
+var
+  l: TStringList;
+  i: Integer;
+  NormalizedString: string;
+begin
+  Result := False;
+  if Trim(InputString) = '' then
+  begin
+    MessageDlg('Строка пуста', mtError, [mbOK], 0);
+    Exit;
+  end;
+
+
+  l := TStringList.Create;
+  try
+    l.Delimiter := ' ';
+    l.StrictDelimiter := True;
+    l.DelimitedText := InputString;
+
+
+    NormalizedString := '';
+    for i := 0 to l.Count - 1 do
+    begin
+      if Trim(l[i]) <> '' then
+        NormalizedString := NormalizedString + ' ' + Trim(l[i]);
+    end;
+    NormalizedString := Trim(NormalizedString);
+
+
+    if NormalizedString = '' then
+    begin
+      MessageDlg('Строка должна содержать минимум одно слово', mtError, [mbOK], 0);
+      Exit;
+    end;
+
+
+    l.DelimitedText := NormalizedString;
+    if l.Count >= 1 then p1 := l.Strings[0] else p1 := '';
+    if l.Count >= 2 then p2 := l.Strings[1] else p2 := '';
+    if l.Count >= 3 then p3 := l.Strings[2] else p3 := '';
+
+
+    InputString := NormalizedString;
+    Result := True;
+  finally
+    FreeAndNil(l);
+  end;
+end;
+function Capitalizer(str:string; mode:integer=0):string;
+begin
+  if (Trim(str)='')and(mode=0) then
+  begin
+    Result:='';
+    ShowMessage('Строка пуста');
+    Exit;
+  end;
+  case mode of
+   0:
+   begin
+    str:=TrimLeft(str);
+    Result:=Concat(AnsiUpperCase(str[1]),
+    AnsiLowerCase(Copy(str, 2, length(str))));
+   end;
+   1:
+   begin
+     Result :=str;
+     Exit;
+   end;
+  end;// case
+end;
+
+function adr_fixer(str:string; mode:Integer=0):string;
+ var head_str:string;
+begin
+if (trim(str)='') then
+begin
+  head_str:='';
+  Result:='';
+  ShowMessage('строка пуста');
+  Exit;
+end;
+case mode  of
+0:
+begin
+  if not(trim(str)='') then
+   begin
+    str:=Trim(str);
+      str := Trim(str);
+      if Pos('Ул.', str) = 1 then
+        Delete(str, 1, 3);
+      if Pos('Пр.', str) = 1 then
+        Delete(str, 1, 3);
+      if Pos('Проезд', str) = 1 then
+        Delete(str, 1, 6);
+      Result := Trim(str);
+   end
+   else
+   begin
+    head_str:='';
+  Result:='';
+  ShowMessage('строка пуста');
+   end;
+end;
+1:
+begin
+  head_str:='Ул.';
+  result:=Concat(head_str, str);
+end;
+2:
+begin
+  head_str:='Пр.';
+  result:=Concat(head_str, str);
+end;
+3:
+begin
+  head_str:='Проезд ';
+  result:=Concat(head_str, str);
+end;
+end;      //case
+end;
+procedure UniformizeDBGrids(AForm: TForm; const FontName: string;
+FontSize: Integer; FontColor: TColor; BkColor: TColor);
+var
+  i: Integer;
+  DBGrid: TDBGrid;
+begin
+  for i := 0 to AForm.ComponentCount - 1 do
+  begin
+    if AForm.Components[i] is TDBGrid then
+    begin
+      DBGrid := TDBGrid(AForm.Components[i]);
+      DBGrid.Font.Name := FontName;
+      DBGrid.Font.Size := FontSize;
+      DBGrid.Font.Color := FontColor;
+      DBGrid.Color := BkColor;
+      DBGrid.Options := DBGrid.Options +
+      [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs];
+      DBGrid.DefaultDrawing := True;
+      DBGrid.ReadOnly := True;
+      DBGrid.Refresh;
+    end;
+  end;
+end;
+function ValidateComponentText(AComponent: TWinControl;
+ const AllowedChars: TSysCharSet): Boolean;
+var
+  Text: string;
+  i: Integer;
+  CharIsValid: Boolean;
+begin
+  Result := True;
+  if AComponent is TLabeledEdit then
+    Text := TLabeledEdit(AComponent).Text
+  else if AComponent is TEdit then
+    Text := TEdit(AComponent).Text;
+  for i := 1 to Length(Text) do
+  begin
+    CharIsValid := Text[i] in AllowedChars;
+    if not CharIsValid then
+    begin
+      ShowMessage('Недопустимый символ в компоненте: ' + AComponent.Name);
+      Result := False;
+      Exit;
+    end;
+  end;
+end;
+function IsEnglishText(const Text: string): Boolean;
+var
+  i: Integer;
+begin
+  Result := True;
+
+  for i := 1 to Length(Text) do
+  begin
+    if not (Text[i] in ['a'..'z', 'A'..'Z', '0'..'9', '@', '.', '_', '-']) then
+    begin
+      Result := False;
+      Exit;
+    end;
+  end;
+end;
+Function IsValidEmail(const Email: string): Boolean;
+var
+AtPos, DotPos: Integer;
+begin
+Result := False;
+if not IsEnglishText(Email) then
+begin
+ShowMessage('Ошибка: текст должен быть на английском языке');
+Exit;
+end;
+AtPos := Pos('@', Email);
+if AtPos = 0 then
+begin
+ShowMessage('Ошибка: отсутствует символ "@"');
+Exit;
+end;
+if (AtPos = 1) or (AtPos = Length(Email)) then
+begin
+ShowMessage('Ошибка: символ "@" находится в неправильной позиции');
+Exit;
+end;
+DotPos := PosEx('.', Email, AtPos);
+if DotPos = 0 then
+begin
+ShowMessage('Ошибка: отсутствует точка после "@"');
+Exit;
+end;
+if DotPos = Length(Email) then
+begin
+ShowMessage('Ошибка: точка находится в конце строки');
+Exit;
+end;
+Result := True;
+end;
+procedure HandleAnimatedCursor(Action: Integer; const FileName: string = '');
+begin
+  case Action of
+    0:
+    begin
+
+      if not FileExists(FileName) then
+        raise Exception.Create('Файл курсора не найден: ' + FileName);
+      if hAniCursor <> 0 then
+      begin
+        DestroyCursor(hAniCursor);
+        hAniCursor := 0;
+      end;
+      hAniCursor := LoadImage(
+        0,
+        PChar(FileName),
+        IMAGE_CURSOR,
+        0,
+        0,
+        LR_LOADFROMFILE or LR_DEFAULTSIZE or LR_SHARED
+      );
+
+      if hAniCursor = 0 then
+        raise Exception.Create('Ошибка загрузки курсора');
+      Screen.Cursors[crMyAnimatedCursor] := hAniCursor;
+      Screen.Cursor := crMyAnimatedCursor;
+    end;
+    1:
+    begin
+      if hAniCursor = 0 then
+        raise Exception.Create('Курсор не загружен');
+      Screen.Cursor := crMyAnimatedCursor;
+    end;
+    2:
+    begin
+      Screen.Cursor := crDefault;
+    end;
+    3:
+    begin
+      if hAniCursor <> 0 then
+        DestroyCursor(hAniCursor);
+      hAniCursor := 0;
+      Screen.Cursor := crDefault;
+    end;
+  end;
+end;
+
+procedure LoadIconFromResource(const ResourceName: string;
+Action: Integer; ImageList: TImageList = nil);
+var
+  RS: TResourceStream;
+  Icon: TIcon;
+begin
+  Icon := TIcon.Create;
+  try
+
+    RS := TResourceStream.Create(HInstance, ResourceName, RT_RCDATA);
+    try
+
+      Icon.LoadFromStream(RS);
+
+
+      case Action of
+        0:
+          Application.Icon := Icon;
+
+        1:
+          if Assigned(ImageList) then
+            ImageList.AddIcon(Icon)
+          else
+            raise Exception.Create('Ошибка: ImageList не назначен.');
+
+        else
+          raise Exception.Create('Ошибка: Неизвестное действие.');
+      end;
+    finally
+      RS.Free;
+    end;
+  finally
+    Icon.Free;
+  end;
+end;
+procedure LoadImageFromResource(const ResourceName: string; Image: TImage);
+var
+  RS: TResourceStream;
+  JPEG: TJPEGImage;
+begin
+  if not Assigned(Image) then
+    raise Exception.Create('Ошибка: Компонент TImage не назначен.');
+  RS := nil;
+  JPEG := nil;
+  try
+    RS := TResourceStream.Create(HInstance, ResourceName, RT_RCDATA);
+    JPEG := TJPEGImage.Create;
+    try
+      JPEG.LoadFromStream(RS);
+      Image.Picture.Assign(JPEG);
+    except
+      on E: Exception do
+        raise Exception.CreateFmt('Ошибка загрузки изображения "%s": %s', [ResourceName, E.Message]);
+    end;
+  finally
+
+    if Assigned(RS) then
+      RS.Free;
+    if Assigned(JPEG) then
+      JPEG.Free;
+  end;
+end;
+procedure CreateToolBarWithButtons(Form: TForm; ImageList: TImageList;
+  const ButtonCaptions: array of string; const ButtonClicks: array of TNotifyEvent);
+var
+  ToolBar: TToolBar;
+  Button: TToolButton;
+  i: Integer;
+begin
+  // Проверка входных параметров
+  if not Assigned(Form) then
+    raise Exception.Create('Ошибка: Форма не назначена.');
+  if not Assigned(ImageList) then
+    raise Exception.Create('Ошибка: ImageList не назначен.');
+
+  // Создание TToolBar
+  ToolBar := TToolBar.Create(Form);
+  ToolBar.Parent := Form;
+  ToolBar.Align := alTop;
+  ToolBar.ShowCaptions := True;
+  ToolBar.Images := ImageList;
+
+  // Создание кнопок
+  for i := 0 to High(ButtonCaptions) do
+  begin
+    Button := TToolButton.Create(ToolBar);
+    Button.Parent := ToolBar;
+    Button.ImageIndex := i; // Назначение индекса картинки из ImageList
+    Button.Caption := ButtonCaptions[i]; // Установка подписи кнопки
+    Button.Hint := ButtonCaptions[i]; // Подсказка для кнопки
+    Button.ShowHint := True; // Включение подсказок
+    Button.Tag := i; // Уникальный идентификатор кнопки
+
+    // Назначение обработчика события
+    if i <= High(ButtonClicks) then
+      Button.OnClick := ButtonClicks[i]
+    else
+      Button.OnClick := nil; // Если обработчик не задан
+  end;
+end;
+function GetTimeOfDay: string;
+var
+  CurrentHour: Word;
+  CurrentMinute: Word;
+  CurrentSecond: Word;
+begin
+  // Получаем текущее системное время
+  DecodeTime(Now, CurrentHour, CurrentMinute, CurrentSecond, CurrentSecond);
+
+  // Определяем время суток
+  if (CurrentHour >= 6) and (CurrentHour < 12) then
+    Result := 'Утро'
+  else if (CurrentHour >= 12) and (CurrentHour < 18) then
+    Result := 'День'
+  else if (CurrentHour >= 18) and (CurrentHour < 24) then
+    Result := 'Вечер'
+  else
+    Result := 'Ночь';
+end;
+procedure ExtractResFile;
+var
+  ResHandle: HRSRC;
+  ResGlobal: HGLOBAL;
+  ResPtr: Pointer;
+  ResSize: DWORD;
+  FileStream: TFileStream;
+  OutputFileName: string;
+begin
+  ResHandle := FindResource(HInstance, 'RYK', RT_RCDATA);
+  if ResHandle = 0 then
+    raise Exception.Create('Ресурс не найден');
+  ResGlobal := LoadResource(HInstance, ResHandle);
+  if ResGlobal = 0 then
+    raise Exception.Create('Ошибка загрузки ресурса');
+  ResPtr := LockResource(ResGlobal);
+  ResSize := SizeofResource(HInstance, ResHandle);
+  if (ResPtr = nil) or (ResSize = 0) then
+    raise Exception.Create('Ошибка доступа к данным ресурса');
+  OutputFileName := ExtractFilePath(ParamStr(0)) + 'ryk.wav';
+  FileStream := TFileStream.Create(OutputFileName, fmCreate);
+  try
+    FileStream.WriteBuffer(ResPtr^, ResSize);
+  finally
+    FileStream.Free;
+  end;
+end;
+
+function FileExistsInAppDirectory(const FileName: string): string;
+var
+  SearchRec: TSearchRec;
+  FindResult: Integer;
+begin
+  Result := '';  // Если файл не найден, возвращаем пустую строку
+  FindResult := FindFirst(ExtractFilePath(ParamStr(0)) + FileName, faAnyFile, SearchRec);
+  if FindResult = 0 then
+  begin
+    if (SearchRec.Attr and faDirectory = 0) then
+      Result := SearchRec.Name;
+  end;
+end;
+procedure UniformizeButtonsSize(AWinControl: TWinControl; AWidth, AHeight: Integer);
+var
+  i: Integer;
+  Control: TControl;
+begin
+  for i := 0 to AWinControl.ControlCount - 1 do
+  begin
+    Control := AWinControl.Controls[i];
+    if Control is TButton then
+    begin
+      TButton(Control).Width := AWidth;
+      TButton(Control).Height := AHeight;
+    end;
+    if Control is TWinControl then
+      UniformizeButtonsSize(TWinControl(Control), AWidth, AHeight);
+  end;
+end;
+function IsDigitsOnly(const Text: string): Boolean;
+var
+  i: Integer;
+  NumberValue: Int64; // Для больших чисел (до 18 цифр)
+begin
+  Result := True;
+
+  // Проверяем каждый символ
+  for i := 1 to Length(Text) do
+  begin
+    if not (Text[i] in ['0'..'9']) then // Разрешены только цифры
+    begin
+      ShowMessage('Ошибка: значение должно содержать только цифры.');
+      Result := False;
+      Exit;
+    end;
+  end;
+
+  // Проверяем, что строка не пустая
+  if Text = '' then
+  begin
+    ShowMessage('Ошибка: введите корректное число.');
+    Result := False;
+    Exit;
+  end;
+
+  // Преобразуем строку в целое число
+  try
+    NumberValue := StrToInt64(Text); // Для поддержки 18-значных чисел
+    // Проверка диапазона (если нужно)
+    if (NumberValue < 0) or (NumberValue > 999999999999999999) then // 10^18 - 1
+    begin
+      ShowMessage('Ошибка: значение должно быть в диапазоне от 0 до 999999999999999999.');
+      Result := False;
+      Exit;
+    end;
+  except
+    on E: EConvertError do
+    begin
+      ShowMessage('Ошибка: неверный формат числа.');
+      Result := False;
+      Exit;
+    end;
+  end;
+end;
+function is_cost_correct(var str: string): Boolean;
+var
+  i: Integer;
+begin
+  Result := False;
+  str := Trim(str);
+
+  // Проверка на пустую строку
+  if str = '' then
+  begin
+    ShowMessage('Строка пуста');
+    Exit;
+  end;
+
+  // Проверка, что все символы — цифры
+  for i := 1 to Length(str) do
+  begin
+    if not (str[i] in ['0'..'9']) then
+    begin
+      ShowMessage('Разрешён ввод только цифр');
+      {$IFDEF MSWINDOWS}
+      Windows.Beep(500, 100);
+      {$ENDIF}
+      Exit;
+    end;
+  end;
+
+  // Проверка на длину числа (не более 3 знаков)
+  if Length(str) >= 4 then  // Изменено условие с = на >=
+  begin
+    ShowMessage('Ошибка: число не должно содержать четыре и более цифр');  // Обновлено сообщение
+    {$IFDEF MSWINDOWS}
+    Windows.Beep(500, 100);
+    {$ENDIF}
+    Exit;
+  end;
+
+  // Если все проверки пройдены
+  ShowMessage('Цена корректна');
+  Result := True;
+end;
+function GetCurrentDateTime: TDateTime;
+begin
+  Result := Now; // Возвращает дату и время
+end;
+function GetDefaultMaskText(EditMask: string): string;
+var
+  i: Integer;
+  InEscape: Boolean;
+begin
+  Result := '';
+  InEscape := False;
+  for i := 1 to Length(EditMask) do
+  begin
+    if InEscape then
+    begin
+      Result := Result + EditMask[i];
+      InEscape := False;
+    end
+    else
+    begin
+      case EditMask[i] of
+        '\': InEscape := True; // Экранированные символы
+        '9', '0', 'L', 'A', 'a', 'C', 'c': Result := Result + ' '; // Заполнители
+        else
+          Result := Result + EditMask[i]; // Статические символы
+      end;
+    end;
+  end;
+end;
+function IsMaskEditEmpty(MaskEdit: TMaskEdit): Boolean;
+var
+  CleanText: string;
+begin
+  // Удаляем статические символы и заполнители
+  CleanText := MaskEdit.Text;
+  CleanText := StringReplace(CleanText, '_', '', [rfReplaceAll]);
+  CleanText := StringReplace(CleanText, '+7', '', [rfReplaceAll]);
+  CleanText := StringReplace(CleanText, '(', '', [rfReplaceAll]);
+  CleanText := StringReplace(CleanText, ')', '', [rfReplaceAll]);
+  CleanText := StringReplace(CleanText, '-', '', [rfReplaceAll]);
+  CleanText := StringReplace(CleanText, ' ', '', [rfReplaceAll]);
+  Result := Trim(CleanText) = '';
+end;
+procedure SetFormPropertiesIfNeeded;
+var
+  Form: TForm;
+begin
+  Form := FindFormByName('frm_main');
+  if Assigned(Form) then
+  begin
+    // Если форма найдена, задаем ей параметры
+    Form.Width := 1024;
+    Form.Height := 768;
+    Form.Position := poScreenCenter;
+  end
+  else
+  begin
+    ShowMessage('Форма frm_main не найдена!');
+  end;
+end;
+function FindDataModuleByName(const AName: string): TDataModule;
+var
+  i: Integer;
+begin
+  Result := nil;
+  for i := 0 to Screen.DataModuleCount - 1 do
+  begin
+    if SameText(Screen.DataModules[i].Name, AName) then
+    begin
+      Result := Screen.DataModules[i];
+      Break;
+    end;
+  end;
+end;
+procedure CloseAllQueriesOnDataModule(const DataModuleName: string);
+var
+  DataModule: TDataModule;
+  Q: Integer;
+  Query: TADOQuery;
+begin
+  DataModule := FindDataModuleByName(DataModuleName);
+  if not Assigned(DataModule) then
+  begin
+    ShowMessage('Модуль данных ' + DataModuleName + ' не найден');
+    Exit;
+  end;
+  for Q := 0 to DataModule.ComponentCount - 1 do
+  begin
+    if DataModule.Components[Q] is TADOQuery then
+    begin
+      Query := TADOQuery(DataModule.Components[Q]);
+      try
+        if Query.Active then
+          Query.Close;
+      except
+        on E: Exception do
+        begin
+          ShowMessageFmt('Ошибка при закрытии запроса "%s": %s', [Query.Name, E.Message]);
+        end;
+      end;
+    end;
+  end;
+end;
+
+procedure GenerateCSVFile(const FileName: string);
+var
+  CSVData: TStringList;
+  i: Integer;
+  SampleGoods: array[1..5] of record
+    id_good: Integer;
+    naim_good: string;
+    price_good: Double;
+  end;
+begin
+  CSVData := TStringList.Create;
+  try
+    CSVData.Add('id_good,naim_good,price_good');
+    SampleGoods[1].id_good := 1; SampleGoods[1].naim_good := 'Товар 1'; SampleGoods[1].price_good := 100.50;
+    SampleGoods[2].id_good := 2; SampleGoods[2].naim_good := 'Товар 2'; SampleGoods[2].price_good := 200.75;
+    SampleGoods[3].id_good := 3; SampleGoods[3].naim_good := 'Товар 3'; SampleGoods[3].price_good := 150.00;
+    SampleGoods[4].id_good := 4; SampleGoods[4].naim_good := 'Товар 4'; SampleGoods[4].price_good := 300.25;
+    SampleGoods[5].id_good := 5; SampleGoods[5].naim_good := 'Товар 5'; SampleGoods[5].price_good := 400.00;
+    for i := 1 to 5 do
+    begin
+      CSVData.Add(Format('%d,%s,%.2f', [
+        SampleGoods[i].id_good,
+        SampleGoods[i].naim_good,
+        SampleGoods[i].price_good
+      ]));
+    end;
+    CSVData.SaveToFile(FileName);
+    ShowMessage('CSV-файл успешно создан: ' + FileName);
+  except
+    on E: Exception do
+      ShowMessage('Ошибка при создании CSV-файла: ' + E.Message);
+  end;
+end;
+procedure GenerateXMLFile(const FileName: string);
+var
+  XMLData: TStringList;
+  i: Integer;
+  SampleGoods: array[1..5] of record
+    id_good: Integer;
+    naim_good: string;
+    price_good: Double;
+  end;
+begin
+  XMLData := TStringList.Create;
+  try
+    XMLData.Add('<?xml version="1.0" encoding="UTF-8"?>');
+    XMLData.Add('<goods>');
+    SampleGoods[1].id_good := 1; SampleGoods[1].naim_good := 'Товар 1'; SampleGoods[1].price_good := 100.50;
+    SampleGoods[2].id_good := 2; SampleGoods[2].naim_good := 'Товар 2'; SampleGoods[2].price_good := 200.75;
+    SampleGoods[3].id_good := 3; SampleGoods[3].naim_good := 'Товар 3'; SampleGoods[3].price_good := 150.00;
+    SampleGoods[4].id_good := 4; SampleGoods[4].naim_good := 'Товар 4'; SampleGoods[4].price_good := 300.25;
+    SampleGoods[5].id_good := 5; SampleGoods[5].naim_good := 'Товар 5'; SampleGoods[5].price_good := 400.00;
+    for i := 1 to 5 do
+    begin
+      XMLData.Add('  <good>');
+      XMLData.Add('    <id_good>' + IntToStr(SampleGoods[i].id_good) + '</id_good>');
+      XMLData.Add('    <naim_good>' + SampleGoods[i].naim_good + '</naim_good>');
+      XMLData.Add('    <price_good>' + FloatToStr(SampleGoods[i].price_good) + '</price_good>');
+      XMLData.Add('  </good>');
+    end;
+    XMLData.Add('</goods>');
+    XMLData.SaveToFile(FileName);
+    ShowMessage('XML-файл успешно создан: ' + FileName);
+  except
+    on E: Exception do
+      ShowMessage('Ошибка при создании XML-файла: ' + E.Message);
+  end;
+end;
+
+procedure GenerateJSONFile(const FileName: string);
+var
+  JSONData: TStringList;
+  i: Integer;
+  SampleGoods: array[1..5] of record
+    id_good: Integer;
+    naim_good: string;
+    price_good: Double;
+  end;
+begin
+  JSONData := TStringList.Create;
+  try
+    JSONData.Add('[');
+    SampleGoods[1].id_good := 1; SampleGoods[1].naim_good := 'Товар 1'; SampleGoods[1].price_good := 100.50;
+    SampleGoods[2].id_good := 2; SampleGoods[2].naim_good := 'Товар 2'; SampleGoods[2].price_good := 200.75;
+    SampleGoods[3].id_good := 3; SampleGoods[3].naim_good := 'Товар 3'; SampleGoods[3].price_good := 150.00;
+    SampleGoods[4].id_good := 4; SampleGoods[4].naim_good := 'Товар 4'; SampleGoods[4].price_good := 300.25;
+    SampleGoods[5].id_good := 5; SampleGoods[5].naim_good := 'Товар 5'; SampleGoods[5].price_good := 400.00;
+    for i := 1 to 5 do
+    begin
+      JSONData.Add('  {');
+      JSONData.Add('    "id_good": ' + IntToStr(SampleGoods[i].id_good) + ',');
+      JSONData.Add('    "naim_good": "' + SampleGoods[i].naim_good + '",');
+      JSONData.Add('    "price_good": ' + FloatToStr(SampleGoods[i].price_good));
+      if i < 5 then
+        JSONData.Add('  },')
+      else
+        JSONData.Add('  }');
+    end;
+    JSONData.Add(']');
+    JSONData.SaveToFile(FileName);
+    ShowMessage('JSON-файл успешно создан: ' + FileName);
+  except
+    on E: Exception do
+      ShowMessage('Ошибка при создании JSON-файла: ' + E.Message);
+  end;
+end;
+function SplitString(const S: string; const Delimiter: Char;
+var ResultArray: array of string): Integer;
+var
+  i, StartPos, DelimPos: Integer;
+  Token: string;
+begin
+  StartPos := 1;
+  Result := 0;
+
+  for i := 0 to High(ResultArray) do
+    ResultArray[i] := '';
+
+  while (StartPos <= Length(S)) and (Result <= High(ResultArray)) do
+  begin
+    DelimPos := Pos(Delimiter, Copy(S, StartPos, MaxInt));
+    if DelimPos > 0 then
+    begin
+      Token := Copy(S, StartPos, DelimPos - 1);
+      StartPos := StartPos + DelimPos;
+    end
+    else
+    begin
+      Token := Copy(S, StartPos, MaxInt);
+      StartPos := Length(S) + 1;
+    end;
+
+    ResultArray[Result] := Trim(Token);
+    Inc(Result);
+  end;
+end;
+procedure LoadCSVToTableFromDialog(
+  OpenDialog: TOpenDialog;
+  const TableName: string;
+  const FieldIdName, FieldNaimName, FieldPriceName: string;
+  Query: TADOQuery
+);
+var
+  StringList: TStringList;
+  i, FieldCount: Integer;
+  Fields: array[0..2] of string;
+  SId, SName, SPrice: string;
+  ID: Integer;
+  Price: Double;
+  Fmt: TFormatSettings;
+begin
+  if not Assigned(OpenDialog) then Exit;
+  if not OpenDialog.Execute then
+    Exit;
+  ID := 0;
+  Price := 0.0;
+  StringList := TStringList.Create;
+  try
+    GetLocaleFormatSettings(0, Fmt);    Fmt.DecimalSeparator := '.';
+    StringList.LoadFromFile(OpenDialog.FileName);
+    with Query do
+    begin
+      Close;
+      SQL.Text := 'DELETE FROM ' + TableName;
+      ExecSQL;
+    end;
+    for i := 1 to StringList.Count - 1 do
+    begin
+      FieldCount := SplitString(StringList[i], ',', Fields);
+      if FieldCount < 3 then Continue;
+      SId := Fields[0];
+      SName := Fields[1];
+      SPrice := Fields[2];
+      try
+        ID := StrToIntDef(Trim(SId), 0);
+        Price := StrToFloat(Trim(SPrice), Fmt);
+      except
+        Continue;
+      end;
+      with Query do
+      begin
+        Close;
+        SQL.Text := Format(
+          'INSERT INTO %s (%s, %s, %s) VALUES (:%s, :%s, :%s)',
+          [TableName, FieldIdName, FieldNaimName, FieldPriceName,
+           FieldIdName, FieldNaimName, FieldPriceName]
+        );
+        Parameters.ParamByName(FieldIdName).Value := ID;
+        Parameters.ParamByName(FieldNaimName).Value := Trim(SName);
+        Parameters.ParamByName(FieldPriceName).Value := Price;
+        ExecSQL;
+      end;
+    end;
+      with Query do
+begin
+  Close;
+  SQL.Text := 'SELECT * FROM ' + TableName;
+  Open;
+end;
+    ShowMessage('Данные успешно загружены из файла: ' + OpenDialog.FileName);
+  finally
+    StringList.Free;
+  end;
+end;
+ function RemoveXMLComments(const FileName: string): string;
+var
+  SL: TStringList;
+  XMLText: string;
+  StartPos, EndPos: Integer;
+begin
+  SL := TStringList.Create;
+  try
+    SL.LoadFromFile(FileName);
+    XMLText := SL.Text;
+    StartPos := Pos('<!--', XMLText);
+    while StartPos > 0 do
+    begin
+      EndPos := Pos('-->', Copy(XMLText, StartPos + 4, Length(XMLText)));
+      if EndPos > 0 then
+      begin
+        EndPos := EndPos + StartPos + 3; // учёт сдвига
+        Delete(XMLText, StartPos, EndPos - StartPos + 1);
+      end
+      else
+        Break; // нет закрывающего комментария
+      StartPos := Pos('<!--', XMLText);
+    end;
+    Result := XMLText;
+  finally
+    SL.Free;
+  end;
+end;
+procedure LoadXMLToTableFromDialog(
+  OpenDialog: TOpenDialog;
+  const TableName: string;
+  const FieldIdName, FieldNaimName, FieldPriceName: string;
+  Query: TADOQuery
+);
+var
+  XMLDoc: Variant;
+  GoodsNode, GoodNode: Variant;
+  i: Integer;
+  ID: Integer;
+  Price: Double;
+  Fmt: TFormatSettings;
+  SId, SName, SPrice: string;
+  XMLString: string;
+begin
+  if not Assigned(OpenDialog) then Exit;
+  if not OpenDialog.Execute then Exit;
+  try
+    XMLDoc := CreateOleObject('MSXML2.DOMDocument.6.0');
+  except
+    ShowMessage('Не удалось создать XML парсер. Убедитесь, что MSXML установлен.');
+    Exit;
+  end;
+  XMLDoc.async := False;
+  XMLDoc.preserveWhiteSpace := False;
+  XMLString := RemoveXMLComments(OpenDialog.FileName);
+
+  if not XMLDoc.loadXML(XMLString) then
+  begin
+    ShowMessage('Ошибка загрузки XML: ' + XMLDoc.parseError.reason);
+    Exit;
+  end;
+  GoodsNode := XMLDoc.documentElement;
+  if VarIsNull(GoodsNode) or (GoodsNode.nodeName <> 'goods') then
+  begin
+    ShowMessage('Неверный XML: ожидался <goods>');
+    Exit;
+  end;
+  GetLocaleFormatSettings(1033, Fmt);
+  Fmt.DecimalSeparator := '.';
+  Fmt.ThousandSeparator := ',';
+  Query.Close;
+  Query.SQL.Text := 'DELETE FROM ' + TableName;
+  Query.ExecSQL;
+
+  Query.Connection.BeginTrans;
+  try
+    for i := 0 to GoodsNode.childNodes.length - 1 do
+    begin
+      GoodNode := GoodsNode.childNodes.item[i];
+      if GoodNode.nodeName <> 'good' then Continue;
+
+      try
+        if not VarIsNull(GoodNode.selectSingleNode('id_good')) then
+          SId := GoodNode.selectSingleNode('id_good').text else SId := '0';
+        if not VarIsNull(GoodNode.selectSingleNode('naim_good')) then
+          SName := GoodNode.selectSingleNode('naim_good').text else SName := '';
+        if not VarIsNull(GoodNode.selectSingleNode('price_good')) then
+          SPrice := GoodNode.selectSingleNode('price_good').text else SPrice := '0';
+        SPrice := StringReplace(SPrice, ',', '.', [rfReplaceAll]);
+        ID := StrToIntDef(Trim(SId), 0);
+        Price := StrToFloat(Trim(SPrice), Fmt);
+        Query.Close;
+        Query.SQL.Text := Format(
+          'INSERT INTO %s (%s, %s, %s) VALUES (:%s, :%s, :%s)',
+          [TableName, FieldIdName, FieldNaimName, FieldPriceName,
+           FieldIdName, FieldNaimName, FieldPriceName]
+        );
+        Query.Parameters.ParamByName(FieldIdName).Value := ID;
+        Query.Parameters.ParamByName(FieldNaimName).Value := Trim(SName);
+        Query.Parameters.ParamByName(FieldPriceName).Value := Price;
+        Query.ExecSQL;
+      except
+        on E: Exception do
+        begin
+          ShowMessage('Ошибка при импорте ID=' + SId + ': ' + E.Message);
+          Continue;
+        end;
+      end;
+    end;
+    Query.Connection.CommitTrans;
+  except
+    on E: Exception do
+    begin
+      Query.Connection.RollbackTrans;
+      ShowMessage('Ошибка транзакции: ' + E.Message);
+      Exit;
+    end;
+  end;
+  Query.DisableControls;
+  try
+    Query.Close;
+    Query.SQL.Text := 'SELECT * FROM ' + TableName;
+    Query.Open;
+  finally
+    Query.EnableControls;
+  end;
+  ShowMessage('Импорт завершён. Загружено товаров: ' + IntToStr(GoodsNode.childNodes.length));
+end;
+procedure LoadJSONToTableFromDialog(
+  OpenDialog: TOpenDialog;
+  const TableName: string;
+  const FieldIdName, FieldNaimName, FieldPriceName: string;
+  Query: TADOQuery
+);
+var
+  SL: TStringList;
+  JSONText, Line, SId, SName, SPrice: string;
+  i, ID: Integer;
+  Price: Double;
+  Fmt: TFormatSettings;
+  Items: TStringList;
+begin
+  if not Assigned(OpenDialog) then Exit;
+  OpenDialog.Filter := 'JSON файлы (*.json)|*.json';
+  if not OpenDialog.Execute then Exit;
+
+  SL := TStringList.Create;
+  try
+    SL.LoadFromFile(OpenDialog.FileName);
+    JSONText := SL.Text;
+  finally
+    SL.Free;
+  end;
+  JSONText := StringReplace(JSONText, #13#10, '', [rfReplaceAll]);
+  JSONText := StringReplace(JSONText, #10, '', [rfReplaceAll]);
+  JSONText := StringReplace(JSONText, ' ', '', [rfReplaceAll]);
+  JSONText := StringReplace(JSONText, '[', '', [rfReplaceAll]);
+  JSONText := StringReplace(JSONText, ']', '', [rfReplaceAll]);
+  JSONText := StringReplace(JSONText, '},{', '}|{', [rfReplaceAll]); // разделим объекты
+
+  Items := TStringList.Create;
+  try
+    Items.Delimiter := '|';
+    Items.StrictDelimiter := True;
+    Items.DelimitedText := JSONText;
+
+    GetLocaleFormatSettings(1033, Fmt);
+    Fmt.DecimalSeparator := '.';
+    Fmt.ThousandSeparator := ',';
+
+    // Удалим старые записи
+    Query.Close;
+    Query.SQL.Text := 'DELETE FROM ' + TableName;
+    Query.ExecSQL;
+
+    Query.Connection.BeginTrans;
+    try
+      for i := 0 to Items.Count - 1 do
+      begin
+        Line := Items[i]; // одна строка: {"id_good":1,"naim_good":"Товар 1","price_good":100.5}
+        Line := StringReplace(Line, '{', '', []);
+        Line := StringReplace(Line, '}', '', []);
+
+        // Простейший парсинг
+        SId := Copy(Line, Pos('"id_good":', Line) + 10, Pos(',', Line) - Pos('"id_good":', Line) - 10);
+        Delete(Line, 1, Pos(',', Line));
+
+        SName := Copy(Line, Pos('"naim_good":"', Line) + 13,
+                      Pos('"', Copy(Line, Pos('"naim_good":"', Line) + 13, 100)) - 1);
+        Delete(Line, 1, Pos('"price_good":', Line) - 1);
+
+        SPrice := Copy(Line, Pos('"price_good":', Line) + 13, Length(Line));
+
+        SPrice := StringReplace(SPrice, ',', '.', [rfReplaceAll]);
+
+        ID := StrToIntDef(Trim(SId), 0);
+        Price := StrToFloatDef(Trim(SPrice), 0, Fmt);
+
+        Query.Close;
+        Query.SQL.Text := Format(
+          'INSERT INTO %s (%s, %s, %s) VALUES (:%s, :%s, :%s)',
+          [TableName, FieldIdName, FieldNaimName, FieldPriceName,
+           FieldIdName, FieldNaimName, FieldPriceName]
+        );
+        Query.Parameters.ParamByName(FieldIdName).Value := ID;
+        Query.Parameters.ParamByName(FieldNaimName).Value := SName;
+        Query.Parameters.ParamByName(FieldPriceName).Value := Price;
+        Query.ExecSQL;
+      end;
+
+      Query.Connection.CommitTrans;
+    except
+      on E: Exception do
+      begin
+        Query.Connection.RollbackTrans;
+        ShowMessage('Ошибка при импорте: ' + E.Message);
+        Exit;
+      end;
+    end;
+  finally
+    Items.Free;
+  end;
+
+  Query.DisableControls;
+  try
+    Query.Close;
+    Query.SQL.Text := 'SELECT * FROM ' + TableName;
+    Query.Open;
+  finally
+    Query.EnableControls;
+  end;
+  ShowMessage('Импорт JSON завершён.');
+end;
+procedure LoadTextFromResource(const ResourceName: string;
+RichTextEdit: TRichEdit);
+var
+  RS: TResourceStream;
+  Text: string;
+begin
+  if not Assigned(RichTextEdit) then
+  begin
+    ShowMessage('Ошибка: компонент RichTextEdit не назначен.');
+    Exit;
+  end;
+  RS := TResourceStream.Create(HInstance, ResourceName, RT_RCDATA);
+  try
+    // Определяем размер текста и читаем его из потока
+    SetLength(Text, RS.Size);
+    RS.ReadBuffer(Pointer(Text)^, RS.Size);
+
+    // Очищаем содержимое RichTextEdit и загружаем текст
+    RichTextEdit.Clear;
+    RichTextEdit.Text := Text;
+  finally
+    // Освобождаем поток
+    RS.Free;
+  end;
+end;
+
+procedure FormatRichText(RichEdit: TRichEdit; FontSize: Integer; FontName: string;
+  TextColor: TColor; BulletStyle: Boolean; ReadOnly: Boolean; ScrollBars: TScrollStyle);
+var
+  i: Integer;
+  StartPos, EndPos: Integer;
+begin
+  // Проверяем, что компонент RichEdit передан
+  if not Assigned(RichEdit) then
+  begin
+    ShowMessage('Компонент RichEdit не назначен.');
+    Exit;
+  end;
+
+  // Устанавливаем шрифт и размер текста для всего документа
+  RichEdit.Font.Name := FontName;
+  RichEdit.Font.Size := FontSize;
+
+  // Устанавливаем режим "только для чтения"
+  RichEdit.ReadOnly := ReadOnly;
+
+  // Устанавливаем полосы прокрутки
+  RichEdit.ScrollBars := ScrollBars;
+
+  // Разделяем текст на строки
+  for i := 0 to RichEdit.Lines.Count - 1 do
+  begin
+    // Определяем позиции начала и конца строки
+    StartPos := RichEdit.Perform(EM_LINEINDEX, i, 0);
+    EndPos := StartPos + Length(RichEdit.Lines[i]);
+
+    // Выделяем строку
+    RichEdit.SelStart := StartPos;
+    RichEdit.SelLength := EndPos - StartPos;
+
+    // Устанавливаем цвет текста
+    RichEdit.SelAttributes.Color := TextColor;
+
+    // Если нужно добавить маркеры (буллеты)
+    if BulletStyle then
+    begin
+      RichEdit.Paragraph.Numbering := nsBullet; // Включаем маркеры
+    end
+    else
+    begin
+      RichEdit.Paragraph.Numbering := nsNone; // Отключаем маркеры
+    end;
+
+    // Снимаем выделение
+    RichEdit.SelLength := 0;
+  end;
+end;
+
+procedure MakeStaticTextLookLikeLink(
+  AForm: TForm;
+  const StaticTextName: string;
+  OnMouseEnterEvent: TNotifyEvent;
+  OnMouseLeaveEvent: TNotifyEvent;
+  OnClickEvent: TNotifyEvent
+);
+var
+  StaticText: TStaticText;
+begin
+  // Находим компонент по имени
+  StaticText := TStaticText(AForm.FindComponent(StaticTextName));
+  if not Assigned(StaticText) then
+  begin
+    raise Exception.CreateFmt('Компонент TStaticText с именем "%s" не найден на форме "%s".', [StaticTextName, AForm.Name]);
+  end;
+  with StaticText do
+  begin
+    Font.Style := [fsUnderline];  // Подчеркивание
+    Cursor := crHandPoint;        // Курсор в виде руки
+    if VisitedStaticTexts.IndexOf(StaticTextName) >= 0 then
+      Font.Color := clRed
+    else
+      Font.Color := clBlue;
+    OnMouseEnter := OnMouseEnterEvent;
+    OnMouseLeave := OnMouseLeaveEvent;
+    OnClick := OnClickEvent;
+  end;
+end;
+
+// Обработчик события OnClick
+procedure StaticTextClick(Sender: TObject);
+begin
+  if Sender is TStaticText then
+  begin
+    // Добавляем имя ссылки в список "посещенных"
+    VisitedStaticTexts.Add(TStaticText(Sender).Name);
+    TStaticText(Sender).Font.Color := clRed;
+  end;
+end;
+
+procedure AlignComponentsVertically(AContainer: TWinControl; Spacing: Integer = 5);
+var
+  i: Integer;
+  CurrentTop: Integer;
+  Component: TControl;
+begin
+  if not Assigned(AContainer) then
+    raise Exception.Create('Контейнер не назначен.');
+
+  // Начальная позиция для первого элемента
+  CurrentTop := 0;
+
+  // Перебираем все дочерние компоненты контейнера
+  for i := 0 to AContainer.ControlCount - 1 do
+  begin
+    Component := AContainer.Controls[i];
+
+    // Проверяем, что компонент видимый и может быть размещен
+    if Component.Visible then
+    begin
+      // Устанавливаем позицию компонента
+      Component.Top := CurrentTop;
+      Component.Left := 0; // Выравниваем по левому краю
+
+      // Обновляем текущую позицию для следующего компонента
+      CurrentTop := CurrentTop + Component.Height + Spacing;
+    end;
+  end;
+
+  // При необходимости можно обновить размер контейнера
+  AContainer.Height := CurrentTop - Spacing;
+end;
+
+procedure CheckAndCreateHelpFolder;
+var
+  AppPath, FolderPath: string;
+begin
+  // Получаем путь к текущей папке приложения
+  AppPath := ExtractFilePath(ParamStr(0));
+  FolderPath := IncludeTrailingPathDelimiter(AppPath) + 'hlp_res';
+
+  // Проверяем, существует ли папка
+  if not DirectoryExists(FolderPath) then
+  begin
+    // Если папка не существует, создаём её
+    if not CreateDir(FolderPath) then
+      raise Exception.Create('Не удалось создать папку: ' + FolderPath);
+  end;
+  if DirectoryExists(FolderPath)  then
+  begin
+     // ShowMessage('folder exists');
+      Exit;
+  end;
+
+end;
+procedure SaveRichEditToFile(RichEdit: TRichEdit; SaveDialog: TSaveDialog);
+var
+  FileStream: TFileStream;
+  RichEditText: string;
+begin
+  if not Assigned(RichEdit) then
+    raise Exception.Create('Компонент TRichEdit не назначен.');
+  if not Assigned(SaveDialog) then
+    raise Exception.Create('Компонент TSaveDialog не назначен.');
+  if SaveDialog.Execute then
+  begin
+    try
+      RichEditText := RichEdit.Lines.Text;
+      FileStream := TFileStream.Create(SaveDialog.FileName, fmCreate);
+      try
+        FileStream.WriteBuffer(Pointer(RichEditText)^, Length(RichEditText));
+      finally
+        FileStream.Free;
+      end;
+    except
+      on E: Exception do
+        ShowMessage('Ошибка при сохранении файла: ' + E.Message);
+    end;
+  end;
+end;
+
+procedure AppendRichEditToIniFile(RichEdit: TRichEdit; const FileName: string);
+var
+  FileStream: TFileStream;
+  RichEditText: string;
+  FilePath: string; // Полный путь к файлу
+begin
+  if not Assigned(RichEdit) then
+    raise Exception.Create('Компонент TRichEdit не назначен.');
+
+  // Формируем полный путь к файлу в папке hlp_res
+  FilePath := IncludeTrailingPathDelimiter(ExtractFilePath(Application.ExeName))
+  + 'hlp_res\' + FileName;
+
+  // Получаем текст из RichEdit
+  RichEditText := RichEdit.Lines.Text;
+
+  // Если файл уже существует, открываем его для добавления данных
+  if FileExists(FilePath) then
+  begin
+    FileStream := TFileStream.Create(FilePath, fmOpenWrite);
+    try
+      // Перемещаем указатель в конец файла
+      FileStream.Seek(0, soFromEnd);
+
+      // Добавляем текст в конец файла
+      FileStream.WriteBuffer(Pointer(RichEditText)^, Length(RichEditText));
+    finally
+      FileStream.Free;
+    end;
+  end
+  else
+  begin
+    // Если файл не существует, создаем новый файл и записываем текст
+    FileStream := TFileStream.Create(FilePath, fmCreate);
+    try
+      FileStream.WriteBuffer(Pointer(RichEditText)^, Length(RichEditText));
+    finally
+      FileStream.Free;
+    end;
+  end;
+end;
+procedure LoadTextFromFile(const FileName: string; RichTextEdit: TRichEdit);
+var
+  FileStream: TStringList;
+    var FilePath:String;
+begin
+  // Проверка, что компонент RichTextEdit назначен
+  if not Assigned(RichTextEdit) then
+  begin
+    ShowMessage('Ошибка: компонент RichTextEdit не назначен.');
+    Exit;
+  end;
+
+  // Формируем полный путь к файлу в папке hlp_res
+   FilePath := IncludeTrailingPathDelimiter(ExtractFilePath(Application.ExeName))
+   + 'hlp_res\' + FileName;
+
+  // Проверяем существование файла
+  if not FileExists(FilePath) then
+  begin
+    ShowMessage('Ошибка: файл "' + FilePath + '" не найден.');
+    Exit;
+  end;
+
+  // Создаем объект TStringList для чтения текста из файла
+  FileStream := TStringList.Create;
+  try
+    FileStream.LoadFromFile(FilePath); // Загружаем текст из файла
+
+    // Очищаем содержимое RichTextEdit и загружаем текст
+    RichTextEdit.Clear;
+    RichTextEdit.Lines.Assign(FileStream);
+  finally
+    // Освобождаем объект TStringList
+    FileStream.Free;
+  end;
+end;
+procedure GenerateMathQuiz(CaptchaLabel: TLabel; ResultLabel: TStaticText);
+var
+  Num1, Num2: Integer;
+begin
+  Randomize;
+
+  // Генерация случайных чисел
+  Num1 := Random(10);
+  Num2 := Random(10);
+
+  // Настройка метки с математическим выражением
+  with CaptchaLabel do
+  begin
+    Caption := IntToStr(Num1) + ' + ' + IntToStr(Num2);
+    Font.Size := RandomRange(12, 20); // Случайный размер шрифта
+    Font.Color := RGB(Random(256), Random(256), Random(256)); // Случайный цвет
+    Font.Style := [fsBold]; // Жирный шрифт
+  end;
+
+  // Вывод вопроса в ResultLabel
+  ResultLabel.Caption := 'Сколько будет ' + CaptchaLabel.Caption + '?';
+end;
+procedure FormatPanelCaption(const PanelName: string; AForm: TForm;
+  FontName: string; FontSize: Integer; FontColor: TColor);
+var
+  Component: TComponent;
+  Panel: TPanel;
+begin
+  // Находим компонент по имени в контексте формы
+  Component := AForm.FindComponent(PanelName);
+
+  // Проверяем, что компонент найден и является TPanel
+  if not Assigned(Component) or not (Component is TPanel) then
+  begin
+    raise Exception.CreateFmt('Компонент "%s" не найден или не является TPanel.', [PanelName]);
+  end;
+
+  // Приводим компонент к типу TPanel
+  Panel := TPanel(Component);
+
+  // Устанавливаем параметры шрифта
+  if Assigned(Panel.Font) then
+  begin
+    Panel.Font.Name := FontName;   // Устанавливаем название шрифта
+    Panel.Font.Size := FontSize;   // Устанавливаем размер шрифта
+    Panel.Font.Color := FontColor; // Устанавливаем цвет шрифта
+  end;
+
+  // Обновляем текст Caption (необязательно)
+  Panel.Caption := Panel.Caption;
+end;
+ procedure CheckMathQuizAnswer(CaptchaLabel: TLabel; InputBox: TLabeledEdit;
+ ResultLabel: TStaticText);
+var
+  Num1, Num2, CorrectAnswer, UserAnswer: Integer;
+  InputStr: string;
+begin
+  // Получение чисел из CaptchaLabel
+  Num1 := StrToInt(Copy(CaptchaLabel.Caption, 1, Pos(' + ', CaptchaLabel.Caption) - 1));
+  Num2 := StrToInt(Copy(CaptchaLabel.Caption, Pos(' + ', CaptchaLabel.Caption) + 3, Length(CaptchaLabel.Caption)));
+
+  // Вычисление правильного ответа
+  CorrectAnswer := AddNumbers(Num1, Num2);
+
+  // Получение введенного текста
+  InputStr := Trim(InputBox.Text);
+
+  // Проверка, что пользователь ввел что-то
+  if InputStr = '' then
+  begin
+    ResultLabel.Caption := 'Ошибка: вы не ввели ответ.';
+    Exit;
+  end;
+
+  // Преобразование введенного текста в число
+  try
+    UserAnswer := StrToInt(InputStr);
+  except
+    on E: EConvertError do
+    begin
+      ResultLabel.Caption := 'Ошибка: введенные данные не являются числом.';
+      Exit;
+    end;
+  end;
+  if UserAnswer = CorrectAnswer then
+    ResultLabel.Caption := 'Правильно!'
+  else
+    ResultLabel.Caption := Format('Неправильно! Правильный ответ: %d.', [CorrectAnswer]);
+end;
+function get_rnd_char(symcount:Integer):string;
+var
+  i:Integer;
+  Symstr:string;
+begin
+if symcount <= 0 then
+  begin
+    Result := '';
+    Exit;
+  end;
+Symstr:='';
+for I := 1 to symcount do
+begin
+Symstr:=Symstr+chr(Random(59)+64);
+end;
+Result:=Symstr;
+end;
+procedure FormatLabel(const LabelName: string; AForm: TForm;
+  FontSize: Integer; FontName: string; FontColor: TColor);
+var
+  Component: TComponent;
+  LabelComponent: TLabel;
+begin
+  // Находим компонент по имени в контексте формы
+  Component := AForm.FindComponent(LabelName);
+
+  // Проверяем, что компонент найден и является TLabel
+  if not Assigned(Component) or not (Component is TLabel) then
+  begin
+    raise Exception.CreateFmt('Компонент "%s" не найден или не является TLabel.', [LabelName]);
+  end;
+
+  // Приводим компонент к типу TLabel
+  LabelComponent := TLabel(Component);
+
+  // Устанавливаем параметры шрифта
+  with LabelComponent.Font do
+  begin
+    Name := FontName;   // Название шрифта
+    Size := FontSize;   // Размер шрифта
+    Color := FontColor; // Цвет шрифта
+  end;
+end;
+
+function ShiftChar(Ch: Char; Shift: Integer; Alphabet: string): Char;
+var
+  Index: Integer;
+begin
+  // Находим индекс символа в алфавите
+  Index := Pos(Ch, Alphabet);
+  if Index > 0 then
+  begin
+    // Вычисляем новый индекс с учетом сдвига
+    Index := ((Index - 1 + Shift) mod Length(Alphabet)) + 1;
+    if Index <= 0 then
+      Index := Index + Length(Alphabet);
+    Result := Alphabet[Index];
+  end
+  else
+    Result := Ch; // Если символ не из алфавита, оставляем его без изменений
+end;
+  function EncryptCaesarFromComponent(AComponent: TControl; Shift: Integer; Mode: TEncryptionMode): string;
+const
+  // Алфавиты для русских и латинских букв
+  RussianLowercase = 'абвгдежзийклмнопрстуфхцчшщъыьэюя';
+  RussianUppercase = 'АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ';
+  LatinLowercase = 'abcdefghijklmnopqrstuvwxyz';
+  LatinUppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+var
+  i: Integer;
+  Ch: Char;
+  Text: string;
+begin
+  // Проверяем, что компонент передан
+  if not Assigned(AComponent) then
+  begin
+    raise Exception.Create('Компонент не назначен.');
+  end;
+
+  // Получаем текст из компонента
+  if AComponent is TLabel then
+    Text := TLabel(AComponent).Caption
+  else if AComponent is TEdit then
+    Text := TEdit(AComponent).Text
+  else if AComponent is TLabeledEdit then
+    Text := TLabeledEdit(AComponent).Text
+  else
+  begin
+    raise Exception.Create('Неподдерживаемый тип компонента.');
+  end;
+
+  // Шифруем текст
+  Result := '';
+  for i := 1 to Length(Text) do
+  begin
+    Ch := Text[i];
+
+    case Mode of
+      emLatin:
+        begin
+          if Ch in ['a'..'z'] then
+            Result := Result + ShiftChar(Ch, Shift, LatinLowercase)
+          else if Ch in ['A'..'Z'] then
+            Result := Result + ShiftChar(Ch, Shift, LatinUppercase)
+          else
+            Result := Result + Ch; // Неизменяемые символы
+        end;
+
+      emRussian:
+        begin
+          if Ch in ['а'..'я'] then
+            Result := Result + ShiftChar(Ch, Shift, RussianLowercase)
+          else if Ch in ['А'..'Я'] then
+            Result := Result + ShiftChar(Ch, Shift, RussianUppercase)
+          else
+            Result := Result + Ch; // Неизменяемые символы
+        end;
+
+      emMixed:
+        begin
+          if Ch in ['а'..'я'] then
+            Result := Result + ShiftChar(Ch, Shift, RussianLowercase)
+          else if Ch in ['А'..'Я'] then
+            Result := Result + ShiftChar(Ch, Shift, RussianUppercase)
+          else if Ch in ['a'..'z'] then
+            Result := Result + ShiftChar(Ch, Shift, LatinLowercase)
+          else if Ch in ['A'..'Z'] then
+            Result := Result + ShiftChar(Ch, Shift, LatinUppercase)
+          else
+            Result := Result + Ch; // Неизменяемые символы
+        end;
+    end;
+  end;
+end;
+
+procedure SetFormSizeAndPosition(const FormName:
+string; NewWidth, NewHeight: Integer);
+var
+  Form: TForm;
+begin
+  Form := FindFormByName_new(FormName);
+
+  // Проверяем, что форма найдена
+  if not Assigned(Form) then
+  begin
+    raise Exception.CreateFmt('Форма с именем "%s" не найдена.', [FormName]);
+  end;
+
+  // Устанавливаем новые размеры и положение
+  with Form do
+  begin
+    if NewWidth > 0 then
+      Width := NewWidth;
+
+    if NewHeight > 0 then
+      Height := NewHeight;
+
+    Position := poScreenCenter;
+  end;
+end;
+ function FindFormByName_new(const AName: string): TForm;
+var
+  i: Integer;
+begin
+  Result := nil;
+  for i := 0 to Screen.FormCount - 1 do
+  begin
+    if SameText(Screen.Forms[i].Name, AName) then
+    begin
+      Result := Screen.Forms[i];
+      Break;
+    end;
+  end;
+end;
+function DecryptCaesarFromComponent(AComponent: TControl; Shift: Integer;
+Mode: TEncryptionMode): string;
+const
+  RussianLowercase = 'абвгдежзийклмнопрстуфхцчшщъыьэюя';
+  RussianUppercase = 'АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ';
+  LatinLowercase = 'abcdefghijklmnopqrstuvwxyz';
+  LatinUppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+var
+  i: Integer;
+  Ch: Char;
+  Text: string;
+begin
+  if not Assigned(AComponent) then
+  begin
+    raise Exception.Create('Компонент не назначен.');
+  end;
+  if AComponent is TLabel then
+    Text := TLabel(AComponent).Caption
+  else if AComponent is TEdit then
+    Text := TEdit(AComponent).Text
+  else if AComponent is TLabeledEdit then
+    Text := TLabeledEdit(AComponent).Text
+  else
+  begin
+    raise Exception.Create('Неподдерживаемый тип компонента.');
+  end;
+  Result := '';
+  for i := 1 to Length(Text) do
+  begin
+    Ch := Text[i];
+    case Mode of
+      emLatin:
+        begin
+          if Ch in ['a'..'z'] then
+            Result := Result + ShiftChar(Ch, -Shift, LatinLowercase) // Вычитаем сдвиг
+          else if Ch in ['A'..'Z'] then
+            Result := Result + ShiftChar(Ch, -Shift, LatinUppercase) // Вычитаем сдвиг
+          else
+            Result := Result + Ch; // Неизменяемые символы
+        end;
+      emRussian:
+        begin
+          if Ch in ['а'..'я'] then
+            Result := Result + ShiftChar(Ch, -Shift, RussianLowercase) // Вычитаем сдвиг
+          else if Ch in ['А'..'Я'] then
+            Result := Result + ShiftChar(Ch, -Shift, RussianUppercase) // Вычитаем сдвиг
+          else
+            Result := Result + Ch; // Неизменяемые символы
+        end;
+
+      emMixed:
+        begin
+          if Ch in ['а'..'я'] then
+            Result := Result + ShiftChar(Ch, -Shift, RussianLowercase) // Вычитаем сдвиг
+          else if Ch in ['А'..'Я'] then
+            Result := Result + ShiftChar(Ch, -Shift, RussianUppercase) // Вычитаем сдвиг
+          else if Ch in ['a'..'z'] then
+            Result := Result + ShiftChar(Ch, -Shift, LatinLowercase) // Вычитаем сдвиг
+          else if Ch in ['A'..'Z'] then
+            Result := Result + ShiftChar(Ch, -Shift, LatinUppercase) // Вычитаем сдвиг
+          else
+            Result := Result + Ch; // Неизменяемые символы
+        end;
+    end;
+  end;
+end;
+
+function GetMorseChar(Ch: Char; Mode: TMorseMode): string;
+var
+  UpCh: Char;
+begin
+  Result := '';  // По умолчанию результат пустой
+
+  // Приводим символ к верхнему регистру
+  case Ch of
+    'а'..'я': UpCh := Chr(Ord(Ch) - 32); // Маленькая русская -> большая
+    'ё': UpCh := 'Ё';                    // Специальная буква "ё"
+    else
+      UpCh := UpCase(Ch);                // Стандартное приведение
+  end;
+
+  if Mode in [mmEnglish, mmMixed] then
+  begin
+    if (UpCh >= 'A') and (UpCh <= 'Z') then
+      Result := EnglishLetters[UpCh]
+    else if (UpCh >= '0') and (UpCh <= '9') then
+      Result := EnglishDigits[UpCh];
+  end;
+
+  if (Result = '') and (Mode in [mmRussian, mmMixed]) then
+  begin
+    if (UpCh >= 'А') and (UpCh <= 'Я') then
+      Result := RussianLetters[UpCh]
+    else if UpCh = 'Ё' then
+      Result := RussianLetterYo; // Обработка буквы Ё
+  end;
+end;
+
+
+function TextToMorse(const Input: string; Mode: TMorseMode): string;
+var
+  i: Integer;
+  MorseChar: string;
+begin
+  Result := '';
+  for i := 1 to Length(Input) do
+  begin
+    if Input[i] = ' ' then
+      Result := Result + ' / ' // Разделение слов
+    else
+    begin
+      MorseChar := GetMorseChar(Input[i], Mode);
+      if MorseChar <> '' then
+        Result := Result + MorseChar + ' ';
+    end;
+  end;
+end;
+function FindChar(const MorseCode: string; Mode: TMorseMode): string;
+var
+  c: Char;
+begin
+  Result := '';
+
+  // Сначала проверяем все стандартные буквы
+  if Mode in [mmEnglish, mmMixed] then
+  begin
+    for c := 'A' to 'Z' do
+      if EnglishLetters[c] = MorseCode then
+      begin
+        Result := c;
+        Exit;
+      end;
+    for c := '0' to '9' do
+      if EnglishDigits[c] = MorseCode then
+      begin
+        Result := c;
+        Exit;
+      end;
+  end;
+
+  if Mode in [mmRussian, mmMixed] then
+  begin
+    for c := 'А' to 'Я' do
+      if RussianLetters[c] = MorseCode then
+      begin
+        Result := c;
+        Exit;
+      end;
+  end;
+
+  // Только если не нашли ничего — пробуем Ё
+  if (Result = '') and (Mode in [mmRussian, mmMixed]) then
+  begin
+    if RussianLetterYo = MorseCode then
+      Result := 'Ё';
+  end;
+end;
+
+function MorseToText(const Input: string; Mode: TMorseMode): string;
+var
+  i: Integer;
+  MorseLetter, DecodedChar: string;
+begin
+  Result := '';
+  MorseLetter := '';
+  i := 1;
+
+  while i <= Length(Input) do
+  begin
+    if (Input[i] = '.') or (Input[i] = '-') then
+    begin
+      MorseLetter := MorseLetter + Input[i];
+    end
+    else if Input[i] = ' ' then
+    begin
+      if MorseLetter <> '' then
+      begin
+        DecodedChar := FindChar(MorseLetter, Mode);
+        if DecodedChar <> '' then
+          Result := Result + DecodedChar;
+        MorseLetter := '';
+      end;
+    end
+    else if (Input[i] = '/') then
+    begin
+      if MorseLetter <> '' then
+      begin
+        DecodedChar := FindChar(MorseLetter, Mode);
+        if DecodedChar <> '' then
+          Result := Result + DecodedChar;
+        MorseLetter := '';
+      end;
+      Result := Result + ' ';
+      if (i < Length(Input)) and (Input[i+1] = ' ') then
+        Inc(i);
+    end;
+    Inc(i);
+  end;
+  if MorseLetter <> '' then
+  begin
+    DecodedChar := FindChar(MorseLetter, Mode);
+    if DecodedChar <> '' then
+      Result := Result + DecodedChar;
+  end;
+end;
+function Decode(const S: AnsiString): AnsiString;
+const
+  Map: array[aNSIChar] of Byte = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 62, 0, 0, 0, 63, 52, 53,54, 55, 56, 57, 58, 59, 60, 61, 0, 0, 0, 0, 0, 0, 0,
+  0, 1, 2,3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,20, 21, 22,
+  23, 24, 25, 0, 0, 0, 0, 0, 0, 26, 27, 28, 29, 30,31, 32, 33, 34, 35, 36, 37, 38,
+  39, 40, 41, 42, 43, 44, 45,46, 47, 48, 49, 50, 51, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0);
+var
+  I: LongInt;
+begin
+  case Length(S) of
+    2:
+      begin
+        I := Map[S[1]] + (Map[S[2]] shl 6);
+        SetLength(Result, 1);
+        Move(I, Result[1], Length(Result))
+      end;
+    3:
+      begin
+        I := Map[S[1]] + (Map[S[2]] shl 6) + (Map[S[3]] shl 12);
+        SetLength(Result, 2);
+        Move(I, Result[1], Length(Result))
+      end;
+    4:
+      begin
+        I := Map[S[1]] + (Map[S[2]] shl 6) + (Map[S[3]] shl 12) +
+          (Map[S[4]] shl 18);
+        SetLength(Result, 3);
+        Move(I, Result[1], Length(Result))
+      end
+  end
+end;
+
+function PreProcess(const S: AnsiString): AnsiString;
+var
+  SS: AnsiString;
+begin
+  SS := S;
+  Result := '';
+  while SS <> '' do
+  begin
+    Result := Result + Decode(Copy(SS, 1, 4));
+    Delete(SS, 1, 4)
+  end
+end;
+
+function InternalDecrypt(const S: AnsiString; Key: Word): AnsiString;
+var
+  I: Word;
+  Seed: Word;
+begin
+  Result := S;
+  Seed := Key;
+  for I := 1 to Length(Result) do
+  begin
+    Result[I] := aNSIChar(Byte(Result[I]) xor (Seed shr 8));
+    Seed := (Byte(S[I]) + Seed) * Word(C1) + Word(C2)
+  end
+end;
+function Decrypt(const S: AnsiString; Key: Word): AnsiString;
+begin
+  Result := InternalDecrypt(PreProcess(S), Key)
+end;
+
+function Encode(const S: AnsiString): AnsiString;
+const
+  Map: array[0..63] of Char = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' +
+    'abcdefghijklmnopqrstuvwxyz0123456789+/';
+var
+  I: LongInt;
+begin
+  I := 0;
+  Move(S[1], I, Length(S));
+  case Length(S) of
+    1:
+      Result := Map[I mod 64] + Map[(I shr 6) mod 64];
+    2:
+      Result := Map[I mod 64] + Map[(I shr 6) mod 64] +
+        Map[(I shr 12) mod 64];
+    3:
+      Result := Map[I mod 64] + Map[(I shr 6) mod 64] +
+        Map[(I shr 12) mod 64] + Map[(I shr 18) mod 64]
+  end
+end;
+
+function PostProcess(const S: AnsiString): AnsiString;
+var
+  SS: AnsiString;
+begin
+  SS := S;
+  Result := '';
+  while SS <> '' do
+  begin
+    Result := Result + Encode(Copy(SS, 1, 3));
+    Delete(SS, 1, 3)
+  end
+end;
+function InternalEncrypt(const S: AnsiString; Key: Word): AnsiString;
+var
+  I: Word;
+  Seed: Word;
+begin
+  Result := S;
+  Seed := Key;
+  for I := 1 to Length(Result) do
+  begin
+    Result[I] := aNSIChar(Byte(Result[I]) xor (Seed shr 8));
+    Seed := (Byte(Result[I]) + Seed) * Word(C1) + Word(C2)
+  end
+end;
+function Encrypt(const S: AnsiString; Key: Word): AnsiString;
+begin
+  Result := PostProcess(InternalEncrypt(S, Key))
+end;
+function LRot32 (a, b: LongWord): LongWord;
+asm
+  mov  ecx, edx
+  rol  eax, cl
+end; {func LRot32}
+
+procedure md5calculate(var A, B, C, D: DWord; var data: tdata; var CurrentHash: tcur);
+begin
+  CurrentHash[0] := $67452301;
+  CurrentHash[1] := $efcdab89;
+  CurrentHash[2] := $98badcfe;
+  CurrentHash[3] := $10325476;
+
+  A := CurrentHash[0];
+  B := CurrentHash[1];
+  C := CurrentHash[2];
+  D := CurrentHash[3];
+
+  A := B + LRot32 (A + (D xor (B and (C xor D))) + data[ 0] + $d76aa478, 7);
+  D := A + LRot32 (D + (C xor (A and (B xor C))) + data[ 1] + $e8c7b756, 12);
+  C := D + LRot32 (C + (B xor (D and (A xor B))) + data[ 2] + $242070db, 17);
+  B := C + LRot32 (B + (A xor (C and (D xor A))) + data[ 3] + $c1bdceee, 22);
+  A := B + LRot32 (A + (D xor (B and (C xor D))) + data[ 4] + $f57c0faf, 7);
+  D := A + LRot32 (D + (C xor (A and (B xor C))) + data[ 5] + $4787c62a, 12);
+  C := D + LRot32 (C + (B xor (D and (A xor B))) + data[ 6] + $a8304613, 17);
+  B := C + LRot32 (B + (A xor (C and (D xor A))) + data[ 7] + $fd469501, 22);
+  A := B + LRot32 (A + (D xor (B and (C xor D))) + data[ 8] + $698098d8, 7);
+  D := A + LRot32 (D + (C xor (A and (B xor C))) + data[ 9] + $8b44f7af, 12);
+  C := D + LRot32 (C + (B xor (D and (A xor B))) + data[10] + $ffff5bb1, 17);
+  B := C + LRot32 (B + (A xor (C and (D xor A))) + data[11] + $895cd7be, 22);
+  A := B + LRot32 (A + (D xor (B and (C xor D))) + data[12] + $6b901122, 7);
+  D := A + LRot32 (D + (C xor (A and (B xor C))) + data[13] + $fd987193, 12);
+  C := D + LRot32 (C + (B xor (D and (A xor B))) + data[14] + $a679438e, 17);
+  B := C + LRot32 (B + (A xor (C and (D xor A))) + data[15] + $49b40821, 22);
+
+  A := B + LRot32 (A + (C xor (D and (B xor C))) + data[ 1] + $f61e2562, 5);
+  D := A + LRot32 (D + (B xor (C and (A xor B))) + data[ 6] + $c040b340, 9);
+  C := D + LRot32 (C + (A xor (B and (D xor A))) + data[11] + $265e5a51, 14);
+  B := C + LRot32 (B + (D xor (A and (C xor D))) + data[ 0] + $e9b6c7aa, 20);
+  A := B + LRot32 (A + (C xor (D and (B xor C))) + data[ 5] + $d62f105d, 5);
+  D := A + LRot32 (D + (B xor (C and (A xor B))) + data[10] + $02441453, 9);
+  C := D + LRot32 (C + (A xor (B and (D xor A))) + data[15] + $d8a1e681, 14);
+  B := C + LRot32 (B + (D xor (A and (C xor D))) + data[ 4] + $e7d3fbc8, 20);
+  A := B + LRot32 (A + (C xor (D and (B xor C))) + data[ 9] + $21e1cde6, 5);
+  D := A + LRot32 (D + (B xor (C and (A xor B))) + data[14] + $c33707d6, 9);
+  C := D + LRot32 (C + (A xor (B and (D xor A))) + data[ 3] + $f4d50d87, 14);
+  B := C + LRot32 (B + (D xor (A and (C xor D))) + data[ 8] + $455a14ed, 20);
+  A := B + LRot32 (A + (C xor (D and (B xor C))) + data[13] + $a9e3e905, 5);
+  D := A + LRot32 (D + (B xor (C and (A xor B))) + data[ 2] + $fcefa3f8, 9);
+  C := D + LRot32 (C + (A xor (B and (D xor A))) + data[ 7] + $676f02d9, 14);
+  B := C + LRot32 (B + (D xor (A and (C xor D))) + data[12] + $8d2a4c8a, 20);
+
+  A := B + LRot32 (A + (B xor C xor D) + data[ 5] + $fffa3942, 4);
+  D := A + LRot32 (D + (A xor B xor C) + data[ 8] + $8771f681, 11);
+  C := D + LRot32 (C + (D xor A xor B) + data[11] + $6d9d6122, 16);
+  B := C + LRot32 (B + (C xor D xor A) + data[14] + $fde5380c, 23);
+  A := B + LRot32 (A + (B xor C xor D) + data[ 1] + $a4beea44, 4);
+  D := A + LRot32 (D + (A xor B xor C) + data[ 4] + $4bdecfa9, 11);
+  C := D + LRot32 (C + (D xor A xor B) + data[ 7] + $f6bb4b60, 16);
+  B := C + LRot32 (B + (C xor D xor A) + data[10] + $bebfbc70, 23);
+  A := B + LRot32 (A + (B xor C xor D) + data[13] + $289b7ec6, 4);
+  D := A + LRot32 (D + (A xor B xor C) + data[ 0] + $eaa127fa, 11);
+  C := D + LRot32 (C + (D xor A xor B) + data[ 3] + $d4ef3085, 16);
+  B := C + LRot32 (B + (C xor D xor A) + data[ 6] + $04881d05, 23);
+  A := B + LRot32 (A + (B xor C xor D) + data[ 9] + $d9d4d039, 4);
+  D := A + LRot32 (D + (A xor B xor C) + data[12] + $e6db99e5, 11);
+  C := D + LRot32 (C + (D xor A xor B) + data[15] + $1fa27cf8, 16);
+  B := C + LRot32 (B + (C xor D xor A) + data[ 2] + $c4ac5665, 23);
+
+  A := B + LRot32 (A + (C xor (B or (not D))) + data[ 0] + $f4292244, 6);
+  D := A + LRot32 (D + (B xor (A or (not C))) + data[ 7] + $432aff97, 10);
+  C := D + LRot32 (C + (A xor (D or (not B))) + data[14] + $ab9423a7, 15);
+  B := C + LRot32 (B + (D xor (C or (not A))) + data[ 5] + $fc93a039, 21);
+  A := B + LRot32 (A + (C xor (B or (not D))) + data[12] + $655b59c3, 6);
+  D := A + LRot32 (D + (B xor (A or (not C))) + data[ 3] + $8f0ccc92, 10);
+  C := D + LRot32 (C + (A xor (D or (not B))) + data[10] + $ffeff47d, 15);
+  B := C + LRot32 (B + (D xor (C or (not A))) + data[ 1] + $85845dd1, 21);
+  A := B + LRot32 (A + (C xor (B or (not D))) + data[ 8] + $6fa87e4f, 6);
+  D := A + LRot32 (D + (B xor (A or (not C))) + data[15] + $fe2ce6e0, 10);
+  C := D + LRot32 (C + (A xor (D or (not B))) + data[ 6] + $a3014314, 15);
+  B := C + LRot32 (B + (D xor (C or (not A))) + data[13] + $4e0811a1, 21);
+  A := B + LRot32 (A + (C xor (B or (not D))) + data[ 4] + $f7537e82, 6);
+  D := A + LRot32 (D + (B xor (A or (not C))) + data[11] + $bd3af235, 10);
+  C := D + LRot32 (C + (A xor (D or (not B))) + data[ 2] + $2ad7d2bb, 15);
+  B := C + LRot32 (B + (D xor (C or (not A))) + data[ 9] + $eb86d391, 21);
+
+  Inc (CurrentHash[0], A);
+  Inc (CurrentHash[1], B);
+  Inc (CurrentHash[2], C);
+  Inc (CurrentHash[3], D);
+end;
+
+function md5 (buf: AnsiString): AnsiString;
+type
+  pint = ^Integer;
+  tbyte = array [0..15] of byte;
+  //tdata = array [0..15] of DWORD;
+  pdata = ^tdata;
+  pbyte = ^tbyte;
+var
+  i, Len: Integer;
+  data: pdata;
+  CurrentHash: tcur;
+  P: array[0..7] of Word absolute CurrentHash;
+  A, B, C, D: DWord;
+begin
+  Len := Length (buf);
+  SetLength (buf, 64);
+  buf[Len+1] := #$80;
+  FillChar (buf[Len+2], 63 - Len, 0);
+  pint (@buf[57])^ := Len * 8;
+
+  data := addr (buf[1]);
+
+  md5calculate(a,b,c,d,data^,CurrentHash);
+
+  Result := HEX[P[0]];
+  for i := 1 to 7 do
+    Result := Concat (Result, HEX[P[i]]);
+end; {func md5}
+
+function HashToHex(const H: tcur): string;
+var
+  i: Integer;
+begin
+  Result := '';
+  for i := 0 to 3 do
+    Result := Result +
+      IntToHex(H[i] and $FF, 2) +
+      IntToHex((H[i] shr 8) and $FF, 2) +
+      IntToHex((H[i] shr 16) and $FF, 2) +
+      IntToHex((H[i] shr 24) and $FF, 2);
+end;
+
+function md5UTF8(const S: UTF8String): AnsiString;
+var
+  Buf: AnsiString;
+  Padded: array[0..63] of Byte;
+  Len: Integer;
+  Data: tdata absolute Padded;
+  Hash: tcur;
+  A, B, C, D: DWord;
+begin
+  Buf := S;
+  Len := Length(Buf); // это уже длина в байтах
+
+  FillChar(Padded, SizeOf(Padded), 0);
+  Move(Buf[1], Padded[0], Len);
+
+  Padded[Len] := $80;
+  PDWord(@Padded[56])^ := Len * 8;
+
+  md5calculate(A, B, C, D, Data, Hash);
+  Result := AnsiString(HashToHex(Hash));
+end;
+function ConvertToUTF8(const AInput: string): string;
+var
+  WideStr: WideString;
+  Utf8Len: Integer;
+  Utf8Buf: PAnsiChar;
+begin
+  // Преобразуем входную строку ANSI в WideString
+  WideStr := WideString(AInput);
+
+  // Узнаем длину UTF-8 строки
+  Utf8Len := WideCharToMultiByte(CP_UTF8, 0, PWideChar(WideStr), -1, nil, 0, nil, nil);
+
+  // Выделяем буфер
+  GetMem(Utf8Buf, Utf8Len);
+
+  try
+    // Конвертируем WideString в UTF-8
+    WideCharToMultiByte(CP_UTF8, 0, PWideChar(WideStr), -1, Utf8Buf, Utf8Len, nil, nil);
+
+    // Результат — строка в кодировке UTF-8
+    Result := AnsiString(Utf8Buf);
+  finally
+    FreeMem(Utf8Buf);
+  end;
+end;
+
+
+procedure ConfigureAndExecuteDialog(Dialog: TCommonDialog; const DialogName: string; const ContentToSave: string);
+var
+  FreeSpace, TotalSpace: Int64;
+  DrivePath, DiskInfo: string;
+  DriveLetter: Char;
+begin
+  if not Assigned(Dialog) then
+  begin
+    ShowMessage('Ошибка: диалог "' + DialogName + '" не назначен.');
+    Exit;
+  end;
+
+  // Проверка, что содержимое для сохранения не пустое
+  if ContentToSave = '' then
+  begin
+    ShowMessage('Ошибка: содержимое для сохранения не может быть пустым.');
+    Exit;
+  end;
+
+  // Настройка заголовка диалога
+  if Dialog is TSaveDialog then
+    TSaveDialog(Dialog).Title := 'Выберите файл для сохранения (' + DialogName + ')';
+
+  // Выполнение диалога
+  if not Dialog.Execute then
+  begin
+    ShowMessage('Действие отменено пользователем.');
+    Exit;
+  end;
+
+  DriveLetter:=#0;
+  if Dialog is TSaveDialog then
+  begin
+    if Length(TSaveDialog(Dialog).FileName) > 0 then
+      DriveLetter := UpCase(TSaveDialog(Dialog).FileName[1])
+    else
+    begin
+      ShowMessage('Имя файла не указано.');
+      Exit;
+    end;
+  end;
+  DrivePath := DriveLetter + ':\';
+  if not GetDiskFreeSpaceEx(PChar(DrivePath), FreeSpace, TotalSpace, nil) then
+  begin
+    ShowMessage('Не удалось получить информацию о диске.');
+    Exit;
+  end;
+  DiskInfo := Format('Диск %s:\ Свободно: %.2f ГБ / %.2f ГБ',
+    [DriveLetter, FreeSpace / (1024 * 1024 * 1024), TotalSpace / (1024 * 1024 * 1024)]);
+  if Dialog is TSaveDialog then
+  begin
+    try
+      with TStringList.Create do
+      try
+        Text := ContentToSave; // Используем переданное значение cor_p
+        SaveToFile(TSaveDialog(Dialog).FileName);
+      finally
+        Free;
+      end;
+      ShowMessage('Файл успешно сохранён: ' + TSaveDialog(Dialog).FileName);
+    except
+      on E: Exception do
+        ShowMessage('Ошибка при сохранении файла: ' + E.Message);
+    end;
+  end;
+  ShowMessage('Информация о диске: ' + DiskInfo);
+end;
+procedure ShowImageFromDatabase(AConnection: TADOConnection; const ATableName,
+AFieldName, AKeyField: string; AKeyValue: Integer);
+var
+  BlobStream: TStream;
+  ImageForm: TForm;
+  ImageViewer: TImage;
+  Query: TADOQuery;
+begin
+  Query := TADOQuery.Create(nil);
+  try
+    Query.Connection := AConnection;
+    Query.SQL.Text := Format('SELECT %s FROM %s WHERE %s = :id', [AFieldName,
+    ATableName, AKeyField]);
+    Query.Parameters.ParamByName('id').Value := AKeyValue;
+    Query.Open;
+    if not Query.FieldByName(AFieldName).IsNull then
+    begin
+      ImageForm := TForm.Create(nil);
+      try
+        ImageForm.Caption := 'Просмотр изображения';
+        ImageForm.Width := 1024;
+        ImageForm.Height := 768;
+        ImageViewer := TImage.Create(ImageForm);
+        ImageViewer.Parent := ImageForm;
+        ImageViewer.Align := alClient;
+        BlobStream := Query.CreateBlobStream(Query.FieldByName(AFieldName), bmRead);
+        try
+          if ImageViewer.Picture.Graphic <> nil then
+            ImageViewer.Picture.Graphic.Free;
+          ImageViewer.Picture.Graphic := TJPEGImage.Create;
+          TJPEGImage(ImageViewer.Picture.Graphic).LoadFromStream(BlobStream);
+        except
+          on E: Exception do
+          begin
+            ShowMessage('Ошибка при загрузке изображения: ' + E.Message);
+            Exit;
+          end;
+        end;
+        ImageForm.ShowModal;
+      finally
+        ImageForm.Free;
+      end;
+    end
+    else
+    begin
+      ShowMessage('Изображение не найдено.');
+    end;
+  finally
+    Query.Free;
+  end;
+end;
+
+
+procedure ShowDBGridInTreeView(AOwner: TComponent; const DBGridName: string);
+var
+  Form: TForm;
+  TreeView: TTreeView;
+  ImageList: TImageList;
+  DBGrid: TDBGrid;
+begin
+  DBGrid := TDBGrid(AOwner.FindComponent(DBGridName));
+  if not Assigned(DBGrid) then
+  begin
+    ShowMessage('Компонент DBGrid с именем "' + DBGridName + '" не найден.');
+    Exit;
+  end;
+  Form := TForm.Create(nil);
+  try
+    Form.Caption := 'Просмотр данных';
+    Form.Width := 600;
+    Form.Height := 400;
+    ImageList := TImageList.Create(Form);
+    ImageList.Width := 32; // Ширина изображений
+    ImageList.Height := 32; // Высота изображений
+    TreeView := TTreeView.Create(Form);
+    TreeView.Parent := Form;
+    TreeView.Align := alClient;
+    TreeView.Images := ImageList; // Привязываем ImageList к TreeView
+    CopyDBGridToTreeView(DBGrid, TreeView);
+    Form.ShowModal;
+  finally
+    Form.Free; // Освобождаем форму после закрытия
+  end;
+end;
+
+procedure CopyDBGridToTreeView(DBGrid: TDBGrid; TreeView: TTreeView);
+var
+  DataSet: TDataSet;
+  TreeNode: TTreeNode;
+  i: Integer;
+  BlobStream: TStream;
+  JPEGImage: TJPEGImage;
+  Image: TImage; // Временный компонент TImage для работы с изображениями
+begin
+  // Получаем набор данных, связанный с DBGrid
+  DataSet := DBGrid.DataSource.DataSet;
+  TreeView.Items.Clear;
+  if not DataSet.Active then
+    Exit;
+  DataSet.DisableControls; // Отключаем обновление интерфейса для ускорения
+  try
+    DataSet.First;
+    while not DataSet.Eof do
+    begin
+      TreeNode := TreeView.Items.AddChild(nil, DataSet.Fields[0].AsString);
+      for i := 1 to DataSet.FieldCount - 1 do
+      begin
+        if (DataSet.Fields[i].FieldName = 'type_image') and (not DataSet.Fields[i].IsNull) then
+        begin
+          BlobStream := DataSet.CreateBlobStream(DataSet.Fields[i], bmRead);
+          try
+            JPEGImage := TJPEGImage.Create;
+            Image := TImage.Create(nil); // Создаем временный TImage
+            try
+              JPEGImage.LoadFromStream(BlobStream);
+
+              Image.Picture.Assign(JPEGImage);
+              TreeView.Items.AddChild(TreeNode, 'Изображение загружено');
+            finally
+              JPEGImage.Free;
+              Image.Free; // Освобождаем временный TImage
+            end;
+          finally
+            BlobStream.Free;
+          end;
+        end
+        else
+        begin
+          TreeView.Items.AddChild(TreeNode, DataSet.Fields[i].DisplayName + ': ' + DataSet.Fields[i].AsString);
+        end;
+      end;
+      DataSet.Next;
+    end;
+  finally
+    DataSet.EnableControls; // Включаем обновление интерфейса
+  end;
+end;
+procedure AdjustDBGridColumnWidths(const FormName: string; MaxWidth: Integer; Divider: Integer);
+var
+  Form: TForm;
+  i, j: Integer;
+  DBGrid: TDBGrid;
+  DataSet: TDataSet;
+begin
+  if MaxWidth <= 0 then
+  begin
+    ShowMessage('Ошибка: MaxWidth должен быть больше 0.');
+    Exit;
+  end;
+
+  if Divider <= 1 then
+  begin
+    ShowMessage('Ошибка: Divider должен быть больше 1.');
+    Exit;
+  end;
+  Form := FindFormByName(FormName);
+  if not Assigned(Form) then
+  begin
+    ShowMessage('Форма "' + FormName + '" не найдена.');
+    Exit;
+  end;
+  for i := 0 to Form.ComponentCount - 1 do
+  begin
+    if Form.Components[i] is TDBGrid then
+    begin
+      DBGrid := TDBGrid(Form.Components[i]);
+      if Assigned(DBGrid.DataSource) and Assigned(DBGrid.DataSource.DataSet) then
+      begin
+        DataSet := DBGrid.DataSource.DataSet;
+        if not DataSet.Active then
+        begin
+          ShowMessage('Набор данных для DBGrid "' + DBGrid.Name + '" не открыт.');
+          Continue; // Пропускаем этот DBGrid
+        end;
+        if Assigned(DBGrid.Columns) and (DBGrid.Columns.Count > 0) then
+        begin
+          for j := 0 to DBGrid.Columns.Count - 1 do
+          begin
+            if DBGrid.Columns[j].Width >= MaxWidth then
+            begin
+              DBGrid.Columns[j].Width := DBGrid.Columns[j].Width div Divider;
+            end;
+          end;
+        end;
+      end
+      else
+      begin
+        ShowMessage('DBGrid "' + DBGrid.Name + '" не имеет связанного DataSource.');
+      end;
+    end;
+  end;
+end;
+function TransliterateToLatin( CyrillicName: string): string;
+var
+  i: Integer;
+  TranslitMap: array[Char] of string;
+  Ch: Char;
+begin
+  TranslitMap['А'] := 'A'; TranslitMap['а'] := 'a';
+  TranslitMap['Б'] := 'B'; TranslitMap['б'] := 'b';
+  TranslitMap['В'] := 'V'; TranslitMap['в'] := 'v';
+  TranslitMap['Г'] := 'G'; TranslitMap['г'] := 'g';
+  TranslitMap['Д'] := 'D'; TranslitMap['д'] := 'd';
+  TranslitMap['Е'] := 'E'; TranslitMap['е'] := 'e';
+  TranslitMap['Ё'] := 'Yo'; TranslitMap['ё'] := 'yo';
+  TranslitMap['Ж'] := 'Zh'; TranslitMap['ж'] := 'zh';
+  TranslitMap['З'] := 'Z'; TranslitMap['з'] := 'z';
+  TranslitMap['И'] := 'I'; TranslitMap['и'] := 'i';
+  TranslitMap['Й'] := 'Y'; TranslitMap['й'] := 'y';
+  TranslitMap['К'] := 'K'; TranslitMap['к'] := 'k';
+  TranslitMap['Л'] := 'L'; TranslitMap['л'] := 'l';
+  TranslitMap['М'] := 'M'; TranslitMap['м'] := 'm';
+  TranslitMap['Н'] := 'N'; TranslitMap['н'] := 'n';
+  TranslitMap['О'] := 'O'; TranslitMap['о'] := 'o';
+  TranslitMap['П'] := 'P'; TranslitMap['п'] := 'p';
+  TranslitMap['Р'] := 'R'; TranslitMap['р'] := 'r';
+  TranslitMap['С'] := 'S'; TranslitMap['с'] := 's';
+  TranslitMap['Т'] := 'T'; TranslitMap['т'] := 't';
+  TranslitMap['У'] := 'U'; TranslitMap['у'] := 'u';
+  TranslitMap['Ф'] := 'F'; TranslitMap['ф'] := 'f';
+  TranslitMap['Х'] := 'Kh'; TranslitMap['х'] := 'kh';
+  TranslitMap['Ц'] := 'Ts'; TranslitMap['ц'] := 'ts';
+  TranslitMap['Ч'] := 'Ch'; TranslitMap['ч'] := 'ch';
+  TranslitMap['Ш'] := 'Sh'; TranslitMap['ш'] := 'sh';
+  TranslitMap['Щ'] := 'Sch'; TranslitMap['щ'] := 'sch';
+  TranslitMap['Ъ'] := ''; TranslitMap['ъ'] := '';
+  TranslitMap['Ы'] := 'Y'; TranslitMap['ы'] := 'y';
+  TranslitMap['Ь'] := ''; TranslitMap['ь'] := '';
+  TranslitMap['Э'] := 'E'; TranslitMap['э'] := 'e';
+  TranslitMap['Ю'] := 'Yu'; TranslitMap['ю'] := 'yu';
+  TranslitMap['Я'] := 'Ya'; TranslitMap['я'] := 'ya';
+  CyrillicName := Trim(CyrillicName);
+  CyrillicName := StringReplace(CyrillicName, #9, '', [rfReplaceAll]);
+  CyrillicName := StringReplace(CyrillicName, #10, '', [rfReplaceAll]);
+  CyrillicName := StringReplace(CyrillicName, #13, '', [rfReplaceAll]);
+  Result := '';
+  for i := 1 to Length(CyrillicName) do
+  begin
+    Ch := CyrillicName[i];
+    if Ch in ['A'..'Z', 'a'..'z', '0'..'9'] then
+      Result := Result + Ch // Латинские буквы и цифры остаются без изменений
+    else if Ch = ' ' then
+      Continue // Пропускаем пробелы
+    else if TranslitMap[Ch] <> '' then
+      Result := Result + TranslitMap[Ch] // Кириллические символы заменяются
+    else
+      Result := Result + '_'; // Все остальные символы заменяются на "_"
+  end;
+end;
+function GetAppDirectory: string;
+begin
+  Result := IncludeTrailingPathDelimiter(ExtractFilePath(ParamStr(0)));
+end;
+  procedure CreateUserFolder(const UserName: string);
+var
+  AppDir, UserSettingsDir, UserFolder: string;
+begin
+  if Trim(UserName) = '' then
+    raise Exception.Create('Имя пользователя не может быть пустым.');
+  AppDir := GetAppDirectory;
+  UserSettingsDir := IncludeTrailingPathDelimiter(AppDir + 'UserSettings');
+  if not DirectoryExists(UserSettingsDir) then
+  begin
+    if not CreateDir(UserSettingsDir) then
+      raise Exception.Create('Не удалось создать папку UserSettings.');
+  end;
+  UserFolder := IncludeTrailingPathDelimiter(UserSettingsDir + UserName);
+  if not DirectoryExists(UserFolder) then
+  begin
+    if not CreateDir(UserFolder) then
+      raise Exception.CreateFmt('Не удалось создать папку пользователя: %s', [UserFolder]);
+  end;
+
+
+  ShowMessage(Format('Папка пользователя "%s" успешно создана.', [UserName]));
+end;
+procedure WriteUserIniFile(const UserName, InitString: string;
+FormWidth, FormHeight: Integer;
+  FormColor: TColor;
+  FontName: string;
+  FontSize: Integer);
+var
+  AppDir, UserSettingsDir, UserFolder, IniFilePath: string;
+  IniFile: TIniFile;
+begin
+  if Trim(UserName) = '' then
+    raise Exception.Create('Имя пользователя не может быть пустым.');
+  if Trim(InitString) = '' then
+    raise Exception.Create('Строка InitString не может быть пустой.');
+  AppDir := IncludeTrailingPathDelimiter(ExtractFilePath(ParamStr(0)));
+  UserSettingsDir := IncludeTrailingPathDelimiter(AppDir + 'UserSettings');
+  UserFolder := IncludeTrailingPathDelimiter(UserSettingsDir + UserName);
+  if not DirectoryExists(UserFolder) then
+    raise Exception.CreateFmt('Папка пользователя "%s" не существует.', [UserName]);
+  IniFilePath := UserFolder + UserName + '.ini';
+  IniFile := TIniFile.Create(IniFilePath);
+  try
+    IniFile.WriteString('User', 'Name', UserName); // Записываем имя пользователя
+    IniFile.WriteString('User', 'InitString', InitString); // Записываем значение InitString
+    IniFile.WriteInteger('FormSettings', 'Width', FormWidth); // Ширина формы
+    IniFile.WriteInteger('FormSettings', 'Height', FormHeight); // Высота формы
+    IniFile.WriteInteger('FormSettings', 'Color', ColorToRGB(FormColor)); // Цвет формы (код RGB)
+    IniFile.WriteString('FontSettings', 'Name', FontName); // Название шрифта
+    IniFile.WriteInteger('FontSettings', 'Size', FontSize); // Размер шрифта
+    ShowMessage(Format('Файл "%s" успешно создан.', [IniFilePath]));
+  finally
+
+    IniFile.Free;
+  end;
+end;
+procedure LoadUserIniFile(const UserName: string; var InitString: string;
+var FormWidth, FormHeight: Integer;
+ var FormColor: TColor;
+  var FontName: string;
+  var FontSize: Integer);
+var
+  AppDir, UserSettingsDir, UserFolder, IniFilePath: string;
+  IniFile: TIniFile;
+begin
+  // Проверяем, что имя пользователя не пустое
+  if Trim(UserName) = '' then
+    raise Exception.Create('Имя пользователя не может быть пустым.');
+
+  // Получаем путь к папке приложения
+  AppDir := IncludeTrailingPathDelimiter(ExtractFilePath(ParamStr(0)));
+
+  // Определяем путь к папке UserSettings
+  UserSettingsDir := IncludeTrailingPathDelimiter(AppDir + 'UserSettings');
+
+  // Определяем путь к папке пользователя
+  UserFolder := IncludeTrailingPathDelimiter(UserSettingsDir + UserName);
+
+  // Проверяем, существует ли папка пользователя
+  if not DirectoryExists(UserFolder) then
+    raise Exception.CreateFmt('Папка пользователя "%s" не существует.', [UserName]);
+
+  // Определяем путь к файлу .ini
+  IniFilePath := UserFolder + UserName + '.ini';
+
+  // Проверяем, существует ли файл .ini
+  if not FileExists(IniFilePath) then
+    raise Exception.CreateFmt('Файл "%s" не найден.', [IniFilePath]);
+
+  // Создаем объект TIniFile
+  IniFile := TIniFile.Create(IniFilePath);
+  try
+    // Читаем данные из файла .ini
+    InitString := IniFile.ReadString('User', 'InitString', ''); // Читаем значение InitString
+    FormWidth := IniFile.ReadInteger('FormSettings', 'Width', 800); // Читаем ширину формы
+    FormHeight := IniFile.ReadInteger('FormSettings', 'Height', 600); // Читаем высоту формы
+    FormColor := IniFile.ReadInteger('FormSettings', 'Color', clWhite); // Читаем цвет формы
+    FontName := IniFile.ReadString('FontSettings', 'Name', 'Arial'); // Читаем название шрифта
+    FontSize := IniFile.ReadInteger('FontSettings', 'Size', 10);
+
+    ShowMessage(Format('Настройки успешно загружены из файла "%s".', [IniFilePath]));
+  finally
+    // Освобождаем ресурсы
+    IniFile.Free;
+  end;
+end;
+   procedure UniformizeDBLookupListBox(AForm: TForm; const FontName: string;
+   FontSize: Integer; FontColor: TColor; BkColor: TColor);
+var
+  i: Integer;
+  DBLookupListBox: TDBLookupListBox;
+begin
+  for i := 0 to AForm.ComponentCount - 1 do
+  begin
+    if AForm.Components[i] is TDBLookupListBox then
+    begin
+      DBLookupListBox := TDBLookupListBox(AForm.Components[i]);
+      DBLookupListBox.Font.Name := FontName;
+      DBLookupListBox.Font.Size := FontSize;
+      DBLookupListBox.Font.Color := FontColor;
+      DBLookupListBox.Color := BkColor;
+      DBLookupListBox.Refresh;
+    end;
+  end;
+end;
+
+procedure AdjustChildFormSize(AForm: TForm; AMDIForm: TForm);
+begin
+  if not Assigned(AForm) or not Assigned(AMDIForm) then
+    raise Exception.Create('Форма или MDI-контейнер не назначены.');
+
+  // Устанавливаем максимальный размер дочерней формы
+  AForm.Width := Min(AMDIForm.ClientWidth, AForm.Width);
+  AForm.Height := Min(AMDIForm.ClientHeight, AForm.Height);
+
+  // Устанавливаем позицию дочерней формы внутри MDI-контейнера
+  AForm.Left := (AMDIForm.ClientWidth - AForm.Width) div 2;
+  AForm.Top := (AMDIForm.ClientHeight - AForm.Height) div 2;
+
+  // Если форма должна быть развернута, проверяем её размеры
+  if AForm.WindowState = wsMaximized then
+  begin
+    AForm.Width := AMDIForm.ClientWidth;
+    AForm.Height := AMDIForm.ClientHeight;
+    AForm.Left := 0;
+    AForm.Top := 0;
+  end;
+end;
+initialization
+  VisitedStaticTexts := TStringList.Create;
+finalization
+if hAniCursor <> 0 then
+    DestroyCursor(hAniCursor);
+    VisitedStaticTexts.Free;
+end.

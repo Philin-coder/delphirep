@@ -1,0 +1,56 @@
+unit Un_main;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, Menus,jpeg;
+const
+  FileName = 'connection_string.txt';
+
+type
+  TFrm_main = class(TForm)
+    main_Image: TImage;
+    ItemMenu: TMainMenu;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormActivate(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_main: TFrm_main;
+
+implementation
+
+uses Un_func, Un_dm;
+
+{$R *.dfm}
+
+procedure TFrm_main.FormActivate(Sender: TObject);
+begin
+   SaveConnectionStringToFile(FileName, dm.connection.ConnectionString);
+end;
+
+procedure TFrm_main.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  main_Image.Picture := nil;
+  SaveFormState(Self);
+end;
+
+procedure TFrm_main.FormCreate(Sender: TObject);
+begin
+  SetFormPropertiesIfNeeded;
+  with main_Image do
+  begin
+    Stretch := True;
+    AutoSize := True;
+  end;
+  LoadFormState(Self);
+  LoadImageFromResource('BACKGROUND_IMAGE', main_Image);
+end;
+
+end.
