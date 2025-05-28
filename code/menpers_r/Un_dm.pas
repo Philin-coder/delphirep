@@ -20,6 +20,12 @@ type
     ins_manager: TADOStoredProc;
     upd_man: TADOStoredProc;
     del_men: TADOStoredProc;
+    ADOQuery1: TADOQuery;
+    DataSource1: TDataSource;
+    ADOStoredProc1: TADOStoredProc;
+    ADOStoredProc2: TADOStoredProc;
+    ADOStoredProc3: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public

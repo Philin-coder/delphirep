@@ -14,11 +14,13 @@ type
     ItemMenu: TMainMenu;
     usver_item: TMenuItem;
     manager_item: TMenuItem;
+    usl_item: TMenuItem;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure usver_itemClick(Sender: TObject);
     procedure manager_itemClick(Sender: TObject);
+    procedure usl_itemClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -30,7 +32,7 @@ var
 
 implementation
 
-uses Un_func, Un_dm, Un_user, Un_manager;
+uses Un_func, Un_dm, Un_user, Un_manager, Un_usl;
 
 {$R *.dfm}
 
@@ -61,6 +63,18 @@ begin
     Frm_manager.ShowModal;
   except
     Frm_manager.Free;
+    raise;
+  end;
+end;
+
+procedure TFrm_main.usl_itemClick(Sender: TObject);
+begin
+   try
+    UpdateFormProperties('Frm_usluga', 'Форма работы с данными об услуге',
+      clBtnFace, 1024, 768);
+    Frm_usluga.ShowModal;
+  except
+    Frm_usluga.Free;
     raise;
   end;
 end;

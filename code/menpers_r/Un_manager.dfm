@@ -21,7 +21,7 @@ object Frm_manager: TFrm_manager
     Top = 0
     Width = 1037
     Height = 632
-    ActivePage = delTab
+    ActivePage = InsTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
@@ -334,6 +334,10 @@ object Frm_manager: TFrm_manager
     object updTab: TTabSheet
       Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1077
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object man_upd_data_Box: TGroupBox
         Left = 0
         Top = 137

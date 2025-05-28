@@ -40,12 +40,14 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@usver_name'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end>
     Left = 112
     Top = 184
@@ -59,18 +61,21 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@user_pass'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 100
+        Value = Null
       end
       item
         Name = '@usver_name'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 100
+        Value = Null
       end>
     Left = 120
     Top = 248
@@ -84,6 +89,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@user_id'
@@ -97,6 +103,7 @@ object DM: TDM
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end>
     Left = 128
     Top = 304
@@ -110,6 +117,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@user_id'
@@ -154,12 +162,14 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@fio'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end>
     Left = 208
     Top = 192
@@ -173,30 +183,35 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@fio'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 150
+        Value = Null
       end
       item
         Name = '@cont'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end
       item
         Name = '@email'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end
       item
         Name = '@phone'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end
       item
         Name = '@User_id'
@@ -217,6 +232,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@maneger_id'
@@ -230,6 +246,7 @@ object DM: TDM
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end>
     Left = 224
     Top = 312
@@ -243,6 +260,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@maneger_id'
@@ -252,6 +270,35 @@ object DM: TDM
         Value = 0
       end>
     Left = 240
+    Top = 392
+  end
+  object ADOQuery1: TADOQuery
+    Parameters = <>
+    Left = 272
+    Top = 80
+  end
+  object DataSource1: TDataSource
+    Left = 296
+    Top = 136
+  end
+  object ADOStoredProc1: TADOStoredProc
+    Parameters = <>
+    Left = 312
+    Top = 200
+  end
+  object ADOStoredProc2: TADOStoredProc
+    Parameters = <>
+    Left = 312
+    Top = 272
+  end
+  object ADOStoredProc3: TADOStoredProc
+    Parameters = <>
+    Left = 308
+    Top = 328
+  end
+  object ADOStoredProc4: TADOStoredProc
+    Parameters = <>
+    Left = 312
     Top = 392
   end
 end
