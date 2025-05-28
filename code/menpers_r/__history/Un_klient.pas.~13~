@@ -55,7 +55,6 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure sel_klient_btnClick(Sender: TObject);
-    procedure klient_fndEditKeyPress(Sender: TObject; var Key: Char);
 
   private
     { Private declarations }
@@ -94,36 +93,6 @@ begin
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   UniformizeComponentAnchors(Self);
   LoadFormState(Self);
-end;
-
-procedure TFrm_klient.klient_fndEditKeyPress(Sender: TObject; var Key: Char);
-begin
-   try
-   dm.klientQuery.SQL.Text:=
-    'select'+' '+
-    'klient.klient_id,'+' '+
-     'klient.naim,'+' '+
-      'klient.otch,'+' '+
-      'klient.snmae,'+' '+
-        'klient.b_date,'+' '+
-        'klient.cont,'+' '+
-        'klient.phone,'+' '+
-        'mplan.nazv,'+' '+
-        'usluga.opis,'+' '+
-        'klient.email'+' '+
-        'from klient'+' '+
-        'inner join mplan on mplan.id_plan=klient.id_plan'+' '+
-        'inner join usluga on usluga.id_usl=klient.id_usl'+' '+
-        ' where 1=1'+' '+
-        'and usluga.opis like'+
-   QuotedStr(Concat(klient_fndedit.Text,#37));
-   dm.klientQuery.close;
-   dm.klientQuery.Open;
-except on E: Exception do
-  begin
-  ShowMessage('Ошибка'+' '+E.Message);
-  end;
-  end;
 end;
 
 procedure TFrm_klient.sel_klient_btnClick(Sender: TObject);

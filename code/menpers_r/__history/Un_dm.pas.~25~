@@ -22,6 +22,18 @@ type
     del_men: TADOStoredProc;
     UslQuery: TADOQuery;
     uslDS: TDataSource;
+    sel_usl_by_opis: TADOStoredProc;
+    ins_usluga: TADOStoredProc;
+    okaz_usl: TADOStoredProc;
+    del_usluga: TADOStoredProc;
+    PlanQuery: TADOQuery;
+    sel_plan_by_nazv: TADOStoredProc;
+    PlanDS: TDataSource;
+    ins_mplan: TADOStoredProc;
+    upd_plan: TADOStoredProc;
+    del_mplan: TADOStoredProc;
+    klientQuery: TADOQuery;
+    klientDS: TDataSource;
     ADOStoredProc1: TADOStoredProc;
     ADOStoredProc2: TADOStoredProc;
     ADOStoredProc3: TADOStoredProc;

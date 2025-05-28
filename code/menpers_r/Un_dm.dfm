@@ -537,8 +537,22 @@ object DM: TDM
     Left = 504
     Top = 136
   end
-  object ADOStoredProc1: TADOStoredProc
-    Parameters = <>
+  object sel_klient_by_fam: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_klient_by_fam;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@snmae'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end>
     Left = 512
     Top = 208
   end

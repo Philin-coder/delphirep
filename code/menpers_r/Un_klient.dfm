@@ -35,7 +35,7 @@ object Frm_klient: TFrm_klient
         Anchors = [akTop, akRight]
         Caption = #1055#1086#1080#1089#1082' '#1087#1086':'
         TabOrder = 0
-        object lient_condEdit: TLabeledEdit
+        object klient_condEdit: TLabeledEdit
           Left = 0
           Top = 48
           Width = 1054
@@ -45,7 +45,7 @@ object Frm_klient: TFrm_klient
           EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1092#1072#1084#1080#1083#1080#1080' '#1082#1083#1080#1077#1085#1090#1072
           TabOrder = 0
         end
-        object lient_fndEdit: TLabeledEdit
+        object klient_fndEdit: TLabeledEdit
           Left = 3
           Top = 104
           Width = 1030
@@ -54,6 +54,7 @@ object Frm_klient: TFrm_klient
           EditLabel.Height = 13
           EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1086#1087#1080#1089#1072#1085#1080#1102
           TabOrder = 1
+          OnKeyPress = klient_fndEditKeyPress
         end
       end
       object sel_klient_btnBox: TGroupBox
@@ -70,6 +71,7 @@ object Frm_klient: TFrm_klient
           Height = 25
           Caption = #1042#1099#1073#1086#1088
           TabOrder = 0
+          OnClick = sel_klient_btnClick
         end
       end
       object sel_klient_grouperBox: TGroupBox

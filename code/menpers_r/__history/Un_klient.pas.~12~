@@ -17,8 +17,8 @@ type
     sel_klient_btnBox: TGroupBox;
     sel_klient_grouperBox: TGroupBox;
     sel_klient_dataBox: TGroupBox;
-    klient_condEdit: TLabeledEdit;
-    klient_fndEdit: TLabeledEdit;
+    lient_condEdit: TLabeledEdit;
+    lient_fndEdit: TLabeledEdit;
     sel_klient_btn: TButton;
     sel_klient_grd: TDBGrid;
     sel_klient_fio_m_radio: TRadioButton;
@@ -54,8 +54,6 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
-    procedure sel_klient_btnClick(Sender: TObject);
-    procedure klient_fndEditKeyPress(Sender: TObject; var Key: Char);
 
   private
     { Private declarations }
@@ -94,56 +92,6 @@ begin
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   UniformizeComponentAnchors(Self);
   LoadFormState(Self);
-end;
-
-procedure TFrm_klient.klient_fndEditKeyPress(Sender: TObject; var Key: Char);
-begin
-   try
-   dm.klientQuery.SQL.Text:=
-    'select'+' '+
-    'klient.klient_id,'+' '+
-     'klient.naim,'+' '+
-      'klient.otch,'+' '+
-      'klient.snmae,'+' '+
-        'klient.b_date,'+' '+
-        'klient.cont,'+' '+
-        'klient.phone,'+' '+
-        'mplan.nazv,'+' '+
-        'usluga.opis,'+' '+
-        'klient.email'+' '+
-        'from klient'+' '+
-        'inner join mplan on mplan.id_plan=klient.id_plan'+' '+
-        'inner join usluga on usluga.id_usl=klient.id_usl'+' '+
-        ' where 1=1'+' '+
-        'and usluga.opis like'+
-   QuotedStr(Concat(klient_fndedit.Text,#37));
-   dm.klientQuery.close;
-   dm.klientQuery.Open;
-except on E: Exception do
-  begin
-  ShowMessage('Ошибка'+' '+E.Message);
-  end;
-  end;
-end;
-
-procedure TFrm_klient.sel_klient_btnClick(Sender: TObject);
-begin
-  try
-    if not DM.Connection.Connected then
-      raise Exception.Create('Соединение с базой не установлено');
-    with DM.sel_klient_by_fam do
-    begin
-      Close;
-      Parameters.ParamByName('@snmae').Value :=klient_condEdit.Text;
-      Open;
-       DM.klientQuery.Recordset:=dm.sel_klient_by_fam.Recordset;
-    end;
-  except
-    on E: EDatabaseError do
-      ShowMessage('Ошибка: ' + E.Message);
-    on E: Exception do
-      ShowMessage('Ошибка: ' + E.Message);
-  end;
 end;
 
 end.

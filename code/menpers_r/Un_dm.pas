@@ -34,7 +34,7 @@ type
     del_mplan: TADOStoredProc;
     klientQuery: TADOQuery;
     klientDS: TDataSource;
-    ADOStoredProc1: TADOStoredProc;
+    sel_klient_by_fam: TADOStoredProc;
     ADOStoredProc2: TADOStoredProc;
     ADOStoredProc3: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;

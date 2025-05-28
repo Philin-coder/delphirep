@@ -115,7 +115,7 @@ begin
         'inner join mplan on mplan.id_plan=klient.id_plan'+' '+
         'inner join usluga on usluga.id_usl=klient.id_usl'+' '+
         ' where 1=1'+' '+
-        'and usluga.opis like'+
+        'and klient.snmae like'+
    QuotedStr(Concat(klient_fndedit.Text,#37));
    dm.klientQuery.close;
    dm.klientQuery.Open;
