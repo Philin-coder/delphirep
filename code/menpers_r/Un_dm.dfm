@@ -270,7 +270,7 @@ object DM: TDM
         Value = 0
       end>
     Left = 232
-    Top = 368
+    Top = 384
   end
   object UslQuery: TADOQuery
     Connection = Connection
@@ -364,9 +364,24 @@ object DM: TDM
     Left = 308
     Top = 328
   end
-  object ADOStoredProc4: TADOStoredProc
-    Parameters = <>
-    Left = 312
+  object del_usluga: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'del_usluga;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@id_usl'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 304
     Top = 392
   end
 end

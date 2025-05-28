@@ -34,20 +34,20 @@ type
     Usl_upd_pas_lbl: TStaticText;
     u_Usl_id_inp: TDBLookupComboBox;
     man_upd_btn: TButton;
-    del_man_data_box: TGroupBox;
-    del_man_inp_box: TGroupBox;
-    del_man_btn_box: TGroupBox;
-    del_man_btn: TButton;
-    del_man_usr_lbl: TStaticText;
-    del_man_id_inp_DBL: TDBLookupComboBox;
+    del_Usl_data_box: TGroupBox;
+    del_Usl_inp_box: TGroupBox;
+    del_Usl_btn_box: TGroupBox;
+    del_Usl_btn: TButton;
+    del_Usl_u_lbl: TStaticText;
+    del_Usl_id_inp_DBL: TDBLookupComboBox;
     ins_Usl_grd: TDBGrid;
-    Del_men_grd: TDBGrid;
     sel_usl_Grid: TDBGrid;
     usl_cost_inp: TLabeledEdit;
     Usl_upd_Grd: TDBGrid;
     u_dateo_inp: TDateTimePicker;
     Usl_upd_date_o_lbl: TStaticText;
     paydcB: TCheckBox;
+    Del_usl_grd: TDBGrid;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -59,6 +59,7 @@ type
     procedure Usl_ins_btnClick(Sender: TObject);
     procedure paydcBClick(Sender: TObject);
     procedure man_upd_btnClick(Sender: TObject);
+    procedure del_Usl_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -73,6 +74,45 @@ implementation
 uses Un_dm, Un_func;
 
 {$R *.dfm}
+
+procedure TFrm_usluga.del_Usl_btnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (del_Usl_id_inp_DBL.Text='')
+  );
+  if AreFieldsEmpty then
+  begin
+       MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.del_usluga do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@id_usl').Value :=
+           dm.UslQuery.FieldByName('id_usl').AsString;
+           ExecProc;
+           dm.uslQuery.Close;
+           dm.uslQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+
+end;
 
 procedure TFrm_usluga.FormActivate(Sender: TObject);
 begin

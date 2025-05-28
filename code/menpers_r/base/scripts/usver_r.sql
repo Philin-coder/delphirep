@@ -1,7 +1,7 @@
 USE [men_pers_r]
 GO
 
-/****** Object:  Table [dbo].[usver_r]    Script Date: 27.05.2025 10:25:11 ******/
+/****** Object:  Table [dbo].[usver_r]    Script Date: 28.05.2025 16:51:40 ******/
 SET ANSI_NULLS ON
 GO
 

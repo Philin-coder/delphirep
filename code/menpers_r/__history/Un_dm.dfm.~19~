@@ -1,0 +1,372 @@
+object DM: TDM
+  OldCreateOrder = False
+  Height = 472
+  Width = 645
+  object Connection: TADOConnection
+    Connected = True
+    ConnectionString = 
+      'Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security In' +
+      'fo=False;Initial Catalog=men_pers_r'
+    LoginPrompt = False
+    Provider = 'SQLOLEDB.1'
+    Left = 8
+    Top = 8
+  end
+  object userQuery: TADOQuery
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select'
+      ' usver_r.user_id,'
+      ' usver_r.user_pas,'
+      ' usver_r.usver_name'
+      'from usver_r '
+      'where 1=1')
+    Left = 104
+    Top = 72
+  end
+  object userDS: TDataSource
+    DataSet = userQuery
+    Left = 104
+    Top = 128
+  end
+  object sel_user_by_fio: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_user_by_fio;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@usver_name'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+        Value = Null
+      end>
+    Left = 112
+    Top = 184
+  end
+  object ins_pass: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'ins_pass;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@user_pass'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 100
+        Value = Null
+      end
+      item
+        Name = '@usver_name'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 100
+        Value = Null
+      end>
+    Left = 120
+    Top = 248
+  end
+  object upd_pas: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_pas;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@user_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@user_pas'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+        Value = Null
+      end>
+    Left = 128
+    Top = 304
+  end
+  object del_pass: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'del_pass;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@user_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 128
+    Top = 376
+  end
+  object manQuery: TADOQuery
+    Active = True
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      'manager.maneger_id,'
+      'manager.fio,'
+      'manager.cont,'
+      'manager.email,'
+      'manager.phone,'
+      ' usver_r.usver_name'
+      'from manager '
+      'inner join usver_r on usver_r.user_id=manager.user_id'
+      'where 1=1')
+    Left = 176
+    Top = 72
+  end
+  object manDS: TDataSource
+    DataSet = manQuery
+    Left = 192
+    Top = 136
+  end
+  object sel_man_by_fio: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_man_by_fio;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@fio'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+        Value = Null
+      end>
+    Left = 208
+    Top = 192
+  end
+  object ins_manager: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'ins_manager;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@fio'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 150
+        Value = Null
+      end
+      item
+        Name = '@cont'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+        Value = Null
+      end
+      item
+        Name = '@email'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+        Value = Null
+      end
+      item
+        Name = '@phone'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+        Value = Null
+      end
+      item
+        Name = '@User_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 216
+    Top = 248
+  end
+  object upd_man: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_man;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@maneger_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@m_email'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+        Value = Null
+      end>
+    Left = 224
+    Top = 312
+  end
+  object del_men: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'del_men;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@maneger_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 232
+    Top = 368
+  end
+  object UslQuery: TADOQuery
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      'usluga.id_usl,'
+      'usluga.opis,'
+      'usluga.date_o,'
+      'usluga.cost'
+      'from usluga '
+      'where 1=1 '
+      'and usluga.date_o is  null')
+    Left = 272
+    Top = 80
+  end
+  object uslDS: TDataSource
+    DataSet = UslQuery
+    Left = 296
+    Top = 136
+  end
+  object sel_usl_by_opis: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_usl_by_opis;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@opis'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 150
+      end>
+    Left = 312
+    Top = 200
+  end
+  object ins_usluga: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'ins_usluga;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@opis'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 150
+      end
+      item
+        Name = '@cost'
+        Attributes = [paNullable]
+        DataType = ftFloat
+        NumericScale = 2
+        Precision = 10
+      end>
+    Left = 312
+    Top = 256
+  end
+  object okaz_usl: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'okaz_usl;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@id_usl'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@date_o'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end>
+    Left = 308
+    Top = 328
+  end
+  object ADOStoredProc4: TADOStoredProc
+    Parameters = <>
+    Left = 312
+    Top = 392
+  end
+end

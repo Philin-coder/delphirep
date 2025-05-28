@@ -25,7 +25,7 @@ type
     sel_usl_by_opis: TADOStoredProc;
     ins_usluga: TADOStoredProc;
     okaz_usl: TADOStoredProc;
-    ADOStoredProc4: TADOStoredProc;
+    del_usluga: TADOStoredProc;
   private
     { Private declarations }
   public
