@@ -25,32 +25,33 @@ type
     sel_plan_opis_radio: TRadioButton;
     sel_plan_reset_radio: TRadioButton;
     man_data_box: TGroupBox;
-    plan_btn_box: TGroupBox;
-    Ins_plan_inp_box: TGroupBox;
-    ins_plan_nazv_inp: TLabeledEdit;
-    plan_ins_btn: TButton;
-    plan_upd_data_Box: TGroupBox;
-    plan_upd_btn_Box: TGroupBox;
-    plan_upd_inp_Box: TGroupBox;
-    plan_upd_pl_lbl: TStaticText;
-    u_plan_id_inp: TDBLookupComboBox;
-    plan_upd_btn: TButton;
+    man_btn_box: TGroupBox;
+    Ins_man_inp_box: TGroupBox;
+    man_fio_inp: TLabeledEdit;
+    man_ins_btn: TButton;
+    man_upd_data_Box: TGroupBox;
+    man_upd_btn_Box: TGroupBox;
+    man_upd_inp_Box: TGroupBox;
+    man_upd_pas_lbl: TStaticText;
+    u_man_id_inp: TDBLookupComboBox;
+    man_upd_btn: TButton;
+    u_man_mail_inp: TLabeledEdit;
     del_man_data_box: TGroupBox;
     del_man_inp_box: TGroupBox;
     del_man_btn_box: TGroupBox;
     del_man_btn: TButton;
     del_man_usr_lbl: TStaticText;
     del_man_id_inp_DBL: TDBLookupComboBox;
-    ins_p_user_id_dbl: TDBLookupComboBox;
+    ins_man_grd: TDBGrid;
+    man_cont_lbl: TStaticText;
+    mancontinp: TMaskEdit;
+    manmailinp: TLabeledEdit;
+    man_phone_lbl: TStaticText;
+    man_phone_inp: TMaskEdit;
+    manloglbl: TStaticText;
+    m_user_id_dbl: TDBLookupComboBox;
+    man_upd_grd: TDBGrid;
     Del_men_grd: TDBGrid;
-    ins_plan_Grd: TDBGrid;
-    Plan_daten_lbl: TStaticText;
-    ins_plan_date_n_inp: TDateTimePicker;
-    ins_plan_opis_inp: TLabeledEdit;
-    ins_plan_manager_id_lbl: TStaticText;
-    plan_upd_Grd: TDBGrid;
-    u_plan_date_n_lbl: TStaticText;
-    U_plan_date_n_inp: TDateTimePicker;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -59,8 +60,6 @@ type
     procedure sel_plan_fio_m_radioClick(Sender: TObject);
     procedure sel_plan_opis_radioClick(Sender: TObject);
     procedure sel_plan_reset_radioClick(Sender: TObject);
-    procedure plan_ins_btnClick(Sender: TObject);
-    procedure plan_upd_btnClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -98,6 +97,8 @@ begin
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   UniformizeComponentAnchors(Self);
   LoadFormState(Self);
+  mancontinp.EditMask := '!+7 \(999\) 000-00-00;1;_';
+  man_phone_inp.EditMask := '!+7 \(999\) 000-00-00;1;_';
 end;
 
 procedure TFrm_plan.plan_fndEditKeyPress(Sender: TObject; var Key: Char);
@@ -122,95 +123,6 @@ except on E: Exception do
   ShowMessage('Ошибка'+' '+E.Message);
   end;
   end;
-end;
-
-procedure TFrm_plan.plan_ins_btnClick(Sender: TObject);
-const
-  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
-var
-  AreFieldsEmpty: Boolean;
-  AreFieldsValid: Boolean;
-begin
-  AreFieldsEmpty:=(
-  (Trim(ins_plan_nazv_inp.Text)='')or
-  (Trim(ins_plan_opis_inp.Text)='')or
-  (ins_p_user_id_dbl.Text='')
-  );
-  AreFieldsValid:=(
-  ValidateComponentText(ins_plan_nazv_inp,AllowedChars)and
-  ValidateComponentText(ins_plan_opis_inp,AllowedChars)
-  );
-  if AreFieldsEmpty or not AreFieldsValid then
-  begin
-    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-   try
-      with dm.ins_mplan do
-      begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@nazv').Value :=ins_plan_nazv_inp.Text;
-           Parameters.ParamByName('@date_n').Value:=ins_plan_date_n_inp.Date;
-           Parameters.ParamByName('@opis').Value:=ins_plan_opis_inp.Text;
-           Parameters.ParamByName('@maneger_id').Value:=
-           dm.manQuery.FieldByName('maneger_id').AsString;
-           ExecProc;
-           dm.PlanQuery.Close;
-           dm.PlanQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-    end;
-end;
-
-procedure TFrm_plan.plan_upd_btnClick(Sender: TObject);
-var
-  AreFieldsEmpty: Boolean;
-begin
-  AreFieldsEmpty:=(
-  (u_plan_id_inp.Text='')
-  );
-  if AreFieldsEmpty then
-  begin
-    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-  try
-      with dm.upd_plan do
-      begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@id_plan').Value :=
-           dm.PlanQuery.FieldByName('id_plan').AsString;
-           Parameters.ParamByName('@date_n').Value:=U_plan_date_n_inp.Date;
-           ExecProc;
-           dm.PlanQuery.Close;
-           dm.PlanQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-    end;
 end;
 
 procedure TFrm_plan.sel_plan_btnClick(Sender: TObject);

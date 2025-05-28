@@ -29,7 +29,7 @@ type
     PlanQuery: TADOQuery;
     sel_plan_by_nazv: TADOStoredProc;
     PlanDS: TDataSource;
-    ADOStoredProc2: TADOStoredProc;
+    ins_mplan: TADOStoredProc;
     ADOStoredProc3: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;
   private

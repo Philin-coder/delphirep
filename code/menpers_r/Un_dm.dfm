@@ -426,8 +426,41 @@ object DM: TDM
     Left = 392
     Top = 128
   end
-  object ADOStoredProc2: TADOStoredProc
-    Parameters = <>
+  object ins_mplan: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'ins_mplan;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@nazv'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end
+      item
+        Name = '@date_n'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end
+      item
+        Name = '@opis'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 150
+      end
+      item
+        Name = '@maneger_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
     Left = 400
     Top = 264
   end

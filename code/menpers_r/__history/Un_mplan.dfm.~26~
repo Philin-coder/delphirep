@@ -21,7 +21,7 @@ object Frm_plan: TFrm_plan
     Top = 0
     Width = 1037
     Height = 632
-    ActivePage = selTab
+    ActivePage = InsTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
@@ -35,25 +35,26 @@ object Frm_plan: TFrm_plan
         Anchors = [akTop, akRight]
         Caption = #1055#1086#1080#1089#1082' '#1087#1086':'
         TabOrder = 0
-        object mancondEdit: TLabeledEdit
+        object plan_condEdit: TLabeledEdit
           Left = 0
           Top = 48
           Width = 1054
           Height = 21
-          EditLabel.Width = 140
+          EditLabel.Width = 221
           EditLabel.Height = 13
-          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1060#1048#1054
+          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1085#1072#1079#1074#1072#1085#1080#1102' '#1084#1077#1085#1076#1078#1077#1088#1072
           TabOrder = 0
         end
-        object manfndEdit: TLabeledEdit
+        object plan_fndEdit: TLabeledEdit
           Left = 3
           Top = 104
           Width = 1030
           Height = 21
-          EditLabel.Width = 104
+          EditLabel.Width = 119
           EditLabel.Height = 13
-          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1083#1086#1075#1080#1085#1091
+          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1086#1087#1080#1089#1072#1085#1080#1102
           TabOrder = 1
+          OnKeyPress = plan_fndEditKeyPress
         end
       end
       object sel_plan_btnBox: TGroupBox
@@ -70,6 +71,7 @@ object Frm_plan: TFrm_plan
           Height = 25
           Caption = #1042#1099#1073#1086#1088
           TabOrder = 0
+          OnClick = sel_plan_btnClick
         end
       end
       object sel_plan_grouperBox: TGroupBox
@@ -80,29 +82,32 @@ object Frm_plan: TFrm_plan
         Align = alTop
         Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '
         TabOrder = 2
-        object selmanfioradio: TRadioButton
+        object sel_plan_fio_m_radio: TRadioButton
           Left = 56
           Top = 40
-          Width = 113
+          Width = 129
           Height = 17
-          Caption = #1055#1086' '#1060#1048#1054
+          Caption = #1055#1086' '#1060#1048#1054' '#1084#1077#1085#1077#1076#1078#1077#1088#1072
           TabOrder = 0
+          OnClick = sel_plan_fio_m_radioClick
         end
-        object selmanlogradio: TRadioButton
+        object sel_plan_opis_radio: TRadioButton
           Left = 344
           Top = 40
           Width = 113
           Height = 17
-          Caption = #1055#1086' '#1083#1086#1075#1080#1085#1091
+          Caption = #1055#1086' '#1086#1087#1080#1089#1072#1085#1080#1102
           TabOrder = 1
+          OnClick = sel_plan_opis_radioClick
         end
-        object selmanresetradio: TRadioButton
+        object sel_plan_reset_radio: TRadioButton
           Left = 664
           Top = 40
           Width = 113
           Height = 17
           Caption = 'C'#1073#1088#1086#1089
           TabOrder = 2
+          OnClick = sel_plan_reset_radioClick
         end
       end
       object sel_plan_dataBox: TGroupBox
@@ -119,7 +124,7 @@ object Frm_plan: TFrm_plan
           Width = 1025
           Height = 269
           Align = alClient
-          DataSource = DM.manDS
+          DataSource = DM.PlanDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -129,45 +134,39 @@ object Frm_plan: TFrm_plan
           Columns = <
             item
               Expanded = False
-              FieldName = 'maneger_id'
+              FieldName = 'id_plan'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
               Visible = True
             end
             item
               Expanded = False
+              FieldName = 'nazv'
+              Title.Caption = #1053#1072#1079#1074#1072#1085#1080#1077
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'date_n'
+              Title.Caption = #1044#1072#1090#1072' '#1074#1089#1090#1091#1087#1083#1077#1085#1080#1103' '#1074' '#1089#1080#1083#1091
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'opis'
+              Title.Caption = #1054#1087#1080#1089#1072#1085#1080#1077
+              Visible = True
+            end
+            item
+              Expanded = False
               FieldName = 'fio'
-              Title.Caption = #1060#1048#1054
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'cont'
-              Title.Caption = #1050#1086#1085#1090#1072#1082#1090#1085#1099#1077' '#1076#1072#1085#1085#1099#1077
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'email'
-              Title.Caption = 'E-mail'
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'phone'
-              Title.Caption = #1058#1077#1083#1077#1092#1086#1085
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'usver_name'
-              Title.Caption = #1051#1086#1075#1080#1085
+              Title.Caption = #1052#1077#1085#1077#1076#1078#1077#1088
               Visible = True
             end>
         end
       end
     end
     object InsTab: TTabSheet
-      Caption = #1044#1086#1073#1072#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1084#1077#1085#1077#1076#1078#1077#1088#1077
+      Caption = #1044#1086#1073#1072#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1083#1072#1085#1077
       ImageIndex = 1
       object man_data_box: TGroupBox
         Left = 0
@@ -177,13 +176,13 @@ object Frm_plan: TFrm_plan
         Align = alClient
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object ins_man_grd: TDBGrid
+        object ins_plan_Grd: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
           Height = 254
           Align = alClient
-          DataSource = DM.manDS
+          DataSource = DM.PlanDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -193,59 +192,54 @@ object Frm_plan: TFrm_plan
           Columns = <
             item
               Expanded = False
-              FieldName = 'maneger_id'
+              FieldName = 'id_plan'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
               Visible = True
             end
             item
               Expanded = False
+              FieldName = 'nazv'
+              Title.Caption = #1053#1072#1079#1074#1072#1085#1080#1077
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'date_n'
+              Title.Caption = #1044#1072#1090#1072' '#1074#1089#1090#1091#1087#1083#1077#1085#1080#1103' '#1074' '#1089#1080#1083#1091
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'opis'
+              Title.Caption = #1054#1087#1080#1089#1072#1085#1080#1077
+              Visible = True
+            end
+            item
+              Expanded = False
               FieldName = 'fio'
-              Title.Caption = #1060#1048#1054
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'cont'
-              Title.Caption = #1050#1086#1085#1090#1072#1082#1090#1085#1099#1077' '#1076#1072#1085#1085#1099#1077
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'email'
-              Title.Caption = 'E-mail'
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'phone'
-              Title.Caption = #1058#1077#1083#1077#1092#1086#1085
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'usver_name'
-              Title.Caption = #1051#1086#1075#1080#1085
+              Title.Caption = #1052#1077#1085#1077#1076#1078#1077#1088
               Visible = True
             end>
         end
       end
-      object man_btn_box: TGroupBox
+      object plan_btn_box: TGroupBox
         Left = 0
         Top = 536
         Width = 1029
         Height = 68
         Align = alBottom
         TabOrder = 1
-        object man_ins_btn: TButton
+        object plan_ins_btn: TButton
           Left = 400
           Top = 24
           Width = 75
           Height = 25
           Caption = #1044#1086#1073#1072#1074#1080#1090#1100
           TabOrder = 0
+          OnClick = plan_ins_btnClick
         end
       end
-      object Ins_man_inp_box: TGroupBox
+      object Ins_plan_inp_box: TGroupBox
         Left = 0
         Top = 0
         Width = 1029
@@ -253,73 +247,60 @@ object Frm_plan: TFrm_plan
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        object man_fio_inp: TLabeledEdit
+        object ins_plan_nazv_inp: TLabeledEdit
           Left = 3
           Top = 32
           Width = 1033
           Height = 21
-          EditLabel.Width = 23
+          EditLabel.Width = 48
           EditLabel.Height = 13
-          EditLabel.Caption = #1060#1048#1054
+          EditLabel.Caption = #1053#1072#1079#1074#1072#1085#1080#1077
           TabOrder = 0
         end
-        object man_cont_lbl: TStaticText
-          Left = 3
-          Top = 59
-          Width = 109
-          Height = 17
-          Caption = #1050#1086#1085#1090#1072#1082#1090#1085#1099#1077' '#1076#1072#1085#1085#1099#1077
-          TabOrder = 1
-        end
-        object mancontinp: TMaskEdit
-          Left = 3
-          Top = 82
-          Width = 1022
-          Height = 21
-          TabOrder = 2
-        end
-        object manmailinp: TLabeledEdit
-          Left = 3
-          Top = 136
-          Width = 1033
-          Height = 21
-          EditLabel.Width = 24
-          EditLabel.Height = 13
-          EditLabel.Caption = 'email'
-          TabOrder = 3
-        end
-        object man_phone_lbl: TStaticText
-          Left = 3
-          Top = 163
-          Width = 90
-          Height = 17
-          Caption = #1051#1080#1095#1085#1099#1081' '#1090#1077#1083#1077#1092#1086#1085
-          TabOrder = 4
-        end
-        object man_phone_inp: TMaskEdit
-          Left = 4
-          Top = 186
-          Width = 1022
-          Height = 21
-          TabOrder = 5
-        end
-        object manloglbl: TStaticText
-          Left = 3
-          Top = 213
-          Width = 34
-          Height = 17
-          Caption = #1051#1086#1075#1080#1085
-          TabOrder = 6
-        end
-        object m_user_id_dbl: TDBLookupComboBox
+        object ins_p_user_id_dbl: TDBLookupComboBox
           Left = 2
-          Top = 236
+          Top = 218
           Width = 1024
           Height = 21
-          KeyField = 'user_id'
-          ListField = 'usver_name'
-          ListSource = DM.userDS
-          TabOrder = 7
+          KeyField = 'maneger_id'
+          ListField = 'fio'
+          ListSource = DM.manDS
+          TabOrder = 1
+        end
+        object Plan_daten_lbl: TStaticText
+          Left = 3
+          Top = 75
+          Width = 127
+          Height = 17
+          Caption = #1044#1072#1090#1072' '#1074#1089#1090#1091#1087#1083#1077#1085#1080#1103' '#1074' '#1089#1080#1083#1091
+          TabOrder = 2
+        end
+        object ins_plan_date_n_inp: TDateTimePicker
+          Left = 3
+          Top = 98
+          Width = 1024
+          Height = 21
+          Date = 45805.835715393520000000
+          Time = 45805.835715393520000000
+          TabOrder = 3
+        end
+        object ins_plan_opis_inp: TLabeledEdit
+          Left = 3
+          Top = 152
+          Width = 1033
+          Height = 21
+          EditLabel.Width = 49
+          EditLabel.Height = 13
+          EditLabel.Caption = #1054#1087#1080#1089#1072#1085#1080#1077
+          TabOrder = 4
+        end
+        object ins_plan_manager_id_lbl: TStaticText
+          Left = 0
+          Top = 195
+          Width = 57
+          Height = 17
+          Caption = #1052#1077#1085#1077#1076#1078#1077#1088
+          TabOrder = 5
         end
       end
     end
