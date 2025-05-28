@@ -338,29 +338,8 @@ object DM: TDM
     Left = 312
     Top = 256
   end
-  object okaz_usl: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'okaz_usl;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@id_usl'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = 0
-      end
-      item
-        Name = '@date_o'
-        Attributes = [paNullable]
-        DataType = ftDateTime
-        Size = 10
-      end>
+  object ADOStoredProc3: TADOStoredProc
+    Parameters = <>
     Left = 308
     Top = 328
   end

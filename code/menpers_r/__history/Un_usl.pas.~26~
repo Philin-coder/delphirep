@@ -58,7 +58,6 @@ type
     procedure sel_usl_reset_radioClick(Sender: TObject);
     procedure Usl_ins_btnClick(Sender: TObject);
     procedure paydcBClick(Sender: TObject);
-    procedure man_upd_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -96,66 +95,12 @@ begin
   LoadFormState(Self);
 end;
 
-procedure TFrm_usluga.man_upd_btnClick(Sender: TObject);
-var
-  AreFieldsEmpty: Boolean;
-begin
-   AreFieldsEmpty:=(
-   (u_Usl_id_inp.Text='')
-   );
-   if AreFieldsEmpty then
-   begin
-   MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-   end;
-   try
-      with dm.okaz_usl do
-      begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@id_usl').Value :=
-           dm.UslQuery.FieldByName('id_usl').AsString;
-           Parameters.ParamByName('@date_o').Value:=u_dateo_inp.Date;
-           ExecProc;
-           dm.uslQuery.Close;
-           dm.uslQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-    end;
-
-end;
-
 procedure TFrm_usluga.paydcBClick(Sender: TObject);
 begin
   case paydcB.Checked of
   true:
   begin
-   with dm.uslQuery do
-     begin
-      close;
-      sql.Clear;
-      sql.Text:=
-     'select'+' '+
-        'usluga.id_usl,'+' '+
-        'usluga.opis,'+' '+
-        'usluga.date_o,'+
-        'usluga.cost'+' '+
-        'from usluga'+' '+
-        'where 1=1'+' '+
-      'and usluga.date_o is  not null';
-      Open;
-     end;
+
   end;
   false:
   begin
