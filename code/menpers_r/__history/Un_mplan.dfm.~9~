@@ -1,7 +1,7 @@
-object Frm_usluga: TFrm_usluga
+object Frm_mplan: TFrm_mplan
   Left = 0
   Top = 0
-  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1076#1072#1085#1085#1099#1084#1080' '#1086#1073' '#1091#1089#1083#1091#1075#1077
+  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1076#1072#1085#1085#1099#1084#1080'  '#1084#1077#1085#1077#1076#1078#1077#1088#1072
   ClientHeight = 632
   ClientWidth = 1037
   Color = clBtnFace
@@ -16,17 +16,21 @@ object Frm_usluga: TFrm_usluga
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object UslPC: TPageControl
+  object manPC: TPageControl
     Left = 0
     Top = 0
     Width = 1037
     Height = 632
-    ActivePage = selTab
+    ActivePage = InsTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
-      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1091#1089#1083#1091#1075#1077
-      object sel_Usl_InpBox: TGroupBox
+      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1084#1077#1085#1077#1076#1078#1077#1088#1077
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
+      object semanInpBox: TGroupBox
         Left = 0
         Top = 0
         Width = 1029
@@ -35,46 +39,44 @@ object Frm_usluga: TFrm_usluga
         Anchors = [akTop, akRight]
         Caption = #1055#1086#1080#1089#1082' '#1087#1086':'
         TabOrder = 0
-        object Usl_condEdit: TLabeledEdit
+        object mancondEdit: TLabeledEdit
           Left = 0
           Top = 48
           Width = 1054
           Height = 21
-          EditLabel.Width = 162
+          EditLabel.Width = 140
           EditLabel.Height = 13
-          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1086#1087#1080#1072#1085#1080#1102
+          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1060#1048#1054
           TabOrder = 0
         end
-        object Usl_fndEdit: TLabeledEdit
+        object manfndEdit: TLabeledEdit
           Left = 3
           Top = 104
           Width = 1030
           Height = 21
-          EditLabel.Width = 119
+          EditLabel.Width = 104
           EditLabel.Height = 13
-          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1086#1087#1080#1089#1072#1085#1080#1102
+          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1083#1086#1075#1080#1085#1091
           TabOrder = 1
-          OnKeyPress = Usl_fndEditKeyPress
         end
       end
-      object sel_Usl_btnBox: TGroupBox
+      object selmanrbtnBox: TGroupBox
         Left = 0
         Top = 544
         Width = 1029
         Height = 60
         Align = alBottom
         TabOrder = 1
-        object sel_Usl_btn: TButton
+        object selman_btn: TButton
           Left = 432
           Top = 16
           Width = 75
           Height = 25
           Caption = #1042#1099#1073#1086#1088
           TabOrder = 0
-          OnClick = sel_Usl_btnClick
         end
       end
-      object sel_Usl_grouperBox: TGroupBox
+      object selmangrouperBox: TGroupBox
         Left = 0
         Top = 153
         Width = 1029
@@ -82,23 +84,23 @@ object Frm_usluga: TFrm_usluga
         Align = alTop
         Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '
         TabOrder = 2
-        object sel_Usl_opis_radio: TRadioButton
+        object selmanfioradio: TRadioButton
           Left = 56
           Top = 40
           Width = 113
           Height = 17
-          Caption = #1055#1086' '#1086#1087#1080#1089#1072#1085#1080#1102
+          Caption = #1055#1086' '#1060#1048#1054
           TabOrder = 0
         end
-        object sel_Usl_costradio: TRadioButton
+        object selmanlogradio: TRadioButton
           Left = 344
           Top = 40
           Width = 113
           Height = 17
-          Caption = #1055#1086' '#1094#1077#1085#1077
+          Caption = #1055#1086' '#1083#1086#1075#1080#1085#1091
           TabOrder = 1
         end
-        object sel_usl_reset_radio: TRadioButton
+        object selmanresetradio: TRadioButton
           Left = 664
           Top = 40
           Width = 113
@@ -107,7 +109,7 @@ object Frm_usluga: TFrm_usluga
           TabOrder = 2
         end
       end
-      object sel_Usl_dataBox: TGroupBox
+      object selmandataBox: TGroupBox
         Left = 0
         Top = 258
         Width = 1029
@@ -115,13 +117,13 @@ object Frm_usluga: TFrm_usluga
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1099#1093' '
         TabOrder = 3
-        object sel_usl_Grid: TDBGrid
+        object selman_grd: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
           Height = 269
           Align = alClient
-          DataSource = DM.uslDS
+          DataSource = DM.manDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -131,33 +133,45 @@ object Frm_usluga: TFrm_usluga
           Columns = <
             item
               Expanded = False
-              FieldName = 'id_usl'
+              FieldName = 'maneger_id'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'opis'
-              Title.Caption = #1054#1087#1080#1089#1072#1085#1080#1077
+              FieldName = 'fio'
+              Title.Caption = #1060#1048#1054
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'date_o'
-              Title.Caption = #1044#1072#1090#1072' '#1086#1082#1072#1079#1072#1085#1080#1103' '#1091#1089#1083#1091#1075#1080
+              FieldName = 'cont'
+              Title.Caption = #1050#1086#1085#1090#1072#1082#1090#1085#1099#1077' '#1076#1072#1085#1085#1099#1077
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'cost'
-              Title.Caption = #1062#1077#1085#1072
+              FieldName = 'email'
+              Title.Caption = 'E-mail'
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'phone'
+              Title.Caption = #1058#1077#1083#1077#1092#1086#1085
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'usver_name'
+              Title.Caption = #1051#1086#1075#1080#1085
               Visible = True
             end>
         end
       end
     end
     object InsTab: TTabSheet
-      Caption = #1044#1086#1073#1072#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1077
+      Caption = #1044#1086#1073#1072#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1084#1077#1085#1077#1076#1078#1077#1088#1077
       ImageIndex = 1
       object man_data_box: TGroupBox
         Left = 0
@@ -173,7 +187,7 @@ object Frm_usluga: TFrm_usluga
           Width = 1025
           Height = 254
           Align = alClient
-          DataSource = DM.uslDS
+          DataSource = DM.manDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -183,26 +197,38 @@ object Frm_usluga: TFrm_usluga
           Columns = <
             item
               Expanded = False
-              FieldName = 'id_usl'
+              FieldName = 'maneger_id'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'opis'
-              Title.Caption = #1054#1087#1080#1089#1072#1085#1080#1077
+              FieldName = 'fio'
+              Title.Caption = #1060#1048#1054
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'date_o'
-              Title.Caption = #1044#1072#1090#1072' '#1086#1082#1072#1079#1072#1085#1080#1103' '#1091#1089#1083#1091#1075#1080
+              FieldName = 'cont'
+              Title.Caption = #1050#1086#1085#1090#1072#1082#1090#1085#1099#1077' '#1076#1072#1085#1085#1099#1077
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'cost'
-              Title.Caption = #1062#1077#1085#1072
+              FieldName = 'email'
+              Title.Caption = 'E-mail'
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'phone'
+              Title.Caption = #1058#1077#1083#1077#1092#1086#1085
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'usver_name'
+              Title.Caption = #1051#1086#1075#1080#1085
               Visible = True
             end>
         end
@@ -221,6 +247,7 @@ object Frm_usluga: TFrm_usluga
           Height = 25
           Caption = #1044#1086#1073#1072#1074#1080#1090#1100
           TabOrder = 0
+          OnClick = man_ins_btnClick
         end
       end
       object Ins_man_inp_box: TGroupBox
@@ -255,6 +282,7 @@ object Frm_usluga: TFrm_usluga
           Width = 1022
           Height = 21
           TabOrder = 2
+          OnExit = mancontinpExit
         end
         object manmailinp: TLabeledEdit
           Left = 3
@@ -302,8 +330,12 @@ object Frm_usluga: TFrm_usluga
       end
     end
     object updTab: TTabSheet
-      Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1077
+      Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1084#1077#1085#1077#1076#1078#1077#1088#1077
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object man_upd_data_Box: TGroupBox
         Left = 0
         Top = 137
@@ -419,7 +451,7 @@ object Frm_usluga: TFrm_usluga
       end
     end
     object delTab: TTabSheet
-      Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1077
+      Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1084#1077#1085#1077#1076#1078#1077#1088#1077
       ImageIndex = 3
       object del_man_data_box: TGroupBox
         Left = 0
@@ -522,6 +554,7 @@ object Frm_usluga: TFrm_usluga
           Height = 25
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
+          OnClick = del_man_btnClick
         end
       end
     end

@@ -21,7 +21,7 @@ object Frm_usluga: TFrm_usluga
     Top = 0
     Width = 1037
     Height = 632
-    ActivePage = delTab
+    ActivePage = updTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet

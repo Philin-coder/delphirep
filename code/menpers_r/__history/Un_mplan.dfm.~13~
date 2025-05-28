@@ -1,7 +1,7 @@
-object Frm_manager: TFrm_manager
+object Frm_plan: TFrm_plan
   Left = 0
   Top = 0
-  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1076#1072#1085#1085#1099#1084#1080'  '#1084#1077#1085#1077#1076#1078#1077#1088#1072
+  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1076#1072#1085#1085#1099#1084#1080'  '#1087#1083#1072#1085#1072' '#1086#1082#1072#1079#1072#1085#1080#1103' '#1091#1089#1083#1091#1075
   ClientHeight = 632
   ClientWidth = 1037
   Color = clBtnFace
@@ -21,15 +21,11 @@ object Frm_manager: TFrm_manager
     Top = 0
     Width = 1037
     Height = 632
-    ActivePage = InsTab
+    ActivePage = delTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
       Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1084#1077#1085#1077#1076#1078#1077#1088#1077
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object semanInpBox: TGroupBox
         Left = 0
         Top = 0
@@ -58,7 +54,6 @@ object Frm_manager: TFrm_manager
           EditLabel.Height = 13
           EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1083#1086#1075#1080#1085#1091
           TabOrder = 1
-          OnKeyPress = manfndEditKeyPress
         end
       end
       object selmanrbtnBox: TGroupBox
@@ -75,7 +70,6 @@ object Frm_manager: TFrm_manager
           Height = 25
           Caption = #1042#1099#1073#1086#1088
           TabOrder = 0
-          OnClick = selman_btnClick
         end
       end
       object selmangrouperBox: TGroupBox
@@ -93,7 +87,6 @@ object Frm_manager: TFrm_manager
           Height = 17
           Caption = #1055#1086' '#1060#1048#1054
           TabOrder = 0
-          OnClick = selmanfioradioClick
         end
         object selmanlogradio: TRadioButton
           Left = 344
@@ -102,7 +95,6 @@ object Frm_manager: TFrm_manager
           Height = 17
           Caption = #1055#1086' '#1083#1086#1075#1080#1085#1091
           TabOrder = 1
-          OnClick = selmanlogradioClick
         end
         object selmanresetradio: TRadioButton
           Left = 664
@@ -111,7 +103,6 @@ object Frm_manager: TFrm_manager
           Height = 17
           Caption = 'C'#1073#1088#1086#1089
           TabOrder = 2
-          OnClick = selmanresetradioClick
         end
       end
       object selmandataBox: TGroupBox
@@ -287,7 +278,6 @@ object Frm_manager: TFrm_manager
           Width = 1022
           Height = 21
           TabOrder = 2
-          OnExit = mancontinpExit
         end
         object manmailinp: TLabeledEdit
           Left = 3
@@ -313,7 +303,6 @@ object Frm_manager: TFrm_manager
           Width = 1022
           Height = 21
           TabOrder = 5
-          OnExit = man_phone_inpExit
         end
         object manloglbl: TStaticText
           Left = 3
@@ -338,10 +327,6 @@ object Frm_manager: TFrm_manager
     object updTab: TTabSheet
       Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1084#1077#1085#1077#1076#1078#1077#1088#1077
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object man_upd_data_Box: TGroupBox
         Left = 0
         Top = 137
@@ -416,7 +401,6 @@ object Frm_manager: TFrm_manager
           Height = 25
           Caption = #1054#1073#1085#1086#1074#1080#1090#1100
           TabOrder = 0
-          OnClick = man_upd_btnClick
         end
       end
       object man_upd_inp_Box: TGroupBox
@@ -561,7 +545,6 @@ object Frm_manager: TFrm_manager
           Height = 25
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
-          OnClick = del_man_btnClick
         end
       end
     end

@@ -26,6 +26,12 @@ type
     ins_usluga: TADOStoredProc;
     okaz_usl: TADOStoredProc;
     del_usluga: TADOStoredProc;
+    PlanQuery: TADOQuery;
+    ADOStoredProc1: TADOStoredProc;
+    PlanDS: TDataSource;
+    ADOStoredProc2: TADOStoredProc;
+    ADOStoredProc3: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public

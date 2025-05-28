@@ -9,7 +9,7 @@ object DM: TDM
       'fo=False;Initial Catalog=men_pers_r'
     LoginPrompt = False
     Provider = 'SQLOLEDB.1'
-    Left = 24
+    Left = 8
     Top = 8
   end
   object userQuery: TADOQuery
@@ -383,48 +383,5 @@ object DM: TDM
       end>
     Left = 304
     Top = 392
-  end
-  object PlanQuery: TADOQuery
-    Active = True
-    Connection = Connection
-    CursorType = ctStatic
-    Parameters = <>
-    SQL.Strings = (
-      'select '
-      '  mplan.id_plan,'
-      '  mplan.nazv,'
-      '  mplan.date_n,'
-      '  mplan.opis,'
-      '  manager.fio '
-      'from mplan '
-      'inner join manager on manager.maneger_id=mplan.maneger_id'
-      'where 1=1')
-    Left = 384
-    Top = 72
-  end
-  object ADOStoredProc1: TADOStoredProc
-    Parameters = <>
-    Left = 392
-    Top = 200
-  end
-  object PlanDS: TDataSource
-    DataSet = PlanQuery
-    Left = 392
-    Top = 128
-  end
-  object ADOStoredProc2: TADOStoredProc
-    Parameters = <>
-    Left = 400
-    Top = 264
-  end
-  object ADOStoredProc3: TADOStoredProc
-    Parameters = <>
-    Left = 416
-    Top = 344
-  end
-  object ADOStoredProc4: TADOStoredProc
-    Parameters = <>
-    Left = 416
-    Top = 408
   end
 end

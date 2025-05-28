@@ -1,4 +1,4 @@
-object Frm_manager: TFrm_manager
+object Frm_mplan: TFrm_mplan
   Left = 0
   Top = 0
   Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1076#1072#1085#1085#1099#1084#1080'  '#1084#1077#1085#1077#1076#1078#1077#1088#1072
@@ -75,7 +75,6 @@ object Frm_manager: TFrm_manager
           Height = 25
           Caption = #1042#1099#1073#1086#1088
           TabOrder = 0
-          OnClick = selman_btnClick
         end
       end
       object selmangrouperBox: TGroupBox
@@ -93,7 +92,6 @@ object Frm_manager: TFrm_manager
           Height = 17
           Caption = #1055#1086' '#1060#1048#1054
           TabOrder = 0
-          OnClick = selmanfioradioClick
         end
         object selmanlogradio: TRadioButton
           Left = 344
@@ -102,7 +100,6 @@ object Frm_manager: TFrm_manager
           Height = 17
           Caption = #1055#1086' '#1083#1086#1075#1080#1085#1091
           TabOrder = 1
-          OnClick = selmanlogradioClick
         end
         object selmanresetradio: TRadioButton
           Left = 664
@@ -111,7 +108,6 @@ object Frm_manager: TFrm_manager
           Height = 17
           Caption = 'C'#1073#1088#1086#1089
           TabOrder = 2
-          OnClick = selmanresetradioClick
         end
       end
       object selmandataBox: TGroupBox
@@ -416,7 +412,6 @@ object Frm_manager: TFrm_manager
           Height = 25
           Caption = #1054#1073#1085#1086#1074#1080#1090#1100
           TabOrder = 0
-          OnClick = man_upd_btnClick
         end
       end
       object man_upd_inp_Box: TGroupBox

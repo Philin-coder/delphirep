@@ -385,9 +385,7 @@ object DM: TDM
     Top = 392
   end
   object PlanQuery: TADOQuery
-    Active = True
     Connection = Connection
-    CursorType = ctStatic
     Parameters = <>
     SQL.Strings = (
       'select '
@@ -400,7 +398,7 @@ object DM: TDM
       'inner join manager on manager.maneger_id=mplan.maneger_id'
       'where 1=1')
     Left = 384
-    Top = 72
+    Top = 64
   end
   object ADOStoredProc1: TADOStoredProc
     Parameters = <>
