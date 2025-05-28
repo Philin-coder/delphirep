@@ -35,13 +35,14 @@ type
     plan_upd_pl_lbl: TStaticText;
     u_plan_id_inp: TDBLookupComboBox;
     plan_upd_btn: TButton;
-    del_plan_data_box: TGroupBox;
-    del_plan_inp_box: TGroupBox;
-    del_plan_btn_box: TGroupBox;
-    del_plan_btn: TButton;
-    del_plan_pl_lbl: TStaticText;
-    del_plan_id_inp_DBL: TDBLookupComboBox;
+    del_man_data_box: TGroupBox;
+    del_man_inp_box: TGroupBox;
+    del_man_btn_box: TGroupBox;
+    del_man_btn: TButton;
+    del_man_usr_lbl: TStaticText;
+    del_man_id_inp_DBL: TDBLookupComboBox;
     ins_p_user_id_dbl: TDBLookupComboBox;
+    Del_men_grd: TDBGrid;
     ins_plan_Grd: TDBGrid;
     Plan_daten_lbl: TStaticText;
     ins_plan_date_n_inp: TDateTimePicker;
@@ -50,7 +51,6 @@ type
     plan_upd_Grd: TDBGrid;
     u_plan_date_n_lbl: TStaticText;
     U_plan_date_n_inp: TDateTimePicker;
-    Del_plan_Grd: TDBGrid;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -61,7 +61,6 @@ type
     procedure sel_plan_reset_radioClick(Sender: TObject);
     procedure plan_ins_btnClick(Sender: TObject);
     procedure plan_upd_btnClick(Sender: TObject);
-    procedure del_plan_btnClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -77,23 +76,6 @@ implementation
 uses Un_dm, Un_func;
 
 {$R *.dfm}
-
-procedure TFrm_plan.del_plan_btnClick(Sender: TObject);
-var
-  AreFieldsEmpty: Boolean;
-begin
-  AreFieldsEmpty:=(
-  (del_plan_id_inp_DBL.Text='')
-  );
-  if AreFieldsEmpty then
-  begin
-       MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-
-end;
 
 procedure TFrm_plan.FormActivate(Sender: TObject);
 begin

@@ -19,6 +19,18 @@ type
     sel_man_by_fio: TADOStoredProc;
     ins_manager: TADOStoredProc;
     upd_man: TADOStoredProc;
+    del_men: TADOStoredProc;
+    UslQuery: TADOQuery;
+    uslDS: TDataSource;
+    sel_usl_by_opis: TADOStoredProc;
+    ins_usluga: TADOStoredProc;
+    okaz_usl: TADOStoredProc;
+    del_usluga: TADOStoredProc;
+    PlanQuery: TADOQuery;
+    sel_plan_by_nazv: TADOStoredProc;
+    PlanDS: TDataSource;
+    ins_mplan: TADOStoredProc;
+    upd_plan: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }

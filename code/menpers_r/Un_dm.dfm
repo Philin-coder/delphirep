@@ -130,7 +130,6 @@ object DM: TDM
     Top = 376
   end
   object manQuery: TADOQuery
-    Active = True
     Connection = Connection
     CursorType = ctStatic
     Parameters = <>
@@ -385,7 +384,6 @@ object DM: TDM
     Top = 392
   end
   object PlanQuery: TADOQuery
-    Active = True
     Connection = Connection
     CursorType = ctStatic
     Parameters = <>
@@ -464,12 +462,35 @@ object DM: TDM
     Left = 400
     Top = 264
   end
-  object ADOStoredProc3: TADOStoredProc
-    Parameters = <>
+  object upd_plan: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_plan;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@id_plan'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@date_n'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end>
     Left = 416
     Top = 344
   end
-  object ADOStoredProc4: TADOStoredProc
+  object del_mplan: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'del_mplan;1'
     Parameters = <>
     Left = 416
     Top = 408

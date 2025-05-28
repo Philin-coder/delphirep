@@ -30,8 +30,8 @@ type
     sel_plan_by_nazv: TADOStoredProc;
     PlanDS: TDataSource;
     ins_mplan: TADOStoredProc;
-    ADOStoredProc3: TADOStoredProc;
-    ADOStoredProc4: TADOStoredProc;
+    upd_plan: TADOStoredProc;
+    del_mplan: TADOStoredProc;
   private
     { Private declarations }
   public
