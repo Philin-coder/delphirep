@@ -8,22 +8,22 @@ uses
 
 type
   TFrm_plan = class(TForm)
-    manPC: TPageControl;
+    plan_PC: TPageControl;
     selTab: TTabSheet;
     InsTab: TTabSheet;
     updTab: TTabSheet;
     delTab: TTabSheet;
-    semanInpBox: TGroupBox;
-    selmanrbtnBox: TGroupBox;
-    selmangrouperBox: TGroupBox;
-    selmandataBox: TGroupBox;
-    mancondEdit: TLabeledEdit;
-    manfndEdit: TLabeledEdit;
-    selman_btn: TButton;
-    selman_grd: TDBGrid;
-    selmanfioradio: TRadioButton;
-    selmanlogradio: TRadioButton;
-    selmanresetradio: TRadioButton;
+    sel_plan_InpBox: TGroupBox;
+    sel_plan_btnBox: TGroupBox;
+    sel_plan_grouperBox: TGroupBox;
+    sel_plan_dataBox: TGroupBox;
+    plan_condEdit: TLabeledEdit;
+    plan_fndEdit: TLabeledEdit;
+    sel_plan_btn: TButton;
+    sel_plan_grd: TDBGrid;
+    sel_plan_fio_m_radio: TRadioButton;
+    sel_plan_opis_radio: TRadioButton;
+    sel_plan_reset_radio: TRadioButton;
     man_data_box: TGroupBox;
     man_btn_box: TGroupBox;
     Ins_man_inp_box: TGroupBox;
@@ -55,7 +55,9 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
-    procedure man_ins_btnClick(Sender: TObject);
+    procedure sel_plan_btnClick(Sender: TObject);
+    procedure plan_fndEditKeyPress(Sender: TObject; var Key: Char);
+
   private
     { Private declarations }
   public
@@ -73,7 +75,7 @@ uses Un_dm, Un_func;
 
 procedure TFrm_plan.FormActivate(Sender: TObject);
 begin
-  dm.userQuery.Open;
+  dm.PlanQuery.Open;
   dm.manQuery.Open;
   AdjustDBGridColumnWidths('Frm_plan',6000, 10);
 end;
@@ -94,6 +96,50 @@ begin
   LoadFormState(Self);
   mancontinp.EditMask := '!+7 \(999\) 000-00-00;1;_';
   man_phone_inp.EditMask := '!+7 \(999\) 000-00-00;1;_';
+end;
+
+procedure TFrm_plan.plan_fndEditKeyPress(Sender: TObject; var Key: Char);
+begin
+   try
+   dm.planQuery.SQL.Text:=
+     'select'+' '+
+        'mplan.id_plan,'+' '+
+        'mplan.nazv,'+' '+
+        'mplan.date_n,'+' '+
+        'mplan.opis,'+' '+
+        'manager.fio'+' '+
+        'from mplan'+' '+
+        'inner join manager on manager.maneger_id=mplan.maneger_id'+' '+
+      'where 1=1'+' '+
+        'and mplan.opis like'+
+   QuotedStr(Concat(plan_fndedit.Text,#37));
+   dm.planQuery.close;
+   dm.PlanQuery.Open;
+except on E: Exception do
+  begin
+  ShowMessage('Ошибка'+' '+E.Message);
+  end;
+  end;
+end;
+
+procedure TFrm_plan.sel_plan_btnClick(Sender: TObject);
+begin
+   try
+    if not DM.Connection.Connected then
+      raise Exception.Create('Соединение с базой не установлено');
+    with DM.sel_plan_by_nazv do
+    begin
+      Close;
+      Parameters.ParamByName('@nazv').Value :=plan_condEdit.Text;
+      Open;
+       DM.PlanQuery.Recordset:=dm.sel_plan_by_nazv.Recordset;
+    end;
+  except
+    on E: EDatabaseError do
+      ShowMessage('Ошибка: ' + E.Message);
+    on E: Exception do
+      ShowMessage('Ошибка: ' + E.Message);
+  end;
 end;
 
 end.

@@ -27,7 +27,7 @@ type
     okaz_usl: TADOStoredProc;
     del_usluga: TADOStoredProc;
     PlanQuery: TADOQuery;
-    ADOStoredProc1: TADOStoredProc;
+    sel_plan_by_nazv: TADOStoredProc;
     PlanDS: TDataSource;
     ADOStoredProc2: TADOStoredProc;
     ADOStoredProc3: TADOStoredProc;

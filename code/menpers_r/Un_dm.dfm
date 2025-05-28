@@ -402,9 +402,23 @@ object DM: TDM
     Left = 384
     Top = 72
   end
-  object ADOStoredProc1: TADOStoredProc
-    Parameters = <>
-    Left = 392
+  object sel_plan_by_nazv: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_plan_by_nazv;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@nazv'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end>
+    Left = 408
     Top = 200
   end
   object PlanDS: TDataSource

@@ -58,8 +58,6 @@ type
     procedure sel_plan_btnClick(Sender: TObject);
     procedure plan_fndEditKeyPress(Sender: TObject; var Key: Char);
     procedure sel_plan_fio_m_radioClick(Sender: TObject);
-    procedure sel_plan_opis_radioClick(Sender: TObject);
-    procedure sel_plan_reset_radioClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -155,16 +153,8 @@ begin
       close;
       sql.Clear;
       sql.Text:=
-      'select'+' '+
-        'mplan.id_plan,'+' '+
-        'mplan.nazv,'+' '+
-        'mplan.date_n,'+' '+
-        'mplan.opis,'+' '+
-        'manager.fio'+' '+
-        'from mplan'+' '+
-        'inner join manager on manager.maneger_id=mplan.maneger_id'+' '+
-      'where 1=1'+' '+
-     'order by manager.fio asc';
+
+     //'order by usluga.opis asc';
       Open;
      end;
     except on E: EADOError do
@@ -173,82 +163,6 @@ begin
     end;
     end;
   end;
-end;
-
-procedure TFrm_plan.sel_plan_opis_radioClick(Sender: TObject);
-begin
-  if  sel_plan_opis_radio.Checked=true then
-  begin
-    try
-     with dm.planQuery do
-     begin
-      close;
-      sql.Clear;
-      sql.Text:=
-      'select'+' '+
-        'mplan.id_plan,'+' '+
-        'mplan.nazv,'+' '+
-        'mplan.date_n,'+' '+
-        'mplan.opis,'+' '+
-        'manager.fio'+' '+
-        'from mplan'+' '+
-        'inner join manager on manager.maneger_id=mplan.maneger_id'+' '+
-      'where 1=1'+' '+
-     'order by mplan.opis asc';
-      Open;
-     end;
-    except on E: EADOError do
-    begin
-      ShowMessage('Ошибка :'+' '+E.Message);
-    end;
-    end;
-  end;
-end;
-
-procedure TFrm_plan.sel_plan_reset_radioClick(Sender: TObject);
-var i,j,c:Integer;
-begin
-  if  sel_plan_reset_radio.Checked=true then
-with Frm_plan do
-    for I := 0 to ComponentCount - 1 do
-     begin
-       if (Components[i] is TLabeledEdit)  then
-        begin
-          (Components[i] as TLabeledEdit).Clear;
-        end;
-     end;
-       with Frm_plan do
-    for c := 0 to ComponentCount - 1 do
-     begin
-       if (Components[c] is TCheckBox)  then
-        begin
-          (Components[c] as TCheckBox).Checked:=False;
-        end;
-     end;
-     with dm.planQuery do
-     begin
-     Close;
-     sql.Clear;
-     sql.Text:=
-       'select'+' '+
-        'mplan.id_plan,'+' '+
-        'mplan.nazv,'+' '+
-        'mplan.date_n,'+' '+
-        'mplan.opis,'+' '+
-        'manager.fio'+' '+
-        'from mplan'+' '+
-        'inner join manager on manager.maneger_id=mplan.maneger_id'+' '+
-      'where 1=1';
-    Open;
-     end;
-    with Frm_plan do
-    for j := 0 to ComponentCount - 1 do
-    begin
-      if(Components[j] is TRadioButton)  then
-      begin
-        (Components[j] as TRadioButton).Checked:=False;
-      end;
-    end;
 end;
 
 end.
