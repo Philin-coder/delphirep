@@ -247,7 +247,6 @@ var
   PriceText: string;
   PriceValue: Int64;
 begin
-  PriceText:=usl_cost_inp.Text;
   AreFieldsEmpty:=(
   (Trim(usl_opis_inp.Text)='')or
   (Trim(usl_cost_inp.Text)='')
@@ -263,29 +262,7 @@ begin
     Beep;
     Exit;
   end;
-  try
-      with dm.ins_usluga do
-      begin
-         PriceValue:=StrToInt64(usl_cost_inp.Text);
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@opis').Value :=usl_opis_inp.Text;
-           Parameters.ParamByName('@cost').Value :=PriceValue;
-           ExecProc;
-           dm.uslQuery.Close;
-           dm.uslQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-    end;
+
 end;
 
 end.

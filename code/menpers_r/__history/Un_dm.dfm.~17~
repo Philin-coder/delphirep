@@ -312,31 +312,10 @@ object DM: TDM
     Left = 312
     Top = 200
   end
-  object ins_usluga: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'ins_usluga;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@opis'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 150
-      end
-      item
-        Name = '@cost'
-        Attributes = [paNullable]
-        DataType = ftFloat
-        NumericScale = 2
-        Precision = 10
-      end>
+  object ADOStoredProc2: TADOStoredProc
+    Parameters = <>
     Left = 312
-    Top = 256
+    Top = 272
   end
   object ADOStoredProc3: TADOStoredProc
     Parameters = <>

@@ -26,7 +26,7 @@ type
     Usl_data_box: TGroupBox;
     Usl_btn_box: TGroupBox;
     Ins_Usl_inp_box: TGroupBox;
-    usl_opis_inp: TLabeledEdit;
+    usl_fio_inp: TLabeledEdit;
     Usl_ins_btn: TButton;
     man_upd_data_Box: TGroupBox;
     man_upd_btn_Box: TGroupBox;
@@ -54,7 +54,6 @@ type
     procedure sel_Usl_opis_radioClick(Sender: TObject);
     procedure sel_Usl_costradioClick(Sender: TObject);
     procedure sel_usl_reset_radioClick(Sender: TObject);
-    procedure Usl_ins_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -236,56 +235,6 @@ except on E: Exception do
   ShowMessage('Ошибка'+' '+E.Message);
   end;
   end;
-end;
-
-procedure TFrm_usluga.Usl_ins_btnClick(Sender: TObject);
-const
-  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
-var
-  AreFieldsEmpty: Boolean;
-  AreFieldsValid: Boolean;
-  PriceText: string;
-  PriceValue: Int64;
-begin
-  PriceText:=usl_cost_inp.Text;
-  AreFieldsEmpty:=(
-  (Trim(usl_opis_inp.Text)='')or
-  (Trim(usl_cost_inp.Text)='')
-  );
-  AreFieldsValid:=(
-  ValidateComponentText(usl_opis_inp,AllowedChars)and
-  IsDigitsOnly(usl_cost_inp.Text)
-  );
-  if AreFieldsEmpty or not AreFieldsValid then
-  begin
-      MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-  try
-      with dm.ins_usluga do
-      begin
-         PriceValue:=StrToInt64(usl_cost_inp.Text);
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@opis').Value :=usl_opis_inp.Text;
-           Parameters.ParamByName('@cost').Value :=PriceValue;
-           ExecProc;
-           dm.uslQuery.Close;
-           dm.uslQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-    end;
 end;
 
 end.

@@ -23,11 +23,11 @@ type
     sel_Usl_opis_radio: TRadioButton;
     sel_Usl_costradio: TRadioButton;
     sel_usl_reset_radio: TRadioButton;
-    Usl_data_box: TGroupBox;
-    Usl_btn_box: TGroupBox;
-    Ins_Usl_inp_box: TGroupBox;
-    usl_opis_inp: TLabeledEdit;
-    Usl_ins_btn: TButton;
+    man_data_box: TGroupBox;
+    man_btn_box: TGroupBox;
+    Ins_man_inp_box: TGroupBox;
+    man_fio_inp: TLabeledEdit;
+    man_ins_btn: TButton;
     man_upd_data_Box: TGroupBox;
     man_upd_btn_Box: TGroupBox;
     man_upd_inp_Box: TGroupBox;
@@ -41,11 +41,17 @@ type
     del_man_btn: TButton;
     del_man_usr_lbl: TStaticText;
     del_man_id_inp_DBL: TDBLookupComboBox;
-    ins_Usl_grd: TDBGrid;
+    ins_man_grd: TDBGrid;
+    man_cont_lbl: TStaticText;
+    mancontinp: TMaskEdit;
+    manmailinp: TLabeledEdit;
+    man_phone_lbl: TStaticText;
+    man_phone_inp: TMaskEdit;
+    manloglbl: TStaticText;
+    m_user_id_dbl: TDBLookupComboBox;
     man_upd_grd: TDBGrid;
     Del_men_grd: TDBGrid;
     sel_usl_Grid: TDBGrid;
-    usl_cost_inp: TLabeledEdit;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -54,7 +60,6 @@ type
     procedure sel_Usl_opis_radioClick(Sender: TObject);
     procedure sel_Usl_costradioClick(Sender: TObject);
     procedure sel_usl_reset_radioClick(Sender: TObject);
-    procedure Usl_ins_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -236,56 +241,6 @@ except on E: Exception do
   ShowMessage('Ошибка'+' '+E.Message);
   end;
   end;
-end;
-
-procedure TFrm_usluga.Usl_ins_btnClick(Sender: TObject);
-const
-  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
-var
-  AreFieldsEmpty: Boolean;
-  AreFieldsValid: Boolean;
-  PriceText: string;
-  PriceValue: Int64;
-begin
-  PriceText:=usl_cost_inp.Text;
-  AreFieldsEmpty:=(
-  (Trim(usl_opis_inp.Text)='')or
-  (Trim(usl_cost_inp.Text)='')
-  );
-  AreFieldsValid:=(
-  ValidateComponentText(usl_opis_inp,AllowedChars)and
-  IsDigitsOnly(usl_cost_inp.Text)
-  );
-  if AreFieldsEmpty or not AreFieldsValid then
-  begin
-      MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-  try
-      with dm.ins_usluga do
-      begin
-         PriceValue:=StrToInt64(usl_cost_inp.Text);
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@opis').Value :=usl_opis_inp.Text;
-           Parameters.ParamByName('@cost').Value :=PriceValue;
-           ExecProc;
-           dm.uslQuery.Close;
-           dm.uslQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-    end;
 end;
 
 end.

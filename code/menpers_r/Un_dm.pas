@@ -23,7 +23,7 @@ type
     UslQuery: TADOQuery;
     uslDS: TDataSource;
     sel_usl_by_opis: TADOStoredProc;
-    ADOStoredProc2: TADOStoredProc;
+    ins_usluga: TADOStoredProc;
     ADOStoredProc3: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;
   private

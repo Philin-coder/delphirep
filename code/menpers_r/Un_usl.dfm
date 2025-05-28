@@ -21,7 +21,7 @@ object Frm_usluga: TFrm_usluga
     Top = 0
     Width = 1037
     Height = 632
-    ActivePage = selTab
+    ActivePage = InsTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
@@ -160,21 +160,23 @@ object Frm_usluga: TFrm_usluga
       end
     end
     object InsTab: TTabSheet
-      Caption = #1044#1086#1073#1072#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1077
+      Caption = #1044#1086#1073#1072#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1091#1089#1083#1091#1075#1077
       ImageIndex = 1
-      object man_data_box: TGroupBox
+      object Usl_data_box: TGroupBox
         Left = 0
-        Top = 265
+        Top = 137
         Width = 1029
-        Height = 271
+        Height = 399
         Align = alClient
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object ins_man_grd: TDBGrid
+        ExplicitTop = 265
+        ExplicitHeight = 271
+        object ins_Usl_grd: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
-          Height = 254
+          Height = 382
           Align = alClient
           DataSource = DM.uslDS
           TabOrder = 0
@@ -200,6 +202,7 @@ object Frm_usluga: TFrm_usluga
               Expanded = False
               FieldName = 'date_o'
               Title.Caption = #1044#1072#1090#1072' '#1086#1082#1072#1079#1072#1085#1080#1103' '#1091#1089#1083#1091#1075#1080
+              Width = 150
               Visible = True
             end
             item
@@ -210,97 +213,50 @@ object Frm_usluga: TFrm_usluga
             end>
         end
       end
-      object man_btn_box: TGroupBox
+      object Usl_btn_box: TGroupBox
         Left = 0
         Top = 536
         Width = 1029
         Height = 68
         Align = alBottom
         TabOrder = 1
-        object man_ins_btn: TButton
+        object Usl_ins_btn: TButton
           Left = 400
           Top = 24
           Width = 75
           Height = 25
           Caption = #1044#1086#1073#1072#1074#1080#1090#1100
           TabOrder = 0
+          OnClick = Usl_ins_btnClick
         end
       end
-      object Ins_man_inp_box: TGroupBox
+      object Ins_Usl_inp_box: TGroupBox
         Left = 0
         Top = 0
         Width = 1029
-        Height = 265
+        Height = 137
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        object man_fio_inp: TLabeledEdit
+        object usl_opis_inp: TLabeledEdit
           Left = 3
           Top = 32
           Width = 1033
           Height = 21
-          EditLabel.Width = 23
+          EditLabel.Width = 51
           EditLabel.Height = 13
-          EditLabel.Caption = #1060#1048#1054
+          EditLabel.Caption = #1053#1072#1079#1074#1072#1085#1080#1077' '
           TabOrder = 0
         end
-        object man_cont_lbl: TStaticText
+        object usl_cost_inp: TLabeledEdit
           Left = 3
-          Top = 59
-          Width = 109
-          Height = 17
-          Caption = #1050#1086#1085#1090#1072#1082#1090#1085#1099#1077' '#1076#1072#1085#1085#1099#1077
-          TabOrder = 1
-        end
-        object mancontinp: TMaskEdit
-          Left = 3
-          Top = 82
-          Width = 1022
-          Height = 21
-          TabOrder = 2
-        end
-        object manmailinp: TLabeledEdit
-          Left = 3
-          Top = 136
+          Top = 88
           Width = 1033
           Height = 21
-          EditLabel.Width = 24
+          EditLabel.Width = 26
           EditLabel.Height = 13
-          EditLabel.Caption = 'email'
-          TabOrder = 3
-        end
-        object man_phone_lbl: TStaticText
-          Left = 3
-          Top = 163
-          Width = 90
-          Height = 17
-          Caption = #1051#1080#1095#1085#1099#1081' '#1090#1077#1083#1077#1092#1086#1085
-          TabOrder = 4
-        end
-        object man_phone_inp: TMaskEdit
-          Left = 4
-          Top = 186
-          Width = 1022
-          Height = 21
-          TabOrder = 5
-        end
-        object manloglbl: TStaticText
-          Left = 3
-          Top = 213
-          Width = 34
-          Height = 17
-          Caption = #1051#1086#1075#1080#1085
-          TabOrder = 6
-        end
-        object m_user_id_dbl: TDBLookupComboBox
-          Left = 2
-          Top = 236
-          Width = 1024
-          Height = 21
-          KeyField = 'user_id'
-          ListField = 'usver_name'
-          ListSource = DM.userDS
-          TabOrder = 7
+          EditLabel.Caption = #1062#1077#1085#1072
+          TabOrder = 1
         end
       end
     end

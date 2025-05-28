@@ -247,7 +247,6 @@ var
   PriceText: string;
   PriceValue: Int64;
 begin
-  PriceText:=usl_cost_inp.Text;
   AreFieldsEmpty:=(
   (Trim(usl_opis_inp.Text)='')or
   (Trim(usl_cost_inp.Text)='')
@@ -270,7 +269,7 @@ begin
         if not Connection.Connected then
           raise Exception.Create('Соединение с базой не установлено');
            Parameters.ParamByName('@opis').Value :=usl_opis_inp.Text;
-           Parameters.ParamByName('@cost').Value :=PriceValue;
+           Parameters.ParamByName('@cost').Value :=
            ExecProc;
            dm.uslQuery.Close;
            dm.uslQuery.Open;
