@@ -269,28 +269,15 @@ object DM: TDM
         Precision = 10
         Value = 0
       end>
-    Left = 232
-    Top = 368
+    Left = 240
+    Top = 392
   end
-  object UslQuery: TADOQuery
-    Active = True
-    Connection = Connection
-    CursorType = ctStatic
+  object ADOQuery1: TADOQuery
     Parameters = <>
-    SQL.Strings = (
-      'select '
-      'usluga.id_usl,'
-      'usluga.opis,'
-      'usluga.date_o,'
-      'usluga.cost'
-      'from usluga '
-      'where 1=1 '
-      'and usluga.date_o is  null')
     Left = 272
     Top = 80
   end
-  object uslDS: TDataSource
-    DataSet = UslQuery
+  object DataSource1: TDataSource
     Left = 296
     Top = 136
   end

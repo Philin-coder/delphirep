@@ -10,6 +10,18 @@ type
     Connection: TADOConnection;
     userQuery: TADOQuery;
     userDS: TDataSource;
+    sel_user_by_fio: TADOStoredProc;
+    ins_pass: TADOStoredProc;
+    upd_pas: TADOStoredProc;
+    del_pass: TADOStoredProc;
+    manQuery: TADOQuery;
+    manDS: TDataSource;
+    sel_man_by_fio: TADOStoredProc;
+    ins_manager: TADOStoredProc;
+    upd_man: TADOStoredProc;
+    del_men: TADOStoredProc;
+    ADOQuery1: TADOQuery;
+    DataSource1: TDataSource;
     ADOStoredProc1: TADOStoredProc;
     ADOStoredProc2: TADOStoredProc;
     ADOStoredProc3: TADOStoredProc;

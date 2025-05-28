@@ -21,7 +21,7 @@ object Frm_usluga: TFrm_usluga
     Top = 0
     Width = 1037
     Height = 632
-    ActivePage = InsTab
+    ActivePage = selTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
@@ -113,13 +113,13 @@ object Frm_usluga: TFrm_usluga
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1099#1093' '
         TabOrder = 3
-        object selman_grd: TDBGrid
+        object DBGrid1: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
           Height = 269
           Align = alClient
-          DataSource = DM.manDS
+          DataSource = DM.uslDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -129,38 +129,26 @@ object Frm_usluga: TFrm_usluga
           Columns = <
             item
               Expanded = False
-              FieldName = 'maneger_id'
+              FieldName = 'id_usl'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'fio'
-              Title.Caption = #1060#1048#1054
+              FieldName = 'opis'
+              Title.Caption = #1054#1087#1080#1089#1072#1085#1080#1077
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'cont'
-              Title.Caption = #1050#1086#1085#1090#1072#1082#1090#1085#1099#1077' '#1076#1072#1085#1085#1099#1077
+              FieldName = 'date_o'
+              Title.Caption = #1044#1072#1090#1072' '#1086#1082#1072#1079#1072#1085#1080#1103' '#1091#1089#1083#1091#1075#1080
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'email'
-              Title.Caption = 'E-mail'
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'phone'
-              Title.Caption = #1058#1077#1083#1077#1092#1086#1085
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'usver_name'
-              Title.Caption = #1051#1086#1075#1080#1085
+              FieldName = 'cost'
+              Title.Caption = #1062#1077#1085#1072
               Visible = True
             end>
         end
@@ -183,7 +171,7 @@ object Frm_usluga: TFrm_usluga
           Width = 1025
           Height = 254
           Align = alClient
-          DataSource = DM.manDS
+          DataSource = DM.uslDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -193,38 +181,26 @@ object Frm_usluga: TFrm_usluga
           Columns = <
             item
               Expanded = False
-              FieldName = 'maneger_id'
+              FieldName = 'id_usl'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'fio'
-              Title.Caption = #1060#1048#1054
+              FieldName = 'opis'
+              Title.Caption = #1054#1087#1080#1089#1072#1085#1080#1077
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'cont'
-              Title.Caption = #1050#1086#1085#1090#1072#1082#1090#1085#1099#1077' '#1076#1072#1085#1085#1099#1077
+              FieldName = 'date_o'
+              Title.Caption = #1044#1072#1090#1072' '#1086#1082#1072#1079#1072#1085#1080#1103' '#1091#1089#1083#1091#1075#1080
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'email'
-              Title.Caption = 'E-mail'
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'phone'
-              Title.Caption = #1058#1077#1083#1077#1092#1086#1085
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'usver_name'
-              Title.Caption = #1051#1086#1075#1080#1085
+              FieldName = 'cost'
+              Title.Caption = #1062#1077#1085#1072
               Visible = True
             end>
         end
@@ -326,10 +302,6 @@ object Frm_usluga: TFrm_usluga
     object updTab: TTabSheet
       Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1077
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object man_upd_data_Box: TGroupBox
         Left = 0
         Top = 137
