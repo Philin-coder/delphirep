@@ -7,9 +7,7 @@ uses
   Un_dm in 'Un_dm.pas' {DM: TDataModule},
   Un_usl in 'Un_usl.pas' {Frm_usluga},
   Un_user in 'Un_user.pas' {Frm_user},
-  Un_klient in 'Un_klient.pas' {Frm_klient},
-  Un_manager in 'Un_manager.pas' {Frm_manager},
-  Un_mplan in 'Un_mplan.pas' {Frm_plan};
+  Un_manager in 'Un_manager.pas' {Frm_manager};
 
 {$R *.res}
 {$R 'resources.RES'}
@@ -20,8 +18,6 @@ begin
   Application.CreateForm(TDM, DM);
   Application.CreateForm(TFrm_usluga, Frm_usluga);
   Application.CreateForm(TFrm_user, Frm_user);
-  Application.CreateForm(TFrm_klient, Frm_klient);
   Application.CreateForm(TFrm_manager, Frm_manager);
-  Application.CreateForm(TFrm_plan, Frm_plan);
   Application.Run;
 end.

@@ -491,8 +491,70 @@ object DM: TDM
   object del_mplan: TADOStoredProc
     Connection = Connection
     ProcedureName = 'del_mplan;1'
-    Parameters = <>
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@id_plan'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
     Left = 416
+    Top = 408
+  end
+  object klientQuery: TADOQuery
+    Active = True
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      ' select '
+      ' klient.klient_id,'
+      ' klient.naim,'
+      ' klient.otch,'
+      ' klient.snmae,'
+      ' klient.b_date, '
+      ' klient.cont,'
+      ' klient.phone,'
+      ' mplan.nazv,'
+      ' usluga.opis,'
+      ' klient.email'
+      ' from klient'
+      ' inner join mplan on mplan.id_plan=klient.id_plan'
+      ' inner join usluga on usluga.id_usl=klient.id_usl'
+      ' where 1=1')
+    Left = 496
+    Top = 72
+  end
+  object klientDS: TDataSource
+    DataSet = klientQuery
+    Left = 504
+    Top = 136
+  end
+  object ADOStoredProc1: TADOStoredProc
+    Parameters = <>
+    Left = 512
+    Top = 208
+  end
+  object ADOStoredProc2: TADOStoredProc
+    Parameters = <>
+    Left = 520
+    Top = 280
+  end
+  object ADOStoredProc3: TADOStoredProc
+    Parameters = <>
+    Left = 528
+    Top = 344
+  end
+  object ADOStoredProc4: TADOStoredProc
+    Parameters = <>
+    Left = 528
     Top = 408
   end
 end

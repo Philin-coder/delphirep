@@ -12,5 +12,9 @@
     <Transaction>2025.05.27 19:02:58.772.dfm,F:\code\Result\delphi\code\menpers_r\Un_user.dfm=F:\code\Result\delphi\code\menpers_r\Un_manager.dfm</Transaction>
     <Transaction>2025.05.28 10:28:58.325.pas,F:\code\Result\delphi\code\menpers_r\Un_manager.pas=F:\code\Result\delphi\code\menpers_r\Un_usl.pas</Transaction>
     <Transaction>2025.05.28 10:28:58.325.dfm,F:\code\Result\delphi\code\menpers_r\Un_manager.dfm=F:\code\Result\delphi\code\menpers_r\Un_usl.dfm</Transaction>
+    <Transaction>2025.05.28 17:14:19.843.pas,F:\code\Result\delphi\code\menpers_r\Un_manager.pas=F:\code\Result\delphi\code\menpers_r\Un_mplan.pas</Transaction>
+    <Transaction>2025.05.28 17:14:19.843.dfm,F:\code\Result\delphi\code\menpers_r\Un_manager.dfm=F:\code\Result\delphi\code\menpers_r\Un_mplan.dfm</Transaction>
+    <Transaction>2025.05.28 23:04:56.399.pas,F:\code\Result\delphi\code\menpers_r\Un_mplan.pas=F:\code\Result\delphi\code\menpers_r\Un_klient.pas</Transaction>
+    <Transaction>2025.05.28 23:04:56.399.dfm,F:\code\Result\delphi\code\menpers_r\Un_mplan.dfm=F:\code\Result\delphi\code\menpers_r\Un_klient.dfm</Transaction>
   </Transactions>
 </BorlandProject>

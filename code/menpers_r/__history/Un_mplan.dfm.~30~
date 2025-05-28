@@ -50,9 +50,9 @@ object Frm_plan: TFrm_plan
           Top = 104
           Width = 1030
           Height = 21
-          EditLabel.Width = 134
+          EditLabel.Width = 119
           EditLabel.Height = 13
-          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1086#1087#1080#1089#1072#1085#1080#1102
+          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1086#1087#1080#1089#1072#1085#1080#1102
           TabOrder = 1
           OnKeyPress = plan_fndEditKeyPress
         end
