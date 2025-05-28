@@ -16,7 +16,7 @@ object Frm_usluga: TFrm_usluga
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object manPC: TPageControl
+  object UslPC: TPageControl
     Left = 0
     Top = 0
     Width = 1037
@@ -25,8 +25,8 @@ object Frm_usluga: TFrm_usluga
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
-      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1084#1077#1085#1077#1076#1078#1077#1088#1072
-      object semanInpBox: TGroupBox
+      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1091#1089#1083#1091#1075#1077
+      object sel_Usl_InpBox: TGroupBox
         Left = 0
         Top = 0
         Width = 1029
@@ -35,44 +35,46 @@ object Frm_usluga: TFrm_usluga
         Anchors = [akTop, akRight]
         Caption = #1055#1086#1080#1089#1082' '#1087#1086':'
         TabOrder = 0
-        object mancondEdit: TLabeledEdit
+        object Usl_condEdit: TLabeledEdit
           Left = 0
           Top = 48
           Width = 1054
           Height = 21
-          EditLabel.Width = 140
+          EditLabel.Width = 162
           EditLabel.Height = 13
-          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1060#1048#1054
+          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1086#1087#1080#1072#1085#1080#1102
           TabOrder = 0
         end
-        object manfndEdit: TLabeledEdit
+        object Usl_fndEdit: TLabeledEdit
           Left = 3
           Top = 104
           Width = 1030
           Height = 21
-          EditLabel.Width = 104
+          EditLabel.Width = 119
           EditLabel.Height = 13
-          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1083#1086#1075#1080#1085#1091
+          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1086#1087#1080#1089#1072#1085#1080#1102
           TabOrder = 1
+          OnKeyPress = Usl_fndEditKeyPress
         end
       end
-      object selmanrbtnBox: TGroupBox
+      object sel_Usl_btnBox: TGroupBox
         Left = 0
         Top = 544
         Width = 1029
         Height = 60
         Align = alBottom
         TabOrder = 1
-        object selman_btn: TButton
+        object sel_Usl_btn: TButton
           Left = 432
           Top = 16
           Width = 75
           Height = 25
           Caption = #1042#1099#1073#1086#1088
           TabOrder = 0
+          OnClick = sel_Usl_btnClick
         end
       end
-      object selmangrouperBox: TGroupBox
+      object sel_Usl_grouperBox: TGroupBox
         Left = 0
         Top = 153
         Width = 1029
@@ -80,32 +82,35 @@ object Frm_usluga: TFrm_usluga
         Align = alTop
         Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '
         TabOrder = 2
-        object selmanfioradio: TRadioButton
+        object sel_Usl_opis_radio: TRadioButton
           Left = 56
           Top = 40
           Width = 113
           Height = 17
-          Caption = #1055#1086' '#1060#1048#1054
+          Caption = #1055#1086' '#1086#1087#1080#1089#1072#1085#1080#1102
           TabOrder = 0
+          OnClick = sel_Usl_opis_radioClick
         end
-        object selmanlogradio: TRadioButton
+        object sel_Usl_costradio: TRadioButton
           Left = 344
           Top = 40
           Width = 113
           Height = 17
-          Caption = #1055#1086' '#1083#1086#1075#1080#1085#1091
+          Caption = #1055#1086' '#1094#1077#1085#1077
           TabOrder = 1
+          OnClick = sel_Usl_costradioClick
         end
-        object selmanresetradio: TRadioButton
+        object sel_usl_reset_radio: TRadioButton
           Left = 664
           Top = 40
           Width = 113
           Height = 17
           Caption = 'C'#1073#1088#1086#1089
           TabOrder = 2
+          OnClick = sel_usl_reset_radioClick
         end
       end
-      object selmandataBox: TGroupBox
+      object sel_Usl_dataBox: TGroupBox
         Left = 0
         Top = 258
         Width = 1029
@@ -113,7 +118,7 @@ object Frm_usluga: TFrm_usluga
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1099#1093' '
         TabOrder = 3
-        object DBGrid1: TDBGrid
+        object sel_usl_Grid: TDBGrid
           Left = 2
           Top = 15
           Width = 1025

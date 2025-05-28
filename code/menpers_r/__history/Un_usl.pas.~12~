@@ -20,7 +20,6 @@ type
     mancondEdit: TLabeledEdit;
     manfndEdit: TLabeledEdit;
     selman_btn: TButton;
-    selman_grd: TDBGrid;
     selmanfioradio: TRadioButton;
     selmanlogradio: TRadioButton;
     selmanresetradio: TRadioButton;
@@ -52,12 +51,10 @@ type
     m_user_id_dbl: TDBLookupComboBox;
     man_upd_grd: TDBGrid;
     Del_men_grd: TDBGrid;
+    DBGrid1: TDBGrid;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
-    procedure manfndEditKeyPress(Sender: TObject; var Key: Char);
-    procedure mancontinpExit(Sender: TObject);
-    procedure del_man_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -73,49 +70,10 @@ uses Un_dm, Un_func;
 
 {$R *.dfm}
 
-procedure TFrm_usluga.del_man_btnClick(Sender: TObject);
-var
-  AreFieldsEmpty: Boolean;
-begin
-  AreFieldsEmpty:=(
-  (del_man_id_inp_DBL.Text='')
-  );
-  if AreFieldsEmpty then
-  begin
-      MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-  try
-      with dm.del_men do
-      begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@maneger_id').Value :=
-           dm.manQuery.FieldByName('maneger_id').AsString;
-           ExecProc;
-           dm.manQuery.Close;
-           dm.manQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-    end;
-end;
-
 procedure TFrm_usluga.FormActivate(Sender: TObject);
 begin
-  dm.userQuery.Open;
-  dm.manQuery.Open;
-  AdjustDBGridColumnWidths('Frm_manager',6000, 10);
+  dm.uslQuery.Open;
+  AdjustDBGridColumnWidths('Frm_usluga',6000, 10);
 end;
 
 procedure TFrm_usluga.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -126,51 +84,12 @@ end;
 
 procedure TFrm_usluga.FormCreate(Sender: TObject);
 begin
-  UpdateFormShowHint('Frm_manager');
+  UpdateFormShowHint('Frm_usluga');
   UniformizeButtonsSize(Self,  273, 25);
   UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   UniformizeComponentAnchors(Self);
   LoadFormState(Self);
-  mancontinp.EditMask := '!+7 \(999\) 000-00-00;1;_';
-  man_phone_inp.EditMask := '!+7 \(999\) 000-00-00;1;_';
-end;
-
-procedure TFrm_usluga.mancontinpExit(Sender: TObject);
-begin
-   if IsMaskEditEmpty(mancontinp) then
-  begin
-    mancontinp.Color := clRed;
-    ShowMessage('Данное поле нужно заполнить');
-    mancontinp.SetFocus;
-  end
-  else
-    mancontinp.Color := clWindow;
-end;
-
-procedure TFrm_usluga.manfndEditKeyPress(Sender: TObject; var Key: Char);
-begin
-   try
-   dm.manQuery.SQL.Text:=
-   'select'+' '+
-    'manager.maneger_id,'+' '+
-    'manager.fio,'+' '+
-    'manager.cont,'+' '+' '+
-    'manager.email,'+' '+' '+
-    'manager.phone,'+' '+
-    'usver_r.usver_name'+' '+
-    'from manager'+' '+
-    'inner join usver_r on usver_r.user_id=manager.user_id'+' '+
-    'where 1=1'+' '+
-  'and usver_r.usver_name like'+
-   QuotedStr(Concat(manfndedit.Text,#37));
-   dm.manQuery.close;
-   dm.manQuery.Open;
-except on E: Exception do
-  begin
-  ShowMessage('Ошибка'+' '+E.Message);
-  end;
-  end;
 end;
 
 end.

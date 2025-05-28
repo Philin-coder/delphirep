@@ -57,9 +57,6 @@ type
     procedure FormActivate(Sender: TObject);
     procedure sel_Usl_btnClick(Sender: TObject);
     procedure Usl_fndEditKeyPress(Sender: TObject; var Key: Char);
-    procedure sel_Usl_opis_radioClick(Sender: TObject);
-    procedure sel_Usl_costradioClick(Sender: TObject);
-    procedure sel_usl_reset_radioClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -115,109 +112,6 @@ begin
     on E: Exception do
       ShowMessage('Ошибка: ' + E.Message);
   end;
-end;
-
-procedure TFrm_usluga.sel_Usl_costradioClick(Sender: TObject);
-begin
-  if  sel_Usl_costradio.Checked=true then
-  begin
-    try
-     with dm.uslQuery do
-     begin
-      close;
-      sql.Clear;
-      sql.Text:=
-     'select'+' '+
-        'usluga.id_usl,'+' '+
-        'usluga.opis,'+' '+
-        'usluga.date_o,'+
-        'usluga.cost'+' '+
-        'from usluga'+' '+
-        'where 1=1'+' '+
-        'and usluga.date_o is  null'+' '+
-      'order by usluga.cost asc';
-      Open;
-     end;
-    except on E: EADOError do
-    begin
-      ShowMessage('Ошибка :'+' '+E.Message);
-    end;
-    end;
-  end;
-end;
-
-procedure TFrm_usluga.sel_Usl_opis_radioClick(Sender: TObject);
-begin
-  if  sel_Usl_opis_radio.Checked=true then
-  begin
-    try
-     with dm.uslQuery do
-     begin
-      close;
-      sql.Clear;
-      sql.Text:=
-     'select'+' '+
-        'usluga.id_usl,'+' '+
-        'usluga.opis,'+' '+
-        'usluga.date_o,'+
-        'usluga.cost'+' '+
-        'from usluga'+' '+
-        'where 1=1'+' '+
-        'and usluga.date_o is  null'+' '+
-     'order by usluga.opis asc';
-      Open;
-     end;
-    except on E: EADOError do
-    begin
-      ShowMessage('Ошибка :'+' '+E.Message);
-    end;
-    end;
-  end;
-end;
-
-procedure TFrm_usluga.sel_usl_reset_radioClick(Sender: TObject);
-var i,j,c:Integer;
-begin
-   if  sel_usl_reset_radio.Checked=true then
-with Frm_usluga do
-    for I := 0 to ComponentCount - 1 do
-     begin
-       if (Components[i] is TLabeledEdit)  then
-        begin
-          (Components[i] as TLabeledEdit).Clear;
-        end;
-     end;
-       with Frm_usluga do
-    for c := 0 to ComponentCount - 1 do
-     begin
-       if (Components[c] is TCheckBox)  then
-        begin
-          (Components[c] as TCheckBox).Checked:=False;
-        end;
-     end;
-     with dm.uslQuery do
-     begin
-     Close;
-     sql.Clear;
-     sql.Text:=
-    'select'+' '+
-        'usluga.id_usl,'+' '+
-        'usluga.opis,'+' '+
-        'usluga.date_o,'+
-        'usluga.cost'+' '+
-        'from usluga'+' '+
-        'where 1=1'+' '+
-    'and usluga.date_o is  null';
-    Open;
-     end;
-    with Frm_usluga do
-    for j := 0 to ComponentCount - 1 do
-    begin
-      if(Components[j] is TRadioButton)  then
-      begin
-        (Components[j] as TRadioButton).Checked:=False;
-      end;
-    end;
 end;
 
 procedure TFrm_usluga.Usl_fndEditKeyPress(Sender: TObject; var Key: Char);

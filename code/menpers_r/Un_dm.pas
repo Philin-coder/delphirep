@@ -22,7 +22,7 @@ type
     del_men: TADOStoredProc;
     UslQuery: TADOQuery;
     uslDS: TDataSource;
-    ADOStoredProc1: TADOStoredProc;
+    sel_usl_by_opis: TADOStoredProc;
     ADOStoredProc2: TADOStoredProc;
     ADOStoredProc3: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;

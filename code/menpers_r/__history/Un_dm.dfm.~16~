@@ -273,6 +273,7 @@ object DM: TDM
     Top = 368
   end
   object UslQuery: TADOQuery
+    Active = True
     Connection = Connection
     CursorType = ctStatic
     Parameters = <>
@@ -293,22 +294,8 @@ object DM: TDM
     Left = 296
     Top = 136
   end
-  object sel_usl_by_opis: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'sel_usl_by_opis;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@opis'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 150
-      end>
+  object ADOStoredProc1: TADOStoredProc
+    Parameters = <>
     Left = 312
     Top = 200
   end
