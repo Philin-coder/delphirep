@@ -21,10 +21,9 @@ object Frm_klient: TFrm_klient
     Top = 0
     Width = 1037
     Height = 865
-    ActivePage = InsTab
+    ActivePage = updTab
     Align = alClient
     TabOrder = 0
-    ExplicitHeight = 632
     object selTab: TTabSheet
       Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1082#1083#1080#1077#1085#1090#1077
       ExplicitHeight = 604
@@ -451,10 +450,10 @@ object Frm_klient: TFrm_klient
       end
     end
     object updTab: TTabSheet
-      Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1083#1072#1085#1077
+      Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1082#1083#1080#1077#1085#1090#1077
       ImageIndex = 2
       ExplicitHeight = 604
-      object plan_upd_data_Box: TGroupBox
+      object klient_upd_data_Box: TGroupBox
         Left = 0
         Top = 137
         Width = 1029
@@ -463,13 +462,13 @@ object Frm_klient: TFrm_klient
         Caption = #1042#1099#1074#1086#1076'  '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
         ExplicitHeight = 399
-        object plan_upd_Grd: TDBGrid
+        object klient_upDGrid: TDBGrid
           Left = 2
           Top = 15
           Width = 1025
           Height = 615
           Align = alClient
-          DataSource = DM.PlanDS
+          DataSource = DM.klientDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -479,37 +478,67 @@ object Frm_klient: TFrm_klient
           Columns = <
             item
               Expanded = False
-              FieldName = 'id_plan'
+              FieldName = 'klient_id'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'nazv'
-              Title.Caption = #1053#1072#1079#1074#1072#1085#1080#1077
+              FieldName = 'naim'
+              Title.Caption = #1048#1084#1103
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'date_n'
-              Title.Caption = #1044#1072#1090#1072' '#1074#1089#1090#1091#1087#1083#1077#1085#1080#1103' '#1074' '#1089#1080#1083#1091
+              FieldName = 'otch'
+              Title.Caption = #1054#1090#1095#1077#1089#1090#1074#1086
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'snmae'
+              Title.Caption = #1060#1072#1084#1080#1083#1080#1103
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'b_date'
+              Title.Caption = #1044#1072#1090#1072' '#1088#1086#1078#1076#1077#1085#1080#1103
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'cont'
+              Title.Caption = #1050#1086#1085#1090#1072#1082#1090#1085#1099#1077' '#1076#1072#1085#1085#1099#1077
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'phone'
+              Title.Caption = #1058#1077#1083#1077#1092#1086#1085
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'nazv'
+              Title.Caption = #1055#1083#1072#1085
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'opis'
-              Title.Caption = #1054#1087#1080#1089#1072#1085#1080#1077
+              Title.Caption = #1059#1089#1083#1091#1075#1072
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'fio'
-              Title.Caption = #1052#1077#1085#1077#1076#1078#1077#1088
+              FieldName = 'email'
+              Title.Caption = 'e-mail'
               Visible = True
             end>
         end
       end
-      object plan_upd_btn_Box: TGroupBox
+      object klient_upd_btn_Box: TGroupBox
         Left = 0
         Top = 769
         Width = 1029
@@ -517,7 +546,7 @@ object Frm_klient: TFrm_klient
         Align = alBottom
         TabOrder = 1
         ExplicitTop = 536
-        object plan_upd_btn: TButton
+        object klient_upd_btn: TButton
           Left = 416
           Top = 24
           Width = 75
@@ -526,7 +555,7 @@ object Frm_klient: TFrm_klient
           TabOrder = 0
         end
       end
-      object plan_upd_inp_Box: TGroupBox
+      object klient_upd_inp_Box: TGroupBox
         Left = 0
         Top = 0
         Width = 1029
@@ -534,40 +563,35 @@ object Frm_klient: TFrm_klient
         Align = alTop
         Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        object plan_upd_pl_lbl: TStaticText
+        ExplicitLeft = 2
+        ExplicitTop = -6
+        object klient_upd_pl_lbl: TStaticText
           Left = 2
           Top = 24
-          Width = 75
+          Width = 93
           Height = 17
-          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1087#1083#1072#1085
+          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1082#1083#1080#1077#1085#1090#1072
           TabOrder = 0
         end
-        object u_plan_id_inp: TDBLookupComboBox
+        object k_plan_id_inp: TDBLookupComboBox
           Left = 3
           Top = 47
           Width = 994
           Height = 21
-          KeyField = 'id_plan'
-          ListField = 'nazv'
-          ListSource = DM.PlanDS
+          KeyField = 'klient_id'
+          ListField = 'snmae'
+          ListSource = DM.klientDS
           TabOrder = 1
         end
-        object u_plan_date_n_lbl: TStaticText
+        object upd_klient_cont_inp: TLabeledEdit
           Left = 3
-          Top = 87
-          Width = 173
-          Height = 17
-          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1076#1072#1090#1091' '#1074#1089#1090#1091#1087#1083#1077#1085#1080#1103' '#1074' '#1089#1080#1083#1091
-          TabOrder = 2
-        end
-        object U_plan_date_n_inp: TDateTimePicker
-          Left = 3
-          Top = 110
+          Top = 100
           Width = 994
           Height = 21
-          Date = 45805.835715393520000000
-          Time = 45805.835715393520000000
-          TabOrder = 3
+          EditLabel.Width = 105
+          EditLabel.Height = 13
+          EditLabel.Caption = #1050#1086#1085#1090#1072#1082#1090#1085#1099#1077' '#1076#1072#1085#1085#1099#1077
+          TabOrder = 2
         end
       end
     end

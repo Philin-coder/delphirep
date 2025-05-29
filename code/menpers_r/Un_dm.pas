@@ -36,7 +36,7 @@ type
     klientDS: TDataSource;
     sel_klient_by_fam: TADOStoredProc;
     ins_klient: TADOStoredProc;
-    ADOStoredProc3: TADOStoredProc;
+    upd_klient: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }

@@ -644,8 +644,29 @@ object DM: TDM
     Left = 520
     Top = 280
   end
-  object ADOStoredProc3: TADOStoredProc
-    Parameters = <>
+  object upd_klient: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_klient;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@klient_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@cont'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end>
     Left = 528
     Top = 344
   end
