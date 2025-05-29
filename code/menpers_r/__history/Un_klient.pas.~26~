@@ -184,37 +184,7 @@ begin
     Beep;
     Exit;
  end;
- try
-      with dm.ins_klient do
-      begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@naim').Value :=ins_klient_naim_inp.Text;
-           Parameters.ParamByName('@otch').Value:=ins_klient_otch_inp.Text;
-           Parameters.ParamByName('@snmae').Value:=ins_klient_snmae_inp.Text;
-           Parameters.ParamByName('@b_date').Value:=ins_klient_b_date_inp.Date;
-           Parameters.ParamByName('@cont').Value:=ins_klient_cont_inp.Text;
-           Parameters.ParamByName('@phone').Value:=ins_klient_phone_inp.Text;
-           Parameters.ParamByName('@id_plan').Value:=
-           dm.PlanQuery.FieldByName('id_plan').AsString;
-           Parameters.ParamByName('@id_usl').Value:=
-           dm.UslQuery.FieldByName('id_usl').AsString;
-           Parameters.ParamByName('@email').Value:=ins_klient_email_inp.Text;
-           ExecProc;
-           dm.klientQuery.Close;
-           dm.klientQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-    end;
+
 
 end;
 

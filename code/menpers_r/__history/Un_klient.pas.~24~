@@ -59,7 +59,6 @@ type
     ins_klient_id_plan_DBL: TDBLookupComboBox;
     ins_klient_id_usl_DBL: TDBLookupComboBox;
     ins_klient_id_usl_lbl: TStaticText;
-    ins_klient_email_inp: TLabeledEdit;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -68,8 +67,6 @@ type
     procedure sel_klient_fio_m_radioClick(Sender: TObject);
     procedure sel_klient_opis_radioClick(Sender: TObject);
     procedure sel_klient_reset_radioClick(Sender: TObject);
-    procedure klient_ins_btnClick(Sender: TObject);
-    procedure ins_klient_phone_inpExit(Sender: TObject);
 
   private
     { Private declarations }
@@ -111,18 +108,6 @@ begin
   ins_klient_phone_inp.EditMask := '!+7 \(999\) 000-00-00;1;_';
 end;
 
-procedure TFrm_klient.ins_klient_phone_inpExit(Sender: TObject);
-begin
-     if IsMaskEditEmpty(ins_klient_phone_inp) then
-  begin
-    ins_klient_phone_inp.Color := clRed;
-    ShowMessage('Данное поле нужно заполнить');
-    ins_klient_phone_inp.SetFocus;
-  end
-  else
-  ins_klient_phone_inp.Color := clWindow;
-end;
-
 procedure TFrm_klient.klient_fndEditKeyPress(Sender: TObject; var Key: Char);
 begin
    try
@@ -151,71 +136,6 @@ except on E: Exception do
   ShowMessage('Ошибка'+' '+E.Message);
   end;
   end;
-end;
-
-procedure TFrm_klient.klient_ins_btnClick(Sender: TObject);
-const
-AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
-var
-  AreFieldsEmpty: Boolean;
-  AreFieldsValid: Boolean;
-begin
- AreFieldsEmpty:=(
- (Trim(ins_klient_naim_inp.Text)='')or
- (Trim(ins_klient_otch_inp.Text)='')or
- (Trim(ins_klient_snmae_inp.Text)='')or
- (Trim(ins_klient_cont_inp.Text)='')or
- (Trim(ins_klient_phone_inp.Text)='')or
- (ins_klient_id_plan_DBL.Text='')or
- (ins_klient_id_usl_DBL.Text='')or
- (Trim(ins_klient_email_inp.Text)='')
- );
- AreFieldsValid:=(
- ValidateComponentText(ins_klient_naim_inp,AllowedChars)and
- ValidateComponentText(ins_klient_otch_inp,AllowedChars)and
- ValidateComponentText(ins_klient_snmae_inp,AllowedChars)and
- IsValidEmail(ins_klient_cont_inp.Text)and
- IsValidEmail(ins_klient_email_inp.Text)
- );
- if AreFieldsEmpty or not AreFieldsValid then
- begin
-   MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
- end;
- try
-      with dm.ins_klient do
-      begin
-        if not Connection.Connected then
-          raise Exception.Create('Соединение с базой не установлено');
-           Parameters.ParamByName('@naim').Value :=ins_klient_naim_inp.Text;
-           Parameters.ParamByName('@otch').Value:=ins_klient_otch_inp.Text;
-           Parameters.ParamByName('@snmae').Value:=ins_klient_snmae_inp.Text;
-           Parameters.ParamByName('@b_date').Value:=ins_klient_b_date_inp.Date;
-           Parameters.ParamByName('@cont').Value:=ins_klient_cont_inp.Text;
-           Parameters.ParamByName('@phone').Value:=ins_klient_phone_inp.Text;
-           Parameters.ParamByName('@id_plan').Value:=
-           dm.PlanQuery.FieldByName('id_plan').AsString;
-           Parameters.ParamByName('@id_usl').Value:=
-           dm.UslQuery.FieldByName('id_usl').AsString;
-           Parameters.ParamByName('@email').Value:=ins_klient_email_inp.Text;
-           ExecProc;
-           dm.klientQuery.Close;
-           dm.klientQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EADOError do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-      on E: Exception do
-      begin
-        ShowMessage('Ошибка: ' + E.Message);
-      end;
-    end;
-
 end;
 
 procedure TFrm_klient.sel_klient_btnClick(Sender: TObject);

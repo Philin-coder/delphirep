@@ -574,8 +574,73 @@ object DM: TDM
     Left = 512
     Top = 208
   end
-  object ADOStoredProc2: TADOStoredProc
-    Parameters = <>
+  object ins_klient: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'ins_klient;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@naim'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end
+      item
+        Name = '@otch'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end
+      item
+        Name = '@snmae'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end
+      item
+        Name = '@b_date'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end
+      item
+        Name = '@cont'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end
+      item
+        Name = '@phone'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end
+      item
+        Name = '@id_plan'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@id_usl'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@email'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+        Value = Null
+      end>
     Left = 520
     Top = 280
   end
