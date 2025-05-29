@@ -21,11 +21,12 @@ object Frm_klient: TFrm_klient
     Top = 0
     Width = 1037
     Height = 865
-    ActivePage = selTab
+    ActivePage = delTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
       Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1082#1083#1080#1077#1085#1090#1077
+      ExplicitHeight = 604
       object sel_klient_InpBox: TGroupBox
         Left = 0
         Top = 0
@@ -64,6 +65,7 @@ object Frm_klient: TFrm_klient
         Height = 60
         Align = alBottom
         TabOrder = 1
+        ExplicitTop = 544
         object sel_klient_btn: TButton
           Left = 432
           Top = 16
@@ -118,6 +120,7 @@ object Frm_klient: TFrm_klient
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1099#1093' '
         TabOrder = 3
+        ExplicitHeight = 286
         object sel_klient_grd: TDBGrid
           Left = 2
           Top = 15
@@ -198,6 +201,7 @@ object Frm_klient: TFrm_klient
     object InsTab: TTabSheet
       Caption = #1044#1086#1073#1072#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1082#1083#1080#1077#1085#1090#1077
       ImageIndex = 1
+      ExplicitHeight = 604
       object klient_data_box: TGroupBox
         Left = 0
         Top = 529
@@ -206,6 +210,8 @@ object Frm_klient: TFrm_klient
         Align = alClient
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
+        ExplicitTop = 433
+        ExplicitHeight = 103
         object ins_klient_Grid: TDBGrid
           Left = 2
           Top = 15
@@ -289,6 +295,7 @@ object Frm_klient: TFrm_klient
         Height = 68
         Align = alBottom
         TabOrder = 1
+        ExplicitTop = 536
         object klient_ins_btn: TButton
           Left = 400
           Top = 24
@@ -309,6 +316,7 @@ object Frm_klient: TFrm_klient
         TabOrder = 2
         object about_klientTabOne: TTabSheet
           Caption = #1054' '#1082#1083#1080#1077#1085#1090#1077
+          ExplicitHeight = 341
           object Ins_klient_inp_box: TGroupBox
             Left = 0
             Top = 0
@@ -317,6 +325,7 @@ object Frm_klient: TFrm_klient
             Align = alClient
             Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
             TabOrder = 0
+            ExplicitHeight = 405
             object ins_klient_naim_inp: TLabeledEdit
               Left = 3
               Top = 32
@@ -443,6 +452,7 @@ object Frm_klient: TFrm_klient
     object updTab: TTabSheet
       Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1082#1083#1080#1077#1085#1090#1077
       ImageIndex = 2
+      ExplicitHeight = 604
       object klient_upd_data_Box: TGroupBox
         Left = 0
         Top = 137
@@ -451,6 +461,7 @@ object Frm_klient: TFrm_klient
         Align = alClient
         Caption = #1042#1099#1074#1086#1076'  '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
+        ExplicitHeight = 399
         object klient_upDGrid: TDBGrid
           Left = 2
           Top = 15
@@ -534,6 +545,7 @@ object Frm_klient: TFrm_klient
         Height = 68
         Align = alBottom
         TabOrder = 1
+        ExplicitTop = 536
         object klient_upd_btn: TButton
           Left = 416
           Top = 24
@@ -552,6 +564,8 @@ object Frm_klient: TFrm_klient
         Align = alTop
         Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
+        ExplicitLeft = 2
+        ExplicitTop = -6
         object klient_upd_pl_lbl: TStaticText
           Left = 2
           Top = 24
@@ -585,6 +599,7 @@ object Frm_klient: TFrm_klient
     object delTab: TTabSheet
       Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1082#1083#1080#1077#1085#1090#1077
       ImageIndex = 3
+      ExplicitHeight = 604
       object del_klient_data_box: TGroupBox
         Left = 0
         Top = 105
@@ -593,6 +608,7 @@ object Frm_klient: TFrm_klient
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
+        ExplicitHeight = 431
         object Del_klient_Grid: TDBGrid
           Left = 2
           Top = 15
@@ -703,6 +719,7 @@ object Frm_klient: TFrm_klient
         Height = 68
         Align = alBottom
         TabOrder = 2
+        ExplicitTop = 536
         object del_klient_btn: TButton
           Left = 400
           Top = 24

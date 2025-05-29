@@ -1,0 +1,77 @@
+object frm_autor: Tfrm_autor
+  Left = 0
+  Top = 0
+  Caption = #1040#1074#1090#1086#1088#1080#1079#1072#1094#1080#1103
+  ClientHeight = 299
+  ClientWidth = 804
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  OnActivate = FormActivate
+  OnClose = FormClose
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object autor_main_image: TImage
+    Left = 0
+    Top = 105
+    Width = 804
+    Height = 143
+    Align = alClient
+    ExplicitLeft = 256
+    ExplicitTop = 152
+    ExplicitWidth = 105
+    ExplicitHeight = 105
+  end
+  object autor_inpBox: TGroupBox
+    Left = 0
+    Top = 0
+    Width = 804
+    Height = 105
+    Align = alTop
+    Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+    TabOrder = 0
+    ExplicitTop = 8
+    object autor_log_inp: TLabeledEdit
+      Left = 13
+      Top = 32
+      Width = 772
+      Height = 21
+      EditLabel.Width = 30
+      EditLabel.Height = 13
+      EditLabel.Caption = #1051#1086#1075#1080#1085
+      TabOrder = 0
+    end
+    object autor_pas_inp: TLabeledEdit
+      Left = 13
+      Top = 78
+      Width = 772
+      Height = 21
+      EditLabel.Width = 38
+      EditLabel.Height = 13
+      EditLabel.Caption = #1055#1040#1088#1086#1083#1100
+      TabOrder = 1
+    end
+  end
+  object autor_btnBox: TGroupBox
+    Left = 0
+    Top = 248
+    Width = 804
+    Height = 51
+    Align = alBottom
+    TabOrder = 1
+    ExplicitWidth = 635
+    object autor_pass_btn: TButton
+      Left = 248
+      Top = 23
+      Width = 185
+      Height = 25
+      Caption = #1042#1074#1077#1089#1090#1080' '#1087#1072#1088#1086#1083#1100'  '#1080' '#1083#1086#1075#1080#1085
+      TabOrder = 0
+    end
+  end
+end

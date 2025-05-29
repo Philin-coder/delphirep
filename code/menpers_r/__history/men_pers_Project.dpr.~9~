@@ -10,13 +10,10 @@ uses
   Un_klient in 'Un_klient.pas' {Frm_klient},
   Un_manager in 'Un_manager.pas' {Frm_manager},
   Un_mplan in 'Un_mplan.pas' {Frm_plan},
-  Un_usl in 'Un_usl.pas' {Frm_usluga},
-  Un_autor in 'Un_autor.pas' {frm_autor};
+  Un_usl in 'Un_usl.pas' {Frm_usluga};
 
 {$R *.res}
 {$R 'resources.RES'}
-{$R 'iniit_res.RES'}
-{$R 'avt_res.RES'}
 
 begin
   Application.Initialize;
@@ -28,6 +25,5 @@ begin
   Application.CreateForm(TFrm_manager, Frm_manager);
   Application.CreateForm(TFrm_plan, Frm_plan);
   Application.CreateForm(TFrm_usluga, Frm_usluga);
-  Application.CreateForm(Tfrm_autor, frm_autor);
   Application.Run;
 end.

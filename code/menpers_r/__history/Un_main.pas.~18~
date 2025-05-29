@@ -27,7 +27,6 @@ type
     procedure mplan_itemClick(Sender: TObject);
     procedure klient_itemClick(Sender: TObject);
     procedure N1Click(Sender: TObject);
-    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -40,7 +39,7 @@ var
 implementation
 
 uses Un_func, Un_dm, Un_user, Un_manager, Un_usl, Un_mplan, Un_klient,
-  Un_report, Un_autor;
+  Un_report;
 
 {$R *.dfm}
 
@@ -61,18 +60,6 @@ begin
   AdjustImageProperties(main_Image);
   LoadFormState(Self);
   LoadImageFromResource('BACKGROUND_IMAGE', main_Image);
-end;
-
-procedure TFrm_main.FormShow(Sender: TObject);
-begin
-  try
-    UpdateFormProperties('frm_autor', 'Форма авторизации ',
-      clBtnFace, 1024, 768);
-    frm_autor.ShowModal;
-  except
-    frm_autor.Free;
-    raise;
-  end;
 end;
 
 procedure TFrm_main.klient_itemClick(Sender: TObject);

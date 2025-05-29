@@ -16,7 +16,6 @@ uses
 {$R *.res}
 {$R 'resources.RES'}
 {$R 'iniit_res.RES'}
-{$R 'avt_res.RES'}
 
 begin
   Application.Initialize;

@@ -1,0 +1,68 @@
+unit Un_autor;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs,jpeg,db,adodb, ExtCtrls, StdCtrls;
+
+type
+  Tfrm_autor = class(TForm)
+    autor_inpBox: TGroupBox;
+    autor_btnBox: TGroupBox;
+    autor_pass_btn: TButton;
+    autor_main_image: TImage;
+    autor_log_inp: TLabeledEdit;
+    autor_pas_inp: TLabeledEdit;
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormActivate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_autor: Tfrm_autor;
+
+implementation
+
+uses Un_dm, Un_func;
+
+{$R *.dfm}
+
+procedure Tfrm_autor.FormActivate(Sender: TObject);
+var i:Integer;
+begin
+  dm.userQuery.Open;
+  AdjustDBGridColumnWidths('Frm_autor',6000, 10);
+   with Frm_autor do
+    begin
+  for I := 0 to ComponentCount - 1 do
+if (Components[i]is  TLabeledEdit) then
+begin
+  (Components[i]as TLabeledEdit).Text:='test';
+  (Components[i]as TLabeledEdit).PasswordChar:='*';
+end;
+  end;
+end;
+
+procedure Tfrm_autor.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  SaveFormState(Self);
+  CloseAllQueriesOnDataModule('dm');
+end;
+
+procedure Tfrm_autor.FormCreate(Sender: TObject);
+begin
+  UpdateFormShowHint('Frm_autor');
+  UniformizeButtonsSize(Self,  273, 25);
+  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+  UniformizeComponentAnchors(Self);
+  LoadFormState(Self);
+  LoadImageFromResource('AUTOR_IMAGE', autor_main_image);
+end;
+
+end.
