@@ -1,14 +1,14 @@
 USE [men_pers_r]
 GO
 
-/****** Object:  StoredProcedure [dbo].[sel_klient_by_fam]    Script Date: 28.05.2025 23:57:12 ******/
+/****** Object:  StoredProcedure [dbo].[sel_klient_by_fam]    Script Date: 29.05.2025 10:26:07 ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
 
-create proc [dbo].[sel_klient_by_fam]
+CREATE proc [dbo].[sel_klient_by_fam]
  @snmae varchar(1000)
  as
  begin

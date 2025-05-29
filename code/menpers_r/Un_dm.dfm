@@ -301,12 +301,14 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@opis'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 150
+        Value = Null
       end>
     Left = 312
     Top = 200
@@ -320,12 +322,14 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@opis'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 150
+        Value = Null
       end
       item
         Name = '@cost'
@@ -333,6 +337,7 @@ object DM: TDM
         DataType = ftFloat
         NumericScale = 2
         Precision = 10
+        Value = Null
       end>
     Left = 312
     Top = 256
@@ -346,6 +351,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@id_usl'
@@ -359,6 +365,7 @@ object DM: TDM
         Attributes = [paNullable]
         DataType = ftDateTime
         Size = 10
+        Value = Null
       end>
     Left = 308
     Top = 328
@@ -372,6 +379,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@id_usl'
@@ -409,12 +417,14 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@nazv'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end>
     Left = 408
     Top = 200
@@ -433,24 +443,28 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@nazv'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end
       item
         Name = '@date_n'
         Attributes = [paNullable]
         DataType = ftDateTime
         Size = 10
+        Value = Null
       end
       item
         Name = '@opis'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 150
+        Value = Null
       end
       item
         Name = '@maneger_id'
@@ -471,6 +485,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@id_plan'
@@ -484,6 +499,7 @@ object DM: TDM
         Attributes = [paNullable]
         DataType = ftDateTime
         Size = 10
+        Value = Null
       end>
     Left = 416
     Top = 344
@@ -497,6 +513,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@id_plan'
@@ -509,7 +526,6 @@ object DM: TDM
     Top = 408
   end
   object klientQuery: TADOQuery
-    Active = True
     Connection = Connection
     CursorType = ctStatic
     Parameters = <>
@@ -546,12 +562,14 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@snmae'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end>
     Left = 512
     Top = 208

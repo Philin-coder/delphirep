@@ -89,6 +89,7 @@ object Frm_klient: TFrm_klient
           Height = 17
           Caption = #1055#1086' '#1092#1072#1084#1080#1083#1080#1080' '#1082#1083#1080#1077#1085#1090#1072
           TabOrder = 0
+          OnClick = sel_klient_fio_m_radioClick
         end
         object sel_klient_opis_radio: TRadioButton
           Left = 344
@@ -97,6 +98,7 @@ object Frm_klient: TFrm_klient
           Height = 17
           Caption = #1055#1086' '#1086#1087#1080#1089#1072#1085#1080#1102
           TabOrder = 1
+          OnClick = sel_klient_opis_radioClick
         end
         object sel_klient_reset_radio: TRadioButton
           Left = 664
@@ -105,6 +107,7 @@ object Frm_klient: TFrm_klient
           Height = 17
           Caption = 'C'#1073#1088#1086#1089
           TabOrder = 2
+          OnClick = sel_klient_reset_radioClick
         end
       end
       object sel_klient_dataBox: TGroupBox
