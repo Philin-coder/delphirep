@@ -1,7 +1,7 @@
 USE [men_pers_r]
 GO
 
-/****** Object:  StoredProcedure [dbo].[sel_klient_by_fam]    Script Date: 29.05.2025 10:26:07 ******/
+/****** Object:  StoredProcedure [dbo].[sel_klient_by_fam]    Script Date: 29.05.2025 10:55:29 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -26,8 +26,8 @@ CREATE proc [dbo].[sel_klient_by_fam]
  from klient
  inner join mplan on mplan.id_plan=klient.id_plan
  inner join usluga on usluga.id_usl=klient.id_usl
- where 1=1 and klient.snmae=@snmae
+ where 1=1 
+ and klient.snmae=@snmae
  end
- 
 GO
 
