@@ -38,6 +38,12 @@ type
     ins_klient: TADOStoredProc;
     upd_klient: TADOStoredProc;
     del_klient: TADOStoredProc;
+    report1Query: TADOQuery;
+    report1DS: TDataSource;
+    report1: TADOStoredProc;
+    report2Query: TADOQuery;
+    report2DS: TDataSource;
+    report2: TADOStoredProc;
   private
     { Private declarations }
   public

@@ -1,7 +1,7 @@
-object Frm_usluga: TFrm_usluga
+object Frm_report: TFrm_report
   Left = 0
   Top = 0
-  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1076#1072#1085#1085#1099#1084#1080' '#1086#1073' '#1091#1089#1083#1091#1075#1077
+  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1076#1072#1085#1085#1099#1084#1080' '#1086#1090#1095#1077#1090#1085#1086#1089#1090#1080
   ClientHeight = 632
   ClientWidth = 1037
   Color = clBtnFace
@@ -21,7 +21,7 @@ object Frm_usluga: TFrm_usluga
     Top = 0
     Width = 1037
     Height = 632
-    ActivePage = updTab
+    ActivePage = selTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
@@ -54,7 +54,6 @@ object Frm_usluga: TFrm_usluga
           EditLabel.Height = 13
           EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1086#1087#1080#1089#1072#1085#1080#1102
           TabOrder = 1
-          OnKeyPress = Usl_fndEditKeyPress
         end
       end
       object sel_Usl_btnBox: TGroupBox
@@ -71,7 +70,6 @@ object Frm_usluga: TFrm_usluga
           Height = 25
           Caption = #1042#1099#1073#1086#1088
           TabOrder = 0
-          OnClick = sel_Usl_btnClick
         end
       end
       object sel_Usl_grouperBox: TGroupBox
@@ -89,7 +87,6 @@ object Frm_usluga: TFrm_usluga
           Height = 17
           Caption = #1055#1086' '#1086#1087#1080#1089#1072#1085#1080#1102
           TabOrder = 0
-          OnClick = sel_Usl_opis_radioClick
         end
         object sel_Usl_costradio: TRadioButton
           Left = 344
@@ -98,7 +95,6 @@ object Frm_usluga: TFrm_usluga
           Height = 17
           Caption = #1055#1086' '#1094#1077#1085#1077
           TabOrder = 1
-          OnClick = sel_Usl_costradioClick
         end
         object sel_usl_reset_radio: TRadioButton
           Left = 664
@@ -107,7 +103,6 @@ object Frm_usluga: TFrm_usluga
           Height = 17
           Caption = 'C'#1073#1088#1086#1089
           TabOrder = 2
-          OnClick = sel_usl_reset_radioClick
         end
       end
       object sel_Usl_dataBox: TGroupBox
@@ -162,6 +157,10 @@ object Frm_usluga: TFrm_usluga
     object InsTab: TTabSheet
       Caption = #1044#1086#1073#1072#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1091#1089#1083#1091#1075#1077
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Usl_data_box: TGroupBox
         Left = 0
         Top = 137
@@ -170,6 +169,8 @@ object Frm_usluga: TFrm_usluga
         Align = alClient
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
+        ExplicitTop = 265
+        ExplicitHeight = 271
         object ins_Usl_grd: TDBGrid
           Left = 2
           Top = 15
@@ -225,7 +226,6 @@ object Frm_usluga: TFrm_usluga
           Height = 25
           Caption = #1044#1086#1073#1072#1074#1080#1090#1100
           TabOrder = 0
-          OnClick = Usl_ins_btnClick
         end
       end
       object Ins_Usl_inp_box: TGroupBox
@@ -324,7 +324,6 @@ object Frm_usluga: TFrm_usluga
           Height = 25
           Caption = #1054#1073#1085#1086#1074#1080#1090#1100
           TabOrder = 0
-          OnClick = man_upd_btnClick
         end
       end
       object Usl_upd_inp_Box: TGroupBox
@@ -378,7 +377,6 @@ object Frm_usluga: TFrm_usluga
           Align = alCustom
           Caption = #1054#1087#1083#1072#1095#1077#1085#1085#1085#1099#1077' '#1091#1089#1083#1091#1075#1080
           TabOrder = 4
-          OnClick = paydcBClick
         end
       end
     end

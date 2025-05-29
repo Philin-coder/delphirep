@@ -29,9 +29,18 @@ type
     PlanQuery: TADOQuery;
     sel_plan_by_nazv: TADOStoredProc;
     PlanDS: TDataSource;
-    ADOStoredProc2: TADOStoredProc;
-    ADOStoredProc3: TADOStoredProc;
-    ADOStoredProc4: TADOStoredProc;
+    ins_mplan: TADOStoredProc;
+    upd_plan: TADOStoredProc;
+    del_mplan: TADOStoredProc;
+    klientQuery: TADOQuery;
+    klientDS: TDataSource;
+    sel_klient_by_fam: TADOStoredProc;
+    ins_klient: TADOStoredProc;
+    upd_klient: TADOStoredProc;
+    del_klient: TADOStoredProc;
+    report1Query: TADOQuery;
+    report1DS: TDataSource;
+    ADOStoredProc1: TADOStoredProc;
   private
     { Private declarations }
   public

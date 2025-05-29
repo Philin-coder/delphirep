@@ -17,7 +17,6 @@ type
     usl_item: TMenuItem;
     mplan_item: TMenuItem;
     klient_item: TMenuItem;
-    N1: TMenuItem;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -26,7 +25,6 @@ type
     procedure usl_itemClick(Sender: TObject);
     procedure mplan_itemClick(Sender: TObject);
     procedure klient_itemClick(Sender: TObject);
-    procedure N1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -38,8 +36,7 @@ var
 
 implementation
 
-uses Un_func, Un_dm, Un_user, Un_manager, Un_usl, Un_mplan, Un_klient,
-  Un_report;
+uses Un_func, Un_dm, Un_user, Un_manager, Un_usl, Un_mplan, Un_klient;
 
 {$R *.dfm}
 
@@ -94,18 +91,6 @@ begin
     Frm_plan.ShowModal;
   except
     Frm_plan.Free;
-    raise;
-  end;
-end;
-
-procedure TFrm_main.N1Click(Sender: TObject);
-begin
-   try
-    UpdateFormProperties('Frm_report', 'Форма работы с данными отчетности',
-      clBtnFace, 1024, 768);
-    Frm_report.ShowModal;
-  except
-    Frm_report.Free;
     raise;
   end;
 end;
