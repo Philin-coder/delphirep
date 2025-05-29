@@ -1,23 +1,27 @@
-USE [men_pers]
+USE [men_pers_r]
 GO
 
-/****** Object:  StoredProcedure [dbo].[report2]    Script Date: 08.11.2020 12:51:42 ******/
+/****** Object:  StoredProcedure [dbo].[report2]    Script Date: 29.05.2025 15:20:36 ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
 
-create proc [dbo].[report2]
-@dnp date
+
+CREATE proc [dbo].[report2]
+@d1 date
 as
 begin
-select klient.naim,klient.otch, klient.snmae, usluga.opis, usluga.cost, usluga.date_o,mplan.nazv,mplan.opis, manager.fio 
+select klient.naim,klient.otch, klient.snmae, usluga.opis, usluga.cost, 
+usluga.date_o,mplan.nazv,mplan.opis, manager.fio 
 from klient
-join usluga on usluga.klient_id=klient.klient_id
-join mplan on klient.klient_id=mplan.klient_id
+join usluga on usluga.id_usl=klient.id_usl
+join mplan on klient.id_plan=mplan.id_plan
 join manager on manager.maneger_id=mplan.maneger_id
-where    usluga.date_o=@dnp  and usluga.date_o is not null
+where 1=1 
+and usluga.date_o is not null
+and    usluga.date_o=@d1
 end
 GO
 
