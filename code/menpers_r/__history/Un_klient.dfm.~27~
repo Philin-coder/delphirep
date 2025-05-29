@@ -727,7 +727,6 @@ object Frm_klient: TFrm_klient
           Height = 25
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
-          OnClick = del_klient_btnClick
         end
       end
     end

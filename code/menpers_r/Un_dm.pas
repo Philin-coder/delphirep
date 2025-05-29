@@ -37,7 +37,7 @@ type
     sel_klient_by_fam: TADOStoredProc;
     ins_klient: TADOStoredProc;
     upd_klient: TADOStoredProc;
-    ADOStoredProc4: TADOStoredProc;
+    del_klient: TADOStoredProc;
   private
     { Private declarations }
   public
