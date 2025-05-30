@@ -21,7 +21,7 @@ object Frm_manager: TFrm_manager
     Top = 0
     Width = 1037
     Height = 632
-    ActivePage = InsTab
+    ActivePage = searchTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
@@ -178,6 +178,10 @@ object Frm_manager: TFrm_manager
     object InsTab: TTabSheet
       Caption = #1044#1086#1073#1072#1074#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1084#1077#1085#1077#1076#1078#1077#1088#1077
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object man_data_box: TGroupBox
         Left = 0
         Top = 265
@@ -460,6 +464,10 @@ object Frm_manager: TFrm_manager
     object delTab: TTabSheet
       Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1084#1077#1085#1077#1076#1078#1077#1088#1077
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object del_man_data_box: TGroupBox
         Left = 0
         Top = 105
@@ -562,6 +570,121 @@ object Frm_manager: TFrm_manager
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
           OnClick = del_man_btnClick
+        end
+      end
+    end
+    object searchTab: TTabSheet
+      Caption = #1055#1086#1080#1089#1082#1080
+      ImageIndex = 4
+      object search_inpBox: TGroupBox
+        Left = 0
+        Top = 0
+        Width = 1029
+        Height = 73
+        Align = alTop
+        Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 0
+        object search_kind_lbl: TStaticText
+          Left = 16
+          Top = 16
+          Width = 108
+          Height = 17
+          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1074#1080#1076' '#1087#1086#1080#1089#1082#1072
+          TabOrder = 0
+        end
+        object searchCombo: TComboBox
+          Left = 3
+          Top = 39
+          Width = 1023
+          Height = 21
+          ItemHeight = 13
+          TabOrder = 1
+          OnChange = searchComboChange
+          Items.Strings = (
+            #1055#1086#1080#1089#1082' '#1084#1077#1085#1077#1076#1078#1077#1088#1072
+            #1055#1086#1080#1089#1082' '#1082#1083#1080#1085#1090#1072
+            #1055#1086#1080#1089#1082' '#1087#1083#1072#1085#1072
+            #1055#1086#1080#1089#1082' '#1091#1089#1083#1091#1075#1080
+            #1055#1086#1080#1089#1082' '#1087#1072#1088#1086#1083#1103)
+        end
+      end
+      object search_stringBox: TGroupBox
+        Left = 0
+        Top = 73
+        Width = 1029
+        Height = 105
+        Align = alTop
+        TabOrder = 1
+        object search_cond_edit: TLabeledEdit
+          Left = 3
+          Top = 40
+          Width = 998
+          Height = 21
+          EditLabel.Width = 92
+          EditLabel.Height = 13
+          EditLabel.Caption = #1055#1086#1080#1089#1082#1086#1074#1072#1103' '#1089#1090#1088#1086#1082#1072
+          TabOrder = 0
+          OnKeyPress = search_cond_editKeyPress
+        end
+      end
+      object search_dataBox: TGroupBox
+        Left = 0
+        Top = 178
+        Width = 1029
+        Height = 426
+        Align = alClient
+        Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1085#1099#1093
+        TabOrder = 2
+        object searchGrid: TDBGrid
+          Left = 2
+          Top = 15
+          Width = 1025
+          Height = 409
+          Align = alClient
+          DataSource = DM.searchDS
+          TabOrder = 0
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWindowText
+          TitleFont.Height = -11
+          TitleFont.Name = 'Tahoma'
+          TitleFont.Style = []
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'maneger_id'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'fio'
+              Title.Caption = #1060#1048#1054
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'cont'
+              Title.Caption = #1050#1086#1085#1090#1072#1082#1090#1085#1099#1077' '#1076#1072#1085#1085#1099#1077
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'email'
+              Title.Caption = 'E-mail'
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'phone'
+              Title.Caption = #1058#1077#1083#1077#1092#1086#1085
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'usver_name'
+              Title.Caption = #1051#1086#1075#1080#1085
+              Visible = True
+            end>
         end
       end
     end

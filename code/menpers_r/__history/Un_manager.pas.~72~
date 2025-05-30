@@ -83,7 +83,7 @@ type
 
 var
   Frm_manager: TFrm_manager;
-  searh_stat:Integer;
+  search_stat:Integer;
 
 implementation
 
@@ -135,6 +135,13 @@ begin
   dm.manQuery.Open;
   dm.searchQuery.Open;
   AdjustDBGridColumnWidths('Frm_manager',6000, 10);
+  search_cond_edit.EditLabel.Caption:='Поиск менеджера';
+  searchGrid.Columns[0].Title.Caption:='Номер порядковый ';
+  searchGrid.Columns[1].Title.Caption:='ФИО менеджера';
+  searchGrid.Columns[2].Title.Caption:='Контактные данные менеджера';
+  searchGrid.Columns[3].Title.Caption:='E-mail менеджера';
+  searchGrid.Columns[4].Title.Caption:='Телефон менеджера';
+  searchGrid.Columns[5].Title.Caption:='Логин менеджера';
 end;
 
 procedure TFrm_manager.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -142,6 +149,7 @@ begin
    SaveFormState(Self);
    CloseAllQueriesOnDataModule('dm');
    search_cond_edit.EditLabel.Caption:='Поисковая строка';
+   search_stat:=0;
 end;
 
 procedure TFrm_manager.FormCreate(Sender: TObject);
@@ -155,6 +163,7 @@ begin
   mancontinp.EditMask := '!+7 \(999\) 000-00-00;1;_';
   man_phone_inp.EditMask := '!+7 \(999\) 000-00-00;1;_';
   search_cond_edit.EditLabel.Caption:='Поисковая строка';
+  search_stat:=0;
 end;
 
 procedure TFrm_manager.mancontinpExit(Sender: TObject);
@@ -310,23 +319,37 @@ begin
 case searchCombo.ItemIndex of
 0:
 begin
-
+  search_stat:=0;
+  search_cond_edit.EditLabel.Caption:='Поиск менеджера';
+  search_cond_edit.Hint:='Поиск менеджера по ФИО';
+  search_cond_edit.Clear;
+  search_cond_edit.SetFocus;
 end;
 1:
 begin
-
+  search_stat:=1;
+  search_cond_edit.EditLabel.Caption:='Поиск клиента';
+  search_cond_edit.Hint:='Поиск клиента по Фамилии';
+  search_cond_edit.Clear;
+  search_cond_edit.SetFocus;
 end;
 2:
 begin
-
+  search_stat:=2;
+  search_cond_edit.EditLabel.Caption:='Поиск плана';
+  search_cond_edit.EditLabel.Hint:='Поиск плана по описанию';
+  search_cond_edit.Clear;
+  search_cond_edit.SetFocus;
 end;
 3:
 begin
-
+   search_stat:=3;
+   search_cond_edit.EditLabel.Caption:='Поиск услуги';
 end;
 4:
 begin
-
+   search_stat:=4;
+   search_cond_edit.EditLabel.Caption:='Поиск пароля';
 end;
 end;//case
 
@@ -335,12 +358,13 @@ end;
 
 procedure TFrm_manager.search_cond_editKeyPress(Sender: TObject; var Key: Char);
 begin
-  case searchCombo.ItemIndex of
+  case search_stat of
   0:
   begin
     try
-   dm.klientQuery.SQL.Text:=
-          'select'+' '+
+  dm.searchQuery.SQL.Clear;
+   dm.searchQuery.SQL.Text:=
+    'select'+' '+
     'manager.maneger_id,'+' '+
     'manager.fio,'+' '+
     'manager.cont,'+' '+' '+
@@ -359,16 +383,81 @@ except on E: Exception do
   ShowMessage('Ошибка'+' '+E.Message);
   end;
   end;
+  searchGrid.Columns[0].Title.Caption:='Номер порядковый ';
+  searchGrid.Columns[1].Title.Caption:='ФИО менеджера';
+  searchGrid.Columns[2].Title.Caption:='Контактные данные менеджера';
+  searchGrid.Columns[3].Title.Caption:='E-mail менеджера';
+  searchGrid.Columns[4].Title.Caption:='Телефон менеджера';
+  searchGrid.Columns[5].Title.Caption:='Логин менеджера';
   end;
-
-
   1:
   begin
-
+   try
+   dm.searchQuery.SQL.Clear;
+   dm.searchQuery.SQL.Text:=
+    'select'+' '+
+    'klient.klient_id,'+' '+
+     'klient.naim,'+' '+
+      'klient.otch,'+' '+
+      'klient.snmae,'+' '+
+        'klient.b_date,'+' '+
+        'klient.cont,'+' '+
+        'klient.phone,'+' '+
+        'mplan.nazv,'+' '+
+        'usluga.opis,'+' '+
+        'klient.email'+' '+
+        'from klient'+' '+
+        'inner join mplan on mplan.id_plan=klient.id_plan'+' '+
+        'inner join usluga on usluga.id_usl=klient.id_usl'+' '+
+        ' where 1=1'+' '+
+        'and klient.snmae like'+
+   QuotedStr(Concat(search_cond_edit.Text,#37));
+   dm.searchQuery.close;
+   dm.searchQuery.Open;
+except on E: Exception do
+  begin
+  ShowMessage('Ошибка'+' '+E.Message);
+  end;
+  end;
+  searchGrid.Columns[0].Title.Caption:='Номер порядковый ';
+  searchGrid.Columns[1].Title.Caption:='Имя клиента';
+  searchGrid.Columns[2].Title.Caption:='Отчество клиента';
+  searchGrid.Columns[3].Title.Caption:='Фамилия клиента';
+  searchGrid.Columns[4].Title.Caption:='Дата рождения клиента';
+  searchGrid.Columns[5].Title.Caption:='Контактные данные клиента';
+  searchGrid.Columns[6].Title.Caption:='Телефон клиента';
+  searchGrid.Columns[7].Title.Caption:='Название плана';
+  searchGrid.Columns[8].Title.Caption:='Описание услуги';
+  searchGrid.Columns[9].Title.Caption:='e-mail клиента';
   end;
   2:
   begin
-
+    try
+   dm.searchQuery.SQL.Clear;
+   dm.searchQuery.SQL.Text:=
+     'select'+' '+
+        'mplan.id_plan,'+' '+
+        'mplan.nazv,'+' '+
+        'mplan.date_n,'+' '+
+        'mplan.opis,'+' '+
+        'manager.fio'+' '+
+        'from mplan'+' '+
+        'inner join manager on manager.maneger_id=mplan.maneger_id'+' '+
+      'where 1=1'+' '+
+        'and mplan.opis like'+
+   QuotedStr(Concat(search_cond_edit.Text,#37));
+   dm.searchQuery.close;
+   dm.searchQuery.Open;
+except on E: Exception do
+  begin
+  ShowMessage('Ошибка'+' '+E.Message);
+  end;
+  end;
+   searchGrid.Columns[0].Title.Caption:='Номер порядковый ';
+   searchGrid.Columns[1].Title.Caption:='Название плана;';
+   searchGrid.Columns[2].Title.Caption:='Дата вступления в силу';
+   searchGrid.Columns[3].Title.Caption:='Описание';
+   searchGrid.Columns[4].Title.Caption:='Менеджер';
   end;
   3:
   begin
