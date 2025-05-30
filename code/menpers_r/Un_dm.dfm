@@ -1,7 +1,7 @@
 object DM: TDM
   OldCreateOrder = False
   Height = 472
-  Width = 811
+  Width = 941
   object Connection: TADOConnection
     Connected = True
     ConnectionString = 
@@ -786,7 +786,31 @@ object DM: TDM
         DataType = ftDateTime
         Size = 10
       end>
-    Left = 752
+    Left = 736
     Top = 224
+  end
+  object searchQuery: TADOQuery
+    Active = True
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      'manager.maneger_id,'
+      'manager.fio,'
+      'manager.cont,'
+      'manager.email,'
+      'manager.phone,'
+      ' usver_r.usver_name'
+      'from manager '
+      'inner join usver_r on usver_r.user_id=manager.user_id'
+      'where 1=1')
+    Left = 824
+    Top = 88
+  end
+  object searchDS: TDataSource
+    DataSet = searchQuery
+    Left = 840
+    Top = 160
   end
 end

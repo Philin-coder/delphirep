@@ -52,6 +52,14 @@ type
     m_user_id_dbl: TDBLookupComboBox;
     man_upd_grd: TDBGrid;
     Del_men_grd: TDBGrid;
+    searchTab: TTabSheet;
+    search_inpBox: TGroupBox;
+    search_stringBox: TGroupBox;
+    search_dataBox: TGroupBox;
+    searchGrid: TDBGrid;
+    search_cond_edit: TLabeledEdit;
+    search_kind_lbl: TStaticText;
+    searchCombo: TComboBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -65,6 +73,8 @@ type
     procedure man_ins_btnClick(Sender: TObject);
     procedure man_upd_btnClick(Sender: TObject);
     procedure del_man_btnClick(Sender: TObject);
+    procedure search_cond_editKeyPress(Sender: TObject; var Key: Char);
+    procedure searchComboChange(Sender: TObject);
   private
     { Private declarations }
   public
@@ -73,6 +83,7 @@ type
 
 var
   Frm_manager: TFrm_manager;
+  search_stat:Integer;
 
 implementation
 
@@ -122,6 +133,7 @@ procedure TFrm_manager.FormActivate(Sender: TObject);
 begin
   dm.userQuery.Open;
   dm.manQuery.Open;
+  dm.searchQuery.Open;
   AdjustDBGridColumnWidths('Frm_manager',6000, 10);
 end;
 
@@ -129,6 +141,8 @@ procedure TFrm_manager.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
    SaveFormState(Self);
    CloseAllQueriesOnDataModule('dm');
+   search_cond_edit.EditLabel.Caption:='Поисковая строка';
+   search_stat:=0;
 end;
 
 procedure TFrm_manager.FormCreate(Sender: TObject);
@@ -141,6 +155,8 @@ begin
   LoadFormState(Self);
   mancontinp.EditMask := '!+7 \(999\) 000-00-00;1;_';
   man_phone_inp.EditMask := '!+7 \(999\) 000-00-00;1;_';
+  search_cond_edit.EditLabel.Caption:='Поисковая строка';
+  search_stat:=0;
 end;
 
 procedure TFrm_manager.mancontinpExit(Sender: TObject);
@@ -289,6 +305,88 @@ begin
       end;
     end;
 
+end;
+
+procedure TFrm_manager.searchComboChange(Sender: TObject);
+begin
+case searchCombo.ItemIndex of
+0:
+begin
+  search_stat:=0;
+  search_cond_edit.EditLabel.Caption:='Поиск менеджера';
+end;
+1:
+begin
+  search_stat:=1;
+  search_cond_edit.EditLabel.Caption:='Поиск клиента';
+end;
+2:
+begin
+  search_stat:=2;
+  search_cond_edit.EditLabel.Caption:='Поиск плана';
+end;
+3:
+begin
+   search_stat:=3;
+   search_cond_edit.EditLabel.Caption:='Поиск услуги';
+end;
+4:
+begin
+   search_stat:=4;
+   search_cond_edit.EditLabel.Caption:='Поиск пароля';
+end;
+end;//case
+
+
+end;
+
+procedure TFrm_manager.search_cond_editKeyPress(Sender: TObject; var Key: Char);
+begin
+  case searchCombo.ItemIndex of
+  0:
+  begin
+    try
+   dm.klientQuery.SQL.Text:=
+          'select'+' '+
+    'manager.maneger_id,'+' '+
+    'manager.fio,'+' '+
+    'manager.cont,'+' '+' '+
+    'manager.email,'+' '+' '+
+    'manager.phone,'+' '+
+    'usver_r.usver_name'+' '+
+    'from manager'+' '+
+    'inner join usver_r on usver_r.user_id=manager.user_id'+' '+
+    'where 1=1'+' '+
+   'and manager.fio like'+
+QuotedStr(Concat(search_cond_edit.Text,#37));
+   dm.searchQuery.close;
+   dm.searchQuery.Open;
+except on E: Exception do
+  begin
+  ShowMessage('Ошибка'+' '+E.Message);
+  end;
+  end;
+  end;
+
+
+  1:
+  begin
+
+  end;
+  2:
+  begin
+
+  end;
+  3:
+  begin
+
+  end;
+  4:
+  begin
+
+  end;
+      
+  end;//case
 end;
 
 procedure TFrm_manager.selmanfioradioClick(Sender: TObject);

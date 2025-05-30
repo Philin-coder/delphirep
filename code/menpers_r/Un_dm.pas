@@ -44,6 +44,8 @@ type
     report2Query: TADOQuery;
     report2DS: TDataSource;
     report2: TADOStoredProc;
+    searchQuery: TADOQuery;
+    searchDS: TDataSource;
   private
     { Private declarations }
   public

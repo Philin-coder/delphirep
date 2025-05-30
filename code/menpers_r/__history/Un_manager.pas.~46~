@@ -29,21 +29,19 @@ type
     Ins_man_inp_box: TGroupBox;
     man_fio_inp: TLabeledEdit;
     man_ins_btn: TButton;
-    user_upd_data_Box: TGroupBox;
-    user_upd_btn_Box: TGroupBox;
-    user_upd_inp_Box: TGroupBox;
-    user_upd_pas_lbl: TStaticText;
-    user_id_inp: TDBLookupComboBox;
-    user_upd_btn: TButton;
-    User_upd_grd: TDBGrid;
-    user_pass_inp: TLabeledEdit;
-    del_user_data_box: TGroupBox;
-    del_user_inp_box: TGroupBox;
-    del_user_btn_box: TGroupBox;
-    del_user_btn: TButton;
-    User_del_grd: TDBGrid;
-    del_user_usr_lbl: TStaticText;
-    del_user_id_inp_DBL: TDBLookupComboBox;
+    man_upd_data_Box: TGroupBox;
+    man_upd_btn_Box: TGroupBox;
+    man_upd_inp_Box: TGroupBox;
+    man_upd_pas_lbl: TStaticText;
+    u_man_id_inp: TDBLookupComboBox;
+    man_upd_btn: TButton;
+    u_man_mail_inp: TLabeledEdit;
+    del_man_data_box: TGroupBox;
+    del_man_inp_box: TGroupBox;
+    del_man_btn_box: TGroupBox;
+    del_man_btn: TButton;
+    del_man_usr_lbl: TStaticText;
+    del_man_id_inp_DBL: TDBLookupComboBox;
     ins_man_grd: TDBGrid;
     man_cont_lbl: TStaticText;
     mancontinp: TMaskEdit;
@@ -52,6 +50,16 @@ type
     man_phone_inp: TMaskEdit;
     manloglbl: TStaticText;
     m_user_id_dbl: TDBLookupComboBox;
+    man_upd_grd: TDBGrid;
+    Del_men_grd: TDBGrid;
+    searchTab: TTabSheet;
+    search_inpBox: TGroupBox;
+    search_stringBox: TGroupBox;
+    search_dataBox: TGroupBox;
+    searchGrid: TDBGrid;
+    search_cond_edit: TLabeledEdit;
+    search_kind_lbl: TStaticText;
+    searchCombo: TComboBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -63,6 +71,10 @@ type
     procedure mancontinpExit(Sender: TObject);
     procedure man_phone_inpExit(Sender: TObject);
     procedure man_ins_btnClick(Sender: TObject);
+    procedure man_upd_btnClick(Sender: TObject);
+    procedure del_man_btnClick(Sender: TObject);
+    procedure search_cond_editKeyPress(Sender: TObject; var Key: Char);
+    procedure searchComboChange(Sender: TObject);
   private
     { Private declarations }
   public
@@ -71,6 +83,7 @@ type
 
 var
   Frm_manager: TFrm_manager;
+  search_stat:Integer;
 
 implementation
 
@@ -78,10 +91,49 @@ uses Un_dm, Un_func;
 
 {$R *.dfm}
 
+procedure TFrm_manager.del_man_btnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (del_man_id_inp_DBL.Text='')
+  );
+  if AreFieldsEmpty then
+  begin
+      MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.del_men do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@maneger_id').Value :=
+           dm.manQuery.FieldByName('maneger_id').AsString;
+           ExecProc;
+           dm.manQuery.Close;
+           dm.manQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+end;
+
 procedure TFrm_manager.FormActivate(Sender: TObject);
 begin
   dm.userQuery.Open;
   dm.manQuery.Open;
+  dm.searchQuery.Open;
   AdjustDBGridColumnWidths('Frm_manager',6000, 10);
 end;
 
@@ -89,6 +141,8 @@ procedure TFrm_manager.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
    SaveFormState(Self);
    CloseAllQueriesOnDataModule('dm');
+   search_cond_edit.EditLabel.Caption:='Поисковая строка';
+   sear
 end;
 
 procedure TFrm_manager.FormCreate(Sender: TObject);
@@ -101,6 +155,7 @@ begin
   LoadFormState(Self);
   mancontinp.EditMask := '!+7 \(999\) 000-00-00;1;_';
   man_phone_inp.EditMask := '!+7 \(999\) 000-00-00;1;_';
+  search_cond_edit.EditLabel.Caption:='Поисковая строка';
 end;
 
 procedure TFrm_manager.mancontinpExit(Sender: TObject);
@@ -203,6 +258,129 @@ begin
   end
   else
   man_phone_inp.Color := clWindow;
+end;
+
+procedure TFrm_manager.man_upd_btnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+
+begin
+  AreFieldsEmpty:=(
+  (u_man_id_inp.Text='')or
+  (Trim(u_man_mail_inp.Text)='')
+  );
+  AreFieldsValid:=(
+  IsValidEmail(u_man_mail_inp.Text)
+  );
+  if AreFieldsEmpty or not  AreFieldsValid then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+    try
+      with dm.upd_man do
+      begin
+        if not Connection.Connected then
+          raise Exception.Create('Соединение с базой не установлено');
+           Parameters.ParamByName('@maneger_id').Value :=
+           dm.manQuery.FieldByName('maneger_id').AsString;
+           Parameters.ParamByName('@m_email').Value:=u_man_mail_inp.Text;
+           ExecProc;
+           dm.manQuery.Close;
+           dm.manQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EADOError do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+      on E: Exception do
+      begin
+        ShowMessage('Ошибка: ' + E.Message);
+      end;
+    end;
+
+end;
+
+procedure TFrm_manager.searchComboChange(Sender: TObject);
+begin
+case searchCombo.ItemIndex of
+0:
+begin
+
+end;
+1:
+begin
+
+end;
+2:
+begin
+
+end;
+3:
+begin
+
+end;
+4:
+begin
+
+end;
+end;//case
+
+
+end;
+
+procedure TFrm_manager.search_cond_editKeyPress(Sender: TObject; var Key: Char);
+begin
+  case searchCombo.ItemIndex of
+  0:
+  begin
+    try
+   dm.klientQuery.SQL.Text:=
+          'select'+' '+
+    'manager.maneger_id,'+' '+
+    'manager.fio,'+' '+
+    'manager.cont,'+' '+' '+
+    'manager.email,'+' '+' '+
+    'manager.phone,'+' '+
+    'usver_r.usver_name'+' '+
+    'from manager'+' '+
+    'inner join usver_r on usver_r.user_id=manager.user_id'+' '+
+    'where 1=1'+' '+
+   'and manager.fio like'+
+QuotedStr(Concat(search_cond_edit.Text,#37));
+   dm.searchQuery.close;
+   dm.searchQuery.Open;
+except on E: Exception do
+  begin
+  ShowMessage('Ошибка'+' '+E.Message);
+  end;
+  end;
+  end;
+
+
+  1:
+  begin
+
+  end;
+  2:
+  begin
+
+  end;
+  3:
+  begin
+
+  end;
+  4:
+  begin
+
+  end;
+      
+  end;//case
 end;
 
 procedure TFrm_manager.selmanfioradioClick(Sender: TObject);
