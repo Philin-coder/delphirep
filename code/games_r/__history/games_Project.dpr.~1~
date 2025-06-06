@@ -3,11 +3,9 @@ program games_Project;
 uses
   Forms,
   Un_main in 'Un_main.pas' {Frm_main},
-  Un_dm in 'Un_dm.pas' {DM: TDataModule},
-  Un_func in 'Un_func.pas';
+  Un_dm in 'Un_dm.pas' {DM: TDataModule};
 
 {$R *.res}
-{$R 'resources.RES'}
 
 begin
   Application.Initialize;

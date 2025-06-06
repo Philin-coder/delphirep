@@ -12,7 +12,6 @@ object Frm_main: TFrm_main
   Font.Style = []
   OldCreateOrder = False
   OnClose = FormClose
-  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object main_Image: TImage
