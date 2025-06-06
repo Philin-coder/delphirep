@@ -4,14 +4,13 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ExtCtrls,jpeg, Menus;
+  Dialogs, ExtCtrls,jpeg;
   const
   FileName = 'connection_string.txt';
 
 type
   TFrm_main = class(TForm)
     main_Image: TImage;
-    ItemsMenu: TMainMenu;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);

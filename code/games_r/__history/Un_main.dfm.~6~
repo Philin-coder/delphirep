@@ -10,7 +10,6 @@ object Frm_main: TFrm_main
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  Menu = ItemsMenu
   OldCreateOrder = False
   OnActivate = FormActivate
   OnClose = FormClose
@@ -27,9 +26,5 @@ object Frm_main: TFrm_main
     ExplicitTop = 120
     ExplicitWidth = 105
     ExplicitHeight = 105
-  end
-  object ItemsMenu: TMainMenu
-    Left = 248
-    Top = 88
   end
 end
