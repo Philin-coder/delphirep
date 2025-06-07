@@ -16,7 +16,7 @@ object Frm_work: TFrm_work
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object WorkPC: TPageControl
+  object EtapPC: TPageControl
     Left = 0
     Top = 0
     Width = 1045
@@ -25,9 +25,9 @@ object Frm_work: TFrm_work
     Align = alClient
     TabOrder = 0
     object SelTab: TTabSheet
-      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1088#1072#1073#1086#1090#1077
+      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1101#1090#1072#1087#1077' '#1088#1072#1079#1088#1072#1073#1086#1090#1082#1080
       ExplicitWidth = 906
-      object WorkcondBox: TGroupBox
+      object etapcondBox: TGroupBox
         Left = 0
         Top = 0
         Width = 1037
@@ -36,28 +36,28 @@ object Frm_work: TFrm_work
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
         ExplicitWidth = 974
-        object Work_cond_Edit: TLabeledEdit
+        object Etap_cond_Edit: TLabeledEdit
           Left = 19
           Top = 40
           Width = 990
           Height = 21
-          EditLabel.Width = 239
+          EditLabel.Width = 230
           EditLabel.Height = 13
-          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1084#1080#1077' '#1087#1086' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1102' '#1088#1072#1073#1086#1090#1099
+          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1084#1080#1077' '#1087#1086' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1102' '#1101#1090#1072#1087#1072
           TabOrder = 0
         end
-        object Work_fnd_Edit: TLabeledEdit
+        object Etap_fnd_Edit: TLabeledEdit
           Left = 19
           Top = 88
           Width = 990
           Height = 21
-          EditLabel.Width = 201
+          EditLabel.Width = 194
           EditLabel.Height = 13
-          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086'  '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1102' '#1088#1072#1073#1086#1090#1074
+          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086'  '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1102' '#1101#1090#1072#1087#1072
           TabOrder = 1
         end
       end
-      object WorkGrouperBox: TGroupBox
+      object etapGrouperBox: TGroupBox
         Left = 0
         Top = 129
         Width = 1037
@@ -68,32 +68,24 @@ object Frm_work: TFrm_work
         ExplicitLeft = 80
         ExplicitTop = 304
         ExplicitWidth = 185
-        object Work_naim_Radio: TRadioButton
+        object etap_naim_Radio: TRadioButton
           Left = 104
           Top = 40
           Width = 161
           Height = 17
-          Caption = #1055#1086' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1102' '#1088#1072#1073#1086#1090#1099
+          Caption = #1055#1086' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1102' '#1101#1090#1072#1087#1072
           TabOrder = 0
         end
-        object Work_reset_Radio: TRadioButton
-          Left = 752
-          Top = 56
+        object etap_reset_Radio: TRadioButton
+          Left = 504
+          Top = 40
           Width = 113
           Height = 17
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 1
         end
-        object Work_Tdate_Radio: TRadioButton
-          Left = 368
-          Top = 40
-          Width = 193
-          Height = 17
-          Caption = #1055#1086'  '#1076#1072#1090#1077' '#1079#1072#1074#1077#1088#1096#1077#1085#1080#1103' '#1088#1072#1073#1086#1090#1099
-          TabOrder = 2
-        end
       end
-      object WorkdataBox: TGroupBox
+      object etapdataBox: TGroupBox
         Left = 0
         Top = 234
         Width = 1037
@@ -135,7 +127,7 @@ object Frm_work: TFrm_work
             end>
         end
       end
-      object WorkbtnBox: TGroupBox
+      object etabtnBox: TGroupBox
         Left = 0
         Top = 431
         Width = 1037
@@ -143,7 +135,7 @@ object Frm_work: TFrm_work
         Align = alBottom
         TabOrder = 3
         ExplicitWidth = 906
-        object Work_sel_Btn: TButton
+        object etap_sel_Btn: TButton
           Left = 344
           Top = 25
           Width = 75

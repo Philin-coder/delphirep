@@ -76,9 +76,9 @@ end;
 procedure TFrm_main.work_itemClick(Sender: TObject);
 begin
   try
-    UpdateFormProperties('Frm_etap', 'Форма работы с данными о работе',
+    UpdateFormProperties('Frm_etap', 'Форма работы с данными этапа разработки',
       clBtnFace, 1024, 768);
-    Frm_work.ShowModal;
+    Frm_etap.ShowModal;
   except
     on E: Exception do
     begin
@@ -86,7 +86,7 @@ begin
         raise EDatabaseError.Create('Ошибка при работе с формой этапа разработки', 3001);
       HandleException(E);
       if Assigned(Frm_etap) then
-        Frm_work.Free;
+        Frm_.Free;
       raise;
     end;
   end;

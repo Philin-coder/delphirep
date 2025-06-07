@@ -8,5 +8,7 @@
     <Transaction>2025.06.06 20:08:01.920.bdsproj,C:\Users\user\OneDrive\Документы\Borland Studio Projects\Project1.bdsproj=F:\code\Result\delphi\code\games_r\games_Project.bdsproj</Transaction>
     <Transaction>2025.06.07 09:54:36.537.pas,F:\code\Result\delphi\code\games_r\Unit1.pas=F:\code\Result\delphi\code\games_r\Un_etap.pas</Transaction>
     <Transaction>2025.06.07 09:54:36.537.dfm,F:\code\Result\delphi\code\games_r\Unit1.dfm=F:\code\Result\delphi\code\games_r\Un_etap.dfm</Transaction>
+    <Transaction>2025.06.07 22:58:09.665.pas,F:\code\Result\delphi\code\games_r\Un_etap.pas=F:\code\Result\delphi\code\games_r\Un_work.pas</Transaction>
+    <Transaction>2025.06.07 22:58:09.665.dfm,F:\code\Result\delphi\code\games_r\Un_etap.dfm=F:\code\Result\delphi\code\games_r\Un_work.dfm</Transaction>
   </Transactions>
 </BorlandProject>
