@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs,db,ADODB, Grids, DBGrids, StdCtrls, ComCtrls;
+  Dialogs,db,ADODB, Grids, DBGrids, StdCtrls, ComCtrls, ExtCtrls;
 
 type
   TFrm_etap = class(TForm)
@@ -17,11 +17,16 @@ type
     etapGrouperBox: TGroupBox;
     etapdataBox: TGroupBox;
     etabtnBox: TGroupBox;
-    Button1: TButton;
+    etap_sel_Btn: TButton;
     etap_selGrd: TDBGrid;
+    Etap_cond_Edit: TLabeledEdit;
+    Etap_fnd_Edit: TLabeledEdit;
+    etap_naim_Radio: TRadioButton;
+    etap_reset_Radio: TRadioButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
+    procedure etap_sel_BtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -36,6 +41,36 @@ implementation
 uses Un_dm, Un_func;
 
 {$R *.dfm}
+
+procedure TFrm_etap.etap_sel_BtnClick(Sender: TObject);
+begin
+  try
+    if not DM.Connection.Connected then
+      raise EDatabaseError.Create('Соединение с базой не установлено',4001);
+    with DM.sel_etap_by_name do
+    begin
+      Close;
+      Parameters.ParamByName('@Nam_etap').Value :=Etap_cond_Edit.Text;
+      Open;
+       DM.etapQuery.Recordset:=dm.sel_etap_by_name.Recordset;
+    end;
+  except
+    on E: EDatabaseError do
+    begin
+      ShowMessage('Ошибка базы данных: ' + E.Message);
+      HandleException(E);
+      raise
+    end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E); 
+  end;
+end;
+end;
+
+
+
 
 procedure TFrm_etap.FormActivate(Sender: TObject);
 begin

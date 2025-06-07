@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs,db,ADODB, Grids, DBGrids, StdCtrls, ComCtrls, ExtCtrls,ActiveX;
+  Dialogs,db,ADODB, Grids, DBGrids, StdCtrls, ComCtrls, ExtCtrls;
 
 type
   TFrm_etap = class(TForm)
@@ -53,11 +53,15 @@ begin
       close;
       sql.Clear;
       sql.Text:=
-       'select'+' '+
-        'Etap.N_Etap,'+' '+
-        'Etap.Nam_etap'+' '+
-        'from Etap'+' '+
-        'where 1=1'+
+      'select'+' '+
+        'mplan.id_plan,'+' '+
+        'mplan.nazv,'+' '+
+        'mplan.date_n,'+' '+
+        'mplan.opis,'+' '+
+        'manager.fio'+' '+
+        'from mplan'+' '+
+        'inner join manager on manager.maneger_id=mplan.maneger_id'+' '+
+      'where 1=1'+' '+
      'order by manager.fio asc';
       Open;
      end;
@@ -68,12 +72,6 @@ begin
       HandleException(E);
       raise
     end;
-       on E: EOleError do
-  begin
-  ShowMessage('Ошибка Ole: ' + E.Message);
-      HandleException(E);
-      raise
-  end;
   on E: Exception do
   begin
     ShowMessage('Общая ошибка: ' + E.Message);
@@ -102,11 +100,6 @@ begin
       HandleException(E);
       raise
     end;
-
-  on E: Exception do
-  begin
-    HandleException(E);
-  end;
   on E: Exception do
   begin
     ShowMessage('Общая ошибка: ' + E.Message);

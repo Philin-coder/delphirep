@@ -62,18 +62,17 @@ begin
       Open;
      end;
     except
+     on E: EOleException do
+  begin
+    // Преобразуем EOleException в EOleError
+    raise EOleError.CreateFromOLEError(E);
+  end;
     on E: EDatabaseError do
     begin
       ShowMessage('Ошибка базы данных: ' + E.Message);
       HandleException(E);
       raise
     end;
-       on E: EOleError do
-  begin
-  ShowMessage('Ошибка Ole: ' + E.Message);
-      HandleException(E);
-      raise
-  end;
   on E: Exception do
   begin
     ShowMessage('Общая ошибка: ' + E.Message);
@@ -102,11 +101,6 @@ begin
       HandleException(E);
       raise
     end;
-
-  on E: Exception do
-  begin
-    HandleException(E);
-  end;
   on E: Exception do
   begin
     ShowMessage('Общая ошибка: ' + E.Message);

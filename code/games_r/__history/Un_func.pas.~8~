@@ -3,7 +3,6 @@ unit Un_func;
 interface
 uses
 dateUtils,
-activeX,
 sysUtils,
 Controls,
 Classes,
@@ -53,7 +52,6 @@ type
   // Конкретные исключения
   EInvalidInput = class(EMyException);
   EDatabaseError = class(EMyException);
-  EOleError = class(EMyException); // Новый класс для ошибок COM/OLE
 
 // Процедура для стандартной обработки ошибок
 procedure HandleException(E: Exception);
@@ -3312,11 +3310,15 @@ begin
 
     Writeln(LogFile, FormatDateTime('yyyy-mm-dd hh:nn:ss', Now) + ' - Ошибка: ' + E.ClassName);
     Writeln(LogFile, 'Сообщение: ' + E.Message);
-    
+
     if E is EMyException then
-      Writeln(LogFile, 'Код ошибки: ' + IntToStr(EMyException(E).ErrorCode))
+    begin
+      Writeln(LogFile, 'Код ошибки: ' + IntToStr(EMyException(E).ErrorCode));
+    end
     else if E is EOleException then
+    begin
       Writeln(LogFile, 'Код ошибки COM: ' + IntToStr(EOleException(E).ErrorCode));
+    end;
 
     Writeln(LogFile, '----------------------------------------');
     CloseFile(LogFile);
@@ -3326,8 +3328,11 @@ begin
       ShowMessage('Ошибка ввода: ' + E.Message)
     else if E is EDatabaseError then
       ShowMessage('Ошибка базы данных: ' + E.Message)
-    else if E is EOleError then // Добавлена обработка EOleError
-      ShowMessage('Ошибка COM: ' + E.Message + #13#10 + 'Код ошибки: ' + IntToStr(EOleError(E).ErrorCode))
+    else if E is EADOError then
+      ShowMessage('Ошибка ADO: ' + E.Message)
+    else if E is EOleException then
+      ShowMessage('Ошибка COM: ' + E.Message + #13#10 +
+                  'Код ошибки COM: ' + IntToStr(EOleException(E).ErrorCode))
     else
       ShowMessage('Произошла ошибка: ' + E.Message);
 
@@ -3338,6 +3343,7 @@ begin
     end;
   end;
 end;
+
 initialization
   VisitedStaticTexts := TStringList.Create;
 finalization

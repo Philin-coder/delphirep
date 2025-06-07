@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs,db,ADODB, Grids, DBGrids, StdCtrls, ComCtrls, ExtCtrls,ActiveX;
+  Dialogs,db,ADODB, Grids, DBGrids, StdCtrls, ComCtrls, ExtCtrls;
 
 type
   TFrm_etap = class(TForm)
@@ -68,12 +68,6 @@ begin
       HandleException(E);
       raise
     end;
-       on E: EOleError do
-  begin
-  ShowMessage('Ошибка Ole: ' + E.Message);
-      HandleException(E);
-      raise
-  end;
   on E: Exception do
   begin
     ShowMessage('Общая ошибка: ' + E.Message);
@@ -102,11 +96,6 @@ begin
       HandleException(E);
       raise
     end;
-
-  on E: Exception do
-  begin
-    HandleException(E);
-  end;
   on E: Exception do
   begin
     ShowMessage('Общая ошибка: ' + E.Message);

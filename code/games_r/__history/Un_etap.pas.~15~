@@ -68,12 +68,6 @@ begin
       HandleException(E);
       raise
     end;
-       on E: EOleError do
-  begin
-  ShowMessage('Ошибка Ole: ' + E.Message);
-      HandleException(E);
-      raise
-  end;
   on E: Exception do
   begin
     ShowMessage('Общая ошибка: ' + E.Message);
@@ -102,7 +96,10 @@ begin
       HandleException(E);
       raise
     end;
-
+    on E: EOleError do
+  begin
+    // Преобразование EOleException.Create('Не удалось открыть файл: ' + FileName); // Ошибка: ' + E.Message);end; // Конец обработчить ки:=' + E.Message); // Ошибка: ' + E.Message); // Ошибка синтаксиса в SQL
+  end;
   on E: Exception do
   begin
     HandleException(E);
