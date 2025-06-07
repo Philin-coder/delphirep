@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs,db,ADODB, Grids, DBGrids, StdCtrls, ComCtrls, ExtCtrls;
+  Dialogs,db,ADODB, Grids, DBGrids, StdCtrls, ComCtrls, ExtCtrls,ActiveX;
 
 type
   TFrm_etap = class(TForm)
@@ -27,6 +27,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure etap_sel_BtnClick(Sender: TObject);
+    procedure etap_naim_RadioClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -42,6 +43,50 @@ uses Un_dm, Un_func;
 
 {$R *.dfm}
 
+procedure TFrm_etap.etap_naim_RadioClick(Sender: TObject);
+begin
+   if  etap_naim_Radio.Checked=true then
+  begin
+    try
+     with dm.etapQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+       'select'+' '+
+        'Etap.N_Etap,'+' '+
+        'Etap.Nam_etap'+' '+
+        'from Etap'+' '+
+        'where 1=1'+
+     'order by Etap.Nam_etap asc';
+      Open;
+     end;
+    except
+        on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise; // Повторное выбрасывание исключения
+  end;
+
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка Ole: ' + E.Message);
+    HandleException(E);
+    raise; // Повторное выбрасывание исключения
+  end;
+
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+  end;
+end;
+    end;
+  end;
+
+
+
 procedure TFrm_etap.etap_sel_BtnClick(Sender: TObject);
 begin
   try
@@ -55,16 +100,24 @@ begin
        DM.etapQuery.Recordset:=dm.sel_etap_by_name.Recordset;
     end;
   except
-    on E: EDatabaseError do
-    begin
-      ShowMessage('Ошибка базы данных: ' + E.Message);
-      HandleException(E);
-      raise
-    end;
+  on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise; // Повторное выбрасывание исключения
+  end;
+
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка Ole: ' + E.Message);
+    HandleException(E);
+    raise; // Повторное выбрасывание исключения
+  end;
+
   on E: Exception do
   begin
     ShowMessage('Общая ошибка: ' + E.Message);
-    HandleException(E); 
+    HandleException(E);
   end;
 end;
 end;

@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs,db,ADODB, Grids, DBGrids, StdCtrls, ComCtrls, ExtCtrls;
+  Dialogs,db,ADODB, Grids, DBGrids, StdCtrls, ComCtrls, ExtCtrls,ActiveX;
 
 type
   TFrm_etap = class(TForm)
@@ -28,6 +28,7 @@ type
     procedure FormActivate(Sender: TObject);
     procedure etap_sel_BtnClick(Sender: TObject);
     procedure etap_naim_RadioClick(Sender: TObject);
+    procedure etap_reset_RadioClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -58,24 +59,112 @@ begin
         'Etap.Nam_etap'+' '+
         'from Etap'+' '+
         'where 1=1'+
-     'order by manager.fio asc';
+     'order by Etap.Nam_etap asc';
       Open;
      end;
     except
-    on E: EDatabaseError do
-    begin
-      ShowMessage('Ошибка базы данных: ' + E.Message);
-      HandleException(E);
-      raise
-    end;
+        on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise; // Повторное выбрасывание исключения
+  end;
+
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка Ole: ' + E.Message);
+    HandleException(E);
+    raise; // Повторное выбрасывание исключения
+  end;
+
   on E: Exception do
   begin
     ShowMessage('Общая ошибка: ' + E.Message);
     HandleException(E);
   end;
 end;
+    end;
+  end;
+
+
+
+procedure TFrm_etap.etap_reset_RadioClick(Sender: TObject);
+var i,j,c:Integer;
+begin
+try
+  // Проверка состояния радиокнопки
+  if etap_reset_Radio.Checked then
+  begin
+    with Frm_etap do
+    begin
+
+      for I := 0 to ComponentCount - 1 do
+      begin
+        if Components[I] is TLabeledEdit then
+        begin
+          (Components[I] as TLabeledEdit).Clear;
+        end;
+      end;
+
+      // Сброс TCheckBox
+      for c := 0 to ComponentCount - 1 do
+      begin
+        if Components[c] is TCheckBox then
+        begin
+          (Components[c] as TCheckBox).Checked := False;
+        end;
+      end;
+
+      // Сброс TRadioButton
+      for j := 0 to ComponentCount - 1 do
+      begin
+        if Components[j] is TRadioButton then
+        begin
+          (Components[j] as TRadioButton).Checked := False;
+        end;
+      end;
+    end;
+  end;
+    with dm.etapQuery do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text :=
+        'SELECT ' +
+        '  mplan.id_plan, ' +
+        '  mplan.nazv, ' +
+        '  mplan.date_n, ' +
+        '  mplan.opis, ' +
+        '  manager.fio ' +
+        'FROM mplan ' +
+        'INNER JOIN manager ON manager.maneger_id = mplan.maneger_id ' +
+        'WHERE 1=1';
+      Open;
+    end;
+
+except
+  on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise; // Повторное выбрасывание исключения
+  end;
+
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise; // Повторное выбрасывание исключения
+  end;
+
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+  end;
 end;
 end;
+
 
 procedure TFrm_etap.etap_sel_BtnClick(Sender: TObject);
 begin
@@ -90,12 +179,20 @@ begin
        DM.etapQuery.Recordset:=dm.sel_etap_by_name.Recordset;
     end;
   except
-    on E: EDatabaseError do
-    begin
-      ShowMessage('Ошибка базы данных: ' + E.Message);
-      HandleException(E);
-      raise
-    end;
+  on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise; // Повторное выбрасывание исключения
+  end;
+
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка Ole: ' + E.Message);
+    HandleException(E);
+    raise; // Повторное выбрасывание исключения
+  end;
+
   on E: Exception do
   begin
     ShowMessage('Общая ошибка: ' + E.Message);
