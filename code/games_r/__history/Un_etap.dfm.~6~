@@ -1,0 +1,108 @@
+object Frm_etap: TFrm_etap
+  Left = 0
+  Top = 0
+  Caption = #1060#1086#1088#1080#1072'  '#1088#1072#1073#1086#1090#1099' '#1089' '#1076#1072#1085#1085#1099#1084#1080' '#1086#1073' '#1101#1090#1072#1087#1077' '#1088#1072#1079#1088#1072#1073#1086#1090#1082#1080
+  ClientHeight = 512
+  ClientWidth = 914
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  OnActivate = FormActivate
+  OnClose = FormClose
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object EtapPC: TPageControl
+    Left = 0
+    Top = 0
+    Width = 914
+    Height = 512
+    ActivePage = SelTab
+    Align = alClient
+    TabOrder = 0
+    object SelTab: TTabSheet
+      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1101#1090#1072#1087#1077' '#1088#1072#1079#1088#1072#1073#1086#1090#1082#1080
+      object etapcondBox: TGroupBox
+        Left = 0
+        Top = 0
+        Width = 906
+        Height = 81
+        Align = alTop
+        Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 0
+        ExplicitLeft = 3
+      end
+      object etapGrouperBox: TGroupBox
+        Left = 0
+        Top = 81
+        Width = 906
+        Height = 105
+        Align = alTop
+        Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086
+        TabOrder = 1
+        ExplicitLeft = 80
+        ExplicitTop = 304
+        ExplicitWidth = 185
+      end
+      object etapdataBox: TGroupBox
+        Left = 0
+        Top = 186
+        Width = 906
+        Height = 245
+        Align = alClient
+        Caption = #1042#1099#1074#1086#1076' '#1083#1072#1085#1085#1099#1093
+        TabOrder = 2
+        ExplicitLeft = 384
+        ExplicitTop = 320
+        ExplicitWidth = 185
+        ExplicitHeight = 105
+        object etap_selGrd: TDBGrid
+          Left = 2
+          Top = 15
+          Width = 902
+          Height = 228
+          Align = alClient
+          DataSource = DM.etapDS
+          TabOrder = 0
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWindowText
+          TitleFont.Height = -11
+          TitleFont.Name = 'Tahoma'
+          TitleFont.Style = []
+        end
+      end
+      object etabtnBox: TGroupBox
+        Left = 0
+        Top = 431
+        Width = 906
+        Height = 53
+        Align = alBottom
+        TabOrder = 3
+        object Button1: TButton
+          Left = 344
+          Top = 17
+          Width = 75
+          Height = 25
+          Caption = #1042#1099#1073#1088#1072#1090#1100
+          TabOrder = 0
+        end
+      end
+    end
+    object TabSheet2: TTabSheet
+      Caption = 'TabSheet2'
+      ImageIndex = 1
+    end
+    object TabSheet3: TTabSheet
+      Caption = 'TabSheet3'
+      ImageIndex = 2
+    end
+    object TabSheet4: TTabSheet
+      Caption = 'TabSheet4'
+      ImageIndex = 3
+    end
+  end
+end

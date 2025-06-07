@@ -1,13 +1,13 @@
-unit Un_main;
+unit Un_dm;
 
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs;
+  SysUtils, Classes, DB, ADODB;
 
 type
-  TForm2 = class(TForm)
+  TDM = class(TDataModule)
+    Connection: TADOConnection;
   private
     { Private declarations }
   public
@@ -15,9 +15,11 @@ type
   end;
 
 var
-  Form2: TForm2;
+  DM: TDM;
 
 implementation
+
+uses Un_main;
 
 {$R *.dfm}
 

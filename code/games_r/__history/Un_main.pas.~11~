@@ -44,6 +44,7 @@ begin
       if not (E is EMyException) then
         raise EDatabaseError.Create('Ошибка при работе с формой этапа разработки', 3001);
       HandleException(E);
+      // Освобождаем форму, если она была создана
       if Assigned(Frm_etap) then
         Frm_etap.Free;
       raise;

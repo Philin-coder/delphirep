@@ -10,7 +10,7 @@ type
     Connection: TADOConnection;
     etapQuery: TADOQuery;
     etapDS: TDataSource;
-    sel_etap_by_name: TADOStoredProc;
+    ADOStoredProc1: TADOStoredProc;
     ADOStoredProc2: TADOStoredProc;
     ADOStoredProc3: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;

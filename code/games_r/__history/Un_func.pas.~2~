@@ -3286,6 +3286,8 @@ begin
   inherited Create(E.Message);
   FErrorCode := 2001; // Код для ошибок БД
 end;
+
+// Реализация процедуры для стандартной обработки ошибок
 procedure HandleException(E: Exception);
 var
   LogFilePath: string;
@@ -3320,6 +3322,7 @@ begin
   except
     on LogError: Exception do
     begin
+      // Если произошла ошибка при логировании, просто выведем сообщение
       ShowMessage('Не удалось записать ошибку в лог: ' + LogError.Message);
     end;
   end;
