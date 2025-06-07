@@ -79,12 +79,14 @@ except
     HandleException(E);
     raise; // Повторное выбрасывание исключения
   end;
+
   on E: Exception do
   begin
     ShowMessage('Общая ошибка: ' + E.Message);
     HandleException(E);
+  end;
 end;
-end;
+
 end;
 
 procedure TFrm_etap.etap_inp_BtnClick(Sender: TObject);
@@ -136,7 +138,7 @@ begin
     ShowMessage('Общая ошибка: ' + E.Message);
     HandleException(E); // Логирование ошибки
   end;
-  end;
+    end;
 end;
 
 procedure TFrm_etap.etap_naim_RadioClick(Sender: TObject);
@@ -164,20 +166,22 @@ begin
     HandleException(E);
     raise; // Повторное выбрасывание исключения
   end;
+
   on E: EOleError do
   begin
     ShowMessage('Ошибка Ole: ' + E.Message);
     HandleException(E);
     raise; // Повторное выбрасывание исключения
   end;
+
   on E: Exception do
   begin
     ShowMessage('Общая ошибка: ' + E.Message);
     HandleException(E);
   end;
 end;
-end;
-end;
+    end;
+  end;
 
 
 
