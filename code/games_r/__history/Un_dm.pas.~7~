@@ -11,7 +11,7 @@ type
     etapQuery: TADOQuery;
     etapDS: TDataSource;
     sel_etap_by_name: TADOStoredProc;
-    ins_etap: TADOStoredProc;
+    ADOStoredProc2: TADOStoredProc;
     ADOStoredProc3: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;
   private

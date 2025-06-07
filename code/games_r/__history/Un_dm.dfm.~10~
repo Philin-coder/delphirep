@@ -49,7 +49,7 @@ object DM: TDM
     Left = 112
     Top = 192
   end
-  object ins_etap: TADOStoredProc
+  object iins_etap: TADOStoredProc
     Connection = Connection
     ProcedureName = 'ins_etap;1'
     Parameters = <

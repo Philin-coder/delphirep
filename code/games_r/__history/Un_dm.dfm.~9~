@@ -49,22 +49,8 @@ object DM: TDM
     Left = 112
     Top = 192
   end
-  object ins_etap: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'ins_etap;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@Nam_etap'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 1000
-      end>
+  object ADOStoredProc2: TADOStoredProc
+    Parameters = <>
     Left = 120
     Top = 272
   end

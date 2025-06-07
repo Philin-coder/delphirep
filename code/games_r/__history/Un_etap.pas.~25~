@@ -10,7 +10,7 @@ type
   TFrm_etap = class(TForm)
     EtapPC: TPageControl;
     SelTab: TTabSheet;
-    insTab: TTabSheet;
+    TabSheet2: TTabSheet;
     TabSheet3: TTabSheet;
     TabSheet4: TTabSheet;
     etapcondBox: TGroupBox;
@@ -23,12 +23,6 @@ type
     Etap_fnd_Edit: TLabeledEdit;
     etap_naim_Radio: TRadioButton;
     etap_reset_Radio: TRadioButton;
-    etap_data_Box: TGroupBox;
-    etap_btn_Box: TGroupBox;
-    etap_inp_Box: TGroupBox;
-    etap_inp_Btn: TButton;
-    etap_data_grd: TDBGrid;
-    Nam_etap_inp: TLabeledEdit;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -36,7 +30,6 @@ type
     procedure etap_naim_RadioClick(Sender: TObject);
     procedure etap_reset_RadioClick(Sender: TObject);
     procedure Etap_fnd_EditKeyPress(Sender: TObject; var Key: Char);
-    procedure etap_inp_BtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -87,58 +80,6 @@ except
   end;
 end;
 
-end;
-
-procedure TFrm_etap.etap_inp_BtnClick(Sender: TObject);
-const
-  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
-var
-  AreFieldsEmpty: Boolean;
-  AreFieldsValid: Boolean;
-begin
- AreFieldsEmpty:=(
- (Trim(Nam_etap_inp.Text)='')
- );
- AreFieldsValid:=(
- ValidateComponentText(Nam_etap_inp,AllowedChars)
- );
- if AreFieldsEmpty or not AreFieldsValid then
- begin
-     MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
- end;
- try
-      with dm.ins_etap do
-      begin
-        if not dm.Connection.Connected then
-          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
-           Parameters.ParamByName('@Nam_etap').Value :=Nam_etap_inp.Text;
-           ExecProc;
-           dm.etapQuery.Close;
-           dm.etapQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EDatabaseError do
-  begin
-    ShowMessage('Ошибка базы данных: ' + E.Message);
-    HandleException(E);
-    raise;
-  end;
-  on E: EOleError do
-  begin
-    ShowMessage('Ошибка COM: ' + E.Message);
-    HandleException(E); // Логирование ошибки
-    raise; // Повторное выбрасывание исключения
-  end;
-  on E: Exception do
-  begin
-    ShowMessage('Общая ошибка: ' + E.Message);
-    HandleException(E); // Логирование ошибки
-  end;
-    end;
 end;
 
 procedure TFrm_etap.etap_naim_RadioClick(Sender: TObject);
@@ -269,6 +210,7 @@ begin
     HandleException(E);
     raise;
   end;
+
   on E: EOleError do
   begin
     ShowMessage('Ошибка Ole: ' + E.Message);

@@ -3326,8 +3326,9 @@ begin
       ShowMessage('Ошибка ввода: ' + E.Message)
     else if E is EDatabaseError then
       ShowMessage('Ошибка базы данных: ' + E.Message)
-    else if E is EOleError then // Добавлена обработка EOleError
-      ShowMessage('Ошибка COM: ' + E.Message + #13#10 + 'Код ошибки: ' + IntToStr(EOleError(E).ErrorCode))
+    else if E is EOleError then
+      ShowMessage('Ошибка COM: ' + E.Message + #13#10 + 'Код ошибки: '
+      + IntToStr(EOleError(E).ErrorCode))
     else
       ShowMessage('Произошла ошибка: ' + E.Message);
 
