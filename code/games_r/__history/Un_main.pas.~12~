@@ -13,12 +13,10 @@ type
     main_Image: TImage;
     ItemsMenu: TMainMenu;
     etap_item: TMenuItem;
-    work_item: TMenuItem;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure etap_itemClick(Sender: TObject);
-    procedure work_itemClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -30,7 +28,7 @@ var
 
 implementation
 
-uses Un_dm, Un_func, Un_etap, Un_work;
+uses Un_dm, Un_func, Un_etap;
 
 {$R *.dfm}
 
@@ -71,25 +69,6 @@ begin
   AdjustImageProperties(main_Image);
   LoadFormState(Self);
   LoadImageFromResource('BACKGROUND_IMAGE', main_Image);
-end;
-
-procedure TFrm_main.work_itemClick(Sender: TObject);
-begin
-  try
-    UpdateFormProperties('Frm_etap', 'Форма работы с данными этапа разработки',
-      clBtnFace, 1024, 768);
-    Frm_etap.ShowModal;
-  except
-    on E: Exception do
-    begin
-      if not (E is EMyException) then
-        raise EDatabaseError.Create('Ошибка при работе с формой этапа разработки', 3001);
-      HandleException(E);
-      if Assigned(Frm_etap) then
-        Frm_.Free;
-      raise;
-    end;
-  end;
 end;
 
 end.

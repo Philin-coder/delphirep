@@ -1,0 +1,434 @@
+object Frm_work: TFrm_work
+  Left = 0
+  Top = 0
+  Caption = #1060#1086#1088#1080#1072'  '#1088#1072#1073#1086#1090#1099' '#1089' '#1076#1072#1085#1085#1099#1084#1080' '#1086#1073' '#1101#1090#1072#1087#1077' '#1088#1072#1079#1088#1072#1073#1086#1090#1082#1080
+  ClientHeight = 512
+  ClientWidth = 1045
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  OnActivate = FormActivate
+  OnClose = FormClose
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object EtapPC: TPageControl
+    Left = 0
+    Top = 0
+    Width = 1045
+    Height = 512
+    ActivePage = SelTab
+    Align = alClient
+    TabOrder = 0
+    object SelTab: TTabSheet
+      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1101#1090#1072#1087#1077' '#1088#1072#1079#1088#1072#1073#1086#1090#1082#1080
+      ExplicitWidth = 906
+      object etapcondBox: TGroupBox
+        Left = 0
+        Top = 0
+        Width = 1037
+        Height = 129
+        Align = alTop
+        Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 0
+        ExplicitWidth = 974
+        object Etap_cond_Edit: TLabeledEdit
+          Left = 19
+          Top = 40
+          Width = 990
+          Height = 21
+          EditLabel.Width = 230
+          EditLabel.Height = 13
+          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1084#1080#1077' '#1087#1086' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1102' '#1101#1090#1072#1087#1072
+          TabOrder = 0
+        end
+        object Etap_fnd_Edit: TLabeledEdit
+          Left = 19
+          Top = 88
+          Width = 990
+          Height = 21
+          EditLabel.Width = 194
+          EditLabel.Height = 13
+          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086'  '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1102' '#1101#1090#1072#1087#1072
+          TabOrder = 1
+          OnKeyPress = Etap_fnd_EditKeyPress
+        end
+      end
+      object etapGrouperBox: TGroupBox
+        Left = 0
+        Top = 129
+        Width = 1037
+        Height = 105
+        Align = alTop
+        Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086
+        TabOrder = 1
+        ExplicitLeft = 80
+        ExplicitTop = 304
+        ExplicitWidth = 185
+        object etap_naim_Radio: TRadioButton
+          Left = 104
+          Top = 40
+          Width = 161
+          Height = 17
+          Caption = #1055#1086' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1102' '#1101#1090#1072#1087#1072
+          TabOrder = 0
+          OnClick = etap_naim_RadioClick
+        end
+        object etap_reset_Radio: TRadioButton
+          Left = 504
+          Top = 40
+          Width = 113
+          Height = 17
+          Caption = #1057#1073#1088#1086#1089
+          TabOrder = 1
+          OnClick = etap_reset_RadioClick
+        end
+      end
+      object etapdataBox: TGroupBox
+        Left = 0
+        Top = 234
+        Width = 1037
+        Height = 197
+        Align = alClient
+        Caption = #1042#1099#1074#1086#1076' '#1083#1072#1085#1085#1099#1093
+        TabOrder = 2
+        ExplicitLeft = 384
+        ExplicitTop = 320
+        ExplicitWidth = 185
+        ExplicitHeight = 105
+        object etap_selGrd: TDBGrid
+          Left = 2
+          Top = 15
+          Width = 1033
+          Height = 180
+          Align = alClient
+          DataSource = DM.etapDS
+          TabOrder = 0
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWindowText
+          TitleFont.Height = -11
+          TitleFont.Name = 'Tahoma'
+          TitleFont.Style = []
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'N_Etap'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Width = 135
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'Nam_etap'
+              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077
+              Width = 156
+              Visible = True
+            end>
+        end
+      end
+      object etabtnBox: TGroupBox
+        Left = 0
+        Top = 431
+        Width = 1037
+        Height = 53
+        Align = alBottom
+        TabOrder = 3
+        ExplicitWidth = 906
+        object etap_sel_Btn: TButton
+          Left = 344
+          Top = 25
+          Width = 75
+          Height = 25
+          Caption = #1042#1099#1073#1088#1072#1090#1100
+          TabOrder = 0
+          OnClick = etap_sel_BtnClick
+        end
+      end
+    end
+    object insTab: TTabSheet
+      Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1101#1090#1072#1087#1077
+      ImageIndex = 1
+      ExplicitWidth = 906
+      object etap_data_Box: TGroupBox
+        Left = 0
+        Top = 105
+        Width = 1037
+        Height = 311
+        Align = alClient
+        Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 0
+        ExplicitLeft = 320
+        ExplicitTop = 104
+        ExplicitWidth = 185
+        ExplicitHeight = 105
+        object etap_data_grd: TDBGrid
+          Left = 2
+          Top = 15
+          Width = 1033
+          Height = 294
+          Align = alClient
+          DataSource = DM.etapDS
+          TabOrder = 0
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWindowText
+          TitleFont.Height = -11
+          TitleFont.Name = 'Tahoma'
+          TitleFont.Style = []
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'N_Etap'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Width = 135
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'Nam_etap'
+              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077
+              Width = 156
+              Visible = True
+            end>
+        end
+      end
+      object etap_btn_Box: TGroupBox
+        Left = 0
+        Top = 416
+        Width = 1037
+        Height = 68
+        Align = alBottom
+        TabOrder = 1
+        object etap_inp_Btn: TButton
+          Left = 304
+          Top = 24
+          Width = 75
+          Height = 25
+          Caption = #1042#1074#1086#1076
+          TabOrder = 0
+          OnClick = etap_inp_BtnClick
+        end
+      end
+      object etap_inp_Box: TGroupBox
+        Left = 0
+        Top = 0
+        Width = 1037
+        Height = 105
+        Align = alTop
+        Caption = #1042#1074#1086#1076' '#1076#1074#1085#1085#1099#1093
+        TabOrder = 2
+        ExplicitLeft = 336
+        ExplicitTop = 120
+        ExplicitWidth = 185
+        object Nam_etap_inp: TLabeledEdit
+          Left = 19
+          Top = 40
+          Width = 990
+          Height = 21
+          EditLabel.Width = 132
+          EditLabel.Height = 13
+          EditLabel.Caption = #1042#1074#1086#1076' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1103' '#1101#1090#1072#1087#1072
+          TabOrder = 0
+        end
+      end
+    end
+    object updTab: TTabSheet
+      Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1101#1090#1072#1087#1077
+      ImageIndex = 2
+      ExplicitWidth = 906
+      object etap_upd_data_Box: TGroupBox
+        Left = 0
+        Top = 105
+        Width = 1037
+        Height = 319
+        Align = alClient
+        Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 0
+        ExplicitLeft = 176
+        ExplicitTop = 80
+        ExplicitWidth = 185
+        ExplicitHeight = 105
+        object etap_upd_grd: TDBGrid
+          Left = 2
+          Top = 15
+          Width = 1033
+          Height = 302
+          Align = alClient
+          DataSource = DM.etapDS
+          TabOrder = 0
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWindowText
+          TitleFont.Height = -11
+          TitleFont.Name = 'Tahoma'
+          TitleFont.Style = []
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'N_Etap'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Width = 231
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'Nam_etap'
+              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077
+              Width = 388
+              Visible = True
+            end>
+        end
+      end
+      object etap_upd_inpBox: TGroupBox
+        Left = 0
+        Top = 0
+        Width = 1037
+        Height = 105
+        Align = alTop
+        Caption = #1042#1074#1086#1076'  '#1076#1072#1085#1085#1099#1093
+        TabOrder = 1
+        ExplicitLeft = 184
+        ExplicitTop = 88
+        ExplicitWidth = 185
+        object etap_upd_e_lbl: TStaticText
+          Left = 16
+          Top = 25
+          Width = 68
+          Height = 17
+          Caption = #1042#1099#1073#1086#1088' '#1101#1090#1072#1087#1072
+          TabOrder = 0
+        end
+        object etap_upd_u_dbl: TDBLookupComboBox
+          Left = 16
+          Top = 40
+          Width = 1009
+          Height = 21
+          KeyField = 'N_Etap'
+          ListField = 'Nam_etap'
+          ListSource = DM.etapDS
+          TabOrder = 1
+        end
+        object u_etap_name_inp: TLabeledEdit
+          Left = 16
+          Top = 78
+          Width = 1009
+          Height = 21
+          EditLabel.Width = 132
+          EditLabel.Height = 13
+          EditLabel.Caption = #1042#1074#1086#1076' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1103' '#1101#1090#1072#1087#1072
+          TabOrder = 2
+        end
+      end
+      object etap_upd_btnBox: TGroupBox
+        Left = 0
+        Top = 424
+        Width = 1037
+        Height = 60
+        Align = alBottom
+        TabOrder = 2
+        object etap_upd_btn: TButton
+          Left = 312
+          Top = 16
+          Width = 75
+          Height = 25
+          Caption = #1054#1073#1085#1086#1074#1080#1090#1100
+          TabOrder = 0
+          OnClick = etap_upd_btnClick
+        end
+      end
+    end
+    object delTab: TTabSheet
+      Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1101#1090#1072#1087#1077
+      ImageIndex = 3
+      ExplicitWidth = 906
+      object etap_del_data_Box: TGroupBox
+        Left = 0
+        Top = 73
+        Width = 1037
+        Height = 351
+        Align = alClient
+        Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 0
+        ExplicitLeft = 328
+        ExplicitTop = 104
+        ExplicitWidth = 185
+        ExplicitHeight = 105
+        object etap_del_grid: TDBGrid
+          Left = 2
+          Top = 15
+          Width = 1033
+          Height = 334
+          Align = alClient
+          DataSource = DM.etapDS
+          TabOrder = 0
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWindowText
+          TitleFont.Height = -11
+          TitleFont.Name = 'Tahoma'
+          TitleFont.Style = []
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'N_Etap'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Width = 231
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'Nam_etap'
+              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077
+              Width = 388
+              Visible = True
+            end>
+        end
+      end
+      object etap_del_btn_Box: TGroupBox
+        Left = 0
+        Top = 424
+        Width = 1037
+        Height = 60
+        Align = alBottom
+        TabOrder = 1
+        object etap_del_btn: TButton
+          Left = 408
+          Top = 24
+          Width = 75
+          Height = 25
+          Caption = #1059#1076#1072#1083#1080#1090#1100
+          TabOrder = 0
+          OnClick = etap_del_btnClick
+        end
+      end
+      object etap_del_ipp_Box: TGroupBox
+        Left = 0
+        Top = 0
+        Width = 1037
+        Height = 73
+        Align = alTop
+        Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 2
+        object etap_del_e_lbl: TStaticText
+          Left = 16
+          Top = 25
+          Width = 68
+          Height = 17
+          Caption = #1042#1099#1073#1086#1088' '#1101#1090#1072#1087#1072
+          TabOrder = 0
+        end
+        object etap_del_e_dbl: TDBLookupComboBox
+          Left = 16
+          Top = 40
+          Width = 1009
+          Height = 21
+          KeyField = 'N_Etap'
+          ListField = 'Nam_etap'
+          ListSource = DM.etapDS
+          TabOrder = 1
+        end
+      end
+    end
+  end
+end
