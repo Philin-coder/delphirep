@@ -144,7 +144,7 @@ object Frm_work: TFrm_work
         TabOrder = 3
         ExplicitWidth = 906
         object Work_sel_Btn: TButton
-          Left = 352
+          Left = 344
           Top = 25
           Width = 75
           Height = 25

@@ -77,8 +77,8 @@ object Frm_work: TFrm_work
           TabOrder = 0
         end
         object Work_reset_Radio: TRadioButton
-          Left = 744
-          Top = 40
+          Left = 752
+          Top = 56
           Width = 113
           Height = 17
           Caption = #1057#1073#1088#1086#1089
@@ -144,7 +144,7 @@ object Frm_work: TFrm_work
         TabOrder = 3
         ExplicitWidth = 906
         object Work_sel_Btn: TButton
-          Left = 352
+          Left = 344
           Top = 25
           Width = 75
           Height = 25
