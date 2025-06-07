@@ -21,10 +21,9 @@ object Frm_etap: TFrm_etap
     Top = 0
     Width = 1045
     Height = 512
-    ActivePage = SelTab
+    ActivePage = updTab
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 914
     object SelTab: TTabSheet
       Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1101#1090#1072#1087#1077' '#1088#1072#1079#1088#1072#1073#1086#1090#1082#1080
       ExplicitWidth = 906
@@ -56,6 +55,7 @@ object Frm_etap: TFrm_etap
           EditLabel.Height = 13
           EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086'  '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1102' '#1101#1090#1072#1087#1072
           TabOrder = 1
+          OnKeyPress = Etap_fnd_EditKeyPress
         end
       end
       object etapGrouperBox: TGroupBox
@@ -76,6 +76,7 @@ object Frm_etap: TFrm_etap
           Height = 17
           Caption = #1055#1086' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1102' '#1101#1090#1072#1087#1072
           TabOrder = 0
+          OnClick = etap_naim_RadioClick
         end
         object etap_reset_Radio: TRadioButton
           Left = 504
@@ -84,6 +85,7 @@ object Frm_etap: TFrm_etap
           Height = 17
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 1
+          OnClick = etap_reset_RadioClick
         end
       end
       object etapdataBox: TGroupBox
@@ -111,6 +113,21 @@ object Frm_etap: TFrm_etap
           TitleFont.Height = -11
           TitleFont.Name = 'Tahoma'
           TitleFont.Style = []
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'N_Etap'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Width = 135
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'Nam_etap'
+              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077
+              Width = 156
+              Visible = True
+            end>
         end
       end
       object etabtnBox: TGroupBox
@@ -123,23 +140,129 @@ object Frm_etap: TFrm_etap
         ExplicitWidth = 906
         object etap_sel_Btn: TButton
           Left = 344
-          Top = 17
+          Top = 25
           Width = 75
           Height = 25
           Caption = #1042#1099#1073#1088#1072#1090#1100
           TabOrder = 0
+          OnClick = etap_sel_BtnClick
         end
       end
     end
-    object TabSheet2: TTabSheet
-      Caption = 'TabSheet2'
+    object insTab: TTabSheet
+      Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1101#1090#1072#1087#1077
       ImageIndex = 1
       ExplicitWidth = 906
+      object etap_data_Box: TGroupBox
+        Left = 0
+        Top = 105
+        Width = 1037
+        Height = 311
+        Align = alClient
+        Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 0
+        ExplicitLeft = 320
+        ExplicitTop = 104
+        ExplicitWidth = 185
+        ExplicitHeight = 105
+        object etap_data_grd: TDBGrid
+          Left = 2
+          Top = 15
+          Width = 1033
+          Height = 294
+          Align = alClient
+          DataSource = DM.etapDS
+          TabOrder = 0
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWindowText
+          TitleFont.Height = -11
+          TitleFont.Name = 'Tahoma'
+          TitleFont.Style = []
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'N_Etap'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Width = 135
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'Nam_etap'
+              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077
+              Width = 156
+              Visible = True
+            end>
+        end
+      end
+      object etap_btn_Box: TGroupBox
+        Left = 0
+        Top = 416
+        Width = 1037
+        Height = 68
+        Align = alBottom
+        TabOrder = 1
+        object etap_inp_Btn: TButton
+          Left = 304
+          Top = 24
+          Width = 75
+          Height = 25
+          Caption = #1042#1074#1086#1076
+          TabOrder = 0
+          OnClick = etap_inp_BtnClick
+        end
+      end
+      object etap_inp_Box: TGroupBox
+        Left = 0
+        Top = 0
+        Width = 1037
+        Height = 105
+        Align = alTop
+        Caption = #1042#1074#1086#1076' '#1076#1074#1085#1085#1099#1093
+        TabOrder = 2
+        ExplicitLeft = 336
+        ExplicitTop = 120
+        ExplicitWidth = 185
+        object Nam_etap_inp: TLabeledEdit
+          Left = 19
+          Top = 40
+          Width = 990
+          Height = 21
+          EditLabel.Width = 132
+          EditLabel.Height = 13
+          EditLabel.Caption = #1042#1074#1086#1076' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1103' '#1101#1090#1072#1087#1072
+          TabOrder = 0
+        end
+      end
     end
-    object TabSheet3: TTabSheet
-      Caption = 'TabSheet3'
+    object updTab: TTabSheet
+      Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1101#1090#1072#1087#1077
       ImageIndex = 2
       ExplicitWidth = 906
+      object GroupBox1: TGroupBox
+        Left = 176
+        Top = 80
+        Width = 185
+        Height = 105
+        Caption = 'GroupBox1'
+        TabOrder = 0
+      end
+      object GroupBox2: TGroupBox
+        Left = 184
+        Top = 88
+        Width = 185
+        Height = 105
+        Caption = 'GroupBox1'
+        TabOrder = 1
+      end
+      object GroupBox3: TGroupBox
+        Left = 192
+        Top = 96
+        Width = 185
+        Height = 105
+        Caption = 'GroupBox1'
+        TabOrder = 2
+      end
     end
     object TabSheet4: TTabSheet
       Caption = 'TabSheet4'

@@ -4,14 +4,15 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs,db,ADODB, Grids, DBGrids, StdCtrls, ComCtrls, ExtCtrls,ActiveX;
+  Dialogs,db,ADODB, Grids, DBGrids, StdCtrls, ComCtrls, ExtCtrls,ActiveX,
+  DBCtrls;
 
 type
   TFrm_etap = class(TForm)
     EtapPC: TPageControl;
     SelTab: TTabSheet;
-    TabSheet2: TTabSheet;
-    TabSheet3: TTabSheet;
+    insTab: TTabSheet;
+    updTab: TTabSheet;
     TabSheet4: TTabSheet;
     etapcondBox: TGroupBox;
     etapGrouperBox: TGroupBox;
@@ -23,12 +24,28 @@ type
     Etap_fnd_Edit: TLabeledEdit;
     etap_naim_Radio: TRadioButton;
     etap_reset_Radio: TRadioButton;
+    etap_data_Box: TGroupBox;
+    etap_btn_Box: TGroupBox;
+    etap_inp_Box: TGroupBox;
+    etap_inp_Btn: TButton;
+    etap_data_grd: TDBGrid;
+    Nam_etap_inp: TLabeledEdit;
+    etap_upd_data_Box: TGroupBox;
+    etap_upd_inpBox: TGroupBox;
+    etap_upd_btnBox: TGroupBox;
+    etap_upd_btn: TButton;
+    etap_upd_grd: TDBGrid;
+    etap_upd_e_lbl: TStaticText;
+    etap_upd_e_dbl: TDBLookupComboBox;
+    LabeledEdit1: TLabeledEdit;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure etap_sel_BtnClick(Sender: TObject);
     procedure etap_naim_RadioClick(Sender: TObject);
     procedure etap_reset_RadioClick(Sender: TObject);
+    procedure Etap_fnd_EditKeyPress(Sender: TObject; var Key: Char);
+    procedure etap_inp_BtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -43,6 +60,93 @@ implementation
 uses Un_dm, Un_func;
 
 {$R *.dfm}
+
+procedure TFrm_etap.Etap_fnd_EditKeyPress(Sender: TObject; var Key: Char);
+begin
+   try
+   dm.etapQuery.SQL.Text:=
+   'select'+' '+
+        'Etap.N_Etap,'+' '+
+        'Etap.Nam_etap'+' '+
+        'from Etap'+' '+
+        'where 1=1'+' '+
+        'and Etap.Nam_etap like'+
+   QuotedStr(Concat(Etap_fnd_Edit.Text,#37));
+   dm.etapQuery.close;
+   dm.etapQuery.Open;
+except
+   on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise; // Повторное выбрасывание исключения
+  end;
+
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка Ole: ' + E.Message);
+    HandleException(E);
+    raise; // Повторное выбрасывание исключения
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+end;
+end;
+end;
+
+procedure TFrm_etap.etap_inp_BtnClick(Sender: TObject);
+const
+  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+begin
+ AreFieldsEmpty:=(
+ (Trim(Nam_etap_inp.Text)='')
+ );
+ AreFieldsValid:=(
+ ValidateComponentText(Nam_etap_inp,AllowedChars)
+ );
+ if AreFieldsEmpty or not AreFieldsValid then
+ begin
+     MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+ end;
+ try
+      with dm.ins_etap do
+      begin
+        if not dm.Connection.Connected then
+          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
+           Parameters.ParamByName('@Nam_etap').Value :=Nam_etap_inp.Text;
+           ExecProc;
+           dm.etapQuery.Close;
+           dm.etapQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise; // Повторное выбрасывание исключения
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+  end;
+  end;
+end;
 
 procedure TFrm_etap.etap_naim_RadioClick(Sender: TObject);
 begin
@@ -69,22 +173,20 @@ begin
     HandleException(E);
     raise; // Повторное выбрасывание исключения
   end;
-
   on E: EOleError do
   begin
     ShowMessage('Ошибка Ole: ' + E.Message);
     HandleException(E);
     raise; // Повторное выбрасывание исключения
   end;
-
   on E: Exception do
   begin
     ShowMessage('Общая ошибка: ' + E.Message);
     HandleException(E);
   end;
 end;
-    end;
-  end;
+end;
+end;
 
 
 
@@ -172,7 +274,6 @@ begin
     HandleException(E);
     raise;
   end;
-
   on E: EOleError do
   begin
     ShowMessage('Ошибка Ole: ' + E.Message);

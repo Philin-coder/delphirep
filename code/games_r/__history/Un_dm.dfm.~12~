@@ -65,8 +65,8 @@ object DM: TDM
         DataType = ftWideString
         Size = 1000
       end>
-    Left = 112
-    Top = 256
+    Left = 120
+    Top = 272
   end
   object upd_etap: TADOStoredProc
     Connection = Connection
@@ -91,26 +91,11 @@ object DM: TDM
         Precision = 10
         Value = 0
       end>
-    Left = 112
-    Top = 312
+    Left = 120
+    Top = 336
   end
-  object del_etap: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'del_etap;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@n_etap'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = 0
-      end>
+  object ADOStoredProc4: TADOStoredProc
+    Parameters = <>
     Left = 128
     Top = 392
   end

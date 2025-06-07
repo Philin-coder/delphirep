@@ -12,8 +12,8 @@ type
     etapDS: TDataSource;
     sel_etap_by_name: TADOStoredProc;
     ins_etap: TADOStoredProc;
-    upd_etap: TADOStoredProc;
-    del_etap: TADOStoredProc;
+    ADOStoredProc3: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public

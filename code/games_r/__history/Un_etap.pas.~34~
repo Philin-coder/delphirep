@@ -13,7 +13,7 @@ type
     SelTab: TTabSheet;
     insTab: TTabSheet;
     updTab: TTabSheet;
-    delTab: TTabSheet;
+    TabSheet4: TTabSheet;
     etapcondBox: TGroupBox;
     etapGrouperBox: TGroupBox;
     etapdataBox: TGroupBox;
@@ -38,13 +38,6 @@ type
     etap_upd_e_lbl: TStaticText;
     etap_upd_u_dbl: TDBLookupComboBox;
     u_etap_name_inp: TLabeledEdit;
-    etap_del_data_Box: TGroupBox;
-    etap_del_btn_Box: TGroupBox;
-    etap_del_ipp_Box: TGroupBox;
-    etap_del_btn: TButton;
-    etap_del_grid: TDBGrid;
-    etap_del_e_lbl: TStaticText;
-    etap_del_e_dbl: TDBLookupComboBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -54,7 +47,6 @@ type
     procedure Etap_fnd_EditKeyPress(Sender: TObject; var Key: Char);
     procedure etap_inp_BtnClick(Sender: TObject);
     procedure etap_upd_btnClick(Sender: TObject);
-    procedure etap_del_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -69,53 +61,6 @@ implementation
 uses Un_dm, Un_func;
 
 {$R *.dfm}
-
-procedure TFrm_etap.etap_del_btnClick(Sender: TObject);
-var
-  AreFieldsEmpty: Boolean;
-begin
-  AreFieldsEmpty:=(
-  (etap_del_e_dbl.Text='')
-  );
-  if AreFieldsEmpty then
-  begin
-    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-  try
-      with dm.del_etap do
-      begin
-        if not dm.Connection.Connected then
-          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
-           Parameters.ParamByName('@N_etap').Value :=
-           dm.etapQuery.FieldByName('N_etap').AsString;
-           ExecProc;
-           dm.etapQuery.Close;
-           dm.etapQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EDatabaseError do
-  begin
-    ShowMessage('Ошибка базы данных: ' + E.Message);
-    HandleException(E);
-    raise;
-  end;
-  on E: EOleError do
-  begin
-    ShowMessage('Ошибка COM: ' + E.Message);
-    HandleException(E); // Логирование ошибки
-    raise; // Повторное выбрасывание исключения
-  end;
-  on E: Exception do
-  begin
-    ShowMessage('Общая ошибка: ' + E.Message);
-    HandleException(E); // Логирование ошибки
-end;
-end;
-end;
 
 procedure TFrm_etap.Etap_fnd_EditKeyPress(Sender: TObject; var Key: Char);
 begin
@@ -373,7 +318,7 @@ begin
       begin
         if not dm.Connection.Connected then
           raise EDatabaseError.Create('Соединение с базой не установлено',4001);
-           Parameters.ParamByName('@Nam_etap').Value :=u_etap_name_inp.Text;
+           Parameters.ParamByName('@Nam_etap').Value :=Nam_etap_inp.Text;
            Parameters.ParamByName('@n_etap').Value:=
            dm.etapQuery.FieldByName('n_etap').AsString;
            ExecProc;
