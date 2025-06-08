@@ -250,7 +250,7 @@ begin
            Parameters.ParamByName('@Nam_work').Value :=Nam_work_inp.Text;
            Parameters.ParamByName('@T_days').Value :=Work_t_days_inp.Date;
            Parameters.ParamByName('@n_etap').Value :=
-           dm.etapQuery.FieldByName('n_etap').AsString;
+           dm.workQuery.FieldByName('n_etap').AsString;
            ExecProc;
            dm.workQuery.Close;
            dm.workQuery.Open;
@@ -411,7 +411,7 @@ case urgency_st of
   end;
    0:
    begin
-      work_selGrd.Canvas.TextOut(Rect.Left +2,Rect.Top+2,Column.Field.Text);
+
    end;
 end; //case
 end;

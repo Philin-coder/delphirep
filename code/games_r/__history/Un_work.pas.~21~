@@ -111,7 +111,6 @@ begin
     begin
       Close;
        Parameters.ParamByName('@check_date').Value := cur_date;
-       ShowMessage(DateToStr(cur_date));
       Open;
        DM.workQuery.Recordset:=dm.sel_work_by_urgency.Recordset;
     end;
@@ -135,13 +134,41 @@ begin
 end;
 end;
 end;
-
-
   false:
   begin
-    ShowMessage('unchecked');
+     try
+   dm.workQuery.SQL.Text:=
+    'select'+' '+
+    'Work.N_Work,'+' '+
+     'Work.Nam_work,'+' '+
+     'Work.T_days,'+' '+
+     'Etap.Nam_etap'+' '+
+     'from Work'+' '+
+    'inner join Etap on Etap.N_Etap=Work.N_Etap'+' '+
+    'where 1=1';
+   dm.workQuery.close;
+   dm.workQuery.Open;
+except
+   on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
   end;
-  end;//case
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+end;
+end;
+end;
+end;//case
 end;
 
 

@@ -24,12 +24,11 @@ type
     Work_fnd_Edit: TLabeledEdit;
     Work_naim_Radio: TRadioButton;
     Work_reset_Radio: TRadioButton;
-    etap_data_Box: TGroupBox;
-    etap_btn_Box: TGroupBox;
-    etap_inp_Box: TGroupBox;
-    etap_inp_Btn: TButton;
-    etap_data_grd: TDBGrid;
-    Nam_etap_inp: TLabeledEdit;
+    Work_data_Box: TGroupBox;
+    Work_btn_Box: TGroupBox;
+    Work_inp_Box: TGroupBox;
+    Work_ins_Btn: TButton;
+    Nam_work_inp: TLabeledEdit;
     etap_upd_data_Box: TGroupBox;
     etap_upd_inpBox: TGroupBox;
     etap_upd_btnBox: TGroupBox;
@@ -47,6 +46,11 @@ type
     etap_del_e_dbl: TDBLookupComboBox;
     Work_Tdate_Radio: TRadioButton;
     threedaysCB: TCheckBox;
+    ins_Work_Grid: TDBGrid;
+    Work_t_date_lbl: TStaticText;
+    Work_t_days_inp: TDateTimePicker;
+    Work_n_etap_lbl: TStaticText;
+    Work_n_etap_dbl: TDBLookupComboBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -56,6 +60,7 @@ type
     procedure Work_Tdate_RadioClick(Sender: TObject);
     procedure Work_reset_RadioClick(Sender: TObject);
     procedure threedaysCBClick(Sender: TObject);
+    procedure Work_ins_BtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -110,7 +115,7 @@ begin
     with DM.sel_work_by_urgency do
     begin
       Close;
-           Parameters.ParamByName('@check_date').Value :=DateToStr_(cur_date);
+       Parameters.ParamByName('@check_date').Value := cur_date;
       Open;
        DM.workQuery.Recordset:=dm.sel_work_by_urgency.Recordset;
     end;
@@ -132,15 +137,43 @@ begin
     ShowMessage('Общая ошибка: ' + E.Message);
     HandleException(E);
 end;
-  end;
-  end;
-
-
+end;
+end;
   false:
   begin
-    ShowMessage('unchecked');
+     try
+   dm.workQuery.SQL.Text:=
+    'select'+' '+
+    'Work.N_Work,'+' '+
+     'Work.Nam_work,'+' '+
+     'Work.T_days,'+' '+
+     'Etap.Nam_etap'+' '+
+     'from Work'+' '+
+    'inner join Etap on Etap.N_Etap=Work.N_Etap'+' '+
+    'where 1=1';
+   dm.workQuery.close;
+   dm.workQuery.Open;
+except
+   on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
   end;
-  end;//case
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+end;
+end;
+end;
+end;//case
 end;
 
 
@@ -178,6 +211,62 @@ except
   begin
     ShowMessage('Общая ошибка: ' + E.Message);
     HandleException(E);
+end;
+end;
+end;
+
+procedure TFrm_work.Work_ins_BtnClick(Sender: TObject);
+const
+  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (Trim(Nam_work_inp.Text)='')or
+  (Work_n_etap_dbl.Text='')
+  );
+  AreFieldsValid:=(
+  ValidateComponentText(Nam_work_inp,AllowedChars)
+  );
+  if AreFieldsEmpty or not AreFieldsValid then
+  begin
+       MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.ins_work do
+      begin
+        if not dm.Connection.Connected then
+          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
+           Parameters.ParamByName('@Nam_work').Value :=Nam_work_inp.Text;
+           Parameters.ParamByName('@T_days').Value :=Work_t_days_inp.Date;
+           Parameters.ParamByName('@n_etap').Value :=
+           dm.workQuery.FieldByName('n_etap').AsString;
+           ExecProc;
+           dm.workQuery.Close;
+           dm.workQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E); 
 end;
 end;
 end;

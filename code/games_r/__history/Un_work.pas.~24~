@@ -24,12 +24,11 @@ type
     Work_fnd_Edit: TLabeledEdit;
     Work_naim_Radio: TRadioButton;
     Work_reset_Radio: TRadioButton;
-    etap_data_Box: TGroupBox;
-    etap_btn_Box: TGroupBox;
-    etap_inp_Box: TGroupBox;
-    etap_inp_Btn: TButton;
-    etap_data_grd: TDBGrid;
-    Nam_etap_inp: TLabeledEdit;
+    Work_data_Box: TGroupBox;
+    Work_btn_Box: TGroupBox;
+    Work_inp_Box: TGroupBox;
+    Work_ins_Btn: TButton;
+    Nam_work_inp: TLabeledEdit;
     etap_upd_data_Box: TGroupBox;
     etap_upd_inpBox: TGroupBox;
     etap_upd_btnBox: TGroupBox;
@@ -47,6 +46,11 @@ type
     etap_del_e_dbl: TDBLookupComboBox;
     Work_Tdate_Radio: TRadioButton;
     threedaysCB: TCheckBox;
+    ins_Work_Grid: TDBGrid;
+    Work_t_date_lbl: TStaticText;
+    Work_t_date_inp: TDateTimePicker;
+    Work_n_etap_lbl: TStaticText;
+    Work_n_etap_dbl: TDBLookupComboBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -54,6 +58,9 @@ type
     procedure Work_fnd_EditKeyPress(Sender: TObject; var Key: Char);
     procedure Work_naim_RadioClick(Sender: TObject);
     procedure Work_Tdate_RadioClick(Sender: TObject);
+    procedure Work_reset_RadioClick(Sender: TObject);
+    procedure threedaysCBClick(Sender: TObject);
+    procedure Work_ins_BtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -94,6 +101,83 @@ begin
   LoadFormState(Self);
 end;
 
+procedure TFrm_work.threedaysCBClick(Sender: TObject);
+var
+  cur_date:TDateTime;
+begin
+  cur_date:=GetCurrentDateTime;
+  case threedaysCB.Checked of
+  true:
+  begin
+    try
+    if not DM.Connection.Connected then
+      raise EDatabaseError.Create('Соединение с базой не установлено',4001);
+    with DM.sel_work_by_urgency do
+    begin
+      Close;
+       Parameters.ParamByName('@check_date').Value := cur_date;
+      Open;
+       DM.workQuery.Recordset:=dm.sel_work_by_urgency.Recordset;
+    end;
+  except
+     on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+end;
+end;
+end;
+  false:
+  begin
+     try
+   dm.workQuery.SQL.Text:=
+    'select'+' '+
+    'Work.N_Work,'+' '+
+     'Work.Nam_work,'+' '+
+     'Work.T_days,'+' '+
+     'Etap.Nam_etap'+' '+
+     'from Work'+' '+
+    'inner join Etap on Etap.N_Etap=Work.N_Etap'+' '+
+    'where 1=1';
+   dm.workQuery.close;
+   dm.workQuery.Open;
+except
+   on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+end;
+end;
+end;
+end;//case
+end;
+
+
+
 procedure TFrm_work.Work_fnd_EditKeyPress(Sender: TObject; var Key: Char);
 begin
 try
@@ -129,6 +213,23 @@ except
     HandleException(E);
 end;
 end;
+end;
+
+procedure TFrm_work.Work_ins_BtnClick(Sender: TObject);
+const
+  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (Trim(Nam_work_inp.Text)='')or
+  (Work_n_etap_dbl.Text='')
+  );
+  AreFieldsValid:=(
+  ValidateComponentText(Nam_work_inp,AllowedChars)
+  );
+  
 end;
 
 procedure TFrm_work.Work_naim_RadioClick(Sender: TObject);
@@ -171,6 +272,73 @@ begin
     HandleException(E);
   end;
 end;
+end;
+end;
+
+procedure TFrm_work.Work_reset_RadioClick(Sender: TObject);
+  var i,j,c:Integer;
+begin
+  try
+  if Work_reset_Radio.Checked then
+  begin
+    with Frm_work do
+    begin
+      for I := 0 to ComponentCount - 1 do
+      begin
+        if Components[I] is TLabeledEdit then
+        begin
+          (Components[I] as TLabeledEdit).Clear;
+        end;
+      end;
+      for c := 0 to ComponentCount - 1 do
+      begin
+        if Components[c] is TCheckBox then
+        begin
+          (Components[c] as TCheckBox).Checked := False;
+        end;
+      end;
+      for j := 0 to ComponentCount - 1 do
+      begin
+        if Components[j] is TRadioButton then
+        begin
+          (Components[j] as TRadioButton).Checked := False;
+        end;
+      end;
+    end;
+    with dm.workQuery do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text :=
+       'select'+' '+
+    'Work.N_Work,'+' '+
+     'Work.Nam_work,'+' '+
+     'Work.T_days,'+' '+
+     'Etap.Nam_etap'+' '+
+     'from Work'+' '+
+    'inner join Etap on Etap.N_Etap=Work.N_Etap'+' '+
+    'where 1=1';
+      Open;
+    end;
+  end;
+except
+  on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+  end;
 end;
 end;
 

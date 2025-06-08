@@ -21,7 +21,7 @@ object Frm_work: TFrm_work
     Top = 0
     Width = 1045
     Height = 512
-    ActivePage = SelTab
+    ActivePage = insTab
     Align = alClient
     TabOrder = 0
     object SelTab: TTabSheet
@@ -109,7 +109,7 @@ object Frm_work: TFrm_work
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1083#1072#1085#1085#1099#1093
         TabOrder = 2
-        object etap_selGrd: TDBGrid
+        object work_selGrd: TDBGrid
           Left = 2
           Top = 15
           Width = 1033
@@ -122,6 +122,7 @@ object Frm_work: TFrm_work
           TitleFont.Height = -11
           TitleFont.Name = 'Tahoma'
           TitleFont.Style = []
+          OnDrawColumnCell = work_selGrdDrawColumnCell
           Columns = <
             item
               Expanded = False
@@ -168,23 +169,25 @@ object Frm_work: TFrm_work
       end
     end
     object insTab: TTabSheet
-      Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1101#1090#1072#1087#1077
+      Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1088#1072#1073#1086#1090#1077
       ImageIndex = 1
-      object etap_data_Box: TGroupBox
+      object Work_data_Box: TGroupBox
         Left = 0
-        Top = 105
+        Top = 193
         Width = 1037
-        Height = 311
+        Height = 223
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object etap_data_grd: TDBGrid
+        ExplicitTop = 137
+        ExplicitHeight = 279
+        object ins_Work_Grid: TDBGrid
           Left = 2
           Top = 15
           Width = 1033
-          Height = 294
+          Height = 206
           Align = alClient
-          DataSource = DM.etapDS
+          DataSource = DM.workDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -194,53 +197,99 @@ object Frm_work: TFrm_work
           Columns = <
             item
               Expanded = False
-              FieldName = 'N_Etap'
+              FieldName = 'N_Work'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-              Width = 135
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'Nam_work'
+              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077' '#1088#1072#1073#1086#1090#1099
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'T_days'
+              Title.Caption = #1044#1072#1090#1072' '#1074#1099#1087#1086#1083#1085#1085#1077#1085#1080#1103
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'Nam_etap'
-              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077
-              Width = 156
+              Title.Caption = #1069#1090#1072#1087
               Visible = True
             end>
         end
       end
-      object etap_btn_Box: TGroupBox
+      object Work_btn_Box: TGroupBox
         Left = 0
         Top = 416
         Width = 1037
         Height = 68
         Align = alBottom
         TabOrder = 1
-        object etap_inp_Btn: TButton
+        object Work_ins_Btn: TButton
           Left = 304
           Top = 24
           Width = 75
           Height = 25
           Caption = #1042#1074#1086#1076
           TabOrder = 0
+          OnClick = Work_ins_BtnClick
         end
       end
-      object etap_inp_Box: TGroupBox
+      object Work_inp_Box: TGroupBox
         Left = 0
         Top = 0
         Width = 1037
-        Height = 105
+        Height = 193
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1074#1085#1085#1099#1093
         TabOrder = 2
-        object Nam_etap_inp: TLabeledEdit
+        object Nam_work_inp: TLabeledEdit
           Left = 19
           Top = 40
           Width = 990
           Height = 21
-          EditLabel.Width = 132
+          EditLabel.Width = 141
           EditLabel.Height = 13
-          EditLabel.Caption = #1042#1074#1086#1076' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1103' '#1101#1090#1072#1087#1072
+          EditLabel.Caption = #1042#1074#1086#1076' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1103' '#1088#1072#1073#1086#1090#1099
           TabOrder = 0
+        end
+        object Work_t_date_lbl: TStaticText
+          Left = 19
+          Top = 67
+          Width = 98
+          Height = 17
+          Caption = #1044#1072#1090#1072' '#1080#1089#1087#1086#1083#1085#1077#1085#1085#1080#1103
+          TabOrder = 1
+        end
+        object Work_t_days_inp: TDateTimePicker
+          Left = 19
+          Top = 90
+          Width = 990
+          Height = 21
+          Date = 45816.718279895830000000
+          Time = 45816.718279895830000000
+          TabOrder = 2
+        end
+        object Work_n_etap_lbl: TStaticText
+          Left = 19
+          Top = 125
+          Width = 29
+          Height = 17
+          Caption = #1069#1090#1072#1087
+          TabOrder = 3
+        end
+        object Work_n_etap_dbl: TDBLookupComboBox
+          Left = 19
+          Top = 148
+          Width = 990
+          Height = 21
+          KeyField = 'N_Etap'
+          ListField = 'Nam_etap'
+          ListSource = DM.etapDS
+          TabOrder = 4
         end
       end
     end
