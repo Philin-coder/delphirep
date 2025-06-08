@@ -161,22 +161,8 @@ object DM: TDM
     Left = 208
     Top = 200
   end
-  object sel_work_by_urgency: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'sel_work_by_urgency;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@check_date'
-        Attributes = [paNullable]
-        DataType = ftDateTime
-        Size = 10
-      end>
+  object ADOStoredProc2: TADOStoredProc
+    Parameters = <>
     Left = 208
     Top = 256
   end
@@ -189,10 +175,5 @@ object DM: TDM
     Parameters = <>
     Left = 224
     Top = 392
-  end
-  object ADOStoredProc1: TADOStoredProc
-    Parameters = <>
-    Left = 224
-    Top = 456
   end
 end

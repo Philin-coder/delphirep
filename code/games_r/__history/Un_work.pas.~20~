@@ -167,8 +167,9 @@ except
     HandleException(E);
 end;
 end;
-end;
-end;//case
+  end;
+
+  end;//case
 end;
 
 
