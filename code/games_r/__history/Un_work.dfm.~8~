@@ -26,7 +26,6 @@ object Frm_work: TFrm_work
     TabOrder = 0
     object SelTab: TTabSheet
       Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1088#1072#1073#1086#1090#1077
-      ExplicitWidth = 906
       object WorkcondBox: TGroupBox
         Left = 0
         Top = 0
@@ -35,7 +34,6 @@ object Frm_work: TFrm_work
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        ExplicitWidth = 974
         object Work_cond_Edit: TLabeledEdit
           Left = 19
           Top = 40
@@ -65,9 +63,6 @@ object Frm_work: TFrm_work
         Align = alTop
         Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086
         TabOrder = 1
-        ExplicitLeft = 80
-        ExplicitTop = 304
-        ExplicitWidth = 185
         object Work_naim_Radio: TRadioButton
           Left = 104
           Top = 40
@@ -77,8 +72,8 @@ object Frm_work: TFrm_work
           TabOrder = 0
         end
         object Work_reset_Radio: TRadioButton
-          Left = 752
-          Top = 56
+          Left = 744
+          Top = 40
           Width = 113
           Height = 17
           Caption = #1057#1073#1088#1086#1089
@@ -101,10 +96,6 @@ object Frm_work: TFrm_work
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1083#1072#1085#1085#1099#1093
         TabOrder = 2
-        ExplicitLeft = 384
-        ExplicitTop = 320
-        ExplicitWidth = 185
-        ExplicitHeight = 105
         object etap_selGrd: TDBGrid
           Left = 2
           Top = 15
@@ -142,9 +133,8 @@ object Frm_work: TFrm_work
         Height = 53
         Align = alBottom
         TabOrder = 3
-        ExplicitWidth = 906
         object Work_sel_Btn: TButton
-          Left = 344
+          Left = 352
           Top = 25
           Width = 75
           Height = 25
@@ -156,7 +146,6 @@ object Frm_work: TFrm_work
     object insTab: TTabSheet
       Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1101#1090#1072#1087#1077
       ImageIndex = 1
-      ExplicitWidth = 906
       object etap_data_Box: TGroupBox
         Left = 0
         Top = 105
@@ -165,10 +154,6 @@ object Frm_work: TFrm_work
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        ExplicitLeft = 320
-        ExplicitTop = 104
-        ExplicitWidth = 185
-        ExplicitHeight = 105
         object etap_data_grd: TDBGrid
           Left = 2
           Top = 15
@@ -223,9 +208,6 @@ object Frm_work: TFrm_work
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1074#1085#1085#1099#1093
         TabOrder = 2
-        ExplicitLeft = 336
-        ExplicitTop = 120
-        ExplicitWidth = 185
         object Nam_etap_inp: TLabeledEdit
           Left = 19
           Top = 40
@@ -241,7 +223,6 @@ object Frm_work: TFrm_work
     object updTab: TTabSheet
       Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1101#1090#1072#1087#1077
       ImageIndex = 2
-      ExplicitWidth = 906
       object etap_upd_data_Box: TGroupBox
         Left = 0
         Top = 105
@@ -250,10 +231,6 @@ object Frm_work: TFrm_work
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        ExplicitLeft = 176
-        ExplicitTop = 80
-        ExplicitWidth = 185
-        ExplicitHeight = 105
         object etap_upd_grd: TDBGrid
           Left = 2
           Top = 15
@@ -292,9 +269,6 @@ object Frm_work: TFrm_work
         Align = alTop
         Caption = #1042#1074#1086#1076'  '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
-        ExplicitLeft = 184
-        ExplicitTop = 88
-        ExplicitWidth = 185
         object etap_upd_e_lbl: TStaticText
           Left = 16
           Top = 25
@@ -344,7 +318,6 @@ object Frm_work: TFrm_work
     object delTab: TTabSheet
       Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1101#1090#1072#1087#1077
       ImageIndex = 3
-      ExplicitWidth = 906
       object etap_del_data_Box: TGroupBox
         Left = 0
         Top = 73
@@ -353,10 +326,6 @@ object Frm_work: TFrm_work
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        ExplicitLeft = 328
-        ExplicitTop = 104
-        ExplicitWidth = 185
-        ExplicitHeight = 105
         object etap_del_grid: TDBGrid
           Left = 2
           Top = 15

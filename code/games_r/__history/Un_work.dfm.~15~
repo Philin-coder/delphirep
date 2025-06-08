@@ -49,9 +49,9 @@ object Frm_work: TFrm_work
           Top = 88
           Width = 990
           Height = 21
-          EditLabel.Width = 203
+          EditLabel.Width = 201
           EditLabel.Height = 13
-          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086'  '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1102' '#1088#1072#1073#1086#1090#1099
+          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086'  '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1102' '#1088#1072#1073#1086#1090#1074
           TabOrder = 1
           OnKeyPress = Work_fnd_EditKeyPress
         end
@@ -80,7 +80,6 @@ object Frm_work: TFrm_work
           Height = 17
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 1
-          OnClick = Work_reset_RadioClick
         end
         object Work_Tdate_Radio: TRadioButton
           Left = 312

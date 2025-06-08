@@ -1,7 +1,7 @@
-USE [Razrab_Andryuschenko]
+USE [games_r]
 GO
 
-/****** Object:  StoredProcedure [dbo].[ins_work]    Script Date: 01.12.2020 21:48:53 ******/
+/****** Object:  StoredProcedure [dbo].[ins_work]    Script Date: 08.06.2025 12:59:22 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -9,7 +9,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 create proc [dbo].[ins_work]
-@Nam_work varchar(100),
+@Nam_work varchar(1000),
 @T_days date,
 @N_Etap int
 as 

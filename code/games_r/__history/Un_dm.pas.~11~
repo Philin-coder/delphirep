@@ -14,12 +14,6 @@ type
     ins_etap: TADOStoredProc;
     upd_etap: TADOStoredProc;
     del_etap: TADOStoredProc;
-    workQuery: TADOQuery;
-    workDS: TDataSource;
-    sel_work_by_naim: TADOStoredProc;
-    ADOStoredProc2: TADOStoredProc;
-    ADOStoredProc3: TADOStoredProc;
-    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public

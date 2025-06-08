@@ -26,7 +26,6 @@ object Frm_work: TFrm_work
     TabOrder = 0
     object SelTab: TTabSheet
       Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1088#1072#1073#1086#1090#1077
-      ExplicitWidth = 906
       object WorkcondBox: TGroupBox
         Left = 0
         Top = 0
@@ -35,7 +34,6 @@ object Frm_work: TFrm_work
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        ExplicitWidth = 974
         object Work_cond_Edit: TLabeledEdit
           Left = 19
           Top = 40
@@ -65,32 +63,37 @@ object Frm_work: TFrm_work
         Align = alTop
         Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086
         TabOrder = 1
-        ExplicitLeft = 80
-        ExplicitTop = 304
-        ExplicitWidth = 185
         object Work_naim_Radio: TRadioButton
-          Left = 104
-          Top = 40
+          Left = 40
+          Top = 32
           Width = 161
           Height = 17
           Caption = #1055#1086' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1102' '#1088#1072#1073#1086#1090#1099
           TabOrder = 0
         end
         object Work_reset_Radio: TRadioButton
-          Left = 744
-          Top = 40
+          Left = 880
+          Top = 32
           Width = 113
           Height = 17
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 1
         end
         object Work_Tdate_Radio: TRadioButton
-          Left = 368
-          Top = 40
+          Left = 312
+          Top = 32
           Width = 193
           Height = 17
           Caption = #1055#1086'  '#1076#1072#1090#1077' '#1079#1072#1074#1077#1088#1096#1077#1085#1080#1103' '#1088#1072#1073#1086#1090#1099
           TabOrder = 2
+        end
+        object threedaysCB: TCheckBox
+          Left = 527
+          Top = 32
+          Width = 315
+          Height = 17
+          Caption = #1054#1090#1086#1073#1088#1072#1090#1100' '#1090#1091' '#1088#1072#1073#1086#1090#1091' '#1075#1076#1077' '#1085#1072' '#1080#1089#1087#1086#1083#1085#1077#1085#1080#1077' '#1086#1089#1090#1072#1083#1088#1086#1089#1100' 3 '#1076#1085#1103
+          TabOrder = 3
         end
       end
       object WorkdataBox: TGroupBox
@@ -101,17 +104,13 @@ object Frm_work: TFrm_work
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1083#1072#1085#1085#1099#1093
         TabOrder = 2
-        ExplicitLeft = 384
-        ExplicitTop = 320
-        ExplicitWidth = 185
-        ExplicitHeight = 105
         object etap_selGrd: TDBGrid
           Left = 2
           Top = 15
           Width = 1033
           Height = 180
           Align = alClient
-          DataSource = DM.etapDS
+          DataSource = DM.workDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -121,16 +120,26 @@ object Frm_work: TFrm_work
           Columns = <
             item
               Expanded = False
-              FieldName = 'N_Etap'
+              FieldName = 'N_Work'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-              Width = 135
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'Nam_work'
+              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077' '#1088#1072#1073#1086#1090#1099
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'T_days'
+              Title.Caption = #1044#1072#1090#1072' '#1074#1099#1087#1086#1083#1085#1085#1077#1085#1080#1103
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'Nam_etap'
-              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077
-              Width = 156
+              Title.Caption = #1069#1090#1072#1087
               Visible = True
             end>
         end
@@ -142,9 +151,8 @@ object Frm_work: TFrm_work
         Height = 53
         Align = alBottom
         TabOrder = 3
-        ExplicitWidth = 906
         object Work_sel_Btn: TButton
-          Left = 344
+          Left = 352
           Top = 25
           Width = 75
           Height = 25
@@ -156,7 +164,6 @@ object Frm_work: TFrm_work
     object insTab: TTabSheet
       Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1101#1090#1072#1087#1077
       ImageIndex = 1
-      ExplicitWidth = 906
       object etap_data_Box: TGroupBox
         Left = 0
         Top = 105
@@ -165,10 +172,6 @@ object Frm_work: TFrm_work
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        ExplicitLeft = 320
-        ExplicitTop = 104
-        ExplicitWidth = 185
-        ExplicitHeight = 105
         object etap_data_grd: TDBGrid
           Left = 2
           Top = 15
@@ -223,9 +226,6 @@ object Frm_work: TFrm_work
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1074#1085#1085#1099#1093
         TabOrder = 2
-        ExplicitLeft = 336
-        ExplicitTop = 120
-        ExplicitWidth = 185
         object Nam_etap_inp: TLabeledEdit
           Left = 19
           Top = 40
@@ -241,7 +241,6 @@ object Frm_work: TFrm_work
     object updTab: TTabSheet
       Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1101#1090#1072#1087#1077
       ImageIndex = 2
-      ExplicitWidth = 906
       object etap_upd_data_Box: TGroupBox
         Left = 0
         Top = 105
@@ -250,10 +249,6 @@ object Frm_work: TFrm_work
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        ExplicitLeft = 176
-        ExplicitTop = 80
-        ExplicitWidth = 185
-        ExplicitHeight = 105
         object etap_upd_grd: TDBGrid
           Left = 2
           Top = 15
@@ -292,9 +287,6 @@ object Frm_work: TFrm_work
         Align = alTop
         Caption = #1042#1074#1086#1076'  '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
-        ExplicitLeft = 184
-        ExplicitTop = 88
-        ExplicitWidth = 185
         object etap_upd_e_lbl: TStaticText
           Left = 16
           Top = 25
@@ -344,7 +336,6 @@ object Frm_work: TFrm_work
     object delTab: TTabSheet
       Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1101#1090#1072#1087#1077
       ImageIndex = 3
-      ExplicitWidth = 906
       object etap_del_data_Box: TGroupBox
         Left = 0
         Top = 73
@@ -353,10 +344,6 @@ object Frm_work: TFrm_work
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        ExplicitLeft = 328
-        ExplicitTop = 104
-        ExplicitWidth = 185
-        ExplicitHeight = 105
         object etap_del_grid: TDBGrid
           Left = 2
           Top = 15

@@ -39,14 +39,12 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@Nam_etap'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 100
-        Value = Null
       end>
     Left = 112
     Top = 192
@@ -60,14 +58,12 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@Nam_etap'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
-        Value = Null
       end>
     Left = 112
     Top = 256
@@ -81,14 +77,12 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@Nam_etap'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
-        Value = Null
       end
       item
         Name = '@n_etap'
@@ -109,7 +103,6 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@n_etap'
@@ -119,61 +112,6 @@ object DM: TDM
         Value = 0
       end>
     Left = 128
-    Top = 392
-  end
-  object workQuery: TADOQuery
-    Connection = Connection
-    CursorType = ctStatic
-    Parameters = <>
-    SQL.Strings = (
-      'select '
-      'Work.N_Work,'
-      'Work.Nam_work,'
-      'Work.T_days,'
-      'Etap.Nam_etap'
-      ' from Work'
-      ' inner join Etap on Etap.N_Etap=Work.N_Etap'
-      ' where 1=1')
-    Left = 176
-    Top = 56
-  end
-  object workDS: TDataSource
-    DataSet = workQuery
-    Left = 192
-    Top = 128
-  end
-  object sel_work_by_naim: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'sel_work_by_naim;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@Nam_work'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 1000
-      end>
-    Left = 208
-    Top = 200
-  end
-  object ADOStoredProc2: TADOStoredProc
-    Parameters = <>
-    Left = 208
-    Top = 256
-  end
-  object ADOStoredProc3: TADOStoredProc
-    Parameters = <>
-    Left = 208
-    Top = 312
-  end
-  object ADOStoredProc4: TADOStoredProc
-    Parameters = <>
-    Left = 224
     Top = 392
   end
 end

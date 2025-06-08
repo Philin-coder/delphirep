@@ -9,21 +9,21 @@ uses
 
 type
   TFrm_work = class(TForm)
-    EtapPC: TPageControl;
+    WorkPC: TPageControl;
     SelTab: TTabSheet;
     insTab: TTabSheet;
     updTab: TTabSheet;
     delTab: TTabSheet;
-    etapcondBox: TGroupBox;
-    etapGrouperBox: TGroupBox;
-    etapdataBox: TGroupBox;
-    etabtnBox: TGroupBox;
-    etap_sel_Btn: TButton;
+    WorkcondBox: TGroupBox;
+    WorkGrouperBox: TGroupBox;
+    WorkdataBox: TGroupBox;
+    WorkbtnBox: TGroupBox;
+    Work_sel_Btn: TButton;
     etap_selGrd: TDBGrid;
-    Etap_cond_Edit: TLabeledEdit;
-    Etap_fnd_Edit: TLabeledEdit;
-    etap_naim_Radio: TRadioButton;
-    etap_reset_Radio: TRadioButton;
+    Work_cond_Edit: TLabeledEdit;
+    Work_fnd_Edit: TLabeledEdit;
+    Work_naim_Radio: TRadioButton;
+    Work_reset_Radio: TRadioButton;
     etap_data_Box: TGroupBox;
     etap_btn_Box: TGroupBox;
     etap_inp_Box: TGroupBox;
@@ -45,16 +45,10 @@ type
     etap_del_grid: TDBGrid;
     etap_del_e_lbl: TStaticText;
     etap_del_e_dbl: TDBLookupComboBox;
+    Work_Tdate_Radio: TRadioButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
-    procedure etap_sel_BtnClick(Sender: TObject);
-    procedure etap_naim_RadioClick(Sender: TObject);
-    procedure etap_reset_RadioClick(Sender: TObject);
-    procedure Etap_fnd_EditKeyPress(Sender: TObject; var Key: Char);
-    procedure etap_inp_BtnClick(Sender: TObject);
-    procedure etap_upd_btnClick(Sender: TObject);
-    procedure etap_del_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -75,6 +69,7 @@ uses Un_dm, Un_func;
 procedure TFrm_work.FormActivate(Sender: TObject);
 begin
   dm.etapQuery.Open;
+  dm.workQuery.Open;
   AdjustDBGridColumnWidths('Frm_work',6000, 10);
 end;
 

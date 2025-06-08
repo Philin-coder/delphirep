@@ -123,7 +123,6 @@ object DM: TDM
   end
   object workQuery: TADOQuery
     Connection = Connection
-    CursorType = ctStatic
     Parameters = <>
     SQL.Strings = (
       'select '
@@ -142,22 +141,8 @@ object DM: TDM
     Left = 192
     Top = 128
   end
-  object sel_work_by_naim: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'sel_work_by_naim;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@Nam_work'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 1000
-      end>
+  object ADOStoredProc1: TADOStoredProc
+    Parameters = <>
     Left = 208
     Top = 200
   end
