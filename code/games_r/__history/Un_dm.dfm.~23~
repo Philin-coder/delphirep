@@ -259,9 +259,7 @@ object DM: TDM
     Top = 456
   end
   object usverQuery: TADOQuery
-    Active = True
     Connection = Connection
-    CursorType = ctStatic
     Parameters = <>
     SQL.Strings = (
       'select '

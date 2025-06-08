@@ -32,7 +32,7 @@ type
     Work_upd_data_Box: TGroupBox;
     Work_upd_inpBox: TGroupBox;
     Work_upd_btnBox: TGroupBox;
-    etap_upd_btn: TButton;
+    work_upd_btn: TButton;
     Work_upd_e_lbl: TStaticText;
     Work_upd_u_dbl: TDBLookupComboBox;
     work_del_data_Box: TGroupBox;
@@ -64,7 +64,7 @@ type
     procedure Work_ins_BtnClick(Sender: TObject);
     procedure work_selGrdDrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
-    procedure etap_upd_btnClick(Sender: TObject);
+    procedure work_upd_btnClick(Sender: TObject);
     procedure work_del_btnClick(Sender: TObject);
   private
     { Private declarations }
@@ -83,7 +83,7 @@ uses Un_dm, Un_func;
 
 
 
-procedure TFrm_work.etap_upd_btnClick(Sender: TObject);
+procedure TFrm_work.work_upd_btnClick(Sender: TObject);
 var
   AreFieldsEmpty: Boolean;
 begin

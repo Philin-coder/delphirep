@@ -11,9 +11,16 @@ type
     etapQuery: TADOQuery;
     etapDS: TDataSource;
     sel_etap_by_name: TADOStoredProc;
-    ADOStoredProc2: TADOStoredProc;
-    ADOStoredProc3: TADOStoredProc;
-    ADOStoredProc4: TADOStoredProc;
+    ins_etap: TADOStoredProc;
+    upd_etap: TADOStoredProc;
+    del_etap: TADOStoredProc;
+    workQuery: TADOQuery;
+    workDS: TDataSource;
+    sel_work_by_naim: TADOStoredProc;
+    sel_work_by_urgency: TADOStoredProc;
+    ins_work: TADOStoredProc;
+    upd_work: TADOStoredProc;
+    del_work: TADOStoredProc;
   private
     { Private declarations }
   public

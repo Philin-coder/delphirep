@@ -1,4 +1,4 @@
-object Frm_work: TFrm_work
+object Frm_user: TFrm_user
   Left = 0
   Top = 0
   Caption = #1060#1086#1088#1080#1072'  '#1088#1072#1073#1086#1090#1099' '#1089' '#1076#1072#1085#1085#1099#1084#1080' '#1086' '#1088#1072#1073#1086#1090#1077
@@ -16,12 +16,12 @@ object Frm_work: TFrm_work
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object WorkPC: TPageControl
+  object userPC: TPageControl
     Left = 0
     Top = 0
     Width = 1045
     Height = 512
-    ActivePage = updTab
+    ActivePage = SelTab
     Align = alClient
     TabOrder = 0
     object SelTab: TTabSheet
@@ -53,7 +53,6 @@ object Frm_work: TFrm_work
           EditLabel.Height = 13
           EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086'  '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1102' '#1088#1072#1073#1086#1090#1099
           TabOrder = 1
-          OnKeyPress = Work_fnd_EditKeyPress
         end
       end
       object WorkGrouperBox: TGroupBox
@@ -71,7 +70,6 @@ object Frm_work: TFrm_work
           Height = 17
           Caption = #1055#1086' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1102' '#1088#1072#1073#1086#1090#1099
           TabOrder = 0
-          OnClick = Work_naim_RadioClick
         end
         object Work_reset_Radio: TRadioButton
           Left = 880
@@ -80,7 +78,6 @@ object Frm_work: TFrm_work
           Height = 17
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 1
-          OnClick = Work_reset_RadioClick
         end
         object Work_Tdate_Radio: TRadioButton
           Left = 312
@@ -89,7 +86,6 @@ object Frm_work: TFrm_work
           Height = 17
           Caption = #1055#1086'  '#1076#1072#1090#1077' '#1079#1072#1074#1077#1088#1096#1077#1085#1080#1103' '#1088#1072#1073#1086#1090#1099
           TabOrder = 2
-          OnClick = Work_Tdate_RadioClick
         end
         object threedaysCB: TCheckBox
           Left = 527
@@ -98,7 +94,6 @@ object Frm_work: TFrm_work
           Height = 17
           Caption = #1054#1090#1086#1073#1088#1072#1090#1100' '#1090#1091' '#1088#1072#1073#1086#1090#1091' '#1075#1076#1077' '#1085#1072' '#1080#1089#1087#1086#1083#1085#1077#1085#1080#1077' '#1086#1089#1090#1072#1083#1088#1086#1089#1100' 3 '#1076#1085#1103
           TabOrder = 3
-          OnClick = threedaysCBClick
         end
       end
       object WorkdataBox: TGroupBox
@@ -115,37 +110,30 @@ object Frm_work: TFrm_work
           Width = 1033
           Height = 180
           Align = alClient
-          DataSource = DM.workDS
+          DataSource = DM.usevrDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
           TitleFont.Height = -11
           TitleFont.Name = 'Tahoma'
           TitleFont.Style = []
-          OnDrawColumnCell = work_selGrdDrawColumnCell
           Columns = <
             item
               Expanded = False
-              FieldName = 'N_Work'
+              FieldName = 'usverId'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'Nam_work'
-              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077' '#1088#1072#1073#1086#1090#1099
+              FieldName = 'usver_role'
+              Title.Caption = #1056#1086#1083#1100' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1103
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'T_days'
-              Title.Caption = #1044#1072#1090#1072' '#1074#1099#1087#1086#1083#1085#1085#1077#1085#1080#1103
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'Nam_etap'
-              Title.Caption = #1069#1090#1072#1087
+              FieldName = 'usver_pass'
+              Title.Caption = #1055#1072#1088#1086#1083#1100
               Visible = True
             end>
         end
@@ -164,7 +152,6 @@ object Frm_work: TFrm_work
           Height = 25
           Caption = #1042#1099#1073#1088#1072#1090#1100
           TabOrder = 0
-          OnClick = Work_sel_BtnClick
         end
       end
     end
@@ -179,6 +166,8 @@ object Frm_work: TFrm_work
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
+        ExplicitTop = 137
+        ExplicitHeight = 279
         object ins_Work_Grid: TDBGrid
           Left = 2
           Top = 15
@@ -233,7 +222,6 @@ object Frm_work: TFrm_work
           Height = 25
           Caption = #1042#1074#1086#1076
           TabOrder = 0
-          OnClick = Work_ins_BtnClick
         end
       end
       object Work_inp_Box: TGroupBox
@@ -393,14 +381,13 @@ object Frm_work: TFrm_work
         Height = 60
         Align = alBottom
         TabOrder = 2
-        object work_upd_btn: TButton
+        object etap_upd_btn: TButton
           Left = 312
           Top = 16
           Width = 75
           Height = 25
           Caption = #1054#1073#1085#1086#1074#1080#1090#1100
           TabOrder = 0
-          OnClick = work_upd_btnClick
         end
       end
     end
@@ -421,7 +408,7 @@ object Frm_work: TFrm_work
           Width = 1033
           Height = 334
           Align = alClient
-          DataSource = DM.workDS
+          DataSource = DM.usevrDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -431,26 +418,17 @@ object Frm_work: TFrm_work
           Columns = <
             item
               Expanded = False
-              FieldName = 'N_Work'
-              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              FieldName = 'usverId'
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'Nam_work'
-              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077' '#1088#1072#1073#1086#1090#1099
+              FieldName = 'usver_role'
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'T_days'
-              Title.Caption = #1044#1072#1090#1072' '#1074#1099#1087#1086#1083#1085#1085#1077#1085#1080#1103
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'Nam_etap'
-              Title.Caption = #1069#1090#1072#1087
+              FieldName = 'usver_pass'
               Visible = True
             end>
         end
@@ -469,7 +447,6 @@ object Frm_work: TFrm_work
           Height = 25
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
-          OnClick = work_del_btnClick
         end
       end
       object work_del_ipp_Box: TGroupBox

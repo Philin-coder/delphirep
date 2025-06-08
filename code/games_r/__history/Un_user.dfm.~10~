@@ -1,4 +1,4 @@
-object Frm_work: TFrm_work
+object Frm_user: TFrm_user
   Left = 0
   Top = 0
   Caption = #1060#1086#1088#1080#1072'  '#1088#1072#1073#1086#1090#1099' '#1089' '#1076#1072#1085#1085#1099#1084#1080' '#1086' '#1088#1072#1073#1086#1090#1077
@@ -21,7 +21,7 @@ object Frm_work: TFrm_work
     Top = 0
     Width = 1045
     Height = 512
-    ActivePage = updTab
+    ActivePage = delTab
     Align = alClient
     TabOrder = 0
     object SelTab: TTabSheet
@@ -53,7 +53,6 @@ object Frm_work: TFrm_work
           EditLabel.Height = 13
           EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086'  '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1102' '#1088#1072#1073#1086#1090#1099
           TabOrder = 1
-          OnKeyPress = Work_fnd_EditKeyPress
         end
       end
       object WorkGrouperBox: TGroupBox
@@ -71,7 +70,6 @@ object Frm_work: TFrm_work
           Height = 17
           Caption = #1055#1086' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1102' '#1088#1072#1073#1086#1090#1099
           TabOrder = 0
-          OnClick = Work_naim_RadioClick
         end
         object Work_reset_Radio: TRadioButton
           Left = 880
@@ -80,7 +78,6 @@ object Frm_work: TFrm_work
           Height = 17
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 1
-          OnClick = Work_reset_RadioClick
         end
         object Work_Tdate_Radio: TRadioButton
           Left = 312
@@ -89,7 +86,6 @@ object Frm_work: TFrm_work
           Height = 17
           Caption = #1055#1086'  '#1076#1072#1090#1077' '#1079#1072#1074#1077#1088#1096#1077#1085#1080#1103' '#1088#1072#1073#1086#1090#1099
           TabOrder = 2
-          OnClick = Work_Tdate_RadioClick
         end
         object threedaysCB: TCheckBox
           Left = 527
@@ -122,7 +118,6 @@ object Frm_work: TFrm_work
           TitleFont.Height = -11
           TitleFont.Name = 'Tahoma'
           TitleFont.Style = []
-          OnDrawColumnCell = work_selGrdDrawColumnCell
           Columns = <
             item
               Expanded = False
@@ -164,7 +159,6 @@ object Frm_work: TFrm_work
           Height = 25
           Caption = #1042#1099#1073#1088#1072#1090#1100
           TabOrder = 0
-          OnClick = Work_sel_BtnClick
         end
       end
     end
@@ -179,6 +173,8 @@ object Frm_work: TFrm_work
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
+        ExplicitTop = 137
+        ExplicitHeight = 279
         object ins_Work_Grid: TDBGrid
           Left = 2
           Top = 15
@@ -233,7 +229,6 @@ object Frm_work: TFrm_work
           Height = 25
           Caption = #1042#1074#1086#1076
           TabOrder = 0
-          OnClick = Work_ins_BtnClick
         end
       end
       object Work_inp_Box: TGroupBox
@@ -393,14 +388,14 @@ object Frm_work: TFrm_work
         Height = 60
         Align = alBottom
         TabOrder = 2
-        object work_upd_btn: TButton
+        object etap_upd_btn: TButton
           Left = 312
           Top = 16
           Width = 75
           Height = 25
           Caption = #1054#1073#1085#1086#1074#1080#1090#1100
           TabOrder = 0
-          OnClick = work_upd_btnClick
+          OnClick = etap_upd_btnClick
         end
       end
     end
@@ -469,7 +464,6 @@ object Frm_work: TFrm_work
           Height = 25
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
-          OnClick = work_del_btnClick
         end
       end
       object work_del_ipp_Box: TGroupBox

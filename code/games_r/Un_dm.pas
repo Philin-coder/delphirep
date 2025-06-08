@@ -21,6 +21,12 @@ type
     ins_work: TADOStoredProc;
     upd_work: TADOStoredProc;
     del_work: TADOStoredProc;
+    usverQuery: TADOQuery;
+    usevrDS: TDataSource;
+    ADOStoredProc1: TADOStoredProc;
+    ADOStoredProc2: TADOStoredProc;
+    ADOStoredProc3: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public

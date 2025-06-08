@@ -14,13 +14,11 @@ type
     ItemsMenu: TMainMenu;
     etap_item: TMenuItem;
     work_item: TMenuItem;
-    user_item: TMenuItem;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure etap_itemClick(Sender: TObject);
     procedure work_itemClick(Sender: TObject);
-    procedure user_itemClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -32,7 +30,7 @@ var
 
 implementation
 
-uses Un_dm, Un_func, Un_etap, Un_work, Un_user;
+uses Un_dm, Un_func, Un_etap, Un_work;
 
 {$R *.dfm}
 
@@ -75,38 +73,19 @@ begin
   LoadImageFromResource('BACKGROUND_IMAGE', main_Image);
 end;
 
-procedure TFrm_main.user_itemClick(Sender: TObject);
-begin
-  try
-    UpdateFormProperties('Frm_user', 'Форма работы с данными о пользователе',
-      clBtnFace, 1024, 768);
-    Frm_user.ShowModal;
-  except
-    on E: Exception do
-    begin
-      if not (E is EMyException) then
-        raise EDatabaseError.Create('Ошибка при работе с формой эработы с данными о пользователе', 3001);
-      HandleException(E);
-      if Assigned(Frm_user) then
-        Frm_user.Free;
-      raise;
-    end;
-  end;
-end;
-
 procedure TFrm_main.work_itemClick(Sender: TObject);
 begin
   try
-    UpdateFormProperties('Frm_work', 'Форма работы с данными о работе',
+    UpdateFormProperties('Frm_etap', 'Форма работы с данными о работе',
       clBtnFace, 1024, 768);
     Frm_work.ShowModal;
   except
     on E: Exception do
     begin
       if not (E is EMyException) then
-        raise EDatabaseError.Create('Ошибка при работе с формой этапа работы', 3001);
+        raise EDatabaseError.Create('Ошибка при работе с формой этапа разработки', 3001);
       HandleException(E);
-      if Assigned(Frm_work) then
+      if Assigned(Frm_etap) then
         Frm_work.Free;
       raise;
     end;

@@ -1,7 +1,7 @@
 object DM: TDM
   OldCreateOrder = False
   Height = 567
-  Width = 635
+  Width = 389
   object Connection: TADOConnection
     Connected = True
     ConnectionString = 
@@ -257,45 +257,5 @@ object DM: TDM
       end>
     Left = 224
     Top = 456
-  end
-  object usverQuery: TADOQuery
-    Active = True
-    Connection = Connection
-    CursorType = ctStatic
-    Parameters = <>
-    SQL.Strings = (
-      'select '
-      '  usver.usverId,'
-      '  usver.usver_role,'
-      '  usver.usver_pass'
-      'from usver '
-      'where 1=1')
-    Left = 296
-    Top = 72
-  end
-  object usevrDS: TDataSource
-    DataSet = usverQuery
-    Left = 312
-    Top = 144
-  end
-  object ADOStoredProc1: TADOStoredProc
-    Parameters = <>
-    Left = 328
-    Top = 216
-  end
-  object ADOStoredProc2: TADOStoredProc
-    Parameters = <>
-    Left = 296
-    Top = 304
-  end
-  object ADOStoredProc3: TADOStoredProc
-    Parameters = <>
-    Left = 304
-    Top = 384
-  end
-  object ADOStoredProc4: TADOStoredProc
-    Parameters = <>
-    Left = 296
-    Top = 464
   end
 end
