@@ -19,7 +19,7 @@ type
     sel_work_by_naim: TADOStoredProc;
     sel_work_by_urgency: TADOStoredProc;
     ins_work: TADOStoredProc;
-    upd_work: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
     ADOStoredProc1: TADOStoredProc;
   private
     { Private declarations }

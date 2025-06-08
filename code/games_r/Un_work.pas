@@ -29,14 +29,12 @@ type
     Work_inp_Box: TGroupBox;
     Work_ins_Btn: TButton;
     Nam_work_inp: TLabeledEdit;
-    etap_upd_data_Box: TGroupBox;
-    etap_upd_inpBox: TGroupBox;
-    etap_upd_btnBox: TGroupBox;
+    Work_upd_data_Box: TGroupBox;
+    Work_upd_inpBox: TGroupBox;
+    Work_upd_btnBox: TGroupBox;
     etap_upd_btn: TButton;
-    etap_upd_grd: TDBGrid;
-    etap_upd_e_lbl: TStaticText;
-    etap_upd_u_dbl: TDBLookupComboBox;
-    u_etap_name_inp: TLabeledEdit;
+    Work_upd_e_lbl: TStaticText;
+    Work_upd_u_dbl: TDBLookupComboBox;
     etap_del_data_Box: TGroupBox;
     etap_del_btn_Box: TGroupBox;
     etap_del_ipp_Box: TGroupBox;
@@ -51,6 +49,9 @@ type
     Work_t_days_inp: TDateTimePicker;
     Work_n_etap_lbl: TStaticText;
     Work_n_etap_dbl: TDBLookupComboBox;
+    Work_updGrid: TDBGrid;
+    Work_upd_u_lbl: TStaticText;
+    Work_u_t_days_inp: TDateTimePicker;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -63,6 +64,7 @@ type
     procedure Work_ins_BtnClick(Sender: TObject);
     procedure work_selGrdDrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
+    procedure etap_upd_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -79,6 +81,54 @@ uses Un_dm, Un_func;
 {$R *.dfm}
 
 
+
+procedure TFrm_work.etap_upd_btnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (Work_upd_u_dbl.Text='')
+  );
+  if AreFieldsEmpty then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.upd_work do
+      begin
+        if not dm.Connection.Connected then
+          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
+           Parameters.ParamByName('@T_days').Value :=Work_u_t_days_inp.Date;
+           Parameters.ParamByName('@N_Work').Value:=
+           dm.workQuery.FieldByName('N_Work').AsString;
+           ExecProc;
+           dm.workQuery.Close;
+           dm.workQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+end;
+end;
+end;
 
 procedure TFrm_work.FormActivate(Sender: TObject);
 begin
