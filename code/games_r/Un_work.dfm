@@ -1,7 +1,7 @@
 object Frm_work: TFrm_work
   Left = 0
   Top = 0
-  Caption = #1060#1086#1088#1080#1072'  '#1088#1072#1073#1086#1090#1099' '#1089' '#1076#1072#1085#1085#1099#1084#1080' '#1086' '#1088#1072#1073#1086#1090#1077
+  Caption = #1060#1086#1088#1084#1072'  '#1088#1072#1073#1086#1090#1099' '#1089' '#1076#1072#1085#1085#1099#1084#1080' '#1086' '#1088#1072#1073#1086#1090#1077
   ClientHeight = 512
   ClientWidth = 1045
   Color = clBtnFace
@@ -26,6 +26,10 @@ object Frm_work: TFrm_work
     TabOrder = 0
     object SelTab: TTabSheet
       Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1088#1072#1073#1086#1090#1077
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object WorkcondBox: TGroupBox
         Left = 0
         Top = 0
@@ -171,6 +175,10 @@ object Frm_work: TFrm_work
     object insTab: TTabSheet
       Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1088#1072#1073#1086#1090#1077
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Work_data_Box: TGroupBox
         Left = 0
         Top = 193
@@ -407,6 +415,10 @@ object Frm_work: TFrm_work
     object delTab: TTabSheet
       Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1088#1072#1073#1086#1090#1077
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object work_del_data_Box: TGroupBox
         Left = 0
         Top = 73

@@ -9,7 +9,7 @@ uses
 
 type
   TFrm_user = class(TForm)
-    WorkPC: TPageControl;
+    userPC: TPageControl;
     SelTab: TTabSheet;
     insTab: TTabSheet;
     updTab: TTabSheet;
@@ -82,7 +82,6 @@ procedure TFrm_user.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   SaveFormState(Self);
   CloseAllQueriesOnDataModule('dm');
-
 end;
 
 procedure TFrm_user.FormCreate(Sender: TObject);
@@ -93,7 +92,6 @@ begin
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   UniformizeComponentAnchors(Self);
   LoadFormState(Self);
-
 end;
 
 end.

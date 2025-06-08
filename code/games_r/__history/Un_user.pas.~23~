@@ -9,21 +9,21 @@ uses
 
 type
   TFrm_user = class(TForm)
-    WorkPC: TPageControl;
+    userPC: TPageControl;
     SelTab: TTabSheet;
     insTab: TTabSheet;
     updTab: TTabSheet;
     delTab: TTabSheet;
-    WorkcondBox: TGroupBox;
-    WorkGrouperBox: TGroupBox;
-    WorkdataBox: TGroupBox;
-    WorkbtnBox: TGroupBox;
-    Work_sel_Btn: TButton;
-    work_selGrd: TDBGrid;
-    Work_cond_Edit: TLabeledEdit;
-    Work_fnd_Edit: TLabeledEdit;
-    Work_naim_Radio: TRadioButton;
-    Work_reset_Radio: TRadioButton;
+    usercondBox: TGroupBox;
+    userGrouperBox: TGroupBox;
+    userdataBox: TGroupBox;
+    userbtnBox: TGroupBox;
+    user_sel_Btn: TButton;
+    user_selGrd: TDBGrid;
+    user_cond_Edit: TLabeledEdit;
+    user_fnd_Edit: TLabeledEdit;
+    user_role_Radio: TRadioButton;
+    user_reset_Radio: TRadioButton;
     Work_data_Box: TGroupBox;
     Work_btn_Box: TGroupBox;
     Work_inp_Box: TGroupBox;
@@ -41,20 +41,22 @@ type
     work_del_btn: TButton;
     work_del_e_lbl: TStaticText;
     work_del_e_dbl: TDBLookupComboBox;
-    Work_Tdate_Radio: TRadioButton;
-    threedaysCB: TCheckBox;
-    ins_Work_Grid: TDBGrid;
+    uaer_pass_Radio: TRadioButton;
+    hidepassCB: TCheckBox;
     Work_t_date_lbl: TStaticText;
     Work_t_days_inp: TDateTimePicker;
     Work_n_etap_lbl: TStaticText;
     Work_n_etap_dbl: TDBLookupComboBox;
-    Work_updGrid: TDBGrid;
     Work_upd_u_lbl: TStaticText;
     Work_u_t_days_inp: TDateTimePicker;
-    DellworkGid: TDBGrid;
+    DBGrid1: TDBGrid;
+    DBGrid2: TDBGrid;
+    DBGrid3: TDBGrid;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
+    procedure user_sel_BtnClick(Sender: TObject);
+    procedure user_fnd_EditKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
   public
@@ -82,7 +84,6 @@ procedure TFrm_user.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   SaveFormState(Self);
   CloseAllQueriesOnDataModule('dm');
-
 end;
 
 procedure TFrm_user.FormCreate(Sender: TObject);
@@ -93,7 +94,69 @@ begin
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   UniformizeComponentAnchors(Self);
   LoadFormState(Self);
+end;
 
+procedure TFrm_user.user_fnd_EditKeyPress(Sender: TObject; var Key: Char);
+begin
+  try
+   dm.usverQuery.SQL.Text:=
+
+   //'and Work.Nam_work like'+
+   QuotedStr(Concat(user_fnd_Edit.Text,#37));
+   dm.usverQuery.close;
+   dm.usverQuery.Open;
+except
+   on E: EDatabaseError do
+  begin
+    ShowMessage('Ощибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ощибка Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая  ощибка: ' + E.Message);
+    HandleException(E);
+end;
+end;
+end;
+
+procedure TFrm_user.user_sel_BtnClick(Sender: TObject);
+begin
+  try
+    if not DM.Connection.Connected then
+      raise EDatabaseError.Create('Cоединение с базой не установлено',4001);
+    with DM.sel_user_by_role do
+    begin
+      Close;
+      Parameters.ParamByName('@usver_role').Value :=user_cond_Edit.Text;
+      Open;
+       DM.usverQuery.Recordset:=dm.sel_user_by_role.Recordset;
+    end;
+  except
+  on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных : ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка  Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+  end;
+end;
 end;
 
 end.

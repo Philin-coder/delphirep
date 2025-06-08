@@ -23,7 +23,7 @@ type
     del_work: TADOStoredProc;
     usverQuery: TADOQuery;
     usevrDS: TDataSource;
-    ADOStoredProc1: TADOStoredProc;
+    sel_user_by_role: TADOStoredProc;
     ADOStoredProc2: TADOStoredProc;
     ADOStoredProc3: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;

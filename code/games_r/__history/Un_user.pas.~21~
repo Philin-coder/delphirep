@@ -9,21 +9,21 @@ uses
 
 type
   TFrm_user = class(TForm)
-    WorkPC: TPageControl;
+    userPC: TPageControl;
     SelTab: TTabSheet;
     insTab: TTabSheet;
     updTab: TTabSheet;
     delTab: TTabSheet;
-    WorkcondBox: TGroupBox;
-    WorkGrouperBox: TGroupBox;
-    WorkdataBox: TGroupBox;
-    WorkbtnBox: TGroupBox;
-    Work_sel_Btn: TButton;
-    work_selGrd: TDBGrid;
-    Work_cond_Edit: TLabeledEdit;
-    Work_fnd_Edit: TLabeledEdit;
-    Work_naim_Radio: TRadioButton;
-    Work_reset_Radio: TRadioButton;
+    usercondBox: TGroupBox;
+    userGrouperBox: TGroupBox;
+    userdataBox: TGroupBox;
+    userbtnBox: TGroupBox;
+    user_sel_Btn: TButton;
+    user_selGrd: TDBGrid;
+    user_cond_Edit: TLabeledEdit;
+    user_fnd_Edit: TLabeledEdit;
+    user_role_Radio: TRadioButton;
+    user_reset_Radio: TRadioButton;
     Work_data_Box: TGroupBox;
     Work_btn_Box: TGroupBox;
     Work_inp_Box: TGroupBox;
@@ -41,17 +41,17 @@ type
     work_del_btn: TButton;
     work_del_e_lbl: TStaticText;
     work_del_e_dbl: TDBLookupComboBox;
-    Work_Tdate_Radio: TRadioButton;
-    threedaysCB: TCheckBox;
-    ins_Work_Grid: TDBGrid;
+    uaer_pass_Radio: TRadioButton;
+    hidepassCB: TCheckBox;
     Work_t_date_lbl: TStaticText;
     Work_t_days_inp: TDateTimePicker;
     Work_n_etap_lbl: TStaticText;
     Work_n_etap_dbl: TDBLookupComboBox;
-    Work_updGrid: TDBGrid;
     Work_upd_u_lbl: TStaticText;
     Work_u_t_days_inp: TDateTimePicker;
-    DellworkGid: TDBGrid;
+    DBGrid1: TDBGrid;
+    DBGrid2: TDBGrid;
+    DBGrid3: TDBGrid;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -92,7 +92,6 @@ begin
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   UniformizeComponentAnchors(Self);
   LoadFormState(Self);
-
 end;
 
 end.

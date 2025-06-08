@@ -278,38 +278,24 @@ object DM: TDM
     Left = 312
     Top = 144
   end
-  object sel_user_by_role: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'sel_user_by_role;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@usver_role'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 1000
-      end>
-    Left = 320
-    Top = 208
+  object ADOStoredProc1: TADOStoredProc
+    Parameters = <>
+    Left = 328
+    Top = 216
   end
   object ADOStoredProc2: TADOStoredProc
     Parameters = <>
-    Left = 336
-    Top = 280
+    Left = 296
+    Top = 304
   end
   object ADOStoredProc3: TADOStoredProc
     Parameters = <>
-    Left = 344
-    Top = 368
+    Left = 304
+    Top = 384
   end
   object ADOStoredProc4: TADOStoredProc
     Parameters = <>
-    Left = 360
-    Top = 448
+    Left = 296
+    Top = 464
   end
 end

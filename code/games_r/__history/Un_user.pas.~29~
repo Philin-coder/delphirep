@@ -60,7 +60,6 @@ type
     procedure user_role_RadioClick(Sender: TObject);
     procedure uaer_pass_RadioClick(Sender: TObject);
     procedure hidepassCBClick(Sender: TObject);
-    procedure user_reset_RadioClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -195,71 +194,6 @@ end;
 end;
 end;
 
-procedure TFrm_user.user_reset_RadioClick(Sender: TObject);
-var i,j,c:Integer;
-begin
-  try
-  if user_reset_Radio.Checked then
-  begin
-    with Frm_user do
-    begin
-      for I := 0 to ComponentCount - 1 do
-      begin
-        if Components[I] is TLabeledEdit then
-        begin
-          (Components[I] as TLabeledEdit).Clear;
-        end;
-      end;
-      for c := 0 to ComponentCount - 1 do
-      begin
-        if Components[c] is TCheckBox then
-        begin
-          (Components[c] as TCheckBox).Checked := False;
-        end;
-      end;
-      for j := 0 to ComponentCount - 1 do
-      begin
-        if Components[j] is TRadioButton then
-        begin
-          (Components[j] as TRadioButton).Checked := False;
-        end;
-      end;
-    end;
-    with dm.usverQuery do
-    begin
-      Close;
-      sql.Clear;
-      sql.Text :=
-       'select'+' '+
-  'usver.usverId,'+' '+
-  'usver.usver_role,'+' '+
-  'usver.usver_pass'+' '+
-  'from usver'+' '+
-  'where 1=1';
-      Open;
-    end;
-  end;
-except
-  on E: EDatabaseError do
-  begin
-    ShowMessage('Ошибка  базы данных: ' + E.Message);
-    HandleException(E);
-    raise;
-  end;
-  on E: EOleError do
-  begin
-    ShowMessage('Ошибка COM: ' + E.Message);
-    HandleException(E);
-    raise;
-  end;
-  on E: Exception do
-  begin
-    ShowMessage('Общая ошибка: ' + E.Message);
-    HandleException(E);
-  end;
-end;
-end;
-
 procedure TFrm_user.user_role_RadioClick(Sender: TObject);
 begin
   if  user_role_Radio.Checked=true then
@@ -270,7 +204,7 @@ begin
       close;
       sql.Clear;
       sql.Text:=
-  'select'+' '+
+      'select'+' '+
   'usver.usverId,'+' '+
   'usver.usver_role,'+' '+
   'usver.usver_pass'+' '+
