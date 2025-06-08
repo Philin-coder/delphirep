@@ -238,23 +238,8 @@ object DM: TDM
     Left = 224
     Top = 392
   end
-  object del_work: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'del_work;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@N_Work'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = 0
-      end>
+  object ADOStoredProc1: TADOStoredProc
+    Parameters = <>
     Left = 224
     Top = 456
   end
