@@ -19,7 +19,7 @@ type
     WorkdataBox: TGroupBox;
     WorkbtnBox: TGroupBox;
     Work_sel_Btn: TButton;
-    etap_selGrd: TDBGrid;
+    work_selGrd: TDBGrid;
     Work_cond_Edit: TLabeledEdit;
     Work_fnd_Edit: TLabeledEdit;
     Work_naim_Radio: TRadioButton;
@@ -29,28 +29,29 @@ type
     Work_inp_Box: TGroupBox;
     Work_ins_Btn: TButton;
     Nam_work_inp: TLabeledEdit;
-    etap_upd_data_Box: TGroupBox;
-    etap_upd_inpBox: TGroupBox;
-    etap_upd_btnBox: TGroupBox;
+    Work_upd_data_Box: TGroupBox;
+    Work_upd_inpBox: TGroupBox;
+    Work_upd_btnBox: TGroupBox;
     etap_upd_btn: TButton;
-    etap_upd_grd: TDBGrid;
-    etap_upd_e_lbl: TStaticText;
-    etap_upd_u_dbl: TDBLookupComboBox;
-    u_etap_name_inp: TLabeledEdit;
-    etap_del_data_Box: TGroupBox;
-    etap_del_btn_Box: TGroupBox;
-    etap_del_ipp_Box: TGroupBox;
-    etap_del_btn: TButton;
-    etap_del_grid: TDBGrid;
-    etap_del_e_lbl: TStaticText;
-    etap_del_e_dbl: TDBLookupComboBox;
+    Work_upd_e_lbl: TStaticText;
+    Work_upd_u_dbl: TDBLookupComboBox;
+    work_del_data_Box: TGroupBox;
+    work_del_btn_Box: TGroupBox;
+    work_del_ipp_Box: TGroupBox;
+    work_del_btn: TButton;
+    work_del_e_lbl: TStaticText;
+    work_del_e_dbl: TDBLookupComboBox;
     Work_Tdate_Radio: TRadioButton;
     threedaysCB: TCheckBox;
     ins_Work_Grid: TDBGrid;
     Work_t_date_lbl: TStaticText;
-    Work_t_date_inp: TDateTimePicker;
+    Work_t_days_inp: TDateTimePicker;
     Work_n_etap_lbl: TStaticText;
     Work_n_etap_dbl: TDBLookupComboBox;
+    Work_updGrid: TDBGrid;
+    Work_upd_u_lbl: TStaticText;
+    Work_u_t_days_inp: TDateTimePicker;
+    DellworkGid: TDBGrid;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -60,6 +61,10 @@ type
     procedure Work_Tdate_RadioClick(Sender: TObject);
     procedure Work_reset_RadioClick(Sender: TObject);
     procedure threedaysCBClick(Sender: TObject);
+    procedure Work_ins_BtnClick(Sender: TObject);
+    procedure work_selGrdDrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumn; State: TGridDrawState);
+    procedure etap_upd_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -68,7 +73,7 @@ type
 
 var
   Frm_work: TFrm_work;
-
+  urgency_st:Integer;
 implementation
 
 uses Un_dm, Un_func;
@@ -76,6 +81,54 @@ uses Un_dm, Un_func;
 {$R *.dfm}
 
 
+
+procedure TFrm_work.etap_upd_btnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (Work_upd_u_dbl.Text='')
+  );
+  if AreFieldsEmpty then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.upd_work do
+      begin
+        if not dm.Connection.Connected then
+          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
+           Parameters.ParamByName('@T_days').Value :=Work_u_t_days_inp.Date;
+           Parameters.ParamByName('@N_Work').Value:=
+           dm.workQuery.FieldByName('N_Work').AsString;
+           ExecProc;
+           dm.workQuery.Close;
+           dm.workQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+end;
+end;
+end;
 
 procedure TFrm_work.FormActivate(Sender: TObject);
 begin
@@ -88,6 +141,7 @@ procedure TFrm_work.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   SaveFormState(Self);
   CloseAllQueriesOnDataModule('dm');
+  urgency_st:=0;
 end;
 
 procedure TFrm_work.FormCreate(Sender: TObject);
@@ -98,6 +152,7 @@ begin
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   UniformizeComponentAnchors(Self);
   LoadFormState(Self);
+  urgency_st:=0;
 end;
 
 procedure TFrm_work.threedaysCBClick(Sender: TObject);
@@ -117,6 +172,7 @@ begin
        Parameters.ParamByName('@check_date').Value := cur_date;
       Open;
        DM.workQuery.Recordset:=dm.sel_work_by_urgency.Recordset;
+       urgency_st:=1;
     end;
   except
      on E: EDatabaseError do
@@ -152,6 +208,7 @@ end;
     'where 1=1';
    dm.workQuery.close;
    dm.workQuery.Open;
+  urgency_st:=0;
 except
    on E: EDatabaseError do
   begin
@@ -210,6 +267,62 @@ except
   begin
     ShowMessage('Общая ошибка: ' + E.Message);
     HandleException(E);
+end;
+end;
+end;
+
+procedure TFrm_work.Work_ins_BtnClick(Sender: TObject);
+const
+  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (Trim(Nam_work_inp.Text)='')or
+  (Work_n_etap_dbl.Text='')
+  );
+  AreFieldsValid:=(
+  ValidateComponentText(Nam_work_inp,AllowedChars)
+  );
+  if AreFieldsEmpty or not AreFieldsValid then
+  begin
+       MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.ins_work do
+      begin
+        if not dm.Connection.Connected then
+          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
+           Parameters.ParamByName('@Nam_work').Value :=Nam_work_inp.Text;
+           Parameters.ParamByName('@T_days').Value :=Work_t_days_inp.Date;
+           Parameters.ParamByName('@n_etap').Value :=
+           dm.etapQuery.FieldByName('n_etap').AsString;
+           ExecProc;
+           dm.workQuery.Close;
+           dm.workQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E); 
 end;
 end;
 end;
@@ -322,6 +435,35 @@ except
     HandleException(E);
   end;
 end;
+end;
+
+procedure TFrm_work.work_selGrdDrawColumnCell(Sender: TObject;
+  const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+begin
+case urgency_st of
+  1:
+  begin
+   work_selGrd.Canvas.Brush.Color := clGreen;
+   work_selGrd.Canvas.Font.Color := clBlack;
+   work_selGrd.Canvas.FillRect(Rect);
+   if Column.Alignment = taRightJustify then
+    work_selGrd.Canvas.TextOut(
+      Rect.Right - 2 - work_selGrd.Canvas.TextWidth(Column.Field.Text),
+      Rect.Top + 2,
+      Column.Field.Text
+    )
+  else
+   work_selGrd.Canvas.TextOut(
+      Rect.Left + 2,
+      Rect.Top + 2,
+      Column.Field.Text
+    );
+  end;
+   0:
+   begin
+      work_selGrd.Canvas.TextOut(Rect.Left +2,Rect.Top+2,Column.Field.Text);
+   end;
+end; //case
 end;
 
 procedure TFrm_work.Work_sel_BtnClick(Sender: TObject);

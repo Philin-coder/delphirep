@@ -21,7 +21,7 @@ object Frm_work: TFrm_work
     Top = 0
     Width = 1045
     Height = 512
-    ActivePage = updTab
+    ActivePage = delTab
     Align = alClient
     TabOrder = 0
     object SelTab: TTabSheet
@@ -407,9 +407,9 @@ object Frm_work: TFrm_work
       end
     end
     object delTab: TTabSheet
-      Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1101#1090#1072#1087#1077
+      Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1088#1072#1073#1086#1090#1077
       ImageIndex = 3
-      object etap_del_data_Box: TGroupBox
+      object work_del_data_Box: TGroupBox
         Left = 0
         Top = 73
         Width = 1037
@@ -417,13 +417,13 @@ object Frm_work: TFrm_work
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object etap_del_grid: TDBGrid
+        object DellworkGid: TDBGrid
           Left = 2
           Top = 15
           Width = 1033
           Height = 334
           Align = alClient
-          DataSource = DM.etapDS
+          DataSource = DM.workDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -433,37 +433,48 @@ object Frm_work: TFrm_work
           Columns = <
             item
               Expanded = False
-              FieldName = 'N_Etap'
+              FieldName = 'N_Work'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-              Width = 231
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'Nam_work'
+              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077' '#1088#1072#1073#1086#1090#1099
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'T_days'
+              Title.Caption = #1044#1072#1090#1072' '#1074#1099#1087#1086#1083#1085#1085#1077#1085#1080#1103
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'Nam_etap'
-              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077
-              Width = 388
+              Title.Caption = #1069#1090#1072#1087
               Visible = True
             end>
         end
       end
-      object etap_del_btn_Box: TGroupBox
+      object work_del_btn_Box: TGroupBox
         Left = 0
         Top = 424
         Width = 1037
         Height = 60
         Align = alBottom
         TabOrder = 1
-        object etap_del_btn: TButton
+        object work_del_btn: TButton
           Left = 408
           Top = 24
           Width = 75
           Height = 25
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
+          OnClick = work_del_btnClick
         end
       end
-      object etap_del_ipp_Box: TGroupBox
+      object work_del_ipp_Box: TGroupBox
         Left = 0
         Top = 0
         Width = 1037
@@ -471,22 +482,22 @@ object Frm_work: TFrm_work
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        object etap_del_e_lbl: TStaticText
+        object work_del_e_lbl: TStaticText
           Left = 16
           Top = 25
-          Width = 68
+          Width = 77
           Height = 17
-          Caption = #1042#1099#1073#1086#1088' '#1101#1090#1072#1087#1072
+          Caption = #1042#1099#1073#1086#1088' '#1088#1072#1073#1086#1090#1099
           TabOrder = 0
         end
-        object etap_del_e_dbl: TDBLookupComboBox
+        object work_del_e_dbl: TDBLookupComboBox
           Left = 16
           Top = 40
           Width = 1009
           Height = 21
-          KeyField = 'N_Etap'
-          ListField = 'Nam_etap'
-          ListSource = DM.etapDS
+          KeyField = 'Nam_work'
+          ListField = 'Nam_work'
+          ListSource = DM.workDS
           TabOrder = 1
         end
       end

@@ -35,13 +35,12 @@ type
     etap_upd_btn: TButton;
     Work_upd_e_lbl: TStaticText;
     Work_upd_u_dbl: TDBLookupComboBox;
-    etap_del_data_Box: TGroupBox;
-    etap_del_btn_Box: TGroupBox;
-    etap_del_ipp_Box: TGroupBox;
-    etap_del_btn: TButton;
-    etap_del_grid: TDBGrid;
-    etap_del_e_lbl: TStaticText;
-    etap_del_e_dbl: TDBLookupComboBox;
+    work_del_data_Box: TGroupBox;
+    work_del_btn_Box: TGroupBox;
+    work_del_ipp_Box: TGroupBox;
+    work_del_btn: TButton;
+    work_del_e_lbl: TStaticText;
+    work_del_e_dbl: TDBLookupComboBox;
     Work_Tdate_Radio: TRadioButton;
     threedaysCB: TCheckBox;
     ins_Work_Grid: TDBGrid;
@@ -52,6 +51,7 @@ type
     Work_updGrid: TDBGrid;
     Work_upd_u_lbl: TStaticText;
     Work_u_t_days_inp: TDateTimePicker;
+    DellworkGid: TDBGrid;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -65,6 +65,7 @@ type
     procedure work_selGrdDrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
     procedure etap_upd_btnClick(Sender: TObject);
+    procedure work_del_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -233,6 +234,53 @@ end;//case
 end;
 
 
+
+procedure TFrm_work.work_del_btnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (work_del_e_dbl.Text='')
+  );
+  if AreFieldsEmpty then
+  begin
+       MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.del_work do
+      begin
+        if not dm.Connection.Connected then
+          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
+           Parameters.ParamByName('@N_Work').Value :=
+           dm.workQuery.FieldByName('N_Work').AsString;
+           ExecProc;
+           dm.workQuery.Close;
+           dm.workQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise; // Повторное выбрасывание исключения
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+end;
+end;
+end;
 
 procedure TFrm_work.Work_fnd_EditKeyPress(Sender: TObject; var Key: Char);
 begin
