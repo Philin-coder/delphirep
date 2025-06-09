@@ -151,14 +151,12 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@Nam_work'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
-        Value = Null
       end>
     Left = 208
     Top = 200
@@ -172,14 +170,12 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@check_date'
         Attributes = [paNullable]
         DataType = ftDateTime
         Size = 10
-        Value = Null
       end>
     Left = 208
     Top = 256
@@ -193,21 +189,18 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@Nam_work'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
-        Value = Null
       end
       item
         Name = '@T_days'
         Attributes = [paNullable]
         DataType = ftDateTime
         Size = 10
-        Value = Null
       end
       item
         Name = '@N_Etap'
@@ -228,14 +221,12 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@T_days'
         Attributes = [paNullable]
         DataType = ftDateTime
         Size = 10
-        Value = Null
       end
       item
         Name = '@N_Work'
@@ -256,7 +247,6 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@N_Work'
@@ -297,40 +287,18 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@usver_role'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
-        Value = Null
       end>
     Left = 320
     Top = 208
   end
-  object ins_user: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'ins_user;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@usver_role'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 1000
-      end
-      item
-        Name = '@usver_pass'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 1000
-      end>
+  object ADOStoredProc2: TADOStoredProc
+    Parameters = <>
     Left = 336
     Top = 280
   end

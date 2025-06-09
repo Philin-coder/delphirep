@@ -220,7 +220,7 @@ begin
         if not dm.Connection.Connected then
           raise EDatabaseError.Create('Соединение с базой не установлено',4001);
            Parameters.ParamByName('@usver_role').Value :=ins_user_role_inp.Text;
-           Parameters.ParamByName('@usver_pass').Value:=ins_user_pass_inp.Text;
+           Parameters.ParamByName('@usver__pass').Value:=ins_user_pass_inp.Text;
            ExecProc;
            dm.usverQuery.Close;
            dm.usverQuery.Open;

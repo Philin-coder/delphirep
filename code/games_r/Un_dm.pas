@@ -24,7 +24,7 @@ type
     usverQuery: TADOQuery;
     usevrDS: TDataSource;
     sel_user_by_role: TADOStoredProc;
-    ADOStoredProc2: TADOStoredProc;
+    ins_user: TADOStoredProc;
     ADOStoredProc3: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;
   private

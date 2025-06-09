@@ -21,11 +21,11 @@ object Frm_user: TFrm_user
     Top = 0
     Width = 1045
     Height = 512
-    ActivePage = SelTab
+    ActivePage = insTab
     Align = alClient
     TabOrder = 0
     object SelTab: TTabSheet
-      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1088#1072#1073#1086#1090#1077
+      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1077
       object usercondBox: TGroupBox
         Left = 0
         Top = 0
@@ -162,23 +162,23 @@ object Frm_user: TFrm_user
       end
     end
     object insTab: TTabSheet
-      Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1088#1072#1073#1086#1090#1077
+      Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1077
       ImageIndex = 1
-      object Work_data_Box: TGroupBox
+      object user_data_Box: TGroupBox
         Left = 0
-        Top = 193
+        Top = 145
         Width = 1037
-        Height = 223
+        Height = 271
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        ExplicitTop = 137
-        ExplicitHeight = 279
-        object DBGrid1: TDBGrid
+        ExplicitTop = 193
+        ExplicitHeight = 223
+        object user_ins_Grd: TDBGrid
           Left = 2
           Top = 15
           Width = 1033
-          Height = 206
+          Height = 254
           Align = alClient
           DataSource = DM.usevrDS
           TabOrder = 0
@@ -208,74 +208,50 @@ object Frm_user: TFrm_user
             end>
         end
       end
-      object Work_btn_Box: TGroupBox
+      object user_btn_Box: TGroupBox
         Left = 0
         Top = 416
         Width = 1037
         Height = 68
         Align = alBottom
         TabOrder = 1
-        object Work_ins_Btn: TButton
+        object user_ins_Btn: TButton
           Left = 304
           Top = 24
           Width = 75
           Height = 25
           Caption = #1042#1074#1086#1076
           TabOrder = 0
+          OnClick = user_ins_BtnClick
         end
       end
-      object Work_inp_Box: TGroupBox
+      object user_inp_Box: TGroupBox
         Left = 0
         Top = 0
         Width = 1037
-        Height = 193
+        Height = 145
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1074#1085#1085#1099#1093
         TabOrder = 2
-        object Nam_work_inp: TLabeledEdit
+        object ins_user_role_inp: TLabeledEdit
           Left = 19
           Top = 40
           Width = 990
           Height = 21
-          EditLabel.Width = 141
+          EditLabel.Width = 126
           EditLabel.Height = 13
-          EditLabel.Caption = #1042#1074#1086#1076' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1103' '#1088#1072#1073#1086#1090#1099
+          EditLabel.Caption = #1042#1074#1086#1076' '#1088#1086#1083#1080' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1103
           TabOrder = 0
         end
-        object Work_t_date_lbl: TStaticText
+        object ins_user_pass_inp: TLabeledEdit
           Left = 19
-          Top = 67
-          Width = 98
-          Height = 17
-          Caption = #1044#1072#1090#1072' '#1080#1089#1087#1086#1083#1085#1077#1085#1085#1080#1103
+          Top = 104
+          Width = 998
+          Height = 21
+          EditLabel.Width = 138
+          EditLabel.Height = 13
+          EditLabel.Caption = #1042#1074#1086#1076' '#1087#1072#1088#1086#1083#1103' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1103
           TabOrder = 1
-        end
-        object Work_t_days_inp: TDateTimePicker
-          Left = 19
-          Top = 90
-          Width = 990
-          Height = 21
-          Date = 45816.718279895830000000
-          Time = 45816.718279895830000000
-          TabOrder = 2
-        end
-        object Work_n_etap_lbl: TStaticText
-          Left = 19
-          Top = 125
-          Width = 29
-          Height = 17
-          Caption = #1069#1090#1072#1087
-          TabOrder = 3
-        end
-        object Work_n_etap_dbl: TDBLookupComboBox
-          Left = 19
-          Top = 148
-          Width = 990
-          Height = 21
-          KeyField = 'N_Etap'
-          ListField = 'Nam_etap'
-          ListSource = DM.etapDS
-          TabOrder = 4
         end
       end
     end

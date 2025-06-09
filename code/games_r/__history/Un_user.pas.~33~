@@ -201,8 +201,7 @@ var
   AreFieldsValid: Boolean;
 begin
   AreFieldsEmpty:=(
-  (Trim(ins_user_role_inp.Text)='')or
-  (Trim(ins_user_pass_inp.Text)='')
+  (Trim(ins_user_role_inp.Text)='')
   );
   AreFieldsValid:=(
   ValidateComponentText(ins_user_role_inp,AllowedChars)
@@ -214,37 +213,7 @@ begin
     Beep;
     Exit;
   end;
-  try
-      with dm.ins_user do
-      begin
-        if not dm.Connection.Connected then
-          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
-           Parameters.ParamByName('@usver_role').Value :=ins_user_role_inp.Text;
-           Parameters.ParamByName('@usver_pass').Value:=ins_user_pass_inp.Text;
-           ExecProc;
-           dm.usverQuery.Close;
-           dm.usverQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EDatabaseError do
-  begin
-    ShowMessage('Ошибка базы данных: ' + E.Message);
-    HandleException(E);
-    raise;
-  end;
-  on E: EOleError do
-  begin
-    ShowMessage('Ошибка COM: ' + E.Message);
-    HandleException(E); // Логирование ошибки
-    raise; // Повторное выбрасывание исключения
-  end;
-  on E: Exception do
-  begin
-    ShowMessage('Общая ошибка: ' + E.Message);
-    HandleException(E); // Логирование ошибки
-end;
-end;
+
 end;
 
 procedure TFrm_user.user_reset_RadioClick(Sender: TObject);
