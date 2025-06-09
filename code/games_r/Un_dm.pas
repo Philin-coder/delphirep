@@ -39,6 +39,13 @@ type
     ins_dol: TADOStoredProc;
     upd_dol: TADOStoredProc;
     del_dol: TADOStoredProc;
+    workerQuery: TADOQuery;
+    worekrDS: TDataSource;
+    ADOStoredProc1: TADOStoredProc;
+    ADOStoredProc2: TADOStoredProc;
+    ADOStoredProc3: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
+    ADOStoredProc5: TADOStoredProc;
   private
     { Private declarations }
   public

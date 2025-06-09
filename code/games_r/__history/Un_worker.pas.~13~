@@ -1,0 +1,97 @@
+unit Un_worker;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs,db,ADODB, Grids, DBGrids, StdCtrls, ComCtrls, ExtCtrls,ActiveX,
+  DBCtrls;
+
+type
+  TFrm_worker = class(TForm)
+    WorkerPC: TPageControl;
+    SelTab: TTabSheet;
+    insTab: TTabSheet;
+    updTab: TTabSheet;
+    delTab: TTabSheet;
+    WorkcondBox: TGroupBox;
+    WorkGrouperBox: TGroupBox;
+    WorkdataBox: TGroupBox;
+    WorkbtnBox: TGroupBox;
+    Work_sel_Btn: TButton;
+    work_selGrd: TDBGrid;
+    Work_cond_Edit: TLabeledEdit;
+    Work_fnd_Edit: TLabeledEdit;
+    Work_naim_Radio: TRadioButton;
+    Work_reset_Radio: TRadioButton;
+    Work_data_Box: TGroupBox;
+    Work_btn_Box: TGroupBox;
+    Work_inp_Box: TGroupBox;
+    Work_ins_Btn: TButton;
+    Nam_work_inp: TLabeledEdit;
+    Work_upd_data_Box: TGroupBox;
+    Work_upd_inpBox: TGroupBox;
+    Work_upd_btnBox: TGroupBox;
+    work_upd_btn: TButton;
+    Work_upd_e_lbl: TStaticText;
+    Work_upd_u_dbl: TDBLookupComboBox;
+    work_del_data_Box: TGroupBox;
+    work_del_btn_Box: TGroupBox;
+    work_del_ipp_Box: TGroupBox;
+    work_del_btn: TButton;
+    work_del_e_lbl: TStaticText;
+    work_del_e_dbl: TDBLookupComboBox;
+    Work_Tdate_Radio: TRadioButton;
+    threedaysCB: TCheckBox;
+    ins_Work_Grid: TDBGrid;
+    Work_t_date_lbl: TStaticText;
+    Work_t_days_inp: TDateTimePicker;
+    Work_n_etap_lbl: TStaticText;
+    Work_n_etap_dbl: TDBLookupComboBox;
+    Work_updGrid: TDBGrid;
+    Work_upd_u_lbl: TStaticText;
+    Work_u_t_days_inp: TDateTimePicker;
+    DellworkGid: TDBGrid;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_worker: TFrm_worker;
+implementation
+
+uses Un_dm, Un_func;
+
+{$R *.dfm}
+
+
+
+procedure TFrm_worker.FormActivate(Sender: TObject);
+begin
+  dm.etapQuery.Open;
+  dm.workQuery.Open;
+  AdjustDBGridColumnWidths('Frm_worker',6000, 10);
+end;
+
+procedure TFrm_worker.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  SaveFormState(Self);
+  CloseAllQueriesOnDataModule('dm');
+end;
+
+procedure TFrm_worker.FormCreate(Sender: TObject);
+begin
+  UpdateFormShowHint('Frm_worker');
+  UniformizeButtonsSize(Self,  273, 25);
+  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+  UniformizeComponentAnchors(Self);
+  LoadFormState(Self);
+end;
+
+end.

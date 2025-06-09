@@ -17,7 +17,6 @@ type
     user_item: TMenuItem;
     N1: TMenuItem;
     dol_item: TMenuItem;
-    worker_item: TMenuItem;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -26,7 +25,6 @@ type
     procedure user_itemClick(Sender: TObject);
     procedure N1Click(Sender: TObject);
     procedure dol_itemClick(Sender: TObject);
-    procedure worker_itemClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -38,7 +36,7 @@ var
 
 implementation
 
-uses Un_dm, Un_func, Un_etap, Un_work, Un_user, Un_men, Un_dolgn, Un_worker;
+uses Un_dm, Un_func, Un_etap, Un_work, Un_user, Un_men, Un_dolgn;
 
 {$R *.dfm}
 
@@ -138,25 +136,6 @@ begin
   end;
 end;
 
-procedure TFrm_main.worker_itemClick(Sender: TObject);
-begin
-  try
-    UpdateFormProperties('Frm_worker', 'Форма работы с данными о работнике',
-      clBtnFace, 1024, 768);
-    Frm_worker.ShowModal;
-  except
-    on E: Exception do
-    begin
-      if not (E is EMyException) then
-        raise EDatabaseError.Create('Ошибка при работе с формой  работника', 3001);
-      HandleException(E);
-      if Assigned(Frm_worker) then
-        Frm_worker.Free;
-      raise;
-    end;
-  end;
-end;
-
 procedure TFrm_main.work_itemClick(Sender: TObject);
 begin
   try
@@ -167,7 +146,7 @@ begin
     on E: Exception do
     begin
       if not (E is EMyException) then
-        raise EDatabaseError.Create('Ошибка при работе с формой  работы', 3001);
+        raise EDatabaseError.Create('Ошибка при работе с формой этапа работы', 3001);
       HandleException(E);
       if Assigned(Frm_work) then
         Frm_work.Free;

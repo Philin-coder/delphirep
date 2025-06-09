@@ -1,7 +1,7 @@
 object DM: TDM
   OldCreateOrder = False
   Height = 567
-  Width = 635
+  Width = 856
   object Connection: TADOConnection
     Connected = True
     ConnectionString = 
@@ -378,5 +378,283 @@ object DM: TDM
       end>
     Left = 336
     Top = 392
+  end
+  object menQuery: TADOQuery
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      '  manager.Id_manager,'
+      '  usver.usver_role,'
+      '  manager.fio '
+      'from manager '
+      'inner join usver on usver.usverId=manager.usverId'
+      'where 1=1')
+    Left = 416
+    Top = 64
+  end
+  object menDS: TDataSource
+    DataSet = menQuery
+    Left = 432
+    Top = 120
+  end
+  object sel_men_by_fio: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_men_by_fio;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@fio'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end>
+    Left = 440
+    Top = 184
+  end
+  object ins_manager: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'ins_manager;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@fio'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end
+      item
+        Name = '@usverid'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 456
+    Top = 256
+  end
+  object upd_men: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_men;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@Id_manager'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@fio'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end>
+    Left = 464
+    Top = 328
+  end
+  object del_men: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'del_men;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@Id_manager'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 472
+    Top = 384
+  end
+  object dolQuery: TADOQuery
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      '   Dolshnost.N_Dol,'
+      '   Dolshnost.Nam_dol,'
+      '   manager.fio'
+      '   from Dolshnost '
+      '   inner join manager on manager.Id_manager=Dolshnost.Id_manager'
+      'where 1=1'
+      ''
+      '')
+    Left = 560
+    Top = 64
+  end
+  object dolDS: TDataSource
+    DataSet = dolQuery
+    Left = 568
+    Top = 120
+  end
+  object sel_dol_by_naim: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_dol_by_naim;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@Nam_dol'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end>
+    Left = 568
+    Top = 168
+  end
+  object ins_dol: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'ins_dol;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@Nam_dol'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end
+      item
+        Name = '@id_manager'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 568
+    Top = 232
+  end
+  object upd_dol: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_dol;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@n_dol'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@nam_dol'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end>
+    Left = 568
+    Top = 312
+  end
+  object del_dol: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'del_dol;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@n_dol'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 568
+    Top = 384
+  end
+  object workerQuery: TADOQuery
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      ' Rabotnik.N_Rab,'
+      ' Rabotnik.Fio, '
+      ' Dolshnost.Nam_dol,'
+      ' Rabotnik.Iphone,'
+      
+        '  case Rabotnik.St_rab when 1 then '#39#1057#1074#1086#1073#1086#1076#1077#1085#39' else '#39#1047#1072#1085#1103#1090#39' end a' +
+        's free,'
+      ' Rabotnik.Date_pr,'
+      'usver.usver_role'
+      'from Rabotnik '
+      'inner join Dolshnost on Dolshnost.N_Dol=Rabotnik.N_Dol'
+      'inner join usver on usver.usverId=Rabotnik.usverId'
+      'where 1=1'
+      'and Date_yv is null '
+      '')
+    Left = 680
+    Top = 64
+  end
+  object worekrDS: TDataSource
+    DataSet = workerQuery
+    Left = 696
+    Top = 128
+  end
+  object ADOStoredProc1: TADOStoredProc
+    Parameters = <>
+    Left = 704
+    Top = 208
+  end
+  object ADOStoredProc2: TADOStoredProc
+    Parameters = <>
+    Left = 696
+    Top = 280
+  end
+  object ADOStoredProc3: TADOStoredProc
+    Parameters = <>
+    Left = 696
+    Top = 336
+  end
+  object ADOStoredProc4: TADOStoredProc
+    Parameters = <>
+    Left = 688
+    Top = 392
+  end
+  object ADOStoredProc5: TADOStoredProc
+    Parameters = <>
+    Left = 696
+    Top = 448
   end
 end

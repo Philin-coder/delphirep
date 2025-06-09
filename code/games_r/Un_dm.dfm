@@ -1,7 +1,7 @@
 object DM: TDM
   OldCreateOrder = False
   Height = 567
-  Width = 699
+  Width = 856
   object Connection: TADOConnection
     Connected = True
     ConnectionString = 
@@ -602,5 +602,60 @@ object DM: TDM
       end>
     Left = 568
     Top = 384
+  end
+  object workerQuery: TADOQuery
+    Active = True
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      ' Rabotnik.N_Rab,'
+      ' Rabotnik.Fio, '
+      ' Dolshnost.Nam_dol,'
+      ' Rabotnik.Iphone,'
+      
+        '  case Rabotnik.St_rab when 1 then '#39#1057#1074#1086#1073#1086#1076#1077#1085#39' else '#39#1047#1072#1085#1103#1090#39' end a' +
+        's free,'
+      ' Rabotnik.Date_pr,'
+      'usver.usver_role'
+      'from Rabotnik '
+      'inner join Dolshnost on Dolshnost.N_Dol=Rabotnik.N_Dol'
+      'inner join usver on usver.usverId=Rabotnik.usverId'
+      'where 1=1'
+      'and Date_yv is null '
+      '')
+    Left = 680
+    Top = 64
+  end
+  object worekrDS: TDataSource
+    DataSet = workerQuery
+    Left = 696
+    Top = 128
+  end
+  object ADOStoredProc1: TADOStoredProc
+    Parameters = <>
+    Left = 704
+    Top = 208
+  end
+  object ADOStoredProc2: TADOStoredProc
+    Parameters = <>
+    Left = 696
+    Top = 280
+  end
+  object ADOStoredProc3: TADOStoredProc
+    Parameters = <>
+    Left = 696
+    Top = 336
+  end
+  object ADOStoredProc4: TADOStoredProc
+    Parameters = <>
+    Left = 688
+    Top = 392
+  end
+  object ADOStoredProc5: TADOStoredProc
+    Parameters = <>
+    Left = 696
+    Top = 448
   end
 end

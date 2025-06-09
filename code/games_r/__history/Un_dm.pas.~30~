@@ -25,8 +25,20 @@ type
     usevrDS: TDataSource;
     sel_user_by_role: TADOStoredProc;
     ins_user: TADOStoredProc;
-    ADOStoredProc3: TADOStoredProc;
-    ADOStoredProc4: TADOStoredProc;
+    upd_usver: TADOStoredProc;
+    del_user: TADOStoredProc;
+    menQuery: TADOQuery;
+    menDS: TDataSource;
+    sel_men_by_fio: TADOStoredProc;
+    ins_manager: TADOStoredProc;
+    upd_men: TADOStoredProc;
+    del_men: TADOStoredProc;
+    dolQuery: TADOQuery;
+    dolDS: TDataSource;
+    sel_dol_by_naim: TADOStoredProc;
+    ins_dol: TADOStoredProc;
+    upd_dol: TADOStoredProc;
+    del_dol: TADOStoredProc;
   private
     { Private declarations }
   public
