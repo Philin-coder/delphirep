@@ -557,13 +557,49 @@ object DM: TDM
     Left = 568
     Top = 232
   end
-  object ADOStoredProc3: TADOStoredProc
-    Parameters = <>
+  object upd_dol: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_dol;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@n_dol'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@nam_dol'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end>
     Left = 568
     Top = 312
   end
-  object ADOStoredProc4: TADOStoredProc
-    Parameters = <>
+  object del_dol: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'del_dol;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@n_dol'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
     Left = 568
     Top = 384
   end

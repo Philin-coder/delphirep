@@ -35,19 +35,19 @@ type
     dol_upd_btn: TButton;
     dol_upd_e_lbl: TStaticText;
     dol_upd_u_dbl: TDBLookupComboBox;
-    dol_del_data_Box: TGroupBox;
-    dol_del_btn_Box: TGroupBox;
-    dol_del_ipp_Box: TGroupBox;
-    dol_del_btn: TButton;
-    dol_del_e_lbl: TStaticText;
-    dol_del_e_dbl: TDBLookupComboBox;
+    men_del_data_Box: TGroupBox;
+    men_del_btn_Box: TGroupBox;
+    men_del_ipp_Box: TGroupBox;
+    men_del_btn: TButton;
+    men_del_e_lbl: TStaticText;
+    men_del_e_dbl: TDBLookupComboBox;
     dol_nam_dol_Radio: TRadioButton;
     dol_u_naim_inp: TLabeledEdit;
     ins_dol_m_fio_lbl: TStaticText;
     ins_d_men_fio_dbl: TDBLookupComboBox;
     ins_dol_grd: TDBGrid;
     dol_upd_Grd: TDBGrid;
-    Del_dol_grd: TDBGrid;
+    DBGrid2: TDBGrid;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -58,7 +58,6 @@ type
     procedure dol_reset_RadioClick(Sender: TObject);
     procedure dol_ins_BtnClick(Sender: TObject);
     procedure dol_upd_btnClick(Sender: TObject);
-    procedure dol_del_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -75,53 +74,6 @@ uses Un_dm, Un_func;
 {$R *.dfm}
 
 
-
-procedure TFrm_dol.dol_del_btnClick(Sender: TObject);
-var
-  AreFieldsEmpty: Boolean;
-begin
-  AreFieldsEmpty:=(
-  (dol_del_e_dbl.Text='')
-  );
-  if AreFieldsEmpty then
-  begin
-    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-  try
-      with dm.del_dol do
-      begin
-        if not dm.Connection.Connected then
-          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
-           Parameters.ParamByName('@n_dol').Value :=
-           dm.dolQuery.FieldByName('n_dol').AsString;
-           ExecProc;
-           dm.dolQuery.Close;
-           dm.dolQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EDatabaseError do
-  begin
-    ShowMessage('Ошибка базы данных: ' + E.Message);
-    HandleException(E);
-    raise;
-  end;
-  on E: EOleError do
-  begin
-    ShowMessage('Ошибка COM: ' + E.Message);
-    HandleException(E); // Логирование ошибки
-    raise; // Повторное выбрасывание исключения
-  end;
-  on E: Exception do
-  begin
-    ShowMessage('Общая ошибка: ' + E.Message);
-    HandleException(E); // Логирование ошибки
-end;
-end;
-end;
 
 procedure TFrm_dol.dol_fio_RadioClick(Sender: TObject);
 begin

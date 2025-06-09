@@ -21,7 +21,7 @@ object Frm_dol: TFrm_dol
     Top = 0
     Width = 1045
     Height = 512
-    ActivePage = updTab
+    ActivePage = delTab
     Align = alClient
     TabOrder = 0
     object SelTab: TTabSheet
@@ -355,9 +355,9 @@ object Frm_dol: TFrm_dol
       end
     end
     object delTab: TTabSheet
-      Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1084#1077#1085#1077#1076#1078#1077#1088#1077
+      Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1076#1086#1083#1078#1085#1086#1089#1090#1080
       ImageIndex = 3
-      object men_del_data_Box: TGroupBox
+      object dol_del_data_Box: TGroupBox
         Left = 0
         Top = 73
         Width = 1037
@@ -365,7 +365,7 @@ object Frm_dol: TFrm_dol
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object DBGrid2: TDBGrid
+        object Del_dol_grd: TDBGrid
           Left = 2
           Top = 15
           Width = 1033
@@ -399,23 +399,24 @@ object Frm_dol: TFrm_dol
             end>
         end
       end
-      object men_del_btn_Box: TGroupBox
+      object dol_del_btn_Box: TGroupBox
         Left = 0
         Top = 424
         Width = 1037
         Height = 60
         Align = alBottom
         TabOrder = 1
-        object men_del_btn: TButton
+        object dol_del_btn: TButton
           Left = 408
           Top = 24
           Width = 75
           Height = 25
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
+          OnClick = dol_del_btnClick
         end
       end
-      object men_del_ipp_Box: TGroupBox
+      object dol_del_ipp_Box: TGroupBox
         Left = 0
         Top = 0
         Width = 1037
@@ -423,22 +424,22 @@ object Frm_dol: TFrm_dol
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        object men_del_e_lbl: TStaticText
+        object dol_del_e_lbl: TStaticText
           Left = 16
           Top = 17
-          Width = 77
+          Width = 98
           Height = 17
-          Caption = #1042#1099#1073#1086#1088' '#1088#1072#1073#1086#1090#1099
+          Caption = #1042#1099#1073#1086#1088'  '#1076#1086#1083#1078#1085#1086#1089#1090#1100
           TabOrder = 0
         end
-        object men_del_e_dbl: TDBLookupComboBox
+        object dol_del_e_dbl: TDBLookupComboBox
           Left = 16
           Top = 40
           Width = 1009
           Height = 21
-          KeyField = 'Id_manager'
-          ListField = 'fio'
-          ListSource = DM.menDS
+          KeyField = 'N_Dol'
+          ListField = 'Nam_dol'
+          ListSource = DM.dolDS
           TabOrder = 1
         end
       end

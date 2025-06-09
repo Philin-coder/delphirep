@@ -37,8 +37,8 @@ type
     dolDS: TDataSource;
     sel_dol_by_naim: TADOStoredProc;
     ins_dol: TADOStoredProc;
-    ADOStoredProc3: TADOStoredProc;
-    ADOStoredProc4: TADOStoredProc;
+    upd_dol: TADOStoredProc;
+    del_dol: TADOStoredProc;
   private
     { Private declarations }
   public
