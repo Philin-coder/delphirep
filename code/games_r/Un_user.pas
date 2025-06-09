@@ -236,13 +236,13 @@ begin
   on E: EOleError do
   begin
     ShowMessage('Ошибка COM: ' + E.Message);
-    HandleException(E); // Логирование ошибки
-    raise; // Повторное выбрасывание исключения
+    HandleException(E);
+    raise;
   end;
   on E: Exception do
   begin
     ShowMessage('Общая ошибка: ' + E.Message);
-    HandleException(E); // Логирование ошибки
+    HandleException(E);
 end;
 end;
 end;
