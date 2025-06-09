@@ -1,0 +1,318 @@
+unit Un_men;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs,db,ADODB, Grids, DBGrids, StdCtrls, ComCtrls, ExtCtrls,ActiveX,
+  DBCtrls;
+
+type
+  TFrm_men = class(TForm)
+    menPC: TPageControl;
+    SelTab: TTabSheet;
+    insTab: TTabSheet;
+    updTab: TTabSheet;
+    delTab: TTabSheet;
+    mencondBox: TGroupBox;
+    menGrouperBox: TGroupBox;
+    mendataBox: TGroupBox;
+    menbtnBox: TGroupBox;
+    men_sel_Btn: TButton;
+    men_selGrd: TDBGrid;
+    men_cond_Edit: TLabeledEdit;
+    men_fnd_Edit: TLabeledEdit;
+    men_fio_Radio: TRadioButton;
+    men_reset_Radio: TRadioButton;
+    men_data_Box: TGroupBox;
+    men_btn_Box: TGroupBox;
+    men_inp_Box: TGroupBox;
+    men_ins_Btn: TButton;
+    ins_men_fio_inp: TLabeledEdit;
+    user_upd_data_Box: TGroupBox;
+    user_upd_inpBox: TGroupBox;
+    user_upd_btnBox: TGroupBox;
+    user_upd_btn: TButton;
+    user_upd_e_lbl: TStaticText;
+    user_upd_u_dbl: TDBLookupComboBox;
+    user_del_data_Box: TGroupBox;
+    user_del_btn_Box: TGroupBox;
+    user_del_ipp_Box: TGroupBox;
+    user_del_btn: TButton;
+    user_del_e_lbl: TStaticText;
+    user_del_e_dbl: TDBLookupComboBox;
+    men_log_Radio: TRadioButton;
+    user_upd_Grd: TDBGrid;
+    Del_user_grd: TDBGrid;
+    user_u_pass_inp: TLabeledEdit;
+    ins_menGrd: TDBGrid;
+    ins_men_log_lbl: TStaticText;
+    ins_men_log_dbl: TDBLookupComboBox;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure men_sel_BtnClick(Sender: TObject);
+    procedure men_fnd_EditKeyPress(Sender: TObject; var Key: Char);
+    procedure men_log_RadioClick(Sender: TObject);
+    procedure men_fio_RadioClick(Sender: TObject);
+    procedure men_reset_RadioClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_men: TFrm_men;
+
+implementation
+
+uses Un_dm, Un_func;
+
+{$R *.dfm}
+
+
+
+procedure TFrm_men.FormActivate(Sender: TObject);
+begin
+  dm.usverQuery.Open;
+  dm.menQuery.Open;
+  AdjustDBGridColumnWidths('Frm_men',6000, 10);
+end;
+
+procedure TFrm_men.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  SaveFormState(Self);
+  CloseAllQueriesOnDataModule('dm');
+end;
+
+procedure TFrm_men.FormCreate(Sender: TObject);
+begin
+  UpdateFormShowHint('Frm_men');
+  UniformizeButtonsSize(Self,  273, 25);
+  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+  UniformizeComponentAnchors(Self);
+  LoadFormState(Self);
+end;
+
+procedure TFrm_men.men_fio_RadioClick(Sender: TObject);
+begin
+  if  men_fio_Radio.Checked=true then
+  begin
+    try
+     with dm.menQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+       'select'+' '+
+    'manager.Id_manager,'+' '+
+    'usver.usver_role,'+' '+
+    'manager.fio'+' '+
+    'from manager'+' '+
+    'inner join usver on usver.usverId=manager.usverId'+' '+
+    'where 1=1'+' '+
+     'order by  manager.fio asc';
+      Open;
+     end;
+    except
+        on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных : ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка  Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+  end;
+end;
+end;
+end;
+
+procedure TFrm_men.men_fnd_EditKeyPress(Sender: TObject; var Key: Char);
+begin
+   try
+   dm.menQuery.SQL.Text:=
+    'select'+' '+
+    'manager.Id_manager,'+' '+
+    'usver.usver_role,'+' '+
+    'manager.fio'+' '+
+    'from manager'+' '+
+    'inner join usver on usver.usverId=manager.usverId'+' '+
+    'where 1=1'+' '+
+    'and usver.usver_role like'+
+   QuotedStr(Concat(men_fnd_Edit.Text,#37));
+   dm.menQuery.close;
+   dm.menQuery.Open;
+except
+   on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка : ' + E.Message);
+    HandleException(E);
+end;
+end;
+end;
+
+procedure TFrm_men.men_log_RadioClick(Sender: TObject);
+begin
+  if  men_log_Radio.Checked=true then
+  begin
+    try
+     with dm.menQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+       'select'+' '+
+    'manager.Id_manager,'+' '+
+    'usver.usver_role,'+' '+
+    'manager.fio'+' '+
+    'from manager'+' '+
+    'inner join usver on usver.usverId=manager.usverId'+' '+
+    'where 1=1'+' '+
+     'order by  usver.usver_role asc';
+      Open;
+     end;
+    except
+        on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка  Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+  end;
+end;
+end;
+end;
+
+procedure TFrm_men.men_reset_RadioClick(Sender: TObject);
+var i,j,c:Integer;
+begin
+  try
+  if men_reset_Radio.Checked then
+  begin
+    with Frm_men do
+    begin
+      for I := 0 to ComponentCount - 1 do
+      begin
+        if Components[I] is TLabeledEdit then
+        begin
+          (Components[I] as TLabeledEdit).Clear;
+        end;
+      end;
+      for c := 0 to ComponentCount - 1 do
+      begin
+        if Components[c] is TCheckBox then
+        begin
+          (Components[c] as TCheckBox).Checked := False;
+        end;
+      end;
+      for j := 0 to ComponentCount - 1 do
+      begin
+        if Components[j] is TRadioButton then
+        begin
+          (Components[j] as TRadioButton).Checked := False;
+        end;
+      end;
+    end;
+    with dm.menQuery do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text :=
+         'select'+' '+
+    'manager.Id_manager,'+' '+
+    'usver.usver_role,'+' '+
+    'manager.fio'+' '+
+    'from manager'+' '+
+    'inner join usver on usver.usverId=manager.usverId'+' '+
+    'where 1=1';
+      Open;
+    end;
+  end;
+except
+  on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка  COM: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+  end;
+end;
+end;
+
+procedure TFrm_men.men_sel_BtnClick(Sender: TObject);
+begin
+   try
+    if not DM.Connection.Connected then
+      raise EDatabaseError.Create('Соединение с базой не установлено',4001);
+    with DM.sel_men_by_fio do
+    begin
+      Close;
+      Parameters.ParamByName('@fio').Value :=men_cond_Edit.Text;
+      Open;
+       DM.menQuery.Recordset:=dm.sel_men_by_fio.Recordset;
+    end;
+  except
+  on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных : ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка  Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+  end;
+end;
+end;
+
+end.

@@ -444,50 +444,14 @@ object DM: TDM
     Left = 456
     Top = 256
   end
-  object upd_men: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'upd_men;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@Id_manager'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = 0
-      end
-      item
-        Name = '@fio'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 1000
-      end>
-    Left = 464
-    Top = 328
+  object ADOStoredProc3: TADOStoredProc
+    Parameters = <>
+    Left = 416
+    Top = 312
   end
-  object del_men: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'del_men;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@Id_manager'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = 0
-      end>
-    Left = 472
-    Top = 384
+  object ADOStoredProc4: TADOStoredProc
+    Parameters = <>
+    Left = 432
+    Top = 392
   end
 end

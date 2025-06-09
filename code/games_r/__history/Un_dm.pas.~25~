@@ -17,8 +17,21 @@ type
     workQuery: TADOQuery;
     workDS: TDataSource;
     sel_work_by_naim: TADOStoredProc;
-    ADOStoredProc2: TADOStoredProc;
-    ADOStoredProc3: TADOStoredProc;
+    sel_work_by_urgency: TADOStoredProc;
+    ins_work: TADOStoredProc;
+    upd_work: TADOStoredProc;
+    del_work: TADOStoredProc;
+    usverQuery: TADOQuery;
+    usevrDS: TDataSource;
+    sel_user_by_role: TADOStoredProc;
+    ins_user: TADOStoredProc;
+    upd_usver: TADOStoredProc;
+    del_user: TADOStoredProc;
+    menQuery: TADOQuery;
+    menDS: TDataSource;
+    sel_men_by_fio: TADOStoredProc;
+    ins_manager: TADOStoredProc;
+    upd_men: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }

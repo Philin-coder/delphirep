@@ -34,7 +34,7 @@ var
 
 implementation
 
-uses Un_dm, Un_func, Un_etap, Un_work, Un_user, Un_men;
+uses Un_dm, Un_func, Un_etap, Un_work, Un_user;
 
 {$R *.dfm}
 
@@ -80,17 +80,17 @@ end;
 procedure TFrm_main.N1Click(Sender: TObject);
 begin
    try
-    UpdateFormProperties('Frm_men', 'Форма работы с данными о менеджере',
+    UpdateFormProperties('Frm_user', 'Форма работы с данными о пользователе',
       clBtnFace, 1024, 768);
-    Frm_men.ShowModal;
+    Frm_user.ShowModal;
   except
     on E: Exception do
     begin
       if not (E is EMyException) then
-        raise EDatabaseError.Create('Ошибка при работе с формой эработы с данными  менеджера', 3001);
+        raise EDatabaseError.Create('Ошибка при работе с формой эработы с данными о пользователе', 3001);
       HandleException(E);
-      if Assigned(Frm_men) then
-        Frm_men.Free;
+      if Assigned(Frm_user) then
+        Frm_user.Free;
       raise;
     end;
   end;

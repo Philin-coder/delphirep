@@ -27,6 +27,12 @@ type
     ins_user: TADOStoredProc;
     upd_usver: TADOStoredProc;
     del_user: TADOStoredProc;
+    menQuery: TADOQuery;
+    menDS: TDataSource;
+    sel_men_by_fio: TADOStoredProc;
+    ins_manager: TADOStoredProc;
+    upd_men: TADOStoredProc;
+    del_men: TADOStoredProc;
   private
     { Private declarations }
   public
