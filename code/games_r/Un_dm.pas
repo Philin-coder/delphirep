@@ -26,7 +26,7 @@ type
     sel_user_by_role: TADOStoredProc;
     ins_user: TADOStoredProc;
     upd_usver: TADOStoredProc;
-    ADOStoredProc4: TADOStoredProc;
+    del_user: TADOStoredProc;
   private
     { Private declarations }
   public

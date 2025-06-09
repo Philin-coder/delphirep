@@ -24,17 +24,17 @@ type
     user_fnd_Edit: TLabeledEdit;
     user_role_Radio: TRadioButton;
     user_reset_Radio: TRadioButton;
-    Work_data_Box: TGroupBox;
-    Work_btn_Box: TGroupBox;
-    Work_inp_Box: TGroupBox;
-    Work_ins_Btn: TButton;
-    Nam_work_inp: TLabeledEdit;
-    Work_upd_data_Box: TGroupBox;
-    Work_upd_inpBox: TGroupBox;
-    Work_upd_btnBox: TGroupBox;
-    etap_upd_btn: TButton;
-    Work_upd_e_lbl: TStaticText;
-    Work_upd_u_dbl: TDBLookupComboBox;
+    user_data_Box: TGroupBox;
+    user_btn_Box: TGroupBox;
+    user_inp_Box: TGroupBox;
+    user_ins_Btn: TButton;
+    ins_user_role_inp: TLabeledEdit;
+    user_upd_data_Box: TGroupBox;
+    user_upd_inpBox: TGroupBox;
+    user_upd_btnBox: TGroupBox;
+    user_upd_btn: TButton;
+    user_upd_e_lbl: TStaticText;
+    user_upd_u_dbl: TDBLookupComboBox;
     work_del_data_Box: TGroupBox;
     work_del_btn_Box: TGroupBox;
     work_del_ipp_Box: TGroupBox;
@@ -43,15 +43,11 @@ type
     work_del_e_dbl: TDBLookupComboBox;
     uaer_pass_Radio: TRadioButton;
     hidepassCB: TCheckBox;
-    Work_t_date_lbl: TStaticText;
-    Work_t_days_inp: TDateTimePicker;
-    Work_n_etap_lbl: TStaticText;
-    Work_n_etap_dbl: TDBLookupComboBox;
-    Work_upd_u_lbl: TStaticText;
-    Work_u_t_days_inp: TDateTimePicker;
-    DBGrid1: TDBGrid;
-    DBGrid2: TDBGrid;
+    user_ins_Grd: TDBGrid;
+    user_upd_Grd: TDBGrid;
     DBGrid3: TDBGrid;
+    ins_user_pass_inp: TLabeledEdit;
+    user_u_pass_inp: TLabeledEdit;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -60,6 +56,9 @@ type
     procedure user_role_RadioClick(Sender: TObject);
     procedure uaer_pass_RadioClick(Sender: TObject);
     procedure hidepassCBClick(Sender: TObject);
+    procedure user_reset_RadioClick(Sender: TObject);
+    procedure user_ins_BtnClick(Sender: TObject);
+    procedure user_upd_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -194,6 +193,125 @@ end;
 end;
 end;
 
+procedure TFrm_user.user_ins_BtnClick(Sender: TObject);
+const
+  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (Trim(ins_user_role_inp.Text)='')or
+  (Trim(ins_user_pass_inp.Text)='')
+  );
+  AreFieldsValid:=(
+  ValidateComponentText(ins_user_role_inp,AllowedChars)
+  );
+  if AreFieldsEmpty or not AreFieldsValid then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.ins_user do
+      begin
+        if not dm.Connection.Connected then
+          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
+           Parameters.ParamByName('@usver_role').Value :=ins_user_role_inp.Text;
+           Parameters.ParamByName('@usver_pass').Value:=ins_user_pass_inp.Text;
+           ExecProc;
+           dm.usverQuery.Close;
+           dm.usverQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+end;
+end;
+end;
+
+procedure TFrm_user.user_reset_RadioClick(Sender: TObject);
+var i,j,c:Integer;
+begin
+  try
+  if user_reset_Radio.Checked then
+  begin
+    with Frm_user do
+    begin
+      for I := 0 to ComponentCount - 1 do
+      begin
+        if Components[I] is TLabeledEdit then
+        begin
+          (Components[I] as TLabeledEdit).Clear;
+        end;
+      end;
+      for c := 0 to ComponentCount - 1 do
+      begin
+        if Components[c] is TCheckBox then
+        begin
+          (Components[c] as TCheckBox).Checked := False;
+        end;
+      end;
+      for j := 0 to ComponentCount - 1 do
+      begin
+        if Components[j] is TRadioButton then
+        begin
+          (Components[j] as TRadioButton).Checked := False;
+        end;
+      end;
+    end;
+    with dm.usverQuery do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text :=
+       'select'+' '+
+  'usver.usverId,'+' '+
+  'usver.usver_role,'+' '+
+  'usver.usver_pass'+' '+
+  'from usver'+' '+
+  'where 1=1';
+      Open;
+    end;
+  end;
+except
+  on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка  базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+  end;
+end;
+end;
+
 procedure TFrm_user.user_role_RadioClick(Sender: TObject);
 begin
   if  user_role_Radio.Checked=true then
@@ -204,7 +322,7 @@ begin
       close;
       sql.Clear;
       sql.Text:=
-      'select'+' '+
+  'select'+' '+
   'usver.usverId,'+' '+
   'usver.usver_role,'+' '+
   'usver.usver_pass'+' '+
@@ -265,6 +383,55 @@ begin
     ShowMessage('Общая ошибка: ' + E.Message);
     HandleException(E);
   end;
+end;
+end;
+
+procedure TFrm_user.user_upd_btnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (Trim(user_u_pass_inp.Text)='')or
+  (user_upd_u_dbl.Text='')
+  );
+  if AreFieldsEmpty then
+  begin
+   MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+   try
+      with dm.upd_usver do
+      begin
+        if not dm.Connection.Connected then
+          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
+           Parameters.ParamByName('@usverId').Value :=
+           dm.usverQuery.FieldByName('usverId').AsString;
+           Parameters.ParamByName('@usver_pass').Value:=user_u_pass_inp.Text;
+           ExecProc;
+           dm.usverQuery.Close;
+           dm.usverQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+end;
 end;
 end;
 

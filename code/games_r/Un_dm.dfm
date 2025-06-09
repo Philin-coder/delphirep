@@ -359,8 +359,23 @@ object DM: TDM
     Left = 336
     Top = 312
   end
-  object ADOStoredProc4: TADOStoredProc
-    Parameters = <>
+  object del_user: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'del_user;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@usverId'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
     Left = 336
     Top = 392
   end
