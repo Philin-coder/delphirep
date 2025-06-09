@@ -16,7 +16,6 @@ type
     work_item: TMenuItem;
     user_item: TMenuItem;
     N1: TMenuItem;
-    dol_item: TMenuItem;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -24,7 +23,6 @@ type
     procedure work_itemClick(Sender: TObject);
     procedure user_itemClick(Sender: TObject);
     procedure N1Click(Sender: TObject);
-    procedure dol_itemClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -36,28 +34,9 @@ var
 
 implementation
 
-uses Un_dm, Un_func, Un_etap, Un_work, Un_user, Un_men, Un_dolgn;
+uses Un_dm, Un_func, Un_etap, Un_work, Un_user, Un_men;
 
 {$R *.dfm}
-
-procedure TFrm_main.dol_itemClick(Sender: TObject);
-begin
-  try
-    UpdateFormProperties('Frm_dol', 'Форма работы с данными должности',
-      clBtnFace, 1024, 768);
-    Frm_dol.ShowModal;
-  except
-    on E: Exception do
-    begin
-      if not (E is EMyException) then
-        raise EDatabaseError.Create('Ошибка при работе с формой должности', 3001);
-      HandleException(E);
-      if Assigned(Frm_dol) then
-        Frm_dol.Free;
-      raise;
-    end;
-  end;
-end;
 
 procedure TFrm_main.etap_itemClick(Sender: TObject);
 begin

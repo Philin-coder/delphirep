@@ -1,0 +1,128 @@
+unit Un_dolgn;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs,db,ADODB, Grids, DBGrids, StdCtrls, ComCtrls, ExtCtrls,ActiveX,
+  DBCtrls;
+
+type
+  TFrm_dol = class(TForm)
+    dolPC: TPageControl;
+    SelTab: TTabSheet;
+    insTab: TTabSheet;
+    updTab: TTabSheet;
+    delTab: TTabSheet;
+    dolcondBox: TGroupBox;
+    dolGrouperBox: TGroupBox;
+    doldataBox: TGroupBox;
+    dolbtnBox: TGroupBox;
+    dol_sel_Btn: TButton;
+    dol_selGrd: TDBGrid;
+    dol_cond_Edit: TLabeledEdit;
+    dol_fnd_Edit: TLabeledEdit;
+    dol_fio_Radio: TRadioButton;
+    dol_reset_Radio: TRadioButton;
+    men_data_Box: TGroupBox;
+    men_btn_Box: TGroupBox;
+    men_inp_Box: TGroupBox;
+    men_ins_Btn: TButton;
+    ins_men_fio_inp: TLabeledEdit;
+    men_upd_data_Box: TGroupBox;
+    men_upd_inpBox: TGroupBox;
+    men_upd_btnBox: TGroupBox;
+    men_upd_btn: TButton;
+    men_upd_e_lbl: TStaticText;
+    men_upd_u_dbl: TDBLookupComboBox;
+    men_del_data_Box: TGroupBox;
+    men_del_btn_Box: TGroupBox;
+    men_del_ipp_Box: TGroupBox;
+    men_del_btn: TButton;
+    men_del_e_lbl: TStaticText;
+    men_del_e_dbl: TDBLookupComboBox;
+    dol_nam_dol_Radio: TRadioButton;
+    men_u_fio_inp: TLabeledEdit;
+    ins_menGrd: TDBGrid;
+    ins_men_log_lbl: TStaticText;
+    ins_men_log_dbl: TDBLookupComboBox;
+    men_upd_Grd: TDBGrid;
+    men_del_Grd: TDBGrid;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure dol_sel_BtnClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_dol: TFrm_dol;
+
+implementation
+
+uses Un_dm, Un_func;
+
+{$R *.dfm}
+
+
+
+procedure TFrm_dol.dol_sel_BtnClick(Sender: TObject);
+begin
+  try
+    if not DM.Connection.Connected then
+      raise EDatabaseError.Create('Cоединение с базой не установлено',4001);
+    with DM.sel_dol_by_naim do
+    begin
+      Close;
+      Parameters.ParamByName('@Nam_dol').Value :=dol_cond_Edit.Text;
+      Open;
+       DM.dolQuery.Recordset:=dm.sel_dol_by_naim.Recordset;
+    end;
+  except
+  on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных : ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка  Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+  end;
+end;
+end;
+
+procedure TFrm_dol.FormActivate(Sender: TObject);
+begin
+  dm.dolQuery.Open;
+  dm.menQuery.Open;
+  AdjustDBGridColumnWidths('Frm_dol',6000, 10);
+end;
+
+procedure TFrm_dol.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  SaveFormState(Self);
+  CloseAllQueriesOnDataModule('dm');
+end;
+
+procedure TFrm_dol.FormCreate(Sender: TObject);
+begin
+  UpdateFormShowHint('Frm_dol');
+  UniformizeButtonsSize(Self,  273, 25);
+  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+  UniformizeComponentAnchors(Self);
+  LoadFormState(Self);
+end;
+
+end.

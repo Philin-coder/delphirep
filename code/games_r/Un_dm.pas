@@ -33,6 +33,12 @@ type
     ins_manager: TADOStoredProc;
     upd_men: TADOStoredProc;
     del_men: TADOStoredProc;
+    dolQuery: TADOQuery;
+    dolDS: TDataSource;
+    sel_dol_by_naim: TADOStoredProc;
+    ADOStoredProc2: TADOStoredProc;
+    ADOStoredProc3: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public

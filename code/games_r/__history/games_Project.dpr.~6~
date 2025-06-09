@@ -5,11 +5,10 @@ uses
   Un_main in 'Un_main.pas' {Frm_main},
   Un_dm in 'Un_dm.pas' {DM: TDataModule},
   Un_func in 'Un_func.pas',
-  Un_dolgn in 'Un_dolgn.pas' {Frm_dol},
-  Un_etap in 'Un_etap.pas' {Frm_etap},
-  Un_user in 'Un_user.pas' {Frm_user},
   Un_men in 'Un_men.pas' {Frm_men},
-  Un_work in 'Un_work.pas' {Frm_work};
+  Un_etap in 'Un_etap.pas' {Frm_etap},
+  Un_work in 'Un_work.pas' {Frm_work},
+  Un_user in 'Un_user.pas' {Frm_user};
 
 {$R *.res}
 {$R 'resources.RES'}
@@ -18,12 +17,9 @@ begin
   Application.Initialize;
   Application.CreateForm(TFrm_main, Frm_main);
   Application.CreateForm(TDM, DM);
-  Application.CreateForm(TFrm_dol, Frm_dol);
+  Application.CreateForm(TFrm_men, Frm_men);
   Application.CreateForm(TFrm_etap, Frm_etap);
   Application.CreateForm(TFrm_work, Frm_work);
   Application.CreateForm(TFrm_user, Frm_user);
-  Application.CreateForm(TFrm_work, Frm_work);
-  Application.CreateForm(TFrm_men, Frm_men);
-  Application.CreateForm(TFrm_work, Frm_work);
   Application.Run;
 end.

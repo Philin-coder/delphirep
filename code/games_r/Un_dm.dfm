@@ -1,7 +1,7 @@
 object DM: TDM
   OldCreateOrder = False
   Height = 567
-  Width = 635
+  Width = 699
   object Connection: TADOConnection
     Connected = True
     ConnectionString = 
@@ -488,6 +488,62 @@ object DM: TDM
         Value = 0
       end>
     Left = 472
+    Top = 384
+  end
+  object dolQuery: TADOQuery
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      '   Dolshnost.N_Dol,'
+      '   Dolshnost.Nam_dol,'
+      '   manager.fio'
+      '   from Dolshnost '
+      '   inner join manager on manager.Id_manager=Dolshnost.Id_manager'
+      'where 1=1'
+      ''
+      '')
+    Left = 560
+    Top = 64
+  end
+  object dolDS: TDataSource
+    DataSet = dolQuery
+    Left = 568
+    Top = 120
+  end
+  object sel_dol_by_naim: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_dol_by_naim;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@Nam_dol'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end>
+    Left = 568
+    Top = 168
+  end
+  object ADOStoredProc2: TADOStoredProc
+    Parameters = <>
+    Left = 568
+    Top = 232
+  end
+  object ADOStoredProc3: TADOStoredProc
+    Parameters = <>
+    Left = 568
+    Top = 312
+  end
+  object ADOStoredProc4: TADOStoredProc
+    Parameters = <>
+    Left = 568
     Top = 384
   end
 end
