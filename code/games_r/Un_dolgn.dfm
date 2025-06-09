@@ -21,7 +21,7 @@ object Frm_dol: TFrm_dol
     Top = 0
     Width = 1045
     Height = 512
-    ActivePage = insTab
+    ActivePage = updTab
     Align = alClient
     TabOrder = 0
     object SelTab: TTabSheet
@@ -255,9 +255,9 @@ object Frm_dol: TFrm_dol
       end
     end
     object updTab: TTabSheet
-      Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086'  '#1084#1077#1085#1077#1076#1078#1077#1088#1077
+      Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086'  '#1076#1086#1083#1078#1085#1086#1089#1090#1080
       ImageIndex = 2
-      object men_upd_data_Box: TGroupBox
+      object dol_upd_data_Box: TGroupBox
         Left = 0
         Top = 105
         Width = 1037
@@ -265,13 +265,13 @@ object Frm_dol: TFrm_dol
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object men_upd_Grd: TDBGrid
+        object dol_upd_Grd: TDBGrid
           Left = 2
           Top = 15
           Width = 1033
           Height = 302
           Align = alClient
-          DataSource = DM.menDS
+          DataSource = DM.dolDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -281,26 +281,25 @@ object Frm_dol: TFrm_dol
           Columns = <
             item
               Expanded = False
-              FieldName = 'Id_manager'
+              FieldName = 'N_Dol'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-              Width = 110
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'usver_role'
-              Title.Caption = #1056#1086#1083#1100
+              FieldName = 'Nam_dol'
+              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077' '#1076#1086#1083#1078#1085#1086#1089#1090#1080
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'fio'
-              Title.Caption = #1060#1048#1054
+              Title.Caption = #1052#1077#1085#1077#1076#1078#1077#1088
               Visible = True
             end>
         end
       end
-      object men_upd_inpBox: TGroupBox
+      object dol_upd_inpBox: TGroupBox
         Left = 0
         Top = 0
         Width = 1037
@@ -308,49 +307,50 @@ object Frm_dol: TFrm_dol
         Align = alTop
         Caption = #1042#1074#1086#1076'  '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
-        object men_upd_e_lbl: TStaticText
+        object dol_upd_e_lbl: TStaticText
           Left = 16
           Top = 17
-          Width = 96
+          Width = 95
           Height = 17
-          Caption = #1042#1099#1073#1086#1088' '#1084#1077#1085#1077#1076#1078#1077#1088#1072
+          Caption = #1042#1099#1073#1086#1088' '#1076#1086#1083#1078#1085#1086#1089#1090#1100
           TabOrder = 0
         end
-        object men_upd_u_dbl: TDBLookupComboBox
+        object dol_upd_u_dbl: TDBLookupComboBox
           Left = 16
           Top = 32
           Width = 1009
           Height = 21
-          KeyField = 'Id_manager'
-          ListField = 'fio'
-          ListSource = DM.menDS
+          KeyField = 'N_Dol'
+          ListField = 'Nam_dol'
+          ListSource = DM.dolDS
           TabOrder = 1
         end
-        object men_u_fio_inp: TLabeledEdit
+        object dol_u_naim_inp: TLabeledEdit
           Left = 16
           Top = 78
           Width = 1009
           Height = 21
-          EditLabel.Width = 155
+          EditLabel.Width = 195
           EditLabel.Height = 13
-          EditLabel.Caption = #1050#1086#1088#1088#1077#1082#1094#1080#1103' '#1060#1048#1054' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1103
+          EditLabel.Caption = #1050#1086#1088#1088#1077#1082#1094#1080#1103' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1103' '#1076#1086#1083#1078#1085#1086#1088#1089#1090#1080
           TabOrder = 2
         end
       end
-      object men_upd_btnBox: TGroupBox
+      object dol_upd_btnBox: TGroupBox
         Left = 0
         Top = 424
         Width = 1037
         Height = 60
         Align = alBottom
         TabOrder = 2
-        object men_upd_btn: TButton
+        object dol_upd_btn: TButton
           Left = 312
           Top = 16
           Width = 75
           Height = 25
           Caption = #1054#1073#1085#1086#1074#1080#1090#1100
           TabOrder = 0
+          OnClick = dol_upd_btnClick
         end
       end
     end
@@ -365,13 +365,13 @@ object Frm_dol: TFrm_dol
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object men_del_Grd: TDBGrid
+        object DBGrid2: TDBGrid
           Left = 2
           Top = 15
           Width = 1033
           Height = 334
           Align = alClient
-          DataSource = DM.menDS
+          DataSource = DM.dolDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -381,21 +381,20 @@ object Frm_dol: TFrm_dol
           Columns = <
             item
               Expanded = False
-              FieldName = 'Id_manager'
+              FieldName = 'N_Dol'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-              Width = 110
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'usver_role'
-              Title.Caption = #1056#1086#1083#1100
+              FieldName = 'Nam_dol'
+              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077' '#1076#1086#1083#1078#1085#1086#1089#1090#1080
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'fio'
-              Title.Caption = #1060#1048#1054
+              Title.Caption = #1052#1077#1085#1077#1076#1078#1077#1088
               Visible = True
             end>
         end

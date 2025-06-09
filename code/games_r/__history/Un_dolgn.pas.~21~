@@ -57,7 +57,6 @@ type
     procedure dol_nam_dol_RadioClick(Sender: TObject);
     procedure dol_reset_RadioClick(Sender: TObject);
     procedure dol_ins_BtnClick(Sender: TObject);
-    procedure dol_upd_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -346,61 +345,6 @@ begin
     ShowMessage('Общая ошибка: ' + E.Message);
     HandleException(E);
   end;
-end;
-end;
-
-procedure TFrm_dol.dol_upd_btnClick(Sender: TObject);
-const
-  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
-var
-  AreFieldsEmpty: Boolean;
-  AreFieldsValid: Boolean;
-begin
-  AreFieldsEmpty:=(
-  (dol_upd_u_dbl.Text='')or
-  (Trim(dol_u_naim_inp.Text)='')
-  );
-  AreFieldsValid:=(
-  ValidateComponentText(dol_u_naim_inp,AllowedChars)
-  );
-  if AreFieldsEmpty or not AreFieldsValid then
-  begin
-    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-   try
-      with dm.upd_dol do
-      begin
-        if not dm.Connection.Connected then
-          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
-           Parameters.ParamByName('@n_dol').Value:=
-           dm.dolQuery.FieldByName('n_dol').AsString;
-           Parameters.ParamByName('@Nam_dol').Value :=dol_u_naim_inp.Text;
-           ExecProc;
-           dm.dolQuery.Close;
-           dm.dolQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EDatabaseError do
-  begin
-    ShowMessage('Ошибка базы данных: ' + E.Message);
-    HandleException(E);
-    raise;
-  end;
-  on E: EOleError do
-  begin
-    ShowMessage('Ошибка COM: ' + E.Message);
-    HandleException(E); // Логирование ошибки
-    raise; // Повторное выбрасывание исключения
-  end;
-  on E: Exception do
-  begin
-    ShowMessage('Общая ошибка: ' + E.Message);
-    HandleException(E); // Логирование ошибки
-end;
 end;
 end;
 
