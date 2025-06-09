@@ -21,7 +21,7 @@ object Frm_user: TFrm_user
     Top = 0
     Width = 1045
     Height = 512
-    ActivePage = insTab
+    ActivePage = updTab
     Align = alClient
     TabOrder = 0
     object SelTab: TTabSheet
@@ -256,9 +256,9 @@ object Frm_user: TFrm_user
       end
     end
     object updTab: TTabSheet
-      Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1088#1072#1073#1086#1090#1077
+      Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086'  '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1077
       ImageIndex = 2
-      object Work_upd_data_Box: TGroupBox
+      object user_upd_data_Box: TGroupBox
         Left = 0
         Top = 105
         Width = 1037
@@ -266,11 +266,11 @@ object Frm_user: TFrm_user
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object DBGrid2: TDBGrid
+        object user_upd_Grd: TDBGrid
           Left = 2
           Top = 15
           Width = 1033
-          Height = 302
+          Height = 279
           Align = alClient
           DataSource = DM.usevrDS
           TabOrder = 0
@@ -300,7 +300,7 @@ object Frm_user: TFrm_user
             end>
         end
       end
-      object Work_upd_inpBox: TGroupBox
+      object user_upd_inpBox: TGroupBox
         Left = 0
         Top = 0
         Width = 1037
@@ -308,56 +308,50 @@ object Frm_user: TFrm_user
         Align = alTop
         Caption = #1042#1074#1086#1076'  '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
-        object Work_upd_e_lbl: TStaticText
+        object user_upd_e_lbl: TStaticText
           Left = 16
-          Top = 25
-          Width = 77
+          Top = 17
+          Width = 110
           Height = 17
-          Caption = #1042#1099#1073#1086#1088' '#1088#1072#1073#1086#1090#1099
+          Caption = #1042#1099#1073#1086#1088' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1103
           TabOrder = 0
         end
-        object Work_upd_u_dbl: TDBLookupComboBox
+        object user_upd_u_dbl: TDBLookupComboBox
           Left = 16
-          Top = 40
+          Top = 32
           Width = 1009
           Height = 21
-          KeyField = 'N_Work'
-          ListField = 'Nam_work'
-          ListSource = DM.workDS
+          KeyField = 'usverId'
+          ListField = 'usver_role'
+          ListSource = DM.usevrDS
           TabOrder = 1
         end
-        object Work_upd_u_lbl: TStaticText
-          Left = 19
-          Top = 67
-          Width = 131
-          Height = 17
-          Caption = #1053#1086#1074#1072#1103' '#1076#1072#1090#1072' '#1080#1089#1087#1086#1083#1085#1077#1085#1085#1080#1103
+        object user_u_pass_inp: TLabeledEdit
+          Left = 16
+          Top = 78
+          Width = 1009
+          Height = 21
+          EditLabel.Width = 138
+          EditLabel.Height = 13
+          EditLabel.Caption = #1042#1074#1086#1076' '#1087#1072#1088#1086#1083#1103' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1103
           TabOrder = 2
         end
-        object Work_u_t_days_inp: TDateTimePicker
-          Left = 19
-          Top = 84
-          Width = 1006
-          Height = 21
-          Date = 45816.718279895830000000
-          Time = 45816.718279895830000000
-          TabOrder = 3
-        end
       end
-      object Work_upd_btnBox: TGroupBox
+      object user_upd_btnBox: TGroupBox
         Left = 0
         Top = 424
         Width = 1037
         Height = 60
         Align = alBottom
         TabOrder = 2
-        object etap_upd_btn: TButton
+        object user_upd_btn: TButton
           Left = 312
           Top = 16
           Width = 75
           Height = 25
           Caption = #1054#1073#1085#1086#1074#1080#1090#1100
           TabOrder = 0
+          OnClick = user_upd_btnClick
         end
       end
     end

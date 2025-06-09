@@ -269,6 +269,7 @@ object DM: TDM
     Top = 456
   end
   object usverQuery: TADOQuery
+    Active = True
     Connection = Connection
     CursorType = ctStatic
     Parameters = <>
@@ -280,12 +281,12 @@ object DM: TDM
       'from usver '
       'where 1=1')
     Left = 296
-    Top = 56
+    Top = 72
   end
   object usevrDS: TDataSource
     DataSet = usverQuery
     Left = 312
-    Top = 128
+    Top = 144
   end
   object sel_user_by_role: TADOStoredProc
     Connection = Connection
@@ -306,7 +307,7 @@ object DM: TDM
         Value = Null
       end>
     Left = 320
-    Top = 192
+    Top = 208
   end
   object ins_user: TADOStoredProc
     Connection = Connection
@@ -331,37 +332,16 @@ object DM: TDM
         Size = 1000
       end>
     Left = 336
-    Top = 256
+    Top = 280
   end
-  object upd_usver: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'upd_usver;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@usverId'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = 0
-      end
-      item
-        Name = '@usver_pass'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 1000
-      end>
-    Left = 336
-    Top = 312
+  object ADOStoredProc3: TADOStoredProc
+    Parameters = <>
+    Left = 344
+    Top = 368
   end
   object ADOStoredProc4: TADOStoredProc
     Parameters = <>
-    Left = 336
-    Top = 392
+    Left = 360
+    Top = 448
   end
 end

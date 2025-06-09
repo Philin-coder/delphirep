@@ -25,7 +25,7 @@ type
     usevrDS: TDataSource;
     sel_user_by_role: TADOStoredProc;
     ins_user: TADOStoredProc;
-    ADOStoredProc3: TADOStoredProc;
+    upd_usver: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }

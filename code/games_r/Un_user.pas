@@ -29,12 +29,12 @@ type
     user_inp_Box: TGroupBox;
     user_ins_Btn: TButton;
     ins_user_role_inp: TLabeledEdit;
-    Work_upd_data_Box: TGroupBox;
-    Work_upd_inpBox: TGroupBox;
-    Work_upd_btnBox: TGroupBox;
-    etap_upd_btn: TButton;
-    Work_upd_e_lbl: TStaticText;
-    Work_upd_u_dbl: TDBLookupComboBox;
+    user_upd_data_Box: TGroupBox;
+    user_upd_inpBox: TGroupBox;
+    user_upd_btnBox: TGroupBox;
+    user_upd_btn: TButton;
+    user_upd_e_lbl: TStaticText;
+    user_upd_u_dbl: TDBLookupComboBox;
     work_del_data_Box: TGroupBox;
     work_del_btn_Box: TGroupBox;
     work_del_ipp_Box: TGroupBox;
@@ -43,12 +43,11 @@ type
     work_del_e_dbl: TDBLookupComboBox;
     uaer_pass_Radio: TRadioButton;
     hidepassCB: TCheckBox;
-    Work_upd_u_lbl: TStaticText;
-    Work_u_t_days_inp: TDateTimePicker;
     user_ins_Grd: TDBGrid;
-    DBGrid2: TDBGrid;
+    user_upd_Grd: TDBGrid;
     DBGrid3: TDBGrid;
     ins_user_pass_inp: TLabeledEdit;
+    user_u_pass_inp: TLabeledEdit;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -59,6 +58,7 @@ type
     procedure hidepassCBClick(Sender: TObject);
     procedure user_reset_RadioClick(Sender: TObject);
     procedure user_ins_BtnClick(Sender: TObject);
+    procedure user_upd_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -383,6 +383,55 @@ begin
     ShowMessage('Общая ошибка: ' + E.Message);
     HandleException(E);
   end;
+end;
+end;
+
+procedure TFrm_user.user_upd_btnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (Trim(user_u_pass_inp.Text)='')or
+  (user_upd_u_dbl.Text='')
+  );
+  if AreFieldsEmpty then
+  begin
+   MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+   try
+      with dm.upd_usver do
+      begin
+        if not dm.Connection.Connected then
+          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
+           Parameters.ParamByName('@usverId').Value :=
+           dm.usverQuery.FieldByName('usverId').AsString;
+           Parameters.ParamByName('@usver_pass').Value:=user_u_pass_inp.Text;
+           ExecProc;
+           dm.usverQuery.Close;
+           dm.usverQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+end;
 end;
 end;
 
