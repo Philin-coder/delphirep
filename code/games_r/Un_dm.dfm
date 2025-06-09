@@ -531,8 +531,29 @@ object DM: TDM
     Left = 568
     Top = 168
   end
-  object ADOStoredProc2: TADOStoredProc
-    Parameters = <>
+  object ins_dol: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'ins_dol;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@Nam_dol'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end
+      item
+        Name = '@id_manager'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
     Left = 568
     Top = 232
   end

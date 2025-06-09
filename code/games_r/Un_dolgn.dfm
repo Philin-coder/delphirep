@@ -21,7 +21,7 @@ object Frm_dol: TFrm_dol
     Top = 0
     Width = 1045
     Height = 512
-    ActivePage = SelTab
+    ActivePage = insTab
     Align = alClient
     TabOrder = 0
     object SelTab: TTabSheet
@@ -153,9 +153,9 @@ object Frm_dol: TFrm_dol
       end
     end
     object insTab: TTabSheet
-      Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1084#1077#1085#1077#1076#1078#1077#1088#1077
+      Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1076#1086#1083#1078#1085#1086#1089#1090#1080
       ImageIndex = 1
-      object men_data_Box: TGroupBox
+      object dol_data_Box: TGroupBox
         Left = 0
         Top = 145
         Width = 1037
@@ -165,13 +165,13 @@ object Frm_dol: TFrm_dol
         TabOrder = 0
         ExplicitTop = 193
         ExplicitHeight = 223
-        object ins_menGrd: TDBGrid
+        object ins_dol_grd: TDBGrid
           Left = 2
           Top = 15
           Width = 1033
           Height = 254
           Align = alClient
-          DataSource = DM.menDS
+          DataSource = DM.dolDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -181,39 +181,39 @@ object Frm_dol: TFrm_dol
           Columns = <
             item
               Expanded = False
-              FieldName = 'Id_manager'
+              FieldName = 'N_Dol'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-              Width = 110
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'usver_role'
-              Title.Caption = #1056#1086#1083#1100
+              FieldName = 'Nam_dol'
+              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077' '#1076#1086#1083#1078#1085#1086#1089#1090#1080
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'fio'
-              Title.Caption = #1060#1048#1054
+              Title.Caption = #1052#1077#1085#1077#1076#1078#1077#1088
               Visible = True
             end>
         end
       end
-      object men_btn_Box: TGroupBox
+      object dol_btn_Box: TGroupBox
         Left = 0
         Top = 416
         Width = 1037
         Height = 68
         Align = alBottom
         TabOrder = 1
-        object men_ins_Btn: TButton
+        object dol_ins_Btn: TButton
           Left = 304
           Top = 24
           Width = 75
           Height = 25
           Caption = #1042#1074#1086#1076
           TabOrder = 0
+          OnClick = dol_ins_BtnClick
         end
       end
       object men_inp_Box: TGroupBox
@@ -224,32 +224,32 @@ object Frm_dol: TFrm_dol
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1074#1085#1085#1099#1093
         TabOrder = 2
-        object ins_men_fio_inp: TLabeledEdit
+        object ins_dol_naim_inp: TLabeledEdit
           Left = 19
           Top = 40
           Width = 990
           Height = 21
-          EditLabel.Width = 111
+          EditLabel.Width = 159
           EditLabel.Height = 13
-          EditLabel.Caption = #1042#1074#1086#1076' '#1060#1048#1054' '#1084#1077#1085#1077#1076#1078#1077#1088#1072
+          EditLabel.Caption = #1042#1074#1086#1076' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1103' '#1076#1086#1083#1078#1085#1086#1089#1090#1080
           TabOrder = 0
         end
-        object ins_men_log_lbl: TStaticText
+        object ins_dol_m_fio_lbl: TStaticText
           Left = 19
           Top = 80
-          Width = 76
+          Width = 57
           Height = 17
-          Caption = #1055#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1100
+          Caption = #1052#1085#1085#1077#1076#1078#1077#1088
           TabOrder = 1
         end
-        object ins_men_log_dbl: TDBLookupComboBox
+        object ins_d_men_fio_dbl: TDBLookupComboBox
           Left = 19
           Top = 103
           Width = 990
           Height = 21
-          KeyField = 'usverId'
-          ListField = 'usver_role'
-          ListSource = DM.usevrDS
+          KeyField = 'Id_manager'
+          ListField = 'fio'
+          ListSource = DM.menDS
           TabOrder = 2
         end
       end

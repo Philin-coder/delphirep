@@ -36,7 +36,7 @@ type
     dolQuery: TADOQuery;
     dolDS: TDataSource;
     sel_dol_by_naim: TADOStoredProc;
-    ADOStoredProc2: TADOStoredProc;
+    ins_dol: TADOStoredProc;
     ADOStoredProc3: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;
   private

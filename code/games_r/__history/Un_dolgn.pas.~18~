@@ -24,11 +24,11 @@ type
     dol_fnd_Edit: TLabeledEdit;
     dol_fio_Radio: TRadioButton;
     dol_reset_Radio: TRadioButton;
-    dol_data_Box: TGroupBox;
-    dol_btn_Box: TGroupBox;
+    men_data_Box: TGroupBox;
+    men_btn_Box: TGroupBox;
     men_inp_Box: TGroupBox;
-    dol_ins_Btn: TButton;
-    ins_dol_naim_inp: TLabeledEdit;
+    men_ins_Btn: TButton;
+    ins_men_fio_inp: TLabeledEdit;
     men_upd_data_Box: TGroupBox;
     men_upd_inpBox: TGroupBox;
     men_upd_btnBox: TGroupBox;
@@ -43,11 +43,11 @@ type
     men_del_e_dbl: TDBLookupComboBox;
     dol_nam_dol_Radio: TRadioButton;
     men_u_fio_inp: TLabeledEdit;
-    ins_dol_m_fio_lbl: TStaticText;
-    ins_d_men_fio_dbl: TDBLookupComboBox;
+    ins_menGrd: TDBGrid;
+    ins_men_log_lbl: TStaticText;
+    ins_men_log_dbl: TDBLookupComboBox;
     men_upd_Grd: TDBGrid;
     men_del_Grd: TDBGrid;
-    ins_dol_grd: TDBGrid;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -56,7 +56,6 @@ type
     procedure dol_fio_RadioClick(Sender: TObject);
     procedure dol_nam_dol_RadioClick(Sender: TObject);
     procedure dol_reset_RadioClick(Sender: TObject);
-    procedure dol_ins_BtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -148,61 +147,6 @@ except
   begin
     ShowMessage('Общая ошибка : ' + E.Message);
     HandleException(E);
-end;
-end;
-end;
-
-procedure TFrm_dol.dol_ins_BtnClick(Sender: TObject);
-const
-  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
-var
-  AreFieldsEmpty: Boolean;
-  AreFieldsValid: Boolean;
-begin
-  AreFieldsEmpty:=(
-  (Trim(ins_dol_naim_inp.Text)='')or
-  (ins_d_men_fio_dbl.Text='')
-  );
-  AreFieldsValid:=(
-  ValidateComponentText(ins_dol_naim_inp,AllowedChars)
-  );
-  if AreFieldsEmpty or not AreFieldsValid then
-  begin
-    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-  try
-      with dm.ins_dol do
-      begin
-        if not dm.Connection.Connected then
-          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
-           Parameters.ParamByName('@Nam_dol').Value :=ins_dol_naim_inp.Text;
-           Parameters.ParamByName('@id_manager').Value:=
-           dm.menQuery.FieldByName('id_manager').AsString;
-           ExecProc;
-           dm.dolQuery.Close;
-           dm.dolQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EDatabaseError do
-  begin
-    ShowMessage('Ошибка базы данных: ' + E.Message);
-    HandleException(E);
-    raise;
-  end;
-  on E: EOleError do
-  begin
-    ShowMessage('Ошибка COM: ' + E.Message);
-    HandleException(E); // Логирование ошибки
-    raise; // Повторное выбрасывание исключения
-  end;
-  on E: Exception do
-  begin
-    ShowMessage('Общая ошибка: ' + E.Message);
-    HandleException(E); // Логирование ошибки
 end;
 end;
 end;
