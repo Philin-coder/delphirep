@@ -366,7 +366,7 @@ object Frm_user: TFrm_user
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object DBGrid3: TDBGrid
+        object Del_user_grd: TDBGrid
           Left = 2
           Top = 15
           Width = 1033

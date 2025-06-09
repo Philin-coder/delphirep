@@ -45,7 +45,7 @@ type
     hidepassCB: TCheckBox;
     user_ins_Grd: TDBGrid;
     user_upd_Grd: TDBGrid;
-    DBGrid3: TDBGrid;
+    Del_user_grd: TDBGrid;
     ins_user_pass_inp: TLabeledEdit;
     user_u_pass_inp: TLabeledEdit;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
