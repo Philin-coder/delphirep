@@ -1,7 +1,7 @@
-USE [Razrab_Andryuschenko]
+USE [games_r]
 GO
 
-/****** Object:  Table [dbo].[Rabotnik]    Script Date: 01.12.2020 21:42:33 ******/
+/****** Object:  Table [dbo].[Rabotnik]    Script Date: 10.06.2025 12:06:45 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -10,10 +10,10 @@ GO
 
 CREATE TABLE [dbo].[Rabotnik](
 	[N_Rab] [int] IDENTITY(1,1) NOT NULL,
-	[Fio] [varchar](100) NOT NULL,
+	[Fio] [varchar](1000) NOT NULL,
 	[N_Dol] [int] NOT NULL,
-	[Iphone] [int] NULL,
-	[St_rab] [char](50) NOT NULL,
+	[Iphone] [varchar](1000) NOT NULL,
+	[St_rab] [int] NOT NULL,
 	[Date_pr] [date] NOT NULL,
 	[usverId] [int] NOT NULL,
 	[Date_yv] [date] NULL,

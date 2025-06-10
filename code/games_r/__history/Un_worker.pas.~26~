@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs,db,ADODB, Grids, DBGrids, StdCtrls, ComCtrls, ExtCtrls,ActiveX,
-  DBCtrls, Mask;
+  DBCtrls;
 
 type
   TFrm_worker = class(TForm)
@@ -49,18 +49,8 @@ type
     DBGrid3: TDBGrid;
     about_workerPC: TPageControl;
     abot_worker_Tab_one: TTabSheet;
-    abot_worker_Tab_two: TTabSheet;
+    TabSheet2: TTabSheet;
     ins_worker_fio_inp: TLabeledEdit;
-    ins_w_dol_lbl: TStaticText;
-    ins_w_dol_dbl: TDBLookupComboBox;
-    ins_w_phone_lbl: TStaticText;
-    ins_w_phone_inp: TMaskEdit;
-    free_busy_lbl: TStaticText;
-    free_busy_combo: TComboBox;
-    data_pr_lbl: TStaticText;
-    data_pr_inp: TDateTimePicker;
-    ins_w_role_lbl: TStaticText;
-    ins_w_role_dbl: TDBLookupComboBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -70,9 +60,6 @@ type
     procedure Worker_roler_RadioClick(Sender: TObject);
     procedure Worker_reset_RadioClick(Sender: TObject);
     procedure freeworekrsCBClick(Sender: TObject);
-    procedure free_busy_comboChange(Sender: TObject);
-    procedure Work_ins_BtnClick(Sender: TObject);
-    procedure ins_w_phone_inpExit(Sender: TObject);
   private
     { Private declarations }
   public
@@ -81,7 +68,6 @@ type
 
 var
   Frm_worker: TFrm_worker;
-  free_st:Integer;
 implementation
 
 uses Un_dm, Un_func;
@@ -102,7 +88,6 @@ procedure TFrm_worker.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   SaveFormState(Self);
   CloseAllQueriesOnDataModule('dm');
-  free_st:=0;
 end;
 
 procedure TFrm_worker.FormCreate(Sender: TObject);
@@ -113,8 +98,6 @@ begin
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   UniformizeComponentAnchors(Self);
   LoadFormState(Self);
-  ins_w_phone_inp.EditMask := '!+7 \(999\) 000-00-00;1;_';
-  free_st:=0;
 end;
 
 procedure TFrm_worker.freeworekrsCBClick(Sender: TObject);
@@ -206,24 +189,6 @@ end;
 end;
   end;
   end;//case
-end;
-
-procedure TFrm_worker.free_busy_comboChange(Sender: TObject);
-begin
-  if free_busy_combo.ItemIndex=0 then free_st:=1
-    else free_st:=0;
-end;
-
-procedure TFrm_worker.ins_w_phone_inpExit(Sender: TObject);
-begin
-    if IsMaskEditEmpty(ins_w_phone_inp) then
-  begin
-    ins_w_phone_inp.Color := clRed;
-    ShowMessage('Данное поле нужно заполнить!');
-    ins_w_phone_inp.SetFocus;
-  end
-  else
-    ins_w_phone_inp.Color := clWindow; 
 end;
 
 procedure TFrm_worker.Worker_fio_RadioClick(Sender: TObject);
@@ -462,69 +427,6 @@ begin
     ShowMessage('Общая ошибка: ' + E.Message);
     HandleException(E);
   end;
-end;
-end;
-
-procedure TFrm_worker.Work_ins_BtnClick(Sender: TObject);
-const
-  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
-var
-  AreFieldsEmpty: Boolean;
-  AreFieldsValid: Boolean;
-begin
-  AreFieldsEmpty:=(
-  (Trim(ins_worker_fio_inp.Text)='')or
-  (ins_w_dol_dbl.Text='')or
-  (Trim(ins_w_phone_inp.Text)='')or
-  (free_busy_combo.Text='')or
-  (ins_w_role_dbl.Text='')
-  );
-  AreFieldsValid:=(
-  ValidateComponentText(ins_worker_fio_inp,AllowedChars)
-  );
-  if AreFieldsEmpty or not AreFieldsValid then
-  begin
-    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-  try
-      with dm.ins_rabotnic do
-      begin
-        if not dm.Connection.Connected then
-          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
-           Parameters.ParamByName('@Fio').Value :=ins_worker_fio_inp.Text;
-           Parameters.ParamByName('@N_Dol').Value:=
-           dm.dolQuery.FieldByName('N_Dol').AsString;
-           Parameters.ParamByName('@Iphone').Value:=ins_w_phone_inp.Text;
-           Parameters.ParamByName('@St_rab').Value:=free_st;
-           Parameters.ParamByName('@Date_pr').Value:=data_pr_inp.Date;
-           Parameters.ParamByName('@usverid').Value:=
-           dm.usverQuery.FieldByName('usverid').AsString;
-           ExecProc;
-           dm.workerQuery.Close;
-           dm.workerQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EDatabaseError do
-  begin
-    ShowMessage('Ошибка базы данных: ' + E.Message);
-    HandleException(E);
-    raise;
-  end;
-  on E: EOleError do
-  begin
-    ShowMessage('Ошибка COM: ' + E.Message);
-    HandleException(E); // Логирование ошибки
-    raise; // Повторное выбрасывание исключения
-  end;
-  on E: Exception do
-  begin
-    ShowMessage('Общая ошибка: ' + E.Message);
-    HandleException(E); // Логирование ошибки
-end;
 end;
 end;
 

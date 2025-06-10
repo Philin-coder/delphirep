@@ -42,7 +42,7 @@ type
     workerQuery: TADOQuery;
     worekrDS: TDataSource;
     sel_worker_by_fio: TADOStoredProc;
-    ADOStoredProc2: TADOStoredProc;
+    ins_rabotnic: TADOStoredProc;
     ADOStoredProc3: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;
     ADOStoredProc5: TADOStoredProc;

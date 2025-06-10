@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs,db,ADODB, Grids, DBGrids, StdCtrls, ComCtrls, ExtCtrls,ActiveX,
-  DBCtrls;
+  DBCtrls, Mask;
 
 type
   TFrm_worker = class(TForm)
@@ -24,11 +24,10 @@ type
     Worker_fnd_Edit: TLabeledEdit;
     Worker_fio_Radio: TRadioButton;
     Worker_reset_Radio: TRadioButton;
-    Work_data_Box: TGroupBox;
-    Work_btn_Box: TGroupBox;
-    Work_inp_Box: TGroupBox;
+    Worker_data_Box: TGroupBox;
+    Worker_btn_Box: TGroupBox;
+    Worker_inp_Box: TGroupBox;
     Work_ins_Btn: TButton;
-    Nam_work_inp: TLabeledEdit;
     Work_upd_data_Box: TGroupBox;
     Work_upd_inpBox: TGroupBox;
     Work_upd_btnBox: TGroupBox;
@@ -43,15 +42,25 @@ type
     work_del_e_dbl: TDBLookupComboBox;
     Worker_roler_Radio: TRadioButton;
     freeworekrsCB: TCheckBox;
-    Work_t_date_lbl: TStaticText;
-    Work_t_days_inp: TDateTimePicker;
-    Work_n_etap_lbl: TStaticText;
-    Work_n_etap_dbl: TDBLookupComboBox;
     Work_upd_u_lbl: TStaticText;
     Work_u_t_days_inp: TDateTimePicker;
-    DBGrid1: TDBGrid;
     DBGrid2: TDBGrid;
+    worker_ins_grd: TDBGrid;
     DBGrid3: TDBGrid;
+    about_workerPC: TPageControl;
+    abot_worker_Tab_one: TTabSheet;
+    abot_worker_Tab_two: TTabSheet;
+    ins_worker_fio_inp: TLabeledEdit;
+    ins_w_dol_lbl: TStaticText;
+    ins_w_dol_dbl: TDBLookupComboBox;
+    ins_w_phone_lbl: TStaticText;
+    ins_w_phone_inp: TMaskEdit;
+    free_busy_lbl: TStaticText;
+    free_busy_combo: TComboBox;
+    data_pr_lbl: TStaticText;
+    data_pr_inp: TDateTimePicker;
+    ins_w_role_lbl: TStaticText;
+    ins_w_role_dbl: TDBLookupComboBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -60,6 +69,9 @@ type
     procedure Worker_fio_RadioClick(Sender: TObject);
     procedure Worker_roler_RadioClick(Sender: TObject);
     procedure Worker_reset_RadioClick(Sender: TObject);
+    procedure freeworekrsCBClick(Sender: TObject);
+    procedure free_busy_comboChange(Sender: TObject);
+    procedure Work_ins_BtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -68,6 +80,7 @@ type
 
 var
   Frm_worker: TFrm_worker;
+  free_st:Integer;
 implementation
 
 uses Un_dm, Un_func;
@@ -88,6 +101,7 @@ procedure TFrm_worker.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   SaveFormState(Self);
   CloseAllQueriesOnDataModule('dm');
+  free_st:=0;
 end;
 
 procedure TFrm_worker.FormCreate(Sender: TObject);
@@ -98,6 +112,105 @@ begin
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   UniformizeComponentAnchors(Self);
   LoadFormState(Self);
+  ins_w_phone_inp.EditMask := '!+7 \(999\) 000-00-00;1;_';
+  free_st:=0;
+end;
+
+procedure TFrm_worker.freeworekrsCBClick(Sender: TObject);
+begin
+  case freeworekrsCB.Checked of
+  true:
+  begin
+    try
+     with dm.workerQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+      'select'+' '+
+        'Rabotnik.N_Rab,'+' '+
+         'Rabotnik.Fio,'+' '+
+         'Dolshnost.Nam_dol,'+' '+
+         'Rabotnik.Iphone,'+' '+
+'case when Rabotnik.St_rab= 1 then ''Свободен'' else ''Занят'' end as free,'+' '+
+        'Rabotnik.Date_pr,'+' '+
+        'usver.usver_role'+' '+
+        'from Rabotnik'+' '+
+        'inner join Dolshnost on Dolshnost.N_Dol=Rabotnik.N_Dol'+' '+
+        'inner join usver on usver.usverId=Rabotnik.usverId'+' '+
+        'where 1=1'+' '+
+        'and  Rabotnik.St_rab= 1';
+      Open;
+     end;
+    except
+        on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая  Ошибка: ' + E.Message);
+    HandleException(E);
+  end;
+end;
+  end;
+  false:
+  begin
+      try
+     with dm.workerQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+      'select'+' '+
+        'Rabotnik.N_Rab,'+' '+
+         'Rabotnik.Fio,'+' '+
+         'Dolshnost.Nam_dol,'+' '+
+         'Rabotnik.Iphone,'+' '+
+'case when Rabotnik.St_rab= 1 then ''Свободен'' else ''Занят'' end as free,'+' '+
+        'Rabotnik.Date_pr,'+' '+
+        'usver.usver_role'+' '+
+        'from Rabotnik'+' '+
+        'inner join Dolshnost on Dolshnost.N_Dol=Rabotnik.N_Dol'+' '+
+        'inner join usver on usver.usverId=Rabotnik.usverId'+' '+
+        'where 1=1';
+      Open;
+     end;
+    except
+        on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая  Ошибка: ' + E.Message);
+    HandleException(E);
+  end;
+end;
+  end;
+  end;//case
+end;
+
+procedure TFrm_worker.free_busy_comboChange(Sender: TObject);
+begin
+  if free_busy_combo.ItemIndex=0 then free_st:=1
+    else free_st:=0;
 end;
 
 procedure TFrm_worker.Worker_fio_RadioClick(Sender: TObject);
@@ -336,6 +449,69 @@ begin
     ShowMessage('Общая ошибка: ' + E.Message);
     HandleException(E);
   end;
+end;
+end;
+
+procedure TFrm_worker.Work_ins_BtnClick(Sender: TObject);
+const
+  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (Trim(ins_worker_fio_inp.Text)='')or
+  (ins_w_dol_dbl.Text='')or
+  (Trim(ins_w_phone_inp.Text)='')or
+  (free_busy_combo.Text='')or
+  (ins_w_role_dbl.Text='')
+  );
+  AreFieldsValid:=(
+  ValidateComponentText(ins_worker_fio_inp,AllowedChars)
+  );
+  if AreFieldsEmpty or not AreFieldsValid then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.ins_rabotnic do
+      begin
+        if not dm.Connection.Connected then
+          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
+           Parameters.ParamByName('@Fio').Value :=ins_worker_fio_inp.Text;
+           Parameters.ParamByName('@N_Dol').Value:=
+           dm.dolQuery.FieldByName('N_Dol').AsString;
+           Parameters.ParamByName('@Iphone').Value:=ins_w_phone_inp.Text;
+           Parameters.ParamByName('@St_rab').Value:=free_st;
+           Parameters.ParamByName('@Date_pr').Value:=data_pr_inp.Date;
+           Parameters.ParamByName('@usverid').Value:=
+           dm.usverQuery.FieldByName('usverid').AsString;
+           ExecProc;
+           dm.workerQuery.Close;
+           dm.workerQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise; // Повторное выбрасывание исключения
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+end;
 end;
 end;
 

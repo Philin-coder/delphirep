@@ -21,7 +21,7 @@ object Frm_worker: TFrm_worker
     Top = 0
     Width = 1045
     Height = 512
-    ActivePage = SelTab
+    ActivePage = insTab
     Align = alClient
     TabOrder = 0
     object SelTab: TTabSheet
@@ -98,6 +98,7 @@ object Frm_worker: TFrm_worker
           Height = 17
           Caption = #1054#1090#1086#1073#1088#1072#1090#1100' '#1089#1074#1086#1073#1086#1076#1085#1099#1093
           TabOrder = 3
+          OnClick = freeworekrsCBClick
         end
       end
       object WorkerdataBox: TGroupBox
@@ -243,6 +244,7 @@ object Frm_worker: TFrm_worker
               Expanded = False
               FieldName = 'Date_pr'
               Title.Caption = #1044#1072#1090#1072' '#1091#1074#1086#1083#1100#1085#1077#1085#1080#1103
+              Width = 138
               Visible = True
             end
             item
