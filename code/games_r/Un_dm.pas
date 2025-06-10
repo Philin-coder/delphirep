@@ -41,7 +41,7 @@ type
     del_dol: TADOStoredProc;
     workerQuery: TADOQuery;
     worekrDS: TDataSource;
-    ADOStoredProc1: TADOStoredProc;
+    sel_worker_by_fio: TADOStoredProc;
     ADOStoredProc2: TADOStoredProc;
     ADOStoredProc3: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;

@@ -317,18 +317,21 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@usver_role'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end
       item
         Name = '@usver_pass'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end>
     Left = 336
     Top = 256
@@ -342,6 +345,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@usverId'
@@ -355,6 +359,7 @@ object DM: TDM
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end>
     Left = 336
     Top = 312
@@ -368,6 +373,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@usverId'
@@ -408,12 +414,14 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@fio'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end>
     Left = 440
     Top = 184
@@ -427,12 +435,14 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@fio'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end
       item
         Name = '@usverid'
@@ -453,6 +463,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@Id_manager'
@@ -466,6 +477,7 @@ object DM: TDM
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end>
     Left = 464
     Top = 328
@@ -479,6 +491,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@Id_manager'
@@ -521,12 +534,14 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@Nam_dol'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end>
     Left = 568
     Top = 168
@@ -540,12 +555,14 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@Nam_dol'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end
       item
         Name = '@id_manager'
@@ -566,6 +583,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@n_dol'
@@ -579,6 +597,7 @@ object DM: TDM
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end>
     Left = 568
     Top = 312
@@ -592,6 +611,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@n_dol'
@@ -604,7 +624,6 @@ object DM: TDM
     Top = 384
   end
   object workerQuery: TADOQuery
-    Active = True
     Connection = Connection
     CursorType = ctStatic
     Parameters = <>
@@ -615,8 +634,8 @@ object DM: TDM
       ' Dolshnost.Nam_dol,'
       ' Rabotnik.Iphone,'
       
-        '  case Rabotnik.St_rab when 1 then '#39#1057#1074#1086#1073#1086#1076#1077#1085#39' else '#39#1047#1072#1085#1103#1090#39' end a' +
-        's free,'
+        '  case when Rabotnik.St_rab= 1 then '#39#1057#1074#1086#1073#1086#1076#1077#1085#39' else '#39#1047#1072#1085#1103#1090#39' end ' +
+        'as free,'
       ' Rabotnik.Date_pr,'
       'usver.usver_role'
       'from Rabotnik '
@@ -633,8 +652,22 @@ object DM: TDM
     Left = 696
     Top = 128
   end
-  object ADOStoredProc1: TADOStoredProc
-    Parameters = <>
+  object sel_worker_by_fio: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_worker_by_fio;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@Fio'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end>
     Left = 704
     Top = 208
   end

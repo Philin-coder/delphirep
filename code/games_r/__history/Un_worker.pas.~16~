@@ -43,15 +43,15 @@ type
     work_del_e_dbl: TDBLookupComboBox;
     Work_Tdate_Radio: TRadioButton;
     threedaysCB: TCheckBox;
-    ins_Work_Grid: TDBGrid;
     Work_t_date_lbl: TStaticText;
     Work_t_days_inp: TDateTimePicker;
     Work_n_etap_lbl: TStaticText;
     Work_n_etap_dbl: TDBLookupComboBox;
-    Work_updGrid: TDBGrid;
     Work_upd_u_lbl: TStaticText;
     Work_u_t_days_inp: TDateTimePicker;
-    DellworkGid: TDBGrid;
+    DBGrid1: TDBGrid;
+    DBGrid2: TDBGrid;
+    DBGrid3: TDBGrid;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -73,8 +73,9 @@ uses Un_dm, Un_func;
 
 procedure TFrm_worker.FormActivate(Sender: TObject);
 begin
-  dm.etapQuery.Open;
-  dm.workQuery.Open;
+  dm.usverQuery.Open;
+  dm.dolQuery.Open;
+  dm.workerQuery.Open;
   AdjustDBGridColumnWidths('Frm_worker',6000, 10);
 end;
 

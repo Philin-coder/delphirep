@@ -26,7 +26,7 @@ object Frm_worker: TFrm_worker
     TabOrder = 0
     object SelTab: TTabSheet
       Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1088#1072#1073#1086#1090#1077
-      object WorkcondBox: TGroupBox
+      object WorkercondBox: TGroupBox
         Left = 0
         Top = 0
         Width = 1037
@@ -34,28 +34,29 @@ object Frm_worker: TFrm_worker
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object Work_cond_Edit: TLabeledEdit
+        object Worker_cond_Edit: TLabeledEdit
           Left = 19
           Top = 40
           Width = 990
           Height = 21
-          EditLabel.Width = 239
+          EditLabel.Width = 146
           EditLabel.Height = 13
-          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1084#1080#1077' '#1087#1086' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1102' '#1088#1072#1073#1086#1090#1099
+          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1084#1080#1077' '#1087#1086' '#1060#1048#1054
           TabOrder = 0
         end
-        object Work_fnd_Edit: TLabeledEdit
+        object Worker_fnd_Edit: TLabeledEdit
           Left = 19
           Top = 88
           Width = 990
           Height = 21
-          EditLabel.Width = 203
+          EditLabel.Width = 143
           EditLabel.Height = 13
-          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086'  '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1102' '#1088#1072#1073#1086#1090#1099
+          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086'  '#1076#1086#1083#1078#1085#1086#1089#1090#1080
           TabOrder = 1
+          OnKeyPress = Worker_fnd_EditKeyPress
         end
       end
-      object WorkGrouperBox: TGroupBox
+      object WorkerGrouperBox: TGroupBox
         Left = 0
         Top = 129
         Width = 1037
@@ -63,40 +64,44 @@ object Frm_worker: TFrm_worker
         Align = alTop
         Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086
         TabOrder = 1
-        object Work_naim_Radio: TRadioButton
+        object Worker_fio_Radio: TRadioButton
           Left = 40
           Top = 32
           Width = 161
           Height = 17
-          Caption = #1055#1086' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1102' '#1088#1072#1073#1086#1090#1099
+          Caption = #1055#1086'  '#1060#1048#1054
           TabOrder = 0
+          OnClick = Worker_fio_RadioClick
         end
-        object Work_reset_Radio: TRadioButton
+        object Worker_reset_Radio: TRadioButton
           Left = 880
           Top = 32
           Width = 113
           Height = 17
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 1
+          OnClick = Worker_reset_RadioClick
         end
-        object Work_Tdate_Radio: TRadioButton
+        object Worker_roler_Radio: TRadioButton
           Left = 312
           Top = 32
           Width = 193
           Height = 17
-          Caption = #1055#1086'  '#1076#1072#1090#1077' '#1079#1072#1074#1077#1088#1096#1077#1085#1080#1103' '#1088#1072#1073#1086#1090#1099
+          Caption = #1055#1086'  '#1076#1086#1083#1078#1085#1086#1089#1090#1080
           TabOrder = 2
+          OnClick = Worker_roler_RadioClick
         end
-        object threedaysCB: TCheckBox
+        object freeworekrsCB: TCheckBox
           Left = 527
           Top = 32
           Width = 315
           Height = 17
-          Caption = #1054#1090#1086#1073#1088#1072#1090#1100' '#1090#1091' '#1088#1072#1073#1086#1090#1091' '#1075#1076#1077' '#1085#1072' '#1080#1089#1087#1086#1083#1085#1077#1085#1080#1077' '#1086#1089#1090#1072#1083#1088#1086#1089#1100' 3 '#1076#1085#1103
+          Caption = #1054#1090#1086#1073#1088#1072#1090#1100' '#1089#1074#1086#1073#1086#1076#1085#1099#1093
           TabOrder = 3
+          OnClick = freeworekrsCBClick
         end
       end
-      object WorkdataBox: TGroupBox
+      object WorkerdataBox: TGroupBox
         Left = 0
         Top = 234
         Width = 1037
@@ -104,7 +109,7 @@ object Frm_worker: TFrm_worker
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1083#1072#1085#1085#1099#1093
         TabOrder = 2
-        object work_selGrd: TDBGrid
+        object worker_selGrd: TDBGrid
           Left = 2
           Top = 15
           Width = 1033
@@ -162,20 +167,21 @@ object Frm_worker: TFrm_worker
             end>
         end
       end
-      object WorkbtnBox: TGroupBox
+      object WorkerbtnBox: TGroupBox
         Left = 0
         Top = 431
         Width = 1037
         Height = 53
         Align = alBottom
         TabOrder = 3
-        object Work_sel_Btn: TButton
+        object Worker_sel_Btn: TButton
           Left = 352
           Top = 25
           Width = 75
           Height = 25
           Caption = #1042#1099#1073#1088#1072#1090#1100
           TabOrder = 0
+          OnClick = Worker_sel_BtnClick
         end
       end
     end

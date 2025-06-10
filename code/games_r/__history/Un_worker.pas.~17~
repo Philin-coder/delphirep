@@ -14,16 +14,16 @@ type
     insTab: TTabSheet;
     updTab: TTabSheet;
     delTab: TTabSheet;
-    WorkcondBox: TGroupBox;
-    WorkGrouperBox: TGroupBox;
-    WorkdataBox: TGroupBox;
-    WorkbtnBox: TGroupBox;
-    Work_sel_Btn: TButton;
-    work_selGrd: TDBGrid;
-    Work_cond_Edit: TLabeledEdit;
-    Work_fnd_Edit: TLabeledEdit;
-    Work_naim_Radio: TRadioButton;
-    Work_reset_Radio: TRadioButton;
+    WorkercondBox: TGroupBox;
+    WorkerGrouperBox: TGroupBox;
+    WorkerdataBox: TGroupBox;
+    WorkerbtnBox: TGroupBox;
+    Worker_sel_Btn: TButton;
+    worker_selGrd: TDBGrid;
+    Worker_cond_Edit: TLabeledEdit;
+    Worker_fnd_Edit: TLabeledEdit;
+    Worker_fio_Radio: TRadioButton;
+    Worker_reset_Radio: TRadioButton;
     Work_data_Box: TGroupBox;
     Work_btn_Box: TGroupBox;
     Work_inp_Box: TGroupBox;
@@ -41,21 +41,20 @@ type
     work_del_btn: TButton;
     work_del_e_lbl: TStaticText;
     work_del_e_dbl: TDBLookupComboBox;
-    Work_Tdate_Radio: TRadioButton;
-    threedaysCB: TCheckBox;
-    ins_Work_Grid: TDBGrid;
+    Worker_roler_Radio: TRadioButton;
+    freeworekrsCB: TCheckBox;
     Work_t_date_lbl: TStaticText;
     Work_t_days_inp: TDateTimePicker;
     Work_n_etap_lbl: TStaticText;
     Work_n_etap_dbl: TDBLookupComboBox;
-    Work_updGrid: TDBGrid;
     Work_upd_u_lbl: TStaticText;
     Work_u_t_days_inp: TDateTimePicker;
-    DellworkGid: TDBGrid;
+    DBGrid1: TDBGrid;
+    DBGrid2: TDBGrid;
+    DBGrid3: TDBGrid;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
-    procedure work_upd_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -64,7 +63,6 @@ type
 
 var
   Frm_worker: TFrm_worker;
-  urgency_st:Integer;
 implementation
 
 uses Un_dm, Un_func;
@@ -73,77 +71,28 @@ uses Un_dm, Un_func;
 
 
 
-procedure TFrm_worker.work_upd_btnClick(Sender: TObject);
-var
-  AreFieldsEmpty: Boolean;
-begin
-  AreFieldsEmpty:=(
-  (Work_upd_u_dbl.Text='')
-  );
-  if AreFieldsEmpty then
-  begin
-    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-  try
-      with dm.upd_work do
-      begin
-        if not dm.Connection.Connected then
-          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
-           Parameters.ParamByName('@T_days').Value :=Work_u_t_days_inp.Date;
-           Parameters.ParamByName('@N_Work').Value:=
-           dm.workQuery.FieldByName('N_Work').AsString;
-           ExecProc;
-           dm.workQuery.Close;
-           dm.workQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EDatabaseError do
-  begin
-    ShowMessage('Ошибка базы данных: ' + E.Message);
-    HandleException(E);
-    raise;
-  end;
-  on E: EOleError do
-  begin
-    ShowMessage('Ошибка COM: ' + E.Message);
-    HandleException(E);
-    raise;
-  end;
-  on E: Exception do
-  begin
-    ShowMessage('Общая ошибка: ' + E.Message);
-    HandleException(E);
-end;
-end;
-end;
-
 procedure TFrm_worker.FormActivate(Sender: TObject);
 begin
-  dm.etapQuery.Open;
-  dm.workQuery.Open;
-  AdjustDBGridColumnWidths('Frm_work',6000, 10);
+  dm.usverQuery.Open;
+  dm.dolQuery.Open;
+  dm.workerQuery.Open;
+  AdjustDBGridColumnWidths('Frm_worker',6000, 10);
 end;
 
 procedure TFrm_worker.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   SaveFormState(Self);
   CloseAllQueriesOnDataModule('dm');
-  urgency_st:=0;
 end;
 
 procedure TFrm_worker.FormCreate(Sender: TObject);
 begin
-  UpdateFormShowHint('Frm_work');
+  UpdateFormShowHint('Frm_worker');
   UniformizeButtonsSize(Self,  273, 25);
   UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   UniformizeComponentAnchors(Self);
   LoadFormState(Self);
-  urgency_st:=0;
 end;
 
 end.

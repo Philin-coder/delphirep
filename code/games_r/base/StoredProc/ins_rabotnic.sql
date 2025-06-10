@@ -1,7 +1,7 @@
-USE [Razrab_Andryuschenko]
+USE [games_r]
 GO
 
-/****** Object:  StoredProcedure [dbo].[ins_rabotnic]    Script Date: 01.12.2020 21:48:19 ******/
+/****** Object:  StoredProcedure [dbo].[ins_rabotnic]    Script Date: 10.06.2025 10:33:19 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -9,10 +9,10 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE proc [dbo].[ins_rabotnic]
-@Fio varchar(100),
+@Fio varchar(1000),
 @N_Dol  int,
-@Iphone int,
-@St_rab char(50),
+@Iphone varchar(1000),
+@St_rab int,
 @Date_pr date,
 @usverid int
 as

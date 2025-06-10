@@ -59,8 +59,6 @@ type
     procedure Worker_fnd_EditKeyPress(Sender: TObject; var Key: Char);
     procedure Worker_fio_RadioClick(Sender: TObject);
     procedure Worker_roler_RadioClick(Sender: TObject);
-    procedure Worker_reset_RadioClick(Sender: TObject);
-    procedure freeworekrsCBClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -99,97 +97,6 @@ begin
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   UniformizeComponentAnchors(Self);
   LoadFormState(Self);
-end;
-
-procedure TFrm_worker.freeworekrsCBClick(Sender: TObject);
-begin
-  case freeworekrsCB.Checked of
-  true:
-  begin
-    try
-     with dm.workerQuery do
-     begin
-      close;
-      sql.Clear;
-      sql.Text:=
-      'select'+' '+
-        'Rabotnik.N_Rab,'+' '+
-         'Rabotnik.Fio,'+' '+
-         'Dolshnost.Nam_dol,'+' '+
-         'Rabotnik.Iphone,'+' '+
-'case when Rabotnik.St_rab= 1 then ''Свободен'' else ''Занят'' end as free,'+' '+
-        'Rabotnik.Date_pr,'+' '+
-        'usver.usver_role'+' '+
-        'from Rabotnik'+' '+
-        'inner join Dolshnost on Dolshnost.N_Dol=Rabotnik.N_Dol'+' '+
-        'inner join usver on usver.usverId=Rabotnik.usverId'+' '+
-        'where 1=1'+' '+
-        'and  Rabotnik.St_rab= 1';
-      Open;
-     end;
-    except
-        on E: EDatabaseError do
-  begin
-    ShowMessage('Ошибка базы данных: ' + E.Message);
-    HandleException(E);
-    raise;
-  end;
-  on E: EOleError do
-  begin
-    ShowMessage('Ошибка Ole: ' + E.Message);
-    HandleException(E);
-    raise;
-  end;
-  on E: Exception do
-  begin
-    ShowMessage('Общая  Ошибка: ' + E.Message);
-    HandleException(E);
-  end;
-end;
-  end;
-  false:
-  begin
-      try
-     with dm.workerQuery do
-     begin
-      close;
-      sql.Clear;
-      sql.Text:=
-      'select'+' '+
-        'Rabotnik.N_Rab,'+' '+
-         'Rabotnik.Fio,'+' '+
-         'Dolshnost.Nam_dol,'+' '+
-         'Rabotnik.Iphone,'+' '+
-'case when Rabotnik.St_rab= 1 then ''Свободен'' else ''Занят'' end as free,'+' '+
-        'Rabotnik.Date_pr,'+' '+
-        'usver.usver_role'+' '+
-        'from Rabotnik'+' '+
-        'inner join Dolshnost on Dolshnost.N_Dol=Rabotnik.N_Dol'+' '+
-        'inner join usver on usver.usverId=Rabotnik.usverId'+' '+
-        'where 1=1';
-      Open;
-     end;
-    except
-        on E: EDatabaseError do
-  begin
-    ShowMessage('Ошибка базы данных: ' + E.Message);
-    HandleException(E);
-    raise;
-  end;
-  on E: EOleError do
-  begin
-    ShowMessage('Ошибка Ole: ' + E.Message);
-    HandleException(E);
-    raise;
-  end;
-  on E: Exception do
-  begin
-    ShowMessage('Общая  Ошибка: ' + E.Message);
-    HandleException(E);
-  end;
-end;
-  end;
-  end;//case
 end;
 
 procedure TFrm_worker.Worker_fio_RadioClick(Sender: TObject);
@@ -277,77 +184,6 @@ except
     ShowMessage('Общая ошибка: ' + E.Message);
     HandleException(E);
 end;
-end;
-end;
-
-procedure TFrm_worker.Worker_reset_RadioClick(Sender: TObject);
-var i,j,c:Integer;
-begin
-   try
-  if Worker_reset_Radio.Checked then
-  begin
-    with Frm_worker do
-    begin
-      for I := 0 to ComponentCount - 1 do
-      begin
-        if Components[I] is TLabeledEdit then
-        begin
-          (Components[I] as TLabeledEdit).Clear;
-        end;
-      end;
-      for c := 0 to ComponentCount - 1 do
-      begin
-        if Components[c] is TCheckBox then
-        begin
-          (Components[c] as TCheckBox).Checked := False;
-        end;
-      end;
-      for j := 0 to ComponentCount - 1 do
-      begin
-        if Components[j] is TRadioButton then
-        begin
-          (Components[j] as TRadioButton).Checked := False;
-        end;
-      end;
-    end;
-    with dm.workerQuery do
-    begin
-      Close;
-      sql.Clear;
-      sql.Text :=
-        'select'+' '+
-        'Rabotnik.N_Rab,'+' '+
-         'Rabotnik.Fio,'+' '+
-         'Dolshnost.Nam_dol,'+' '+
-         'Rabotnik.Iphone,'+' '+
-'case when Rabotnik.St_rab= 1 then ''Свободен'' else ''Занят'' end as free,'+' '+
-        'Rabotnik.Date_pr,'+' '+
-        'usver.usver_role'+' '+
-        'from Rabotnik'+' '+
-        'inner join Dolshnost on Dolshnost.N_Dol=Rabotnik.N_Dol'+' '+
-        'inner join usver on usver.usverId=Rabotnik.usverId'+' '+
-        'where 1=1';
-      Open;
-    end;
-  end;
-except
-  on E: EDatabaseError do
-  begin
-    ShowMessage('Ошибка  базы  данных: ' + E.Message);
-    HandleException(E);
-    raise;
-  end;
-  on E: EOleError do
-  begin
-    ShowMessage('Ошибка COM: ' + E.Message);
-    HandleException(E);
-    raise;
-  end;
-  on E: Exception do
-  begin
-    ShowMessage('Общая ошибка: ' + E.Message);
-    HandleException(E);
-  end;
 end;
 end;
 
