@@ -15,20 +15,18 @@ type
     etap_item: TMenuItem;
     work_item: TMenuItem;
     user_item: TMenuItem;
-    men_item: TMenuItem;
+    N1: TMenuItem;
     dol_item: TMenuItem;
     worker_item: TMenuItem;
-    proekt_item: TMenuItem;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure etap_itemClick(Sender: TObject);
     procedure work_itemClick(Sender: TObject);
     procedure user_itemClick(Sender: TObject);
-    procedure men_itemClick(Sender: TObject);
+    procedure N1Click(Sender: TObject);
     procedure dol_itemClick(Sender: TObject);
     procedure worker_itemClick(Sender: TObject);
-    procedure proekt_itemClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -40,8 +38,7 @@ var
 
 implementation
 
-uses Un_dm, Un_func, Un_etap, Un_work, Un_user, Un_men, Un_dolgn, Un_worker,
-  Un_proekt;
+uses Un_dm, Un_func, Un_etap, Un_work, Un_user, Un_men, Un_dolgn, Un_worker;
 
 {$R *.dfm}
 
@@ -103,7 +100,7 @@ begin
   LoadImageFromResource('BACKGROUND_IMAGE', main_Image);
 end;
 
-procedure TFrm_main.men_itemClick(Sender: TObject);
+procedure TFrm_main.N1Click(Sender: TObject);
 begin
    try
     UpdateFormProperties('Frm_men', 'Форма работы с данными о менеджере',
@@ -117,25 +114,6 @@ begin
       HandleException(E);
       if Assigned(Frm_men) then
         Frm_men.Free;
-      raise;
-    end;
-  end;
-end;
-
-procedure TFrm_main.proekt_itemClick(Sender: TObject);
-begin
-  try
-    UpdateFormProperties('Frm_proekt', 'Форма работы с данными о проекте',
-      clBtnFace, 1024, 768);
-    Frm_proekt.ShowModal;
-  except
-    on E: Exception do
-    begin
-      if not (E is EMyException) then
-        raise EDatabaseError.Create('Ошибка при работе с формой работы с данными о проекте', 3001);
-      HandleException(E);
-      if Assigned(Frm_proekt) then
-        Frm_proekt.Free;
       raise;
     end;
   end;

@@ -1,7 +1,7 @@
 object DM: TDM
   OldCreateOrder = False
   Height = 567
-  Width = 856
+  Width = 888
   object Connection: TADOConnection
     Connected = True
     ConnectionString = 
@@ -317,18 +317,21 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@usver_role'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end
       item
         Name = '@usver_pass'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end>
     Left = 336
     Top = 256
@@ -342,6 +345,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@usverId'
@@ -355,6 +359,7 @@ object DM: TDM
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end>
     Left = 336
     Top = 312
@@ -368,6 +373,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@usverId'
@@ -408,12 +414,14 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@fio'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end>
     Left = 440
     Top = 184
@@ -427,12 +435,14 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@fio'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end
       item
         Name = '@usverid'
@@ -453,6 +463,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@Id_manager'
@@ -466,6 +477,7 @@ object DM: TDM
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end>
     Left = 464
     Top = 328
@@ -479,6 +491,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@Id_manager'
@@ -521,12 +534,14 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@Nam_dol'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end>
     Left = 568
     Top = 168
@@ -540,12 +555,14 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@Nam_dol'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end
       item
         Name = '@id_manager'
@@ -566,6 +583,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@n_dol'
@@ -579,6 +597,7 @@ object DM: TDM
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end>
     Left = 568
     Top = 312
@@ -592,6 +611,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@n_dol'
@@ -605,6 +625,7 @@ object DM: TDM
   end
   object workerQuery: TADOQuery
     Connection = Connection
+    CursorType = ctStatic
     Parameters = <>
     SQL.Strings = (
       'select '
@@ -613,8 +634,8 @@ object DM: TDM
       ' Dolshnost.Nam_dol,'
       ' Rabotnik.Iphone,'
       
-        '  case Rabotnik.St_rab when 1 then '#39#1057#1074#1086#1073#1086#1076#1077#1085#39' else '#39#1047#1072#1085#1103#1090#39' end a' +
-        's free,'
+        '  case when Rabotnik.St_rab= 1 then '#39#1057#1074#1086#1073#1086#1076#1077#1085#39' else '#39#1047#1072#1085#1103#1090#39' end ' +
+        'as free,'
       ' Rabotnik.Date_pr,'
       'usver.usver_role'
       'from Rabotnik '
@@ -631,29 +652,194 @@ object DM: TDM
     Left = 696
     Top = 128
   end
+  object sel_worker_by_fio: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_worker_by_fio;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@Fio'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+        Value = Null
+      end>
+    Left = 704
+    Top = 208
+  end
+  object ins_rabotnic: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'ins_rabotnic;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@Fio'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+        Value = Null
+      end
+      item
+        Name = '@N_Dol'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@Iphone'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+        Value = Null
+      end
+      item
+        Name = '@St_rab'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@Date_pr'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+        Value = Null
+      end
+      item
+        Name = '@usverid'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 696
+    Top = 280
+  end
+  object upd_worker: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_worker;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@N_Rab'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@Date_yv'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+        Value = Null
+      end>
+    Left = 696
+    Top = 336
+  end
+  object upd_worker_back: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_worker_back;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@N_Rab'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 688
+    Top = 392
+  end
+  object del_worker: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'del_worker;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@N_Rab'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 696
+    Top = 448
+  end
+  object proektQuery: TADOQuery
+    Connection = Connection
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      'Proect.N_Proekta,'
+      'Proect.Nam_proect,'
+      'Proect.janr,'
+      'Proect.data_nash,'
+      'manager.fio,'
+      'Proect.cost_plan,'
+      'Proect.cost_fact,'
+      'Proect.dataend,'
+      'Proect.dataendplan'
+      ' from Proect'
+      ' inner join manager on manager.Id_manager=Proect.id_manager'
+      ' where 1=1')
+    Left = 808
+    Top = 64
+  end
+  object proektDS: TDataSource
+    DataSet = proektQuery
+    Left = 816
+    Top = 144
+  end
   object ADOStoredProc1: TADOStoredProc
     Parameters = <>
-    Left = 704
+    Left = 824
     Top = 208
   end
   object ADOStoredProc2: TADOStoredProc
     Parameters = <>
-    Left = 696
-    Top = 280
+    Left = 800
+    Top = 304
   end
   object ADOStoredProc3: TADOStoredProc
     Parameters = <>
-    Left = 696
-    Top = 336
+    Left = 816
+    Top = 392
   end
   object ADOStoredProc4: TADOStoredProc
     Parameters = <>
-    Left = 688
-    Top = 392
-  end
-  object ADOStoredProc5: TADOStoredProc
-    Parameters = <>
-    Left = 696
-    Top = 448
+    Left = 832
+    Top = 456
   end
 end

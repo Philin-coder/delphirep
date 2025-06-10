@@ -1,7 +1,7 @@
 object DM: TDM
   OldCreateOrder = False
   Height = 567
-  Width = 856
+  Width = 888
   object Connection: TADOConnection
     Connected = True
     ConnectionString = 
@@ -796,5 +796,66 @@ object DM: TDM
       end>
     Left = 696
     Top = 448
+  end
+  object proektQuery: TADOQuery
+    Active = True
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      'Proect.N_Proekta,'
+      'Proect.Nam_proect,'
+      'Proect.janr,'
+      'Proect.data_nash,'
+      'manager.fio,'
+      'Proect.cost_plan,'
+      'Proect.cost_fact,'
+      'Proect.dataend,'
+      'Proect.dataendplan'
+      ' from Proect'
+      ' inner join manager on manager.Id_manager=Proect.id_manager'
+      ' where 1=1')
+    Left = 808
+    Top = 64
+  end
+  object proektDS: TDataSource
+    DataSet = proektQuery
+    Left = 816
+    Top = 144
+  end
+  object sel_proekt_by_men_fio: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_proekt_by_men_fio;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@manager_fio'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end>
+    Left = 824
+    Top = 208
+  end
+  object ADOStoredProc2: TADOStoredProc
+    Parameters = <>
+    Left = 800
+    Top = 304
+  end
+  object ADOStoredProc3: TADOStoredProc
+    Parameters = <>
+    Left = 816
+    Top = 392
+  end
+  object ADOStoredProc4: TADOStoredProc
+    Parameters = <>
+    Left = 832
+    Top = 456
   end
 end

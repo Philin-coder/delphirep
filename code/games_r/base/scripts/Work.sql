@@ -1,7 +1,7 @@
-USE [Razrab_Andryuschenko]
+USE [games_r]
 GO
 
-/****** Object:  Table [dbo].[Work]    Script Date: 01.12.2020 21:43:36 ******/
+/****** Object:  Table [dbo].[Work]    Script Date: 10.06.2025 22:06:55 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -10,17 +10,20 @@ GO
 
 CREATE TABLE [dbo].[Work](
 	[N_Work] [int] IDENTITY(1,1) NOT NULL,
-	[Nam_work] [varchar](100) NOT NULL,
+	[Nam_work] [varchar](1000) NOT NULL,
 	[T_days] [date] NOT NULL,
 	[N_Etap] [int] NOT NULL,
-PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK__Work__6C14E63B37773E99] PRIMARY KEY CLUSTERED 
 (
 	[N_Work] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
 
-ALTER TABLE [dbo].[Work]  WITH CHECK ADD FOREIGN KEY([N_Etap])
+ALTER TABLE [dbo].[Work]  WITH CHECK ADD  CONSTRAINT [FK__Work__N_Etap__3B75D760] FOREIGN KEY([N_Etap])
 REFERENCES [dbo].[Etap] ([N_Etap])
+GO
+
+ALTER TABLE [dbo].[Work] CHECK CONSTRAINT [FK__Work__N_Etap__3B75D760]
 GO
 

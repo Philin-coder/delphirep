@@ -1,7 +1,7 @@
-object Frm_worker: TFrm_worker
+object Frm_proekt: TFrm_proekt
   Left = 0
   Top = 0
-  Caption = #1060#1086#1088#1084#1072'  '#1088#1072#1073#1086#1090#1099' '#1089' '#1076#1072#1085#1085#1099#1084#1080' '#1086' '#1088#1072#1073#1086#1090#1085#1080#1082#1077
+  Caption = #1060#1086#1088#1084#1072'  '#1088#1072#1073#1086#1090#1099' '#1089' '#1076#1072#1085#1085#1099#1084#1080' '#1086'  '#1087#1088#1086#1077#1082#1090#1077
   ClientHeight = 512
   ClientWidth = 1045
   Color = clBtnFace
@@ -16,17 +16,17 @@ object Frm_worker: TFrm_worker
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object WorkerPC: TPageControl
+  object ProektPC: TPageControl
     Left = 0
     Top = 0
     Width = 1045
     Height = 512
-    ActivePage = insTab
+    ActivePage = SelTab
     Align = alClient
     TabOrder = 0
     object SelTab: TTabSheet
-      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1088#1072#1073#1086#1090#1085#1080#1082#1077
-      object WorkercondBox: TGroupBox
+      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1088#1086#1077#1082#1090#1077
+      object ProektcondBox: TGroupBox
         Left = 0
         Top = 0
         Width = 1037
@@ -34,29 +34,28 @@ object Frm_worker: TFrm_worker
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object Worker_cond_Edit: TLabeledEdit
+        object Proekt_cond_Edit: TLabeledEdit
           Left = 19
           Top = 40
           Width = 990
           Height = 21
-          EditLabel.Width = 146
+          EditLabel.Width = 206
           EditLabel.Height = 13
-          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1084#1080#1077' '#1087#1086' '#1060#1048#1054
+          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1084#1080#1077' '#1087#1086' '#1060#1048#1054' '#1084#1077#1077#1085#1076#1078#1077#1088#1072
           TabOrder = 0
         end
-        object Worker_fnd_Edit: TLabeledEdit
+        object Proekt_fnd_Edit: TLabeledEdit
           Left = 19
           Top = 88
           Width = 990
           Height = 21
-          EditLabel.Width = 143
+          EditLabel.Width = 119
           EditLabel.Height = 13
-          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086'  '#1076#1086#1083#1078#1085#1086#1089#1090#1080
+          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086'  '#1078#1072#1085#1088#1091
           TabOrder = 1
-          OnKeyPress = Worker_fnd_EditKeyPress
         end
       end
-      object WorkerGrouperBox: TGroupBox
+      object ProektGrouperBox: TGroupBox
         Left = 0
         Top = 129
         Width = 1037
@@ -64,44 +63,32 @@ object Frm_worker: TFrm_worker
         Align = alTop
         Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086
         TabOrder = 1
-        object Worker_fio_Radio: TRadioButton
+        object Proekt_m_fio_Radio: TRadioButton
           Left = 40
           Top = 32
           Width = 161
           Height = 17
-          Caption = #1055#1086'  '#1060#1048#1054
+          Caption = #1055#1086'  '#1060#1048#1054' '#1084#1077#1085#1077#1076#1078#1077#1088#1072
           TabOrder = 0
-          OnClick = Worker_fio_RadioClick
         end
-        object Worker_reset_Radio: TRadioButton
-          Left = 880
+        object Proekt_reset_Radio: TRadioButton
+          Left = 616
           Top = 32
           Width = 113
           Height = 17
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 1
-          OnClick = Worker_reset_RadioClick
         end
-        object Worker_roler_Radio: TRadioButton
+        object proekt_janr_Radio: TRadioButton
           Left = 312
           Top = 32
           Width = 193
           Height = 17
-          Caption = #1055#1086'  '#1076#1086#1083#1078#1085#1086#1089#1090#1080
+          Caption = #1055#1086'  '#1078#1072#1085#1088#1091
           TabOrder = 2
-          OnClick = Worker_roler_RadioClick
-        end
-        object freeworekrsCB: TCheckBox
-          Left = 527
-          Top = 32
-          Width = 315
-          Height = 17
-          Caption = #1054#1090#1086#1073#1088#1072#1090#1100' '#1089#1074#1086#1073#1086#1076#1085#1099#1093
-          TabOrder = 3
-          OnClick = freeworekrsCBClick
         end
       end
-      object WorkerdataBox: TGroupBox
+      object ProektdataBox: TGroupBox
         Left = 0
         Top = 234
         Width = 1037
@@ -109,13 +96,13 @@ object Frm_worker: TFrm_worker
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1083#1072#1085#1085#1099#1093
         TabOrder = 2
-        object worker_selGrd: TDBGrid
+        object Proekt_selGrd: TDBGrid
           Left = 2
           Top = 15
           Width = 1033
           Height = 180
           Align = alClient
-          DataSource = DM.worekrDS
+          DataSource = DM.proektDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -125,68 +112,80 @@ object Frm_worker: TFrm_worker
           Columns = <
             item
               Expanded = False
-              FieldName = 'N_Rab'
-              Title.Caption = #1053#1086#1084#1077#1088'  '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              FieldName = 'N_Proekta'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1072#1074#1099#1081
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'Fio'
-              Title.Caption = #1060#1048#1054' '#1088#1072#1073#1086#1090#1085#1080#1082#1072
+              FieldName = 'Nam_proect'
+              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'Nam_dol'
-              Title.Caption = #1044#1086#1083#1078#1085#1086#1089#1090#1100
+              FieldName = 'janr'
+              Title.Caption = #1046#1072#1085#1088
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'Iphone'
-              Title.Caption = #1058#1077#1077#1083#1092#1086#1085
+              FieldName = 'data_nash'
+              Title.Caption = #1044#1072#1090#1072' '#1085#1072#1095#1072#1083#1072' '#1088#1072#1073#1086#1090#1099
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'free'
-              Title.Caption = #1057#1090#1072#1090#1072#1091#1089
+              FieldName = 'fio'
+              Title.Caption = #1060#1048#1054' '#1084#1077#1085#1077#1076#1078#1077#1088#1072
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'Date_pr'
-              Title.Caption = #1044#1072#1090#1072' '#1091#1074#1086#1083#1100#1085#1077#1085#1080#1103
+              FieldName = 'cost_plan'
+              Title.Caption = #1062#1077#1085#1072' '#1087#1083#1072#1085#1086#1074#1072#1103
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'usver_role'
-              Title.Caption = #1051#1086#1075#1080#1085
+              FieldName = 'cost_fact'
+              Title.Caption = #1062#1077#1085#1072' '#1060#1072#1082#1090#1080#1095#1077#1089#1082#1072#1103
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'dataend'
+              Title.Caption = #1044#1072#1090#1072' '#1086#1082#1086#1085#1095#1072#1085#1080#1103' '#1092#1072#1082#1090#1080#1095#1077#1089#1082#1072#1103
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'dataendplan'
+              Title.Caption = #1044#1072#1090#1072' '#1086#1082#1086#1085#1095#1072#1085#1080#1103' '#1087#1083#1072#1085#1086#1074#1072#1103
               Visible = True
             end>
         end
       end
-      object WorkerbtnBox: TGroupBox
+      object ProektbtnBox: TGroupBox
         Left = 0
         Top = 431
         Width = 1037
         Height = 53
         Align = alBottom
         TabOrder = 3
-        object Worker_sel_Btn: TButton
+        object Proekt_sel_Btn: TButton
           Left = 352
           Top = 25
           Width = 75
           Height = 25
           Caption = #1042#1099#1073#1088#1072#1090#1100
           TabOrder = 0
-          OnClick = Worker_sel_BtnClick
+          OnClick = Proekt_sel_BtnClick
         end
       end
     end
     object insTab: TTabSheet
-      Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1088#1072#1073#1086#1090#1085#1080#1082#1077
+      Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1088#1072#1073#1086#1090#1077
       ImageIndex = 1
       object Worker_data_Box: TGroupBox
         Left = 0
@@ -196,13 +195,13 @@ object Frm_worker: TFrm_worker
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object worker_ins_grd: TDBGrid
+        object DBGrid1: TDBGrid
           Left = 2
           Top = 15
           Width = 1033
           Height = 206
           Align = alClient
-          DataSource = DM.worekrDS
+          DataSource = DM.proektDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -212,45 +211,56 @@ object Frm_worker: TFrm_worker
           Columns = <
             item
               Expanded = False
-              FieldName = 'N_Rab'
-              Title.Caption = #1053#1086#1084#1077#1088'  '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              FieldName = 'N_Proekta'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1072#1074#1099#1081
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'Fio'
-              Title.Caption = #1060#1048#1054' '#1088#1072#1073#1086#1090#1085#1080#1082#1072
+              FieldName = 'Nam_proect'
+              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'Nam_dol'
-              Title.Caption = #1044#1086#1083#1078#1085#1086#1089#1090#1100
+              FieldName = 'janr'
+              Title.Caption = #1046#1072#1085#1088
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'Iphone'
-              Title.Caption = #1058#1077#1077#1083#1092#1086#1085
+              FieldName = 'data_nash'
+              Title.Caption = #1044#1072#1090#1072' '#1085#1072#1095#1072#1083#1072' '#1088#1072#1073#1086#1090#1099
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'free'
-              Title.Caption = #1057#1090#1072#1090#1072#1091#1089
+              FieldName = 'fio'
+              Title.Caption = #1060#1048#1054' '#1084#1077#1085#1077#1076#1078#1077#1088#1072
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'Date_pr'
-              Title.Caption = #1044#1072#1090#1072' '#1087#1088#1080#1077#1084#1072' '#1085#1072' '#1088#1072#1073#1086#1090#1091
-              Width = 138
+              FieldName = 'cost_plan'
+              Title.Caption = #1062#1077#1085#1072' '#1087#1083#1072#1085#1086#1074#1072#1103
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'usver_role'
-              Title.Caption = #1051#1086#1075#1080#1085
+              FieldName = 'cost_fact'
+              Title.Caption = #1062#1077#1085#1072' '#1060#1072#1082#1090#1080#1095#1077#1089#1082#1072#1103
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'dataend'
+              Title.Caption = #1044#1072#1090#1072' '#1086#1082#1086#1085#1095#1072#1085#1080#1103' '#1092#1072#1082#1090#1080#1095#1077#1089#1082#1072#1103
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'dataendplan'
+              Title.Caption = #1044#1072#1090#1072' '#1086#1082#1086#1085#1095#1072#1085#1080#1103' '#1087#1083#1072#1085#1086#1074#1072#1103
               Visible = True
             end>
         end
@@ -269,7 +279,6 @@ object Frm_worker: TFrm_worker
           Height = 25
           Caption = #1042#1074#1086#1076
           TabOrder = 0
-          OnClick = Work_ins_BtnClick
         end
       end
       object Worker_inp_Box: TGroupBox
@@ -332,16 +341,11 @@ object Frm_worker: TFrm_worker
               Width = 990
               Height = 21
               TabOrder = 4
-              OnExit = ins_w_phone_inpExit
             end
           end
           object abot_worker_Tab_two: TTabSheet
             Caption = #1054' '#1088#1072#1073#1086#1090#1085#1080#1082#1077
             ImageIndex = 1
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object free_busy_lbl: TStaticText
               Left = 3
               Top = 0
@@ -355,9 +359,8 @@ object Frm_worker: TFrm_worker
               Top = 23
               Width = 1014
               Height = 21
-              ItemHeight = 0
+              ItemHeight = 13
               TabOrder = 1
-              OnChange = free_busy_comboChange
               Items.Strings = (
                 #1057#1074#1086#1073#1086#1076#1077#1085' '
                 #1047#1072#1085#1103#1090)
@@ -412,13 +415,13 @@ object Frm_worker: TFrm_worker
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object worker_upd_grid: TDBGrid
+        object DBGrid2: TDBGrid
           Left = 2
           Top = 15
           Width = 1033
           Height = 302
           Align = alClient
-          DataSource = DM.worekrDS
+          DataSource = DM.proektDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -428,52 +431,56 @@ object Frm_worker: TFrm_worker
           Columns = <
             item
               Expanded = False
-              FieldName = 'N_Rab'
-              Title.Caption = #1053#1086#1084#1077#1088'  '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              FieldName = 'N_Proekta'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1072#1074#1099#1081
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'Fio'
-              Title.Caption = #1060#1048#1054' '#1088#1072#1073#1086#1090#1085#1080#1082#1072
+              FieldName = 'Nam_proect'
+              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'Nam_dol'
-              Title.Caption = #1044#1086#1083#1078#1085#1086#1089#1090#1100
+              FieldName = 'janr'
+              Title.Caption = #1046#1072#1085#1088
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'Iphone'
-              Title.Caption = #1058#1077#1077#1083#1092#1086#1085
+              FieldName = 'data_nash'
+              Title.Caption = #1044#1072#1090#1072' '#1085#1072#1095#1072#1083#1072' '#1088#1072#1073#1086#1090#1099
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'free'
-              Title.Caption = #1057#1090#1072#1090#1072#1091#1089
+              FieldName = 'fio'
+              Title.Caption = #1060#1048#1054' '#1084#1077#1085#1077#1076#1078#1077#1088#1072
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'Date_pr'
-              Title.Caption = #1044#1072#1090#1072' '#1087#1088#1080#1077#1084#1072' '#1085#1072' '#1088#1072#1073#1086#1090#1091
-              Width = 138
+              FieldName = 'cost_plan'
+              Title.Caption = #1062#1077#1085#1072' '#1087#1083#1072#1085#1086#1074#1072#1103
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'usver_role'
-              Title.Caption = #1051#1086#1075#1080#1085
+              FieldName = 'cost_fact'
+              Title.Caption = #1062#1077#1085#1072' '#1060#1072#1082#1090#1080#1095#1077#1089#1082#1072#1103
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'Date_yv'
-              Title.Caption = #1044#1072#1090#1072' '#1091#1074#1086#1083#1100#1085#1077#1085#1080#1103
-              Width = 119
+              FieldName = 'dataend'
+              Title.Caption = #1044#1072#1090#1072' '#1086#1082#1086#1085#1095#1072#1085#1080#1103' '#1092#1072#1082#1090#1080#1095#1077#1089#1082#1072#1103
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'dataendplan'
+              Title.Caption = #1044#1072#1090#1072' '#1086#1082#1086#1085#1095#1072#1085#1080#1103' '#1087#1083#1072#1085#1086#1074#1072#1103
               Visible = True
             end>
         end
@@ -528,7 +535,6 @@ object Frm_worker: TFrm_worker
           Height = 17
           Caption = #1055#1086#1082#1072#1079#1072#1090#1100' '#1091#1074#1086#1083#1077#1085#1085#1099#1093
           TabOrder = 4
-          OnClick = firecbClick
         end
       end
       object Worker_upd_btnBox: TGroupBox
@@ -545,17 +551,12 @@ object Frm_worker: TFrm_worker
           Height = 25
           Caption = #1054#1073#1085#1086#1074#1080#1090#1100
           TabOrder = 0
-          OnClick = worker_upd_btnClick
         end
       end
     end
     object delTab: TTabSheet
       Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1088#1072#1073#1086#1090#1085#1080#1082#1077
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object worker_del_data_Box: TGroupBox
         Left = 0
         Top = 73
@@ -564,13 +565,13 @@ object Frm_worker: TFrm_worker
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object DelworkerGrid: TDBGrid
+        object DBGrid3: TDBGrid
           Left = 2
           Top = 15
           Width = 1033
           Height = 334
           Align = alClient
-          DataSource = DM.worekrDS
+          DataSource = DM.proektDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -580,45 +581,56 @@ object Frm_worker: TFrm_worker
           Columns = <
             item
               Expanded = False
-              FieldName = 'N_Rab'
-              Title.Caption = #1053#1086#1084#1077#1088'  '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              FieldName = 'N_Proekta'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1072#1074#1099#1081
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'Fio'
-              Title.Caption = #1060#1048#1054' '#1088#1072#1073#1086#1090#1085#1080#1082#1072
+              FieldName = 'Nam_proect'
+              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'Nam_dol'
-              Title.Caption = #1044#1086#1083#1078#1085#1086#1089#1090#1100
+              FieldName = 'janr'
+              Title.Caption = #1046#1072#1085#1088
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'Iphone'
-              Title.Caption = #1058#1077#1077#1083#1092#1086#1085
+              FieldName = 'data_nash'
+              Title.Caption = #1044#1072#1090#1072' '#1085#1072#1095#1072#1083#1072' '#1088#1072#1073#1086#1090#1099
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'free'
-              Title.Caption = #1057#1090#1072#1090#1072#1091#1089
+              FieldName = 'fio'
+              Title.Caption = #1060#1048#1054' '#1084#1077#1085#1077#1076#1078#1077#1088#1072
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'Date_pr'
-              Title.Caption = #1044#1072#1090#1072' '#1087#1088#1080#1077#1084#1072' '#1085#1072' '#1088#1072#1073#1086#1090#1091
-              Width = 138
+              FieldName = 'cost_plan'
+              Title.Caption = #1062#1077#1085#1072' '#1087#1083#1072#1085#1086#1074#1072#1103
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'usver_role'
-              Title.Caption = #1051#1086#1075#1080#1085
+              FieldName = 'cost_fact'
+              Title.Caption = #1062#1077#1085#1072' '#1060#1072#1082#1090#1080#1095#1077#1089#1082#1072#1103
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'dataend'
+              Title.Caption = #1044#1072#1090#1072' '#1086#1082#1086#1085#1095#1072#1085#1080#1103' '#1092#1072#1082#1090#1080#1095#1077#1089#1082#1072#1103
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'dataendplan'
+              Title.Caption = #1044#1072#1090#1072' '#1086#1082#1086#1085#1095#1072#1085#1080#1103' '#1087#1083#1072#1085#1086#1074#1072#1103
               Visible = True
             end>
         end
@@ -637,7 +649,6 @@ object Frm_worker: TFrm_worker
           Height = 25
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
-          OnClick = worker_del_btnClick
         end
       end
       object worker_del_ipp_Box: TGroupBox

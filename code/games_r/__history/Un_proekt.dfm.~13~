@@ -1,4 +1,4 @@
-object Frm_worker: TFrm_worker
+object Frm_proekt: TFrm_proekt
   Left = 0
   Top = 0
   Caption = #1060#1086#1088#1084#1072'  '#1088#1072#1073#1086#1090#1099' '#1089' '#1076#1072#1085#1085#1099#1084#1080' '#1086' '#1088#1072#1073#1086#1090#1085#1080#1082#1077
@@ -21,11 +21,11 @@ object Frm_worker: TFrm_worker
     Top = 0
     Width = 1045
     Height = 512
-    ActivePage = insTab
+    ActivePage = delTab
     Align = alClient
     TabOrder = 0
     object SelTab: TTabSheet
-      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1088#1072#1073#1086#1090#1085#1080#1082#1077
+      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1088#1072#1073#1086#1090#1077
       object WorkercondBox: TGroupBox
         Left = 0
         Top = 0
@@ -53,7 +53,6 @@ object Frm_worker: TFrm_worker
           EditLabel.Height = 13
           EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086'  '#1076#1086#1083#1078#1085#1086#1089#1090#1080
           TabOrder = 1
-          OnKeyPress = Worker_fnd_EditKeyPress
         end
       end
       object WorkerGrouperBox: TGroupBox
@@ -71,7 +70,6 @@ object Frm_worker: TFrm_worker
           Height = 17
           Caption = #1055#1086'  '#1060#1048#1054
           TabOrder = 0
-          OnClick = Worker_fio_RadioClick
         end
         object Worker_reset_Radio: TRadioButton
           Left = 880
@@ -80,7 +78,6 @@ object Frm_worker: TFrm_worker
           Height = 17
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 1
-          OnClick = Worker_reset_RadioClick
         end
         object Worker_roler_Radio: TRadioButton
           Left = 312
@@ -89,7 +86,6 @@ object Frm_worker: TFrm_worker
           Height = 17
           Caption = #1055#1086'  '#1076#1086#1083#1078#1085#1086#1089#1090#1080
           TabOrder = 2
-          OnClick = Worker_roler_RadioClick
         end
         object freeworekrsCB: TCheckBox
           Left = 527
@@ -98,7 +94,6 @@ object Frm_worker: TFrm_worker
           Height = 17
           Caption = #1054#1090#1086#1073#1088#1072#1090#1100' '#1089#1074#1086#1073#1086#1076#1085#1099#1093
           TabOrder = 3
-          OnClick = freeworekrsCBClick
         end
       end
       object WorkerdataBox: TGroupBox
@@ -181,12 +176,11 @@ object Frm_worker: TFrm_worker
           Height = 25
           Caption = #1042#1099#1073#1088#1072#1090#1100
           TabOrder = 0
-          OnClick = Worker_sel_BtnClick
         end
       end
     end
     object insTab: TTabSheet
-      Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1088#1072#1073#1086#1090#1085#1080#1082#1077
+      Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1088#1072#1073#1086#1090#1077
       ImageIndex = 1
       object Worker_data_Box: TGroupBox
         Left = 0
@@ -269,7 +263,6 @@ object Frm_worker: TFrm_worker
           Height = 25
           Caption = #1042#1074#1086#1076
           TabOrder = 0
-          OnClick = Work_ins_BtnClick
         end
       end
       object Worker_inp_Box: TGroupBox
@@ -332,16 +325,11 @@ object Frm_worker: TFrm_worker
               Width = 990
               Height = 21
               TabOrder = 4
-              OnExit = ins_w_phone_inpExit
             end
           end
           object abot_worker_Tab_two: TTabSheet
             Caption = #1054' '#1088#1072#1073#1086#1090#1085#1080#1082#1077
             ImageIndex = 1
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object free_busy_lbl: TStaticText
               Left = 3
               Top = 0
@@ -355,9 +343,8 @@ object Frm_worker: TFrm_worker
               Top = 23
               Width = 1014
               Height = 21
-              ItemHeight = 0
+              ItemHeight = 13
               TabOrder = 1
-              OnChange = free_busy_comboChange
               Items.Strings = (
                 #1057#1074#1086#1073#1086#1076#1077#1085' '
                 #1047#1072#1085#1103#1090)
@@ -528,7 +515,6 @@ object Frm_worker: TFrm_worker
           Height = 17
           Caption = #1055#1086#1082#1072#1079#1072#1090#1100' '#1091#1074#1086#1083#1077#1085#1085#1099#1093
           TabOrder = 4
-          OnClick = firecbClick
         end
       end
       object Worker_upd_btnBox: TGroupBox
@@ -545,17 +531,12 @@ object Frm_worker: TFrm_worker
           Height = 25
           Caption = #1054#1073#1085#1086#1074#1080#1090#1100
           TabOrder = 0
-          OnClick = worker_upd_btnClick
         end
       end
     end
     object delTab: TTabSheet
       Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1088#1072#1073#1086#1090#1085#1080#1082#1077
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object worker_del_data_Box: TGroupBox
         Left = 0
         Top = 73
@@ -637,7 +618,6 @@ object Frm_worker: TFrm_worker
           Height = 25
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
-          OnClick = worker_del_btnClick
         end
       end
       object worker_del_ipp_Box: TGroupBox

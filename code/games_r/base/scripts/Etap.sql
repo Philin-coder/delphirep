@@ -1,7 +1,7 @@
-USE [Razrab_Andryuschenko]
+USE [games_r]
 GO
 
-/****** Object:  Table [dbo].[Etap]    Script Date: 01.12.2020 21:41:06 ******/
+/****** Object:  Table [dbo].[Etap]    Script Date: 10.06.2025 22:05:22 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -10,8 +10,8 @@ GO
 
 CREATE TABLE [dbo].[Etap](
 	[N_Etap] [int] IDENTITY(1,1) NOT NULL,
-	[Nam_etap] [varchar](100) NOT NULL,
-PRIMARY KEY CLUSTERED 
+	[Nam_etap] [varchar](1000) NOT NULL,
+ CONSTRAINT [PK__Etap__98678CF73D9D3C90] PRIMARY KEY CLUSTERED 
 (
 	[N_Etap] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]

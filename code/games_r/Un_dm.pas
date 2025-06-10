@@ -46,6 +46,12 @@ type
     upd_worker: TADOStoredProc;
     upd_worker_back: TADOStoredProc;
     del_worker: TADOStoredProc;
+    proektQuery: TADOQuery;
+    proektDS: TDataSource;
+    sel_proekt_by_men_fio: TADOStoredProc;
+    ADOStoredProc2: TADOStoredProc;
+    ADOStoredProc3: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public

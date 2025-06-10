@@ -1,7 +1,7 @@
-USE [Razrab_Andryuschenko]
+USE [games_r]
 GO
 
-/****** Object:  Table [dbo].[Proect]    Script Date: 01.12.2020 21:42:14 ******/
+/****** Object:  Table [dbo].[Proect]    Script Date: 10.06.2025 22:05:56 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -10,8 +10,8 @@ GO
 
 CREATE TABLE [dbo].[Proect](
 	[N_Proekta] [int] IDENTITY(1,1) NOT NULL,
-	[Nam_proect] [varchar](100) NOT NULL,
-	[janr] [char](50) NOT NULL,
+	[Nam_proect] [varchar](1000) NOT NULL,
+	[janr] [varchar](1000) NOT NULL,
 	[data_nash] [date] NOT NULL,
 	[id_manager] [int] NOT NULL,
 	[cost_plan] [decimal](10, 2) NOT NULL,

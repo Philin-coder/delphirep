@@ -1,7 +1,7 @@
-USE [Razrab_Andryuschenko]
+USE [games_r]
 GO
 
-/****** Object:  Table [dbo].[manager]    Script Date: 01.12.2020 21:41:43 ******/
+/****** Object:  Table [dbo].[manager]    Script Date: 10.06.2025 22:05:40 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -11,7 +11,7 @@ GO
 CREATE TABLE [dbo].[manager](
 	[Id_manager] [int] IDENTITY(1,1) NOT NULL,
 	[usverId] [int] NOT NULL,
-	[fio] [varchar](50) NOT NULL,
+	[fio] [varchar](1000) NOT NULL,
  CONSTRAINT [PK_manager] PRIMARY KEY CLUSTERED 
 (
 	[Id_manager] ASC

@@ -21,11 +21,11 @@ object Frm_worker: TFrm_worker
     Top = 0
     Width = 1045
     Height = 512
-    ActivePage = insTab
+    ActivePage = updTab
     Align = alClient
     TabOrder = 0
     object SelTab: TTabSheet
-      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1088#1072#1073#1086#1090#1085#1080#1082#1077
+      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1088#1072#1073#1086#1090#1077
       object WorkercondBox: TGroupBox
         Left = 0
         Top = 0
@@ -186,7 +186,7 @@ object Frm_worker: TFrm_worker
       end
     end
     object insTab: TTabSheet
-      Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1088#1072#1073#1086#1090#1085#1080#1082#1077
+      Caption = #1042#1074#1086#1076' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1088#1072#1073#1086#1090#1077
       ImageIndex = 1
       object Worker_data_Box: TGroupBox
         Left = 0
@@ -338,10 +338,6 @@ object Frm_worker: TFrm_worker
           object abot_worker_Tab_two: TTabSheet
             Caption = #1054' '#1088#1072#1073#1086#1090#1085#1080#1082#1077
             ImageIndex = 1
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object free_busy_lbl: TStaticText
               Left = 3
               Top = 0
@@ -355,7 +351,7 @@ object Frm_worker: TFrm_worker
               Top = 23
               Width = 1014
               Height = 21
-              ItemHeight = 0
+              ItemHeight = 13
               TabOrder = 1
               OnChange = free_busy_comboChange
               Items.Strings = (
@@ -552,10 +548,6 @@ object Frm_worker: TFrm_worker
     object delTab: TTabSheet
       Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1088#1072#1073#1086#1090#1085#1080#1082#1077
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object worker_del_data_Box: TGroupBox
         Left = 0
         Top = 73

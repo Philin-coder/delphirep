@@ -1,7 +1,7 @@
-USE [Razrab_Andryuschenko]
+USE [games_r]
 GO
 
-/****** Object:  StoredProcedure [dbo].[ins_proect]    Script Date: 01.12.2020 21:47:48 ******/
+/****** Object:  StoredProcedure [dbo].[ins_proect]    Script Date: 10.06.2025 23:52:06 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -18,7 +18,8 @@ CREATE proc [dbo].[ins_proect]
 @dataendplan date
 as
 begin
-insert into Proect ( Nam_proect,janr,data_nash,id_manager,cost_plan, cost_fact,dataendplan ) values(@Nam_proect,@janr,@data_nash,@id_manager,@cost_plan,@cost_fact, @dataendplan)
+insert into Proect ( Nam_proect,janr,data_nash,id_manager,cost_plan, cost_fact,dataendplan ) 
+values(@Nam_proect,@janr,@data_nash,@id_manager,@cost_plan,@cost_fact, @dataendplan)
 end
 GO
 

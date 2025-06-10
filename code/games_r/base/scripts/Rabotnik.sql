@@ -1,7 +1,7 @@
 USE [games_r]
 GO
 
-/****** Object:  Table [dbo].[Rabotnik]    Script Date: 10.06.2025 12:06:45 ******/
+/****** Object:  Table [dbo].[Rabotnik]    Script Date: 10.06.2025 22:06:13 ******/
 SET ANSI_NULLS ON
 GO
 

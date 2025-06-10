@@ -9,9 +9,8 @@ uses
   Un_etap in 'Un_etap.pas' {Frm_etap},
   Un_user in 'Un_user.pas' {Frm_user},
   Un_men in 'Un_men.pas' {Frm_men},
-  Un_proekt in 'Un_proekt.pas' {Frm_proekt},
-  Un_work in 'Un_work.pas' {Frm_work},
-  Un_worker in 'Un_worker.pas' {Frm_worker};
+  Un_worker in 'Un_worker.pas' {Frm_worker},
+  Un_work in 'Un_work.pas' {Frm_work};
 
 {$R *.res}
 {$R 'resources.RES'}
@@ -22,12 +21,11 @@ begin
   Application.CreateForm(TDM, DM);
   Application.CreateForm(TFrm_dol, Frm_dol);
   Application.CreateForm(TFrm_etap, Frm_etap);
-  Application.CreateForm(TFrm_proekt, Frm_proekt);
+  Application.CreateForm(TFrm_worker, Frm_worker);
   Application.CreateForm(TFrm_user, Frm_user);
   Application.CreateForm(TFrm_work, Frm_work);
   Application.CreateForm(TFrm_men, Frm_men);
   Application.CreateForm(TFrm_work, Frm_work);
   Application.CreateForm(TFrm_work, Frm_work);
-  Application.CreateForm(TFrm_worker, Frm_worker);
   Application.Run;
 end.

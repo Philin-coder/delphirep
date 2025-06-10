@@ -1,7 +1,7 @@
-USE [Razrab_Andryuschenko]
+USE [games_r]
 GO
 
-/****** Object:  Table [dbo].[usver]    Script Date: 01.12.2020 21:43:10 ******/
+/****** Object:  Table [dbo].[usver]    Script Date: 10.06.2025 22:06:40 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -10,8 +10,8 @@ GO
 
 CREATE TABLE [dbo].[usver](
 	[usverId] [int] IDENTITY(1,1) NOT NULL,
-	[usver_role] [varchar](50) NOT NULL,
-	[usver_pass] [varchar](50) NOT NULL,
+	[usver_role] [varchar](1000) NOT NULL,
+	[usver_pass] [varchar](1000) NOT NULL,
  CONSTRAINT [PK_usver] PRIMARY KEY CLUSTERED 
 (
 	[usverId] ASC
