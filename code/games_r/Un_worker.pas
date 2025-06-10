@@ -28,25 +28,25 @@ type
     Worker_btn_Box: TGroupBox;
     Worker_inp_Box: TGroupBox;
     Work_ins_Btn: TButton;
-    Work_upd_data_Box: TGroupBox;
-    Work_upd_inpBox: TGroupBox;
-    Work_upd_btnBox: TGroupBox;
-    work_upd_btn: TButton;
-    Work_upd_e_lbl: TStaticText;
-    Work_upd_u_dbl: TDBLookupComboBox;
-    work_del_data_Box: TGroupBox;
-    work_del_btn_Box: TGroupBox;
-    work_del_ipp_Box: TGroupBox;
-    work_del_btn: TButton;
-    work_del_e_lbl: TStaticText;
-    work_del_e_dbl: TDBLookupComboBox;
+    Worker_upd_data_Box: TGroupBox;
+    Worker_upd_inpBox: TGroupBox;
+    Worker_upd_btnBox: TGroupBox;
+    worker_upd_btn: TButton;
+    Worker_upd_uv_lbl: TStaticText;
+    Worker_upd_u_dbl: TDBLookupComboBox;
+    worker_del_data_Box: TGroupBox;
+    worker_del_btn_Box: TGroupBox;
+    worker_del_ipp_Box: TGroupBox;
+    worker_del_btn: TButton;
+    worker_del_e_lbl: TStaticText;
+    worker_del_e_dbl: TDBLookupComboBox;
     Worker_roler_Radio: TRadioButton;
     freeworekrsCB: TCheckBox;
-    Work_upd_u_lbl: TStaticText;
-    Work_u_t_days_inp: TDateTimePicker;
-    DBGrid2: TDBGrid;
+    Worker_upd_dateuv_lbl: TStaticText;
+    Worker_u_date_uv_inp: TDateTimePicker;
+    worker_upd_grid: TDBGrid;
     worker_ins_grd: TDBGrid;
-    DBGrid3: TDBGrid;
+    DelworkerGrid: TDBGrid;
     about_workerPC: TPageControl;
     abot_worker_Tab_one: TTabSheet;
     abot_worker_Tab_two: TTabSheet;
@@ -61,6 +61,7 @@ type
     data_pr_inp: TDateTimePicker;
     ins_w_role_lbl: TStaticText;
     ins_w_role_dbl: TDBLookupComboBox;
+    firecb: TCheckBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -73,6 +74,9 @@ type
     procedure free_busy_comboChange(Sender: TObject);
     procedure Work_ins_BtnClick(Sender: TObject);
     procedure ins_w_phone_inpExit(Sender: TObject);
+    procedure worker_upd_btnClick(Sender: TObject);
+    procedure firecbClick(Sender: TObject);
+    procedure worker_del_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -82,11 +86,113 @@ type
 var
   Frm_worker: TFrm_worker;
   free_st:Integer;
+  fire_st:Integer;
 implementation
 
 uses Un_dm, Un_func;
 
 {$R *.dfm}
+
+
+
+procedure TFrm_worker.firecbClick(Sender: TObject);
+begin
+ case firecb.Checked of
+ true:
+ begin
+ fire_st:=1;
+ worker_upd_grid.Columns[7].Visible:=TRue;
+   try
+     with dm.workerQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+      'select'+' '+
+        'Rabotnik.N_Rab,'+' '+
+         'Rabotnik.Fio,'+' '+
+         'Dolshnost.Nam_dol,'+' '+
+         'Rabotnik.Iphone,'+' '+
+'case when Rabotnik.St_rab= 1 then ''Свободен'' else ''Занят'' end as free,'+' '+
+        'Rabotnik.Date_pr,'+' '+
+        'usver.usver_role,'+' '+
+        'Rabotnik.Date_yv'+' '+
+        'from Rabotnik'+' '+
+        'inner join Dolshnost on Dolshnost.N_Dol=Rabotnik.N_Dol'+' '+
+        'inner join usver on usver.usverId=Rabotnik.usverId'+' '+
+        'where 1=1'+''+
+        'and Rabotnik.Date_yv is not null' ;
+      Open;
+     end;
+    except
+        on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая  Ошибка: ' + E.Message);
+    HandleException(E);
+  end;
+end;
+  end;
+ false:
+ begin
+    fire_st:=0;
+   worker_upd_grid.Columns[7].Visible:=False;
+    try
+     with dm.workerQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+      'select'+' '+
+        'Rabotnik.N_Rab,'+' '+
+         'Rabotnik.Fio,'+' '+
+         'Dolshnost.Nam_dol,'+' '+
+         'Rabotnik.Iphone,'+' '+
+'case when Rabotnik.St_rab= 1 then ''Свободен'' else ''Занят'' end as free,'+' '+
+        'Rabotnik.Date_pr,'+' '+
+        'usver.usver_role,'+' '+
+        'Rabotnik.Date_yv'+' '+
+        'from Rabotnik'+' '+
+        'inner join Dolshnost on Dolshnost.N_Dol=Rabotnik.N_Dol'+' '+
+        'inner join usver on usver.usverId=Rabotnik.usverId'+' '+
+        'where 1=1'+''+
+        'and Rabotnik.Date_yv is null' ;
+      Open;
+     end;
+    except
+        on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая  Ошибка: ' + E.Message);
+    HandleException(E);
+  end;
+end;
+  end;
+ end;
+
+ end; //case
 
 
 
@@ -103,6 +209,8 @@ begin
   SaveFormState(Self);
   CloseAllQueriesOnDataModule('dm');
   free_st:=0;
+  fire_st:=0;
+  worker_upd_grid.Columns[7].Visible:=False;
 end;
 
 procedure TFrm_worker.FormCreate(Sender: TObject);
@@ -115,6 +223,8 @@ begin
   LoadFormState(Self);
   ins_w_phone_inp.EditMask := '!+7 \(999\) 000-00-00;1;_';
   free_st:=0;
+  fire_st:=0;
+  worker_upd_grid.Columns[7].Visible:=False;
 end;
 
 procedure TFrm_worker.freeworekrsCBClick(Sender: TObject);
@@ -224,6 +334,53 @@ begin
   end
   else
     ins_w_phone_inp.Color := clWindow; 
+end;
+
+procedure TFrm_worker.worker_del_btnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (worker_del_e_dbl.Text='')
+  );
+  if AreFieldsEmpty then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.del_worker do
+      begin
+        if not dm.Connection.Connected then
+          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
+           Parameters.ParamByName('@N_Rab').Value :=
+           dm.workerQuery.FieldByName('N_Rab').AsString;
+           ExecProc;
+           dm.workerQuery.Close;
+           dm.workerQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise; // Повторное выбрасывание исключения
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+end;
+end;
 end;
 
 procedure TFrm_worker.Worker_fio_RadioClick(Sender: TObject);
@@ -462,6 +619,103 @@ begin
     ShowMessage('Общая ошибка: ' + E.Message);
     HandleException(E);
   end;
+end;
+end;
+
+procedure TFrm_worker.worker_upd_btnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+begin
+  case fire_st of
+   0:
+   begin
+   AreFieldsEmpty:=(
+  (Worker_upd_u_dbl.Text='')
+  );
+  if AreFieldsEmpty then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+    try
+      with dm.upd_worker do
+      begin
+        if not dm.Connection.Connected then
+          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
+           Parameters.ParamByName('@N_Rab').Value :=
+           dm.workerQuery.FieldByName('N_Rab').AsString;
+           Parameters.ParamByName('@Date_yv').Value:=Worker_u_date_uv_inp.Date;
+           ExecProc;
+           dm.workerQuery.Close;
+           dm.workerQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise; // Повторное выбрасывание исключения
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+end;
+end;
+   end;
+   1:
+   begin
+      AreFieldsEmpty:=(
+  (Worker_upd_u_dbl.Text='')
+  );
+  if AreFieldsEmpty then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+    try
+      with dm.upd_worker_back do
+      begin
+        if not dm.Connection.Connected then
+          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
+           Parameters.ParamByName('@N_Rab').Value :=
+           dm.workerQuery.FieldByName('N_Rab').AsString;
+           ExecProc;
+           dm.workerQuery.Close;
+           dm.workerQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise; // Повторное выбрасывание исключения
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+end;
+   end;
+  end; //case
 end;
 end;
 

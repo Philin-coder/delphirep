@@ -43,9 +43,9 @@ type
     worekrDS: TDataSource;
     sel_worker_by_fio: TADOStoredProc;
     ins_rabotnic: TADOStoredProc;
-    ADOStoredProc3: TADOStoredProc;
-    ADOStoredProc4: TADOStoredProc;
-    ADOStoredProc5: TADOStoredProc;
+    upd_worker: TADOStoredProc;
+    upd_worker_back: TADOStoredProc;
+    del_worker: TADOStoredProc;
   private
     { Private declarations }
   public

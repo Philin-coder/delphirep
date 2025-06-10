@@ -29,10 +29,23 @@ type
     del_user: TADOStoredProc;
     menQuery: TADOQuery;
     menDS: TDataSource;
-    ADOStoredProc1: TADOStoredProc;
-    ADOStoredProc2: TADOStoredProc;
-    ADOStoredProc3: TADOStoredProc;
-    ADOStoredProc4: TADOStoredProc;
+    sel_men_by_fio: TADOStoredProc;
+    ins_manager: TADOStoredProc;
+    upd_men: TADOStoredProc;
+    del_men: TADOStoredProc;
+    dolQuery: TADOQuery;
+    dolDS: TDataSource;
+    sel_dol_by_naim: TADOStoredProc;
+    ins_dol: TADOStoredProc;
+    upd_dol: TADOStoredProc;
+    del_dol: TADOStoredProc;
+    workerQuery: TADOQuery;
+    worekrDS: TDataSource;
+    sel_worker_by_fio: TADOStoredProc;
+    ins_rabotnic: TADOStoredProc;
+    upd_worker: TADOStoredProc;
+    upd_worker_back: TADOStoredProc;
+    ADOStoredProc5: TADOStoredProc;
   private
     { Private declarations }
   public

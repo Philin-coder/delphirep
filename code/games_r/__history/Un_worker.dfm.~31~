@@ -200,7 +200,7 @@ object Frm_worker: TFrm_worker
           Left = 2
           Top = 15
           Width = 1033
-          Height = 206
+          Height = 167
           Align = alClient
           DataSource = DM.worekrDS
           TabOrder = 0
@@ -269,6 +269,7 @@ object Frm_worker: TFrm_worker
           Height = 25
           Caption = #1042#1074#1086#1076
           TabOrder = 0
+          OnClick = Work_ins_BtnClick
         end
       end
       object Worker_inp_Box: TGroupBox
@@ -299,10 +300,101 @@ object Frm_worker: TFrm_worker
               EditLabel.Caption = #1042#1074#1086#1076' '#1060#1048#1054' '#1088#1072#1073#1086#1090#1085#1080#1082#1072
               TabOrder = 0
             end
+            object ins_w_dol_lbl: TStaticText
+              Left = 19
+              Top = 43
+              Width = 61
+              Height = 17
+              Caption = #1044#1086#1083#1078#1085#1086#1089#1090#1100
+              TabOrder = 1
+            end
+            object ins_w_dol_dbl: TDBLookupComboBox
+              Left = 19
+              Top = 66
+              Width = 990
+              Height = 21
+              KeyField = 'N_Dol'
+              ListField = 'Nam_dol'
+              ListSource = DM.dolDS
+              TabOrder = 2
+            end
+            object ins_w_phone_lbl: TStaticText
+              Left = 19
+              Top = 93
+              Width = 48
+              Height = 17
+              Caption = #1058#1077#1083#1077#1092#1086#1085
+              TabOrder = 3
+            end
+            object ins_w_phone_inp: TMaskEdit
+              Left = 19
+              Top = 116
+              Width = 990
+              Height = 21
+              TabOrder = 4
+              OnExit = ins_w_phone_inpExit
+            end
           end
-          object TabSheet2: TTabSheet
-            Caption = 'TabSheet2'
+          object abot_worker_Tab_two: TTabSheet
+            Caption = #1054' '#1088#1072#1073#1086#1090#1085#1080#1082#1077
             ImageIndex = 1
+            ExplicitLeft = 20
+            ExplicitTop = 39
+            object free_busy_lbl: TStaticText
+              Left = 3
+              Top = 0
+              Width = 97
+              Height = 17
+              Caption = 'C'#1090#1072#1090#1091#1089' '#1088#1072#1073#1086#1090#1085#1080#1082#1072
+              TabOrder = 0
+            end
+            object free_busy_combo: TComboBox
+              Left = 3
+              Top = 23
+              Width = 1014
+              Height = 21
+              ItemHeight = 13
+              TabOrder = 1
+              OnChange = free_busy_comboChange
+              Items.Strings = (
+                #1057#1074#1086#1073#1086#1076#1077#1085' '
+                #1047#1072#1085#1103#1090)
+            end
+            object data_pr_lbl: TStaticText
+              Left = 3
+              Top = 50
+              Width = 123
+              Height = 17
+              Caption = #1044#1072#1090#1072' '#1087#1088#1080#1077#1084#1072' '#1085#1072' '#1088#1072#1073#1086#1090#1091
+              TabOrder = 2
+            end
+            object data_pr_inp: TDateTimePicker
+              Left = 0
+              Top = 73
+              Width = 1014
+              Height = 21
+              Date = 45818.512184212970000000
+              Time = 45818.512184212970000000
+              TabOrder = 3
+            end
+            object ins_w_role_lbl: TStaticText
+              Left = 3
+              Top = 100
+              Width = 34
+              Height = 17
+              Caption = #1051#1086#1075#1080#1085
+              TabOrder = 4
+            end
+            object ins_w_role_dbl: TDBLookupComboBox
+              Left = 2
+              Top = 124
+              Width = 1020
+              Height = 21
+              KeyField = 'usverId'
+              ListField = 'usver_role'
+              ListSource = DM.usevrDS
+              TabOrder = 5
+            end
           end
         end
       end

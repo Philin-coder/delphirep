@@ -661,12 +661,14 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@Fio'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end>
     Left = 704
     Top = 208
@@ -680,12 +682,14 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@Fio'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end
       item
         Name = '@N_Dol'
@@ -699,6 +703,7 @@ object DM: TDM
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end
       item
         Name = '@St_rab'
@@ -712,6 +717,7 @@ object DM: TDM
         Attributes = [paNullable]
         DataType = ftDateTime
         Size = 10
+        Value = Null
       end
       item
         Name = '@usverid'
@@ -723,18 +729,71 @@ object DM: TDM
     Left = 696
     Top = 280
   end
-  object ADOStoredProc3: TADOStoredProc
-    Parameters = <>
+  object upd_worker: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_worker;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@N_Rab'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@Date_yv'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+        Value = Null
+      end>
     Left = 696
     Top = 336
   end
-  object ADOStoredProc4: TADOStoredProc
-    Parameters = <>
+  object upd_worker_back: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_worker_back;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@N_Rab'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
     Left = 688
     Top = 392
   end
-  object ADOStoredProc5: TADOStoredProc
-    Parameters = <>
+  object del_worker: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'del_worker;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@N_Rab'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
     Left = 696
     Top = 448
   end
