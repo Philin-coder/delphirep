@@ -22,5 +22,7 @@
     <Transaction>2025.06.10 21:49:56.685.dfm,F:\code\Result\delphi\code\games_r\Un_worker.dfm=F:\code\Result\delphi\code\games_r\Un_proekt.dfm</Transaction>
     <Transaction>2025.06.11 14:50:31.668.pas,F:\code\Result\delphi\code\games_r\Un_worker.pas=F:\code\Result\delphi\code\games_r\Un_task.pas</Transaction>
     <Transaction>2025.06.11 14:50:31.668.dfm,F:\code\Result\delphi\code\games_r\Un_worker.dfm=F:\code\Result\delphi\code\games_r\Un_task.dfm</Transaction>
+    <Transaction>2025.06.11 22:10:04.902.pas,F:\code\Result\delphi\code\games_r\Un_worker.pas=F:\code\Result\delphi\code\games_r\Un_report1.pas</Transaction>
+    <Transaction>2025.06.11 22:10:04.902.dfm,F:\code\Result\delphi\code\games_r\Un_worker.dfm=F:\code\Result\delphi\code\games_r\Un_report1.dfm</Transaction>
   </Transactions>
 </BorlandProject>

@@ -1,0 +1,274 @@
+unit Un_report1;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs,db,ADODB, Grids, DBGrids, StdCtrls, ComCtrls, ExtCtrls,ActiveX,
+  DBCtrls, Mask;
+
+type
+  TFrm_report = class(TForm)
+    WorkerPC: TPageControl;
+    delTab: TTabSheet;
+    worker_del_data_Box: TGroupBox;
+    worker_del_btn_Box: TGroupBox;
+    worker_del_ipp_Box: TGroupBox;
+    worker_del_btn: TButton;
+    worker_del_e_lbl: TStaticText;
+    worker_del_e_dbl: TDBLookupComboBox;
+    DelworkerGrid: TDBGrid;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure freeworekrsCBClick(Sender: TObject);
+    procedure free_busy_comboChange(Sender: TObject);
+    procedure firecbClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_report: TFrm_report;
+  free_st:Integer;
+  fire_st:Integer;
+implementation
+
+uses Un_dm, Un_func;
+
+{$R *.dfm}
+
+
+
+procedure TFrm_report.firecbClick(Sender: TObject);
+begin
+ case firecb.Checked of
+ true:
+ begin
+ fire_st:=1;
+ worker_upd_grid.Columns[7].Visible:=TRue;
+   try
+     with dm.workerQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+      'select'+' '+
+        'Rabotnik.N_Rab,'+' '+
+         'Rabotnik.Fio,'+' '+
+         'Dolshnost.Nam_dol,'+' '+
+         'Rabotnik.Iphone,'+' '+
+'case when Rabotnik.St_rab= 1 then ''Свободен'' else ''Занят'' end as free,'+' '+
+        'Rabotnik.Date_pr,'+' '+
+        'usver.usver_role,'+' '+
+        'Rabotnik.Date_yv'+' '+
+        'from Rabotnik'+' '+
+        'inner join Dolshnost on Dolshnost.N_Dol=Rabotnik.N_Dol'+' '+
+        'inner join usver on usver.usverId=Rabotnik.usverId'+' '+
+        'where 1=1'+''+
+        'and Rabotnik.Date_yv is not null' ;
+      Open;
+     end;
+    except
+        on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая  Ошибка: ' + E.Message);
+    HandleException(E);
+  end;
+end;
+  end;
+ false:
+ begin
+    fire_st:=0;
+   worker_upd_grid.Columns[7].Visible:=False;
+    try
+     with dm.workerQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+      'select'+' '+
+        'Rabotnik.N_Rab,'+' '+
+         'Rabotnik.Fio,'+' '+
+         'Dolshnost.Nam_dol,'+' '+
+         'Rabotnik.Iphone,'+' '+
+'case when Rabotnik.St_rab= 1 then ''Свободен'' else ''Занят'' end as free,'+' '+
+        'Rabotnik.Date_pr,'+' '+
+        'usver.usver_role,'+' '+
+        'Rabotnik.Date_yv'+' '+
+        'from Rabotnik'+' '+
+        'inner join Dolshnost on Dolshnost.N_Dol=Rabotnik.N_Dol'+' '+
+        'inner join usver on usver.usverId=Rabotnik.usverId'+' '+
+        'where 1=1'+''+
+        'and Rabotnik.Date_yv is null' ;
+      Open;
+     end;
+    except
+        on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая  Ошибка: ' + E.Message);
+    HandleException(E);
+  end;
+end;
+  end;
+ end;
+
+ end; //case
+
+
+
+procedure TFrm_report.FormActivate(Sender: TObject);
+begin
+  dm.usverQuery.Open;
+  dm.dolQuery.Open;
+  dm.workerQuery.Open;
+  AdjustDBGridColumnWidths('Frm_worker',6000, 10);
+end;
+
+procedure TFrm_report.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  SaveFormState(Self);
+  CloseAllQueriesOnDataModule('dm');
+  free_st:=0;
+  fire_st:=0;
+  worker_upd_grid.Columns[7].Visible:=False;
+end;
+
+procedure TFrm_report.FormCreate(Sender: TObject);
+begin
+  UpdateFormShowHint('Frm_worker');
+  UniformizeButtonsSize(Self,  273, 25);
+  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+  UniformizeComponentAnchors(Self);
+  LoadFormState(Self);
+  ins_w_phone_inp.EditMask := '!+7 \(999\) 000-00-00;1;_';
+  free_st:=0;
+  fire_st:=0;
+  worker_upd_grid.Columns[7].Visible:=False;
+end;
+
+procedure TFrm_report.freeworekrsCBClick(Sender: TObject);
+begin
+  case freeworekrsCB.Checked of
+  true:
+  begin
+    try
+     with dm.workerQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+      'select'+' '+
+        'Rabotnik.N_Rab,'+' '+
+         'Rabotnik.Fio,'+' '+
+         'Dolshnost.Nam_dol,'+' '+
+         'Rabotnik.Iphone,'+' '+
+'case when Rabotnik.St_rab= 1 then ''Свободен'' else ''Занят'' end as free,'+' '+
+        'Rabotnik.Date_pr,'+' '+
+        'usver.usver_role'+' '+
+        'from Rabotnik'+' '+
+        'inner join Dolshnost on Dolshnost.N_Dol=Rabotnik.N_Dol'+' '+
+        'inner join usver on usver.usverId=Rabotnik.usverId'+' '+
+        'where 1=1'+' '+
+        'and  Rabotnik.St_rab= 1';
+      Open;
+     end;
+    except
+        on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая  Ошибка: ' + E.Message);
+    HandleException(E);
+  end;
+end;
+  end;
+  false:
+  begin
+      try
+     with dm.workerQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+      'select'+' '+
+        'Rabotnik.N_Rab,'+' '+
+         'Rabotnik.Fio,'+' '+
+         'Dolshnost.Nam_dol,'+' '+
+         'Rabotnik.Iphone,'+' '+
+'case when Rabotnik.St_rab= 1 then ''Свободен'' else ''Занят'' end as free,'+' '+
+        'Rabotnik.Date_pr,'+' '+
+        'usver.usver_role'+' '+
+        'from Rabotnik'+' '+
+        'inner join Dolshnost on Dolshnost.N_Dol=Rabotnik.N_Dol'+' '+
+        'inner join usver on usver.usverId=Rabotnik.usverId'+' '+
+        'where 1=1';
+      Open;
+     end;
+    except
+        on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая  Ошибка: ' + E.Message);
+    HandleException(E);
+  end;
+end;
+  end;
+  end;//case
+end;
+
+procedure TFrm_report.free_busy_comboChange(Sender: TObject);
+begin
+  if free_busy_combo.ItemIndex=0 then free_st:=1
+    else free_st:=0;
+end;
+
+end.

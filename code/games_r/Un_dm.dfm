@@ -855,24 +855,28 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@Nam_proect'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 200
+        Value = Null
       end
       item
         Name = '@janr'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 50
+        Value = Null
       end
       item
         Name = '@data_nash'
         Attributes = [paNullable]
         DataType = ftDateTime
         Size = 10
+        Value = Null
       end
       item
         Name = '@id_manager'
@@ -887,6 +891,7 @@ object DM: TDM
         DataType = ftFloat
         NumericScale = 2
         Precision = 10
+        Value = Null
       end
       item
         Name = '@cost_fact'
@@ -894,12 +899,14 @@ object DM: TDM
         DataType = ftFloat
         NumericScale = 2
         Precision = 10
+        Value = Null
       end
       item
         Name = '@dataendplan'
         Attributes = [paNullable]
         DataType = ftDateTime
         Size = 10
+        Value = Null
       end>
     Left = 832
     Top = 304
@@ -913,6 +920,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@N_Proekta'
@@ -926,6 +934,7 @@ object DM: TDM
         Attributes = [paNullable]
         DataType = ftDateTime
         Size = 10
+        Value = Null
       end>
     Left = 832
     Top = 384
@@ -939,6 +948,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@N_Proekta'
@@ -989,12 +999,14 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@Nam_proect'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end>
     Left = 944
     Top = 184
@@ -1008,12 +1020,14 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@Sr_vip'
         Attributes = [paNullable]
         DataType = ftDateTime
         Size = 10
+        Value = Null
       end
       item
         Name = '@N_Rab'
@@ -1034,6 +1048,7 @@ object DM: TDM
         Attributes = [paNullable]
         DataType = ftDateTime
         Size = 10
+        Value = Null
       end
       item
         Name = '@N_Proekta'
@@ -1061,6 +1076,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@N_zad'
@@ -1074,6 +1090,7 @@ object DM: TDM
         Attributes = [paNullable]
         DataType = ftDateTime
         Size = 10
+        Value = Null
       end>
     Left = 944
     Top = 312
@@ -1087,6 +1104,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@N_zad'
@@ -1107,6 +1125,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@N_zad'
@@ -1117,5 +1136,61 @@ object DM: TDM
       end>
     Left = 952
     Top = 448
+  end
+  object reportQuery: TADOQuery
+    Active = True
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      'Zadanie.N_Zad, '
+      'Zadanie.Sr_vip,'
+      'Rabotnik.Fio,'
+      
+        'case when  Zadanie.St_rab=1 then '#39#1043#1086#1090#1086#1074#1086#39' else '#39#1053#1077' '#1075#1086#1090#1086#1074#1086#39' end a' +
+        's work_st ,'
+      'Zadanie.Data_nash,'
+      'Proect.Nam_proect,'
+      'Work.Nam_work'
+      'from Zadanie '
+      'inner join Rabotnik on Rabotnik.N_Rab=Zadanie.N_Rab'
+      'inner join Proect on Proect.N_Proekta=Zadanie.N_Proekta'
+      'inner join Work on Work.N_Work=Zadanie.N_Work'
+      'where 1=1'
+      'and Zadanie.St_rab=1 '
+      'and  Zadanie.Sr_vip is not null ')
+    Left = 984
+    Top = 64
+  end
+  object reportDS: TDataSource
+    DataSet = reportQuery
+    Left = 1000
+    Top = 128
+  end
+  object report1: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'report1;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@d1'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end
+      item
+        Name = '@d2'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end>
+    Left = 992
+    Top = 184
   end
 end

@@ -59,6 +59,9 @@ type
     upd_task: TADOStoredProc;
     upd_task_back: TADOStoredProc;
     del_task: TADOStoredProc;
+    reportQuery: TADOQuery;
+    reportDS: TDataSource;
+    report1: TADOStoredProc;
   private
     { Private declarations }
   public

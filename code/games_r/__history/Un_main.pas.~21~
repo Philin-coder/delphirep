@@ -20,7 +20,6 @@ type
     worker_item: TMenuItem;
     proekt_item: TMenuItem;
     task_item: TMenuItem;
-    N1: TMenuItem;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -32,7 +31,6 @@ type
     procedure worker_itemClick(Sender: TObject);
     procedure proekt_itemClick(Sender: TObject);
     procedure task_itemClick(Sender: TObject);
-    procedure N1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -45,7 +43,7 @@ var
 implementation
 
 uses Un_dm, Un_func, Un_etap, Un_work, Un_user, Un_men, Un_dolgn, Un_worker,
-  Un_proekt, Un_task, Un_report1;
+  Un_proekt, Un_task;
 
 {$R *.dfm}
 
@@ -121,25 +119,6 @@ begin
       HandleException(E);
       if Assigned(Frm_men) then
         Frm_men.Free;
-      raise;
-    end;
-  end;
-end;
-
-procedure TFrm_main.N1Click(Sender: TObject);
-begin
-  try
-    UpdateFormProperties('frm_report', 'Форма работы с отсетностью',
-      clBtnFace, 1024, 768);
-    Frm_report.ShowModal;
-  except
-    on E: Exception do
-    begin
-      if not (E is EMyException) then
-        raise EDatabaseError.Create('Ошибка при работе с формой отчетности', 3001);
-      HandleException(E);
-      if Assigned(Frm_report) then
-        Frm_report.Free;
       raise;
     end;
   end;

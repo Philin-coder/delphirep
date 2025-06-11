@@ -12,7 +12,6 @@ uses
   Un_proekt in 'Un_proekt.pas' {Frm_proekt},
   Un_work in 'Un_work.pas' {Frm_work},
   Un_task in 'Un_task.pas' {Frm_task},
-  Un_report1 in 'Un_report1.pas' {Frm_report},
   Un_worker in 'Un_worker.pas' {Frm_worker};
 
 {$R *.res}
@@ -31,7 +30,6 @@ begin
   Application.CreateForm(TFrm_work, Frm_work);
   Application.CreateForm(TFrm_work, Frm_work);
   Application.CreateForm(TFrm_task, Frm_task);
-  Application.CreateForm(TFrm_report, Frm_report);
   Application.CreateForm(TFrm_worker, Frm_worker);
   Application.Run;
 end.

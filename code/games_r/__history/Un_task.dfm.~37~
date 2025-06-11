@@ -21,7 +21,7 @@ object Frm_task: TFrm_task
     Top = 0
     Width = 1045
     Height = 512
-    ActivePage = updTab
+    ActivePage = delTab
     Align = alClient
     TabOrder = 0
     object SelTab: TTabSheet
