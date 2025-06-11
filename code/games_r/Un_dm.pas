@@ -52,6 +52,13 @@ type
     ins_proect: TADOStoredProc;
     upd_proekt: TADOStoredProc;
     del_proekt: TADOStoredProc;
+    taskQuery: TADOQuery;
+    taskDS: TDataSource;
+    sel_task_by_proekt_naim: TADOStoredProc;
+    ADOStoredProc2: TADOStoredProc;
+    ADOStoredProc3: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
+    ADOStoredProc5: TADOStoredProc;
   private
     { Private declarations }
   public

@@ -21,7 +21,7 @@ object Frm_proekt: TFrm_proekt
     Top = 0
     Width = 1045
     Height = 533
-    ActivePage = delTab
+    ActivePage = SelTab
     Align = alClient
     TabOrder = 0
     object SelTab: TTabSheet

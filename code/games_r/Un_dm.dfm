@@ -1,7 +1,7 @@
 object DM: TDM
   OldCreateOrder = False
   Height = 567
-  Width = 941
+  Width = 1014
   object Connection: TADOConnection
     Connected = True
     ConnectionString = 
@@ -948,6 +948,76 @@ object DM: TDM
         Value = 0
       end>
     Left = 832
+    Top = 456
+  end
+  object taskQuery: TADOQuery
+    Active = True
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      'Zadanie.N_Zad, '
+      'Zadanie.Sr_vip,'
+      'Rabotnik.Fio,'
+      
+        'case when  Zadanie.St_rab=1 then '#39#1043#1086#1090#1086#1074#1086#39' else '#39#1053#1077' '#1075#1086#1090#1086#1074#1086#39' end a' +
+        's work_st ,'
+      'Zadanie.Data_nash,'
+      'Proect.Nam_proect,'
+      'Work.Nam_work'
+      'from Zadanie '
+      'inner join Rabotnik on Rabotnik.N_Rab=Zadanie.N_Rab'
+      'inner join Proect on Proect.N_Proekta=Zadanie.N_Proekta'
+      'inner join Work on Work.N_Work=Zadanie.N_Work'
+      'where 1=1'
+      'and Zadanie.Date_fakt is null'
+      '')
+    Left = 928
+    Top = 64
+  end
+  object taskDS: TDataSource
+    DataSet = taskQuery
+    Left = 936
+    Top = 136
+  end
+  object sel_task_by_proekt_naim: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_task_by_proekt_naim;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@Nam_proect'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+      end>
+    Left = 944
+    Top = 184
+  end
+  object ADOStoredProc2: TADOStoredProc
+    Parameters = <>
+    Left = 944
+    Top = 240
+  end
+  object ADOStoredProc3: TADOStoredProc
+    Parameters = <>
+    Left = 896
+    Top = 336
+  end
+  object ADOStoredProc4: TADOStoredProc
+    Parameters = <>
+    Left = 896
+    Top = 392
+  end
+  object ADOStoredProc5: TADOStoredProc
+    Parameters = <>
+    Left = 904
     Top = 456
   end
 end

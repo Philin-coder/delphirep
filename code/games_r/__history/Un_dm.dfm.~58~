@@ -1,7 +1,7 @@
 object DM: TDM
   OldCreateOrder = False
   Height = 567
-  Width = 888
+  Width = 1014
   object Connection: TADOConnection
     Connected = True
     ConnectionString = 
@@ -766,6 +766,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@N_Rab'
@@ -786,6 +787,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@N_Rab'
@@ -798,7 +800,6 @@ object DM: TDM
     Top = 448
   end
   object proektQuery: TADOQuery
-    Active = True
     Connection = Connection
     CursorType = ctStatic
     Parameters = <>
@@ -816,32 +817,189 @@ object DM: TDM
       ' from Proect'
       ' inner join manager on manager.Id_manager=Proect.id_manager'
       ' where 1=1')
-    Left = 808
-    Top = 64
+    Left = 816
+    Top = 56
   end
   object proektDS: TDataSource
     DataSet = proektQuery
-    Left = 816
-    Top = 144
+    Left = 824
+    Top = 136
+  end
+  object sel_proekt_by_men_fio: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_proekt_by_men_fio;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@manager_fio'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+        Value = Null
+      end>
+    Left = 824
+    Top = 216
+  end
+  object ins_proect: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'ins_proect;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@Nam_proect'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 200
+      end
+      item
+        Name = '@janr'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = '@data_nash'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end
+      item
+        Name = '@id_manager'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@cost_plan'
+        Attributes = [paNullable]
+        DataType = ftFloat
+        NumericScale = 2
+        Precision = 10
+      end
+      item
+        Name = '@cost_fact'
+        Attributes = [paNullable]
+        DataType = ftFloat
+        NumericScale = 2
+        Precision = 10
+      end
+      item
+        Name = '@dataendplan'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end>
+    Left = 832
+    Top = 304
+  end
+  object upd_proekt: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_proekt;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@N_Proekta'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@dataend'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end>
+    Left = 832
+    Top = 384
+  end
+  object del_proekt: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'del_proekt;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@N_Proekta'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 832
+    Top = 456
+  end
+  object taskQuery: TADOQuery
+    Connection = Connection
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      'Zadanie.N_Zad, '
+      'Zadanie.Sr_vip,'
+      'Rabotnik.Fio,'
+      
+        'case when  Zadanie.St_rab=1 then '#39#1043#1086#1090#1086#1074#1086#39' else '#39#1053#1077' '#1075#1086#1090#1086#1074#1086#39' end a' +
+        's work_st ,'
+      'Zadanie.Data_nash,'
+      'Proect.Nam_proect,'
+      'Work.Nam_work'
+      'from Zadanie '
+      'inner join Rabotnik on Rabotnik.N_Rab=Zadanie.N_Rab'
+      'inner join Proect on Proect.N_Proekta=Zadanie.N_Proekta'
+      'inner join Work on Work.N_Work=Zadanie.N_Work'
+      'where 1=1')
+    Left = 928
+    Top = 64
+  end
+  object taskDS: TDataSource
+    DataSet = taskQuery
+    Left = 936
+    Top = 136
   end
   object ADOStoredProc1: TADOStoredProc
     Parameters = <>
-    Left = 824
-    Top = 208
+    Left = 944
+    Top = 184
   end
   object ADOStoredProc2: TADOStoredProc
     Parameters = <>
-    Left = 800
-    Top = 304
+    Left = 944
+    Top = 240
   end
   object ADOStoredProc3: TADOStoredProc
     Parameters = <>
-    Left = 816
-    Top = 392
+    Left = 896
+    Top = 336
   end
   object ADOStoredProc4: TADOStoredProc
     Parameters = <>
-    Left = 832
+    Left = 896
+    Top = 392
+  end
+  object ADOStoredProc5: TADOStoredProc
+    Parameters = <>
+    Left = 904
     Top = 456
   end
 end
