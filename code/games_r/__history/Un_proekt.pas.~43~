@@ -24,10 +24,9 @@ type
     Proekt_fnd_Edit: TLabeledEdit;
     Proekt_m_fio_Radio: TRadioButton;
     Proekt_reset_Radio: TRadioButton;
-    Worker_data_Box: TGroupBox;
-    Worker_btn_Box: TGroupBox;
-    Worker_inp_Box: TGroupBox;
-    Work_ins_Btn: TButton;
+    proekt_data_Box: TGroupBox;
+    proekt_btn_Box: TGroupBox;
+    proekt_ins_Btn: TButton;
     Worker_upd_data_Box: TGroupBox;
     Worker_upd_inpBox: TGroupBox;
     Worker_upd_btnBox: TGroupBox;
@@ -43,24 +42,25 @@ type
     proekt_janr_Radio: TRadioButton;
     Worker_upd_dateuv_lbl: TStaticText;
     Worker_u_date_uv_inp: TDateTimePicker;
+    firecb: TCheckBox;
+    ins_proekt_Grid: TDBGrid;
+    DBGrid2: TDBGrid;
+    DBGrid3: TDBGrid;
     about_workerPC: TPageControl;
     abot_worker_Tab_one: TTabSheet;
     abot_worker_Tab_two: TTabSheet;
-    ins_worker_fio_inp: TLabeledEdit;
-    ins_w_dol_lbl: TStaticText;
-    ins_w_dol_dbl: TDBLookupComboBox;
-    ins_w_phone_lbl: TStaticText;
-    ins_w_phone_inp: TMaskEdit;
-    free_busy_lbl: TStaticText;
-    free_busy_combo: TComboBox;
-    data_pr_lbl: TStaticText;
-    data_pr_inp: TDateTimePicker;
-    ins_w_role_lbl: TStaticText;
-    ins_w_role_dbl: TDBLookupComboBox;
-    firecb: TCheckBox;
-    DBGrid1: TDBGrid;
-    DBGrid2: TDBGrid;
-    DBGrid3: TDBGrid;
+    proekt_inp_box_one: TGroupBox;
+    ins_proekt_nam_inp: TLabeledEdit;
+    ins_pr_phone_lbl: TStaticText;
+    proekt_inp_box_two: TGroupBox;
+    ins_pr_cost_plan_inp: TLabeledEdit;
+    ins_proekt_janr_inp: TLabeledEdit;
+    ins_pr_date_nash_inp: TDateTimePicker;
+    ins_pr_men_lbl: TStaticText;
+    ins_pr_men_dbl: TDBLookupComboBox;
+    ins_pr_cost_fact_inp: TLabeledEdit;
+    ins_pr_data_end_lbl: TStaticText;
+    ins_pr_data_end_inp: TDateTimePicker;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -68,6 +68,8 @@ type
     procedure Proekt_fnd_EditKeyPress(Sender: TObject; var Key: Char);
     procedure Proekt_m_fio_RadioClick(Sender: TObject);
     procedure proekt_janr_RadioClick(Sender: TObject);
+    procedure Proekt_reset_RadioClick(Sender: TObject);
+    procedure proekt_ins_BtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -150,6 +152,72 @@ end;
 end;
 end;
 
+procedure TFrm_proekt.proekt_ins_BtnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+  PriceText: string;
+  PriceText1: string;
+  PriceValue: Int64;
+  PriceValue1: Int64;
+begin
+  PriceText:=ins_pr_cost_plan_inp.Text;
+  PriceText1:=ins_pr_cost_fact_inp.Text;
+  AreFieldsEmpty:=(
+ (Trim(ins_proekt_nam_inp.Text)='')or
+ (Trim(ins_proekt_janr_inp.Text)='')or
+ (Ins_pr_men_dbl.Text='')or
+ (Trim(ins_pr_cost_plan_inp.Text)='')or
+ (Trim(ins_pr_cost_fact_inp.Text)='')
+  );
+  if AreFieldsEmpty then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+    try
+      with dm.ins_proect do
+      begin
+        PriceValue:=StrToInt64(ins_pr_cost_plan_inp.Text);
+        PriceValue1:=StrToInt64(ins_pr_cost_fact_inp.Text);
+        if not dm.Connection.Connected then
+          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
+          Parameters.ParamByName('@Nam_proect').Value :=ins_proekt_nam_inp.Text;
+          Parameters.ParamByName('@janr').Value:=ins_proekt_janr_inp.Text;
+          Parameters.ParamByName('@data_nash').Value:=ins_pr_date_nash_inp.Date;
+          Parameters.ParamByName('@id_manager').Value:=
+          dm.menQuery.FieldByName('id_manager').AsString;
+          Parameters.ParamByName('@cost_plan').Value:=PriceValue;
+          Parameters.ParamByName('@cost_fact').Value:=PriceValue1;
+          Parameters.ParamByName('@dataendplan date').Value:=
+           ExecProc;
+           dm.proektQuery.Close;
+           dm.proektQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise; // Повторное выбрасывание исключения
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise;
+end;
+end;
+end;
+
 procedure TFrm_proekt.proekt_janr_RadioClick(Sender: TObject);
 begin
      if  proekt_janr_Radio.Checked=true then
@@ -160,21 +228,26 @@ begin
       close;
       sql.Clear;
       sql.Text:=
-      'select'+' '+
-    'Work.N_Work,'+' '+
-     'Work.Nam_work,'+' '+
-     'Work.T_days,'+' '+
-     'Etap.Nam_etap'+' '+
-     'from Work'+' '+
-    'inner join Etap on Etap.N_Etap=Work.N_Etap'+' '+
+     'select'+' '+
+    'Proect.N_Proekta,'+' '+
+    'Proect.Nam_proect,'+' '+
+    'Proect.janr,'+' '+
+    'Proect.data_nash,'+' '+
+    'manager.fio,'+' '+
+    'Proect.cost_plan,'+' '+
+    'Proect.cost_fact,'+' '+
+    'Proect.dataend,'+' '+
+    'Proect.dataendplan'+' '+
+    'from Proect'+' '+
+    'inner join manager on manager.Id_manager=Proect.id_manager'+' '+
     'where 1=1'+' '+
-     'order by  Work.Nam_work asc';
+     'order by  Proect.janr asc';
       Open;
      end;
     except
         on E: EDatabaseError do
   begin
-    ShowMessage('?????? ???? ??????: ' + E.Message);
+    ShowMessage('Ошибка базы данных: ' + E.Message);
     HandleException(E);
     raise;
   end;
@@ -240,6 +313,80 @@ begin
     raise;
   end;
 end;
+end;
+end;
+
+procedure TFrm_proekt.Proekt_reset_RadioClick(Sender: TObject);
+  var
+  i,j,c:Integer;
+begin
+  try
+  if Proekt_reset_Radio.Checked then
+  begin
+    with Frm_proekt do
+    begin
+      for I := 0 to ComponentCount - 1 do
+      begin
+        if Components[I] is TLabeledEdit then
+        begin
+          (Components[I] as TLabeledEdit).Clear;
+        end;
+      end;
+      for c := 0 to ComponentCount - 1 do
+      begin
+        if Components[c] is TCheckBox then
+        begin
+          (Components[c] as TCheckBox).Checked := False;
+        end;
+      end;
+      for j := 0 to ComponentCount - 1 do
+      begin
+        if Components[j] is TRadioButton then
+        begin
+          (Components[j] as TRadioButton).Checked := False;
+        end;
+      end;
+    end;
+    with dm.proektQuery do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text :=
+       'select'+' '+
+    'Proect.N_Proekta,'+' '+
+    'Proect.Nam_proect,'+' '+
+    'Proect.janr,'+' '+
+    'Proect.data_nash,'+' '+
+    'manager.fio,'+' '+
+    'Proect.cost_plan,'+' '+
+    'Proect.cost_fact,'+' '+
+    'Proect.dataend,'+' '+
+    'Proect.dataendplan'+' '+
+    'from Proect'+' '+
+    'inner join manager on manager.Id_manager=Proect.id_manager'+' '+
+    'where 1=1';
+      Open;
+    end;
+  end;
+except
+  on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка :' + E.Message);
+    HandleException(E);
+    raise;
+  end;
 end;
 end;
 

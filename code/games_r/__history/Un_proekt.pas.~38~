@@ -61,6 +61,8 @@ type
     ins_pr_cost_fact_inp: TLabeledEdit;
     ins_pr_data_end_lbl: TStaticText;
     ins_pr_data_end_inp: TDateTimePicker;
+    ins_pr_data_end_plan_lbl: TStaticText;
+    ins_pr_data_end_plan_inp: TDateTimePicker;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -155,14 +157,9 @@ end;
 procedure TFrm_proekt.proekt_ins_BtnClick(Sender: TObject);
 var
   AreFieldsEmpty: Boolean;
-  AreFieldsValid: Boolean;
   PriceText: string;
-  PriceText1: string;
   PriceValue: Int64;
-  PriceValue1: Int64;
 begin
-  PriceText:=ins_pr_cost_plan_inp.Text;
-  PriceText1:=ins_pr_cost_fact_inp.Text;
   AreFieldsEmpty:=(
  (Trim(ins_proekt_nam_inp.Text)='')or
  (Trim(ins_proekt_janr_inp.Text)='')or
@@ -170,57 +167,14 @@ begin
  (Trim(ins_pr_cost_plan_inp.Text)='')or
  (Trim(ins_pr_cost_fact_inp.Text)='')
   );
-  AreFieldsValid:=(
-  IsDigitsOnly(ins_pr_cost_plan_inp.Text)and
-  IsDigitsOnly(ins_pr_cost_fact_inp.Text)
-  );
-  if AreFieldsEmpty or not AreFieldsValid then
+  if AreFieldsEmpty then
   begin
     MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
     mtError, [mbOK], 0);
     Beep;
     Exit;
   end;
-    try
-      with dm.ins_proect do
-      begin
-        PriceValue:=StrToInt64(ins_pr_cost_plan_inp.Text);
-        PriceValue1:=StrToInt64(ins_pr_cost_fact_inp.Text);
-        if not dm.Connection.Connected then
-          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
-          Parameters.ParamByName('@Nam_proect').Value :=ins_proekt_nam_inp.Text;
-          Parameters.ParamByName('@janr').Value:=ins_proekt_janr_inp.Text;
-          Parameters.ParamByName('@data_nash').Value:=ins_pr_date_nash_inp.Date;
-          Parameters.ParamByName('@id_manager').Value:=
-          dm.menQuery.FieldByName('id_manager').AsString;
-          Parameters.ParamByName('@cost_plan').Value:=PriceValue;
-          Parameters.ParamByName('@cost_fact').Value:=PriceValue1;
-        Parameters.ParamByName('@dataendplan').Value:=ins_pr_date_nash_inp.Date;
-           ExecProc;
-           dm.proektQuery.Close;
-           dm.proektQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EDatabaseError do
-  begin
-    ShowMessage('Ошибка базы данных: ' + E.Message);
-    HandleException(E);
-    raise;
-  end;
-  on E: EOleError do
-  begin
-    ShowMessage('Ошибка COM: ' + E.Message);
-    HandleException(E); // Логирование ошибки
-    raise; // Повторное выбрасывание исключения
-  end;
-  on E: Exception do
-  begin
-    ShowMessage('Общая ошибка: ' + E.Message);
-    HandleException(E); // Логирование ошибки
-    raise;
-end;
-end;
+
 end;
 
 procedure TFrm_proekt.proekt_janr_RadioClick(Sender: TObject);

@@ -49,7 +49,7 @@ type
     proektQuery: TADOQuery;
     proektDS: TDataSource;
     sel_proekt_by_men_fio: TADOStoredProc;
-    ADOStoredProc2: TADOStoredProc;
+    ins_proect: TADOStoredProc;
     ADOStoredProc3: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;
   private

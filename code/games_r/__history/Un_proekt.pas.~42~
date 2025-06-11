@@ -61,6 +61,8 @@ type
     ins_pr_cost_fact_inp: TLabeledEdit;
     ins_pr_data_end_lbl: TStaticText;
     ins_pr_data_end_inp: TDateTimePicker;
+    ins_pr_data_end_plan_lbl: TStaticText;
+    ins_pr_data_end_plan_inp: TDateTimePicker;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -155,7 +157,6 @@ end;
 procedure TFrm_proekt.proekt_ins_BtnClick(Sender: TObject);
 var
   AreFieldsEmpty: Boolean;
-  AreFieldsValid: Boolean;
   PriceText: string;
   PriceText1: string;
   PriceValue: Int64;
@@ -170,11 +171,7 @@ begin
  (Trim(ins_pr_cost_plan_inp.Text)='')or
  (Trim(ins_pr_cost_fact_inp.Text)='')
   );
-  AreFieldsValid:=(
-  IsDigitsOnly(ins_pr_cost_plan_inp.Text)and
-  IsDigitsOnly(ins_pr_cost_fact_inp.Text)
-  );
-  if AreFieldsEmpty or not AreFieldsValid then
+  if AreFieldsEmpty then
   begin
     MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
     mtError, [mbOK], 0);
@@ -195,7 +192,7 @@ begin
           dm.menQuery.FieldByName('id_manager').AsString;
           Parameters.ParamByName('@cost_plan').Value:=PriceValue;
           Parameters.ParamByName('@cost_fact').Value:=PriceValue1;
-        Parameters.ParamByName('@dataendplan').Value:=ins_pr_date_nash_inp.Date;
+          Parameters.ParamByName('@dataendplan date').Value:=
            ExecProc;
            dm.proektQuery.Close;
            dm.proektQuery.Open;

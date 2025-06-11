@@ -155,7 +155,6 @@ end;
 procedure TFrm_proekt.proekt_ins_BtnClick(Sender: TObject);
 var
   AreFieldsEmpty: Boolean;
-  AreFieldsValid: Boolean;
   PriceText: string;
   PriceText1: string;
   PriceValue: Int64;
@@ -170,11 +169,7 @@ begin
  (Trim(ins_pr_cost_plan_inp.Text)='')or
  (Trim(ins_pr_cost_fact_inp.Text)='')
   );
-  AreFieldsValid:=(
-  IsDigitsOnly(ins_pr_cost_plan_inp.Text)and
-  IsDigitsOnly(ins_pr_cost_fact_inp.Text)
-  );
-  if AreFieldsEmpty or not AreFieldsValid then
+  if AreFieldsEmpty then
   begin
     MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
     mtError, [mbOK], 0);

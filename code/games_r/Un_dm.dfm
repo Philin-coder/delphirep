@@ -1,7 +1,7 @@
 object DM: TDM
   OldCreateOrder = False
   Height = 567
-  Width = 888
+  Width = 941
   object Connection: TADOConnection
     Connected = True
     ConnectionString = 
@@ -766,6 +766,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@N_Rab'
@@ -786,6 +787,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@N_Rab'
@@ -816,13 +818,13 @@ object DM: TDM
       ' from Proect'
       ' inner join manager on manager.Id_manager=Proect.id_manager'
       ' where 1=1')
-    Left = 808
-    Top = 64
+    Left = 816
+    Top = 56
   end
   object proektDS: TDataSource
     DataSet = proektQuery
-    Left = 816
-    Top = 144
+    Left = 824
+    Top = 136
   end
   object sel_proekt_by_men_fio: TADOStoredProc
     Connection = Connection
@@ -833,19 +835,74 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@manager_fio'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 1000
+        Value = Null
       end>
     Left = 824
-    Top = 208
+    Top = 216
   end
-  object ADOStoredProc2: TADOStoredProc
-    Parameters = <>
-    Left = 800
+  object ins_proect: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'ins_proect;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@Nam_proect'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 200
+      end
+      item
+        Name = '@janr'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = '@data_nash'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end
+      item
+        Name = '@id_manager'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@cost_plan'
+        Attributes = [paNullable]
+        DataType = ftFloat
+        NumericScale = 2
+        Precision = 10
+      end
+      item
+        Name = '@cost_fact'
+        Attributes = [paNullable]
+        DataType = ftFloat
+        NumericScale = 2
+        Precision = 10
+      end
+      item
+        Name = '@dataendplan'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end>
+    Left = 832
     Top = 304
   end
   object ADOStoredProc3: TADOStoredProc

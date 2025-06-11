@@ -21,7 +21,7 @@ object Frm_proekt: TFrm_proekt
     Top = 0
     Width = 1045
     Height = 533
-    ActivePage = insTab
+    ActivePage = updTab
     Align = alClient
     TabOrder = 0
     ExplicitHeight = 512
@@ -208,7 +208,7 @@ object Frm_proekt: TFrm_proekt
           Left = 2
           Top = 15
           Width = 1033
-          Height = 180
+          Height = 140
           Align = alClient
           DataSource = DM.proektDS
           TabOrder = 0
@@ -289,7 +289,6 @@ object Frm_proekt: TFrm_proekt
           Height = 25
           Caption = #1042#1074#1086#1076
           TabOrder = 0
-          OnClick = proekt_ins_BtnClick
         end
       end
       object about_workerPC: TPageControl
@@ -300,7 +299,6 @@ object Frm_proekt: TFrm_proekt
         ActivePage = abot_worker_Tab_two
         Align = alTop
         TabOrder = 2
-        ExplicitTop = -56
         object abot_worker_Tab_one: TTabSheet
           Caption = #1054' '#1087#1088#1086#1077#1082#1090#1077
           ExplicitLeft = 0
@@ -388,6 +386,8 @@ object Frm_proekt: TFrm_proekt
             Align = alClient
             Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
             TabOrder = 0
+            ExplicitLeft = 3
+            ExplicitTop = 13
             object ins_pr_cost_plan_inp: TLabeledEdit
               Left = 19
               Top = 48
@@ -400,7 +400,7 @@ object Frm_proekt: TFrm_proekt
             end
             object ins_pr_cost_fact_inp: TLabeledEdit
               Left = 19
-              Top = 120
+              Top = 96
               Width = 990
               Height = 21
               EditLabel.Width = 122
@@ -410,20 +410,37 @@ object Frm_proekt: TFrm_proekt
             end
             object ins_pr_data_end_lbl: TStaticText
               Left = 19
-              Top = 173
-              Width = 257
+              Top = 133
+              Width = 276
               Height = 17
-              Caption = #1044#1072#1090#1072' '#1086#1082#1086#1085#1095#1072#1085#1080#1103' '#1088#1072#1073#1086#1090#1099' '#1085#1072#1076' '#1087#1088#1086#1077#1082#1090#1086#1084'('#1087#1083#1072#1085#1086#1074#1072#1103')'
+              Caption = #1044#1072#1090#1072' '#1086#1082#1086#1085#1095#1072#1085#1080#1103' '#1088#1072#1073#1086#1090#1099' '#1085#1072#1076' '#1087#1088#1086#1077#1082#1090#1086#1084'('#1092#1072#1082#1090#1080#1095#1077#1089#1082#1072#1103')'
               TabOrder = 2
             end
             object ins_pr_data_end_inp: TDateTimePicker
               Left = 19
-              Top = 204
+              Top = 156
               Width = 990
               Height = 21
               Date = 45819.470418125000000000
               Time = 45819.470418125000000000
               TabOrder = 3
+            end
+            object ins_pr_data_end_plan_lbl: TStaticText
+              Left = 19
+              Top = 205
+              Width = 257
+              Height = 17
+              Caption = #1044#1072#1090#1072' '#1086#1082#1086#1085#1095#1072#1085#1080#1103' '#1088#1072#1073#1086#1090#1099' '#1085#1072#1076' '#1087#1088#1086#1077#1082#1090#1086#1084'('#1087#1083#1072#1085#1086#1074#1072#1103')'
+              TabOrder = 4
+            end
+            object ins_pr_data_end_plan_inp: TDateTimePicker
+              Left = 19
+              Top = 228
+              Width = 990
+              Height = 21
+              Date = 45819.470418125000000000
+              Time = 45819.470418125000000000
+              TabOrder = 5
             end
           end
         end
