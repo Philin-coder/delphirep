@@ -50,8 +50,8 @@ type
     proektDS: TDataSource;
     sel_proekt_by_men_fio: TADOStoredProc;
     ins_proect: TADOStoredProc;
-    ADOStoredProc3: TADOStoredProc;
-    ADOStoredProc4: TADOStoredProc;
+    upd_proekt: TADOStoredProc;
+    del_proekt: TADOStoredProc;
   private
     { Private declarations }
   public

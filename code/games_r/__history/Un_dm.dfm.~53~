@@ -1,7 +1,7 @@
 object DM: TDM
   OldCreateOrder = False
   Height = 567
-  Width = 856
+  Width = 941
   object Connection: TADOConnection
     Connected = True
     ConnectionString = 
@@ -766,6 +766,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@N_Rab'
@@ -777,9 +778,142 @@ object DM: TDM
     Left = 688
     Top = 392
   end
-  object ADOStoredProc5: TADOStoredProc
-    Parameters = <>
+  object del_worker: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'del_worker;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@N_Rab'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
     Left = 696
     Top = 448
+  end
+  object proektQuery: TADOQuery
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      'Proect.N_Proekta,'
+      'Proect.Nam_proect,'
+      'Proect.janr,'
+      'Proect.data_nash,'
+      'manager.fio,'
+      'Proect.cost_plan,'
+      'Proect.cost_fact,'
+      'Proect.dataend,'
+      'Proect.dataendplan'
+      ' from Proect'
+      ' inner join manager on manager.Id_manager=Proect.id_manager'
+      ' where 1=1')
+    Left = 816
+    Top = 56
+  end
+  object proektDS: TDataSource
+    DataSet = proektQuery
+    Left = 824
+    Top = 136
+  end
+  object sel_proekt_by_men_fio: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_proekt_by_men_fio;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@manager_fio'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 1000
+        Value = Null
+      end>
+    Left = 824
+    Top = 216
+  end
+  object ins_proect: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'ins_proect;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@Nam_proect'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 200
+      end
+      item
+        Name = '@janr'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 50
+      end
+      item
+        Name = '@data_nash'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end
+      item
+        Name = '@id_manager'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@cost_plan'
+        Attributes = [paNullable]
+        DataType = ftFloat
+        NumericScale = 2
+        Precision = 10
+      end
+      item
+        Name = '@cost_fact'
+        Attributes = [paNullable]
+        DataType = ftFloat
+        NumericScale = 2
+        Precision = 10
+      end
+      item
+        Name = '@dataendplan'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end>
+    Left = 832
+    Top = 304
+  end
+  object upd_proekt: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_proekt;1'
+    Parameters = <>
+    Left = 832
+    Top = 384
+  end
+  object ADOStoredProc4: TADOStoredProc
+    Parameters = <>
+    Left = 832
+    Top = 456
   end
 end

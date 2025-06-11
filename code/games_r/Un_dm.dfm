@@ -800,7 +800,6 @@ object DM: TDM
     Top = 448
   end
   object proektQuery: TADOQuery
-    Active = True
     Connection = Connection
     CursorType = ctStatic
     Parameters = <>
@@ -905,13 +904,49 @@ object DM: TDM
     Left = 832
     Top = 304
   end
-  object ADOStoredProc3: TADOStoredProc
-    Parameters = <>
-    Left = 816
-    Top = 392
+  object upd_proekt: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_proekt;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@N_Proekta'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@dataend'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end>
+    Left = 832
+    Top = 384
   end
-  object ADOStoredProc4: TADOStoredProc
-    Parameters = <>
+  object del_proekt: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'del_proekt;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@N_Proekta'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
     Left = 832
     Top = 456
   end

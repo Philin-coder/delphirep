@@ -27,25 +27,22 @@ type
     proekt_data_Box: TGroupBox;
     proekt_btn_Box: TGroupBox;
     proekt_ins_Btn: TButton;
-    Worker_upd_data_Box: TGroupBox;
-    Worker_upd_inpBox: TGroupBox;
-    Worker_upd_btnBox: TGroupBox;
-    worker_upd_btn: TButton;
-    Worker_upd_uv_lbl: TStaticText;
-    Worker_upd_u_dbl: TDBLookupComboBox;
-    worker_del_data_Box: TGroupBox;
-    worker_del_btn_Box: TGroupBox;
-    worker_del_ipp_Box: TGroupBox;
-    worker_del_btn: TButton;
-    worker_del_e_lbl: TStaticText;
-    worker_del_e_dbl: TDBLookupComboBox;
+    proekt_upd_data_Box: TGroupBox;
+    proekt_upd_inpBox: TGroupBox;
+    proekt_upd_btnBox: TGroupBox;
+    proekt_upd_btn: TButton;
+    proekt_upd_proekt_lbl: TStaticText;
+    proekt_upd_u_dbl: TDBLookupComboBox;
+    proekt_del_data_Box: TGroupBox;
+    proekt_del_btn_Box: TGroupBox;
+    proekt_del_ipp_Box: TGroupBox;
+    proekt_del_btn: TButton;
+    proekt_del_e_lbl: TStaticText;
+    proekt_del_e_dbl: TDBLookupComboBox;
     proekt_janr_Radio: TRadioButton;
-    Worker_upd_dateuv_lbl: TStaticText;
-    Worker_u_date_uv_inp: TDateTimePicker;
-    firecb: TCheckBox;
-    ins_proekt_Grid: TDBGrid;
-    DBGrid2: TDBGrid;
-    DBGrid3: TDBGrid;
+    proekt_upd_dataendplan_lbl: TStaticText;
+    proekt_u_dataendplan_inp: TDateTimePicker;
+    proekt_Del_Grid: TDBGrid;
     about_workerPC: TPageControl;
     abot_worker_Tab_one: TTabSheet;
     abot_worker_Tab_two: TTabSheet;
@@ -61,6 +58,8 @@ type
     ins_pr_cost_fact_inp: TLabeledEdit;
     ins_pr_data_end_lbl: TStaticText;
     ins_pr_data_end_inp: TDateTimePicker;
+    ins_pr_Grid: TDBGrid;
+    upd_pr_Grid: TDBGrid;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -70,6 +69,8 @@ type
     procedure proekt_janr_RadioClick(Sender: TObject);
     procedure Proekt_reset_RadioClick(Sender: TObject);
     procedure proekt_ins_BtnClick(Sender: TObject);
+    procedure proekt_upd_btnClick(Sender: TObject);
+    procedure proekt_del_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -107,6 +108,54 @@ begin
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   UniformizeComponentAnchors(Self);
   LoadFormState(Self);
+end;
+
+procedure TFrm_proekt.proekt_del_btnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (proekt_del_e_dbl.Text='')
+  );
+  if AreFieldsEmpty then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+    try
+      with dm.del_proekt do
+      begin
+        if not dm.Connection.Connected then
+          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
+           Parameters.ParamByName('@N_Proekta').Value :=
+           dm.proektQuery.FieldByName('N_Proekta').AsString;
+           ExecProc;
+           dm.proektQuery.Close;
+           dm.proektQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise; // Повторное выбрасывание исключения
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise;
+end;
+end;
 end;
 
 procedure TFrm_proekt.Proekt_fnd_EditKeyPress(Sender: TObject; var Key: Char);
@@ -428,6 +477,57 @@ begin
   end;
 end;
 
+end;
+
+procedure TFrm_proekt.proekt_upd_btnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (proekt_upd_u_dbl.Text='')
+  );
+  if AreFieldsEmpty then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.upd_proekt do
+      begin
+        if not dm.Connection.Connected then
+          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
+           Parameters.ParamByName('@N_Proekta').Value :=
+           dm.proektQuery.FieldByName('N_Proekta').AsString;
+           Parameters.ParamByName('@dataend').Value:=
+           proekt_u_dataendplan_inp.Date;
+           ExecProc;
+           dm.proektQuery.Close;
+           dm.proektQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise; // Повторное выбрасывание исключения
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise;
+end;
+end;
+  
 end;
 
 end.
