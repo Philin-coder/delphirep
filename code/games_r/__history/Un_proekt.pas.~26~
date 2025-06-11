@@ -67,8 +67,6 @@ type
     procedure Proekt_sel_BtnClick(Sender: TObject);
     procedure Proekt_fnd_EditKeyPress(Sender: TObject; var Key: Char);
     procedure Proekt_m_fio_RadioClick(Sender: TObject);
-    procedure proekt_janr_RadioClick(Sender: TObject);
-    procedure Proekt_reset_RadioClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -151,55 +149,6 @@ end;
 end;
 end;
 
-procedure TFrm_proekt.proekt_janr_RadioClick(Sender: TObject);
-begin
-     if  proekt_janr_Radio.Checked=true then
-  begin
-    try
-     with dm.proektQuery do
-     begin
-      close;
-      sql.Clear;
-      sql.Text:=
-     'select'+' '+
-    'Proect.N_Proekta,'+' '+
-    'Proect.Nam_proect,'+' '+
-    'Proect.janr,'+' '+
-    'Proect.data_nash,'+' '+
-    'manager.fio,'+' '+
-    'Proect.cost_plan,'+' '+
-    'Proect.cost_fact,'+' '+
-    'Proect.dataend,'+' '+
-    'Proect.dataendplan'+' '+
-    'from Proect'+' '+
-    'inner join manager on manager.Id_manager=Proect.id_manager'+' '+
-    'where 1=1'+' '+
-     'order by  Proect.janr asc';
-      Open;
-     end;
-    except
-        on E: EDatabaseError do
-  begin
-    ShowMessage('Ошибка базы данных: ' + E.Message);
-    HandleException(E);
-    raise;
-  end;
-  on E: EOleError do
-  begin
-    ShowMessage('Ошибка  Ole: ' + E.Message);
-    HandleException(E);
-    raise;
-  end;
-  on E: Exception do
-  begin
-    ShowMessage('Общая ошибка: ' + E.Message);
-    HandleException(E);
-    raise;
-  end;
-end;
-end;
-end;
-
 procedure TFrm_proekt.Proekt_m_fio_RadioClick(Sender: TObject);
 begin
      if  Proekt_m_fio_Radio.Checked=true then
@@ -243,83 +192,8 @@ begin
   begin
     ShowMessage(' Общая ошибка: ' + E.Message);
     HandleException(E);
-    raise;
   end;
 end;
-end;
-end;
-
-procedure TFrm_proekt.Proekt_reset_RadioClick(Sender: TObject);
-  var
-  i,j,c:Integer;
-begin
-  try
-  if Proekt_reset_Radio.Checked then
-  begin
-    with Frm_proekt do
-    begin
-      for I := 0 to ComponentCount - 1 do
-      begin
-        if Components[I] is TLabeledEdit then
-        begin
-          (Components[I] as TLabeledEdit).Clear;
-        end;
-      end;
-      for c := 0 to ComponentCount - 1 do
-      begin
-        if Components[c] is TCheckBox then
-        begin
-          (Components[c] as TCheckBox).Checked := False;
-        end;
-      end;
-      for j := 0 to ComponentCount - 1 do
-      begin
-        if Components[j] is TRadioButton then
-        begin
-          (Components[j] as TRadioButton).Checked := False;
-        end;
-      end;
-    end;
-    with dm.proektQuery do
-    begin
-      Close;
-      sql.Clear;
-      sql.Text :=
-       'select'+' '+
-    'Proect.N_Proekta,'+' '+
-    'Proect.Nam_proect,'+' '+
-    'Proect.janr,'+' '+
-    'Proect.data_nash,'+' '+
-    'manager.fio,'+' '+
-    'Proect.cost_plan,'+' '+
-    'Proect.cost_fact,'+' '+
-    'Proect.dataend,'+' '+
-    'Proect.dataendplan'+' '+
-    'from Proect'+' '+
-    'inner join manager on manager.Id_manager=Proect.id_manager'+' '+
-    'where 1=1';
-      Open;
-    end;
-  end;
-except
-  on E: EDatabaseError do
-  begin
-    ShowMessage('Ошибка базы данных: ' + E.Message);
-    HandleException(E);
-    raise;
-  end;
-  on E: EOleError do
-  begin
-    ShowMessage('Ошибка COM: ' + E.Message);
-    HandleException(E);
-    raise;
-  end;
-  on E: Exception do
-  begin
-    ShowMessage('Общая ошибка :' + E.Message);
-    HandleException(E);
-    raise;
-  end;
 end;
 end;
 

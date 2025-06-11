@@ -71,6 +71,7 @@ object Frm_proekt: TFrm_proekt
           Height = 17
           Caption = #1055#1086'  '#1060#1048#1054' '#1084#1077#1085#1077#1076#1078#1077#1088#1072
           TabOrder = 0
+          OnClick = Proekt_m_fio_RadioClick
         end
         object Proekt_reset_Radio: TRadioButton
           Left = 616
@@ -79,6 +80,7 @@ object Frm_proekt: TFrm_proekt
           Height = 17
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 1
+          OnClick = Proekt_reset_RadioClick
         end
         object proekt_janr_Radio: TRadioButton
           Left = 312
@@ -87,6 +89,7 @@ object Frm_proekt: TFrm_proekt
           Height = 17
           Caption = #1055#1086'  '#1078#1072#1085#1088#1091
           TabOrder = 2
+          OnClick = proekt_janr_RadioClick
         end
       end
       object ProektdataBox: TGroupBox
