@@ -1098,23 +1098,8 @@ object DM: TDM
     Left = 944
     Top = 384
   end
-  object del_task: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'del_task;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@N_zad'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = 0
-      end>
+  object ADOStoredProc1: TADOStoredProc
+    Parameters = <>
     Left = 952
     Top = 448
   end

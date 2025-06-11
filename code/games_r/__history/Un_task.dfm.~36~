@@ -629,7 +629,6 @@ object Frm_task: TFrm_task
           Height = 25
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
-          OnClick = worker_del_btnClick
         end
       end
       object taskr_del_ipp_Box: TGroupBox

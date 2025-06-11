@@ -56,9 +56,9 @@ type
     taskDS: TDataSource;
     sel_task_by_proekt_naim: TADOStoredProc;
     ins_zadanie: TADOStoredProc;
-    upd_task: TADOStoredProc;
-    upd_task_back: TADOStoredProc;
-    del_task: TADOStoredProc;
+    ADOStoredProc3: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
+    ADOStoredProc5: TADOStoredProc;
   private
     { Private declarations }
   public

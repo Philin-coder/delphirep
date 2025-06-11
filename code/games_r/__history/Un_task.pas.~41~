@@ -34,12 +34,12 @@ type
     task_upd_btn: TButton;
     task_upd_uv_lbl: TStaticText;
     task_upd_u_dbl: TDBLookupComboBox;
-    task_del_data_Box: TGroupBox;
-    task_del_btn_Box: TGroupBox;
-    taskr_del_ipp_Box: TGroupBox;
+    worker_del_data_Box: TGroupBox;
+    worker_del_btn_Box: TGroupBox;
+    worker_del_ipp_Box: TGroupBox;
     worker_del_btn: TButton;
-    task_del_e_lbl: TStaticText;
-    task_del_e_dbl: TDBLookupComboBox;
+    worker_del_e_lbl: TStaticText;
+    worker_del_e_dbl: TDBLookupComboBox;
     task_pr_Radio: TRadioButton;
     readysCB: TCheckBox;
     task_upd_dateuv_lbl: TStaticText;
@@ -47,10 +47,10 @@ type
     about_taskPC: TPageControl;
     abot_tsk_Tab_one: TTabSheet;
     abot_tsk_two: TTabSheet;
-    readycb: TCheckBox;
+    firecb: TCheckBox;
     ins_task_Grd: TDBGrid;
     updDataGrd: TDBGrid;
-    task_del_grd: TDBGrid;
+    DBGrid3: TDBGrid;
     sr_vip_lbl: TStaticText;
     sr_vip_inp: TDateTimePicker;
     n_rab_lbl: TStaticText;
@@ -75,8 +75,6 @@ type
     procedure st_rabComboChange(Sender: TObject);
     procedure task_ins_BtnClick(Sender: TObject);
     procedure task_upd_btnClick(Sender: TObject);
-    procedure readycbClick(Sender: TObject);
-    procedure worker_del_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -92,98 +90,6 @@ uses Un_dm, Un_func;
 
 {$R *.dfm}
 
-
-
-procedure TFrm_task.readycbClick(Sender: TObject);
-begin
-  case readycb.Checked of
-  true:
-  begin
-  ready_st:=1;
-      try
-   dm.taskQuery.SQL.Text:=
-    'select'+' '+
-    'Zadanie.N_Zad,'+' '+
-    'Zadanie.Sr_vip,'+' '+
-    'Rabotnik.Fio,'+' '+
-    'case when  Zadanie.St_rab=1 then ''Готово'' else ''Не готово'' end as work_st ,'+' '+
-    'Zadanie.Data_nash,'+' '+
-    'Proect.Nam_proect,'+' '+
-    'Work.Nam_work'+' '+
-    'from Zadanie'+' '+
-    'inner join Rabotnik on Rabotnik.N_Rab=Zadanie.N_Rab'+' '+
-    'inner join Proect on Proect.N_Proekta=Zadanie.N_Proekta'+' '+
-    'inner join Work on Work.N_Work=Zadanie.N_Work'+' '+
-    'where 1=1'+' '+
-    'and Zadanie.Date_fakt is not  null';
-   dm.taskQuery.close;
-   dm.taskQuery.Open;
-except
-   on E: EDatabaseError do
-  begin
-    ShowMessage('Ошибка базы данных ' + E.Message);
-    HandleException(E);
-    raise;
-  end;
-  on E: EOleError do
-  begin
-    ShowMessage('Ошибка  Ole: ' + E.Message);
-    HandleException(E);
-    raise;
-  end;
-  on E: Exception do
-  begin
-    ShowMessage('Общая ошибка: ' + E.Message);
-    HandleException(E);
-    raise;
-end;
-end;
-end;
-  false:
-  begin
-    ready_st:=0;
-     try
-   dm.taskQuery.SQL.Text:=
-    'select'+' '+
-    'Zadanie.N_Zad,'+' '+
-    'Zadanie.Sr_vip,'+' '+
-    'Rabotnik.Fio,'+' '+
-    'case when  Zadanie.St_rab=1 then ''Готово'' else ''Не готово'' end as work_st ,'+' '+
-    'Zadanie.Data_nash,'+' '+
-    'Proect.Nam_proect,'+' '+
-    'Work.Nam_work'+' '+
-    'from Zadanie'+' '+
-    'inner join Rabotnik on Rabotnik.N_Rab=Zadanie.N_Rab'+' '+
-    'inner join Proect on Proect.N_Proekta=Zadanie.N_Proekta'+' '+
-    'inner join Work on Work.N_Work=Zadanie.N_Work'+' '+
-    'where 1=1'+' '+
-    'and Zadanie.Date_fakt is null';
-   dm.taskQuery.close;
-   dm.taskQuery.Open;
-except
-   on E: EDatabaseError do
-  begin
-    ShowMessage('Ошибка базы данных ' + E.Message);
-    HandleException(E);
-    raise;
-  end;
-  on E: EOleError do
-  begin
-    ShowMessage('Ошибка  Ole: ' + E.Message);
-    HandleException(E);
-    raise;
-  end;
-  on E: Exception do
-  begin
-    ShowMessage('Общая ошибка: ' + E.Message);
-    HandleException(E);
-    raise;
-end;
-end;
-end;
-
-  end;
-  end; //case
 
 
 procedure TFrm_task.FormActivate(Sender: TObject);
@@ -621,10 +527,7 @@ procedure TFrm_task.task_upd_btnClick(Sender: TObject);
 var
   AreFieldsEmpty: Boolean;
 begin
- case ready_st of
- 0:
- begin
-    AreFieldsEmpty:=(
+  AreFieldsEmpty:=(
   (task_upd_u_dbl.Text='')
   );
   if AreFieldsEmpty then
@@ -639,9 +542,7 @@ begin
       begin
         if not dm.Connection.Connected then
           raise EDatabaseError.Create('Соединение с базой не установлено',4001);
-           Parameters.ParamByName('@N_zad').Value :=
-           dm.taskQuery.FieldByName('N_zad').AsString;
-           Parameters.ParamByName('@date_fakt').Value:=task_u_date_uv_inp.Date;
+           Parameters.ParamByName('@Nam_etap').Value :=Nam_etap_inp.Text;
            ExecProc;
            dm.taskQuery.Close;
            dm.taskQuery.Open;
@@ -667,104 +568,6 @@ begin
     raise;
 end;
 end;
-end;
-1:
-begin
-    AreFieldsEmpty:=(
-  (task_upd_u_dbl.Text='')
-  );
-  if AreFieldsEmpty then
-  begin
-    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-  try
-      with dm.upd_task_back do
-      begin
-        if not dm.Connection.Connected then
-          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
-           Parameters.ParamByName('@N_zad').Value :=
-           dm.taskQuery.FieldByName('N_zad').AsString;
-           ExecProc;
-           dm.taskQuery.Close;
-           dm.taskQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EDatabaseError do
-  begin
-    ShowMessage('Ошибка базы данных: ' + E.Message);
-    HandleException(E);
-    raise;
-  end;
-  on E: EOleError do
-  begin
-    ShowMessage('Ошибка COM: ' + E.Message);
-    HandleException(E); // Логирование ошибки
-    raise; // Повторное выбрасывание исключения
-  end;
-  on E: Exception do
-  begin
-    ShowMessage('Общая ошибка: ' + E.Message);
-    HandleException(E); // Логирование ошибки
-    raise;
-end;
-end;
-end;
-end;
-
-
-end;
-
-procedure TFrm_task.worker_del_btnClick(Sender: TObject);
-var
-  AreFieldsEmpty: Boolean;
-begin
-  AreFieldsEmpty:=(
-  (task_del_e_dbl.Text='')
-  );
-  if AreFieldsEmpty then
-  begin
-      MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-  try
-      with dm.del_task do
-      begin
-        if not dm.Connection.Connected then
-          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
-           Parameters.ParamByName('@N_zad').Value :=
-           dm.taskQuery.FieldByName('N_zad').AsString;
-           ExecProc;
-           dm.taskQuery.Close;
-           dm.taskQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EDatabaseError do
-  begin
-    ShowMessage('Ошибка базы данных: ' + E.Message);
-    HandleException(E);
-    raise;
-  end;
-  on E: EOleError do
-  begin
-    ShowMessage('Ошибка COM: ' + E.Message);
-    HandleException(E); // Логирование ошибки
-    raise; // Повторное выбрасывание исключения
-  end;
-  on E: Exception do
-  begin
-    ShowMessage('Общая ошибка: ' + E.Message);
-    HandleException(E); // Логирование ошибки
-    raise;
-end;
-end;
-  
 end;
 
 end.

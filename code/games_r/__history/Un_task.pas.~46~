@@ -34,12 +34,12 @@ type
     task_upd_btn: TButton;
     task_upd_uv_lbl: TStaticText;
     task_upd_u_dbl: TDBLookupComboBox;
-    task_del_data_Box: TGroupBox;
-    task_del_btn_Box: TGroupBox;
-    taskr_del_ipp_Box: TGroupBox;
+    worker_del_data_Box: TGroupBox;
+    worker_del_btn_Box: TGroupBox;
+    worker_del_ipp_Box: TGroupBox;
     worker_del_btn: TButton;
-    task_del_e_lbl: TStaticText;
-    task_del_e_dbl: TDBLookupComboBox;
+    worker_del_e_lbl: TStaticText;
+    worker_del_e_dbl: TDBLookupComboBox;
     task_pr_Radio: TRadioButton;
     readysCB: TCheckBox;
     task_upd_dateuv_lbl: TStaticText;
@@ -50,7 +50,7 @@ type
     readycb: TCheckBox;
     ins_task_Grd: TDBGrid;
     updDataGrd: TDBGrid;
-    task_del_grd: TDBGrid;
+    DBGrid3: TDBGrid;
     sr_vip_lbl: TStaticText;
     sr_vip_inp: TDateTimePicker;
     n_rab_lbl: TStaticText;
@@ -76,7 +76,6 @@ type
     procedure task_ins_BtnClick(Sender: TObject);
     procedure task_upd_btnClick(Sender: TObject);
     procedure readycbClick(Sender: TObject);
-    procedure worker_del_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -668,103 +667,11 @@ begin
 end;
 end;
 end;
-1:
-begin
-    AreFieldsEmpty:=(
-  (task_upd_u_dbl.Text='')
-  );
-  if AreFieldsEmpty then
-  begin
-    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-  try
-      with dm.upd_task_back do
-      begin
-        if not dm.Connection.Connected then
-          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
-           Parameters.ParamByName('@N_zad').Value :=
-           dm.taskQuery.FieldByName('N_zad').AsString;
-           ExecProc;
-           dm.taskQuery.Close;
-           dm.taskQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EDatabaseError do
-  begin
-    ShowMessage('Ошибка базы данных: ' + E.Message);
-    HandleException(E);
-    raise;
-  end;
-  on E: EOleError do
-  begin
-    ShowMessage('Ошибка COM: ' + E.Message);
-    HandleException(E); // Логирование ошибки
-    raise; // Повторное выбрасывание исключения
-  end;
-  on E: Exception do
-  begin
-    ShowMessage('Общая ошибка: ' + E.Message);
-    HandleException(E); // Логирование ошибки
-    raise;
-end;
-end;
-end;
-end;
+ end;
+ 1:
+ begin
 
-
-end;
-
-procedure TFrm_task.worker_del_btnClick(Sender: TObject);
-var
-  AreFieldsEmpty: Boolean;
-begin
-  AreFieldsEmpty:=(
-  (task_del_e_dbl.Text='')
-  );
-  if AreFieldsEmpty then
-  begin
-      MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-  try
-      with dm.del_task do
-      begin
-        if not dm.Connection.Connected then
-          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
-           Parameters.ParamByName('@N_zad').Value :=
-           dm.taskQuery.FieldByName('N_zad').AsString;
-           ExecProc;
-           dm.taskQuery.Close;
-           dm.taskQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EDatabaseError do
-  begin
-    ShowMessage('Ошибка базы данных: ' + E.Message);
-    HandleException(E);
-    raise;
-  end;
-  on E: EOleError do
-  begin
-    ShowMessage('Ошибка COM: ' + E.Message);
-    HandleException(E); // Логирование ошибки
-    raise; // Повторное выбрасывание исключения
-  end;
-  on E: Exception do
-  begin
-    ShowMessage('Общая ошибка: ' + E.Message);
-    HandleException(E); // Логирование ошибки
-    raise;
-end;
-end;
-  
-end;
+ end;
+ end;//case
 
 end.
