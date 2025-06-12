@@ -1,7 +1,7 @@
-USE [Razrab_Andryuschenko]
+USE [games_r]
 GO
 
-/****** Object:  Table [dbo].[Dolshnost]    Script Date: 01.12.2020 21:40:48 ******/
+/****** Object:  Table [dbo].[Dolshnost]    Script Date: 12.06.2025 12:42:17 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -10,7 +10,7 @@ GO
 
 CREATE TABLE [dbo].[Dolshnost](
 	[N_Dol] [int] IDENTITY(1,1) NOT NULL,
-	[Nam_dol] [varchar](100) NOT NULL,
+	[Nam_dol] [varchar](1000) NOT NULL,
 	[Id_manager] [int] NOT NULL,
  CONSTRAINT [PK__Dolshnos__CC4C67DB00314AF6] PRIMARY KEY CLUSTERED 
 (
