@@ -430,6 +430,7 @@ begin
       TDateTimePicker(Control).Color := AColor;
       TDateTimePicker(Control).Font.Name := AFontName;
       TDateTimePicker(Control).Font.Size := AFontSize;
+      TDateTimePicker(Control).Date:=Now;
     end
      else if Control  is TDBComboBox then
           begin

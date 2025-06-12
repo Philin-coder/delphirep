@@ -3,6 +3,7 @@ unit Un_func;
 interface
 uses
 dateUtils,
+activeX,
 sysUtils,
 Controls,
 Classes,
@@ -52,6 +53,7 @@ type
   // Конкретные исключения
   EInvalidInput = class(EMyException);
   EDatabaseError = class(EMyException);
+  EOleError = class(EMyException); // Новый класс для ошибок COM/OLE
 
 // Процедура для стандартной обработки ошибок
 procedure HandleException(E: Exception);
@@ -3276,6 +3278,7 @@ begin
   AControl.Anchors := [akLeft, akRight];
   AControl.Anchors := AControl.Anchors - [akTop, akBottom];
 end;
+
 constructor EMyException.Create(const Msg: string; AErrorCode: Integer);
 begin
   inherited Create(Msg);
@@ -3286,6 +3289,12 @@ constructor EMyException.CreateFromADOError(E: EADOError);
 begin
   inherited Create(E.Message);
   FErrorCode := 2001; // Код для ошибок БД
+end;
+
+constructor EMyException.CreateFromOLEError(E: EOleException);
+begin
+  inherited Create(E.Message);
+  FErrorCode := 3001; // Код для ошибок COM
 end;
 procedure HandleException(E: Exception);
 var
@@ -3303,16 +3312,23 @@ begin
 
     Writeln(LogFile, FormatDateTime('yyyy-mm-dd hh:nn:ss', Now) + ' - Ошибка: ' + E.ClassName);
     Writeln(LogFile, 'Сообщение: ' + E.Message);
+    
     if E is EMyException then
-      Writeln(LogFile, 'Код ошибки: ' + IntToStr(EMyException(E).ErrorCode));
+      Writeln(LogFile, 'Код ошибки: ' + IntToStr(EMyException(E).ErrorCode))
+    else if E is EOleException then
+      Writeln(LogFile, 'Код ошибки COM: ' + IntToStr(EOleException(E).ErrorCode));
+
     Writeln(LogFile, '----------------------------------------');
     CloseFile(LogFile);
+
+    // Вывод сообщения пользователю
     if E is EInvalidInput then
       ShowMessage('Ошибка ввода: ' + E.Message)
     else if E is EDatabaseError then
       ShowMessage('Ошибка базы данных: ' + E.Message)
-    else if E is EADOError then
-      ShowMessage('Ошибка ADO: ' + E.Message)
+    else if E is EOleError then
+      ShowMessage('Ошибка COM: ' + E.Message + #13#10 + 'Код ошибки: '
+      + IntToStr(EOleError(E).ErrorCode))
     else
       ShowMessage('Произошла ошибка: ' + E.Message);
 
@@ -3323,8 +3339,6 @@ begin
     end;
   end;
 end;
-
-
 initialization
   VisitedStaticTexts := TStringList.Create;
 finalization
