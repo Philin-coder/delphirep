@@ -1,0 +1,26 @@
+unit Un_main;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs,jpeg,ADODB,db;
+
+type
+  TFrm_main = class(TForm)
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_main: TFrm_main;
+
+implementation
+
+uses Un_dm, Un_func;
+
+{$R *.dfm}
+
+end.
