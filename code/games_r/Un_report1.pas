@@ -78,9 +78,9 @@ begin
     begin
       Close;
            Parameters.ParamByName('@d1').Value
-           :=DateToStr_(rp_date_b_inp.Date);
+           :=rp_date_b_inp.Date;
            Parameters.ParamByName('@d2').Value
-           :=DateToStr_(rp_date_e_inp.Date);
+           :=rp_date_e_inp.Date;
       Open;
        DM.reportQuery.Recordset:=dm.report1.Recordset;
     end;
