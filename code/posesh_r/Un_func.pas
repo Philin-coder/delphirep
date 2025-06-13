@@ -3368,7 +3368,8 @@ begin
       except
         on E: Exception do
         begin
-          ShowMessageFmt('Ошибка при отключении LoginPrompt у "%s": %s', [ADOConn.Name, E.Message]);
+          ShowMessageFmt('Ошибка при отключении LoginPrompt у "%s": %s',
+          [ADOConn.Name, E.Message]);
         end;
       end;
     end;
