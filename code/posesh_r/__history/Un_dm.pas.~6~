@@ -8,8 +8,6 @@ uses
 type
   Tdm = class(TDataModule)
     Connection: TADOConnection;
-    TeacherQuery: TADOQuery;
-    teacherDS: TDataSource;
   private
     { Private declarations }
   public
