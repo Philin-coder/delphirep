@@ -203,8 +203,8 @@ procedure UniformizeComponentAnchors(AComponent: TComponent);
 procedure UpdateFormShowHint(const FormName: string);
 procedure UpdateControlsShowHint(ParentControl: TWinControl);
 procedure UpdateAnchors(AControl: TControl);
+
 procedure DisableLoginPromptsOnDataModule(const DataModuleName: string);
-function FindDMByName(const mName: string): TDataModule;
 implementation
 type
   tdata = array [0..15] of DWORD;
@@ -3363,7 +3363,7 @@ begin
         if ADOConn.LoginPrompt then
         begin
           ADOConn.LoginPrompt := False;
-          //ShowMessageFmt('LoginPrompt отключён для "%s".', [ADOConn.Name]);
+          ShowMessageFmt('LoginPrompt отключён для "%s".', [ADOConn.Name]);
         end;
       except
         on E: Exception do

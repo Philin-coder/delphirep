@@ -6,6 +6,6 @@
     <Transaction>2025.06.13 00:07:28.371.bdsgroup,F:\code\Result\delphi\code\posesh_r\posech_Project.bdsgroup=F:\code\Result\delphi\code\posesh_r\posech_Project_group.bdsgroup</Transaction>
   </Transactions>
   <Default.Personality>
-    <Projects ActiveProject="posechProject.exe"/>
+    <Projects ActiveProject="posech.exe"/>
   </Default.Personality>
 </BorlandProject>

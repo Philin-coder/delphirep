@@ -16,11 +16,9 @@
     
     
     
-    
-    
     <Projects>
-      <Projects Name="posech.exe">posech.bdsproj</Projects>
-      <Projects Name="Targets">posech.exe</Projects>
+      <Projects Name="posechProject.exe">posechProject.bdsproj</Projects>
+      <Projects Name="Targets">posechProject.exe</Projects>
     </Projects>
     <Dependencies/>
   </Default.Personality>

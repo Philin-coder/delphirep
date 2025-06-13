@@ -3,7 +3,7 @@ program posech;
 uses
   Forms,
   Un_main in 'Un_main.pas' {Frm_main},
-  Un_dm in 'Un_dm.pas' {dm: TDataModule},
+  Un_dm in 'Un_dm.pas' {DM: TDataModule},
   Un_func in 'Un_func.pas';
 
 {$R *.res}
@@ -11,6 +11,6 @@ uses
 begin
   Application.Initialize;
   Application.CreateForm(TFrm_main, Frm_main);
-  Application.CreateForm(Tdm, dm);
+  Application.CreateForm(TDM, DM);
   Application.Run;
 end.

@@ -203,8 +203,7 @@ procedure UniformizeComponentAnchors(AComponent: TComponent);
 procedure UpdateFormShowHint(const FormName: string);
 procedure UpdateControlsShowHint(ParentControl: TWinControl);
 procedure UpdateAnchors(AControl: TControl);
-procedure DisableLoginPromptsOnDataModule(const DataModuleName: string);
-function FindDMByName(const mName: string): TDataModule;
+
 implementation
 type
   tdata = array [0..15] of DWORD;
@@ -3341,50 +3340,42 @@ begin
     end;
   end;
 end;
-procedure DisableLoginPromptsOnDataModule(const DataModuleName: string);
+procedure EnsureLoginPromptDisabled;
 var
-  DataModule: TDataModule;
-  I: Integer;
-  ADOConn: TADOConnection;
+  Q: Integer;
+  ADOConnection: TADOConnection;
 begin
-  DataModule := FindDMByName(DataModuleName);
-  if not Assigned(DataModule) then
+  // Проверяем, что модуль данных существует
+  if not Assigned(dm) then
   begin
-    ShowMessage('Модуль данных "' + DataModuleName + '" не найден.');
+    ShowMessage('Модуль данных "dm" не найден.');
     Exit;
   end;
 
-  for I := 0 to DataModule.ComponentCount - 1 do
+  // Проход по всем компонентам модуля данных
+  for Q := 0 to dm.ComponentCount - 1 do
   begin
-    if DataModule.Components[I] is TADOConnection then
+    // Проверка, является ли компонент TADOConnection
+    if dm.Components[Q] is TADOConnection then
     begin
-      ADOConn := TADOConnection(DataModule.Components[I]);
+      ADOConnection := TADOConnection(dm.Components[Q]);
       try
-        if ADOConn.LoginPrompt then
+        // Проверка и изменение свойства LoginPrompt
+        if ADOConnection.LoginPrompt then
         begin
-          ADOConn.LoginPrompt := False;
-          //ShowMessageFmt('LoginPrompt отключён для "%s".', [ADOConn.Name]);
+          ADOConnection.LoginPrompt := False;
+          ShowMessageFmt('Свойство LoginPrompt для "%s" установлено в False.', [ADOConnection.Name]);
+        end
+        else
+        begin
+          ShowMessageFmt('Свойство LoginPrompt для "%s" уже равно False.', [ADOConnection.Name]);
         end;
       except
         on E: Exception do
         begin
-          ShowMessageFmt('Ошибка при отключении LoginPrompt у "%s": %s', [ADOConn.Name, E.Message]);
+          ShowMessageFmt('Ошибка при изменении свойства LoginPrompt для "%s": %s', [ADOConnection.Name, E.Message]);
         end;
       end;
-    end;
-  end;
-end;
-function FindDMByName(const mName: string): TDataModule;
-var
-  I: Integer;
-begin
-  Result := nil;
-  for I := 0 to Screen.DataModuleCount - 1 do
-  begin
-    if SameText(Screen.DataModules[I].Name, mName) then
-    begin
-      Result := Screen.DataModules[I];
-      Exit;
     end;
   end;
 end;

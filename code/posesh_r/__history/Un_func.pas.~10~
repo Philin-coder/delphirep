@@ -203,8 +203,7 @@ procedure UniformizeComponentAnchors(AComponent: TComponent);
 procedure UpdateFormShowHint(const FormName: string);
 procedure UpdateControlsShowHint(ParentControl: TWinControl);
 procedure UpdateAnchors(AControl: TControl);
-procedure DisableLoginPromptsOnDataModule(const DataModuleName: string);
-function FindDMByName(const mName: string): TDataModule;
+
 implementation
 type
   tdata = array [0..15] of DWORD;
@@ -3341,53 +3340,7 @@ begin
     end;
   end;
 end;
-procedure DisableLoginPromptsOnDataModule(const DataModuleName: string);
-var
-  DataModule: TDataModule;
-  I: Integer;
-  ADOConn: TADOConnection;
-begin
-  DataModule := FindDMByName(DataModuleName);
-  if not Assigned(DataModule) then
-  begin
-    ShowMessage('Модуль данных "' + DataModuleName + '" не найден.');
-    Exit;
-  end;
 
-  for I := 0 to DataModule.ComponentCount - 1 do
-  begin
-    if DataModule.Components[I] is TADOConnection then
-    begin
-      ADOConn := TADOConnection(DataModule.Components[I]);
-      try
-        if ADOConn.LoginPrompt then
-        begin
-          ADOConn.LoginPrompt := False;
-          //ShowMessageFmt('LoginPrompt отключён для "%s".', [ADOConn.Name]);
-        end;
-      except
-        on E: Exception do
-        begin
-          ShowMessageFmt('Ошибка при отключении LoginPrompt у "%s": %s', [ADOConn.Name, E.Message]);
-        end;
-      end;
-    end;
-  end;
-end;
-function FindDMByName(const mName: string): TDataModule;
-var
-  I: Integer;
-begin
-  Result := nil;
-  for I := 0 to Screen.DataModuleCount - 1 do
-  begin
-    if SameText(Screen.DataModules[I].Name, mName) then
-    begin
-      Result := Screen.DataModules[I];
-      Exit;
-    end;
-  end;
-end;
 
 initialization
   VisitedStaticTexts := TStringList.Create;

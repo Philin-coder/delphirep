@@ -1,4 +1,4 @@
-object dm: Tdm
+object DM: TDM
   OldCreateOrder = False
   Height = 278
   Width = 424

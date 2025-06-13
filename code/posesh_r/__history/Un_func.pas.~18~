@@ -3363,7 +3363,7 @@ begin
         if ADOConn.LoginPrompt then
         begin
           ADOConn.LoginPrompt := False;
-          //ShowMessageFmt('LoginPrompt отключён для "%s".', [ADOConn.Name]);
+          ShowMessageFmt('LoginPrompt отключён для "%s".', [ADOConn.Name]);
         end;
       except
         on E: Exception do

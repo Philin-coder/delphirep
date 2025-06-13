@@ -6,7 +6,7 @@ uses
   SysUtils, Classes, DB, ADODB;
 
 type
-  Tdm = class(TDataModule)
+  TDM = class(TDataModule)
     Connection: TADOConnection;
   private
     { Private declarations }
@@ -15,13 +15,9 @@ type
   end;
 
 var
-  dm: Tdm;
+  DM: TDM;
 
 implementation
-
-
-
-
 
 
 
