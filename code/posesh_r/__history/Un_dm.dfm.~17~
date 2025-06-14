@@ -231,18 +231,7 @@ object dm: Tdm
     Top = 384
   end
   object groupQuery: TADOQuery
-    Connection = Connection
     Parameters = <>
-    SQL.Strings = (
-      'select '
-      '   m_Group.id_group,'
-      '   m_Group.group_name,'
-      '  Speciality.name'
-      '  from m_Group '
-      
-        '  inner join Speciality on Speciality.id_speciality=m_Group.id_s' +
-        'peciality'
-      '  where 1=1 ')
     Left = 248
     Top = 64
   end
