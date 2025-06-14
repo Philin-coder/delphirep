@@ -11,8 +11,8 @@ type
     TeacherQuery: TADOQuery;
     teacherDS: TDataSource;
     sel_teacher_by_fio: TADOStoredProc;
-    ins_teacher: TADOStoredProc;
-    upd_teacher: TADOStoredProc;
+    ADOStoredProc2: TADOStoredProc;
+    ADOStoredProc3: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;
     ADOStoredProc5: TADOStoredProc;
   private

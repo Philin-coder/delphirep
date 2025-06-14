@@ -4,15 +4,15 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ComCtrls, Grids, DBGrids, ExtCtrls,adodb,db, DBCtrls;
+  Dialogs, StdCtrls, ComCtrls, Grids, DBGrids, ExtCtrls,adodb,db;
 
 type
   TFrm_teacher = class(TForm)
     TeacherPC: TPageControl;
     selTab: TTabSheet;
     insTab: TTabSheet;
-    UpdTab: TTabSheet;
-    DelTab: TTabSheet;
+    TabSheet3: TTabSheet;
+    TabSheet4: TTabSheet;
     teacherr_inp_Box: TGroupBox;
     teacherr_data_Box: TGroupBox;
     teacherr_groupr_Box: TGroupBox;
@@ -31,21 +31,6 @@ type
     ins_Teacher_grid: TDBGrid;
     Teacher_predm_inp: TLabeledEdit;
     Teacher_fio_inp: TLabeledEdit;
-    upd_data_Box: TGroupBox;
-    upd_btn_Box: TGroupBox;
-    upd_inp_Box: TGroupBox;
-    upd_pred_inp: TLabeledEdit;
-    predm_lbl: TStaticText;
-    upd_teacher_departmetr_DBL: TDBLookupComboBox;
-    upd_btn: TButton;
-    Predm_upd_Grid: TDBGrid;
-    del_inp_Box: TGroupBox;
-    del_btn_Box: TGroupBox;
-    del_data_Box: TGroupBox;
-    del_btn: TButton;
-    del_teacher_Grid: TDBGrid;
-    del_teacher_departmetr_DBL: TDBLookupComboBox;
-    del_teacher_departmetr_lBL: TStaticText;
     procedure teacher_sel_btnClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
@@ -55,8 +40,6 @@ type
     procedure teacher_pred_radioClick(Sender: TObject);
     procedure teacher_reset_radioClick(Sender: TObject);
     procedure Teacher_ins_btnClick(Sender: TObject);
-    procedure upd_btnClick(Sender: TObject);
-    procedure del_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -71,54 +54,6 @@ implementation
 uses Un_dm, Un_func;
 
 {$R *.dfm}
-
-procedure TFrm_teacher.del_btnClick(Sender: TObject);
-var
-  AreFieldsEmpty: Boolean;
-begin
-  AreFieldsEmpty:=(
-  (del_teacher_departmetr_DBL.Text='')
-  );
-  if AreFieldsEmpty then
-  begin
-    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-  try
-      with dm.del_teacher do
-      begin
-        if not dm.Connection.Connected then
-          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
-           Parameters.ParamByName('@id_teacher').Value :=
-           dm.TeacherQuery.FieldByName('id_teacher').AsString;
-           ExecProc;
-           dm.TeacherQuery.Close;
-           dm.TeacherQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EDatabaseError do
-  begin
-    ShowMessage('Ошибка базы данных: ' + E.Message);
-    HandleException(E);
-    raise;
-  end;
-  on E: EOleError do
-  begin
-    ShowMessage('Ошибка COM: ' + E.Message);
-    HandleException(E);
-    raise;
-  end;
-  on E: Exception do
-  begin
-    ShowMessage('Общая ошибка: ' + E.Message);
-    HandleException(E); // Логирование ошибки
-    raise;
-end;
-end;
-end;
 
 procedure TFrm_teacher.FormActivate(Sender: TObject);
 begin
@@ -194,7 +129,7 @@ begin
   'Teacher.department'+' '+
   'from'+' '+
   'Teacher where 1=1'+' '+
-  'and Teacher.department like'+' '+
+  'and Teacher.fio like'+' '+
    QuotedStr(Concat(teacher_fnd_Edit.Text,#37));
    dm.teacherQuery.close;
    dm.teacherQuery.Open;
@@ -416,62 +351,6 @@ begin
     HandleException(E);
     Raise;
   end;
-end;
-end;
-
-procedure TFrm_teacher.upd_btnClick(Sender: TObject);
-  const
-  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
-var
-  AreFieldsEmpty: Boolean;
-  AreFieldsValid: Boolean;
-begin
-  AreFieldsEmpty:=(
-  (Trim(upd_pred_inp.Text)='')or
-  (upd_teacher_departmetr_DBL.Text='')
-  );
-  AreFieldsValid:=(
-  ValidateComponentText(upd_pred_inp,AllowedChars)
-  );
-  if AreFieldsEmpty or not AreFieldsValid then
-  begin
-    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-  try
-      with dm.upd_teacher do
-      begin
-        if not dm.Connection.Connected then
-          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
-           Parameters.ParamByName('@id_teacher').Value :=
-           dm.TeacherQuery.FieldByName('id_teacher').AsString;
-           Parameters.ParamByName('@department').Value:=upd_pred_inp.Text;
-           ExecProc;
-           dm.TeacherQuery.Close;
-           dm.TeacherQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EDatabaseError do
-  begin
-    ShowMessage('Ошибка базы данных: ' + E.Message);
-    HandleException(E);
-    raise;
-  end;
-  on E: EOleError do
-  begin
-    ShowMessage('Ошибка COM: ' + E.Message);
-    HandleException(E);
-    raise;
-  end;
-  on E: Exception do
-  begin
-    ShowMessage('Общая ошибка: ' + E.Message);
-    HandleException(E); // Логирование ошибки
-    raise;
-end;
 end;
 end;
 

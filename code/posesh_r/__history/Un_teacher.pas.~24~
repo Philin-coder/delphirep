@@ -81,43 +81,12 @@ begin
   );
   if AreFieldsEmpty then
   begin
-    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+      MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
     mtError, [mbOK], 0);
     Beep;
     Exit;
   end;
-  try
-      with dm.del_teacher do
-      begin
-        if not dm.Connection.Connected then
-          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
-           Parameters.ParamByName('@id_teacher').Value :=
-           dm.TeacherQuery.FieldByName('id_teacher').AsString;
-           ExecProc;
-           dm.TeacherQuery.Close;
-           dm.TeacherQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EDatabaseError do
-  begin
-    ShowMessage('Ошибка базы данных: ' + E.Message);
-    HandleException(E);
-    raise;
-  end;
-  on E: EOleError do
-  begin
-    ShowMessage('Ошибка COM: ' + E.Message);
-    HandleException(E);
-    raise;
-  end;
-  on E: Exception do
-  begin
-    ShowMessage('Общая ошибка: ' + E.Message);
-    HandleException(E); // Логирование ошибки
-    raise;
-end;
-end;
+  
 end;
 
 procedure TFrm_teacher.FormActivate(Sender: TObject);
@@ -194,7 +163,7 @@ begin
   'Teacher.department'+' '+
   'from'+' '+
   'Teacher where 1=1'+' '+
-  'and Teacher.department like'+' '+
+  'and Teacher.fio like'+' '+
    QuotedStr(Concat(teacher_fnd_Edit.Text,#37));
    dm.teacherQuery.close;
    dm.teacherQuery.Open;

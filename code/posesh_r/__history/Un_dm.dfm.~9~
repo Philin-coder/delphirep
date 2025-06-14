@@ -14,7 +14,6 @@ object dm: Tdm
   end
   object TeacherQuery: TADOQuery
     Connection = Connection
-    CursorType = ctStatic
     Parameters = <>
     SQL.Strings = (
       'select  '
@@ -50,54 +49,13 @@ object dm: Tdm
     Left = 80
     Top = 176
   end
-  object ins_teacher: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'ins_teacher;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@fio'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = '@department'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 255
-      end>
+  object ADOStoredProc2: TADOStoredProc
+    Parameters = <>
     Left = 80
     Top = 232
   end
-  object upd_teacher: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'upd_teacher;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@id_teacher'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = 0
-      end
-      item
-        Name = '@department'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 255
-      end>
+  object ADOStoredProc3: TADOStoredProc
+    Parameters = <>
     Left = 88
     Top = 288
   end

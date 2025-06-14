@@ -21,7 +21,7 @@ object Frm_teacher: TFrm_teacher
     Top = 0
     Width = 1053
     Height = 584
-    ActivePage = selTab
+    ActivePage = DelTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
@@ -419,7 +419,6 @@ object Frm_teacher: TFrm_teacher
           Height = 25
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
-          OnClick = del_btnClick
         end
       end
       object del_data_Box: TGroupBox
