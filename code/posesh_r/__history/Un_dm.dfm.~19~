@@ -253,22 +253,8 @@ object dm: Tdm
     Left = 248
     Top = 128
   end
-  object sel_group_by_naim: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'sel_group_by_naim;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@group_name'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 255
-      end>
+  object ADOStoredProc1: TADOStoredProc
+    Parameters = <>
     Left = 272
     Top = 200
   end

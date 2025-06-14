@@ -22,7 +22,7 @@ type
     del_spec: TADOStoredProc;
     groupQuery: TADOQuery;
     groupDS: TDataSource;
-    sel_group_by_naim: TADOStoredProc;
+    ADOStoredProc1: TADOStoredProc;
     ADOStoredProc2: TADOStoredProc;
     ADOStoredProc3: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;
