@@ -230,34 +230,4 @@ object dm: Tdm
     Left = 184
     Top = 384
   end
-  object groupQuery: TADOQuery
-    Parameters = <>
-    Left = 248
-    Top = 64
-  end
-  object groupDS: TDataSource
-    DataSet = groupQuery
-    Left = 248
-    Top = 128
-  end
-  object ADOStoredProc1: TADOStoredProc
-    Parameters = <>
-    Left = 272
-    Top = 200
-  end
-  object ADOStoredProc2: TADOStoredProc
-    Parameters = <>
-    Left = 272
-    Top = 256
-  end
-  object ADOStoredProc3: TADOStoredProc
-    Parameters = <>
-    Left = 264
-    Top = 312
-  end
-  object ADOStoredProc4: TADOStoredProc
-    Parameters = <>
-    Left = 264
-    Top = 392
-  end
 end

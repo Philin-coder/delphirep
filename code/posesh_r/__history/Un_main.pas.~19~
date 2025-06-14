@@ -14,7 +14,6 @@ type
     ItemMenu: TMainMenu;
     teacher_item: TMenuItem;
     spec_item: TMenuItem;
-    group_item: TMenuItem;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);

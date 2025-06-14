@@ -13,13 +13,12 @@ type
     Main_Image: TImage;
     ItemMenu: TMainMenu;
     teacher_item: TMenuItem;
-    spec_item: TMenuItem;
-    group_item: TMenuItem;
+    N1: TMenuItem;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure teacher_itemClick(Sender: TObject);
-    procedure spec_itemClick(Sender: TObject);
+    procedure N1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -55,7 +54,7 @@ begin
   LoadImageFromResource('BACKGROUND_IMAGE', main_Image);
 end;
 
-procedure TFrm_main.spec_itemClick(Sender: TObject);
+procedure TFrm_main.N1Click(Sender: TObject);
 begin
   try
     UpdateFormProperties('Frm_spec', 'Форма работы с информацией о специальности',
