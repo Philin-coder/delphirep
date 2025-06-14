@@ -1,0 +1,476 @@
+unit Un_spec;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ComCtrls, Grids, DBGrids, ExtCtrls,adodb,db, DBCtrls;
+
+type
+  TFrm_spec = class(TForm)
+    SpecPC: TPageControl;
+    selTab: TTabSheet;
+    insTab: TTabSheet;
+    UpdTab: TTabSheet;
+    DelTab: TTabSheet;
+    spec_inp_Box: TGroupBox;
+    spec_data_Box: TGroupBox;
+    spec_groupr_Box: TGroupBox;
+    spec_btn_Box: TGroupBox;
+    spec_sel_btn: TButton;
+    spec_sel_grd: TDBGrid;
+    spec_cond_edit: TLabeledEdit;
+    spec_fnd_edit: TLabeledEdit;
+    spec_name_radio: TRadioButton;
+    spec_faculity_radio: TRadioButton;
+    spec_reset_radio: TRadioButton;
+    ins_Spec_data_Box: TGroupBox;
+    ins_Spec_inp_Box: TGroupBox;
+    ins_Spec_btn_Box: TGroupBox;
+    ins_Spec_ins_btn: TButton;
+    ins_Spec_faculity_inp: TLabeledEdit;
+    ins_Spec_name_inp: TLabeledEdit;
+    spec_upd_data_Box: TGroupBox;
+    spec_upd_btn_Box: TGroupBox;
+    spec_upd_inp_Box: TGroupBox;
+    spec_upd_name_inp: TLabeledEdit;
+    spec_name_lbl: TStaticText;
+    spec_upd_name_DBL: TDBLookupComboBox;
+    spec_upd_btn: TButton;
+    spec_del_inp_Box: TGroupBox;
+    spec_del_btn_Box: TGroupBox;
+    del_data_Box: TGroupBox;
+    spec_del_btn: TButton;
+    sp_del_spec_DBL: TDBLookupComboBox;
+    sp_del_spec_lBL: TStaticText;
+    ins_Spec_Grd: TDBGrid;
+    spec_upd_grid: TDBGrid;
+    Del_sp_Grid: TDBGrid;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormActivate(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure spec_sel_btnClick(Sender: TObject);
+    procedure spec_name_radioClick(Sender: TObject);
+    procedure spec_faculity_radioClick(Sender: TObject);
+    procedure spec_reset_radioClick(Sender: TObject);
+    procedure spec_fnd_editKeyPress(Sender: TObject; var Key: Char);
+    procedure ins_Spec_ins_btnClick(Sender: TObject);
+    procedure spec_upd_btnClick(Sender: TObject);
+    procedure spec_del_btnClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_spec: TFrm_spec;
+
+implementation
+
+uses Un_dm, Un_func;
+
+{$R *.dfm}
+
+procedure TFrm_spec.FormActivate(Sender: TObject);
+begin
+  dm.specQuery.Open;
+  AdjustDBGridColumnWidths('Frm_spec',6000, 10);
+end;
+
+procedure TFrm_spec.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  SaveFormState(Self);
+  CloseAllQueriesOnDataModule('dm');
+end;
+
+procedure TFrm_spec.FormCreate(Sender: TObject);
+begin
+  UpdateFormShowHint('Frm_spec');
+  UniformizeButtonsSize(Self,  273, 25);
+  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+  UniformizeComponentAnchors(Self);
+  LoadFormState(Self);
+end;
+
+procedure TFrm_spec.ins_Spec_ins_btnClick(Sender: TObject);
+const
+  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (Trim(ins_Spec_name_inp.Text)='')or
+  (Trim(ins_Spec_faculity_inp.Text)='')
+  );
+  AreFieldsValid:=(
+  ValidateComponentText(ins_Spec_name_inp,AllowedChars)and
+  ValidateComponentText(ins_Spec_faculity_inp,AllowedChars)
+  );
+  if AreFieldsEmpty or not AreFieldsValid then
+  begin
+      MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.ins_spec do
+      begin
+        if not dm.Connection.Connected then
+          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
+           Parameters.ParamByName('@m_name').Value :=ins_Spec_name_inp.Text;
+           Parameters.ParamByName('@faculty').Value :=ins_Spec_faculity_inp.Text;
+           ExecProc;
+           dm.specQuery.Close;
+           dm.specQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise; // Повторное выбрасывание исключения
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise;
+end;
+end;
+end;
+
+procedure TFrm_spec.spec_del_btnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (sp_del_spec_DBL.Text='')
+  );
+  if AreFieldsEmpty then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+   try
+      with dm.ins_etap do
+      begin
+        if not dm.Connection.Connected then
+          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
+           Parameters.ParamByName('@Nam_etap').Value :=Nam_etap_inp.Text;
+           ExecProc;
+           dm.etapQuery.Close;
+           dm.etapQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise; // Повторное выбрасывание исключения
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise;
+end;
+end;
+end;
+
+procedure TFrm_spec.spec_faculity_radioClick(Sender: TObject);
+begin
+  if  spec_faculity_radio.Checked=true then
+  begin
+    try
+     with dm.specQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+        'select'+' '+
+        'Speciality.id_speciality,'+' '+
+        'Speciality.name,'+' '+
+        'Speciality.faculty'+' '+
+        'from Speciality'+' '+
+        'where 1=1'+' '+
+        'order by Speciality.faculty asc';
+      Open;
+     end;
+    except
+        on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка  Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    Raise;
+  end;
+end;
+end;
+end;
+
+procedure TFrm_spec.spec_fnd_editKeyPress(Sender: TObject; var Key: Char);
+begin
+  try
+   dm.specQuery.SQL.Text:=
+        'select'+' '+
+        'Speciality.id_speciality,'+' '+
+        'Speciality.name,'+' '+
+        'Speciality.faculty'+' '+
+        'from Speciality'+' '+
+        'where 1=1'+' '+
+  'and Speciality.faculty like'+' '+
+   QuotedStr(Concat(spec_fnd_Edit.Text,#37));
+   dm.specQuery.close;
+   dm.specQuery.Open;
+except
+   on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка  Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    raise;
+end;
+end;
+end;
+
+procedure TFrm_spec.spec_name_radioClick(Sender: TObject);
+begin
+  if  spec_name_radio.Checked=true then
+  begin
+    try
+     with dm.specQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+       'select'+' '+
+        'Speciality.id_speciality,'+' '+
+        'Speciality.name,'+' '+
+        'Speciality.faculty'+' '+
+        'from Speciality'+' '+
+        'where 1=1'+' '+
+       'order by Speciality.name asc';
+      Open;
+     end;
+    except
+        on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    Raise;
+  end;
+end;
+end;
+end;
+
+procedure TFrm_spec.spec_reset_radioClick(Sender: TObject);
+  var i,j,c:Integer;
+begin
+  try
+  if spec_reset_radio.Checked then
+  begin
+    with Frm_spec do
+    begin
+      for I := 0 to ComponentCount - 1 do
+      begin
+        if Components[I] is TLabeledEdit then
+        begin
+          (Components[I] as TLabeledEdit).Clear;
+        end;
+      end;
+      for c := 0 to ComponentCount - 1 do
+      begin
+        if Components[c] is TCheckBox then
+        begin
+          (Components[c] as TCheckBox).Checked := False;
+        end;
+      end;
+      for j := 0 to ComponentCount - 1 do
+      begin
+        if Components[j] is TRadioButton then
+        begin
+          (Components[j] as TRadioButton).Checked := False;
+        end;
+      end;
+    end;
+    with dm.specQuery do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text :=
+        'select'+' '+
+        'Speciality.id_speciality,'+' '+
+        'Speciality.name,'+' '+
+        'Speciality.faculty'+' '+
+        'from Speciality'+' '+
+        'where 1=1';
+      Open;
+    end;
+  end;
+except
+  on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы  данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+end;
+end;
+
+procedure TFrm_spec.spec_sel_btnClick(Sender: TObject);
+begin
+  try
+    if not DM.Connection.Connected then
+      raise EDatabaseError.Create('Соедмнение с базой не установлено ',4001);
+    with DM.sel_spec_by_naim do
+    begin
+      Close;
+      Parameters.ParamByName('@m_name').Value :=spec_cond_edit.Text;
+      Open;
+       DM.specQuery.Recordset:=dm.sel_spec_by_naim.Recordset;
+    end;
+  except
+  on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка  базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка  Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    Raise;
+  end;
+end;
+end;
+
+procedure TFrm_spec.spec_upd_btnClick(Sender: TObject);
+const
+  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (Trim(spec_upd_name_inp.Text)='')or
+  (spec_upd_name_DBL.Text='')
+  );
+  AreFieldsValid:=(
+  ValidateComponentText(spec_upd_name_inp,AllowedChars)
+  );
+  if AreFieldsEmpty or not AreFieldsValid then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.upd_spec do
+      begin
+        if not dm.Connection.Connected then
+          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
+           Parameters.ParamByName('@id_speciality').Value :=
+           dm.specQuery.FieldByName('id_speciality').AsString;
+           Parameters.ParamByName('@m_name').Value:=spec_upd_name_inp.Text;
+           ExecProc;
+           dm.specQuery.Close;
+           dm.specQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise; // Повторное выбрасывание исключения
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise;
+end;
+end;
+end;
+
+end.

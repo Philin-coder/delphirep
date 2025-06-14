@@ -121,24 +121,10 @@ object dm: Tdm
     Left = 80
     Top = 352
   end
-  object sel_spec_by_naim: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'sel_spec_by_naim;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@m_name'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 255
-      end>
-    Left = 168
-    Top = 192
+  object ADOStoredProc5: TADOStoredProc
+    Parameters = <>
+    Left = 232
+    Top = 168
   end
   object specQuery: TADOQuery
     Connection = Connection
@@ -158,76 +144,5 @@ object dm: Tdm
     DataSet = specQuery
     Left = 168
     Top = 120
-  end
-  object ins_spec: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'ins_spec;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@m_name'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = '@faculty'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 255
-      end>
-    Left = 176
-    Top = 248
-  end
-  object upd_spec: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'upd_spec;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@id_speciality'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = 0
-      end
-      item
-        Name = '@m_name'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 255
-      end>
-    Left = 184
-    Top = 304
-  end
-  object del_spec: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'del_spec;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@id_speciality'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = 0
-      end>
-    Left = 184
-    Top = 384
   end
 end
