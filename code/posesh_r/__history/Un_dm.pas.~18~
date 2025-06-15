@@ -14,7 +14,18 @@ type
     ins_teacher: TADOStoredProc;
     upd_teacher: TADOStoredProc;
     del_teacher: TADOStoredProc;
-    ADOStoredProc5: TADOStoredProc;
+    sel_spec_by_naim: TADOStoredProc;
+    specQuery: TADOQuery;
+    SpecDS: TDataSource;
+    ins_spec: TADOStoredProc;
+    upd_spec: TADOStoredProc;
+    del_spec: TADOStoredProc;
+    groupQuery: TADOQuery;
+    groupDS: TDataSource;
+    sel_group_by_naim: TADOStoredProc;
+    ins_group: TADOStoredProc;
+    upd_group: TADOStoredProc;
+    del_group: TADOStoredProc;
   private
     { Private declarations }
   public

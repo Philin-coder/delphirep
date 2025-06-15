@@ -30,8 +30,8 @@ type
     studDS: TDataSource;
     sel_stud_by_fio: TADOStoredProc;
     ins_stud: TADOStoredProc;
-    upd_stud: TADOStoredProc;
-    del_stud: TADOStoredProc;
+    ADOStoredProc3: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public

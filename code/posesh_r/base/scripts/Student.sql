@@ -1,7 +1,7 @@
 USE [posech_r]
 GO
 
-/****** Object:  Table [dbo].[Student]    Script Date: 14.06.2025 22:31:55 ******/
+/****** Object:  Table [dbo].[Student]    Script Date: 15.06.2025 12:20:24 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -13,7 +13,7 @@ CREATE TABLE [dbo].[Student](
 	[fio] [nvarchar](255) NOT NULL,
 	[email] [nvarchar](100) NOT NULL,
 	[enrollment_date] [date] NOT NULL,
-	[status] [nvarchar](50) NOT NULL,
+	[m_status] [int] NOT NULL,
 	[id_group] [int] NOT NULL,
  CONSTRAINT [PK__Student__2BE2EBB65FB9F3C4] PRIMARY KEY CLUSTERED 
 (
