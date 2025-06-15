@@ -8,7 +8,6 @@ uses
   Un_spec in 'Un_spec.pas' {Frm_spec},
   Un_group in 'Un_group.pas' {Frm_group},
   Un_student in 'Un_student.pas' {Frm_stud},
-  Un_subject in 'Un_subject.pas' {Frm_subject},
   Un_teacher in 'Un_teacher.pas' {Frm_teacher};
 
 {$R *.res}
@@ -21,7 +20,6 @@ begin
   Application.CreateForm(TFrm_spec, Frm_spec);
   Application.CreateForm(TFrm_group, Frm_group);
   Application.CreateForm(TFrm_stud, Frm_stud);
-  Application.CreateForm(TFrm_subject, Frm_subject);
   Application.CreateForm(TFrm_teacher, Frm_teacher);
   Application.Run;
 end.

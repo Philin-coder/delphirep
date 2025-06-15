@@ -23,6 +23,18 @@ type
     groupQuery: TADOQuery;
     groupDS: TDataSource;
     sel_group_by_naim: TADOStoredProc;
+    ins_group: TADOStoredProc;
+    upd_group: TADOStoredProc;
+    del_group: TADOStoredProc;
+    StudQuery: TADOQuery;
+    studDS: TDataSource;
+    sel_stud_by_fio: TADOStoredProc;
+    ins_stud: TADOStoredProc;
+    upd_stud: TADOStoredProc;
+    del_stud: TADOStoredProc;
+    subjQuery: TADOQuery;
+    aubjDS: TDataSource;
+    ADOStoredProc1: TADOStoredProc;
     ADOStoredProc2: TADOStoredProc;
     ADOStoredProc3: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;

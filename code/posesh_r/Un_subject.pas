@@ -1,0 +1,477 @@
+unit Un_subject;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ComCtrls, Grids, DBGrids, ExtCtrls,adodb,db, DBCtrls;
+
+type
+  TFrm_subject = class(TForm)
+    subjPC: TPageControl;
+    selTab: TTabSheet;
+    insTab: TTabSheet;
+    UpdTab: TTabSheet;
+    DelTab: TTabSheet;
+    subj_inp_Box: TGroupBox;
+    subj_data_Box: TGroupBox;
+    subj_groupr_Box: TGroupBox;
+    subj_btn_Box: TGroupBox;
+    subj_sel_btn: TButton;
+    subj_sel_grd: TDBGrid;
+    subj_cond_edit: TLabeledEdit;
+    subj_fnd_edit: TLabeledEdit;
+    subj_naim_radio: TRadioButton;
+    subj_credit_radio: TRadioButton;
+    subj_reset_radio: TRadioButton;
+    ins_subj_data_Box: TGroupBox;
+    ins_subj_inp_Box: TGroupBox;
+    ins_subj_btn_Box: TGroupBox;
+    ins_subj_btn: TButton;
+    ins_subj_credit_inp: TLabeledEdit;
+    ins_subj_pred_naim_inp: TLabeledEdit;
+    upd_s_data_Box: TGroupBox;
+    upd_s_btn_Box: TGroupBox;
+    upd_s_inp_Box: TGroupBox;
+    upd_pred_inp: TLabeledEdit;
+    predm_s_lbl: TStaticText;
+    upd_s_DBL: TDBLookupComboBox;
+    upd_s_btn: TButton;
+    subj_del_inp_Box: TGroupBox;
+    subj_del_btn_Box: TGroupBox;
+    subj_del_data_Box: TGroupBox;
+    del_btn: TButton;
+    del_subj_DBL: TDBLookupComboBox;
+    del_subj_lBL: TStaticText;
+    ins_subj_Grid: TDBGrid;
+    upd_s_Grid: TDBGrid;
+    Del_subj_Grid: TDBGrid;
+    ins_subj_credit_grader: TUpDown;
+    Upd_s_grader: TUpDown;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormActivate(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure subj_sel_btnClick(Sender: TObject);
+    procedure subj_fnd_editKeyPress(Sender: TObject; var Key: Char);
+    procedure subj_naim_radioClick(Sender: TObject);
+    procedure subj_credit_radioClick(Sender: TObject);
+    procedure subj_reset_radioClick(Sender: TObject);
+    procedure ins_subj_btnClick(Sender: TObject);
+    procedure upd_s_btnClick(Sender: TObject);
+    procedure del_btnClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_subject: TFrm_subject;
+
+implementation
+
+uses Un_dm, Un_func;
+
+{$R *.dfm}
+
+procedure TFrm_subject.del_btnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (del_subj_DBL.Text='')
+  );
+  if AreFieldsEmpty then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.del_subj do
+      begin
+        if not dm.Connection.Connected then
+          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
+           Parameters.ParamByName('@id_subject').Value :=
+           dm.subjQuery.FieldByName('id_subject').AsString;
+           ExecProc;
+           dm.subjQuery.Close;
+           dm.subjQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise; // Повторное выбрасывание исключения
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise;
+end;
+end;
+end;
+
+procedure TFrm_subject.FormActivate(Sender: TObject);
+begin
+  dm.subjQuery.Open;
+  AdjustDBGridColumnWidths('Frm_subject',6000, 10);
+end;
+
+procedure TFrm_subject.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  SaveFormState(Self);
+  CloseAllQueriesOnDataModule('dm');
+  ins_subj_credit_grader.Position:=0;
+  Upd_s_grader.Position:=0;
+end;
+
+procedure TFrm_subject.FormCreate(Sender: TObject);
+begin
+  UpdateFormShowHint('Frm_subject');
+  UniformizeButtonsSize(Self,  273, 25);
+  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+  UniformizeComponentAnchors(Self);
+  LoadFormState(Self);
+  ins_subj_credit_grader.Position:=0;
+  Upd_s_grader.Position:=0;
+end;
+
+procedure TFrm_subject.ins_subj_btnClick(Sender: TObject);
+const
+  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (Trim(ins_subj_pred_naim_inp.Text)='')or
+  (ins_subj_credit_grader.Position=0)
+  );
+  AreFieldsValid:=(
+  ValidateComponentText(ins_subj_pred_naim_inp,AllowedChars)
+  );
+  if AreFieldsEmpty or not AreFieldsValid then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.ins_subj do
+      begin
+        if not dm.Connection.Connected then
+          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
+           Parameters.ParamByName('@name').Value :=ins_subj_pred_naim_inp.Text;
+           Parameters.ParamByName('@credits').Value:=
+           ins_subj_credit_grader.Position;
+           ExecProc;
+           dm.subjQuery.Close;
+           dm.subjQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise; // Повторное выбрасывание исключения
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise;
+end;
+end;
+end;
+
+procedure TFrm_subject.subj_credit_radioClick(Sender: TObject);
+begin
+  if  subj_credit_radio.Checked=true then
+  begin
+    try
+     with dm.subjQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+      'select'+' '+
+        'Subject.id_subject,'+' '+
+        'Subject.name,'+' '+
+        'Subject.credits'+' '+
+        'from Subject'+' '+
+        'where 1=1'+' '+
+        'order by Subject.credits asc';
+      Open;
+     end;
+    except
+        on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка  Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    Raise;
+  end;
+end;
+end;
+end;
+
+procedure TFrm_subject.subj_fnd_editKeyPress(Sender: TObject; var Key: Char);
+begin
+  try
+   dm.subjQuery.SQL.Text:=
+        'select'+' '+
+        'Subject.id_subject,'+' '+
+        'Subject.name,'+' '+
+        'Subject.credits'+' '+
+        'from Subject'+' '+
+        'where 1=1'+' '+
+  'and Subject.name like'+' '+
+   QuotedStr(Concat(subj_fnd_Edit.Text,#37));
+   dm.subjQuery.close;
+   dm.subjQuery.Open;
+except
+   on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы ланных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка   Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка : ' + E.Message);
+    HandleException(E);
+    raise;
+end;
+end;
+end;
+
+procedure TFrm_subject.subj_naim_radioClick(Sender: TObject);
+begin
+  if  subj_naim_radio.Checked=true then
+  begin
+    try
+     with dm.subjQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+       'select'+' '+
+        'Subject.id_subject,'+' '+
+        'Subject.name,'+' '+
+        'Subject.credits'+' '+
+        'from Subject'+' '+
+        'where 1=1'+' '+
+         'order by Subject.name asc';
+      Open;
+     end;
+    except
+        on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    Raise;
+  end;
+end;
+end;
+end;
+
+procedure TFrm_subject.subj_reset_radioClick(Sender: TObject);
+var i,j,c:Integer;
+begin
+   try
+  if subj_reset_radio.Checked then
+  begin
+    with Frm_subject do
+    begin
+      for I := 0 to ComponentCount - 1 do
+      begin
+        if Components[I] is TLabeledEdit then
+        begin
+          (Components[I] as TLabeledEdit).Clear;
+        end;
+      end;
+      for c := 0 to ComponentCount - 1 do
+      begin
+        if Components[c] is TCheckBox then
+        begin
+          (Components[c] as TCheckBox).Checked := False;
+        end;
+      end;
+      for j := 0 to ComponentCount - 1 do
+      begin
+        if Components[j] is TRadioButton then
+        begin
+          (Components[j] as TRadioButton).Checked := False;
+        end;
+      end;
+    end;
+    with dm.subjQuery do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text :=
+        'select'+' '+
+        'Subject.id_subject,'+' '+
+        'Subject.name,'+' '+
+        'Subject.credits'+' '+
+        'from Subject'+' '+
+        'where 1=1';
+      Open;
+    end;
+  end;
+except
+  on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы  данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+end;
+end;
+
+procedure TFrm_subject.subj_sel_btnClick(Sender: TObject);
+begin
+  try
+    if not DM.Connection.Connected then
+      raise EDatabaseError.Create('Соединение с базой не установлено ',4001);
+    with DM.sel_subj_by_name do
+    begin
+      Close;
+      Parameters.ParamByName('@m_name').Value :=subj_cond_edit.Text;
+      Open;
+       DM.subjQuery.Recordset:=dm.sel_subj_by_name.Recordset;
+    end;
+  except
+  on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка  Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    Raise;
+  end;
+end;
+end;
+
+procedure TFrm_subject.upd_s_btnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (upd_s_DBL.Text='')or
+  (Upd_s_grader.Position=0)
+  );
+ if AreFieldsEmpty then
+ begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+ end;
+ try
+      with dm.upd_subj do
+      begin
+        if not dm.Connection.Connected then
+          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
+           Parameters.ParamByName('@id_subject').Value :=
+           dm.subjQuery.FieldByName('id_subject').AsString;
+           Parameters.ParamByName('@credits').Value:=Upd_s_grader.Position;
+           ExecProc;
+           dm.subjQuery.Close;
+           dm.subjQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise; // Повторное выбрасывание исключения
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise;
+end;
+end;
+end;
+
+end.

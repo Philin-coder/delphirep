@@ -499,6 +499,7 @@ object dm: Tdm
     Top = 392
   end
   object subjQuery: TADOQuery
+    Active = True
     Connection = Connection
     CursorType = ctStatic
     Parameters = <>
@@ -562,50 +563,13 @@ object dm: Tdm
     Left = 464
     Top = 240
   end
-  object upd_subj: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'upd_subj;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@id_subject'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = 0
-      end
-      item
-        Name = '@credits'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = 0
-      end>
+  object ADOStoredProc3: TADOStoredProc
+    Parameters = <>
     Left = 472
     Top = 304
   end
-  object del_subj: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'del_subj;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@id_subject'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = 0
-      end>
+  object ADOStoredProc4: TADOStoredProc
+    Parameters = <>
     Left = 480
     Top = 384
   end

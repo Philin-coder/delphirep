@@ -36,8 +36,8 @@ type
     aubjDS: TDataSource;
     sel_subj_by_name: TADOStoredProc;
     ins_subj: TADOStoredProc;
-    upd_subj: TADOStoredProc;
-    del_subj: TADOStoredProc;
+    ADOStoredProc3: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public
