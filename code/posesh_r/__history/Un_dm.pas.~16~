@@ -24,8 +24,8 @@ type
     groupDS: TDataSource;
     sel_group_by_naim: TADOStoredProc;
     ins_group: TADOStoredProc;
-    upd_group: TADOStoredProc;
-    del_group: TADOStoredProc;
+    ADOStoredProc3: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public

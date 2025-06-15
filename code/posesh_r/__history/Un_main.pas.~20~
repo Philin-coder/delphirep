@@ -20,7 +20,6 @@ type
     procedure FormCreate(Sender: TObject);
     procedure teacher_itemClick(Sender: TObject);
     procedure spec_itemClick(Sender: TObject);
-    procedure group_itemClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -32,7 +31,7 @@ var
 
 implementation
 
-uses Un_dm, Un_func, Un_teacher, Un_spec, Un_group;
+uses Un_dm, Un_func, Un_teacher, Un_spec;
 
 {$R *.dfm}
 
@@ -56,25 +55,6 @@ begin
   LoadImageFromResource('BACKGROUND_IMAGE', main_Image);
 end;
 
-procedure TFrm_main.group_itemClick(Sender: TObject);
-begin
-  try
-    UpdateFormProperties('Frm_group', 'Форма работы с информацией о группе',
-      clBtnFace, 1024, 768);
-    Frm_group.ShowModal;
-  except
-    on E: Exception do
-    begin
-      if not (E is EMyException) then
-        raise EDatabaseError.Create('Ошибка работы с Формой работы о группе', 3001);
-      HandleException(E);
-      if Assigned(Frm_group) then
-        Frm_group.Free;
-      raise;
-    end;
-  end;
-end;
-
 procedure TFrm_main.spec_itemClick(Sender: TObject);
 begin
   try
@@ -85,7 +65,7 @@ begin
     on E: Exception do
     begin
       if not (E is EMyException) then
-        raise EDatabaseError.Create('Ошибка работы с Формой работы о специальности', 3001);
+        raise EDatabaseError.Create('Ошибка работы с Формой работы с специальности', 3001);
       HandleException(E);
       if Assigned(Frm_spec) then
         Frm_spec.Free;

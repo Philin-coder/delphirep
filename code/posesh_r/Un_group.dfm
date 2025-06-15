@@ -16,12 +16,12 @@ object Frm_group: TFrm_group
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object TeacherPC: TPageControl
+  object groupPC: TPageControl
     Left = 0
     Top = 0
     Width = 1053
     Height = 584
-    ActivePage = selTab
+    ActivePage = DelTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
@@ -53,6 +53,7 @@ object Frm_group: TFrm_group
           EditLabel.Height = 13
           EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1089#1087#1077#1094#1080#1072#1083#1100#1085#1086#1089#1090#1080
           TabOrder = 1
+          OnKeyPress = group_fnd_editKeyPress
         end
       end
       object group_data_Box: TGroupBox
@@ -112,6 +113,7 @@ object Frm_group: TFrm_group
           Height = 17
           Caption = #1055#1086' '#1075#1088#1091#1087#1087#1077
           TabOrder = 0
+          OnClick = group_naim_radioClick
         end
         object group_spnaim_radio: TRadioButton
           Left = 320
@@ -120,6 +122,7 @@ object Frm_group: TFrm_group
           Height = 17
           Caption = #1055#1086' '#1089#1087#1077#1094#1080#1072#1083#1100#1085#1086#1089#1090#1080
           TabOrder = 1
+          OnClick = group_spnaim_radioClick
         end
         object group_reset_radio: TRadioButton
           Left = 672
@@ -128,6 +131,7 @@ object Frm_group: TFrm_group
           Height = 17
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 2
+          OnClick = group_reset_radioClick
         end
       end
       object group_btn_Box: TGroupBox
@@ -144,13 +148,14 @@ object Frm_group: TFrm_group
           Height = 25
           Caption = #1042#1099#1073#1088#1072#1090#1100
           TabOrder = 0
+          OnClick = group_sel_btnClick
         end
       end
     end
     object insTab: TTabSheet
-      Caption = #1042#1074#1086#1076' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1087#1088#1077#1087#1086#1076#1072#1074#1072#1090#1077#1083#1077
+      Caption = #1042#1074#1086#1076' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1075#1088#1091#1087#1087#1077
       ImageIndex = 1
-      object Teacher_data_Box: TGroupBox
+      object ins_group_data_Box: TGroupBox
         Left = 0
         Top = 105
         Width = 1045
@@ -158,7 +163,7 @@ object Frm_group: TFrm_group
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object DBGrid1: TDBGrid
+        object ins_group_data_Grid: TDBGrid
           Left = 2
           Top = 15
           Width = 1041
@@ -192,7 +197,7 @@ object Frm_group: TFrm_group
             end>
         end
       end
-      object Teacher_inp_Box: TGroupBox
+      object ins_group_inp_Box: TGroupBox
         Left = 0
         Top = 0
         Width = 1045
@@ -200,46 +205,55 @@ object Frm_group: TFrm_group
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
-        object Teacher_predm_inp: TLabeledEdit
-          Left = 24
-          Top = 78
+        object ins_group_naim_inp: TLabeledEdit
+          Left = 25
+          Top = 32
           Width = 1017
           Height = 21
-          EditLabel.Width = 44
+          EditLabel.Width = 36
           EditLabel.Height = 13
-          EditLabel.Caption = #1055#1088#1077#1076#1084#1077#1090
+          EditLabel.Caption = #1043#1088#1091#1087#1087#1072
           TabOrder = 0
         end
-        object Teacher_fio_inp: TLabeledEdit
-          Left = 24
-          Top = 40
-          Width = 1017
-          Height = 21
-          EditLabel.Width = 105
-          EditLabel.Height = 13
-          EditLabel.Caption = #1060#1048#1054' '#1087#1088#1077#1087#1086#1076#1072#1074#1072#1080#1077#1083#1103
+        object ins_group_spec_lbl: TStaticText
+          Left = 25
+          Top = 59
+          Width = 82
+          Height = 17
+          Caption = 'C'#1087#1077#1094#1080#1072#1083#1100#1085#1086#1089#1090#1100
           TabOrder = 1
         end
+        object ins_group_spec_dbl: TDBLookupComboBox
+          Left = 25
+          Top = 81
+          Width = 1017
+          Height = 21
+          KeyField = 'id_speciality'
+          ListField = 'name'
+          ListSource = dm.SpecDS
+          TabOrder = 2
+        end
       end
-      object Teacher_btn_Box: TGroupBox
+      object ins_group_btn_Box: TGroupBox
         Left = 0
         Top = 488
         Width = 1045
         Height = 68
         Align = alBottom
         TabOrder = 2
-        object Teacher_ins_btn: TButton
+        object ins_group_ins_btn: TButton
           Left = 416
           Top = 32
           Width = 75
           Height = 25
           Caption = #1042#1089#1090#1072#1074#1080#1090#1100
           TabOrder = 0
+          OnClick = ins_group_ins_btnClick
         end
       end
     end
     object UpdTab: TTabSheet
-      Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1088#1077#1087#1086#1076#1072#1074#1072#1090#1077#1083#1077
+      Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1075#1088#1091#1087#1087#1077
       ImageIndex = 2
       object upd_data_Box: TGroupBox
         Left = 0
@@ -297,9 +311,10 @@ object Frm_group: TFrm_group
           Height = 25
           Caption = #1054#1073#1085#1086#1074#1080#1090#1100
           TabOrder = 0
+          OnClick = upd_btnClick
         end
       end
-      object upd_inp_Box: TGroupBox
+      object u_g_upd_inp_Box: TGroupBox
         Left = 0
         Top = 0
         Width = 1045
@@ -307,40 +322,40 @@ object Frm_group: TFrm_group
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        object upd_pred_inp: TLabeledEdit
+        object u_g_upd_group_inp: TLabeledEdit
           Left = 16
           Top = 96
           Width = 1017
           Height = 21
-          EditLabel.Width = 44
+          EditLabel.Width = 36
           EditLabel.Height = 13
-          EditLabel.Caption = #1055#1088#1077#1076#1084#1077#1090
+          EditLabel.Caption = #1043#1088#1091#1087#1087#1072
           TabOrder = 0
         end
-        object predm_lbl: TStaticText
+        object u_g_group_lbl: TStaticText
           Left = 16
           Top = 16
-          Width = 94
+          Width = 86
           Height = 17
-          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1087#1088#1077#1076#1084#1077#1090
+          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1075#1088#1091#1087#1087#1091
           TabOrder = 1
         end
-        object upd_teacher_departmetr_DBL: TDBLookupComboBox
+        object u_g_upd_spec_DBL: TDBLookupComboBox
           Left = 16
           Top = 39
           Width = 1017
           Height = 21
-          KeyField = 'id_teacher'
-          ListField = 'fio'
-          ListSource = dm.teacherDS
+          KeyField = 'id_group'
+          ListField = 'group_name'
+          ListSource = dm.groupDS
           TabOrder = 2
         end
       end
     end
     object DelTab: TTabSheet
-      Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1088#1077#1087#1086#1076#1072#1074#1072#1090#1077#1083#1077
+      Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1075#1088#1091#1087#1087#1077
       ImageIndex = 3
-      object del_inp_Box: TGroupBox
+      object g_del_inp_Box: TGroupBox
         Left = 0
         Top = 0
         Width = 1045
@@ -348,42 +363,43 @@ object Frm_group: TFrm_group
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object del_teacher_departmetr_DBL: TDBLookupComboBox
+        object g_del_group_DBL: TDBLookupComboBox
           Left = 16
           Top = 71
           Width = 1017
           Height = 21
-          KeyField = 'id_teacher'
-          ListField = 'fio'
-          ListSource = dm.teacherDS
+          KeyField = 'id_group'
+          ListField = 'group_name'
+          ListSource = dm.groupDS
           TabOrder = 0
         end
-        object del_teacher_departmetr_lBL: TStaticText
+        object del_group_lBL: TStaticText
           Left = 16
           Top = 32
-          Width = 130
+          Width = 86
           Height = 17
-          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1087#1088#1077#1087#1086#1076#1072#1074#1072#1090#1077#1083#1103
+          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1075#1088#1091#1087#1087#1091
           TabOrder = 1
         end
       end
-      object del_btn_Box: TGroupBox
+      object g_del_btn_Box: TGroupBox
         Left = 0
         Top = 488
         Width = 1045
         Height = 68
         Align = alBottom
         TabOrder = 1
-        object del_btn: TButton
+        object g_del_btn: TButton
           Left = 416
           Top = 32
           Width = 75
           Height = 25
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
+          OnClick = g_del_btnClick
         end
       end
-      object del_data_Box: TGroupBox
+      object g_del_data_Box: TGroupBox
         Left = 0
         Top = 105
         Width = 1045
@@ -391,8 +407,7 @@ object Frm_group: TFrm_group
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        ExplicitTop = 99
-        object DBGrid3: TDBGrid
+        object g_Del_BGrid: TDBGrid
           Left = 2
           Top = 15
           Width = 1041

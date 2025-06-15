@@ -36,15 +36,15 @@ type
     u_g_group_lbl: TStaticText;
     u_g_upd_spec_DBL: TDBLookupComboBox;
     upd_btn: TButton;
-    g_del_inp_Box: TGroupBox;
-    g_del_btn_Box: TGroupBox;
-    g_del_data_Box: TGroupBox;
-    g_del_btn: TButton;
-    g_del_group_DBL: TDBLookupComboBox;
-    del_group_lBL: TStaticText;
+    del_inp_Box: TGroupBox;
+    del_btn_Box: TGroupBox;
+    del_data_Box: TGroupBox;
+    del_btn: TButton;
+    del_teacher_departmetr_DBL: TDBLookupComboBox;
+    del_teacher_departmetr_lBL: TStaticText;
     ins_group_data_Grid: TDBGrid;
     DBGrid2: TDBGrid;
-    g_Del_BGrid: TDBGrid;
+    DBGrid3: TDBGrid;
     ins_group_spec_lbl: TStaticText;
     ins_group_spec_dbl: TDBLookupComboBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -57,7 +57,6 @@ type
     procedure group_fnd_editKeyPress(Sender: TObject; var Key: Char);
     procedure ins_group_ins_btnClick(Sender: TObject);
     procedure upd_btnClick(Sender: TObject);
-    procedure g_del_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -321,54 +320,6 @@ end;
 end;
 end;
 
-procedure TFrm_group.g_del_btnClick(Sender: TObject);
-var
-  AreFieldsEmpty: Boolean;
-begin
-  AreFieldsEmpty:=(
-  (g_del_group_DBL.Text='')
-  );
-  if AreFieldsEmpty then
-  begin
-    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-  try
-      with dm.del_group do
-      begin
-        if not dm.Connection.Connected then
-          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
-           Parameters.ParamByName('@id_group').Value :=
-           dm.groupQuery.FieldByName('id_group').AsString;
-           ExecProc;
-           dm.groupQuery.Close;
-           dm.groupQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EDatabaseError do
-  begin
-    ShowMessage('Ошибка базы данных: ' + E.Message);
-    HandleException(E);
-    raise;
-  end;
-  on E: EOleError do
-  begin
-    ShowMessage('Ошибка COM: ' + E.Message);
-    HandleException(E); // Логирование ошибки
-    raise; // Повторное выбрасывание исключения
-  end;
-  on E: Exception do
-  begin
-    ShowMessage('Общая ошибка: ' + E.Message);
-    HandleException(E); // Логирование ошибки
-    raise;
-end;
-end;
-end;
-
 procedure TFrm_group.ins_group_ins_btnClick(Sender: TObject);
 const
   AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
@@ -434,7 +385,7 @@ var
 begin
   AreFieldsEmpty:=(
   (Trim(u_g_upd_group_inp.Text)='')or
-  (u_g_upd_spec_DBL.Text='')
+  (u_g_upd_spec_DBL.Text)
   );
   AreFieldsValid:=(
   ValidateComponentText(u_g_upd_group_inp,AllowedChars)
@@ -451,9 +402,7 @@ begin
       begin
         if not dm.Connection.Connected then
           raise EDatabaseError.Create('Соединение с базой не установлено',4001);
-           Parameters.ParamByName('@group_name').Value :=u_g_upd_group_inp.Text;
-           Parameters.ParamByName('@id_group').Value:=
-           dm.groupQuery.FieldByName('id_group').AsString;
+           Parameters.ParamByName('@Nam_etap').Value :=Nam_etap_inp.Text;
            ExecProc;
            dm.groupQuery.Close;
            dm.groupQuery.Open;

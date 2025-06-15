@@ -57,7 +57,6 @@ type
     procedure group_fnd_editKeyPress(Sender: TObject; var Key: Char);
     procedure ins_group_ins_btnClick(Sender: TObject);
     procedure upd_btnClick(Sender: TObject);
-    procedure g_del_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -317,54 +316,6 @@ begin
     HandleException(E);
     raise;
   end;
-end;
-end;
-end;
-
-procedure TFrm_group.g_del_btnClick(Sender: TObject);
-var
-  AreFieldsEmpty: Boolean;
-begin
-  AreFieldsEmpty:=(
-  (g_del_group_DBL.Text='')
-  );
-  if AreFieldsEmpty then
-  begin
-    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-  try
-      with dm.del_group do
-      begin
-        if not dm.Connection.Connected then
-          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
-           Parameters.ParamByName('@id_group').Value :=
-           dm.groupQuery.FieldByName('id_group').AsString;
-           ExecProc;
-           dm.groupQuery.Close;
-           dm.groupQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EDatabaseError do
-  begin
-    ShowMessage('Ошибка базы данных: ' + E.Message);
-    HandleException(E);
-    raise;
-  end;
-  on E: EOleError do
-  begin
-    ShowMessage('Ошибка COM: ' + E.Message);
-    HandleException(E); // Логирование ошибки
-    raise; // Повторное выбрасывание исключения
-  end;
-  on E: Exception do
-  begin
-    ShowMessage('Общая ошибка: ' + E.Message);
-    HandleException(E); // Логирование ошибки
-    raise;
 end;
 end;
 end;

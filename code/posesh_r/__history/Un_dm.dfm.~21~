@@ -247,6 +247,7 @@ object dm: Tdm
     Top = 384
   end
   object groupQuery: TADOQuery
+    Active = True
     Connection = Connection
     CursorType = ctStatic
     Parameters = <>
@@ -315,49 +316,13 @@ object dm: Tdm
     Left = 272
     Top = 256
   end
-  object upd_group: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'upd_group;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@group_name'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 50
-      end
-      item
-        Name = '@id_group'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = 0
-      end>
+  object ADOStoredProc3: TADOStoredProc
+    Parameters = <>
     Left = 264
     Top = 312
   end
-  object del_group: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'del_group;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@id_group'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = 0
-      end>
+  object ADOStoredProc4: TADOStoredProc
+    Parameters = <>
     Left = 264
     Top = 392
   end
