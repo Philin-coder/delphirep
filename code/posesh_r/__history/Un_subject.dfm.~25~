@@ -360,7 +360,7 @@ object Frm_subject: TFrm_subject
           TabOrder = 2
         end
         object Upd_s_grader: TUpDown
-          Left = 1017
+          Left = 1023
           Top = 102
           Width = 16
           Height = 21

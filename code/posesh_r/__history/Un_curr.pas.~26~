@@ -1,0 +1,345 @@
+unit Un_curr;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ComCtrls, Grids, DBGrids, ExtCtrls,adodb,db, DBCtrls;
+
+type
+  TFrm_curr = class(TForm)
+    CurrPC: TPageControl;
+    selTab: TTabSheet;
+    insTab: TTabSheet;
+    UpdTab: TTabSheet;
+    DelTab: TTabSheet;
+    curr_inp_Box: TGroupBox;
+    curr_data_Box: TGroupBox;
+    curr_groupr_Box: TGroupBox;
+    curr_btn_Box: TGroupBox;
+    curr_sel_btn: TButton;
+    curr_sel_grd: TDBGrid;
+    curr_cond_edit: TLabeledEdit;
+    curr_fnd_edit: TLabeledEdit;
+    curr_subj_radio: TRadioButton;
+    cur_spec_radio: TRadioButton;
+    curr_reset_radio: TRadioButton;
+    ins_curr_data_Box: TGroupBox;
+    ins_curr_inp_Box: TGroupBox;
+    curr_ins_btn_Box: TGroupBox;
+    curr_ins_btn: TButton;
+    upd_data_Box: TGroupBox;
+    upd_btn_Box: TGroupBox;
+    upd_inp_Box: TGroupBox;
+    upd_pred_inp: TLabeledEdit;
+    predm_lbl: TStaticText;
+    upd_teacher_departmetr_DBL: TDBLookupComboBox;
+    upd_btn: TButton;
+    del_inp_Box: TGroupBox;
+    del_btn_Box: TGroupBox;
+    del_data_Box: TGroupBox;
+    del_btn: TButton;
+    del_teacher_departmetr_DBL: TDBLookupComboBox;
+    del_teacher_departmetr_lBL: TStaticText;
+    ins_curr_Grid: TDBGrid;
+    DBGrid2: TDBGrid;
+    DBGrid3: TDBGrid;
+    ins_curr_Sp_lbl: TStaticText;
+    ins_curr_Sb_lbl: TStaticText;
+    ins_curr_Sp_dbl: TDBLookupComboBox;
+    ins_curr_Sb_dbl: TDBLookupComboBox;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormActivate(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure curr_sel_btnClick(Sender: TObject);
+    procedure curr_fnd_editKeyPress(Sender: TObject; var Key: Char);
+    procedure curr_subj_radioClick(Sender: TObject);
+    procedure cur_spec_radioClick(Sender: TObject);
+    procedure curr_reset_radioClick(Sender: TObject);
+    procedure curr_ins_btnClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_curr: TFrm_curr;
+
+implementation
+
+uses Un_dm, Un_func;
+
+{$R *.dfm}
+
+procedure TFrm_curr.curr_fnd_editKeyPress(Sender: TObject; var Key: Char);
+begin
+   try
+   dm.currQuery.SQL.Text:=
+   'select'+' '+
+    'Curriculum.id_curriculum,'+' '+
+    'Speciality.name,'+' '+
+    'Subject.name'+' '+
+    'from Curriculum'+' '+
+'inner join Speciality on Speciality.id_speciality=Curriculum.id_speciality'+' '+
+    'inner join Subject on Subject.id_subject=Curriculum.id_subject'+' '+
+    'where 1=1'+' '+
+  'and Subject.name like'+' '+
+   QuotedStr(Concat(curr_fnd_Edit.Text,#37));
+   dm.currQuery.close;
+   dm.currQuery.Open;
+except
+   on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка   Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    raise;
+end;
+end;
+end;
+
+procedure TFrm_curr.curr_ins_btnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (ins_curr_Sp_dbl.Text='')or
+  (ins_curr_Sb_dbl.Text='')
+  );
+  if AreFieldsEmpty then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+
+end;
+
+procedure TFrm_curr.curr_reset_radioClick(Sender: TObject);
+var i,j,c:Integer;
+begin
+  try
+  if curr_reset_radio.Checked then
+  begin
+    with Frm_curr do
+    begin
+      for I := 0 to ComponentCount - 1 do
+      begin
+        if Components[I] is TLabeledEdit then
+        begin
+          (Components[I] as TLabeledEdit).Clear;
+        end;
+      end;
+      for c := 0 to ComponentCount - 1 do
+      begin
+        if Components[c] is TCheckBox then
+        begin
+          (Components[c] as TCheckBox).Checked := False;
+        end;
+      end;
+      for j := 0 to ComponentCount - 1 do
+      begin
+        if Components[j] is TRadioButton then
+        begin
+          (Components[j] as TRadioButton).Checked := False;
+        end;
+      end;
+    end;
+    with dm.currQuery do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text :=
+    'select'+' '+
+    'Curriculum.id_curriculum,'+' '+
+    'Speciality.name,'+' '+
+    'Subject.name'+' '+
+    'from Curriculum'+' '+
+'inner join Speciality on Speciality.id_speciality=Curriculum.id_speciality'+' '+
+    'inner join Subject on Subject.id_subject=Curriculum.id_subject'+' '+
+    'where 1=1';
+      Open;
+    end;
+  end;
+except
+  on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка : ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+end;
+end;
+
+procedure TFrm_curr.curr_sel_btnClick(Sender: TObject);
+begin
+    try
+    if not DM.Connection.Connected then
+      raise EDatabaseError.Create('Соединение сбазоой не установлено ',4001);
+    with DM.sel_cur_by_name do
+    begin
+      Close;
+      Parameters.ParamByName('@m_name').Value :=curr_cond_edit.Text;
+      Open;
+       DM.currQuery.Recordset:=dm.sel_cur_by_name.Recordset;
+    end;
+  except
+  on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка  Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    Raise;
+  end;
+end;
+end;
+
+procedure TFrm_curr.curr_subj_radioClick(Sender: TObject);
+begin
+  if  curr_subj_radio.Checked=true then
+  begin
+    try
+     with dm.currQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+      'select'+' '+
+    'Curriculum.id_curriculum,'+' '+
+    'Speciality.name,'+' '+
+    'Subject.name'+' '+
+    'from Curriculum'+' '+
+'inner join Speciality on Speciality.id_speciality=Curriculum.id_speciality'+' '+
+    'inner join Subject on Subject.id_subject=Curriculum.id_subject'+' '+
+    'where 1=1'+' '+
+       'order by Subject.name asc';
+      Open;
+     end;
+    except
+        on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    Raise;
+  end;
+end;
+end;
+end;
+
+procedure TFrm_curr.cur_spec_radioClick(Sender: TObject);
+begin
+  if  cur_spec_radio.Checked=true then
+  begin
+    try
+     with dm.currQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+      'select'+' '+
+    'Curriculum.id_curriculum,'+' '+
+    'Speciality.name,'+' '+
+    'Subject.name'+' '+
+    'from Curriculum'+' '+
+'inner join Speciality on Speciality.id_speciality=Curriculum.id_speciality'+' '+
+    'inner join Subject on Subject.id_subject=Curriculum.id_subject'+' '+
+    'where 1=1'+' '+
+       'order by Speciality.name asc';
+      Open;
+     end;
+    except
+        on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    Raise;
+  end;
+end;
+end;
+end;
+
+procedure TFrm_curr.FormActivate(Sender: TObject);
+begin
+  dm.specQuery.Open;
+  dm.subjQuery.Open;
+  dm.currQuery.Open;
+  AdjustDBGridColumnWidths('Frm_curr',6000, 10);
+end;
+
+procedure TFrm_curr.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  SaveFormState(Self);
+  CloseAllQueriesOnDataModule('dm');
+end;
+
+procedure TFrm_curr.FormCreate(Sender: TObject);
+begin
+  UpdateFormShowHint('Frm_curr');
+  UniformizeButtonsSize(Self,  273, 25);
+  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+  UniformizeComponentAnchors(Self);
+  LoadFormState(Self);
+end;
+
+end.

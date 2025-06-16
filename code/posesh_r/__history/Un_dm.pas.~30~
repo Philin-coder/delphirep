@@ -41,9 +41,9 @@ type
     currQuery: TADOQuery;
     currds: TDataSource;
     sel_cur_by_name: TADOStoredProc;
-    ins_cur: TADOStoredProc;
-    upd_curr: TADOStoredProc;
-    del_curr: TADOStoredProc;
+    ADOStoredProc2: TADOStoredProc;
+    ADOStoredProc3: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public

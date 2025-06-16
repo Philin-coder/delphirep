@@ -105,8 +105,8 @@ object dm: Tdm
         Size = 255
         Value = Null
       end>
-    Left = 80
-    Top = 304
+    Left = 88
+    Top = 288
   end
   object del_teacher: TADOStoredProc
     Connection = Connection
@@ -127,7 +127,7 @@ object dm: Tdm
         Value = 0
       end>
     Left = 80
-    Top = 368
+    Top = 352
   end
   object sel_spec_by_naim: TADOStoredProc
     Connection = Connection
@@ -298,14 +298,12 @@ object dm: Tdm
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@group_name'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 50
-        Value = Null
       end
       item
         Name = '@id_speciality'
@@ -326,14 +324,12 @@ object dm: Tdm
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@group_name'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 50
-        Value = Null
       end
       item
         Name = '@id_group'
@@ -354,7 +350,6 @@ object dm: Tdm
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@id_group'
@@ -401,14 +396,12 @@ object dm: Tdm
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@fio'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 255
-        Value = Null
       end>
     Left = 376
     Top = 192
@@ -422,28 +415,24 @@ object dm: Tdm
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@fio'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 255
-        Value = Null
       end
       item
         Name = '@email'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 100
-        Value = Null
       end
       item
         Name = '@enrollment_date'
         Attributes = [paNullable]
         DataType = ftDateTime
         Size = 10
-        Value = Null
       end
       item
         Name = '@m_status'
@@ -471,7 +460,6 @@ object dm: Tdm
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@id_student'
@@ -499,7 +487,6 @@ object dm: Tdm
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@id_student'
@@ -539,14 +526,12 @@ object dm: Tdm
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@m_name'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 255
-        Value = Null
       end>
     Left = 464
     Top = 192
@@ -560,14 +545,12 @@ object dm: Tdm
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@name'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 255
-        Value = Null
       end
       item
         Name = '@credits'
@@ -588,7 +571,6 @@ object dm: Tdm
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@id_subject'
@@ -616,7 +598,6 @@ object dm: Tdm
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@id_subject'
@@ -627,121 +608,5 @@ object dm: Tdm
       end>
     Left = 480
     Top = 384
-  end
-  object currQuery: TADOQuery
-    Connection = Connection
-    CursorType = ctStatic
-    Parameters = <>
-    SQL.Strings = (
-      'select '
-      ' Curriculum.id_curriculum,'
-      ' Speciality.name,'
-      ' Subject.name'
-      'from Curriculum '
-      
-        'inner join Speciality on Speciality.id_speciality=Curriculum.id_' +
-        'speciality'
-      'inner join Subject on Subject.id_subject=Curriculum.id_subject'
-      'where 1=1')
-    Left = 536
-    Top = 72
-  end
-  object currds: TDataSource
-    DataSet = currQuery
-    Left = 544
-    Top = 136
-  end
-  object sel_cur_by_name: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'sel_cur_by_name;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@m_name'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 255
-      end>
-    Left = 552
-    Top = 200
-  end
-  object ins_cur: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'ins_cur;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@id_speciality'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = 0
-      end
-      item
-        Name = '@id_subject'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = 0
-      end>
-    Left = 560
-    Top = 256
-  end
-  object upd_curr: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'upd_curr;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@id_curriculum'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = 0
-      end
-      item
-        Name = '@id_subject'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = 0
-      end>
-    Left = 560
-    Top = 320
-  end
-  object del_curr: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'del_curr;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@id_curriculum'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = 0
-      end>
-    Left = 560
-    Top = 392
   end
 end

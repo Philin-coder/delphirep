@@ -38,12 +38,6 @@ type
     ins_subj: TADOStoredProc;
     upd_subj: TADOStoredProc;
     del_subj: TADOStoredProc;
-    currQuery: TADOQuery;
-    currds: TDataSource;
-    sel_cur_by_name: TADOStoredProc;
-    ins_cur: TADOStoredProc;
-    upd_curr: TADOStoredProc;
-    del_curr: TADOStoredProc;
   private
     { Private declarations }
   public
@@ -54,6 +48,12 @@ var
   dm: Tdm;
 
 implementation
+
+
+
+
+
+
 
 {$R *.dfm}
 
