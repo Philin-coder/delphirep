@@ -44,6 +44,12 @@ type
     ins_cur: TADOStoredProc;
     upd_curr: TADOStoredProc;
     del_curr: TADOStoredProc;
+    gradeQuery: TADOQuery;
+    gradeDS: TDataSource;
+    sel_grade_by_st_fio: TADOStoredProc;
+    ins_grade: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
+    upd_grade: TADOStoredProc;
   private
     { Private declarations }
   public

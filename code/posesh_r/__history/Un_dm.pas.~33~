@@ -35,9 +35,15 @@ type
     subjQuery: TADOQuery;
     aubjDS: TDataSource;
     sel_subj_by_name: TADOStoredProc;
-    ADOStoredProc2: TADOStoredProc;
-    ADOStoredProc3: TADOStoredProc;
-    ADOStoredProc4: TADOStoredProc;
+    ins_subj: TADOStoredProc;
+    upd_subj: TADOStoredProc;
+    del_subj: TADOStoredProc;
+    currQuery: TADOQuery;
+    currds: TDataSource;
+    sel_cur_by_name: TADOStoredProc;
+    ins_cur: TADOStoredProc;
+    upd_curr: TADOStoredProc;
+    del_curr: TADOStoredProc;
   private
     { Private declarations }
   public
@@ -48,12 +54,6 @@ var
   dm: Tdm;
 
 implementation
-
-
-
-
-
-
 
 {$R *.dfm}
 

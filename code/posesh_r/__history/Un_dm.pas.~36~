@@ -37,6 +37,18 @@ type
     sel_subj_by_name: TADOStoredProc;
     ins_subj: TADOStoredProc;
     upd_subj: TADOStoredProc;
+    del_subj: TADOStoredProc;
+    currQuery: TADOQuery;
+    currds: TDataSource;
+    sel_cur_by_name: TADOStoredProc;
+    ins_cur: TADOStoredProc;
+    upd_curr: TADOStoredProc;
+    del_curr: TADOStoredProc;
+    gradeQuery: TADOQuery;
+    gradeDS: TDataSource;
+    sel_grade_by_st_fio: TADOStoredProc;
+    ins_grade: TADOStoredProc;
+    ADOStoredProc3: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
@@ -48,12 +60,6 @@ var
   dm: Tdm;
 
 implementation
-
-
-
-
-
-
 
 {$R *.dfm}
 

@@ -1,0 +1,371 @@
+unit Un_grade;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ComCtrls, Grids, DBGrids, ExtCtrls,adodb,db, DBCtrls;
+
+type
+  TFrm_grade = class(TForm)
+    graderPC: TPageControl;
+    selTab: TTabSheet;
+    insTab: TTabSheet;
+    UpdTab: TTabSheet;
+    DelTab: TTabSheet;
+    grade_inp_Box: TGroupBox;
+    grade_data_Box: TGroupBox;
+    grade_groupr_Box: TGroupBox;
+    grade_btn_Box: TGroupBox;
+    grade_sel_btn: TButton;
+    grade_sel_grd: TDBGrid;
+    grade_cond_edit: TLabeledEdit;
+    grade_fnd_edit: TLabeledEdit;
+    grade_fio_radio: TRadioButton;
+    grade_pred_radio: TRadioButton;
+    grade_reset_radio: TRadioButton;
+    ins_grade_data_Box: TGroupBox;
+    ins_grade_btn_Box: TGroupBox;
+    ins_grade_ins_btn: TButton;
+    upd_data_Box: TGroupBox;
+    upd_btn_Box: TGroupBox;
+    upd_inp_Box: TGroupBox;
+    upd_pred_inp: TLabeledEdit;
+    predm_lbl: TStaticText;
+    upd_teacher_departmetr_DBL: TDBLookupComboBox;
+    upd_btn: TButton;
+    del_inp_Box: TGroupBox;
+    del_btn_Box: TGroupBox;
+    del_data_Box: TGroupBox;
+    del_btn: TButton;
+    del_teacher_departmetr_DBL: TDBLookupComboBox;
+    del_teacher_departmetr_lBL: TStaticText;
+    ins_grade_Grid: TDBGrid;
+    DBGrid2: TDBGrid;
+    DBGrid3: TDBGrid;
+    ins_grade_PC: TPageControl;
+    about_grade_Tab_one: TTabSheet;
+    about_grade_Tab_two: TTabSheet;
+    about_gradeTabThree: TTabSheet;
+    ins_grade_inp_Box_one: TGroupBox;
+    ins_grade_st_lbl: TStaticText;
+    ins_grade_sb_lbl: TStaticText;
+    ins_grade_st_dbl: TDBLookupComboBox;
+    ins_grade_sb_dbl: TDBLookupComboBox;
+    ins_grade_inp_Box_two: TGroupBox;
+    ins_grade_t_lbl: TStaticText;
+    ins_grade_t_dbl: TDBLookupComboBox;
+    ins_grade_grade_inp: TLabeledEdit;
+    ins_grade_grader: TUpDown;
+    ins_grade_inp_Box_three: TGroupBox;
+    ins_grade_d_lbl: TStaticText;
+    ins_grade_date_inp: TDateTimePicker;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormActivate(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure grade_sel_btnClick(Sender: TObject);
+    procedure grade_fnd_editKeyPress(Sender: TObject; var Key: Char);
+    procedure grade_fio_radioClick(Sender: TObject);
+    procedure grade_pred_radioClick(Sender: TObject);
+    procedure grade_reset_radioClick(Sender: TObject);
+    procedure ins_grade_ins_btnClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_grade: TFrm_grade;
+
+implementation
+
+uses Un_dm, Un_func;
+
+{$R *.dfm}
+
+procedure TFrm_grade.FormActivate(Sender: TObject);
+begin
+  dm.teacherQuery.Open;
+  dm.subjQuery.Open;
+  dm.StudQuery.Open;
+  dm.gradeQuery.open;
+  AdjustDBGridColumnWidths('Frm_grade',6000, 10);
+end;
+
+procedure TFrm_grade.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  SaveFormState(Self);
+  CloseAllQueriesOnDataModule('dm');
+  ins_grade_grader.Position:=0;
+end;
+
+procedure TFrm_grade.FormCreate(Sender: TObject);
+begin
+  UpdateFormShowHint('Frm_grade');
+  UniformizeButtonsSize(Self,  273, 25);
+  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+  UniformizeComponentAnchors(Self);
+  LoadFormState(Self);
+  ins_grade_grader.Position:=0;
+end;
+
+procedure TFrm_grade.grade_fio_radioClick(Sender: TObject);
+begin
+  if  grade_fio_radio.Checked=true then
+  begin
+    try
+     with dm.gradeQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+      'select'+' '+' '+
+    'Grade.id_grade,'+' '+
+    'Student.fio,'+' '+
+    'Subject.name,'+' '+
+    'Teacher.fio,'+' '+
+    'Grade.grade_value,'+' '+
+    'Grade.g_date'+' '+
+    'from Grade'+' '+
+    'inner join Student on Student.id_student=Grade.id_student'+' '+
+    'inner join Subject on Subject.id_subject=Grade.id_subject'+' '+
+    'inner join Teacher on Teacher.id_teacher=Grade.id_teacher'+' '+
+    'where 1=1'+' '+
+    'order by Student.fio asc';
+      Open;
+     end;
+    except
+        on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка   Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    Raise;
+  end;
+end;
+end;
+end;
+
+procedure TFrm_grade.grade_fnd_editKeyPress(Sender: TObject; var Key: Char);
+begin
+  try
+   dm.gradeQuery.SQL.Text:=
+     'select'+' '+' '+
+    'Grade.id_grade,'+' '+
+    'Student.fio,'+' '+
+    'Subject.name,'+' '+
+    'Teacher.fio,'+' '+
+    'Grade.grade_value,'+' '+
+    'Grade.g_date'+' '+
+    'from Grade'+' '+
+    'inner join Student on Student.id_student=Grade.id_student'+' '+
+    'inner join Subject on Subject.id_subject=Grade.id_subject'+' '+
+    'inner join Teacher on Teacher.id_teacher=Grade.id_teacher'+' '+
+    'where 1=1'+' '+
+  'and Subject.name like'+' '+
+   QuotedStr(Concat(grade_fnd_Edit.Text,#37));
+   dm.gradeQuery.close;
+   dm.gradeQuery.Open;
+except
+   on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка   Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    raise;
+end;
+end;
+end;
+
+procedure TFrm_grade.grade_pred_radioClick(Sender: TObject);
+begin
+  if  grade_pred_radio.Checked=true then
+  begin
+    try
+     with dm.gradeQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+      'select'+' '+' '+
+    'Grade.id_grade,'+' '+
+    'Student.fio,'+' '+
+    'Subject.name,'+' '+
+    'Teacher.fio,'+' '+
+    'Grade.grade_value,'+' '+
+    'Grade.g_date'+' '+
+    'from Grade'+' '+
+    'inner join Student on Student.id_student=Grade.id_student'+' '+
+    'inner join Subject on Subject.id_subject=Grade.id_subject'+' '+
+    'inner join Teacher on Teacher.id_teacher=Grade.id_teacher'+' '+
+    'where 1=1'+' '+
+    'order by Subject.name asc';
+      Open;
+     end;
+    except
+        on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка  Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    Raise;
+  end;
+end;
+end;
+end;
+
+procedure TFrm_grade.grade_reset_radioClick(Sender: TObject);
+var i,j,c:Integer;
+begin
+   try
+  if grade_reset_radio.Checked then
+  begin
+    with Frm_grade do
+    begin
+      for I := 0 to ComponentCount - 1 do
+      begin
+        if Components[I] is TLabeledEdit then
+        begin
+          (Components[I] as TLabeledEdit).Clear;
+        end;
+      end;
+      for c := 0 to ComponentCount - 1 do
+      begin
+        if Components[c] is TCheckBox then
+        begin
+          (Components[c] as TCheckBox).Checked := False;
+        end;
+      end;
+      for j := 0 to ComponentCount - 1 do
+      begin
+        if Components[j] is TRadioButton then
+        begin
+          (Components[j] as TRadioButton).Checked := False;
+        end;
+      end;
+    end;
+    with dm.gradeQuery do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text :=
+      'select'+' '+' '+
+    'Grade.id_grade,'+' '+
+    'Student.fio,'+' '+
+    'Subject.name,'+' '+
+    'Teacher.fio,'+' '+
+    'Grade.grade_value,'+' '+
+    'Grade.g_date'+' '+
+    'from Grade'+' '+
+    'inner join Student on Student.id_student=Grade.id_student'+' '+
+    'inner join Subject on Subject.id_subject=Grade.id_subject'+' '+
+    'inner join Teacher on Teacher.id_teacher=Grade.id_teacher'+' '+
+    'where 1=1';
+      Open;
+    end;
+  end;
+except
+  on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка  COM: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+end;
+end;
+
+procedure TFrm_grade.grade_sel_btnClick(Sender: TObject);
+begin
+  try
+    if not DM.Connection.Connected then
+      raise EDatabaseError.Create('Соединение с базой не установлено ',4001);
+    with DM.sel_grade_by_st_fio do
+    begin
+      Close;
+      Parameters.ParamByName('@fio').Value :=grade_cond_edit.Text;
+      Open;
+       DM.gradeQuery.Recordset:=dm.sel_grade_by_st_fio.Recordset;
+    end;
+  except
+  on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка  базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка  Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    Raise;
+  end;
+end;
+end;
+
+procedure TFrm_grade.ins_grade_ins_btnClick(Sender: TObject);
+var
+   AreFieldsEmpty: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (ins_grade_st_dbl.Text='')or
+  (ins_grade_sb_dbl.Text='')or
+  (ins_grade_t_dbl.Text='')or
+  (ins_grade_grader.Position=0)or
+
+  );
+end;
+
+end.

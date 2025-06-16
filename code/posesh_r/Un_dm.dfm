@@ -1,7 +1,7 @@
 object dm: Tdm
   OldCreateOrder = False
   Height = 558
-  Width = 661
+  Width = 851
   object Connection: TADOConnection
     Connected = True
     ConnectionString = 
@@ -660,12 +660,14 @@ object dm: Tdm
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@m_name'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 255
+        Value = Null
       end>
     Left = 552
     Top = 200
@@ -679,6 +681,7 @@ object dm: Tdm
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@id_speciality'
@@ -706,6 +709,7 @@ object dm: Tdm
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@id_curriculum'
@@ -733,6 +737,7 @@ object dm: Tdm
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@id_curriculum'
@@ -743,5 +748,128 @@ object dm: Tdm
       end>
     Left = 560
     Top = 392
+  end
+  object gradeQuery: TADOQuery
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      'Grade.id_grade,'
+      'Student.fio,'
+      'Subject.name,'
+      'Teacher.fio,'
+      'Grade.grade_value,'
+      'Grade.g_date'
+      'from Grade '
+      'inner join Student on Student.id_student=Grade.id_student'
+      'inner join Subject on Subject.id_subject=Grade.id_subject'
+      'inner join Teacher on Teacher.id_teacher=Grade.id_teacher'
+      'where 1=1')
+    Left = 648
+    Top = 72
+  end
+  object gradeDS: TDataSource
+    DataSet = gradeQuery
+    Left = 656
+    Top = 136
+  end
+  object sel_grade_by_st_fio: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_grade_by_st_fio;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@fio'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 255
+      end>
+    Left = 664
+    Top = 200
+  end
+  object ins_grade: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'ins_grade;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@id_student'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@id_subject'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@id_teacher'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@grade_value'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@g_date'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end>
+    Left = 672
+    Top = 256
+  end
+  object upd_grade: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_grade;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@id_grade'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@grade_value'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 672
+    Top = 320
+  end
+  object ADOStoredProc4: TADOStoredProc
+    Parameters = <>
+    Left = 696
+    Top = 384
   end
 end

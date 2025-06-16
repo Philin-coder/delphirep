@@ -18,7 +18,6 @@ type
     stud_item: TMenuItem;
     subj_item: TMenuItem;
     cur_item: TMenuItem;
-    grade_item: TMenuItem;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -28,7 +27,6 @@ type
     procedure stud_itemClick(Sender: TObject);
     procedure subj_itemClick(Sender: TObject);
     procedure cur_itemClick(Sender: TObject);
-    procedure grade_itemClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -41,7 +39,7 @@ var
 implementation
 
 uses Un_dm, Un_func, Un_teacher, Un_spec, Un_group, Un_student, Un_subject,
-  Un_curr, Un_grade;
+  Un_curr;
 
 {$R *.dfm}
 
@@ -82,25 +80,6 @@ begin
   AdjustImageProperties(main_Image);
   LoadFormState(Self);
   LoadImageFromResource('BACKGROUND_IMAGE', main_Image);
-end;
-
-procedure TFrm_main.grade_itemClick(Sender: TObject);
-begin
-  try
-    UpdateFormProperties('Frm_grade', 'Форма работы с информацией об оценке',
-      clBtnFace, 1024, 768);
-    Frm_grade.ShowModal;
-  except
-    on E: Exception do
-    begin
-      if not (E is EMyException) then
-        raise EDatabaseError.Create('Ошибка работы с Формой работы об оценке', 3001);
-      HandleException(E);
-      if Assigned(Frm_grade) then
-        Frm_grade.Free;
-      raise;
-    end;
-  end;
 end;
 
 procedure TFrm_main.group_itemClick(Sender: TObject);

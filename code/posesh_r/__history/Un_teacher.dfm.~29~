@@ -21,7 +21,7 @@ object Frm_teacher: TFrm_teacher
     Top = 0
     Width = 1053
     Height = 584
-    ActivePage = DelTab
+    ActivePage = selTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
