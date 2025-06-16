@@ -48,7 +48,7 @@ type
     gradeDS: TDataSource;
     sel_grade_by_st_fio: TADOStoredProc;
     ins_grade: TADOStoredProc;
-    ADOStoredProc4: TADOStoredProc;
+    del_grade: TADOStoredProc;
     upd_grade: TADOStoredProc;
   private
     { Private declarations }
