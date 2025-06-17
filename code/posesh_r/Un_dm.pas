@@ -53,9 +53,9 @@ type
     lessonQuery: TADOQuery;
     sel_t_by_fio: TADOStoredProc;
     lessonDS: TDataSource;
-    ADOStoredProc2: TADOStoredProc;
-    ADOStoredProc3: TADOStoredProc;
-    ADOStoredProc4: TADOStoredProc;
+    ins_les: TADOStoredProc;
+    upd_less: TADOStoredProc;
+    del_less: TADOStoredProc;
   private
     { Private declarations }
   public

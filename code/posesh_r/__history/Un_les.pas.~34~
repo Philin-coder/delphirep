@@ -108,8 +108,7 @@ begin
       begin
         if not dm.Connection.Connected then
           raise EDatabaseError.Create('Соединение с базой не установлено',4001);
-           Parameters.ParamByName('@id_lesson').Value :=
-           dm.lessonQuery.FieldByName('id_lesson').AsString;
+           Parameters.ParamByName('@Nam_etap').Value :=Nam_etap_inp.Text;
            ExecProc;
            dm.lessonQuery.Close;
            dm.lessonQuery.Open;

@@ -27,21 +27,22 @@ type
     Teacher_data_Box: TGroupBox;
     ins_les_btn_Box: TGroupBox;
     ins_les_ins_btn: TButton;
-    u_les_upd_data_Box: TGroupBox;
-    u_les_upd_btn_Box: TGroupBox;
-    u_les_upd_inp_Box: TGroupBox;
-    u_les_l_lbl: TStaticText;
-    upd_les_DBL: TDBLookupComboBox;
+    upd_data_Box: TGroupBox;
+    upd_btn_Box: TGroupBox;
+    upd_inp_Box: TGroupBox;
+    upd_pred_inp: TLabeledEdit;
+    predm_lbl: TStaticText;
+    upd_teacher_departmetr_DBL: TDBLookupComboBox;
     upd_btn: TButton;
-    d_les_del_inp_Box: TGroupBox;
-    d_les_del_btn_Box: TGroupBox;
-    d_les_del_data_Box: TGroupBox;
-    d_les_del_btn: TButton;
-    del_lesson_DBL: TDBLookupComboBox;
-    del_lesson_lBL: TStaticText;
+    del_inp_Box: TGroupBox;
+    del_btn_Box: TGroupBox;
+    del_data_Box: TGroupBox;
+    del_btn: TButton;
+    del_teacher_departmetr_DBL: TDBLookupComboBox;
+    del_teacher_departmetr_lBL: TStaticText;
     ins_les_Grid: TDBGrid;
-    u_les_Grid: TDBGrid;
-    d_les_Grid: TDBGrid;
+    DBGrid2: TDBGrid;
+    DBGrid3: TDBGrid;
     about_lessonPC: TPageControl;
     about_lessen_Tab_one: TTabSheet;
     about_lessen_Tab_two: TTabSheet;
@@ -57,10 +58,6 @@ type
     ins_l_time_end_inp: TDateTimePicker;
     ins_l_type_combo: TComboBox;
     ins_l_type_lbl: TStaticText;
-    ins_l_l_date_lbl: TStaticText;
-    ins_l_l_date_inp: TDateTimePicker;
-    u_les_date_lbl: TStaticText;
-    u_les_date_inp: TDateTimePicker;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -70,9 +67,6 @@ type
     procedure les_pred_radioClick(Sender: TObject);
     procedure les_reset_radioClick(Sender: TObject);
     procedure ins_les_ins_btnClick(Sender: TObject);
-    procedure ins_l_type_comboChange(Sender: TObject);
-    procedure upd_btnClick(Sender: TObject);
-    procedure d_les_del_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -81,61 +75,12 @@ type
 
 var
   Frm_les: TFrm_les;
-  les_st:Integer;
 
 implementation
 
 uses Un_dm, Un_func;
 
 {$R *.dfm}
-
-procedure TFrm_les.d_les_del_btnClick(Sender: TObject);
-var
-  AreFieldsEmpty: Boolean;
-begin
-  AreFieldsEmpty:=(
-  (del_lesson_DBL.Text='')
-  );
-  if AreFieldsEmpty then
-  begin
-   MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-   try
-      with dm.del_less do
-      begin
-        if not dm.Connection.Connected then
-          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
-           Parameters.ParamByName('@id_lesson').Value :=
-           dm.lessonQuery.FieldByName('id_lesson').AsString;
-           ExecProc;
-           dm.lessonQuery.Close;
-           dm.lessonQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EDatabaseError do
-  begin
-    ShowMessage('Ошибка базы данных: ' + E.Message);
-    HandleException(E);
-    raise;
-  end;
-  on E: EOleError do
-  begin
-    ShowMessage('Ошибка COM: ' + E.Message);
-    HandleException(E); // Логирование ошибки
-    raise; // Повторное выбрасывание исключения
-  end;
-  on E: Exception do
-  begin
-    ShowMessage('Общая ошибка: ' + E.Message);
-    HandleException(E); // Логирование ошибки
-    raise;
-end;
-end;
-end;
 
 procedure TFrm_les.FormActivate(Sender: TObject);
 begin
@@ -149,7 +94,6 @@ procedure TFrm_les.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   SaveFormState(Self);
   CloseAllQueriesOnDataModule('dm');
-  les_st:=0;
 end;
 
 procedure TFrm_les.FormCreate(Sender: TObject);
@@ -160,69 +104,15 @@ begin
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   UniformizeComponentAnchors(Self);
   LoadFormState(Self);
-  les_st:=0;
 end;
 
 procedure TFrm_les.ins_les_ins_btnClick(Sender: TObject);
+const
+  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
 var
   AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
 begin
-  AreFieldsEmpty:=(
-  (ins_l_s_dbl.Text='')or
-  (ins_l_t_dbl.Text='')or
-  (ins_l_type_combo.Text='')
-  );
-  if AreFieldsEmpty then
-  begin
-    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-    try
-      with dm.ins_les do
-      begin
-        if not dm.Connection.Connected then
-          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
-           Parameters.ParamByName('@id_subject').Value :=
-           dm.subjQuery.FieldByName('id_subject').AsString;
-           Parameters.ParamByName('@id_teacher').Value:=
-           dm.TeacherQuery.FieldByName('id_teacher').AsString;
-           Parameters.ParamByName('@l_date').Value:=ins_l_l_date_inp.Date;
-           Parameters.ParamByName('@time_start').Value:=ins_l_time_start_inp.Time;
-           Parameters.ParamByName('@time_end').Value:=ins_l_time_end_inp.Time;
-           Parameters.ParamByName('@l_type').Value:=les_st;
-           ExecProc;
-           dm.lessonQuery.Close;
-           dm.lessonQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EDatabaseError do
-  begin
-    ShowMessage('Ошибка базы данных: ' + E.Message);
-    HandleException(E);
-    raise;
-  end;
-  on E: EOleError do
-  begin
-    ShowMessage('Ошибка COM: ' + E.Message);
-    HandleException(E); // Логирование ошибки
-    raise; // Повторное выбрасывание исключения
-  end;
-  on E: Exception do
-  begin
-    ShowMessage('Общая ошибка: ' + E.Message);
-    HandleException(E); // Логирование ошибки
-    raise;
-end;
-end;
-end;
-
-procedure TFrm_les.ins_l_type_comboChange(Sender: TObject);
-begin
-if ins_l_type_combo.ItemIndex=0 then  les_st:=1
-  else les_st:=0;
 end;
 
 procedure TFrm_les.les_fnd_editKeyPress(Sender: TObject; var Key: Char);
@@ -465,55 +355,6 @@ begin
     HandleException(E);
     Raise;
   end;
-end;
-end;
-end;
-
-procedure TFrm_les.upd_btnClick(Sender: TObject);
-var
-  AreFieldsEmpty: Boolean;
-begin
-  AreFieldsEmpty:=(
-  (upd_les_DBL.Text='')
-  );
-  if AreFieldsEmpty then
-  begin
-    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-    try
-      with dm.upd_less do
-      begin
-        if not dm.Connection.Connected then
-          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
-           Parameters.ParamByName('@id_lesson').Value :=
-           dm.lessonQuery.FieldByName('id_lesson').AsString;
-           Parameters.ParamByName('@l_date').Value:=u_les_date_inp.Date;
-           ExecProc;
-           dm.lessonQuery.Close;
-           dm.lessonQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EDatabaseError do
-  begin
-    ShowMessage('Ошибка базы данных: ' + E.Message);
-    HandleException(E);
-    raise;
-  end;
-  on E: EOleError do
-  begin
-    ShowMessage('Ошибка COM: ' + E.Message);
-    HandleException(E); // Логирование ошибки
-    raise; // Повторное выбрасывание исключения
-  end;
-  on E: Exception do
-  begin
-    ShowMessage('Общая ошибка: ' + E.Message);
-    HandleException(E); // Логирование ошибки
-    raise;
 end;
 end;
 end;

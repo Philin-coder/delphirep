@@ -72,7 +72,6 @@ type
     procedure ins_les_ins_btnClick(Sender: TObject);
     procedure ins_l_type_comboChange(Sender: TObject);
     procedure upd_btnClick(Sender: TObject);
-    procedure d_les_del_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -88,54 +87,6 @@ implementation
 uses Un_dm, Un_func;
 
 {$R *.dfm}
-
-procedure TFrm_les.d_les_del_btnClick(Sender: TObject);
-var
-  AreFieldsEmpty: Boolean;
-begin
-  AreFieldsEmpty:=(
-  (del_lesson_DBL.Text='')
-  );
-  if AreFieldsEmpty then
-  begin
-   MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-   try
-      with dm.del_less do
-      begin
-        if not dm.Connection.Connected then
-          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
-           Parameters.ParamByName('@id_lesson').Value :=
-           dm.lessonQuery.FieldByName('id_lesson').AsString;
-           ExecProc;
-           dm.lessonQuery.Close;
-           dm.lessonQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EDatabaseError do
-  begin
-    ShowMessage('Ошибка базы данных: ' + E.Message);
-    HandleException(E);
-    raise;
-  end;
-  on E: EOleError do
-  begin
-    ShowMessage('Ошибка COM: ' + E.Message);
-    HandleException(E); // Логирование ошибки
-    raise; // Повторное выбрасывание исключения
-  end;
-  on E: Exception do
-  begin
-    ShowMessage('Общая ошибка: ' + E.Message);
-    HandleException(E); // Логирование ошибки
-    raise;
-end;
-end;
-end;
 
 procedure TFrm_les.FormActivate(Sender: TObject);
 begin
