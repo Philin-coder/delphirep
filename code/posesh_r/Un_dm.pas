@@ -50,6 +50,12 @@ type
     ins_grade: TADOStoredProc;
     del_grade: TADOStoredProc;
     upd_grade: TADOStoredProc;
+    lessonQuery: TADOQuery;
+    sel_t_by_fio: TADOStoredProc;
+    lessonDS: TDataSource;
+    ADOStoredProc2: TADOStoredProc;
+    ADOStoredProc3: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public

@@ -1,0 +1,528 @@
+object Frm_les: TFrm_les
+  Left = 0
+  Top = 0
+  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1077#1081' '#1086#1073' '#1091#1088#1086#1082#1077' '
+  ClientHeight = 584
+  ClientWidth = 1053
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  OnActivate = FormActivate
+  OnClose = FormClose
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object lesPC: TPageControl
+    Left = 0
+    Top = 0
+    Width = 1053
+    Height = 584
+    ActivePage = selTab
+    Align = alClient
+    TabOrder = 0
+    object selTab: TTabSheet
+      Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086#1073' '#1091#1088#1086#1082#1077
+      object les_inp_Box: TGroupBox
+        Left = 0
+        Top = 0
+        Width = 1045
+        Height = 105
+        Align = alTop
+        Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 0
+        object les_cond_edit: TLabeledEdit
+          Left = 16
+          Top = 32
+          Width = 1017
+          Height = 21
+          EditLabel.Width = 222
+          EditLabel.Height = 13
+          EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1060#1048#1054' '#1087#1088#1077#1087#1086#1076#1072#1074#1072#1090#1077#1083#1103
+          TabOrder = 0
+        end
+        object les_fnd_edit: TLabeledEdit
+          Left = 16
+          Top = 72
+          Width = 1017
+          Height = 21
+          EditLabel.Width = 133
+          EditLabel.Height = 13
+          EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1087#1088#1077#1076#1084#1077#1090#1091
+          TabOrder = 1
+          OnKeyPress = les_fnd_editKeyPress
+        end
+      end
+      object les_data_Box: TGroupBox
+        Left = 0
+        Top = 210
+        Width = 1045
+        Height = 286
+        Align = alClient
+        Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 1
+        object les_sel_grd: TDBGrid
+          Left = 2
+          Top = 15
+          Width = 1041
+          Height = 269
+          Align = alClient
+          DataSource = dm.lessonDS
+          TabOrder = 0
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWindowText
+          TitleFont.Height = -11
+          TitleFont.Name = 'Tahoma'
+          TitleFont.Style = []
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'id_lesson'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'name'
+              Title.Caption = #1055#1088#1077#1076#1084#1077#1090' '
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'fio'
+              Title.Caption = #1055#1088#1077#1087#1086#1076#1072#1074#1072#1090#1077#1083#1100
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'date'
+              Title.Caption = #1044#1072#1090#1072' '#1085#1072#1095#1072#1083#1072' '#1091#1088#1086#1082#1072
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'time_start'
+              Title.Caption = #1042#1088#1077#1084#1103' '#1085#1072#1095#1072#1083#1072
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'time_end'
+              Title.Caption = #1042#1088#1077#1084#1103' '#1086#1082#1086#1085#1095#1072#1085#1080#1103
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'l_type'
+              Title.Caption = #1058#1080#1087' '#1091#1088#1086#1082#1072
+              Visible = True
+            end>
+        end
+      end
+      object les_groupr_Box: TGroupBox
+        Left = 0
+        Top = 105
+        Width = 1045
+        Height = 105
+        Align = alTop
+        Caption = #1057#1086#1088#1090#1080#1088#1086#1074#1082#1072' '#1087#1086
+        TabOrder = 2
+        object les_teacher_fio_radio: TRadioButton
+          Left = 56
+          Top = 48
+          Width = 137
+          Height = 17
+          Caption = #1055#1086' '#1060#1048#1054' '#1087#1088#1077#1087#1086#1076#1072#1074#1072#1090#1077#1083#1103
+          TabOrder = 0
+        end
+        object les_pred_radio: TRadioButton
+          Left = 320
+          Top = 48
+          Width = 113
+          Height = 17
+          Caption = #1055#1086' '#1087#1088#1077#1076#1084#1077#1090#1091
+          TabOrder = 1
+        end
+        object les_reset_radio: TRadioButton
+          Left = 672
+          Top = 48
+          Width = 113
+          Height = 17
+          Caption = #1057#1073#1088#1086#1089
+          TabOrder = 2
+        end
+      end
+      object les_btn_Box: TGroupBox
+        Left = 0
+        Top = 496
+        Width = 1045
+        Height = 60
+        Align = alBottom
+        TabOrder = 3
+        object les_sel_btn: TButton
+          Left = 328
+          Top = 24
+          Width = 75
+          Height = 25
+          Caption = #1042#1099#1073#1088#1072#1090#1100
+          TabOrder = 0
+          OnClick = les_sel_btnClick
+        end
+      end
+    end
+    object insTab: TTabSheet
+      Caption = #1042#1074#1086#1076' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1087#1088#1077#1087#1086#1076#1072#1074#1072#1090#1077#1083#1077
+      ImageIndex = 1
+      object Teacher_data_Box: TGroupBox
+        Left = 0
+        Top = 105
+        Width = 1045
+        Height = 383
+        Align = alClient
+        Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 0
+        object DBGrid1: TDBGrid
+          Left = 2
+          Top = 15
+          Width = 1041
+          Height = 366
+          Align = alClient
+          DataSource = dm.lessonDS
+          TabOrder = 0
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWindowText
+          TitleFont.Height = -11
+          TitleFont.Name = 'Tahoma'
+          TitleFont.Style = []
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'id_lesson'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'name'
+              Title.Caption = #1055#1088#1077#1076#1084#1077#1090' '
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'fio'
+              Title.Caption = #1055#1088#1077#1087#1086#1076#1072#1074#1072#1090#1077#1083#1100
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'date'
+              Title.Caption = #1044#1072#1090#1072' '#1085#1072#1095#1072#1083#1072' '#1091#1088#1086#1082#1072
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'time_start'
+              Title.Caption = #1042#1088#1077#1084#1103' '#1085#1072#1095#1072#1083#1072
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'time_end'
+              Title.Caption = #1042#1088#1077#1084#1103' '#1086#1082#1086#1085#1095#1072#1085#1080#1103
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'l_type'
+              Title.Caption = #1058#1080#1087' '#1091#1088#1086#1082#1072
+              Visible = True
+            end>
+        end
+      end
+      object Teacher_inp_Box: TGroupBox
+        Left = 0
+        Top = 0
+        Width = 1045
+        Height = 105
+        Align = alTop
+        Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 1
+        object Teacher_predm_inp: TLabeledEdit
+          Left = 24
+          Top = 78
+          Width = 1017
+          Height = 21
+          EditLabel.Width = 44
+          EditLabel.Height = 13
+          EditLabel.Caption = #1055#1088#1077#1076#1084#1077#1090
+          TabOrder = 0
+        end
+        object Teacher_fio_inp: TLabeledEdit
+          Left = 24
+          Top = 40
+          Width = 1017
+          Height = 21
+          EditLabel.Width = 105
+          EditLabel.Height = 13
+          EditLabel.Caption = #1060#1048#1054' '#1087#1088#1077#1087#1086#1076#1072#1074#1072#1080#1077#1083#1103
+          TabOrder = 1
+        end
+      end
+      object Teacher_btn_Box: TGroupBox
+        Left = 0
+        Top = 488
+        Width = 1045
+        Height = 68
+        Align = alBottom
+        TabOrder = 2
+        object Teacher_ins_btn: TButton
+          Left = 416
+          Top = 32
+          Width = 75
+          Height = 25
+          Caption = #1042#1089#1090#1072#1074#1080#1090#1100
+          TabOrder = 0
+        end
+      end
+    end
+    object UpdTab: TTabSheet
+      Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1088#1077#1087#1086#1076#1072#1074#1072#1090#1077#1083#1077
+      ImageIndex = 2
+      object upd_data_Box: TGroupBox
+        Left = 0
+        Top = 129
+        Width = 1045
+        Height = 375
+        Align = alClient
+        Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 0
+        object DBGrid2: TDBGrid
+          Left = 2
+          Top = 15
+          Width = 1041
+          Height = 358
+          Align = alClient
+          DataSource = dm.lessonDS
+          TabOrder = 0
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWindowText
+          TitleFont.Height = -11
+          TitleFont.Name = 'Tahoma'
+          TitleFont.Style = []
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'id_lesson'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'name'
+              Title.Caption = #1055#1088#1077#1076#1084#1077#1090' '
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'fio'
+              Title.Caption = #1055#1088#1077#1087#1086#1076#1072#1074#1072#1090#1077#1083#1100
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'date'
+              Title.Caption = #1044#1072#1090#1072' '#1085#1072#1095#1072#1083#1072' '#1091#1088#1086#1082#1072
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'time_start'
+              Title.Caption = #1042#1088#1077#1084#1103' '#1085#1072#1095#1072#1083#1072
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'time_end'
+              Title.Caption = #1042#1088#1077#1084#1103' '#1086#1082#1086#1085#1095#1072#1085#1080#1103
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'l_type'
+              Title.Caption = #1058#1080#1087' '#1091#1088#1086#1082#1072
+              Visible = True
+            end>
+        end
+      end
+      object upd_btn_Box: TGroupBox
+        Left = 0
+        Top = 504
+        Width = 1045
+        Height = 52
+        Align = alBottom
+        TabOrder = 1
+        object upd_btn: TButton
+          Left = 296
+          Top = 24
+          Width = 75
+          Height = 25
+          Caption = #1054#1073#1085#1086#1074#1080#1090#1100
+          TabOrder = 0
+        end
+      end
+      object upd_inp_Box: TGroupBox
+        Left = 0
+        Top = 0
+        Width = 1045
+        Height = 129
+        Align = alTop
+        Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 2
+        object upd_pred_inp: TLabeledEdit
+          Left = 16
+          Top = 96
+          Width = 1017
+          Height = 21
+          EditLabel.Width = 44
+          EditLabel.Height = 13
+          EditLabel.Caption = #1055#1088#1077#1076#1084#1077#1090
+          TabOrder = 0
+        end
+        object predm_lbl: TStaticText
+          Left = 16
+          Top = 16
+          Width = 94
+          Height = 17
+          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1087#1088#1077#1076#1084#1077#1090
+          TabOrder = 1
+        end
+        object upd_teacher_departmetr_DBL: TDBLookupComboBox
+          Left = 16
+          Top = 39
+          Width = 1017
+          Height = 21
+          KeyField = 'id_teacher'
+          ListField = 'fio'
+          ListSource = dm.teacherDS
+          TabOrder = 2
+        end
+      end
+    end
+    object DelTab: TTabSheet
+      Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1087#1088#1077#1087#1086#1076#1072#1074#1072#1090#1077#1083#1077
+      ImageIndex = 3
+      object del_inp_Box: TGroupBox
+        Left = 0
+        Top = 0
+        Width = 1045
+        Height = 105
+        Align = alTop
+        Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 0
+        object del_teacher_departmetr_DBL: TDBLookupComboBox
+          Left = 16
+          Top = 71
+          Width = 1017
+          Height = 21
+          KeyField = 'id_teacher'
+          ListField = 'fio'
+          ListSource = dm.teacherDS
+          TabOrder = 0
+        end
+        object del_teacher_departmetr_lBL: TStaticText
+          Left = 16
+          Top = 32
+          Width = 130
+          Height = 17
+          Caption = #1042#1099#1073#1088#1072#1090#1100' '#1087#1088#1077#1087#1086#1076#1072#1074#1072#1090#1077#1083#1103
+          TabOrder = 1
+        end
+      end
+      object del_btn_Box: TGroupBox
+        Left = 0
+        Top = 488
+        Width = 1045
+        Height = 68
+        Align = alBottom
+        TabOrder = 1
+        object del_btn: TButton
+          Left = 416
+          Top = 32
+          Width = 75
+          Height = 25
+          Caption = #1059#1076#1072#1083#1080#1090#1100
+          TabOrder = 0
+        end
+      end
+      object del_data_Box: TGroupBox
+        Left = 0
+        Top = 105
+        Width = 1045
+        Height = 383
+        Align = alClient
+        Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+        TabOrder = 2
+        object DBGrid3: TDBGrid
+          Left = 2
+          Top = 15
+          Width = 1041
+          Height = 366
+          Align = alClient
+          DataSource = dm.lessonDS
+          TabOrder = 0
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWindowText
+          TitleFont.Height = -11
+          TitleFont.Name = 'Tahoma'
+          TitleFont.Style = []
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'id_lesson'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'name'
+              Title.Caption = #1055#1088#1077#1076#1084#1077#1090' '
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'fio'
+              Title.Caption = #1055#1088#1077#1087#1086#1076#1072#1074#1072#1090#1077#1083#1100
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'date'
+              Title.Caption = #1044#1072#1090#1072' '#1085#1072#1095#1072#1083#1072' '#1091#1088#1086#1082#1072
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'time_start'
+              Title.Caption = #1042#1088#1077#1084#1103' '#1085#1072#1095#1072#1083#1072
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'time_end'
+              Title.Caption = #1042#1088#1077#1084#1103' '#1086#1082#1086#1085#1095#1072#1085#1080#1103
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'l_type'
+              Title.Caption = #1058#1080#1087' '#1091#1088#1086#1082#1072
+              Visible = True
+            end>
+        end
+      end
+    end
+  end
+end

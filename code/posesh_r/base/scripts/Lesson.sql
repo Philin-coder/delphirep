@@ -1,7 +1,7 @@
 USE [posech_r]
 GO
 
-/****** Object:  Table [dbo].[Lesson]    Script Date: 12.06.2025 23:37:18 ******/
+/****** Object:  Table [dbo].[Lesson]    Script Date: 17.06.2025 11:35:17 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -15,8 +15,8 @@ CREATE TABLE [dbo].[Lesson](
 	[date] [date] NOT NULL,
 	[time_start] [time](7) NOT NULL,
 	[time_end] [time](7) NOT NULL,
-	[type] [nvarchar](50) NOT NULL,
- CONSTRAINT [PK__Lesson__BC5E15A05D446CA4] PRIMARY KEY CLUSTERED 
+	[l_type] [int] NOT NULL,
+ CONSTRAINT [PK__Lesson__BC5E15A0C82BB426] PRIMARY KEY CLUSTERED 
 (
 	[id_lesson] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]

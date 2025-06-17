@@ -1,7 +1,7 @@
 object dm: Tdm
   OldCreateOrder = False
   Height = 558
-  Width = 851
+  Width = 957
   object Connection: TADOConnection
     Connected = True
     ConnectionString = 
@@ -783,12 +783,14 @@ object dm: Tdm
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@fio'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 255
+        Value = Null
       end>
     Left = 664
     Top = 200
@@ -802,6 +804,7 @@ object dm: Tdm
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@id_student'
@@ -836,6 +839,7 @@ object dm: Tdm
         Attributes = [paNullable]
         DataType = ftDateTime
         Size = 10
+        Value = Null
       end>
     Left = 672
     Top = 256
@@ -849,6 +853,7 @@ object dm: Tdm
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@id_grade'
@@ -876,6 +881,7 @@ object dm: Tdm
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@id_grade'
@@ -886,5 +892,67 @@ object dm: Tdm
       end>
     Left = 696
     Top = 384
+  end
+  object lessonQuery: TADOQuery
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      ' Lesson.id_lesson,'
+      ' Subject.name,'
+      ' Teacher.fio,'
+      ' Lesson.date,'
+      ' Lesson.time_start,'
+      ' Lesson.time_end,'
+      
+        ' case when Lesson.l_type=1 then '#39#1083#1077#1082#1094#1080#1103#39' else '#39#1087#1088#1072#1082#1090#1080#1082#1072#39' end as ' +
+        'l_type'
+      'from Lesson '
+      'inner join Subject on Subject.id_subject=Lesson.id_subject'
+      'inner join Teacher on Teacher.id_teacher=Lesson.id_teacher'
+      'where 1=1'
+      '')
+    Left = 776
+    Top = 64
+  end
+  object sel_t_by_fio: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_t_by_fio;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@fio'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 255
+      end>
+    Left = 792
+    Top = 176
+  end
+  object lessonDS: TDataSource
+    DataSet = lessonQuery
+    Left = 792
+    Top = 120
+  end
+  object ADOStoredProc2: TADOStoredProc
+    Parameters = <>
+    Left = 808
+    Top = 232
+  end
+  object ADOStoredProc3: TADOStoredProc
+    Parameters = <>
+    Left = 808
+    Top = 304
+  end
+  object ADOStoredProc4: TADOStoredProc
+    Parameters = <>
+    Left = 800
+    Top = 376
   end
 end
