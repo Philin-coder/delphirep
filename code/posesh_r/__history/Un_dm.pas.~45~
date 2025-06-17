@@ -48,6 +48,18 @@ type
     gradeDS: TDataSource;
     sel_grade_by_st_fio: TADOStoredProc;
     ins_grade: TADOStoredProc;
+    del_grade: TADOStoredProc;
+    upd_grade: TADOStoredProc;
+    lessonQuery: TADOQuery;
+    sel_t_by_fio: TADOStoredProc;
+    lessonDS: TDataSource;
+    ins_les: TADOStoredProc;
+    upd_less: TADOStoredProc;
+    del_less: TADOStoredProc;
+    attQuery: TADOQuery;
+    attDS: TDataSource;
+    ADOStoredProc1: TADOStoredProc;
+    ADOStoredProc2: TADOStoredProc;
     ADOStoredProc3: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;
   private

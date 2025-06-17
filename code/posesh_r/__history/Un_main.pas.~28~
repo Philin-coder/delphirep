@@ -20,7 +20,6 @@ type
     cur_item: TMenuItem;
     grade_item: TMenuItem;
     les_item: TMenuItem;
-    att_item: TMenuItem;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -32,7 +31,6 @@ type
     procedure cur_itemClick(Sender: TObject);
     procedure grade_itemClick(Sender: TObject);
     procedure les_itemClick(Sender: TObject);
-    procedure att_itemClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -45,28 +43,9 @@ var
 implementation
 
 uses Un_dm, Un_func, Un_teacher, Un_spec, Un_group, Un_student, Un_subject,
-  Un_curr, Un_grade, Un_les, Un_att;
+  Un_curr, Un_grade, Un_les;
 
 {$R *.dfm}
-
-procedure TFrm_main.att_itemClick(Sender: TObject);
-begin
-  try
-    UpdateFormProperties('Frm_att', 'Форма работы с информацией об опоздании',
-      clBtnFace, 1024, 768);
-    Frm_att.ShowModal;
-  except
-    on E: Exception do
-    begin
-      if not (E is EMyException) then
-        raise EDatabaseError.Create('Ошибка работы с Формой работы c опозданием', 3001);
-      HandleException(E);
-      if Assigned(Frm_att) then
-        Frm_att.Free;
-      raise;
-    end;
-  end;
-end;
 
 procedure TFrm_main.cur_itemClick(Sender: TObject);
 begin

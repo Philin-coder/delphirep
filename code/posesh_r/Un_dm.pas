@@ -56,6 +56,12 @@ type
     ins_les: TADOStoredProc;
     upd_less: TADOStoredProc;
     del_less: TADOStoredProc;
+    attQuery: TADOQuery;
+    attDS: TDataSource;
+    upd_att: TADOStoredProc;
+    sel_att_by_stud_fio: TADOStoredProc;
+    ins_att: TADOStoredProc;
+    del_att: TADOStoredProc;
   private
     { Private declarations }
   public

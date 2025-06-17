@@ -940,18 +940,101 @@ object dm: Tdm
     Left = 792
     Top = 120
   end
-  object ADOStoredProc2: TADOStoredProc
-    Parameters = <>
+  object ins_les: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'ins_les;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@id_subject'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@id_teacher'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@l_date'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end
+      item
+        Name = '@time_start'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 16
+      end
+      item
+        Name = '@time_end'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 16
+      end
+      item
+        Name = '@l_type'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
     Left = 808
     Top = 232
   end
-  object ADOStoredProc3: TADOStoredProc
-    Parameters = <>
+  object upd_less: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_less;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@id_lesson'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@l_date'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end>
     Left = 808
     Top = 304
   end
-  object ADOStoredProc4: TADOStoredProc
-    Parameters = <>
+  object del_less: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'del_less;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@id_lesson'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
     Left = 800
     Top = 376
   end
