@@ -925,12 +925,14 @@ object dm: Tdm
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@fio'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 255
+        Value = Null
       end>
     Left = 728
     Top = 184
@@ -949,6 +951,7 @@ object dm: Tdm
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@id_subject'
@@ -969,18 +972,21 @@ object dm: Tdm
         Attributes = [paNullable]
         DataType = ftDateTime
         Size = 10
+        Value = Null
       end
       item
         Name = '@time_start'
         Attributes = [paNullable]
         DataType = ftDateTime
         Size = 16
+        Value = Null
       end
       item
         Name = '@time_end'
         Attributes = [paNullable]
         DataType = ftDateTime
         Size = 16
+        Value = Null
       end
       item
         Name = '@l_type'
@@ -1001,6 +1007,7 @@ object dm: Tdm
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@id_lesson'
@@ -1014,6 +1021,7 @@ object dm: Tdm
         Attributes = [paNullable]
         DataType = ftDateTime
         Size = 10
+        Value = Null
       end>
     Left = 744
     Top = 304
@@ -1027,6 +1035,7 @@ object dm: Tdm
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@id_lesson'
@@ -1056,12 +1065,12 @@ object dm: Tdm
       'inner join Subject on Subject.id_subject=Lesson.id_subject'
       'inner join Student on Student.id_student=Attendance.id_student'
       'where 1=1 ')
-    Left = 856
-    Top = 64
+    Left = 800
+    Top = 48
   end
   object attDS: TDataSource
     DataSet = attQuery
-    Left = 848
+    Left = 800
     Top = 120
   end
   object upd_att: TADOStoredProc
@@ -1073,6 +1082,7 @@ object dm: Tdm
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@id_attendance'
@@ -1086,8 +1096,9 @@ object dm: Tdm
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 255
+        Value = Null
       end>
-    Left = 864
+    Left = 808
     Top = 312
   end
   object sel_att_by_stud_fio: TADOStoredProc
@@ -1099,15 +1110,17 @@ object dm: Tdm
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@fio'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 255
+        Value = Null
       end>
-    Left = 856
-    Top = 176
+    Left = 792
+    Top = 184
   end
   object ins_att: TADOStoredProc
     Connection = Connection
@@ -1118,6 +1131,7 @@ object dm: Tdm
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@id_lesson'
@@ -1145,8 +1159,9 @@ object dm: Tdm
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 255
+        Value = Null
       end>
-    Left = 856
+    Left = 800
     Top = 240
   end
   object del_att: TADOStoredProc
@@ -1158,6 +1173,7 @@ object dm: Tdm
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@id_attendance'
@@ -1166,7 +1182,59 @@ object dm: Tdm
         Precision = 10
         Value = 0
       end>
-    Left = 872
-    Top = 376
+    Left = 816
+    Top = 368
+  end
+  object reportQuery: TADOQuery
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      ' Lesson.id_lesson,'
+      ' Subject.name,'
+      ' Teacher.fio,'
+      ' Lesson.date,'
+      ' Lesson.time_start,'
+      ' Lesson.time_end,'
+      
+        ' case when Lesson.l_type=1 then '#39#1083#1077#1082#1094#1080#1103#39' else '#39#1087#1088#1072#1082#1090#1080#1082#1072#39' end as ' +
+        'l_type'
+      'from Lesson '
+      'inner join Subject on Subject.id_subject=Lesson.id_subject'
+      'inner join Teacher on Teacher.id_teacher=Lesson.id_teacher'
+      'where 1=1')
+    Left = 896
+    Top = 56
+  end
+  object reportDS: TDataSource
+    DataSet = reportQuery
+    Left = 896
+    Top = 112
+  end
+  object report1: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'report1;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@d1'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end
+      item
+        Name = '@d2'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end>
+    Left = 896
+    Top = 184
   end
 end

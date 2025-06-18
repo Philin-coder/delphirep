@@ -21,7 +21,6 @@ type
     grade_item: TMenuItem;
     les_item: TMenuItem;
     att_item: TMenuItem;
-    report_item: TMenuItem;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -34,7 +33,6 @@ type
     procedure grade_itemClick(Sender: TObject);
     procedure les_itemClick(Sender: TObject);
     procedure att_itemClick(Sender: TObject);
-    procedure report_itemClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -47,7 +45,7 @@ var
 implementation
 
 uses Un_dm, Un_func, Un_teacher, Un_spec, Un_group, Un_student, Un_subject,
-  Un_curr, Un_grade, Un_les, Un_att, Un_report;
+  Un_curr, Un_grade, Un_les, Un_att;
 
 {$R *.dfm}
 
@@ -161,25 +159,6 @@ begin
       HandleException(E);
       if Assigned(Frm_les) then
         Frm_les.Free;
-      raise;
-    end;
-  end;
-end;
-
-procedure TFrm_main.report_itemClick(Sender: TObject);
-begin
-  try
-    UpdateFormProperties('Frm_report', 'Форма работы с информацией об отчетности',
-      clBtnFace, 1024, 768);
-    Frm_report.ShowModal;
-  except
-    on E: Exception do
-    begin
-      if not (E is EMyException) then
-        raise EDatabaseError.Create('Ошибка работы с Формой работы об отчетности', 3001);
-      HandleException(E);
-      if Assigned(Frm_report) then
-        Frm_report.Free;
       raise;
     end;
   end;

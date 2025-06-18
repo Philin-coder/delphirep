@@ -13,7 +13,6 @@ uses
   Un_grade in 'Un_grade.pas' {Frm_grade},
   Un_les in 'Un_les.pas' {Frm_les},
   Un_att in 'Un_att.pas' {Frm_att},
-  Un_report in 'Un_report.pas' {Frm_report},
   Un_teacher in 'Un_teacher.pas' {Frm_teacher};
 
 {$R *.res}
@@ -31,7 +30,6 @@ begin
   Application.CreateForm(TFrm_grade, Frm_grade);
   Application.CreateForm(TFrm_les, Frm_les);
   Application.CreateForm(TFrm_att, Frm_att);
-  Application.CreateForm(TFrm_report, Frm_report);
   Application.CreateForm(TFrm_teacher, Frm_teacher);
   Application.Run;
 end.

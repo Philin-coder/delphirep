@@ -62,6 +62,9 @@ type
     sel_att_by_stud_fio: TADOStoredProc;
     ins_att: TADOStoredProc;
     del_att: TADOStoredProc;
+    reportQuery: TADOQuery;
+    reportDS: TDataSource;
+    report1: TADOStoredProc;
   private
     { Private declarations }
   public
