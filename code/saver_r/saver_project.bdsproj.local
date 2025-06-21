@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2025.06.21 23:00:13.788.pas,C:\Users\user\OneDrive\Документы\Borland Studio Projects\Unit2.pas=F:\code\Result\delphi\code\saver_r\Un_main.pas</Transaction>
+    <Transaction>2025.06.21 23:00:13.788.dfm,C:\Users\user\OneDrive\Документы\Borland Studio Projects\Unit2.dfm=F:\code\Result\delphi\code\saver_r\Un_main.dfm</Transaction>
+    <Transaction>2025.06.21 23:00:47.695.bdsproj,C:\Users\user\OneDrive\Документы\Borland Studio Projects\Project1.bdsproj=F:\code\Result\delphi\code\saver_r\saver_project.bdsproj</Transaction>
+    <Transaction>2025.06.21 23:12:17.067.pas,F:\code\Result\delphi\code\saver_r\Unit1.pas=F:\code\Result\delphi\code\saver_r\Un_dm.pas</Transaction>
+    <Transaction>2025.06.21 23:12:17.067.dfm,F:\code\Result\delphi\code\saver_r\Unit1.dfm=F:\code\Result\delphi\code\saver_r\Un_dm.dfm</Transaction>
+  </Transactions>
+</BorlandProject>

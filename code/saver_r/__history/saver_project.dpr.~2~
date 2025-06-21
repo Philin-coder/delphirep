@@ -1,0 +1,17 @@
+program saver_project;
+
+uses
+  Forms,
+  Un_func in 'Un_func.pas',
+  Un_main in 'Un_main.pas' {Form2},
+  Un_dm in 'Un_dm.pas' {DataModule1: TDataModule};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.CreateForm(TForm2, Form2);
+  Application.CreateForm(TForm2, Form2);
+  Application.CreateForm(TDataModule1, DataModule1);
+  Application.Run;
+end.
