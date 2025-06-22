@@ -27,7 +27,6 @@ ComObj,
 math,
 ExtCtrls,
 Registry,
-FileCtrl,
 ShellAPI;
 function AddNumbers(num1, num2: Integer): Integer; stdcall;
   external 'mylib.dll' name 'AddNumbers';
@@ -209,7 +208,6 @@ procedure UpdateAnchors(AControl: TControl);
 procedure DisableLoginPromptsOnDataModule(const DataModuleName: string);
 function FindDMByName(const mName: string): TDataModule;
 function IsWinRARInstalled: Boolean;
-procedure ArchiveSelectedFolderWithWinRAR;
 implementation
 type
   tdata = array [0..15] of DWORD;
@@ -3431,40 +3429,6 @@ begin
     end;
   end;
 end;
-
- procedure ArchiveSelectedFolderWithWinRAR;
-var
-  FolderPath, WinRARPath, ArchiveName, CmdParams: string;
-begin
-  // Выбор папки
-  if not SelectDirectory('Выберите папку для архивирования', '', FolderPath) then
-    Exit;
-
-  // Убираем завершающий слэш, если есть
-  if FolderPath[Length(FolderPath)] = '\' then
-    Delete(FolderPath, Length(FolderPath), 1);
-
-  // Поиск WinRAR
-  if FileExists('C:\Program Files\WinRAR\WinRAR.exe') then
-    WinRARPath := 'C:\Program Files\WinRAR\WinRAR.exe'
-  else if FileExists('C:\Program Files (x86)\WinRAR\WinRAR.exe') then
-    WinRARPath := 'C:\Program Files (x86)\WinRAR\WinRAR.exe'
-  else
-  begin
-    ShowMessage('WinRAR не найден на этом компьютере.');
-    Exit;
-  end;
-
-  // Имя архива (папка.rar в той же директории)
-  ArchiveName := FolderPath + '.rar';
-
-  // Команда архивирования
-  CmdParams := Format('a -r "%s" "%s\*"', [ArchiveName, FolderPath]);
-
-  // Запуск WinRAR с параметрами
-  ShellExecute(0, 'open', PChar(WinRARPath), PChar(CmdParams), nil, SW_SHOWNORMAL);
-end;
-
 initialization
   VisitedStaticTexts := TStringList.Create;
 finalization
