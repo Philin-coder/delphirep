@@ -36,7 +36,7 @@ uses Un_dm, Un_func, Un_lang;
 
 procedure TFrm_main.Button1Click(Sender: TObject);
 begin
-    ArchiveSelectedFolderWithWinRAR;
+   ArchiveFolderWithWinRAR;
 end;
 
 procedure TFrm_main.FormActivate(Sender: TObject);
