@@ -7,7 +7,6 @@ uses
   Un_dm in 'Un_dm.pas' {DM: TDataModule};
 
 {$R *.res}
-{$R 'resources.RES'}
 
 begin
   Application.Initialize;

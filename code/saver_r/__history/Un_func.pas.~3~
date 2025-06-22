@@ -207,7 +207,6 @@ procedure UpdateControlsShowHint(ParentControl: TWinControl);
 procedure UpdateAnchors(AControl: TControl);
 procedure DisableLoginPromptsOnDataModule(const DataModuleName: string);
 function FindDMByName(const mName: string): TDataModule;
-function IsWinRARInstalled: Boolean;
 implementation
 type
   tdata = array [0..15] of DWORD;

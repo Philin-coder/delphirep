@@ -25,9 +25,7 @@ db,
 adodb,
 ComObj,
 math,
-ExtCtrls,
-Registry,
-ShellAPI;
+ExtCtrls;
 function AddNumbers(num1, num2: Integer): Integer; stdcall;
   external 'mylib.dll' name 'AddNumbers';
 const
@@ -207,7 +205,6 @@ procedure UpdateControlsShowHint(ParentControl: TWinControl);
 procedure UpdateAnchors(AControl: TControl);
 procedure DisableLoginPromptsOnDataModule(const DataModuleName: string);
 function FindDMByName(const mName: string): TDataModule;
-function IsWinRARInstalled: Boolean;
 implementation
 type
   tdata = array [0..15] of DWORD;
@@ -3392,43 +3389,7 @@ begin
     end;
   end;
 end;
-function IsWinRARInstalled: Boolean;
-var
-  Reg: TRegistry;
-  StandardPaths: array[0..1] of string;
-  Path: string;
-begin
-  Result := False;
 
-  // 1. Проверка через реестр
-  Reg := TRegistry.Create;
-  try
-    Reg.RootKey := HKEY_LOCAL_MACHINE;
-    if Reg.OpenKeyReadOnly('SOFTWARE\WinRAR') then
-    begin
-      if Reg.ValueExists('exe64') or Reg.ValueExists('exe32') then
-      begin
-        Result := True;
-        Exit;
-      end;
-    end;
-  finally
-    Reg.Free;
-  end;
-
-  // 2. Проверка в стандартных путях
-  StandardPaths[0] := 'C:\Program Files\WinRAR\WinRAR.exe';
-  StandardPaths[1] := 'C:\Program Files (x86)\WinRAR\WinRAR.exe';
-
-  for Path in StandardPaths do
-  begin
-    if FileExists(Path) then
-    begin
-      Result := True;
-      Exit;
-    end;
-  end;
-end;
 initialization
   VisitedStaticTexts := TStringList.Create;
 finalization

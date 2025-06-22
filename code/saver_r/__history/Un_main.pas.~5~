@@ -14,7 +14,6 @@ type
     ItemMenu: TMainMenu;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure FormActivate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -30,12 +29,6 @@ uses Un_dm, Un_func;
 
 {$R *.dfm}
 
-procedure TFrm_main.FormActivate(Sender: TObject);
-begin
-  DisableLoginPromptsOnDataModule('dm');
-  SaveConnectionStringToFile(FileName, dm.connection.ConnectionString);
-end;
-
 procedure TFrm_main.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   main_Image.Picture := nil;
@@ -44,11 +37,6 @@ end;
 
 procedure TFrm_main.FormCreate(Sender: TObject);
 begin
-//if IsWinRARInstalled then
-//    ShowMessage('WinRAR установлен.')
-//  else
-//    ShowMessage('WinRAR не установлен.');
-
   SetFormPropertiesIfNeeded;
   AdjustImageProperties(main_Image);
   LoadFormState(Self);
