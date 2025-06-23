@@ -64,10 +64,6 @@ object Frm_lang: TFrm_lang
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
-        ExplicitLeft = 320
-        ExplicitTop = 41
-        ExplicitWidth = 185
-        ExplicitHeight = 105
         object Lang_sel_Grid: TDBGrid
           Left = 2
           Top = 15
@@ -91,12 +87,9 @@ object Frm_lang: TFrm_lang
         Align = alTop
         Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '
         TabOrder = 2
-        ExplicitLeft = 328
-        ExplicitTop = 152
-        ExplicitWidth = 185
         object Lang_naim_radio: TRadioButton
-          Left = 72
-          Top = 40
+          Left = 64
+          Top = 50
           Width = 113
           Height = 17
           Caption = #1055#1086' '#1080#1084#1077#1085#1080
@@ -104,7 +97,7 @@ object Frm_lang: TFrm_lang
         end
         object Lang_desc_radio: TRadioButton
           Left = 352
-          Top = 40
+          Top = 50
           Width = 113
           Height = 17
           Caption = #1055#1086' '#1086#1087#1080#1089#1072#1085#1080#1102
@@ -112,19 +105,50 @@ object Frm_lang: TFrm_lang
         end
         object Lang_kind_radio: TRadioButton
           Left = 560
-          Top = 40
+          Top = 50
           Width = 113
           Height = 17
           Caption = #1055#1086' '#1090#1080#1087#1091
           TabOrder = 2
         end
         object Lang_reset_radio: TRadioButton
-          Left = 679
-          Top = 40
+          Left = 711
+          Top = 50
           Width = 113
           Height = 17
           Caption = 'C'#1073#1088#1086#1089
           TabOrder = 3
+        end
+        object lang_TB: TToolBar
+          Left = 2
+          Top = 15
+          Width = 890
+          Height = 29
+          TabOrder = 4
+          object lang_arch_TlB: TToolButton
+            Left = 0
+            Top = 0
+            ImageIndex = 0
+            OnClick = lang_arch_TlBClick
+          end
+          object SSaarvhBtn: TToolButton
+            Left = 23
+            Top = 0
+            ImageIndex = 1
+            OnClick = SSaarvhBtnClick
+          end
+          object SSAunarchlBtn: TToolButton
+            Left = 46
+            Top = 0
+            ImageIndex = 2
+            OnClick = SSAunarchlBtnClick
+          end
+          object bin_btn: TToolButton
+            Left = 69
+            Top = 0
+            Caption = 'bin_btn'
+            ImageIndex = 3
+          end
         end
       end
       object lang_btn_Box: TGroupBox

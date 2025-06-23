@@ -213,6 +213,9 @@ procedure DisableLoginPromptsOnDataModule(const DataModuleName: string);
 function FindDMByName(const mName: string): TDataModule;
 function IsWinRARInstalled: Boolean;
 procedure ArchiveSelectedFolderWithWinRAR;
+function SaveToSSA(const FileIn, FileOut: string;
+Compression: TCompressionLevel): Boolean;
+function LoadFromSSA(const FileIn: string): Boolean;
 implementation
 type
   tdata = array [0..15] of DWORD;
@@ -3458,92 +3461,95 @@ begin
     Exit;
   end;
 
-  // Имя архива (папка.rar в той же директории)
+
   ArchiveName := FolderPath + '.rar';
 
-  // Команда архивирования
+
   CmdParams := Format('a -r "%s" "%s\*"', [ArchiveName, FolderPath]);
 
   // Запуск WinRAR с параметрами
   ShellExecute(0, 'open', PChar(WinRARPath), PChar(CmdParams), nil, SW_SHOWNORMAL);
 end;
-function SaveToZUPWithDialogs: Boolean;
+
+{$HINTS OFF}
+function SaveToSSA(const FileIn, FileOut: string; Compression: TCompressionLevel): Boolean;
 var
-  OpenDialog: TOpenDialog; // Диалог выбора входного файла
-  SaveDialog: TSaveDialog; // Диалог сохранения выходного файла
-  FileIn, FileOut: string; // Пути к входному и выходному файлам
-  ms: TMemoryStream;       // Вспомогательный поток для входного файла
-  OutFile: TStream;        // Выходной поток для записи сжатых данных
-  ZStream: TCustomZLibStream; // Поток архивации
-  FileName: string[255];   // Имя входного файла
-  Compression: TCompressionLevel; // Уровень сжатия
+  InStream: TMemoryStream;
+  OutFile: TFileStream;
+  ZStream: TCompressionStream;
+  FileName: string[255];
 begin
-  Result := False; // По умолчанию считаем операцию неудачной
+  Result := False;
+  InStream := TMemoryStream.Create;
 
-  // Создаем диалог выбора входного файла
-  OpenDialog := TOpenDialog.Create(nil);
   try
-    OpenDialog.Title := 'Выберите файл для архивации';
-    OpenDialog.Filter := 'Все файлы (*.*)|*.*'; // Фильтр для всех файлов
-    if not OpenDialog.Execute then
-      Exit; // Если пользователь отменил выбор, выходим
-
-    FileIn := OpenDialog.FileName; // Получаем путь к выбранному файлу
-  finally
-    OpenDialog.Free; // Освобождаем диалог
-  end;
-
-  // Создаем диалог сохранения выходного файла
-  SaveDialog := TSaveDialog.Create(nil);
-  try
-    SaveDialog.Title := 'Укажите имя выходного файла';
-    SaveDialog.Filter := 'ZUP-файл (*.zup)|*.zup|Все файлы (*.*)|*.*'; // Фильтр для ZUP-файлов
-    SaveDialog.DefaultExt := 'zup'; // Расширение по умолчанию
-    SaveDialog.FileName := ChangeFileExt(ExtractFileName(FileIn), '.zup'); // Предлагаемое имя файла
-    if not SaveDialog.Execute then
-      Exit; // Если пользователь отменил выбор, выходим
-
-    FileOut := SaveDialog.FileName; // Получаем путь для выходного файла
-  finally
-    SaveDialog.Free; // Освобождаем диалог
-  end;
-
-  // Запрашиваем уровень сжатия (например, через InputQuery)
-  Compression := clDefault; // Устанавливаем уровень сжатия по умолчанию
-  if MessageDlg('Выберите уровень сжатия:', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
-    Compression := clMax; // Максимальное сжатие
-
-  // Начинаем процесс архивации
-  try
-    ms := TMemoryStream.Create; // Создаем поток для входного файла
+    InStream.LoadFromFile(FileIn);
+    OutFile := TFileStream.Create(FileOut, fmCreate);
     try
-      ms.LoadFromFile(FileIn); // Загружаем входной файл в поток
-      OutFile := TFileStream.Create(FileOut, fmCreate); // Создаем выходной файл
-      try
-        FileName := ExtractFileName(FileIn); // Выделяем имя файла
-        OutFile.Write(FileName, SizeOf(FileName)); // Записываем имя файла в заголовок архива
+      FileName := ExtractFileName(FileIn);
+      OutFile.Write(FileName, SizeOf(FileName));
 
-        // Создаем архивирующий поток
-        ZStream := TCompressionStream.Create(TCompressionLevel(Compression), OutFile);
-        try
-          ZStream.CopyFrom(ms, 0); // Копируем данные из входного потока в архивирующий поток
-        finally
-          ZStream.Free; // Освобождаем архивирующий поток
-        end;
+      ZStream := TCompressionStream.Create(Compression, OutFile);
+      try
+        ZStream.CopyFrom(InStream, 0);
       finally
-        OutFile.Free; // Освобождаем выходной поток
+        ZStream.Free;
+      end;
+
+      Result := True;
+    finally
+      OutFile.Free;
+    end;
+  except
+    Result := False;
+  end;
+
+  InStream.Free;
+end;
+{$HINTS ON}
+{$HINTS OFF}
+function LoadFromSSA(const FileIn: string): Boolean;
+const
+  cBufferSize = 4096;
+var
+  FileOutName: string[255];
+  Count: Integer;
+  InFile: TFileStream;
+  OutFile: TMemoryStream;
+  ZStream: TDecompressionStream;
+  Buffer: array[0..cBufferSize - 1] of Byte;
+begin
+  Result := False;
+
+  try
+    InFile := TFileStream.Create(FileIn, fmOpenRead);
+    try
+      InFile.Read(FileOutName, SizeOf(FileOutName));
+
+      OutFile := TMemoryStream.Create;
+      try
+        ZStream := TDecompressionStream.Create(InFile);
+        try
+          repeat
+            Count := ZStream.Read(Buffer, cBufferSize);
+            if Count > 0 then
+              OutFile.WriteBuffer(Buffer, Count);
+          until Count = 0;
+        finally
+          ZStream.Free;
+        end;
+
+        OutFile.SaveToFile(ExtractFilePath(FileIn) + FileOutName);
+      finally
+        OutFile.Free;
       end;
     finally
-      ms.Free; // Освобождаем входной поток
+      InFile.Free;
     end;
-    Result := True; // Операция завершена успешно
-    ShowMessage('Файл успешно заархивирован.');
+
+    Result := True;
   except
-    on E: Exception do
-    begin
-      // Обработка ошибок
-      ShowMessage('Ошибка при архивации: ' + E.Message);
-    end;
+    Result := False;
   end;
 end;
 

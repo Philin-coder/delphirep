@@ -77,6 +77,31 @@ object Frm_lang: TFrm_lang
           TitleFont.Height = -11
           TitleFont.Name = 'Tahoma'
           TitleFont.Style = []
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'lang_id'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'lang_desc'
+              Title.Caption = #1054#1087#1080#1089#1072#1085#1080#1077
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'lang_naim'
+              Title.Caption = #1053#1072#1079#1074#1072#1085#1080#1077
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'lang_kind'
+              Title.Caption = #1058#1080#1087
+              Visible = True
+            end>
         end
       end
       object lang_grouper_Box: TGroupBox
@@ -131,11 +156,23 @@ object Frm_lang: TFrm_lang
             ImageIndex = 0
             OnClick = lang_arch_TlBClick
           end
-          object ToolButton1: TToolButton
+          object SSaarvhBtn: TToolButton
             Left = 23
             Top = 0
-            Caption = 'ToolButton1'
             ImageIndex = 1
+            OnClick = SSaarvhBtnClick
+          end
+          object SSAunarchlBtn: TToolButton
+            Left = 46
+            Top = 0
+            ImageIndex = 2
+            OnClick = SSAunarchlBtnClick
+          end
+          object bin_btn: TToolButton
+            Left = 69
+            Top = 0
+            Caption = 'bin_btn'
+            ImageIndex = 3
           end
         end
       end
@@ -153,6 +190,7 @@ object Frm_lang: TFrm_lang
           Height = 25
           Caption = #1042#1099#1073#1086#1088
           TabOrder = 0
+          OnClick = lang_sel_BtnClick
         end
       end
     end
@@ -168,5 +206,9 @@ object Frm_lang: TFrm_lang
       Caption = 'TabSheet3'
       ImageIndex = 3
     end
+  end
+  object icon_ImageList: TImageList
+    Left = 512
+    Top = 24
   end
 end

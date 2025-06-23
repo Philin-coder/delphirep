@@ -147,7 +147,6 @@ object Frm_lang: TFrm_lang
           Height = 17
           Caption = 'C'#1073#1088#1086#1089
           TabOrder = 3
-          OnClick = Lang_reset_radioClick
         end
         object lang_TB: TToolBar
           Left = 2

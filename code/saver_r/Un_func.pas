@@ -3423,8 +3423,6 @@ begin
   finally
     Reg.Free;
   end;
-
-  // 2. Проверка в стандартных путях
   StandardPaths[0] := 'C:\Program Files\WinRAR\WinRAR.exe';
   StandardPaths[1] := 'C:\Program Files (x86)\WinRAR\WinRAR.exe';
 
@@ -3442,15 +3440,10 @@ end;
 var
   FolderPath, WinRARPath, ArchiveName, CmdParams: string;
 begin
-  // Выбор папки
   if not SelectDirectory('Выберите папку для архивирования', '', FolderPath) then
     Exit;
-
-  // Убираем завершающий слэш, если есть
   if FolderPath[Length(FolderPath)] = '\' then
     Delete(FolderPath, Length(FolderPath), 1);
-
-  // Поиск WinRAR
   if FileExists('C:\Program Files\WinRAR\WinRAR.exe') then
     WinRARPath := 'C:\Program Files\WinRAR\WinRAR.exe'
   else if FileExists('C:\Program Files (x86)\WinRAR\WinRAR.exe') then
@@ -3460,14 +3453,8 @@ begin
     ShowMessage('WinRAR не найден на этом компьютере.');
     Exit;
   end;
-
-
   ArchiveName := FolderPath + '.rar';
-
-
   CmdParams := Format('a -r "%s" "%s\*"', [ArchiveName, FolderPath]);
-
-  // Запуск WinRAR с параметрами
   ShellExecute(0, 'open', PChar(WinRARPath), PChar(CmdParams), nil, SW_SHOWNORMAL);
 end;
 

@@ -54,7 +54,6 @@ object Frm_lang: TFrm_lang
           EditLabel.Height = 13
           EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1086#1087#1080#1089#1072#1085#1080#1102' '#1103#1079#1099#1082#1072
           TabOrder = 1
-          OnKeyPress = Lang_fnd_EditKeyPress
         end
       end
       object lang_Data_Box: TGroupBox
@@ -78,31 +77,6 @@ object Frm_lang: TFrm_lang
           TitleFont.Height = -11
           TitleFont.Name = 'Tahoma'
           TitleFont.Style = []
-          Columns = <
-            item
-              Expanded = False
-              FieldName = 'lang_id'
-              Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'lang_desc'
-              Title.Caption = #1054#1087#1080#1089#1072#1085#1080#1077
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'lang_naim'
-              Title.Caption = #1053#1072#1079#1074#1072#1085#1080#1077
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'lang_kind'
-              Title.Caption = #1058#1080#1087
-              Visible = True
-            end>
         end
       end
       object lang_grouper_Box: TGroupBox
@@ -120,7 +94,6 @@ object Frm_lang: TFrm_lang
           Height = 17
           Caption = #1055#1086' '#1080#1084#1077#1085#1080
           TabOrder = 0
-          OnClick = Lang_naim_radioClick
         end
         object Lang_desc_radio: TRadioButton
           Left = 352
@@ -129,7 +102,6 @@ object Frm_lang: TFrm_lang
           Height = 17
           Caption = #1055#1086' '#1086#1087#1080#1089#1072#1085#1080#1102
           TabOrder = 1
-          OnClick = Lang_desc_radioClick
         end
         object Lang_kind_radio: TRadioButton
           Left = 560
@@ -138,7 +110,6 @@ object Frm_lang: TFrm_lang
           Height = 17
           Caption = #1055#1086' '#1090#1080#1087#1091
           TabOrder = 2
-          OnClick = Lang_kind_radioClick
         end
         object Lang_reset_radio: TRadioButton
           Left = 711
@@ -147,7 +118,6 @@ object Frm_lang: TFrm_lang
           Height = 17
           Caption = 'C'#1073#1088#1086#1089
           TabOrder = 3
-          OnClick = Lang_reset_radioClick
         end
         object lang_TB: TToolBar
           Left = 2
