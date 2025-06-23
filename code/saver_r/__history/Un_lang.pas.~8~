@@ -1,0 +1,68 @@
+unit Un_lang;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ComCtrls, Grids, DBGrids, ExtCtrls;
+
+type
+  TFrm_lang = class(TForm)
+    langPC: TPageControl;
+    selTab: TTabSheet;
+    lang_inp_Box: TGroupBox;
+    lang_Data_Box: TGroupBox;
+    lang_grouper_Box: TGroupBox;
+    lang_btn_Box: TGroupBox;
+    lang_sel_Btn: TButton;
+    TabSheet1: TTabSheet;
+    TabSheet2: TTabSheet;
+    TabSheet3: TTabSheet;
+    Lang_cond_Edit: TLabeledEdit;
+    Lang_fnd_Edit: TLabeledEdit;
+    Lang_sel_Grid: TDBGrid;
+    Lang_naim_radio: TRadioButton;
+    Lang_desc_radio: TRadioButton;
+    Lang_kind_radio: TRadioButton;
+    Lang_reset_radio: TRadioButton;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_lang: TFrm_lang;
+
+implementation
+
+uses Un_dm, Un_func;
+
+{$R *.dfm}
+
+procedure TFrm_lang.FormActivate(Sender: TObject);
+begin
+  dm.langQuery.Open;
+  AdjustDBGridColumnWidths('Frm_lang',6000, 10);
+end;
+
+procedure TFrm_lang.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  SaveFormState(Self);
+  CloseAllQueriesOnDataModule('dm');
+end;
+
+procedure TFrm_lang.FormCreate(Sender: TObject);
+begin
+  UpdateFormShowHint('Frm_lang');
+  UniformizeButtonsSize(Self,  273, 25);
+  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+  UniformizeComponentAnchors(Self);
+  LoadFormState(Self);
+end;
+
+end.

@@ -213,9 +213,9 @@ procedure DisableLoginPromptsOnDataModule(const DataModuleName: string);
 function FindDMByName(const mName: string): TDataModule;
 function IsWinRARInstalled: Boolean;
 procedure ArchiveSelectedFolderWithWinRAR;
-function SaveToSSA(const FileIn, FileOut: string;
+function SaveToSap(const FileIn, FileOut: string;
 Compression: TCompressionLevel): Boolean;
-function LoadFromSSA(const FileIn: string): Boolean;
+function LoadFromSap(const FileIn: string): Boolean;
 implementation
 type
   tdata = array [0..15] of DWORD;
@@ -3472,7 +3472,7 @@ begin
 end;
 
 {$HINTS OFF}
-function SaveToSSA(const FileIn, FileOut: string; Compression: TCompressionLevel): Boolean;
+function SaveToSAP(const FileIn, FileOut: string; Compression: TCompressionLevel): Boolean;
 var
   InStream: TMemoryStream;
   OutFile: TFileStream;
@@ -3508,7 +3508,7 @@ begin
 end;
 {$HINTS ON}
 {$HINTS OFF}
-function LoadFromSSA(const FileIn: string): Boolean;
+function LoadFromSAP(const FileIn: string): Boolean;
 const
   cBufferSize = 4096;
 var

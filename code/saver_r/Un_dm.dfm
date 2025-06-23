@@ -1,6 +1,6 @@
 object DM: TDM
   OldCreateOrder = False
-  Height = 150
+  Height = 422
   Width = 411
   object Connection: TADOConnection
     ConnectionString = 
@@ -9,5 +9,44 @@ object DM: TDM
     Provider = 'SQLOLEDB.1'
     Left = 16
     Top = 16
+  end
+  object langQuery: TADOQuery
+    Connection = Connection
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      '  lang.lang_id,'
+      '  lang.lang_desc,'
+      '  lang.lang_naim,'
+      '  lang.lang_kind '
+      'from lang '
+      'where 1=1')
+    Left = 64
+    Top = 72
+  end
+  object langDS: TDataSource
+    DataSet = langQuery
+    Left = 72
+    Top = 136
+  end
+  object ADOStoredProc1: TADOStoredProc
+    Parameters = <>
+    Left = 80
+    Top = 192
+  end
+  object ADOStoredProc2: TADOStoredProc
+    Parameters = <>
+    Left = 88
+    Top = 264
+  end
+  object ADOStoredProc3: TADOStoredProc
+    Parameters = <>
+    Left = 88
+    Top = 320
+  end
+  object ADOStoredProc4: TADOStoredProc
+    Parameters = <>
+    Left = 88
+    Top = 368
   end
 end

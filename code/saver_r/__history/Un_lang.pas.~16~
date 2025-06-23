@@ -91,7 +91,7 @@ OpenDialog := TOpenDialog.Create(nil);
     if OpenDialog.Execute then
     begin
       InFile := OpenDialog.FileName;
-      OutFile := ChangeFileExt(InFile, '.ssa');
+      OutFile := ChangeFileExt(InFile, '.sap');
 
       if SaveToSSA(InFile, OutFile, clMax) then
         ShowMessage('Файл успешно заархивирован: ' + OutFile)

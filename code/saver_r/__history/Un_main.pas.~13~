@@ -13,6 +13,7 @@ type
     main_Image: TImage;
     ItemMenu: TMainMenu;
     lang_item: TMenuItem;
+    Button1: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);

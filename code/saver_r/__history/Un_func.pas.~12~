@@ -213,9 +213,7 @@ procedure DisableLoginPromptsOnDataModule(const DataModuleName: string);
 function FindDMByName(const mName: string): TDataModule;
 function IsWinRARInstalled: Boolean;
 procedure ArchiveSelectedFolderWithWinRAR;
-function SaveToSSA(const FileIn, FileOut: string;
-Compression: TCompressionLevel): Boolean;
-function LoadFromSSA(const FileIn: string): Boolean;
+function SaveToZUPWithDialogs: Boolean;
 implementation
 type
   tdata = array [0..15] of DWORD;
@@ -3471,88 +3469,24 @@ begin
   ShellExecute(0, 'open', PChar(WinRARPath), PChar(CmdParams), nil, SW_SHOWNORMAL);
 end;
 
-{$HINTS OFF}
-function SaveToSSA(const FileIn, FileOut: string; Compression: TCompressionLevel): Boolean;
+function GetUserCompressionLevel: TCompressionLevel;
 var
-  InStream: TMemoryStream;
-  OutFile: TFileStream;
-  ZStream: TCompressionStream;
-  FileName: string[255];
+  UserChoice: Integer;
 begin
-  Result := False;
-  InStream := TMemoryStream.Create;
+  // Предлагаем пользователю выбрать уровень сжатия
+  if not InputQuery('Выбор уровня сжатия', 'Введите число (0 - Без сжатия, 1 - Быстрое, 2 - По умолчанию, 3 - Максимальное):', UserChoice) then
+    Exit(clDefault);
 
-  try
-    InStream.LoadFromFile(FileIn);
-    OutFile := TFileStream.Create(FileOut, fmCreate);
-    try
-      FileName := ExtractFileName(FileIn);
-      OutFile.Write(FileName, SizeOf(FileName));
-
-      ZStream := TCompressionStream.Create(Compression, OutFile);
-      try
-        ZStream.CopyFrom(InStream, 0);
-      finally
-        ZStream.Free;
-      end;
-
-      Result := True;
-    finally
-      OutFile.Free;
-    end;
-  except
-    Result := False;
+  // Проверяем, что введенное значение находится в допустимом диапазоне
+  if (UserChoice < Ord(clNone)) or (UserChoice > Ord(clMax)) then
+  begin
+    ShowMessage('Неверное значение. Будет использован уровень сжатия по умолчанию.');
+    Exit(clDefault);
   end;
 
-  InStream.Free;
+  // Преобразуем Integer в TCompressionLevel
+  Result := TCompressionLevel(UserChoice);
 end;
-{$HINTS ON}
-{$HINTS OFF}
-function LoadFromSSA(const FileIn: string): Boolean;
-const
-  cBufferSize = 4096;
-var
-  FileOutName: string[255];
-  Count: Integer;
-  InFile: TFileStream;
-  OutFile: TMemoryStream;
-  ZStream: TDecompressionStream;
-  Buffer: array[0..cBufferSize - 1] of Byte;
-begin
-  Result := False;
-
-  try
-    InFile := TFileStream.Create(FileIn, fmOpenRead);
-    try
-      InFile.Read(FileOutName, SizeOf(FileOutName));
-
-      OutFile := TMemoryStream.Create;
-      try
-        ZStream := TDecompressionStream.Create(InFile);
-        try
-          repeat
-            Count := ZStream.Read(Buffer, cBufferSize);
-            if Count > 0 then
-              OutFile.WriteBuffer(Buffer, Count);
-          until Count = 0;
-        finally
-          ZStream.Free;
-        end;
-
-        OutFile.SaveToFile(ExtractFilePath(FileIn) + FileOutName);
-      finally
-        OutFile.Free;
-      end;
-    finally
-      InFile.Free;
-    end;
-
-    Result := True;
-  except
-    Result := False;
-  end;
-end;
-
 initialization
   VisitedStaticTexts := TStringList.Create;
 finalization

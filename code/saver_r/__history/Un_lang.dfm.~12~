@@ -138,13 +138,6 @@ object Frm_lang: TFrm_lang
             ImageIndex = 1
             OnClick = ToolButton1Click
           end
-          object ToolButton2: TToolButton
-            Left = 46
-            Top = 0
-            Caption = 'ToolButton2'
-            ImageIndex = 2
-            OnClick = ToolButton2Click
-          end
         end
       end
       object lang_btn_Box: TGroupBox

@@ -91,9 +91,9 @@ OpenDialog := TOpenDialog.Create(nil);
     if OpenDialog.Execute then
     begin
       InFile := OpenDialog.FileName;
-      OutFile := ChangeFileExt(InFile, '.ssa');
+      OutFile := ChangeFileExt(InFile, '.sap');
 
-      if SaveToSSA(InFile, OutFile, clMax) then
+      if SaveToSap(InFile, OutFile, clMax) then
         ShowMessage('Файл успешно заархивирован: ' + OutFile)
       else
         ShowMessage('Ошибка при архивировании.');
@@ -111,14 +111,14 @@ var
 begin
  OpenDialog := TOpenDialog.Create(nil);
   try
-    OpenDialog.Title := 'Выберите архив (.ssa) для распаковки';
-    OpenDialog.Filter := 'SSA-файлы (*.ssa)|*.ssa|Все файлы (*.*)|*.*';
+    OpenDialog.Title := 'Выберите архив (.sap) для распаковки';
+    OpenDialog.Filter := 'SAP-файлы (*.sap)|*.sap|Все файлы (*.*)|*.*';
 
     if OpenDialog.Execute then
     begin
       InFile := OpenDialog.FileName;
 
-      if LoadFromSSA(InFile) then
+      if LoadFromSap(InFile) then
         ShowMessage('Файл успешно распакован.')
       else
         ShowMessage('Ошибка при распаковке.');

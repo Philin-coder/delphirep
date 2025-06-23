@@ -64,6 +64,10 @@ object Frm_lang: TFrm_lang
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
+        ExplicitLeft = 320
+        ExplicitTop = 41
+        ExplicitWidth = 185
+        ExplicitHeight = 105
         object Lang_sel_Grid: TDBGrid
           Left = 2
           Top = 15
@@ -87,6 +91,9 @@ object Frm_lang: TFrm_lang
         Align = alTop
         Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '
         TabOrder = 2
+        ExplicitLeft = 328
+        ExplicitTop = 152
+        ExplicitWidth = 185
         object Lang_naim_radio: TRadioButton
           Left = 64
           Top = 50
@@ -125,25 +132,13 @@ object Frm_lang: TFrm_lang
           Width = 890
           Height = 29
           TabOrder = 4
-          object lang_arch_TlB: TToolButton
+          ExplicitLeft = 16
+          ExplicitTop = 6
+          object ToolButton1: TToolButton
             Left = 0
             Top = 0
-            ImageIndex = 0
-            OnClick = lang_arch_TlBClick
-          end
-          object ToolButton1: TToolButton
-            Left = 23
-            Top = 0
             Caption = 'ToolButton1'
-            ImageIndex = 1
-            OnClick = ToolButton1Click
-          end
-          object ToolButton2: TToolButton
-            Left = 46
-            Top = 0
-            Caption = 'ToolButton2'
-            ImageIndex = 2
-            OnClick = ToolButton2Click
+            ImageIndex = 0
           end
         end
       end

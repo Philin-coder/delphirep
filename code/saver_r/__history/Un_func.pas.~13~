@@ -2,6 +2,7 @@ unit Un_func;
 
 interface
 uses
+zLib,
 dateUtils,
 activeX,
 sysUtils,
@@ -27,7 +28,9 @@ ComObj,
 math,
 ExtCtrls,
 Registry,
+ {$WARN UNIT_PLATFORM OFF}
 FileCtrl,
+ {$WARN UNIT_PLATFORM ON}
 ShellAPI;
 function AddNumbers(num1, num2: Integer): Integer; stdcall;
   external 'mylib.dll' name 'AddNumbers';
@@ -209,7 +212,9 @@ procedure UpdateAnchors(AControl: TControl);
 procedure DisableLoginPromptsOnDataModule(const DataModuleName: string);
 function FindDMByName(const mName: string): TDataModule;
 function IsWinRARInstalled: Boolean;
-procedure ArchiveFolderWithWinRAR;
+procedure ArchiveSelectedFolderWithWinRAR;
+function SaveToZUP(const FileIn, FileOut: string;
+Compression: TCompressionLevel): Boolean;
 implementation
 type
   tdata = array [0..15] of DWORD;
@@ -3455,16 +3460,49 @@ begin
     Exit;
   end;
 
-  // Имя архива (папка.rar в той же директории)
+
   ArchiveName := FolderPath + '.rar';
 
-  // Команда архивирования
+
   CmdParams := Format('a -r "%s" "%s\*"', [ArchiveName, FolderPath]);
 
   // Запуск WinRAR с параметрами
   ShellExecute(0, 'open', PChar(WinRARPath), PChar(CmdParams), nil, SW_SHOWNORMAL);
 end;
+function SaveToZUP(const FileIn, FileOut: string; Compression: TCompressionLevel): Boolean;
+var
+  InStream: TMemoryStream;
+  OutFile: TFileStream;
+  ZStream: TCompressionStream;
+  FileName: string[255];
+begin
+  Result := False;
+  InStream := TMemoryStream.Create;
 
+  try
+    InStream.LoadFromFile(FileIn);
+    OutFile := TFileStream.Create(FileOut, fmCreate);
+    try
+      FileName := ExtractFileName(FileIn);
+      OutFile.Write(FileName, SizeOf(FileName));
+
+      ZStream := TCompressionStream.Create(Compression, OutFile);
+      try
+        ZStream.CopyFrom(InStream, 0);
+      finally
+        ZStream.Free;
+      end;
+
+      Result := True;
+    finally
+      OutFile.Free;
+    end;
+  except
+    Result := False;
+  end;
+
+  InStream.Free;
+end;
 initialization
   VisitedStaticTexts := TStringList.Create;
 finalization

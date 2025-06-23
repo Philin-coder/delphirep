@@ -2,6 +2,7 @@ unit Un_func;
 
 interface
 uses
+zLib,
 dateUtils,
 activeX,
 sysUtils,
@@ -27,6 +28,9 @@ ComObj,
 math,
 ExtCtrls,
 Registry,
+ {$WARN UNIT_PLATFORM OFF}
+FileCtrl,
+ {$WARN UNIT_PLATFORM ON}
 ShellAPI;
 function AddNumbers(num1, num2: Integer): Integer; stdcall;
   external 'mylib.dll' name 'AddNumbers';
@@ -208,6 +212,10 @@ procedure UpdateAnchors(AControl: TControl);
 procedure DisableLoginPromptsOnDataModule(const DataModuleName: string);
 function FindDMByName(const mName: string): TDataModule;
 function IsWinRARInstalled: Boolean;
+procedure ArchiveSelectedFolderWithWinRAR;
+function SaveToZUP(const FileIn, FileOut: string;
+Compression: TCompressionLevel): Boolean;
+function LoadFromZUP(const FileIn: string): Boolean;
 implementation
 type
   tdata = array [0..15] of DWORD;
@@ -3427,6 +3435,121 @@ begin
       Result := True;
       Exit;
     end;
+  end;
+end;
+
+ procedure ArchiveSelectedFolderWithWinRAR;
+var
+  FolderPath, WinRARPath, ArchiveName, CmdParams: string;
+begin
+  // Выбор папки
+  if not SelectDirectory('Выберите папку для архивирования', '', FolderPath) then
+    Exit;
+
+  // Убираем завершающий слэш, если есть
+  if FolderPath[Length(FolderPath)] = '\' then
+    Delete(FolderPath, Length(FolderPath), 1);
+
+  // Поиск WinRAR
+  if FileExists('C:\Program Files\WinRAR\WinRAR.exe') then
+    WinRARPath := 'C:\Program Files\WinRAR\WinRAR.exe'
+  else if FileExists('C:\Program Files (x86)\WinRAR\WinRAR.exe') then
+    WinRARPath := 'C:\Program Files (x86)\WinRAR\WinRAR.exe'
+  else
+  begin
+    ShowMessage('WinRAR не найден на этом компьютере.');
+    Exit;
+  end;
+
+
+  ArchiveName := FolderPath + '.rar';
+
+
+  CmdParams := Format('a -r "%s" "%s\*"', [ArchiveName, FolderPath]);
+
+  // Запуск WinRAR с параметрами
+  ShellExecute(0, 'open', PChar(WinRARPath), PChar(CmdParams), nil, SW_SHOWNORMAL);
+end;
+function SaveToZUP(const FileIn, FileOut: string; Compression: TCompressionLevel): Boolean;
+var
+  InStream: TMemoryStream;
+  OutFile: TFileStream;
+  ZStream: TCompressionStream;
+  FileName: string[255];
+begin
+  Result := False;
+  InStream := TMemoryStream.Create;
+
+  try
+    InStream.LoadFromFile(FileIn);
+    OutFile := TFileStream.Create(FileOut, fmCreate);
+    try
+      FileName := ExtractFileName(FileIn);
+      OutFile.Write(FileName, SizeOf(FileName));
+
+      ZStream := TCompressionStream.Create(Compression, OutFile);
+      try
+        ZStream.CopyFrom(InStream, 0);
+      finally
+        ZStream.Free;
+      end;
+
+      Result := True;
+    finally
+      OutFile.Free;
+    end;
+  except
+    Result := False;
+  end;
+
+  InStream.Free;
+end;
+function LoadFromZUP(const FileIn: string): Boolean;
+var
+  S, FileOut: string[255];
+  Count: Integer;
+  InFile: TFileStream;
+  OutFile: TMemoryStream;
+  ZStream: TDecompressionStream;
+  Buffer: array[0..cBufferSize - 1] of Byte;
+begin
+  Result := False;
+
+  try
+    InFile := TFileStream.Create(FileIn, fmOpenRead);
+    try
+      InFile.Read(S, SizeOf(S)); // Считываем оригинальное имя файла
+
+      OutFile := TMemoryStream.Create;
+      try
+        ZStream := TDecompressionStream.Create(InFile);
+        try
+          while True do
+          begin
+            Count := ZStream.Read(Buffer, cBufferSize);
+            if Count > 0 then
+              OutFile.WriteBuffer(Buffer, Count)
+            else
+              Break;
+          end;
+        finally
+          ZStream.Free;
+        end;
+
+        FileOut := ExtractFilePath(FileIn) + S;
+        OutFile.SaveToFile(FileOut);
+      finally
+        OutFile.Free;
+      end;
+    finally
+      InFile.Free;
+    end;
+
+    Result := True;
+  except
+    on E: Exception do
+      // В реальном проекте можно логировать ошибку
+      Result := False;
   end;
 end;
 initialization

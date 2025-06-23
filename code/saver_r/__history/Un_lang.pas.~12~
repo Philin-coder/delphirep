@@ -28,13 +28,11 @@ type
     lang_TB: TToolBar;
     lang_arch_TlB: TToolButton;
     ToolButton1: TToolButton;
-    ToolButton2: TToolButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure lang_arch_TlBClick(Sender: TObject);
     procedure ToolButton1Click(Sender: TObject);
-    procedure ToolButton2Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -91,41 +89,18 @@ OpenDialog := TOpenDialog.Create(nil);
     if OpenDialog.Execute then
     begin
       InFile := OpenDialog.FileName;
-      OutFile := ChangeFileExt(InFile, '.ssa');
+      OutFile := ChangeFileExt(InFile, '.zup');
 
-      if SaveToSSA(InFile, OutFile, clMax) then
+      if SaveToZUP(InFile, OutFile, clMax) then
         ShowMessage('Файл успешно заархивирован: ' + OutFile)
       else
         ShowMessage('Ошибка при архивировании.');
     end;
+
   finally
     OpenDialog.Free;
   end;
 end;
 
-
-procedure TFrm_lang.ToolButton2Click(Sender: TObject);
-var
- OpenDialog: TOpenDialog;
- InFile: string;
-begin
- OpenDialog := TOpenDialog.Create(nil);
-  try
-    OpenDialog.Title := 'Выберите архив (.ssa) для распаковки';
-    OpenDialog.Filter := 'SSA-файлы (*.ssa)|*.ssa|Все файлы (*.*)|*.*';
-
-    if OpenDialog.Execute then
-    begin
-      InFile := OpenDialog.FileName;
-
-      if LoadFromSSA(InFile) then
-        ShowMessage('Файл успешно распакован.')
-      else
-        ShowMessage('Ошибка при распаковке.');
-    end;
-  finally
-    OpenDialog.Free;
-  end;
-end;
 
 end.
