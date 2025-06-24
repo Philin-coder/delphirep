@@ -28,7 +28,6 @@ type
     ins_lang_inp_Box: TGroupBox;
     ins_lang_data_Box: TGroupBox;
     ins_lang_btn_Box: TGroupBox;
-    ins_lang_grid: TDBGrid;
     ins_lang_btn: TButton;
     lang_desc_inp: TLabeledEdit;
     lang_naim_inp: TLabeledEdit;
@@ -49,12 +48,16 @@ type
     lang_del_btn: TButton;
     del_lang_lbl: TStaticText;
     del_lang_dbl: TDBLookupComboBox;
+    DBGrid1: TDBGrid;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure ts_sel_BtnClick(Sender: TObject);
     procedure ts_fnd_EditKeyPress(Sender: TObject; var Key: Char);
     procedure ts_theme_radioClick(Sender: TObject);
+    procedure ts_desc_radioClick(Sender: TObject);
+    procedure ts_kind_radioClick(Sender: TObject);
+    procedure ts_reset_radioClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -94,6 +97,53 @@ begin
   UniformizeComponentAnchors(Self);
   LoadFormState(Self);
 end;
+procedure TFrm_ts.ts_desc_radioClick(Sender: TObject);
+begin
+   if  ts_desc_radio.Checked=true then
+  begin
+    try
+     with dm.tsQuery do
+     begin
+      close;
+      sql.Clear;
+      dm.TsQuery.SQL.Text:=
+  'select'+' '+
+  'to_save.to_save_id,'+' '+
+  'to_save.to_save_desc,'+' '+
+  'to_save.to_save_theme,'+' '+
+  'to_save.to_save_create_date,'+' '+
+  'to_save.to_save_file,'+' '+
+  'case when to_save.work_kind=0 then ''Курсовая'' else ''Дипломная'' end  as work_type,'+' '+
+  'lang.lang_naim'+' '+
+  'from to_save'+' '+
+  'inner join lang on lang.lang_id=to_save.lang_id'+' '+
+  'where 1=1'+' '+
+  'order by to_save.to_save_desc asc';
+      Open;
+     end;
+    except
+        on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка  Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    Raise;
+  end;
+end;
+end;
+end;
+
 procedure TFrm_ts.ts_fnd_EditKeyPress(Sender: TObject; var Key: Char);
 begin
     try
@@ -132,6 +182,124 @@ except
     HandleException(E);
     raise;
 end;
+end;
+end;
+
+procedure TFrm_ts.ts_kind_radioClick(Sender: TObject);
+begin
+   if  ts_kind_radio.Checked=true then
+  begin
+    try
+     with dm.tsQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+       'select'+' '+
+  'to_save.to_save_id,'+' '+
+  'to_save.to_save_desc,'+' '+
+  'to_save.to_save_theme,'+' '+
+  'to_save.to_save_create_date,'+' '+
+  'to_save.to_save_file,'+' '+
+  'case when to_save.work_kind=0 then ''Курсовая'' else ''Дипломная'' end  as work_type,'+' '+
+  'lang.lang_naim'+' '+
+  'from to_save'+' '+
+  'inner join lang on lang.lang_id=to_save.lang_id'+' '+
+  'where 1=1'+' '+
+     'order by to_save.work_kind asc';
+      Open;
+     end;
+    except
+        on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка  Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    Raise;
+  end;
+end;
+end;
+end;
+
+procedure TFrm_ts.ts_reset_radioClick(Sender: TObject);
+var i,j,c:Integer;
+begin
+    try
+  if ts_reset_radio.Checked then
+  begin
+    with Frm_ts do
+    begin
+      for I := 0 to ComponentCount - 1 do
+      begin
+        if Components[I] is TLabeledEdit then
+        begin
+          (Components[I] as TLabeledEdit).Clear;
+        end;
+      end;
+      for c := 0 to ComponentCount - 1 do
+      begin
+        if Components[c] is TCheckBox then
+        begin
+          (Components[c] as TCheckBox).Checked := False;
+        end;
+      end;
+      for j := 0 to ComponentCount - 1 do
+      begin
+        if Components[j] is TRadioButton then
+        begin
+          (Components[j] as TRadioButton).Checked := False;
+        end;
+      end;
+    end;
+    with dm.tsQuery do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text :=
+       'select'+' '+
+  'to_save.to_save_id,'+' '+
+  'to_save.to_save_desc,'+' '+
+  'to_save.to_save_theme,'+' '+
+  'to_save.to_save_create_date,'+' '+
+  'to_save.to_save_file,'+' '+
+  'case when to_save.work_kind=0 then ''Курсовая'' else ''Дипломная'' end  as work_type,'+' '+
+  'lang.lang_naim'+' '+
+  'from to_save'+' '+
+  'inner join lang on lang.lang_id=to_save.lang_id'+' '+
+  'where 1=1';
+      Open;
+    end;
+  end;
+except
+  on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
 end;
 end;
 
@@ -179,7 +347,7 @@ begin
       close;
       sql.Clear;
       sql.Text:=
-          'select'+' '+
+  'select'+' '+
   'to_save.to_save_id,'+' '+
   'to_save.to_save_desc,'+' '+
   'to_save.to_save_theme,'+' '+

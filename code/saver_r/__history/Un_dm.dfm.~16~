@@ -185,55 +185,9 @@ object DM: TDM
     Left = 176
     Top = 192
   end
-  object ins_to_sv: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'ins_to_sv;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@to_save_desc'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = '@to_save_theme'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = '@to_save_create_date'
-        Attributes = [paNullable]
-        DataType = ftDateTime
-        Size = 10
-      end
-      item
-        Name = '@to_save_file'
-        Attributes = [paNullable]
-        DataType = ftVarBytes
-        Size = 2147483647
-      end
-      item
-        Name = '@work_kind'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = 0
-      end
-      item
-        Name = '@lang_id'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = 0
-      end>
-    Left = 176
+  object ADOStoredProc2: TADOStoredProc
+    Parameters = <>
+    Left = 168
     Top = 256
   end
   object ADOStoredProc3: TADOStoredProc

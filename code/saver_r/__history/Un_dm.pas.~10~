@@ -17,7 +17,7 @@ type
     TsQuery: TADOQuery;
     TsDS: TDataSource;
     sel_work_by_theme: TADOStoredProc;
-    ins_to_sv: TADOStoredProc;
+    ADOStoredProc2: TADOStoredProc;
     ADOStoredProc3: TADOStoredProc;
     ADOStoredProc4: TADOStoredProc;
   private

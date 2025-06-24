@@ -53,7 +53,6 @@ type
     st_kind_combo: TComboBox;
     st_lang_lbl: TStaticText;
     st_lang_dbl: TDBLookupComboBox;
-    toSaveOD: TOpenDialog;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);

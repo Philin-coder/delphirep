@@ -29,9 +29,9 @@ type
     ins_lang_data_Box: TGroupBox;
     ins_ts_btn_Box: TGroupBox;
     ins_ts_btn: TButton;
-    to_save_desc_inp: TLabeledEdit;
-    to_save_theme_inp: TLabeledEdit;
-    st_date_lbl: TStaticText;
+    lang_desc_inp: TLabeledEdit;
+    lang_naim_inp: TLabeledEdit;
+    Lang_lbl: TStaticText;
     upd_data_box: TGroupBox;
     upd_inp_Box: TGroupBox;
     upd_btn_box: TGroupBox;
@@ -48,12 +48,7 @@ type
     del_lang_lbl: TStaticText;
     del_lang_dbl: TDBLookupComboBox;
     DBGrid1: TDBGrid;
-    to_save_create_date_inp: TDateTimePicker;
-    st_kind_lbl: TStaticText;
-    st_kind_combo: TComboBox;
-    st_lang_lbl: TStaticText;
-    st_lang_dbl: TDBLookupComboBox;
-    toSaveOD: TOpenDialog;
+    DateTimePicker1: TDateTimePicker;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
