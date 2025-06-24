@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ComCtrls, Grids, DBGrids, ExtCtrls, ToolWin,zlib, ImgList,
-  jpeg, DBCtrls;
+  jpeg, DBCtrls,adodb,db;
 type
   TFrm_lang = class(TForm)
     langPC: TPageControl;
@@ -84,7 +84,7 @@ var
 
 implementation
 
-uses Un_dm, Un_func, ADODB;
+uses Un_dm, Un_func;
 
 {$R *.dfm}
 

@@ -140,9 +140,7 @@ object DM: TDM
     Top = 368
   end
   object TsQuery: TADOQuery
-    Active = True
     Connection = Connection
-    CursorType = ctStatic
     Parameters = <>
     SQL.Strings = (
       'select '
@@ -165,39 +163,5 @@ object DM: TDM
     DataSet = TsQuery
     Left = 168
     Top = 144
-  end
-  object sel_work_by_theme: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'sel_work_by_theme;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@to_save_theme'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 255
-      end>
-    Left = 176
-    Top = 192
-  end
-  object ADOStoredProc2: TADOStoredProc
-    Parameters = <>
-    Left = 168
-    Top = 256
-  end
-  object ADOStoredProc3: TADOStoredProc
-    Parameters = <>
-    Left = 176
-    Top = 312
-  end
-  object ADOStoredProc4: TADOStoredProc
-    Parameters = <>
-    Left = 176
-    Top = 360
   end
 end

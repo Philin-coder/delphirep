@@ -8,5 +8,7 @@
     <Transaction>2025.06.21 23:12:17.067.dfm,F:\code\Result\delphi\code\saver_r\Unit1.dfm=F:\code\Result\delphi\code\saver_r\Un_dm.dfm</Transaction>
     <Transaction>2025.06.22 17:34:40.394.pas,F:\code\Result\delphi\code\saver_r\Unit1.pas=F:\code\Result\delphi\code\saver_r\Un_lang.pas</Transaction>
     <Transaction>2025.06.22 17:34:40.395.dfm,F:\code\Result\delphi\code\saver_r\Unit1.dfm=F:\code\Result\delphi\code\saver_r\Un_lang.dfm</Transaction>
+    <Transaction>2025.06.24 18:36:05.604.pas,F:\code\Result\delphi\code\saver_r\Un_lang.pas=F:\code\Result\delphi\code\saver_r\Un_ts.pas</Transaction>
+    <Transaction>2025.06.24 18:36:05.604.dfm,F:\code\Result\delphi\code\saver_r\Un_lang.dfm=F:\code\Result\delphi\code\saver_r\Un_ts.dfm</Transaction>
   </Transactions>
 </BorlandProject>

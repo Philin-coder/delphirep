@@ -64,21 +64,18 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@lang_desc'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 255
-        Value = Null
       end
       item
         Name = '@lang_naim'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 255
-        Value = Null
       end
       item
         Name = '@lang_kind'
@@ -99,7 +96,6 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@lang_id'
@@ -113,7 +109,6 @@ object DM: TDM
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 255
-        Value = Null
       end>
     Left = 88
     Top = 320
@@ -127,7 +122,6 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@lang_id'
@@ -138,66 +132,5 @@ object DM: TDM
       end>
     Left = 88
     Top = 368
-  end
-  object TsQuery: TADOQuery
-    Active = True
-    Connection = Connection
-    CursorType = ctStatic
-    Parameters = <>
-    SQL.Strings = (
-      'select '
-      '  to_save.to_save_id,'
-      '  to_save.to_save_desc,'
-      '  to_save.to_save_theme,'
-      '  to_save.to_save_create_date,'
-      '  to_save.to_save_file,'
-      
-        '  case when to_save.work_kind=0 then '#39#1050#1091#1088#1089#1086#1074#1072#1103#39' else '#39#1044#1080#1087#1083#1086#1084#1085#1072#1103#39 +
-        ' end  as work_type,'
-      '  lang.lang_naim'
-      '  from to_save '
-      '  inner join lang on lang.lang_id=to_save.lang_id'
-      '  where 1=1')
-    Left = 160
-    Top = 72
-  end
-  object TsDS: TDataSource
-    DataSet = TsQuery
-    Left = 168
-    Top = 144
-  end
-  object sel_work_by_theme: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'sel_work_by_theme;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@to_save_theme'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 255
-      end>
-    Left = 176
-    Top = 192
-  end
-  object ADOStoredProc2: TADOStoredProc
-    Parameters = <>
-    Left = 168
-    Top = 256
-  end
-  object ADOStoredProc3: TADOStoredProc
-    Parameters = <>
-    Left = 176
-    Top = 312
-  end
-  object ADOStoredProc4: TADOStoredProc
-    Parameters = <>
-    Left = 176
-    Top = 360
   end
 end

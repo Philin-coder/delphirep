@@ -1,7 +1,7 @@
-object Frm_lang: TFrm_lang
+object Frm_ts: TFrm_ts
   Left = 0
   Top = 0
-  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1085#1081' '#1086' '#1103#1079#1099#1082#1077
+  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1085#1081' '#1086' '#1089#1086#1093#1088#1072#1085#1103#1077#1084#1086#1084
   ClientHeight = 497
   ClientWidth = 1051
   Color = clBtnFace
@@ -16,7 +16,7 @@ object Frm_lang: TFrm_lang
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object langPC: TPageControl
+  object tsPC: TPageControl
     Left = 0
     Top = 0
     Width = 1051
@@ -27,11 +27,7 @@ object Frm_lang: TFrm_lang
     object selTab: TTabSheet
       Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1103#1079#1099#1082#1077
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
-      object lang_inp_Box: TGroupBox
+      object ts_inp_Box: TGroupBox
         Left = 0
         Top = 0
         Width = 1043
@@ -39,29 +35,28 @@ object Frm_lang: TFrm_lang
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object Lang_cond_Edit: TLabeledEdit
+        object ts_cond_Edit: TLabeledEdit
           Left = 16
           Top = 32
-          Width = 875
+          Width = 1025
           Height = 21
           EditLabel.Width = 226
           EditLabel.Height = 13
           EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1080#1077' '#1087#1086' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1102' '#1103#1079#1099#1082#1072
           TabOrder = 0
         end
-        object Lang_fnd_Edit: TLabeledEdit
+        object ts_fnd_Edit: TLabeledEdit
           Left = 16
           Top = 78
-          Width = 875
+          Width = 1025
           Height = 21
           EditLabel.Width = 168
           EditLabel.Height = 13
           EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1086#1087#1080#1089#1072#1085#1080#1102' '#1103#1079#1099#1082#1072
           TabOrder = 1
-          OnKeyPress = Lang_fnd_EditKeyPress
         end
       end
-      object lang_Data_Box: TGroupBox
+      object ts_Data_Box: TGroupBox
         Left = 0
         Top = 210
         Width = 1043
@@ -69,7 +64,7 @@ object Frm_lang: TFrm_lang
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
-        object Lang_sel_Grid: TDBGrid
+        object ts_sel_Grid: TDBGrid
           Left = 2
           Top = 15
           Width = 1039
@@ -109,7 +104,7 @@ object Frm_lang: TFrm_lang
             end>
         end
       end
-      object lang_grouper_Box: TGroupBox
+      object ts_grouper_Box: TGroupBox
         Left = 0
         Top = 105
         Width = 1043
@@ -117,105 +112,60 @@ object Frm_lang: TFrm_lang
         Align = alTop
         Caption = #1043#1088#1091#1087#1087#1080#1088#1086#1074#1082#1072' '#1087#1086' '
         TabOrder = 2
-        object Lang_naim_radio: TRadioButton
+        object ts_theme_radio: TRadioButton
           Left = 64
           Top = 50
           Width = 113
           Height = 17
-          Caption = #1055#1086' '#1080#1084#1077#1085#1080
+          Caption = #1055#1086' '#1090#1077#1084#1077
           TabOrder = 0
-          OnClick = Lang_naim_radioClick
         end
-        object Lang_desc_radio: TRadioButton
+        object ts_desc_radio: TRadioButton
           Left = 352
           Top = 50
           Width = 113
           Height = 17
           Caption = #1055#1086' '#1086#1087#1080#1089#1072#1085#1080#1102
           TabOrder = 1
-          OnClick = Lang_desc_radioClick
         end
-        object Lang_kind_radio: TRadioButton
+        object ts_kind_radio: TRadioButton
           Left = 560
           Top = 50
           Width = 113
           Height = 17
           Caption = #1055#1086' '#1090#1080#1087#1091
           TabOrder = 2
-          OnClick = Lang_kind_radioClick
         end
-        object Lang_reset_radio: TRadioButton
+        object ts_reset_radio: TRadioButton
           Left = 711
           Top = 50
           Width = 113
           Height = 17
           Caption = 'C'#1073#1088#1086#1089
           TabOrder = 3
-          OnClick = Lang_reset_radioClick
-        end
-        object lang_TB: TToolBar
-          Left = 2
-          Top = 15
-          Width = 1039
-          Height = 29
-          Images = icon_ImageList
-          TabOrder = 4
-          object lang_arch_TlB: TToolButton
-            Left = 0
-            Top = 0
-            ImageIndex = 0
-            OnClick = lang_arch_TlBClick
-          end
-          object SSaarvhBtn: TToolButton
-            Left = 23
-            Top = 0
-            ImageIndex = 1
-            OnClick = SSaarvhBtnClick
-          end
-          object SSAunarchlBtn: TToolButton
-            Left = 46
-            Top = 0
-            ImageIndex = 2
-            OnClick = SSAunarchlBtnClick
-          end
-          object bin_btn: TToolButton
-            Left = 69
-            Top = 0
-            Caption = 'bin_btn'
-            ImageIndex = 3
-          end
-          object UnlBinbtn: TToolButton
-            Left = 92
-            Top = 0
-            ImageIndex = 4
-          end
         end
       end
-      object lang_btn_Box: TGroupBox
+      object ts_btn_Box: TGroupBox
         Left = 0
         Top = 408
         Width = 1043
         Height = 61
         Align = alBottom
         TabOrder = 3
-        object lang_sel_Btn: TButton
+        object ts_sel_Btn: TButton
           Left = 304
           Top = 24
           Width = 75
           Height = 25
           Caption = #1042#1099#1073#1086#1088
           TabOrder = 0
-          OnClick = lang_sel_BtnClick
+          OnClick = ts_sel_BtnClick
         end
       end
     end
     object insTab: TTabSheet
       Caption = #1042#1074#1086#1076' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1103#1079#1099#1082#1077
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object ins_lang_inp_Box: TGroupBox
         Left = 0
         Top = 0
@@ -259,7 +209,6 @@ object Frm_lang: TFrm_lang
           Height = 21
           ItemHeight = 13
           TabOrder = 3
-          OnChange = lang_kind_comboChange
           Items.Strings = (
             #1050#1086#1084#1087#1080#1083#1080#1088#1091#1077#1084#1099#1081
             #1048#1085#1090#1077#1088#1087#1088#1080#1090#1080#1087#1091#1077#1084#1099#1081)
@@ -327,17 +276,12 @@ object Frm_lang: TFrm_lang
           Height = 25
           Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
           TabOrder = 0
-          OnClick = ins_lang_btnClick
         end
       end
     end
     object UpdTab: TTabSheet
       Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077'  '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1103#1079#1099#1082#1077
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object upd_data_box: TGroupBox
         Left = 0
         Top = 105
@@ -437,17 +381,12 @@ object Frm_lang: TFrm_lang
           Height = 25
           Caption = #1054#1073#1085#1086#1074#1080#1090#1100
           TabOrder = 0
-          OnClick = upd_btnClick
         end
       end
     end
     object delTab: TTabSheet
       Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1103#1079#1099#1082#1077
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object lang_del_data_Box: TGroupBox
         Left = 0
         Top = 105
@@ -510,7 +449,6 @@ object Frm_lang: TFrm_lang
           Height = 25
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
-          OnClick = lang_del_btnClick
         end
       end
       object lang_del_inp_Box: TGroupBox
@@ -541,9 +479,5 @@ object Frm_lang: TFrm_lang
         end
       end
     end
-  end
-  object icon_ImageList: TImageList
-    Left = 640
-    Top = 8
   end
 end

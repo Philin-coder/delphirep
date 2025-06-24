@@ -76,7 +76,7 @@ end;
 procedure TFrm_main.ts_itemClick(Sender: TObject);
 begin
   try
-    UpdateFormProperties('Frm_ts', 'Форма работы с информацинй о сохраняемом',
+    UpdateFormProperties('Frm_lang', 'Форма работы с информацинй о сохраняемом',
       clBtnFace, 1024, 768);
     Frm_ts.ShowModal;
   except

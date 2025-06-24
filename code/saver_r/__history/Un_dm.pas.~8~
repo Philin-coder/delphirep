@@ -14,12 +14,6 @@ type
     ins_lang: TADOStoredProc;
     upd_lang: TADOStoredProc;
     del_lang: TADOStoredProc;
-    TsQuery: TADOQuery;
-    TsDS: TDataSource;
-    sel_work_by_theme: TADOStoredProc;
-    ADOStoredProc2: TADOStoredProc;
-    ADOStoredProc3: TADOStoredProc;
-    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public

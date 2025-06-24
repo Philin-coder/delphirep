@@ -1,4 +1,4 @@
-object Frm_lang: TFrm_lang
+object Frm_ts: TFrm_ts
   Left = 0
   Top = 0
   Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1085#1081' '#1086' '#1103#1079#1099#1082#1077
@@ -27,10 +27,6 @@ object Frm_lang: TFrm_lang
     object selTab: TTabSheet
       Caption = #1042#1099#1073#1086#1088' '#1089#1074#1077#1076#1080#1085#1080#1081' '#1086' '#1103#1079#1099#1082#1077
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object lang_inp_Box: TGroupBox
         Left = 0
         Top = 0
@@ -58,7 +54,6 @@ object Frm_lang: TFrm_lang
           EditLabel.Height = 13
           EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1086#1087#1080#1089#1072#1085#1080#1102' '#1103#1079#1099#1082#1072
           TabOrder = 1
-          OnKeyPress = Lang_fnd_EditKeyPress
         end
       end
       object lang_Data_Box: TGroupBox
@@ -124,7 +119,6 @@ object Frm_lang: TFrm_lang
           Height = 17
           Caption = #1055#1086' '#1080#1084#1077#1085#1080
           TabOrder = 0
-          OnClick = Lang_naim_radioClick
         end
         object Lang_desc_radio: TRadioButton
           Left = 352
@@ -133,7 +127,6 @@ object Frm_lang: TFrm_lang
           Height = 17
           Caption = #1055#1086' '#1086#1087#1080#1089#1072#1085#1080#1102
           TabOrder = 1
-          OnClick = Lang_desc_radioClick
         end
         object Lang_kind_radio: TRadioButton
           Left = 560
@@ -142,7 +135,6 @@ object Frm_lang: TFrm_lang
           Height = 17
           Caption = #1055#1086' '#1090#1080#1087#1091
           TabOrder = 2
-          OnClick = Lang_kind_radioClick
         end
         object Lang_reset_radio: TRadioButton
           Left = 711
@@ -151,7 +143,6 @@ object Frm_lang: TFrm_lang
           Height = 17
           Caption = 'C'#1073#1088#1086#1089
           TabOrder = 3
-          OnClick = Lang_reset_radioClick
         end
         object lang_TB: TToolBar
           Left = 2
@@ -164,19 +155,16 @@ object Frm_lang: TFrm_lang
             Left = 0
             Top = 0
             ImageIndex = 0
-            OnClick = lang_arch_TlBClick
           end
           object SSaarvhBtn: TToolButton
             Left = 23
             Top = 0
             ImageIndex = 1
-            OnClick = SSaarvhBtnClick
           end
           object SSAunarchlBtn: TToolButton
             Left = 46
             Top = 0
             ImageIndex = 2
-            OnClick = SSAunarchlBtnClick
           end
           object bin_btn: TToolButton
             Left = 69
@@ -205,17 +193,12 @@ object Frm_lang: TFrm_lang
           Height = 25
           Caption = #1042#1099#1073#1086#1088
           TabOrder = 0
-          OnClick = lang_sel_BtnClick
         end
       end
     end
     object insTab: TTabSheet
       Caption = #1042#1074#1086#1076' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1103#1079#1099#1082#1077
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object ins_lang_inp_Box: TGroupBox
         Left = 0
         Top = 0
@@ -259,7 +242,6 @@ object Frm_lang: TFrm_lang
           Height = 21
           ItemHeight = 13
           TabOrder = 3
-          OnChange = lang_kind_comboChange
           Items.Strings = (
             #1050#1086#1084#1087#1080#1083#1080#1088#1091#1077#1084#1099#1081
             #1048#1085#1090#1077#1088#1087#1088#1080#1090#1080#1087#1091#1077#1084#1099#1081)
@@ -327,17 +309,12 @@ object Frm_lang: TFrm_lang
           Height = 25
           Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
           TabOrder = 0
-          OnClick = ins_lang_btnClick
         end
       end
     end
     object UpdTab: TTabSheet
       Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077'  '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1103#1079#1099#1082#1077
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object upd_data_box: TGroupBox
         Left = 0
         Top = 105
@@ -437,17 +414,12 @@ object Frm_lang: TFrm_lang
           Height = 25
           Caption = #1054#1073#1085#1086#1074#1080#1090#1100
           TabOrder = 0
-          OnClick = upd_btnClick
         end
       end
     end
     object delTab: TTabSheet
       Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1103#1079#1099#1082#1077
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object lang_del_data_Box: TGroupBox
         Left = 0
         Top = 105
@@ -510,7 +482,6 @@ object Frm_lang: TFrm_lang
           Height = 25
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
-          OnClick = lang_del_btnClick
         end
       end
       object lang_del_inp_Box: TGroupBox

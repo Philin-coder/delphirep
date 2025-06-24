@@ -13,12 +13,10 @@ type
     main_Image: TImage;
     ItemMenu: TMainMenu;
     lang_item: TMenuItem;
-    ts_item: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure lang_itemClick(Sender: TObject);
-    procedure ts_itemClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -30,7 +28,7 @@ var
 
 implementation
 
-uses Un_dm, Un_func, Un_lang, Un_ts;
+uses Un_dm, Un_func, Un_lang;
 
 {$R *.dfm}
 
@@ -72,25 +70,5 @@ begin
     end;
   end;
 end;
-
-procedure TFrm_main.ts_itemClick(Sender: TObject);
-begin
-  try
-    UpdateFormProperties('Frm_ts', 'Форма работы с информацинй о сохраняемом',
-      clBtnFace, 1024, 768);
-    Frm_ts.ShowModal;
-  except
-    on E: Exception do
-    begin
-      if not (E is EMyException) then
-        raise EDatabaseError.Create('Ошибка работы  формой  информацини о срхраняемом', 3001);
-      HandleException(E);
-      if Assigned(Frm_ts) then
-        Frm_ts.Free;
-      raise;
-    end;
-  end;
-end;
-
 
 end.
