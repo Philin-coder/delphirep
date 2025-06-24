@@ -21,7 +21,7 @@ object Frm_ts: TFrm_ts
     Top = 0
     Width = 1051
     Height = 497
-    ActivePage = insTab
+    ActivePage = delTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
@@ -249,6 +249,10 @@ object Frm_ts: TFrm_ts
           Height = 21
           ItemHeight = 13
           TabOrder = 5
+          OnChange = st_kind_comboChange
+          Items.Strings = (
+            #1050#1091#1088#1089#1086#1074#1072#1103
+            #1044#1080#1087#1083#1086#1084#1085#1072#1103)
         end
         object st_lang_lbl: TStaticText
           Left = 16
@@ -263,6 +267,9 @@ object Frm_ts: TFrm_ts
           Top = 224
           Width = 1024
           Height = 21
+          KeyField = 'lang_id'
+          ListField = 'lang_naim'
+          ListSource = DM.langDS
           TabOrder = 7
         end
       end
@@ -276,7 +283,7 @@ object Frm_ts: TFrm_ts
         TabOrder = 1
         ExplicitTop = 161
         ExplicitHeight = 247
-        object DBGrid1: TDBGrid
+        object ins_st_Grid: TDBGrid
           Left = 2
           Top = 15
           Width = 1039
@@ -348,13 +355,14 @@ object Frm_ts: TFrm_ts
           Height = 25
           Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
           TabOrder = 0
+          OnClick = ins_ts_btnClick
         end
       end
     end
     object UpdTab: TTabSheet
-      Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077'  '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1103#1079#1099#1082#1077
+      Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077'  '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1089#1086#1093#1088#1072#1085#1103#1077#1084#1086#1084
       ImageIndex = 2
-      object upd_data_box: TGroupBox
+      object ts_upd_data_box: TGroupBox
         Left = 0
         Top = 105
         Width = 1043
@@ -362,13 +370,13 @@ object Frm_ts: TFrm_ts
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object upd_lang_grd: TDBGrid
+        object ts_upd_Grid: TDBGrid
           Left = 2
           Top = 15
           Width = 1039
           Height = 278
           Align = alClient
-          DataSource = DM.langDS
+          DataSource = DM.TsDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -378,31 +386,49 @@ object Frm_ts: TFrm_ts
           Columns = <
             item
               Expanded = False
-              FieldName = 'lang_id'
+              FieldName = 'to_save_id'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'lang_desc'
-              Title.Caption = #1054#1087#1080#1089#1072#1085#1080#1077
+              FieldName = 'to_save_desc'
+              Title.Caption = #1054#1087#1080#1089#1072#1085#1080#1077' '#1088#1072#1073#1086#1090#1099
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'to_save_theme'
+              Title.Caption = #1058#1077#1084#1072
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'to_save_create_date'
+              Title.Caption = #1044#1072#1090#1072' '#1089#1086#1079#1076#1072#1085#1080#1103
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'to_save_file'
+              Title.Caption = #1060#1072#1081#1083
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'work_type'
+              Title.Caption = #1042#1080#1076' '#1088#1072#1073#1086#1090#1099
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'lang_naim'
-              Title.Caption = #1053#1072#1079#1074#1072#1085#1080#1077
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'lang_kind'
-              Title.Caption = #1058#1080#1087
+              Title.Caption = #1071#1079#1099#1082
               Visible = True
             end>
         end
       end
-      object upd_inp_Box: TGroupBox
+      object ts_upd_inp_Box: TGroupBox
         Left = 0
         Top = 0
         Width = 1043
@@ -410,17 +436,17 @@ object Frm_ts: TFrm_ts
         Align = alTop
         Caption = #1042#1074#1086#1076'  '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
-        object Upd_lang_desc_inp: TLabeledEdit
+        object Upd_ts_desc_inp: TLabeledEdit
           Left = 16
           Top = 32
           Width = 1025
           Height = 21
-          EditLabel.Width = 83
+          EditLabel.Width = 90
           EditLabel.Height = 13
-          EditLabel.Caption = #1054#1087#1080#1089#1072#1085#1080#1077' '#1103#1079#1099#1082#1072
+          EditLabel.Caption = #1054#1087#1080#1089#1072#1085#1080#1077' '#1088#1072#1073#1086#1090#1099
           TabOrder = 0
         end
-        object upd_lang_desc_lbl: TStaticText
+        object upd_ts_desc_lbl: TStaticText
           Left = 16
           Top = 59
           Width = 30
@@ -428,36 +454,37 @@ object Frm_ts: TFrm_ts
           Caption = #1071#1079#1099#1082
           TabOrder = 1
         end
-        object upd_lang_desc_dbl: TDBLookupComboBox
+        object upd_ts_desc_dbl: TDBLookupComboBox
           Left = 16
           Top = 78
           Width = 1024
           Height = 21
-          KeyField = 'lang_id'
-          ListField = 'lang_naim'
-          ListSource = DM.langDS
+          KeyField = 'to_save_id'
+          ListField = 'to_save_theme'
+          ListSource = DM.TsDS
           TabOrder = 2
         end
       end
-      object upd_btn_box: TGroupBox
+      object ts_upd_btn_box: TGroupBox
         Left = 0
         Top = 400
         Width = 1043
         Height = 69
         Align = alBottom
         TabOrder = 2
-        object upd_btn: TButton
+        object ts_upd_btn: TButton
           Left = 368
           Top = 32
           Width = 75
           Height = 25
           Caption = #1054#1073#1085#1086#1074#1080#1090#1100
           TabOrder = 0
+          OnClick = ts_upd_btnClick
         end
       end
     end
     object delTab: TTabSheet
-      Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1103#1079#1099#1082#1077
+      Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1089#1086#1093#1088#1072#1085#1103#1077#1084#1086#1084
       ImageIndex = 3
       object lang_del_data_Box: TGroupBox
         Left = 0
@@ -467,13 +494,13 @@ object Frm_ts: TFrm_ts
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1085#1099#1093
         TabOrder = 0
-        object lang_del_grid: TDBGrid
+        object DBGrid1: TDBGrid
           Left = 2
           Top = 15
           Width = 1039
           Height = 286
           Align = alClient
-          DataSource = DM.langDS
+          DataSource = DM.TsDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -483,47 +510,66 @@ object Frm_ts: TFrm_ts
           Columns = <
             item
               Expanded = False
-              FieldName = 'lang_id'
+              FieldName = 'to_save_id'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'lang_desc'
-              Title.Caption = #1054#1087#1080#1089#1072#1085#1080#1077
+              FieldName = 'to_save_desc'
+              Title.Caption = #1054#1087#1080#1089#1072#1085#1080#1077' '#1088#1072#1073#1086#1090#1099
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'to_save_theme'
+              Title.Caption = #1058#1077#1084#1072
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'to_save_create_date'
+              Title.Caption = #1044#1072#1090#1072' '#1089#1086#1079#1076#1072#1085#1080#1103
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'to_save_file'
+              Title.Caption = #1060#1072#1081#1083
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'work_type'
+              Title.Caption = #1042#1080#1076' '#1088#1072#1073#1086#1090#1099
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'lang_naim'
-              Title.Caption = #1053#1072#1079#1074#1072#1085#1080#1077
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'lang_kind'
-              Title.Caption = #1058#1080#1087
+              Title.Caption = #1071#1079#1099#1082
               Visible = True
             end>
         end
       end
-      object lang_del_btn_Box: TGroupBox
+      object ts_del_btn_Box: TGroupBox
         Left = 0
         Top = 408
         Width = 1043
         Height = 61
         Align = alBottom
         TabOrder = 1
-        object lang_del_btn: TButton
+        object ts_del_btn: TButton
           Left = 360
           Top = 33
           Width = 75
           Height = 25
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
+          OnClick = ts_del_btnClick
         end
       end
-      object lang_del_inp_Box: TGroupBox
+      object ts_del_inp_Box: TGroupBox
         Left = 0
         Top = 0
         Width = 1043
@@ -531,22 +577,22 @@ object Frm_ts: TFrm_ts
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        object del_lang_lbl: TStaticText
+        object ts_work_lbl: TStaticText
           Left = 24
           Top = 23
-          Width = 30
+          Width = 40
           Height = 17
-          Caption = #1071#1079#1099#1082
+          Caption = #1056#1072#1073#1086#1090#1072
           TabOrder = 0
         end
-        object del_lang_dbl: TDBLookupComboBox
+        object del_ts_dbl: TDBLookupComboBox
           Left = 24
           Top = 46
           Width = 1024
           Height = 21
-          KeyField = 'lang_id'
-          ListField = 'lang_naim'
-          ListSource = DM.langDS
+          KeyField = 'to_save_id'
+          ListField = 'to_save_theme'
+          ListSource = DM.TsDS
           TabOrder = 1
         end
       end

@@ -25,15 +25,13 @@ type
     ts_desc_radio: TRadioButton;
     ts_kind_radio: TRadioButton;
     ts_reset_radio: TRadioButton;
-    ins_lang_inp_Box: TGroupBox;
+    ins_ts_inp_Box: TGroupBox;
     ins_lang_data_Box: TGroupBox;
-    ins_lang_btn_Box: TGroupBox;
-    ins_lang_grid: TDBGrid;
-    ins_lang_btn: TButton;
-    lang_desc_inp: TLabeledEdit;
-    lang_naim_inp: TLabeledEdit;
-    Lang_lbl: TStaticText;
-    lang_kind_combo: TComboBox;
+    ins_ts_btn_Box: TGroupBox;
+    ins_ts_btn: TButton;
+    to_save_desc_inp: TLabeledEdit;
+    to_save_theme_inp: TLabeledEdit;
+    st_date_lbl: TStaticText;
     upd_data_box: TGroupBox;
     upd_inp_Box: TGroupBox;
     upd_btn_box: TGroupBox;
@@ -49,6 +47,13 @@ type
     lang_del_btn: TButton;
     del_lang_lbl: TStaticText;
     del_lang_dbl: TDBLookupComboBox;
+    DBGrid1: TDBGrid;
+    to_save_create_date_inp: TDateTimePicker;
+    st_kind_lbl: TStaticText;
+    st_kind_combo: TComboBox;
+    st_lang_lbl: TStaticText;
+    st_lang_dbl: TDBLookupComboBox;
+    toSaveOD: TOpenDialog;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -57,6 +62,8 @@ type
     procedure ts_theme_radioClick(Sender: TObject);
     procedure ts_desc_radioClick(Sender: TObject);
     procedure ts_kind_radioClick(Sender: TObject);
+    procedure ts_reset_radioClick(Sender: TObject);
+    procedure ins_ts_btnClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -96,6 +103,33 @@ begin
   UniformizeComponentAnchors(Self);
   LoadFormState(Self);
 end;
+procedure TFrm_ts.ins_ts_btnClick(Sender: TObject);
+const
+  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+   FileStream: TFileStream;
+begin
+  AreFieldsEmpty:=(
+  (Trim(to_save_desc_inp.Text)='')or
+  (Trim(to_save_theme_inp.Text)='')or
+  (st_lang_dbl.Text='')
+  );
+  AreFieldsValid:=(
+  ValidateComponentText(to_save_desc_inp,AllowedChars)and
+  ValidateComponentText(to_save_theme_inp,AllowedChars)
+  );
+  if AreFieldsEmpty or not AreFieldsValid then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  
+end;
+
 procedure TFrm_ts.ts_desc_radioClick(Sender: TObject);
 begin
    if  ts_desc_radio.Checked=true then
@@ -231,6 +265,77 @@ end;
 end;
 end;
 
+procedure TFrm_ts.ts_reset_radioClick(Sender: TObject);
+var i,j,c:Integer;
+begin
+    try
+  if ts_reset_radio.Checked then
+  begin
+    with Frm_ts do
+    begin
+      for I := 0 to ComponentCount - 1 do
+      begin
+        if Components[I] is TLabeledEdit then
+        begin
+          (Components[I] as TLabeledEdit).Clear;
+        end;
+      end;
+      for c := 0 to ComponentCount - 1 do
+      begin
+        if Components[c] is TCheckBox then
+        begin
+          (Components[c] as TCheckBox).Checked := False;
+        end;
+      end;
+      for j := 0 to ComponentCount - 1 do
+      begin
+        if Components[j] is TRadioButton then
+        begin
+          (Components[j] as TRadioButton).Checked := False;
+        end;
+      end;
+    end;
+    with dm.tsQuery do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text :=
+       'select'+' '+
+  'to_save.to_save_id,'+' '+
+  'to_save.to_save_desc,'+' '+
+  'to_save.to_save_theme,'+' '+
+  'to_save.to_save_create_date,'+' '+
+  'to_save.to_save_file,'+' '+
+  'case when to_save.work_kind=0 then ''Курсовая'' else ''Дипломная'' end  as work_type,'+' '+
+  'lang.lang_naim'+' '+
+  'from to_save'+' '+
+  'inner join lang on lang.lang_id=to_save.lang_id'+' '+
+  'where 1=1';
+      Open;
+    end;
+  end;
+except
+  on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+end;
+end;
+
 procedure TFrm_ts.ts_sel_BtnClick(Sender: TObject);
 begin
   try
@@ -275,7 +380,7 @@ begin
       close;
       sql.Clear;
       sql.Text:=
-          'select'+' '+
+  'select'+' '+
   'to_save.to_save_id,'+' '+
   'to_save.to_save_desc,'+' '+
   'to_save.to_save_theme,'+' '+

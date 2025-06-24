@@ -25,22 +25,20 @@ type
     ts_desc_radio: TRadioButton;
     ts_kind_radio: TRadioButton;
     ts_reset_radio: TRadioButton;
-    ins_lang_inp_Box: TGroupBox;
+    ins_ts_inp_Box: TGroupBox;
     ins_lang_data_Box: TGroupBox;
     ins_ts_btn_Box: TGroupBox;
     ins_ts_btn: TButton;
-    lang_desc_inp: TLabeledEdit;
-    lang_naim_inp: TLabeledEdit;
-    Lang_lbl: TStaticText;
-    lang_kind_combo: TComboBox;
-    upd_data_box: TGroupBox;
-    upd_inp_Box: TGroupBox;
-    upd_btn_box: TGroupBox;
-    upd_btn: TButton;
-    upd_lang_grd: TDBGrid;
-    Upd_lang_desc_inp: TLabeledEdit;
-    upd_lang_desc_lbl: TStaticText;
-    upd_lang_desc_dbl: TDBLookupComboBox;
+    to_save_desc_inp: TLabeledEdit;
+    to_save_theme_inp: TLabeledEdit;
+    st_date_lbl: TStaticText;
+    ts_upd_data_box: TGroupBox;
+    ts_upd_inp_Box: TGroupBox;
+    ts_upd_btn_box: TGroupBox;
+    ts_upd_btn: TButton;
+    Upd_ts_desc_inp: TLabeledEdit;
+    upd_ts_desc_lbl: TStaticText;
+    upd_ts_desc_dbl: TDBLookupComboBox;
     lang_del_data_Box: TGroupBox;
     lang_del_btn_Box: TGroupBox;
     lang_del_inp_Box: TGroupBox;
@@ -48,7 +46,14 @@ type
     lang_del_btn: TButton;
     del_lang_lbl: TStaticText;
     del_lang_dbl: TDBLookupComboBox;
-    DBGrid1: TDBGrid;
+    ins_st_Grid: TDBGrid;
+    to_save_create_date_inp: TDateTimePicker;
+    st_kind_lbl: TStaticText;
+    st_kind_combo: TComboBox;
+    st_lang_lbl: TStaticText;
+    st_lang_dbl: TDBLookupComboBox;
+    toSaveOD: TOpenDialog;
+    ts_upd_Grid: TDBGrid;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -58,6 +63,9 @@ type
     procedure ts_desc_radioClick(Sender: TObject);
     procedure ts_kind_radioClick(Sender: TObject);
     procedure ts_reset_radioClick(Sender: TObject);
+    procedure ins_ts_btnClick(Sender: TObject);
+    procedure st_kind_comboChange(Sender: TObject);
+    procedure ts_upd_btnClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -67,6 +75,7 @@ type
 
 var
   Frm_ts: TFrm_ts;
+  work_kind_st:Integer;
 
 
 implementation
@@ -86,6 +95,7 @@ procedure TFrm_ts.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   SaveFormState(Self);
   CloseAllQueriesOnDataModule('dm');
+  work_kind_st:=0;
 end;
 
 procedure TFrm_ts.FormCreate(Sender: TObject);
@@ -96,7 +106,92 @@ begin
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   UniformizeComponentAnchors(Self);
   LoadFormState(Self);
+  work_kind_st:=0;
 end;
+procedure TFrm_ts.ins_ts_btnClick(Sender: TObject);
+const
+  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+  FileStream: TFileStream;
+begin
+  AreFieldsEmpty:=(
+  (Trim(to_save_desc_inp.Text)='')or
+  (Trim(to_save_theme_inp.Text)='')or
+  (st_lang_dbl.Text='')
+  );
+  AreFieldsValid:=(
+  ValidateComponentText(to_save_desc_inp,AllowedChars)and
+  ValidateComponentText(to_save_theme_inp,AllowedChars)
+  );
+  if AreFieldsEmpty or not AreFieldsValid then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.ins_to_sv do
+      begin
+        if not dm.Connection.Connected then
+          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
+          Parameters.ParamByName('@to_save_desc').Value :=to_save_desc_inp.Text;
+          Parameters.ParamByName('@to_save_theme').Value:=to_save_theme_inp.Text;
+          Parameters.ParamByName('@to_save_create_date').Value:=
+          to_save_create_date_inp.Date;
+          if tosaveod.Execute then
+      begin
+        FileStream := nil;
+        try
+          FileStream := TFileStream.Create(tosaveod.FileName, fmOpenRead);
+          Parameters.ParamByName('@to_save_file').LoadFromStream(FileStream, ftBlob);
+        finally
+          FileStream.Free;
+        end;
+      end
+      else
+      begin
+        MessageDlg('Файл не выбран.', mtError, [mbOK], 0);
+        Exit;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+      Parameters.ParamByName('@work_kind').Value:=work_kind_st;
+      Parameters.ParamByName('@lang_id').Value:=
+      dm.langQuery.FieldByName('lang_id').AsString;
+      ExecProc;
+      dm.tsQuery.Close;
+      dm.tsQuery.Open;
+      end;
+    except
+      on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise; // Повторное выбрасывание исключения
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise;
+end;
+end;
+end;
+
+procedure TFrm_ts.st_kind_comboChange(Sender: TObject);
+begin
+if st_kind_combo.ItemIndex=0 then work_kind_st:=0
+  else work_kind_st:=1;
+end;
+
 procedure TFrm_ts.ts_desc_radioClick(Sender: TObject);
 begin
    if  ts_desc_radio.Checked=true then
@@ -380,6 +475,62 @@ begin
     HandleException(E);
     Raise;
   end;
+end;
+end;
+end;
+
+procedure TFrm_ts.ts_upd_btnClick(Sender: TObject);
+const
+  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (Trim(Upd_ts_desc_inp.Text)='')or
+  (upd_ts_desc_dbl.Text='')
+  );
+  AreFieldsValid:=(
+  ValidateComponentText(Upd_ts_desc_inp,AllowedChars)
+  );
+  if AreFieldsEmpty or not AreFieldsValid then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.upd_sv do
+      begin
+        if not dm.Connection.Connected then
+          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
+           Parameters.ParamByName('@to_save_id').Value :=
+           dm.TsQuery.FieldByName('to_save_id').AsString;
+           Parameters.ParamByName('@to_save_desc').Value:=Upd_ts_desc_inp.Text;
+           ExecProc;
+           dm.tsQuery.Close;
+           dm.tsQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise; // Повторное выбрасывание исключения
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise;
 end;
 end;
 end;
