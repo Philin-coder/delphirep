@@ -4,8 +4,8 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ComCtrls, Grids, DBGrids, ExtCtrls, ToolWin,zlib, ImgList;
-
+  Dialogs, StdCtrls, ComCtrls, Grids, DBGrids, ExtCtrls, ToolWin,zlib, ImgList,
+  jpeg;
 type
   TFrm_lang = class(TForm)
     langPC: TPageControl;
@@ -31,6 +31,7 @@ type
     SSAunarchlBtn: TToolButton;
     bin_btn: TToolButton;
     icon_ImageList: TImageList;
+    ToolButton1: TToolButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -39,6 +40,10 @@ type
     procedure SSAunarchlBtnClick(Sender: TObject);
     procedure lang_sel_BtnClick(Sender: TObject);
     procedure Lang_fnd_EditKeyPress(Sender: TObject; var Key: Char);
+    procedure Lang_naim_radioClick(Sender: TObject);
+    procedure Lang_desc_radioClick(Sender: TObject);
+    procedure Lang_kind_radioClick(Sender: TObject);
+    procedure Lang_reset_radioClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -74,11 +79,56 @@ begin
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   UniformizeComponentAnchors(Self);
   LoadFormState(Self);
+  icon_ImageList.Clear;
+  LoadIconFromResource('RAR_IMAGE',1,icon_ImageList);
 end;
 
 procedure TFrm_lang.lang_arch_TlBClick(Sender: TObject);
 begin
   ArchiveSelectedFolderWithWinRAR;
+end;
+
+procedure TFrm_lang.Lang_desc_radioClick(Sender: TObject);
+begin
+    if  Lang_desc_radio.Checked=true then
+  begin
+    try
+     with dm.langQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+     'select'+' '+
+    'lang.lang_id,'+' '+
+    'lang.lang_desc,'+' '+
+    'lang.lang_naim,'+' '+
+    'lang.lang_kind'+' '+
+    'from lang'+' '+
+    'where 1=1'+' '+
+     'order by lang_desc asc';
+      Open;
+     end;
+    except
+        on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка  Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    Raise;
+  end;
+end;
+end;
 end;
 
 procedure TFrm_lang.Lang_fnd_EditKeyPress(Sender: TObject; var Key: Char);
@@ -91,7 +141,7 @@ begin
     'lang.lang_naim,'+' '+
     'lang.lang_kind'+' '+
     'from lang'+' '+
-    'where 1=1'+
+    'where 1=1'+' '+
   'and lang.lang_desc like'+' '+
    QuotedStr(Concat(lang_fnd_Edit.Text,#37));
    dm.langQuery.close;
@@ -115,6 +165,159 @@ except
     HandleException(E);
     raise;
 end;
+end;
+end;
+
+procedure TFrm_lang.Lang_kind_radioClick(Sender: TObject);
+begin
+    if  Lang_kind_radio.Checked=true then
+  begin
+    try
+     with dm.langQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+     'select'+' '+
+    'lang.lang_id,'+' '+
+    'lang.lang_desc,'+' '+
+    'lang.lang_naim,'+' '+
+    'lang.lang_kind'+' '+
+    'from lang'+' '+
+    'where 1=1'+' '+
+    'order by lang.lang_kind asc';
+      Open;
+     end;
+    except
+        on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка  базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка  Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    Raise;
+  end;
+end;
+end;
+end;
+
+procedure TFrm_lang.Lang_naim_radioClick(Sender: TObject);
+begin
+    if  Lang_naim_radio.Checked=true then
+  begin
+    try
+     with dm.langQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+     'select'+' '+
+    'lang.lang_id,'+' '+
+    'lang.lang_desc,'+' '+
+    'lang.lang_naim,'+' '+
+    'lang.lang_kind'+' '+
+    'from lang'+' '+
+    'where 1=1'+' '+
+    'order by lang.lang_naim asc';
+      Open;
+     end;
+    except
+        on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка   Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    Raise;
+  end;
+end;
+end;
+end;
+
+procedure TFrm_lang.Lang_reset_radioClick(Sender: TObject);
+var i,j,c:Integer;
+begin
+     try
+  if Lang_reset_radio.Checked then
+  begin
+    with Frm_lang do
+    begin
+      for I := 0 to ComponentCount - 1 do
+      begin
+        if Components[I] is TLabeledEdit then
+        begin
+          (Components[I] as TLabeledEdit).Clear;
+        end;
+      end;
+      for c := 0 to ComponentCount - 1 do
+      begin
+        if Components[c] is TCheckBox then
+        begin
+          (Components[c] as TCheckBox).Checked := False;
+        end;
+      end;
+      for j := 0 to ComponentCount - 1 do
+      begin
+        if Components[j] is TRadioButton then
+        begin
+          (Components[j] as TRadioButton).Checked := False;
+        end;
+      end;
+    end;
+    with dm.langQuery do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text :=
+      'select'+' '+
+      'lang.lang_id,'+' '+
+      'lang.lang_desc,'+' '+
+      'lang.lang_naim,'+' '+
+      'lang.lang_kind'+' '+
+      'from lang'+' '+
+      'where 1=1';
+      Open;
+    end;
+  end;
+except
+  on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
 end;
 end;
 

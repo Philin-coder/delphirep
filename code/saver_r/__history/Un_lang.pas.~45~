@@ -31,7 +31,7 @@ type
     SSAunarchlBtn: TToolButton;
     bin_btn: TToolButton;
     icon_ImageList: TImageList;
-    UnlBinbtn: TToolButton;
+    ToolButton1: TToolButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -106,7 +106,7 @@ begin
     'lang.lang_id,'+' '+
     'lang.lang_desc,'+' '+
     'lang.lang_naim,'+' '+
-'case when lang.lang_kind=0 then ''Компилируемый'' else ''Интерпритипуемый'' end'+' '+
+    'lang.lang_kind'+' '+
     'from lang'+' '+
     'where 1=1'+' '+
      'order by lang_desc asc';
@@ -143,7 +143,7 @@ begin
     'lang.lang_id,'+' '+
     'lang.lang_desc,'+' '+
     'lang.lang_naim,'+' '+
-'case when lang.lang_kind=0 then ''Компилируемый'' else ''Интерпритипуемый'' end'+' '+
+    'lang.lang_kind'+' '+
     'from lang'+' '+
     'where 1=1'+' '+
   'and lang.lang_desc like'+' '+
@@ -186,7 +186,7 @@ begin
     'lang.lang_id,'+' '+
     'lang.lang_desc,'+' '+
     'lang.lang_naim,'+' '+
-'case when lang.lang_kind=0 then ''Компилируемый'' else ''Интерпритипуемый'' end'+' '+
+    'lang.lang_kind'+' '+
     'from lang'+' '+
     'where 1=1'+' '+
     'order by lang.lang_kind asc';
@@ -229,7 +229,7 @@ begin
     'lang.lang_id,'+' '+
     'lang.lang_desc,'+' '+
     'lang.lang_naim,'+' '+
-'case when lang.lang_kind=0 then ''Компилируемый'' else ''Интерпритипуемый'' end'+' '+
+    'lang.lang_kind'+' '+
     'from lang'+' '+
     'where 1=1'+' '+
     'order by lang.lang_naim asc';
@@ -297,7 +297,7 @@ begin
       'lang.lang_id,'+' '+
       'lang.lang_desc,'+' '+
       'lang.lang_naim,'+' '+
-'case when lang.lang_kind=0 then ''Компилируемый'' else ''Интерпритипуемый'' end'+' '+
+      'lang.lang_kind'+' '+
       'from lang'+' '+
       'where 1=1';
       Open;
