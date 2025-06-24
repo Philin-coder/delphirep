@@ -520,7 +520,6 @@ object Frm_lang: TFrm_lang
           Height = 25
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
-          OnClick = lang_del_btnClick
         end
       end
       object lang_del_inp_Box: TGroupBox

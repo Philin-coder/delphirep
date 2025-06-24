@@ -13,7 +13,7 @@ type
     sel_lang_by_name: TADOStoredProc;
     ins_lang: TADOStoredProc;
     upd_lang: TADOStoredProc;
-    del_lang: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public

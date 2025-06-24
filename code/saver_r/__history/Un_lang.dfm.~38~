@@ -520,7 +520,6 @@ object Frm_lang: TFrm_lang
           Height = 25
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
-          OnClick = lang_del_btnClick
         end
       end
       object lang_del_inp_Box: TGroupBox
@@ -534,24 +533,6 @@ object Frm_lang: TFrm_lang
         ExplicitLeft = 560
         ExplicitTop = 120
         ExplicitWidth = 185
-        object del_lang_lbl: TStaticText
-          Left = 24
-          Top = 23
-          Width = 30
-          Height = 17
-          Caption = #1071#1079#1099#1082
-          TabOrder = 0
-        end
-        object del_lang_dbl: TDBLookupComboBox
-          Left = 24
-          Top = 46
-          Width = 1024
-          Height = 21
-          KeyField = 'lang_id'
-          ListField = 'lang_naim'
-          ListSource = DM.langDS
-          TabOrder = 1
-        end
       end
     end
   end
