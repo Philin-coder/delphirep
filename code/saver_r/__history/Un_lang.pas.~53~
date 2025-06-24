@@ -15,7 +15,7 @@ type
     lang_grouper_Box: TGroupBox;
     lang_btn_Box: TGroupBox;
     lang_sel_Btn: TButton;
-    TabSheet1: TTabSheet;
+    insTab: TTabSheet;
     TabSheet2: TTabSheet;
     TabSheet3: TTabSheet;
     Lang_cond_Edit: TLabeledEdit;
@@ -31,7 +31,16 @@ type
     SSAunarchlBtn: TToolButton;
     bin_btn: TToolButton;
     icon_ImageList: TImageList;
-    ToolButton1: TToolButton;
+    UnlBinbtn: TToolButton;
+    ins_lang_inp_Box: TGroupBox;
+    ins_lang_data_Box: TGroupBox;
+    ins_lang_btn_Box: TGroupBox;
+    ins_lang_grid: TDBGrid;
+    ins_lang_btn: TButton;
+    lang_desc_inp: TLabeledEdit;
+    lang_naim_inp: TLabeledEdit;
+    Lang_lbl: TStaticText;
+    lang_kind_combo: TComboBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -44,6 +53,8 @@ type
     procedure Lang_desc_radioClick(Sender: TObject);
     procedure Lang_kind_radioClick(Sender: TObject);
     procedure Lang_reset_radioClick(Sender: TObject);
+    procedure lang_kind_comboChange(Sender: TObject);
+    procedure ins_lang_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -52,6 +63,7 @@ type
 
 var
   Frm_lang: TFrm_lang;
+  lang_st:Integer;
 
 implementation
 
@@ -69,6 +81,7 @@ procedure TFrm_lang.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   SaveFormState(Self);
   CloseAllQueriesOnDataModule('dm');
+  lang_st:=0;
 end;
 
 procedure TFrm_lang.FormCreate(Sender: TObject);
@@ -85,6 +98,25 @@ begin
   LoadIconFromResource('SSA_OUT_IMAGE',1,icon_ImageList);
   LoadIconFromResource('BIN_IN_IMAGE',1,icon_ImageList);
   LoadIconFromResource('UNBIN_IN_IMAGE',1,icon_ImageList);
+  lang_st:=0;
+end;
+
+procedure TFrm_lang.ins_lang_btnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (Trim(lang_desc_inp.Text)='')or
+  (Trim(lang_naim_inp.Text)='')or
+  );
+  if AreFieldsEmpty then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+
 end;
 
 procedure TFrm_lang.lang_arch_TlBClick(Sender: TObject);
@@ -106,7 +138,7 @@ begin
     'lang.lang_id,'+' '+
     'lang.lang_desc,'+' '+
     'lang.lang_naim,'+' '+
-    'lang.lang_kind'+' '+
+'case when lang.lang_kind=0 then ''Компилируемый'' else ''Интерпритипуемый'' end'+' '+
     'from lang'+' '+
     'where 1=1'+' '+
      'order by lang_desc asc';
@@ -143,7 +175,7 @@ begin
     'lang.lang_id,'+' '+
     'lang.lang_desc,'+' '+
     'lang.lang_naim,'+' '+
-    'lang.lang_kind'+' '+
+'case when lang.lang_kind=0 then ''Компилируемый'' else ''Интерпритипуемый'' end'+' '+
     'from lang'+' '+
     'where 1=1'+' '+
   'and lang.lang_desc like'+' '+
@@ -172,6 +204,12 @@ end;
 end;
 end;
 
+procedure TFrm_lang.lang_kind_comboChange(Sender: TObject);
+begin
+  if lang_kind_combo.ItemIndex=0 then lang_st:=0
+    else lang_st:=1;
+end;
+
 procedure TFrm_lang.Lang_kind_radioClick(Sender: TObject);
 begin
     if  Lang_kind_radio.Checked=true then
@@ -186,7 +224,7 @@ begin
     'lang.lang_id,'+' '+
     'lang.lang_desc,'+' '+
     'lang.lang_naim,'+' '+
-    'lang.lang_kind'+' '+
+'case when lang.lang_kind=0 then ''Компилируемый'' else ''Интерпритипуемый'' end'+' '+
     'from lang'+' '+
     'where 1=1'+' '+
     'order by lang.lang_kind asc';
@@ -229,7 +267,7 @@ begin
     'lang.lang_id,'+' '+
     'lang.lang_desc,'+' '+
     'lang.lang_naim,'+' '+
-    'lang.lang_kind'+' '+
+'case when lang.lang_kind=0 then ''Компилируемый'' else ''Интерпритипуемый'' end'+' '+
     'from lang'+' '+
     'where 1=1'+' '+
     'order by lang.lang_naim asc';
@@ -297,7 +335,7 @@ begin
       'lang.lang_id,'+' '+
       'lang.lang_desc,'+' '+
       'lang.lang_naim,'+' '+
-      'lang.lang_kind'+' '+
+'case when lang.lang_kind=0 then ''Компилируемый'' else ''Интерпритипуемый'' end'+' '+
       'from lang'+' '+
       'where 1=1';
       Open;

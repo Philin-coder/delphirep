@@ -21,7 +21,7 @@ object Frm_lang: TFrm_lang
     Top = 0
     Width = 1051
     Height = 497
-    ActivePage = delTab
+    ActivePage = UpdTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
@@ -403,34 +403,6 @@ object Frm_lang: TFrm_lang
         ExplicitLeft = 608
         ExplicitTop = 104
         ExplicitWidth = 185
-        object Upd_lang_desc_inp: TLabeledEdit
-          Left = 16
-          Top = 32
-          Width = 1025
-          Height = 21
-          EditLabel.Width = 83
-          EditLabel.Height = 13
-          EditLabel.Caption = #1054#1087#1080#1089#1072#1085#1080#1077' '#1103#1079#1099#1082#1072
-          TabOrder = 0
-        end
-        object upd_lang_desc_lbl: TStaticText
-          Left = 16
-          Top = 59
-          Width = 30
-          Height = 17
-          Caption = #1071#1079#1099#1082
-          TabOrder = 1
-        end
-        object upd_lang_desc_dbl: TDBLookupComboBox
-          Left = 16
-          Top = 78
-          Width = 1024
-          Height = 21
-          KeyField = 'lang_id'
-          ListField = 'lang_naim'
-          ListSource = DM.langDS
-          TabOrder = 2
-        end
       end
       object upd_btn_box: TGroupBox
         Left = 0
@@ -446,42 +418,16 @@ object Frm_lang: TFrm_lang
           Height = 25
           Caption = #1054#1073#1085#1086#1074#1080#1090#1100
           TabOrder = 0
-          OnClick = upd_btnClick
         end
       end
     end
-    object delTab: TTabSheet
-      Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1103#1079#1099#1082#1077
+    object TabSheet3: TTabSheet
+      Caption = 'TabSheet3'
       ImageIndex = 3
       ExplicitWidth = 894
-      object GroupBox1: TGroupBox
-        Left = 544
-        Top = 104
-        Width = 185
-        Height = 105
-        Caption = 'GroupBox1'
-        TabOrder = 0
-      end
-      object GroupBox2: TGroupBox
-        Left = 552
-        Top = 112
-        Width = 185
-        Height = 105
-        Caption = 'GroupBox1'
-        TabOrder = 1
-      end
-      object GroupBox3: TGroupBox
-        Left = 560
-        Top = 120
-        Width = 185
-        Height = 105
-        Caption = 'GroupBox1'
-        TabOrder = 2
-      end
     end
   end
   object icon_ImageList: TImageList
-    Left = 640
-    Top = 8
+    Left = 560
   end
 end

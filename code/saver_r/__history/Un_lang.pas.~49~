@@ -15,7 +15,7 @@ type
     lang_grouper_Box: TGroupBox;
     lang_btn_Box: TGroupBox;
     lang_sel_Btn: TButton;
-    TabSheet1: TTabSheet;
+    insTab: TTabSheet;
     TabSheet2: TTabSheet;
     TabSheet3: TTabSheet;
     Lang_cond_Edit: TLabeledEdit;
@@ -31,7 +31,16 @@ type
     SSAunarchlBtn: TToolButton;
     bin_btn: TToolButton;
     icon_ImageList: TImageList;
-    ToolButton1: TToolButton;
+    UnlBinbtn: TToolButton;
+    ins_lang_inp_Box: TGroupBox;
+    ins_lang_data_Box: TGroupBox;
+    ins_lang_btn_Box: TGroupBox;
+    ins_lang_grid: TDBGrid;
+    ins_lang_btn: TButton;
+    lang_desc_inp: TLabeledEdit;
+    lang_naim_inp: TLabeledEdit;
+    Lang_lbl: TStaticText;
+    lang_kind_combo: TComboBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -52,6 +61,7 @@ type
 
 var
   Frm_lang: TFrm_lang;
+  lang_st:Integer;
 
 implementation
 
@@ -80,7 +90,11 @@ begin
   UniformizeComponentAnchors(Self);
   LoadFormState(Self);
   icon_ImageList.Clear;
-
+  LoadIconFromResource('RAR_IMAGE',1,icon_ImageList);
+  LoadIconFromResource('SSA_IN_IMAGE',1,icon_ImageList);
+  LoadIconFromResource('SSA_OUT_IMAGE',1,icon_ImageList);
+  LoadIconFromResource('BIN_IN_IMAGE',1,icon_ImageList);
+  LoadIconFromResource('UNBIN_IN_IMAGE',1,icon_ImageList);
 end;
 
 procedure TFrm_lang.lang_arch_TlBClick(Sender: TObject);
@@ -102,7 +116,7 @@ begin
     'lang.lang_id,'+' '+
     'lang.lang_desc,'+' '+
     'lang.lang_naim,'+' '+
-    'lang.lang_kind'+' '+
+'case when lang.lang_kind=0 then ''Компилируемый'' else ''Интерпритипуемый'' end'+' '+
     'from lang'+' '+
     'where 1=1'+' '+
      'order by lang_desc asc';
@@ -139,7 +153,7 @@ begin
     'lang.lang_id,'+' '+
     'lang.lang_desc,'+' '+
     'lang.lang_naim,'+' '+
-    'lang.lang_kind'+' '+
+'case when lang.lang_kind=0 then ''Компилируемый'' else ''Интерпритипуемый'' end'+' '+
     'from lang'+' '+
     'where 1=1'+' '+
   'and lang.lang_desc like'+' '+
@@ -182,7 +196,7 @@ begin
     'lang.lang_id,'+' '+
     'lang.lang_desc,'+' '+
     'lang.lang_naim,'+' '+
-    'lang.lang_kind'+' '+
+'case when lang.lang_kind=0 then ''Компилируемый'' else ''Интерпритипуемый'' end'+' '+
     'from lang'+' '+
     'where 1=1'+' '+
     'order by lang.lang_kind asc';
@@ -225,7 +239,7 @@ begin
     'lang.lang_id,'+' '+
     'lang.lang_desc,'+' '+
     'lang.lang_naim,'+' '+
-    'lang.lang_kind'+' '+
+'case when lang.lang_kind=0 then ''Компилируемый'' else ''Интерпритипуемый'' end'+' '+
     'from lang'+' '+
     'where 1=1'+' '+
     'order by lang.lang_naim asc';
@@ -293,7 +307,7 @@ begin
       'lang.lang_id,'+' '+
       'lang.lang_desc,'+' '+
       'lang.lang_naim,'+' '+
-      'lang.lang_kind'+' '+
+'case when lang.lang_kind=0 then ''Компилируемый'' else ''Интерпритипуемый'' end'+' '+
       'from lang'+' '+
       'where 1=1';
       Open;

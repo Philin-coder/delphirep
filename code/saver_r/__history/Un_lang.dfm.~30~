@@ -154,6 +154,7 @@ object Frm_lang: TFrm_lang
           Top = 15
           Width = 890
           Height = 29
+          Images = icon_ImageList
           TabOrder = 4
           object lang_arch_TlB: TToolButton
             Left = 0
@@ -178,6 +179,11 @@ object Frm_lang: TFrm_lang
             Top = 0
             Caption = 'bin_btn'
             ImageIndex = 3
+          end
+          object UnlBinbtn: TToolButton
+            Left = 92
+            Top = 0
+            ImageIndex = 4
           end
         end
       end
