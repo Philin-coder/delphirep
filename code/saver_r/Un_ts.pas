@@ -122,7 +122,6 @@ begin
       MessageDlg('Ошибка при извлечении файла: ' + E.Message, mtError, [mbOK], 0);
     end;
   end;
-
 end;
 
 procedure TFrm_ts.FormActivate(Sender: TObject);
