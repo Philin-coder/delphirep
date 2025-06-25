@@ -32,21 +32,19 @@ type
     to_save_desc_inp: TLabeledEdit;
     to_save_theme_inp: TLabeledEdit;
     st_date_lbl: TStaticText;
-    upd_data_box: TGroupBox;
-    upd_inp_Box: TGroupBox;
-    upd_btn_box: TGroupBox;
-    upd_btn: TButton;
-    upd_lang_grd: TDBGrid;
-    Upd_lang_desc_inp: TLabeledEdit;
-    upd_lang_desc_lbl: TStaticText;
-    upd_lang_desc_dbl: TDBLookupComboBox;
+    ts_upd_data_box: TGroupBox;
+    ts_upd_inp_Box: TGroupBox;
+    ts_upd_btn_box: TGroupBox;
+    ts_upd_btn: TButton;
+    Upd_ts_desc_inp: TLabeledEdit;
+    upd_ts_desc_lbl: TStaticText;
+    upd_ts_desc_dbl: TDBLookupComboBox;
     lang_del_data_Box: TGroupBox;
-    lang_del_btn_Box: TGroupBox;
-    lang_del_inp_Box: TGroupBox;
-    lang_del_grid: TDBGrid;
-    lang_del_btn: TButton;
-    del_lang_lbl: TStaticText;
-    del_lang_dbl: TDBLookupComboBox;
+    ts_del_btn_Box: TGroupBox;
+    ts_del_inp_Box: TGroupBox;
+    ts_del_btn: TButton;
+    ts_work_lbl: TStaticText;
+    del_ts_dbl: TDBLookupComboBox;
     ins_st_Grid: TDBGrid;
     to_save_create_date_inp: TDateTimePicker;
     st_kind_lbl: TStaticText;
@@ -54,6 +52,9 @@ type
     st_lang_lbl: TStaticText;
     st_lang_dbl: TDBLookupComboBox;
     toSaveOD: TOpenDialog;
+    ts_upd_Grid: TDBGrid;
+    DBGrid1: TDBGrid;
+    unbinSD: TSaveDialog;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -64,9 +65,14 @@ type
     procedure ts_kind_radioClick(Sender: TObject);
     procedure ts_reset_radioClick(Sender: TObject);
     procedure ins_ts_btnClick(Sender: TObject);
+    procedure st_kind_comboChange(Sender: TObject);
+    procedure ts_upd_btnClick(Sender: TObject);
+    procedure ts_del_btnClick(Sender: TObject);
+    procedure ins_st_GridCellClick(Column: TColumn);
 
   private
     { Private declarations }
+    procedure ExtractFileFromDB;
   public
     { Public declarations }
   end;
@@ -81,6 +87,50 @@ implementation
 uses Un_dm, Un_func;
 
 {$R *.dfm}
+procedure TFrm_ts.ExtractFileFromDB;
+var
+  BlobStream: TStream;
+  FileStream: TFileStream;
+  unbinSD: TSaveDialog;
+begin
+  if dm.tsQuery.IsEmpty then
+  begin
+    MessageDlg('Нет данных для извлечения.', mtError, [mbOK], 0);
+    Exit;
+  end;
+  unbinSD := TSaveDialog.Create(nil);
+  try
+    unbinSD.Title := 'Сохранить файл';
+    unbinSD.Filter := 'Все файлы (*.*)|*.*'; // Фильтр для всех файлов
+    if not unbinSD.Execute then
+      Exit; // Если пользователь отменил выбор, выходим
+
+    // Получаем поток данных из поля BLOB
+    BlobStream := dm.tsQuery.CreateBlobStream(dm.tsQuery.FieldByName('to_save_file'), bmRead);
+    try
+      // Создаем поток для записи данных в файл
+      FileStream := TFileStream.Create(unbinSD.FileName, fmCreate);
+      try
+        // Копируем данные из BLOB в файл
+        FileStream.CopyFrom(BlobStream, BlobStream.Size);
+      finally
+        FileStream.Free;
+      end;
+    finally
+      BlobStream.Free;
+    end;
+
+    // Сообщение об успешном извлечении
+    MessageDlg('Файл успешно извлечен.', mtInformation, [mbOK], 0);
+  except
+    on E: Exception do
+    begin
+      // Обработка ошибок
+      MessageDlg('Ошибка при извлечении файла: ' + E.Message, mtError, [mbOK], 0);
+    end;
+  end;
+
+end;
 
 procedure TFrm_ts.FormActivate(Sender: TObject);
 begin
@@ -106,6 +156,11 @@ begin
   LoadFormState(Self);
   work_kind_st:=0;
 end;
+procedure TFrm_ts.ins_st_GridCellClick(Column: TColumn);
+begin
+    ExtractFileFromDB;
+end;
+
 procedure TFrm_ts.ins_ts_btnClick(Sender: TObject);
 const
   AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
@@ -153,13 +208,70 @@ begin
       begin
         MessageDlg('Файл не выбран.', mtError, [mbOK], 0);
         Exit;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+      Parameters.ParamByName('@work_kind').Value:=work_kind_st;
+      Parameters.ParamByName('@lang_id').Value:=
+      dm.langQuery.FieldByName('lang_id').AsString;
+      ExecProc;
+      dm.tsQuery.Close;
+      dm.tsQuery.Open;
+      MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise; // Повторное выбрасывание исключения
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise;
+end;
+end;
+end;
+
+procedure TFrm_ts.st_kind_comboChange(Sender: TObject);
+begin
+if st_kind_combo.ItemIndex=0 then work_kind_st:=0
+  else work_kind_st:=1;
+end;
+
+procedure TFrm_ts.ts_del_btnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (del_ts_dbl.Text='')
+  );
+  if AreFieldsEmpty then
+  begin
+      MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.del_sv do
+      begin
+        if not dm.Connection.Connected then
+          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
+           Parameters.ParamByName('@to_save_id').Value :=
+           dm.TsQuery.FieldByName('to_save_id').AsString;
            ExecProc;
            dm.tsQuery.Close;
            dm.tsQuery.Open;
         MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
       end;
-      end;
-
     except
       on E: EDatabaseError do
   begin
@@ -465,6 +577,62 @@ begin
     HandleException(E);
     Raise;
   end;
+end;
+end;
+end;
+
+procedure TFrm_ts.ts_upd_btnClick(Sender: TObject);
+const
+  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (Trim(Upd_ts_desc_inp.Text)='')or
+  (upd_ts_desc_dbl.Text='')
+  );
+  AreFieldsValid:=(
+  ValidateComponentText(Upd_ts_desc_inp,AllowedChars)
+  );
+  if AreFieldsEmpty or not AreFieldsValid then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.upd_sv do
+      begin
+        if not dm.Connection.Connected then
+          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
+           Parameters.ParamByName('@to_save_id').Value :=
+           dm.TsQuery.FieldByName('to_save_id').AsString;
+           Parameters.ParamByName('@to_save_desc').Value:=Upd_ts_desc_inp.Text;
+           ExecProc;
+           dm.tsQuery.Close;
+           dm.tsQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise; // Повторное выбрасывание исключения
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise;
 end;
 end;
 end;

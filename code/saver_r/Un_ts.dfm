@@ -21,7 +21,7 @@ object Frm_ts: TFrm_ts
     Top = 0
     Width = 1051
     Height = 497
-    ActivePage = delTab
+    ActivePage = insTab
     Align = alClient
     TabOrder = 0
     object selTab: TTabSheet
@@ -281,8 +281,6 @@ object Frm_ts: TFrm_ts
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
-        ExplicitTop = 161
-        ExplicitHeight = 247
         object ins_st_Grid: TDBGrid
           Left = 2
           Top = 15
@@ -296,6 +294,7 @@ object Frm_ts: TFrm_ts
           TitleFont.Height = -11
           TitleFont.Name = 'Tahoma'
           TitleFont.Style = []
+          OnCellClick = ins_st_GridCellClick
           Columns = <
             item
               Expanded = False
@@ -600,6 +599,10 @@ object Frm_ts: TFrm_ts
   end
   object toSaveOD: TOpenDialog
     Left = 520
+    Top = 16
+  end
+  object unbinSD: TSaveDialog
+    Left = 648
     Top = 16
   end
 end

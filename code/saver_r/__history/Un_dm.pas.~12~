@@ -19,7 +19,7 @@ type
     sel_work_by_theme: TADOStoredProc;
     ins_to_sv: TADOStoredProc;
     upd_sv: TADOStoredProc;
-    del_sv: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public

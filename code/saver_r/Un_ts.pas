@@ -54,6 +54,7 @@ type
     toSaveOD: TOpenDialog;
     ts_upd_Grid: TDBGrid;
     DBGrid1: TDBGrid;
+    unbinSD: TSaveDialog;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -67,9 +68,11 @@ type
     procedure st_kind_comboChange(Sender: TObject);
     procedure ts_upd_btnClick(Sender: TObject);
     procedure ts_del_btnClick(Sender: TObject);
+    procedure ins_st_GridCellClick(Column: TColumn);
 
   private
     { Private declarations }
+    procedure ExtractFileFromDB;
   public
     { Public declarations }
   end;
@@ -84,6 +87,43 @@ implementation
 uses Un_dm, Un_func;
 
 {$R *.dfm}
+procedure TFrm_ts.ExtractFileFromDB;
+var
+  BlobStream: TStream;
+  FileStream: TFileStream;
+  unbinSD: TSaveDialog;
+begin
+  if dm.tsQuery.IsEmpty then
+  begin
+    MessageDlg('Нет данных для извлечения.', mtError, [mbOK], 0);
+    Exit;
+  end;
+  unbinSD := TSaveDialog.Create(nil);
+  try
+    unbinSD.Title := 'Сохранить файл';
+    unbinSD.Filter := 'Все файлы (*.*)|*.*'; // Фильтр для всех файлов
+    if not unbinSD.Execute then
+      Exit;
+    BlobStream := dm.tsQuery.CreateBlobStream(dm.tsQuery.FieldByName('to_save_file'), bmRead);
+    try
+      FileStream := TFileStream.Create(unbinSD.FileName, fmCreate);
+      try
+        FileStream.CopyFrom(BlobStream, BlobStream.Size);
+      finally
+        FileStream.Free;
+      end;
+    finally
+      BlobStream.Free;
+    end;
+    MessageDlg('Файл успешно извлечен.', mtInformation, [mbOK], 0);
+  except
+    on E: Exception do
+    begin
+      MessageDlg('Ошибка при извлечении файла: ' + E.Message, mtError, [mbOK], 0);
+    end;
+  end;
+
+end;
 
 procedure TFrm_ts.FormActivate(Sender: TObject);
 begin
@@ -109,6 +149,11 @@ begin
   LoadFormState(Self);
   work_kind_st:=0;
 end;
+procedure TFrm_ts.ins_st_GridCellClick(Column: TColumn);
+begin
+    ExtractFileFromDB;
+end;
+
 procedure TFrm_ts.ins_ts_btnClick(Sender: TObject);
 const
   AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
@@ -164,6 +209,7 @@ begin
       ExecProc;
       dm.tsQuery.Close;
       dm.tsQuery.Open;
+      MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
       end;
     except
       on E: EDatabaseError do

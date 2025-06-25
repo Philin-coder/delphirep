@@ -261,23 +261,8 @@ object DM: TDM
     Left = 176
     Top = 312
   end
-  object del_sv: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'del_sv;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@to_save_id'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = 0
-      end>
+  object ADOStoredProc4: TADOStoredProc
+    Parameters = <>
     Left = 176
     Top = 360
   end
