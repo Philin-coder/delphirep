@@ -6,5 +6,7 @@
     <Transaction>2025.06.26 19:00:23.015.bdsproj,C:\Users\user\OneDrive\Документы\Borland Studio Projects\Project1.bdsproj=F:\code\Result\delphi\code\libr_r\libr_project_gr.bdsproj</Transaction>
     <Transaction>2025.06.26 19:01:35.704.bdsproj,F:\code\Result\delphi\code\libr_r\libr_project_gr.bdsproj=F:\code\Result\delphi\code\libr_r\libr_gr.bdsproj</Transaction>
     <Transaction>2025.06.27 12:40:12.244.bdsproj,F:\code\Result\delphi\code\libr_r\libr_gr.bdsproj=F:\code\Result\delphi\code\libr_r\libr_porekt.bdsproj</Transaction>
+    <Transaction>2025.06.27 12:44:51.768.pas,F:\code\Result\delphi\code\libr_r\Unit1.pas=F:\code\Result\delphi\code\libr_r\Un_dm.pas</Transaction>
+    <Transaction>2025.06.27 12:44:51.768.dfm,F:\code\Result\delphi\code\libr_r\Unit1.dfm=F:\code\Result\delphi\code\libr_r\Un_dm.dfm</Transaction>
   </Transactions>
 </BorlandProject>
