@@ -1,0 +1,13 @@
+program libr_porekt;
+
+uses
+  Forms,
+  Un_main in 'Un_main.pas' {Frm_main};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.CreateForm(TFrm_main, Frm_main);
+  Application.Run;
+end.

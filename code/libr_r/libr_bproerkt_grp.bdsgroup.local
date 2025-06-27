@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2025.06.26 19:00:54.456.bdsgroup,C:\Users\user\OneDrive\Документы\Borland Studio Projects\ProjectGroup1.bdsgroup=F:\code\Result\delphi\code\libr_r\libr_bproerkt.bdsgroup</Transaction>
+    <Transaction>2025.06.26 19:01:16.036.bdsgroup,F:\code\Result\delphi\code\libr_r\libr_bproerkt.bdsgroup=F:\code\Result\delphi\code\libr_r\libr_bproerkt.bdsgroup</Transaction>
+    <Transaction>2025.06.27 12:39:51.308.bdsgroup,F:\code\Result\delphi\code\libr_r\libr_bproerkt.bdsgroup=F:\code\Result\delphi\code\libr_r\libr_bproerkt_grp.bdsgroup</Transaction>
+  </Transactions>
+	<Default.Personality>
+		<Projects ActiveProject="libr_gr.exe"/>
+	</Default.Personality>
+</BorlandProject>

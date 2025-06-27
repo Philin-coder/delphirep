@@ -29,9 +29,7 @@ type
     lang_arch_TlB: TToolButton;
     SSaarvhBtn: TToolButton;
     SSAunarchlBtn: TToolButton;
-    bin_btn: TToolButton;
     icon_ImageList: TImageList;
-    UnlBinbtn: TToolButton;
     ins_lang_inp_Box: TGroupBox;
     ins_lang_data_Box: TGroupBox;
     ins_lang_btn_Box: TGroupBox;
@@ -113,8 +111,6 @@ begin
   LoadIconFromResource('RAR_IMAGE',1,icon_ImageList);
   LoadIconFromResource('SSA_IN_IMAGE',1,icon_ImageList);
   LoadIconFromResource('SSA_OUT_IMAGE',1,icon_ImageList);
-  LoadIconFromResource('BIN_IN_IMAGE',1,icon_ImageList);
-  LoadIconFromResource('UNBIN_IN_IMAGE',1,icon_ImageList);
   lang_st:=0;
 end;
 
