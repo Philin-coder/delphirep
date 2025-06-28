@@ -1,0 +1,266 @@
+unit Un_c_exit;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ComCtrls, StdCtrls, Grids, DBGrids, ExtCtrls,ADODB,db, DBCtrls;
+
+type
+  TFrm_c_exit = class(TForm)
+    exit_cPC: TPageControl;
+    SelTab: TTabSheet;
+    insTab: TTabSheet;
+    updTab: TTabSheet;
+    delTab: TTabSheet;
+    exit_c_inp_Box: TGroupBox;
+    exit_c_Data_Box: TGroupBox;
+    exit_c_grouper_Box: TGroupBox;
+    exit_c_btn_Box: TGroupBox;
+    exit_c_sel_btn: TButton;
+    sel_exit_c_grid: TDBGrid;
+    exit_c_radio: TRadioButton;
+    exit_c_reset_Radio: TRadioButton;
+    exit_c_CondEdit: TLabeledEdit;
+    exit_cfndEdit: TLabeledEdit;
+    ins_kind_data_Box: TGroupBox;
+    ins_kind_btn_Box: TGroupBox;
+    ins_kind_inp_Box: TGroupBox;
+    ins_kind_btn: TButton;
+    ins_kind_inp: TLabeledEdit;
+    Upd_kind_data_Box: TGroupBox;
+    Upd_kind_inp_Box: TGroupBox;
+    Upd_kind_btn_Box: TGroupBox;
+    Upd_kind_btn: TButton;
+    upd_kind_inp: TLabeledEdit;
+    upd_kind_id_dbl: TDBLookupComboBox;
+    upd_kind_id_lbl: TStaticText;
+    kind_del_inp_Box: TGroupBox;
+    kind_del_btn_Box: TGroupBox;
+    kind_del_data_Box: TGroupBox;
+    kind_del_inp_lbl: TStaticText;
+    kind_del_inp_dbl: TDBLookupComboBox;
+    kind_del_btn: TButton;
+    DBGrid1: TDBGrid;
+    DBGrid2: TDBGrid;
+    DBGrid3: TDBGrid;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormActivate(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure exit_c_sel_btnClick(Sender: TObject);
+    procedure exit_cfndEditKeyPress(Sender: TObject; var Key: Char);
+    procedure exit_c_radioClick(Sender: TObject);
+    procedure exit_c_reset_RadioClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_c_exit: TFrm_c_exit;
+
+implementation
+
+uses Un_dm, Un_func;
+
+{$R *.dfm}
+
+procedure TFrm_c_exit.exit_cfndEditKeyPress(Sender: TObject; var Key: Char);
+begin
+try
+   dm.exit_cQuery.SQL.Text:=
+   'select'+' '+
+    'c_exit.c_exit_id,'+' '+
+    'c_exit.c_exit_desc'+' '+
+    'from c_exit'+' '+
+    'where 1=1'+' '+
+  'and c_exit.c_exit_desc like'+' '+
+   QuotedStr(Concat(exit_cfndEdit.Text,#37));
+   dm.exit_cQuery.close;
+   dm.exit_cQuery.Open;
+except
+   on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка   Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка  : ' + E.Message);
+    HandleException(E);
+    raise;
+end;
+end;
+end;
+
+procedure TFrm_c_exit.exit_c_radioClick(Sender: TObject);
+begin
+      if  exit_c_radio.Checked=true then
+  begin
+    try
+     with dm.exit_cQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+     'select'+' '+
+    'c_exit.c_exit_id,'+' '+
+    'c_exit.c_exit_desc'+' '+
+    'from c_exit'+' '+
+    'where 1=1'+' '+
+    'order by c_exit.c_exit_desc';
+      Open;
+     end;
+    except
+        on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка  Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    Raise;
+  end;
+end;
+end;
+end;
+
+procedure TFrm_c_exit.exit_c_reset_RadioClick(Sender: TObject);
+var i,j,c:Integer;
+begin
+   try
+  if exit_c_reset_Radio.Checked then
+  begin
+    with Frm_c_exit do
+    begin
+      for I := 0 to ComponentCount - 1 do
+      begin
+        if Components[I] is TLabeledEdit then
+        begin
+          (Components[I] as TLabeledEdit).Clear;
+        end;
+      end;
+      for c := 0 to ComponentCount - 1 do
+      begin
+        if Components[c] is TCheckBox then
+        begin
+          (Components[c] as TCheckBox).Checked := False;
+        end;
+      end;
+      for j := 0 to ComponentCount - 1 do
+      begin
+        if Components[j] is TRadioButton then
+        begin
+          (Components[j] as TRadioButton).Checked := False;
+        end;
+      end;
+    end;
+    with dm.exit_cQuery do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text :=
+        'select'+' '+
+    'c_exit.c_exit_id,'+' '+
+    'c_exit.c_exit_desc'+' '+
+    'from c_exit'+' '+
+    'where 1=1';
+      Open;
+    end;
+  end;
+except
+  on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+end;
+end;
+
+procedure TFrm_c_exit.exit_c_sel_btnClick(Sender: TObject);
+begin
+  try
+    if not DM.Connection.Connected then
+      raise EDatabaseError.Create('Соединение с базой не установлено ',4001);
+    with DM.sel_c_exit_by_desc do
+    begin
+      Close;
+      Parameters.ParamByName('@c_exit_desc').Value :=exit_c_CondEdit.Text;
+      Open;
+       DM.exit_cQuery.Recordset:=dm.sel_c_exit_by_desc.Recordset;
+    end;
+  except
+  on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка   Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    Raise;
+  end;
+end;
+end;
+
+procedure TFrm_c_exit.FormActivate(Sender: TObject);
+begin
+  dm.exit_cQuery.Open;
+  AdjustDBGridColumnWidths('Frm_c_exit',6000, 10);
+end;
+
+procedure TFrm_c_exit.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  SaveFormState(Self);
+  CloseAllQueriesOnDataModule('dm');
+end;
+
+procedure TFrm_c_exit.FormCreate(Sender: TObject);
+begin
+  UpdateFormShowHint('Frm_c_exit');
+  UniformizeButtonsSize(Self,  273, 25);
+  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+  UniformizeComponentAnchors(Self);
+  LoadFormState(Self);
+end;
+
+end.

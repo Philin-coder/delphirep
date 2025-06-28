@@ -14,12 +14,6 @@ type
     ins_kind: TADOStoredProc;
     upd_kind: TADOStoredProc;
     del_kind: TADOStoredProc;
-    exit_cQuery: TADOQuery;
-    exit_cDS: TDataSource;
-    sel_c_exit_by_desc: TADOStoredProc;
-    ADOStoredProc2: TADOStoredProc;
-    ADOStoredProc3: TADOStoredProc;
-    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public

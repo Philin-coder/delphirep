@@ -13,12 +13,12 @@ type
     ItemMenu: TMainMenu;
     main_Image: TImage;
     kind_doc_item: TMenuItem;
-    c_exit_item: TMenuItem;
+    N1: TMenuItem;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure kind_doc_itemClick(Sender: TObject);
-    procedure c_exit_itemClick(Sender: TObject);
+    procedure N1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -72,10 +72,10 @@ begin
   end;
 end;
 
-procedure TFrm_main.c_exit_itemClick(Sender: TObject);
+procedure TFrm_main.N1Click(Sender: TObject);
 begin
 try
-    UpdateFormProperties('Frm_c_exit', 'Информация о причине выбытия',
+    UpdateFormProperties('Frm_с_exit', 'Информация о причине выбытия',
       clBtnFace, 1024, 768);
     Frm_c_exit.ShowModal;
   except
