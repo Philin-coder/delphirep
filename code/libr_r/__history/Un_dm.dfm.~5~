@@ -1,0 +1,50 @@
+object DM: TDM
+  OldCreateOrder = False
+  Height = 430
+  Width = 460
+  object Connection: TADOConnection
+    ConnectionString = 
+      'Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security In' +
+      'fo=False;Initial Catalog=libr_r'
+    Provider = 'SQLOLEDB.1'
+    Left = 32
+    Top = 16
+  end
+  object kindQuery: TADOQuery
+    Connection = Connection
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      ' doc_kind.doc_kind_id,'
+      ' doc_kind.doc_kind_naim '
+      'from doc_kind '
+      'where 1=1')
+    Left = 88
+    Top = 88
+  end
+  object DataSource1: TDataSource
+    DataSet = kindQuery
+    Left = 96
+    Top = 152
+  end
+  object ADOStoredProc1: TADOStoredProc
+    Parameters = <>
+    Left = 112
+    Top = 216
+  end
+  object ADOStoredProc2: TADOStoredProc
+    Parameters = <>
+    Left = 112
+    Top = 264
+  end
+  object ADOStoredProc3: TADOStoredProc
+    Parameters = <>
+    Left = 112
+    Top = 328
+  end
+  object ADOStoredProc4: TADOStoredProc
+    Parameters = <>
+    Left = 112
+    Top = 384
+  end
+end

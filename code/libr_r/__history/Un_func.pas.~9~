@@ -3553,6 +3553,8 @@ begin
       MaskEdit.EditMask := '9-99-99;1;_';
   end;
 end;
+
+// Рекурсивный поиск компонентов
 procedure FindAndSetMaskEditMasks(AControl: TWinControl; Status: TMaskStatus);
 var
   i: Integer;
@@ -3561,12 +3563,18 @@ begin
   for i := 0 to AControl.ControlCount - 1 do
   begin
     Control := AControl.Controls[i];
+
+    // Если компонент является MaskEdit, применяем маску
     if Control is TMaskEdit then
       ApplyMaskToMaskEdit(TMaskEdit(Control), Status);
+
+    // Если компонент содержит дочерние элементы, вызываем процедуру рекурсивно
     if Control is TWinControl then
       FindAndSetMaskEditMasks(TWinControl(Control), Status);
   end;
 end;
+
+// Основная процедура
 procedure SetMaskEditMask(AForm: TForm; Status: TMaskStatus);
 begin
   if not Assigned(AForm) then
@@ -3574,6 +3582,8 @@ begin
     ShowMessage('Форма не назначена.');
     Exit;
   end;
+
+  // Начинаем рекурсивный поиск с корневого уровня формы
   FindAndSetMaskEditMasks(AForm, Status);
 end;
 

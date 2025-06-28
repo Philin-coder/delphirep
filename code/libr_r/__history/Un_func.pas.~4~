@@ -216,9 +216,8 @@ procedure ArchiveSelectedFolderWithWinRAR;
 function SaveToSSA(const FileIn, FileOut: string;
 Compression: TCompressionLevel): Boolean;
 function LoadFromSSA(const FileIn: string): Boolean;
-type
-  TMaskStatus = (msCustom, msMobilePhone, msRegularPhone);
-  procedure SetMaskEditMask(AForm: TForm; Status: TMaskStatus);
+function IsConnectedToDatabase(const TargetDatabaseName, ConnectionName:
+string; Owner: TComponent): Boolean;
 implementation
 type
   tdata = array [0..15] of DWORD;
@@ -3542,42 +3541,45 @@ begin
     Result := False;
   end;
 end;
-procedure ApplyMaskToMaskEdit(MaskEdit: TMaskEdit; Status: TMaskStatus);
-begin
-  case Status of
-    msCustom: // Произвольная маска
-      MaskEdit.EditMask := '!99-99-99;1;_'; // Пример произвольной маски
-    msMobilePhone: // Маска для мобильного телефона
-      MaskEdit.EditMask := '+7 \(999\) 000-00-00;1;_';
-    msRegularPhone: // Маска для обычного телефона
-      MaskEdit.EditMask := '9-99-99;1;_';
-  end;
-end;
-procedure FindAndSetMaskEditMasks(AControl: TWinControl; Status: TMaskStatus);
+function IsConnectedToDatabase(const TargetDatabaseName, ConnectionName:
+string; Owner: TComponent): Boolean;
 var
-  i: Integer;
-  Control: TControl;
+  CurrentDatabaseName: string;
+  Connection: TADOConnection;
 begin
-  for i := 0 to AControl.ControlCount - 1 do
+  Result := False;
+
+  // Находим компонент TADOConnection по имени
+  Connection := TADOConnection(Owner.FindComponent(ConnectionName));
+  if not Assigned(Connection) then
   begin
-    Control := AControl.Controls[i];
-    if Control is TMaskEdit then
-      ApplyMaskToMaskEdit(TMaskEdit(Control), Status);
-    if Control is TWinControl then
-      FindAndSetMaskEditMasks(TWinControl(Control), Status);
-  end;
-end;
-procedure SetMaskEditMask(AForm: TForm; Status: TMaskStatus);
-begin
-  if not Assigned(AForm) then
-  begin
-    ShowMessage('Форма не назначена.');
+    ShowMessage('Компонент TADOConnection с именем "' + ConnectionName + '" не найден.');
     Exit;
   end;
-  FindAndSetMaskEditMasks(AForm, Status);
+
+  // Проверяем, активно ли соединение
+  if not Connection.Connected then
+  begin
+    ShowMessage('Соединение с базой данных не установлено.');
+    Exit;
+  end;
+
+  // Извлекаем имя базы данных из строки подключения
+  CurrentDatabaseName := '';
+  if Pos('Initial Catalog=', Connection.ConnectionString) > 0 then
+  begin
+    CurrentDatabaseName := Copy(Connection.ConnectionString,
+      Pos('Initial Catalog=', Connection.ConnectionString) + Length('Initial Catalog='),
+      Length(Connection.ConnectionString));
+    CurrentDatabaseName := Trim(Copy(CurrentDatabaseName, 1, Pos(';', CurrentDatabaseName) - 1));
+  end;
+
+  // Сравниваем имя базы данных
+  if SameText(CurrentDatabaseName, TargetDatabaseName) then
+    Result := True
+  else
+    ShowMessage(Format('Подключена другая база данных: %s', [CurrentDatabaseName]));
 end;
-
-
 
 initialization
   VisitedStaticTexts := TStringList.Create;

@@ -6,6 +6,6 @@
     <Transaction>2025.06.27 12:39:51.308.bdsgroup,F:\code\Result\delphi\code\libr_r\libr_bproerkt.bdsgroup=F:\code\Result\delphi\code\libr_r\libr_bproerkt_grp.bdsgroup</Transaction>
   </Transactions>
 	<Default.Personality>
-		<Projects ActiveProject="libr_gr.exe"/>
+		<Projects ActiveProject="libr_porekt.exe"/>
 	</Default.Personality>
 </BorlandProject>

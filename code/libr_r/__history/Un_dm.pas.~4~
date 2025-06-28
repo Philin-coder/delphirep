@@ -9,11 +9,11 @@ type
   TDM = class(TDataModule)
     Connection: TADOConnection;
     kindQuery: TADOQuery;
-    KindDS: TDataSource;
-    sel_kind_by_name: TADOStoredProc;
-    ins_kind: TADOStoredProc;
-    upd_kind: TADOStoredProc;
-    del_kind: TADOStoredProc;
+    DataSource1: TDataSource;
+    ADOStoredProc1: TADOStoredProc;
+    ADOStoredProc2: TADOStoredProc;
+    ADOStoredProc3: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public

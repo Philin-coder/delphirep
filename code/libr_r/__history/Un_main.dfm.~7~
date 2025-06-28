@@ -10,7 +10,7 @@ object Frm_main: TFrm_main
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  Menu = ItemMenu
+  Menu = ItemnMenu
   OldCreateOrder = False
   OnActivate = FormActivate
   OnClose = FormClose
@@ -28,12 +28,8 @@ object Frm_main: TFrm_main
     ExplicitWidth = 105
     ExplicitHeight = 105
   end
-  object ItemMenu: TMainMenu
+  object ItemnMenu: TMainMenu
     Left = 312
     Top = 152
-    object kind_doc_item: TMenuItem
-      Caption = '&'#1048#1085#1092#1086#1088#1084#1072#1094#1080#1103' '#1086' '#1074#1080#1076#1077' '#1076#1086#1082#1091#1084#1077#1085#1090#1072
-      OnClick = kind_doc_itemClick
-    end
   end
 end

@@ -4,8 +4,7 @@ uses
   Forms,
   Un_main in 'Un_main.pas' {Frm_main},
   Un_func in 'Un_func.pas',
-  Un_dm in 'Un_dm.pas' {DM: TDataModule},
-  Un_kind in 'Un_kind.pas' {Frm_kind};
+  Un_dm in 'Un_dm.pas' {DM: TDataModule};
 
 {$R *.res}
 {$R 'resources.RES'}
@@ -14,6 +13,5 @@ begin
   Application.Initialize;
   Application.CreateForm(TFrm_main, Frm_main);
   Application.CreateForm(TDM, DM);
-  Application.CreateForm(TFrm_kind, Frm_kind);
   Application.Run;
 end.

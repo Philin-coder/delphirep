@@ -216,13 +216,12 @@ procedure ArchiveSelectedFolderWithWinRAR;
 function SaveToSSA(const FileIn, FileOut: string;
 Compression: TCompressionLevel): Boolean;
 function LoadFromSSA(const FileIn: string): Boolean;
-type
-  TMaskStatus = (msCustom, msMobilePhone, msRegularPhone);
-  procedure SetMaskEditMask(AForm: TForm; Status: TMaskStatus);
 implementation
 type
   tdata = array [0..15] of DWORD;
   tcur = array[0..3] of DWord;
+  type
+  TMaskStatus = (msCustom, msMobilePhone, msRegularPhone);
 var HEX: array[Word] of AnsiString;
 const
   EnglishLetters: array['A'..'Z'] of string = (
@@ -3542,17 +3541,6 @@ begin
     Result := False;
   end;
 end;
-procedure ApplyMaskToMaskEdit(MaskEdit: TMaskEdit; Status: TMaskStatus);
-begin
-  case Status of
-    msCustom: // Произвольная маска
-      MaskEdit.EditMask := '!99-99-99;1;_'; // Пример произвольной маски
-    msMobilePhone: // Маска для мобильного телефона
-      MaskEdit.EditMask := '+7 \(999\) 000-00-00;1;_';
-    msRegularPhone: // Маска для обычного телефона
-      MaskEdit.EditMask := '9-99-99;1;_';
-  end;
-end;
 procedure FindAndSetMaskEditMasks(AControl: TWinControl; Status: TMaskStatus);
 var
   i: Integer;
@@ -3561,8 +3549,12 @@ begin
   for i := 0 to AControl.ControlCount - 1 do
   begin
     Control := AControl.Controls[i];
+
+    // Если компонент является MaskEdit, применяем маску
     if Control is TMaskEdit then
       ApplyMaskToMaskEdit(TMaskEdit(Control), Status);
+
+    // Если компонент содержит дочерние элементы, вызываем процедуру рекурсивно
     if Control is TWinControl then
       FindAndSetMaskEditMasks(TWinControl(Control), Status);
   end;
@@ -3574,10 +3566,10 @@ begin
     ShowMessage('Форма не назначена.');
     Exit;
   end;
+
+  // Начинаем рекурсивный поиск с корневого уровня формы
   FindAndSetMaskEditMasks(AForm, Status);
 end;
-
-
 
 initialization
   VisitedStaticTexts := TStringList.Create;

@@ -10,13 +10,11 @@ const
 
 type
   TFrm_main = class(TForm)
-    ItemMenu: TMainMenu;
+    ItemnMenu: TMainMenu;
     main_Image: TImage;
-    kind_doc_item: TMenuItem;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
-    procedure kind_doc_itemClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -28,7 +26,7 @@ var
 
 implementation
 
-uses Un_dm, Un_func, Un_kind;
+uses Un_dm, Un_func;
 
 {$R *.dfm}
 
@@ -55,25 +53,6 @@ begin
   AdjustImageProperties(main_Image);
   LoadFormState(Self);
   LoadImageFromResource('BACKGROUND_IMAGE', main_Image)
-end;
-
-procedure TFrm_main.kind_doc_itemClick(Sender: TObject);
-begin
-   try
-    UpdateFormProperties('Frm_kind', 'Информация о виде документ',
-      clBtnFace, 1024, 768);
-    Frm_kind.ShowModal;
-  except
-    on E: Exception do
-    begin
-      if not (E is EMyException) then
-        raise EDatabaseError.Create('Ошибка при работе с формой о виде документа', 3001);
-      HandleException(E);
-      if Assigned(Frm_kind) then
-        Frm_kind.Free;
-      raise;
-    end;
-  end;
 end;
 
 end.

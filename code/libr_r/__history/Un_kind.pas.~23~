@@ -1,0 +1,426 @@
+unit Un_kind;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ComCtrls, StdCtrls, Grids, DBGrids, ExtCtrls,ADODB,db, DBCtrls;
+
+type
+  TFrm_kind = class(TForm)
+    kindPC: TPageControl;
+    SelTab: TTabSheet;
+    insTab: TTabSheet;
+    updTab: TTabSheet;
+    delTab: TTabSheet;
+    kind_inp_Box: TGroupBox;
+    kind_Data_Box: TGroupBox;
+    kind_grouper_Box: TGroupBox;
+    kind_btn_Box: TGroupBox;
+    kind_sel_btn: TButton;
+    sel_kind_grid: TDBGrid;
+    kind_radio: TRadioButton;
+    reset_Radio: TRadioButton;
+    KIndCondEdit: TLabeledEdit;
+    KIndfndEdit: TLabeledEdit;
+    ins_kind_data_Box: TGroupBox;
+    ins_kind_btn_Box: TGroupBox;
+    ins_kind_inp_Box: TGroupBox;
+    ins_kind_btn: TButton;
+    ins_Grid_grid: TDBGrid;
+    ins_kind_inp: TLabeledEdit;
+    Upd_kind_data_Box: TGroupBox;
+    Upd_kind_inp_Box: TGroupBox;
+    Upd_kind_btn_Box: TGroupBox;
+    Upd_kind_btn: TButton;
+    Upd_kind_data_Grid: TDBGrid;
+    upd_kind_inp: TLabeledEdit;
+    upd_kind_id_dbl: TDBLookupComboBox;
+    upd_kind_id_lbl: TStaticText;
+    kind_del_inp_Box: TGroupBox;
+    kind_del_btn_Box: TGroupBox;
+    kind_del_data_Box: TGroupBox;
+    kind_del_inp_lbl: TStaticText;
+    kind_del_inp_dbl: TDBLookupComboBox;
+    kind_del_btn: TButton;
+    kind_del_Grid: TDBGrid;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormActivate(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure kind_sel_btnClick(Sender: TObject);
+    procedure KIndfndEditKeyPress(Sender: TObject; var Key: Char);
+    procedure kind_radioClick(Sender: TObject);
+    procedure reset_RadioClick(Sender: TObject);
+    procedure ins_kind_btnClick(Sender: TObject);
+    procedure Upd_kind_btnClick(Sender: TObject);
+    procedure kind_del_btnClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_kind: TFrm_kind;
+
+implementation
+
+uses Un_dm, Un_func;
+
+{$R *.dfm}
+
+procedure TFrm_kind.FormActivate(Sender: TObject);
+begin
+  dm.kindQuery.Open;
+  AdjustDBGridColumnWidths('Frm_kind',6000, 10);
+end;
+
+procedure TFrm_kind.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  SaveFormState(Self);
+  CloseAllQueriesOnDataModule('dm');
+end;
+
+procedure TFrm_kind.FormCreate(Sender: TObject);
+begin
+  UpdateFormShowHint('Frm_kind');
+  UniformizeButtonsSize(Self,  273, 25);
+  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+  UniformizeComponentAnchors(Self);
+  LoadFormState(Self);
+end;
+
+procedure TFrm_kind.ins_kind_btnClick(Sender: TObject);
+const
+  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (Trim(ins_kind_inp.Text)='')
+  );
+  AreFieldsValid:=(
+  ValidateComponentText(ins_kind_inp,AllowedChars)
+  );
+  if AreFieldsEmpty or not AreFieldsValid then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.ins_kind do
+      begin
+        if not dm.Connection.Connected then
+          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
+           Parameters.ParamByName('@doc_kind_naim').Value :=ins_kind_inp.Text;
+           ExecProc;
+           dm.kindQuery.Close;
+           dm.kindQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise; // Повторное выбрасывание исключения
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise;
+end;
+end;
+end;
+
+procedure TFrm_kind.KIndfndEditKeyPress(Sender: TObject; var Key: Char);
+begin
+   try
+   dm.kindQuery.SQL.Text:=
+    'select'+ ' '+
+    'doc_kind.doc_kind_id,'+' '+
+    'doc_kind.doc_kind_naim'+' '+
+    'from doc_kind'+' '+
+    'where 1=1'+' '+
+  'and doc_kind.doc_kind_naim like'+' '+
+   QuotedStr(Concat(KIndfndEdit.Text,#37));
+   dm.kindQuery.close;
+   dm.kindQuery.Open;
+except
+   on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка    Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка : ' + E.Message);
+    HandleException(E);
+    raise;
+end;
+end;
+end;
+
+procedure TFrm_kind.kind_del_btnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (kind_del_inp_dbl.Text='')
+  );
+  if AreFieldsEmpty then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.del_kind do
+      begin
+        if not dm.Connection.Connected then
+          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
+           Parameters.ParamByName('doc_kind_id').Value :=
+           dm.kindQuery.FieldByName('doc_kind_id').AsString;
+           ExecProc;
+           dm.kindQuery.Close;
+           dm.kindQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise; // Повторное выбрасывание исключения
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise;
+end;
+end;
+end;
+
+procedure TFrm_kind.kind_radioClick(Sender: TObject);
+begin
+  if  kind_radio.Checked=true then
+  begin
+    try
+     with dm.kindQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+      'select'+ ' '+
+    'doc_kind.doc_kind_id,'+' '+
+    'doc_kind.doc_kind_naim'+' '+
+    'from doc_kind'+' '+
+    'where 1=1'+' '+
+    ' order by doc_kind.doc_kind_naim asc';
+      Open;
+     end;
+    except
+        on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка   Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    Raise;
+  end;
+end;
+end;
+end;
+
+procedure TFrm_kind.kind_sel_btnClick(Sender: TObject);
+begin
+    try
+    if not DM.Connection.Connected then
+      raise EDatabaseError.Create('Соединение с базой не установлено ',4001);
+    with DM.sel_kind_by_name do
+    begin
+      Close;
+      Parameters.ParamByName('@doc_kind_naim').Value :=kindcondEdit.Text;
+      Open;
+       DM.kindQuery.Recordset:=dm.sel_kind_by_name.Recordset;
+    end;
+  except
+  on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка   Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    Raise;
+  end;
+end;
+end;
+
+procedure TFrm_kind.reset_RadioClick(Sender: TObject);
+var i,j,c:Integer;
+begin
+     try
+  if reset_Radio.Checked then
+  begin
+    with Frm_kind do
+    begin
+      for I := 0 to ComponentCount - 1 do
+      begin
+        if Components[I] is TLabeledEdit then
+        begin
+          (Components[I] as TLabeledEdit).Clear;
+        end;
+      end;
+      for c := 0 to ComponentCount - 1 do
+      begin
+        if Components[c] is TCheckBox then
+        begin
+          (Components[c] as TCheckBox).Checked := False;
+        end;
+      end;
+      for j := 0 to ComponentCount - 1 do
+      begin
+        if Components[j] is TRadioButton then
+        begin
+          (Components[j] as TRadioButton).Checked := False;
+        end;
+      end;
+    end;
+    with dm.kindQuery do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text :=
+              'select'+ ' '+
+    'doc_kind.doc_kind_id,'+' '+
+    'doc_kind.doc_kind_naim'+' '+
+    'from doc_kind'+' '+
+    'where 1=1';
+      Open;
+    end;
+  end;
+except
+  on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+end;
+end;
+
+procedure TFrm_kind.Upd_kind_btnClick(Sender: TObject);
+const
+  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (Trim(upd_kind_inp.Text)='')or
+  (upd_kind_id_dbl.Text='')
+  );
+  AreFieldsValid:=(
+  ValidateComponentText(  upd_kind_inp,AllowedChars)
+  );
+  if AreFieldsEmpty or not AreFieldsValid then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.upd_kind do
+      begin
+        if not dm.Connection.Connected then
+          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
+           Parameters.ParamByName('@doc_kind_id').Value :=
+           dm.kindQuery.FieldByName('doc_kind_id').AsString;
+           Parameters.ParamByName('@doc_kind_naim').Value:=upd_kind_inp.Text;
+           ExecProc;
+           dm.kindQuery.Close;
+           dm.kindQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise; // Повторное выбрасывание исключения
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise;
+end;
+end;
+end;
+
+end.

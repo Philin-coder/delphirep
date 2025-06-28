@@ -12,8 +12,8 @@ type
     KindDS: TDataSource;
     sel_kind_by_name: TADOStoredProc;
     ins_kind: TADOStoredProc;
-    upd_kind: TADOStoredProc;
-    del_kind: TADOStoredProc;
+    ADOStoredProc3: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public
