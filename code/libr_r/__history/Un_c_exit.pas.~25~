@@ -123,11 +123,10 @@ begin
       begin
         if not dm.Connection.Connected then
           raise EDatabaseError.Create('Соединение с базой не установлено',4001);
-           Parameters.ParamByName('@c_exit_id').Value :=
-           dm
+           Parameters.ParamByName('@c_exit_id').Value :=Nam_etap_inp.Text;
            ExecProc;
-           dm.exit_cQuery.Close;
-           dm.exit_cQuery.Open;
+           dm.etapQuery.Close;
+           dm.etapQuery.Open;
         MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
       end;
     except

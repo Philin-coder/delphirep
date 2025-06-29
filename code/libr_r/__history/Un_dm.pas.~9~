@@ -19,7 +19,7 @@ type
     sel_c_exit_by_desc: TADOStoredProc;
     ins_c: TADOStoredProc;
     upd_c: TADOStoredProc;
-    del_c: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public

@@ -35,15 +35,15 @@ type
     upd_exit_c_inp: TLabeledEdit;
     upd_exit_c_id_dbl: TDBLookupComboBox;
     upd_exit_c_id_lbl: TStaticText;
-    exit_c_del_inp_Box: TGroupBox;
-    exit_c_del_btn_Box: TGroupBox;
-    exit_c_del_data_Box: TGroupBox;
-    exit_c_del_inp_lbl: TStaticText;
-    exit_c_del_inp_dbl: TDBLookupComboBox;
-    exit_c_del_btn: TButton;
+    kind_del_inp_Box: TGroupBox;
+    kind_del_btn_Box: TGroupBox;
+    kind_del_data_Box: TGroupBox;
+    kind_del_inp_lbl: TStaticText;
+    kind_del_inp_dbl: TDBLookupComboBox;
+    kind_del_btn: TButton;
     eit_c_Grid: TDBGrid;
     exit_c_Grid: TDBGrid;
-    exit_cGrid: TDBGrid;
+    DBGrid3: TDBGrid;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -53,7 +53,6 @@ type
     procedure exit_c_reset_RadioClick(Sender: TObject);
     procedure ins_exit_c_btnClick(Sender: TObject);
     procedure Upd_exit_c_btnClick(Sender: TObject);
-    procedure exit_c_del_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -99,54 +98,6 @@ except
   begin
     ShowMessage('Общая ошибка  : ' + E.Message);
     HandleException(E);
-    raise;
-end;
-end;
-end;
-
-procedure TFrm_c_exit.exit_c_del_btnClick(Sender: TObject);
-var
-  AreFieldsEmpty: Boolean;
-begin
-  AreFieldsEmpty:=(
-  (exit_c_del_inp_dbl.Text='')
-  );
-  if AreFieldsEmpty then
-  begin
-    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
-    mtError, [mbOK], 0);
-    Beep;
-    Exit;
-  end;
-  try
-      with dm.del_c do
-      begin
-        if not dm.Connection.Connected then
-          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
-           Parameters.ParamByName('@c_exit_id').Value :=
-           dm
-           ExecProc;
-           dm.exit_cQuery.Close;
-           dm.exit_cQuery.Open;
-        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
-      end;
-    except
-      on E: EDatabaseError do
-  begin
-    ShowMessage('Ошибка базы данных: ' + E.Message);
-    HandleException(E);
-    raise;
-  end;
-  on E: EOleError do
-  begin
-    ShowMessage('Ошибка COM: ' + E.Message);
-    HandleException(E); // Логирование ошибки
-    raise; // Повторное выбрасывание исключения
-  end;
-  on E: Exception do
-  begin
-    ShowMessage('Общая ошибка: ' + E.Message);
-    HandleException(E); // Логирование ошибки
     raise;
 end;
 end;

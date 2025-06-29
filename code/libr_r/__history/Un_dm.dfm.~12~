@@ -202,14 +202,12 @@ object DM: TDM
         DataType = ftWideString
         Size = 255
       end>
-    Left = 224
-    Top = 320
+    Left = 208
+    Top = 336
   end
-  object del_c: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'del_c;1'
+  object ADOStoredProc4: TADOStoredProc
     Parameters = <>
-    Left = 224
+    Left = 208
     Top = 384
   end
 end
