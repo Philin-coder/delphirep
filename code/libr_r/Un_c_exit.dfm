@@ -21,7 +21,7 @@ object Frm_c_exit: TFrm_c_exit
     Top = 0
     Width = 1045
     Height = 433
-    ActivePage = delTab
+    ActivePage = SelTab
     Align = alClient
     TabOrder = 0
     object SelTab: TTabSheet

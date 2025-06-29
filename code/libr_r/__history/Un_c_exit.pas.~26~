@@ -167,7 +167,7 @@ begin
     'c_exit.c_exit_desc'+' '+
     'from c_exit'+' '+
     'where 1=1'+' '+
-    'order by c_exit.c_exit_desc asc';
+    'order by c_exit.c_exit_desc';
       Open;
      end;
     except
