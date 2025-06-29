@@ -21,12 +21,11 @@ object Frm_c_exit: TFrm_c_exit
     Top = 0
     Width = 1045
     Height = 433
-    ActivePage = SelTab
+    ActivePage = insTab
     Align = alClient
     TabOrder = 0
     object SelTab: TTabSheet
       Caption = #1042#1099#1073#1086#1088' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1087#1088#1080#1095#1080#1085#1077' '#1074#1099#1073#1099#1090#1080#1103
-      ExplicitWidth = 627
       object exit_c_inp_Box: TGroupBox
         Left = 0
         Top = 0
@@ -35,9 +34,6 @@ object Frm_c_exit: TFrm_c_exit
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        ExplicitLeft = 152
-        ExplicitTop = 80
-        ExplicitWidth = 185
         object exit_c_CondEdit: TLabeledEdit
           Left = 16
           Top = 32
@@ -68,10 +64,6 @@ object Frm_c_exit: TFrm_c_exit
         Align = alClient
         Caption = #1042#1099#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
-        ExplicitLeft = 160
-        ExplicitTop = 88
-        ExplicitWidth = 185
-        ExplicitHeight = 105
         object sel_exit_c_grid: TDBGrid
           Left = 2
           Top = 15
@@ -108,9 +100,6 @@ object Frm_c_exit: TFrm_c_exit
         Align = alTop
         Caption = #1057#1086#1088#1090#1080#1088#1086#1074#1082#1072' '#1087#1086' '
         TabOrder = 2
-        ExplicitLeft = 168
-        ExplicitTop = 96
-        ExplicitWidth = 185
         object exit_c_radio: TRadioButton
           Left = 48
           Top = 48
@@ -137,7 +126,6 @@ object Frm_c_exit: TFrm_c_exit
         Height = 53
         Align = alBottom
         TabOrder = 3
-        ExplicitWidth = 890
         object exit_c_sel_btn: TButton
           Left = 248
           Top = 25
@@ -152,9 +140,7 @@ object Frm_c_exit: TFrm_c_exit
     object insTab: TTabSheet
       Caption = #1042#1074#1086#1076' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1074#1080#1076#1077' '#1076#1086#1082#1091#1084#1077#1085#1090#1072
       ImageIndex = 1
-      ExplicitWidth = 627
-      ExplicitHeight = 271
-      object ins_kind_data_Box: TGroupBox
+      object ins_exit_c_data_Box: TGroupBox
         Left = 0
         Top = 105
         Width = 1037
@@ -162,10 +148,6 @@ object Frm_c_exit: TFrm_c_exit
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        ExplicitLeft = 480
-        ExplicitTop = 120
-        ExplicitWidth = 185
-        ExplicitHeight = 105
         object DBGrid1: TDBGrid
           Left = 2
           Top = 15
@@ -194,14 +176,14 @@ object Frm_c_exit: TFrm_c_exit
             end>
         end
       end
-      object ins_kind_btn_Box: TGroupBox
+      object exit_c_couse_btn_Box: TGroupBox
         Left = 0
         Top = 352
         Width = 1037
         Height = 53
         Align = alBottom
         TabOrder = 1
-        object ins_kind_btn: TButton
+        object ins_exit_c_btn: TButton
           Left = 384
           Top = 17
           Width = 75
@@ -210,7 +192,7 @@ object Frm_c_exit: TFrm_c_exit
           TabOrder = 0
         end
       end
-      object ins_kind_inp_Box: TGroupBox
+      object exit_c_couse_inp_Box: TGroupBox
         Left = 0
         Top = 0
         Width = 1037
@@ -218,10 +200,7 @@ object Frm_c_exit: TFrm_c_exit
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        ExplicitLeft = 496
-        ExplicitTop = 136
-        ExplicitWidth = 185
-        object ins_kind_inp: TLabeledEdit
+        object exit_c_caose_inp: TLabeledEdit
           Left = 16
           Top = 48
           Width = 1018
@@ -236,6 +215,8 @@ object Frm_c_exit: TFrm_c_exit
     object updTab: TTabSheet
       Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1085#1080#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1074#1080#1076#1077' '#1076#1086#1082#1091#1084#1077#1085#1090#1072
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
       ExplicitWidth = 627
       ExplicitHeight = 271
       object Upd_kind_data_Box: TGroupBox
@@ -337,6 +318,8 @@ object Frm_c_exit: TFrm_c_exit
     object delTab: TTabSheet
       Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1074#1080#1076#1077' '#1083#1080#1090#1077#1088#1072#1090#1091#1088#1099
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
       ExplicitWidth = 627
       ExplicitHeight = 271
       object kind_del_inp_Box: TGroupBox

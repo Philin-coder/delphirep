@@ -23,11 +23,11 @@ type
     exit_c_reset_Radio: TRadioButton;
     exit_c_CondEdit: TLabeledEdit;
     exit_cfndEdit: TLabeledEdit;
-    ins_exit_c_data_Box: TGroupBox;
-    exit_c_couse_btn_Box: TGroupBox;
-    exit_c_couse_inp_Box: TGroupBox;
-    ins_exit_c_btn: TButton;
-    exit_c_caose_inp: TLabeledEdit;
+    ins_kind_data_Box: TGroupBox;
+    ins_kind_btn_Box: TGroupBox;
+    ins_kind_inp_Box: TGroupBox;
+    ins_kind_btn: TButton;
+    ins_kind_inp: TLabeledEdit;
     Upd_kind_data_Box: TGroupBox;
     Upd_kind_inp_Box: TGroupBox;
     Upd_kind_btn_Box: TGroupBox;
