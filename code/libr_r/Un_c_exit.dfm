@@ -21,7 +21,7 @@ object Frm_c_exit: TFrm_c_exit
     Top = 0
     Width = 1045
     Height = 433
-    ActivePage = SelTab
+    ActivePage = updTab
     Align = alClient
     TabOrder = 0
     object SelTab: TTabSheet
@@ -172,6 +172,7 @@ object Frm_c_exit: TFrm_c_exit
               Expanded = False
               FieldName = 'c_exit_desc'
               Title.Caption = #1054#1087#1080#1089#1072#1085#1080#1077' '#1087#1088#1080#1095#1080#1085#1099' '#1074#1099#1073#1099#1090#1080#1103
+              Width = 132
               Visible = True
             end>
         end

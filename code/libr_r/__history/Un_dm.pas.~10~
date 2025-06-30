@@ -20,12 +20,6 @@ type
     ins_c: TADOStoredProc;
     upd_c: TADOStoredProc;
     del_c: TADOStoredProc;
-    Akt_inQuery: TADOQuery;
-    Akt_inDS: TDataSource;
-    sel_akt_in_by_akt_soure: TADOStoredProc;
-    ins_akt_in: TADOStoredProc;
-    upd_akt_in: TADOStoredProc;
-    del_akt_in: TADOStoredProc;
   private
     { Private declarations }
   public

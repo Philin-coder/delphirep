@@ -6,7 +6,6 @@ uses
   Un_func in 'Un_func.pas',
   Un_dm in 'Un_dm.pas' {DM: TDataModule},
   Un_c_exit in 'Un_c_exit.pas' {Frm_c_exit},
-  Un_act_in in 'Un_act_in.pas' {Frm_act_in},
   Un_kind in 'Un_kind.pas' {Frm_kind};
 
 {$R *.res}
@@ -17,7 +16,6 @@ begin
   Application.CreateForm(TFrm_main, Frm_main);
   Application.CreateForm(TDM, DM);
   Application.CreateForm(TFrm_c_exit, Frm_c_exit);
-  Application.CreateForm(TFrm_act_in, Frm_act_in);
   Application.CreateForm(TFrm_kind, Frm_kind);
   Application.Run;
 end.

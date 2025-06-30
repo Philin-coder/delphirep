@@ -20,7 +20,6 @@ type
     procedure FormCreate(Sender: TObject);
     procedure kind_doc_itemClick(Sender: TObject);
     procedure c_exit_itemClick(Sender: TObject);
-    procedure akt_in_itemClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -32,7 +31,7 @@ var
 
 implementation
 
-uses Un_dm, Un_func, Un_kind, Un_c_exit, Un_act_in;
+uses Un_dm, Un_func, Un_kind, Un_c_exit;
 
 {$R *.dfm}
 
@@ -74,25 +73,6 @@ begin
   end;
 end;
 
-procedure TFrm_main.akt_in_itemClick(Sender: TObject);
-begin
-try
-    UpdateFormProperties('Frm_act_in', 'Информация об акте приемки',
-      clBtnFace, 1024, 768);
-    Frm_act_in.ShowModal;
-  except
-    on E: Exception do
-    begin
-      if not (E is EMyException) then
-        raise EDatabaseError.Create('Ошибка при работе с формой акта приемки', 3001);
-      HandleException(E);
-      if Assigned(Frm_act_in) then
-        Frm_act_in.Free;
-      raise;
-    end;
-  end;
-end;
-
 procedure TFrm_main.c_exit_itemClick(Sender: TObject);
 begin
 try
@@ -110,6 +90,7 @@ try
       raise;
     end;
   end;
+
 end;
 
 end.

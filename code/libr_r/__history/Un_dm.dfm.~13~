@@ -1,7 +1,7 @@
 object DM: TDM
   OldCreateOrder = False
-  Height = 475
-  Width = 605
+  Height = 430
+  Width = 460
   object Connection: TADOConnection
     Connected = True
     ConnectionString = 
@@ -132,7 +132,7 @@ object DM: TDM
       ' from c_exit '
       ' where 1=1')
     Left = 192
-    Top = 88
+    Top = 96
   end
   object exit_cDS: TDataSource
     DataSet = exit_cQuery
@@ -169,14 +169,12 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@c_exit_desc'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 255
-        Value = Null
       end>
     Left = 224
     Top = 272
@@ -190,7 +188,6 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@c_exit_id'
@@ -204,7 +201,6 @@ object DM: TDM
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 255
-        Value = Null
       end>
     Left = 224
     Top = 320
@@ -214,136 +210,6 @@ object DM: TDM
     ProcedureName = 'del_c;1'
     Parameters = <>
     Left = 224
-    Top = 384
-  end
-  object Akt_inQuery: TADOQuery
-    Connection = Connection
-    CursorType = ctStatic
-    Parameters = <>
-    SQL.Strings = (
-      'select '
-      '   akt_in.akt_in_id,'
-      '   akt_in.akt_in_data,'
-      '   akt_in.akt_soure,'
-      '   akt_in.s_doc_id,'
-      '   akt_in.s_doc_date,'
-      '   akt_in.s_doc_kind'
-      '   from  akt_in '
-      '   where 1=1')
-    Left = 320
-    Top = 80
-  end
-  object Akt_inDS: TDataSource
-    DataSet = Akt_inQuery
-    Left = 328
-    Top = 136
-  end
-  object sel_akt_in_by_akt_soure: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'sel_akt_in_by_akt_soure;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@akt_soure'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 255
-      end>
-    Left = 336
-    Top = 208
-  end
-  object ins_akt_in: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'ins_akt_in;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@akt_in_data'
-        Attributes = [paNullable]
-        DataType = ftDateTime
-        Size = 10
-      end
-      item
-        Name = '@akt_soure'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = '@s_doc_id'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = '@s_doc_date'
-        Attributes = [paNullable]
-        DataType = ftDateTime
-        Size = 10
-      end
-      item
-        Name = '@s_doc_kind'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 255
-      end>
-    Left = 344
-    Top = 264
-  end
-  object upd_akt_in: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'upd_akt_in;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@akt_in_id'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = 0
-      end
-      item
-        Name = '@s_doc_id'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 255
-      end>
-    Left = 352
-    Top = 320
-  end
-  object del_akt_in: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'del_akt_in;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@akt_in_id'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = 0
-      end>
-    Left = 368
     Top = 384
   end
 end

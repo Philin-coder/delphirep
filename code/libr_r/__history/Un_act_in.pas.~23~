@@ -1,0 +1,359 @@
+unit Un_act_in;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ComCtrls, StdCtrls, Grids, DBGrids, ExtCtrls,ADODB,db, DBCtrls;
+
+type
+  TFrm_act_in = class(TForm)
+    Act_inPC: TPageControl;
+    SelTab: TTabSheet;
+    insTab: TTabSheet;
+    updTab: TTabSheet;
+    delTab: TTabSheet;
+    Act_in_inp_Box: TGroupBox;
+    Act_in_Data_Box: TGroupBox;
+    Act_in_grouper_Box: TGroupBox;
+    Act_in_btn_Box: TGroupBox;
+    Act_in_sel_btn: TButton;
+    sel_Act_in_grid: TDBGrid;
+    Act_in_source_radio: TRadioButton;
+    Act_in_reset_Radio: TRadioButton;
+    Act_inCondEdit: TLabeledEdit;
+    Act_infndEdit: TLabeledEdit;
+    ins_Act_in_data_Box: TGroupBox;
+    ins_act_in_btn_Box: TGroupBox;
+    ins_Act_in_inp_Box: TGroupBox;
+    ins_Act_in_btn: TButton;
+    ins_Act_in_nom_inp: TLabeledEdit;
+    Upd_kind_data_Box: TGroupBox;
+    Upd_kind_inp_Box: TGroupBox;
+    Upd_kind_btn_Box: TGroupBox;
+    Upd_kind_btn: TButton;
+    Upd_kind_data_Grid: TDBGrid;
+    upd_kind_inp: TLabeledEdit;
+    upd_kind_id_dbl: TDBLookupComboBox;
+    upd_kind_id_lbl: TStaticText;
+    kind_del_inp_Box: TGroupBox;
+    kind_del_btn_Box: TGroupBox;
+    kind_del_data_Box: TGroupBox;
+    kind_del_inp_lbl: TStaticText;
+    kind_del_inp_dbl: TDBLookupComboBox;
+    kind_del_btn: TButton;
+    kind_del_Grid: TDBGrid;
+    Act_in_date_radio: TRadioButton;
+    Act_in_ins_Grid: TDBGrid;
+    akt_ind_data_lbl: TStaticText;
+    akt_ind_data_inp: TDateTimePicker;
+    akt_is_source_lbl: TStaticText;
+    akt_is_source_inp: TComboBox;
+    akt_ind_data_s_lbl: TStaticText;
+    akt_is_date_akt_inp: TDateTimePicker;
+    doc_s_kind_lbl: TStaticText;
+    s_doc_kind_inp: TComboBox;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormActivate(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure Act_in_sel_btnClick(Sender: TObject);
+    procedure Act_infndEditKeyPress(Sender: TObject; var Key: Char);
+    procedure Act_in_source_radioClick(Sender: TObject);
+    procedure Act_in_date_radioClick(Sender: TObject);
+    procedure Act_in_reset_RadioClick(Sender: TObject);
+    procedure ins_Act_in_btnClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_act_in: TFrm_act_in;
+
+implementation
+
+uses Un_dm, Un_func;
+
+{$R *.dfm}
+
+procedure TFrm_act_in.Act_infndEditKeyPress(Sender: TObject; var Key: Char);
+begin
+  try
+   dm.Akt_inQuery.SQL.Text:=
+   'select'+' '+
+   'akt_in.akt_in_id,'+' '+
+   'akt_in.akt_in_data,'+' '+
+   'akt_in.akt_soure,'+' '+
+   'akt_in.s_doc_id,'+' '+
+   'akt_in.s_doc_date,'+' '+
+   'akt_in.s_doc_kind'+' '+
+   'from  akt_in'+' '+
+  'where 1=1'+' '+
+  'and akt_in.s_doc_kind like'+' '+
+   QuotedStr(Concat(act_infndEdit.Text,#37));
+   dm.akt_inQuery.close;
+   dm.akt_inQuery.Open;
+except
+   on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка    Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка : ' + E.Message);
+    HandleException(E);
+    raise;
+end;
+end;
+end;
+
+procedure TFrm_act_in.Act_in_date_radioClick(Sender: TObject);
+begin
+  if  Act_in_date_radio.Checked=true then
+  begin
+    try
+     with dm.Akt_inQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+        'select'+' '+
+        'akt_in.akt_in_id,'+' '+
+        'akt_in.akt_in_data,'+' '+
+        'akt_in.akt_soure,'+' '+
+        'akt_in.s_doc_id,'+' '+
+        'akt_in.s_doc_date,'+' '+
+        'akt_in.s_doc_kind'+' '+
+        'from  akt_in'+' '+
+        'where 1=1'+' '+
+    ' order by akt_in.akt_in_data asc';
+      Open;
+     end;
+    except
+        on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка   Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    Raise;
+  end;
+end;
+end;
+end;
+
+procedure TFrm_act_in.Act_in_reset_RadioClick(Sender: TObject);
+var i,j,c:Integer;
+begin
+   try
+  if Act_in_reset_Radio.Checked then
+  begin
+    with Frm_act_in do
+    begin
+      for I := 0 to ComponentCount - 1 do
+      begin
+        if Components[I] is TLabeledEdit then
+        begin
+          (Components[I] as TLabeledEdit).Clear;
+        end;
+      end;
+      for c := 0 to ComponentCount - 1 do
+      begin
+        if Components[c] is TCheckBox then
+        begin
+          (Components[c] as TCheckBox).Checked := False;
+        end;
+      end;
+      for j := 0 to ComponentCount - 1 do
+      begin
+        if Components[j] is TRadioButton then
+        begin
+          (Components[j] as TRadioButton).Checked := False;
+        end;
+      end;
+    end;
+    with dm.akt_inQuery do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text :=
+        'select'+' '+
+        'akt_in.akt_in_id,'+' '+
+        'akt_in.akt_in_data,'+' '+
+        'akt_in.akt_soure,'+' '+
+        'akt_in.s_doc_id,'+' '+
+        'akt_in.s_doc_date,'+' '+
+        'akt_in.s_doc_kind'+' '+
+        'from  akt_in'+' '+
+        'where 1=1';
+      Open;
+    end;
+  end;
+except
+  on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+end;
+end;
+
+procedure TFrm_act_in.Act_in_sel_btnClick(Sender: TObject);
+begin
+  try
+    if not DM.Connection.Connected then
+      raise EDatabaseError.Create('Соединение с базой не установлено ',4001);
+    with DM.sel_akt_in_by_akt_soure do
+    begin
+      Close;
+      Parameters.ParamByName('@akt_soure').Value :=Act_inCondEdit.Text;
+      Open;
+       DM.Akt_inQuery.Recordset:=dm.sel_akt_in_by_akt_soure.Recordset;
+    end;
+  except
+  on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка   Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    Raise;
+  end;
+end;
+end;
+
+procedure TFrm_act_in.Act_in_source_radioClick(Sender: TObject);
+begin
+  if  Act_in_source_radio.Checked=true then
+  begin
+    try
+     with dm.akt_inQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+        'select'+' '+
+        'akt_in.akt_in_id,'+' '+
+        'akt_in.akt_in_data,'+' '+
+        'akt_in.akt_soure,'+' '+
+        'akt_in.s_doc_id,'+' '+
+        'akt_in.s_doc_date,'+' '+
+        'akt_in.s_doc_kind'+' '+
+        'from  akt_in'+' '+
+        'where 1=1'+' '+
+      ' order by akt_in.akt_soure asc';
+      Open;
+     end;
+    except
+        on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка   Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    Raise;
+  end;
+end;
+end;
+end;
+
+procedure TFrm_act_in.FormActivate(Sender: TObject);
+begin
+  dm.Akt_inQuery.Open;
+  AdjustDBGridColumnWidths('Frm_act_in',6000, 10);
+end;
+
+procedure TFrm_act_in.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  SaveFormState(Self);
+  CloseAllQueriesOnDataModule('dm');
+end;
+
+procedure TFrm_act_in.FormCreate(Sender: TObject);
+begin
+  UpdateFormShowHint('Frm_act_in');
+  UniformizeButtonsSize(Self,  273, 25);
+  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+  UniformizeComponentAnchors(Self);
+  LoadFormState(Self);
+end;
+
+procedure TFrm_act_in.ins_Act_in_btnClick(Sender: TObject);
+const
+  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (akt_is_source_inp.Text='')or
+  (Trim(ins_Act_in_nom_inp.Text)='')or
+  (s_doc_kind_inp.Text='')
+  );
+  AreFieldsValid:=(
+  ValidateComponentText(akt_is_source_inp,AllowedChars)
+  );
+  if AreFieldsEmpty or not AreFieldsValid then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  
+end;
+
+end.
