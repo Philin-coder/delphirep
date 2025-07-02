@@ -1,0 +1,369 @@
+unit Un_act_out;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ComCtrls, StdCtrls, Grids, DBGrids, ExtCtrls,ADODB,db, DBCtrls;
+
+type
+  TFrm_act_out = class(TForm)
+    act_outPC: TPageControl;
+    SelTab: TTabSheet;
+    insTab: TTabSheet;
+    updTab: TTabSheet;
+    delTab: TTabSheet;
+    act_out_inp_Box: TGroupBox;
+    act_out_Data_Box: TGroupBox;
+    act_out_grouper_Box: TGroupBox;
+    act_out_btn_Box: TGroupBox;
+    act_out_sel_btn: TButton;
+    sel_act_out_grid: TDBGrid;
+    act_out_date_radio: TRadioButton;
+    act_out_reset_Radio: TRadioButton;
+    act_outCondEdit: TLabeledEdit;
+    act_outfndEdit: TLabeledEdit;
+    ins_act_out_data_Box: TGroupBox;
+    ins_act_out_btn_Box: TGroupBox;
+    ins_act_out_inp_Box: TGroupBox;
+    ins_act_out_btn: TButton;
+    ins_act_out_grid: TDBGrid;
+    ins_act_out_inp: TLabeledEdit;
+    Upd_kind_data_Box: TGroupBox;
+    Upd_kind_inp_Box: TGroupBox;
+    Upd_kind_btn_Box: TGroupBox;
+    Upd_kind_btn: TButton;
+    Upd_kind_data_Grid: TDBGrid;
+    upd_kind_inp: TLabeledEdit;
+    upd_kind_id_dbl: TDBLookupComboBox;
+    upd_kind_id_lbl: TStaticText;
+    kind_del_inp_Box: TGroupBox;
+    kind_del_btn_Box: TGroupBox;
+    kind_del_data_Box: TGroupBox;
+    kind_del_inp_lbl: TStaticText;
+    kind_del_inp_dbl: TDBLookupComboBox;
+    kind_del_btn: TButton;
+    kind_del_Grid: TDBGrid;
+    act_out_balance_cb: TCheckBox;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormActivate(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure act_out_sel_btnClick(Sender: TObject);
+    procedure act_outfndEditKeyPress(Sender: TObject; var Key: Char);
+    procedure act_out_date_radioClick(Sender: TObject);
+    procedure act_out_balance_cbClick(Sender: TObject);
+    procedure act_out_reset_RadioClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_act_out: TFrm_act_out;
+
+implementation
+
+uses Un_dm, Un_func;
+
+{$R *.dfm}
+
+procedure TFrm_act_out.act_outfndEditKeyPress(Sender: TObject; var Key: Char);
+begin
+   try
+   dm.Act_outQuery.SQL.Text:=
+   'select'+' '+
+   'akt_out.exit_akt_id,'+''+
+   'akt_out.akt_data,'+' '+
+   'akt_out.akt_s_nom,'+' '+
+   'akt_out.doc_kind_id,'+' '+
+   'case when akt_out.on_balance=0 then ''На балансе'' else ''Снят с баланса'' end as balance,'+' '+
+   'akt_out.ex_cost'+' '+
+   'from akt_out'+' '+
+   'where 1=1'+' '+
+  'and akt_out.doc_kind_id like'+' '+
+   QuotedStr(Concat(act_outfndEdit.Text,#37));
+   dm.act_outQuery.close;
+   dm.act_outQuery.Open;
+except
+   on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка    Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка : ' + E.Message);
+    HandleException(E);
+    raise;
+end;
+end;
+end;
+
+procedure TFrm_act_out.act_out_balance_cbClick(Sender: TObject);
+begin
+case act_out_balance_cb.Checked of
+true:
+begin
+      try
+     with dm.Act_outQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+    'select'+' '+
+   'akt_out.exit_akt_id,'+''+
+   'akt_out.akt_data,'+' '+
+   'akt_out.akt_s_nom,'+' '+
+   'akt_out.doc_kind_id,'+' '+
+   'case when akt_out.on_balance=0 then ''На балансе'' else ''Снят с баланса'' end as balance,'+' '+
+   'akt_out.ex_cost'+' '+
+   'from akt_out'+' '+
+   'where 1=1'+' '+
+    'and akt_out.on_balance=1';
+      Open;
+     end;
+    except
+        on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка   Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    Raise;
+  end;
+end;
+end;
+false:
+begin
+     try
+     with dm.Act_outQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+    'select'+' '+
+   'akt_out.exit_akt_id,'+''+
+   'akt_out.akt_data,'+' '+
+   'akt_out.akt_s_nom,'+' '+
+   'akt_out.doc_kind_id,'+' '+
+   'case when akt_out.on_balance=0 then ''На балансе'' else ''Снят с баланса'' end as balance,'+' '+
+   'akt_out.ex_cost'+' '+
+   'from akt_out'+' '+
+   'where 1=1'+' '+
+    'and akt_out.on_balance=0';
+      Open;
+     end;
+    except
+        on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка   Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    Raise;
+  end;
+end;
+end;
+
+end; //case
+end;
+
+procedure TFrm_act_out.act_out_date_radioClick(Sender: TObject);
+begin
+  if  act_out_date_radio.Checked=true then
+  begin
+    try
+     with dm.Act_outQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+    'select'+' '+
+   'akt_out.exit_akt_id,'+''+
+   'akt_out.akt_data,'+' '+
+   'akt_out.akt_s_nom,'+' '+
+   'akt_out.doc_kind_id,'+' '+
+   'case when akt_out.on_balance=0 then ''На балансе'' else ''Снят с баланса'' end as balance,'+' '+
+   'akt_out.ex_cost'+' '+
+   'from akt_out'+' '+
+   'where 1=1'+' '+
+    ' order by akt_out.akt_data asc';
+      Open;
+     end;
+    except
+        on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка   Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    Raise;
+  end;
+end;
+end;
+end;
+
+procedure TFrm_act_out.act_out_reset_RadioClick(Sender: TObject);
+var i,j,c:Integer;
+begin
+  try
+  if act_out_reset_Radio.Checked then
+  begin
+    with Frm_act_out do
+    begin
+      for I := 0 to ComponentCount - 1 do
+      begin
+        if Components[I] is TLabeledEdit then
+        begin
+          (Components[I] as TLabeledEdit).Clear;
+        end;
+      end;
+      for c := 0 to ComponentCount - 1 do
+      begin
+        if Components[c] is TCheckBox then
+        begin
+          (Components[c] as TCheckBox).Checked := False;
+        end;
+      end;
+      for j := 0 to ComponentCount - 1 do
+      begin
+        if Components[j] is TRadioButton then
+        begin
+          (Components[j] as TRadioButton).Checked := False;
+        end;
+      end;
+    end;
+    with dm.act_outQuery do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text :=
+    'select'+' '+
+   'akt_out.exit_akt_id,'+''+
+   'akt_out.akt_data,'+' '+
+   'akt_out.akt_s_nom,'+' '+
+   'akt_out.doc_kind_id,'+' '+
+   'case when akt_out.on_balance=0 then ''На балансе'' else ''Снят с баланса'' end as balance,'+' '+
+   'akt_out.ex_cost'+' '+
+   'from akt_out'+' '+
+   'where 1=1';
+      Open;
+    end;
+  end;
+except
+  on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+end;
+end;
+
+procedure TFrm_act_out.act_out_sel_btnClick(Sender: TObject);
+begin
+  try
+    if not DM.Connection.Connected then
+      raise EDatabaseError.Create('Соединение с базой не установлено ',4001);
+    with DM.sel_akt_out_by_kind do
+    begin
+      Close;
+      Parameters.ParamByName('@doc_kind_id').Value :=Act_outCondEdit.Text;
+      Open;
+       DM.Act_outQuery.Recordset:=dm.sel_akt_out_by_kind.Recordset;
+    end;
+  except
+  on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка   Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    Raise;
+  end;
+end;
+end;
+
+procedure TFrm_act_out.FormActivate(Sender: TObject);
+begin
+  dm.act_outQuery.Open;
+  AdjustDBGridColumnWidths('Frm_act_out',6000, 10);
+end;
+
+procedure TFrm_act_out.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  SaveFormState(Self);
+  CloseAllQueriesOnDataModule('dm');
+end;
+
+procedure TFrm_act_out.FormCreate(Sender: TObject);
+begin
+  UpdateFormShowHint('Frm_act_out');
+  UniformizeButtonsSize(Self,  273, 25);
+  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+  UniformizeComponentAnchors(Self);
+  LoadFormState(Self);
+end;
+
+end.

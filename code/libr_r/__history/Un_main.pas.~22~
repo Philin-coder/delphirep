@@ -22,7 +22,7 @@ type
     procedure kind_doc_itemClick(Sender: TObject);
     procedure c_exit_itemClick(Sender: TObject);
     procedure akt_in_itemClick(Sender: TObject);
-    procedure act_out_itemClick(Sender: TObject);
+    procedure main_ImageClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -76,9 +76,9 @@ begin
   end;
 end;
 
-procedure TFrm_main.act_out_itemClick(Sender: TObject);
+procedure TFrm_main.main_ImageClick(Sender: TObject);
 begin
-   try
+  try
     UpdateFormProperties('Frm_act_out', 'Информация об акте выбытия',
       clBtnFace, 1024, 768);
     Frm_act_out.ShowModal;

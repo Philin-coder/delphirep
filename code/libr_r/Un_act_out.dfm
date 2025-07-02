@@ -1,8 +1,8 @@
-object Frm_kind: TFrm_kind
+object Frm_act_out: TFrm_act_out
   Left = 0
   Top = 0
-  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1074#1080#1076#1086#1084' '#1076#1086#1082#1091#1084#1077#1085#1090#1072
-  ClientHeight = 433
+  Caption = #1060#1086#1088#1084#1072' '#1088#1072#1073#1086#1090#1099' '#1089' '#1072#1082#1090#1086#1084' '#1074#1099#1073#1099#1090#1080#1103
+  ClientHeight = 612
   ClientWidth = 1045
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -16,17 +16,17 @@ object Frm_kind: TFrm_kind
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object kindPC: TPageControl
+  object act_outPC: TPageControl
     Left = 0
     Top = 0
     Width = 1045
-    Height = 433
+    Height = 612
     ActivePage = SelTab
     Align = alClient
     TabOrder = 0
     object SelTab: TTabSheet
-      Caption = #1042#1099#1073#1086#1088' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1074#1080#1076#1077' '#1076#1086#1082#1091#1084#1077#1085#1090#1072
-      object kind_inp_Box: TGroupBox
+      Caption = #1042#1099#1073#1086#1088' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086#1073' '#1072#1082#1090#1077' '#1074#1099#1073#1099#1090#1080#1103
+      object act_out_inp_Box: TGroupBox
         Left = 0
         Top = 0
         Width = 1037
@@ -34,7 +34,7 @@ object Frm_kind: TFrm_kind
         Align = alTop
         Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object KIndCondEdit: TLabeledEdit
+        object act_outCondEdit: TLabeledEdit
           Left = 16
           Top = 32
           Width = 1018
@@ -44,7 +44,7 @@ object Frm_kind: TFrm_kind
           EditLabel.Caption = #1058#1086#1095#1085#1086#1077' '#1089#1086#1074#1087#1072#1076#1077#1085#1077' '#1087#1086' '#1091#1089#1083#1086#1074#1080#1102' ('#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077' '#1074#1080#1076#1072')'
           TabOrder = 0
         end
-        object KIndfndEdit: TLabeledEdit
+        object act_outfndEdit: TLabeledEdit
           Left = 16
           Top = 72
           Width = 1018
@@ -53,24 +53,24 @@ object Frm_kind: TFrm_kind
           EditLabel.Height = 13
           EditLabel.Caption = #1046#1080#1074#1086#1081' '#1087#1086#1080#1089#1082' '#1087#1086' '#1091#1089#1083#1086#1074#1080#1102'('#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077' '#1074#1080#1076#1072')'
           TabOrder = 1
-          OnKeyPress = KIndfndEditKeyPress
+          OnKeyPress = act_outfndEditKeyPress
         end
       end
-      object kind_Data_Box: TGroupBox
+      object act_out_Data_Box: TGroupBox
         Left = 0
         Top = 210
         Width = 1037
-        Height = 142
+        Height = 321
         Align = alClient
         Caption = #1042#1099#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
-        object sel_kind_grid: TDBGrid
+        object sel_act_out_grid: TDBGrid
           Left = 2
           Top = 15
           Width = 1033
-          Height = 125
+          Height = 304
           Align = alClient
-          DataSource = DM.KindDS
+          DataSource = DM.actoutDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -80,19 +80,49 @@ object Frm_kind: TFrm_kind
           Columns = <
             item
               Expanded = False
-              FieldName = 'doc_kind_id'
+              FieldName = 'exit_akt_id'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'doc_kind_naim'
-              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077' '#1074#1080#1076#1072
+              FieldName = 'akt_data'
+              Title.Caption = #1044#1072#1090#1072' '#1089#1086#1089#1090#1072#1074#1077#1083#1085#1080#1103' '#1072#1082#1090#1072
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'date_s_doc'
+              Title.Caption = #1044#1072#1090#1072' '#1089#1086#1089#1090#1072#1074#1083#1077#1085#1080#1103' '#1089#1086#1087#1088#1086#1074#1086#1076#1080#1090#1077#1083#1100#1085#1086#1075#1086' '#1076#1086#1082#1091#1084#1077#1085#1090#1072
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'akt_s_nom'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1089#1086#1087#1088#1086#1074#1086#1076#1080#1090#1077#1083#1100#1085#1086#1075#1086' '#1076#1086#1082#1091#1084#1077#1085#1090#1072
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'doc_kind_id'
+              Title.Caption = #1042#1080#1076' '#1089#1086#1087#1088#1086#1074#1086#1076#1080#1090#1077#1083#1100#1085#1086#1075#1086' '#1076#1086#1082#1091#1084#1077#1085#1090#1072
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'balance'
+              Title.Caption = #1041#1072#1083#1072#1085#1089
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'ex_cost'
+              Title.Caption = #1062#1077#1085#1072
               Visible = True
             end>
         end
       end
-      object kind_grouper_Box: TGroupBox
+      object act_out_grouper_Box: TGroupBox
         Left = 0
         Top = 105
         Width = 1037
@@ -100,65 +130,70 @@ object Frm_kind: TFrm_kind
         Align = alTop
         Caption = #1057#1086#1088#1090#1080#1088#1086#1074#1082#1072' '#1087#1086' '
         TabOrder = 2
-        object kind_radio: TRadioButton
+        object act_out_date_radio: TRadioButton
           Left = 48
           Top = 48
           Width = 113
           Height = 17
-          Caption = #1055#1086' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1102
+          Caption = #1055#1086' '#1076#1072#1090#1077
           TabOrder = 0
-          OnClick = kind_radioClick
+          OnClick = act_out_date_radioClick
         end
-        object reset_Radio: TRadioButton
+        object act_out_reset_Radio: TRadioButton
           Left = 568
           Top = 48
           Width = 113
           Height = 17
           Caption = #1057#1073#1088#1086#1089
           TabOrder = 1
-          OnClick = reset_RadioClick
+          OnClick = act_out_reset_RadioClick
+        end
+        object act_out_balance_cb: TCheckBox
+          Left = 248
+          Top = 48
+          Width = 97
+          Height = 17
+          Caption = #1053#1072' '#1073#1072#1083#1072#1085#1089#1077
+          TabOrder = 2
+          OnClick = act_out_balance_cbClick
         end
       end
-      object kind_btn_Box: TGroupBox
+      object act_out_btn_Box: TGroupBox
         Left = 0
-        Top = 352
+        Top = 531
         Width = 1037
         Height = 53
         Align = alBottom
         TabOrder = 3
-        object kind_sel_btn: TButton
+        object act_out_sel_btn: TButton
           Left = 248
           Top = 25
           Width = 75
           Height = 25
           Caption = #1042#1099#1073#1086#1088
           TabOrder = 0
-          OnClick = kind_sel_btnClick
+          OnClick = act_out_sel_btnClick
         end
       end
     end
     object insTab: TTabSheet
-      Caption = #1042#1074#1086#1076' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1074#1080#1076#1077' '#1076#1086#1082#1091#1084#1077#1085#1090#1072
+      Caption = #1042#1074#1086#1076' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086#1073' '#1072#1082#1090#1077' '#1074#1099#1073#1099#1090#1080#1103
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
-      object ins_kind_data_Box: TGroupBox
+      object ins_act_out_data_Box: TGroupBox
         Left = 0
-        Top = 105
+        Top = 193
         Width = 1037
-        Height = 247
+        Height = 338
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
-        object ins_Grid_grid: TDBGrid
+        object DBGrid1: TDBGrid
           Left = 2
           Top = 15
           Width = 1033
-          Height = 230
+          Height = 321
           Align = alClient
-          DataSource = DM.KindDS
+          DataSource = DM.actoutDS
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -168,69 +203,129 @@ object Frm_kind: TFrm_kind
           Columns = <
             item
               Expanded = False
-              FieldName = 'doc_kind_id'
+              FieldName = 'exit_akt_id'
               Title.Caption = #1053#1086#1084#1077#1088' '#1087#1086#1088#1103#1076#1082#1086#1074#1099#1081
-              Width = 89
               Visible = True
             end
             item
               Expanded = False
-              FieldName = 'doc_kind_naim'
-              Title.Caption = #1053#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1077' '#1074#1080#1076#1072
-              Width = 91
+              FieldName = 'akt_data'
+              Title.Caption = #1044#1072#1090#1072' '#1089#1086#1089#1090#1072#1074#1077#1083#1085#1080#1103' '#1072#1082#1090#1072
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'date_s_doc'
+              Title.Caption = #1044#1072#1090#1072' '#1089#1086#1089#1090#1072#1074#1083#1077#1085#1080#1103' '#1089#1086#1087#1088#1086#1074#1086#1076#1080#1090#1077#1083#1100#1085#1086#1075#1086' '#1076#1086#1082#1091#1084#1077#1085#1090#1072
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'akt_s_nom'
+              Title.Caption = #1053#1086#1084#1077#1088' '#1089#1086#1087#1088#1086#1074#1086#1076#1080#1090#1077#1083#1100#1085#1086#1075#1086' '#1076#1086#1082#1091#1084#1077#1085#1090#1072
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'doc_kind_id'
+              Title.Caption = #1042#1080#1076' '#1089#1086#1087#1088#1086#1074#1086#1076#1080#1090#1077#1083#1100#1085#1086#1075#1086' '#1076#1086#1082#1091#1084#1077#1085#1090#1072
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'balance'
+              Title.Caption = #1041#1072#1083#1072#1085#1089
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'ex_cost'
+              Title.Caption = #1062#1077#1085#1072
               Visible = True
             end>
         end
       end
-      object ins_kind_btn_Box: TGroupBox
+      object ins_act_out_btn_Box: TGroupBox
         Left = 0
-        Top = 352
+        Top = 531
         Width = 1037
         Height = 53
         Align = alBottom
         TabOrder = 1
-        object ins_kind_btn: TButton
+        object ins_act_out_btn: TButton
           Left = 384
           Top = 17
           Width = 75
           Height = 25
           Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
           TabOrder = 0
-          OnClick = ins_kind_btnClick
         end
       end
-      object ins_kind_inp_Box: TGroupBox
+      object aboutactoutPC: TPageControl
         Left = 0
         Top = 0
         Width = 1037
-        Height = 105
+        Height = 193
+        ActivePage = aboutactoutPCTabone
         Align = alTop
-        Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
-        object ins_kind_inp: TLabeledEdit
-          Left = 16
-          Top = 48
-          Width = 1018
-          Height = 21
-          EditLabel.Width = 128
-          EditLabel.Height = 13
-          EditLabel.Caption = #1042#1074#1086#1076' '#1085#1072#1080#1084#1080#1085#1086#1074#1072#1085#1080#1103' '#1074#1080#1076#1072
-          TabOrder = 0
+        object aboutactoutPCTabone: TTabSheet
+          Caption = #1054#1073' '#1072#1082#1090#1077' '#1074#1099#1073#1099#1090#1080#1103
+          object aboutactoutGr: TGroupBox
+            Left = 0
+            Top = 0
+            Width = 1029
+            Height = 165
+            Align = alClient
+            Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
+            TabOrder = 0
+            ExplicitLeft = 136
+            ExplicitTop = 40
+            ExplicitWidth = 185
+            ExplicitHeight = 105
+            object ins_akt_out_akt_data_lbl: TStaticText
+              Left = 16
+              Top = 16
+              Width = 173
+              Height = 17
+              Caption = #1044#1072#1090#1072' '#1089#1086#1089#1090#1072#1074#1083#1077#1085#1080#1103' '#1072#1082#1090#1072' '#1074#1099#1073#1099#1090#1080#1103
+              TabOrder = 0
+            end
+            object ins_akt_out_akt_data_inp: TDateTimePicker
+              Left = 16
+              Top = 39
+              Width = 1010
+              Height = 21
+              Date = 45840.421032118060000000
+              Time = 45840.421032118060000000
+              TabOrder = 1
+            end
+            object akt_out_akt_s_nom_inp: TLabeledEdit
+              Left = 16
+              Top = 80
+              Width = 1010
+              Height = 21
+              EditLabel.Width = 193
+              EditLabel.Height = 13
+              EditLabel.Caption = #1053#1086#1084#1077#1088' '#1089#1086#1087#1088#1086#1074#1086#1076#1080#1090#1077#1083#1100#1085#1086#1075#1086' '#1076#1086#1082#1091#1084#1077#1085#1090#1072
+              TabOrder = 2
+            end
+          end
+        end
+        object aboutactoutPCTabtwo: TTabSheet
+          Caption = #1054#1073' '#1072#1082#1090#1077' '#1074#1099#1073#1099#1090#1080#1103
+          ImageIndex = 1
         end
       end
     end
     object updTab: TTabSheet
       Caption = #1048#1079#1084#1077#1085#1077#1085#1080#1077' '#1085#1080#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1074#1080#1076#1077' '#1076#1086#1082#1091#1084#1077#1085#1090#1072
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Upd_kind_data_Box: TGroupBox
         Left = 0
         Top = 137
         Width = 1037
-        Height = 199
+        Height = 378
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 0
@@ -238,7 +333,7 @@ object Frm_kind: TFrm_kind
           Left = 2
           Top = 15
           Width = 1033
-          Height = 182
+          Height = 361
           Align = alClient
           DataSource = DM.KindDS
           TabOrder = 0
@@ -303,7 +398,7 @@ object Frm_kind: TFrm_kind
       end
       object Upd_kind_btn_Box: TGroupBox
         Left = 0
-        Top = 336
+        Top = 515
         Width = 1037
         Height = 69
         Align = alBottom
@@ -315,17 +410,12 @@ object Frm_kind: TFrm_kind
           Height = 25
           Caption = #1054#1073#1085#1086#1074#1080#1090#1100
           TabOrder = 0
-          OnClick = Upd_kind_btnClick
         end
       end
     end
     object delTab: TTabSheet
       Caption = #1059#1076#1072#1083#1077#1085#1080#1077' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080' '#1086' '#1074#1080#1076#1077' '#1083#1080#1090#1077#1088#1072#1090#1091#1088#1099
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object kind_del_inp_Box: TGroupBox
         Left = 0
         Top = 0
@@ -355,7 +445,7 @@ object Frm_kind: TFrm_kind
       end
       object kind_del_btn_Box: TGroupBox
         Left = 0
-        Top = 344
+        Top = 523
         Width = 1037
         Height = 61
         Align = alBottom
@@ -367,14 +457,13 @@ object Frm_kind: TFrm_kind
           Height = 25
           Caption = #1059#1076#1072#1083#1080#1090#1100
           TabOrder = 0
-          OnClick = kind_del_btnClick
         end
       end
       object kind_del_data_Box: TGroupBox
         Left = 0
         Top = 105
         Width = 1037
-        Height = 239
+        Height = 418
         Align = alClient
         Caption = #1042#1099#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
         TabOrder = 2
@@ -382,7 +471,7 @@ object Frm_kind: TFrm_kind
           Left = 2
           Top = 15
           Width = 1033
-          Height = 222
+          Height = 401
           Align = alClient
           DataSource = DM.KindDS
           TabOrder = 0

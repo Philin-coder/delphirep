@@ -1,7 +1,7 @@
 USE [libr_r]
 GO
 
-/****** Object:  Table [dbo].[akt_out]    Script Date: 28.06.2025 16:00:54 ******/
+/****** Object:  Table [dbo].[akt_out]    Script Date: 30.06.2025 15:54:53 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -14,7 +14,7 @@ CREATE TABLE [dbo].[akt_out](
 	[akt_s_nom] [nchar](255) NOT NULL,
 	[doc_kind_id] [nvarchar](255) NOT NULL,
 	[on_balance] [int] NOT NULL,
-	[ex_cost] [float] NOT NULL,
+	[ex_cost] [decimal](10, 2) NOT NULL,
  CONSTRAINT [PK_akt_out] PRIMARY KEY CLUSTERED 
 (
 	[exit_akt_id] ASC

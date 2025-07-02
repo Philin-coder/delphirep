@@ -247,14 +247,12 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@akt_soure'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 255
-        Value = Null
       end>
     Left = 336
     Top = 208
@@ -268,42 +266,36 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@akt_in_data'
         Attributes = [paNullable]
         DataType = ftDateTime
         Size = 10
-        Value = Null
       end
       item
         Name = '@akt_soure'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 255
-        Value = Null
       end
       item
         Name = '@s_doc_id'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 255
-        Value = Null
       end
       item
         Name = '@s_doc_date'
         Attributes = [paNullable]
         DataType = ftDateTime
         Size = 10
-        Value = Null
       end
       item
         Name = '@s_doc_kind'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 255
-        Value = Null
       end>
     Left = 344
     Top = 264
@@ -317,7 +309,6 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@akt_in_id'
@@ -331,7 +322,6 @@ object DM: TDM
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 255
-        Value = Null
       end>
     Left = 352
     Top = 320
@@ -345,7 +335,6 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@akt_in_id'
@@ -366,7 +355,6 @@ object DM: TDM
       'select '
       '   akt_out.exit_akt_id,'
       '   akt_out.akt_data,'
-      '   akt_out.date_s_doc,'
       '   akt_out.akt_s_nom,'
       '   akt_out.doc_kind_id,'
       
@@ -374,9 +362,7 @@ object DM: TDM
         ' '#1073#1072#1083#1072#1085#1089#1072#39' end as balance,'
       '   akt_out.ex_cost '
       '   from akt_out '
-      '   where 1=1'
-      ''
-      '')
+      '   where 1=1')
     Left = 440
     Top = 80
   end
@@ -394,14 +380,12 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
-        Value = Null
       end
       item
         Name = '@doc_kind_id'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 255
-        Value = Null
       end>
     Left = 464
     Top = 200
