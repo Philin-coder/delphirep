@@ -26,30 +26,38 @@ type
     ins_act_out_data_Box: TGroupBox;
     ins_act_out_btn_Box: TGroupBox;
     ins_act_out_btn: TButton;
-    Upd_kind_data_Box: TGroupBox;
-    Upd_kind_inp_Box: TGroupBox;
-    Upd_kind_btn_Box: TGroupBox;
-    Upd_kind_btn: TButton;
-    Upd_kind_data_Grid: TDBGrid;
-    upd_kind_inp: TLabeledEdit;
-    upd_kind_id_dbl: TDBLookupComboBox;
-    upd_kind_id_lbl: TStaticText;
-    kind_del_inp_Box: TGroupBox;
-    kind_del_btn_Box: TGroupBox;
-    kind_del_data_Box: TGroupBox;
-    kind_del_inp_lbl: TStaticText;
-    kind_del_inp_dbl: TDBLookupComboBox;
-    kind_del_btn: TButton;
-    kind_del_Grid: TDBGrid;
+    Upd_act_out_data_Box: TGroupBox;
+    Upd_act_out_inp_Box: TGroupBox;
+    Upd_act_out_btn_Box: TGroupBox;
+    Upd_act_out_btn: TButton;
+    upd_act_out_id_dbl: TDBLookupComboBox;
+    upd_act_out_id_lbl: TStaticText;
+    act_out_del_inp_Box: TGroupBox;
+    act_out_del_btn_Box: TGroupBox;
+    act_out_del_data_Box: TGroupBox;
+    act_out_del_inp_lbl: TStaticText;
+    act_out_del_inp_dbl: TDBLookupComboBox;
+    act_out_del_btn: TButton;
     act_out_balance_cb: TCheckBox;
     aboutactoutPC: TPageControl;
     aboutactoutPCTabone: TTabSheet;
     aboutactoutPCTabtwo: TTabSheet;
-    aboutactoutGr: TGroupBox;
+    aboutactoutGr_one: TGroupBox;
     ins_akt_out_akt_data_lbl: TStaticText;
     ins_akt_out_akt_data_inp: TDateTimePicker;
     akt_out_akt_s_nom_inp: TLabeledEdit;
-    DBGrid1: TDBGrid;
+    ins_act_out_grid: TDBGrid;
+    ins_akt_out_s_doc_data_lbl: TStaticText;
+    ins_akt_out_s_doc_data_inp: TDateTimePicker;
+    aboutactoutGr_two: TGroupBox;
+    ins_akt_out_ex_cost_inp: TLabeledEdit;
+    ins_akt_out_balance_lbl: TStaticText;
+    ins_akt_out_balance_cb: TComboBox;
+    ins_akt_kind_id_inp: TLabeledEdit;
+    act_out_upd_Grid: TDBGrid;
+    Upd_act_out_dbl: TStaticText;
+    Upd_act_out_inp: TComboBox;
+    act_out_delGrid: TDBGrid;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -58,6 +66,11 @@ type
     procedure act_out_date_radioClick(Sender: TObject);
     procedure act_out_balance_cbClick(Sender: TObject);
     procedure act_out_reset_RadioClick(Sender: TObject);
+    procedure ins_act_out_btnClick(Sender: TObject);
+    procedure ins_akt_out_balance_cbChange(Sender: TObject);
+    procedure Upd_act_out_inpChange(Sender: TObject);
+    procedure Upd_act_out_btnClick(Sender: TObject);
+    procedure act_out_del_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -66,6 +79,7 @@ type
 
 var
   Frm_act_out: TFrm_act_out;
+  on_balance_st:Integer;
 
 implementation
 
@@ -250,6 +264,54 @@ end;
 end;
 end;
 
+procedure TFrm_act_out.act_out_del_btnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (act_out_del_inp_dbl.Text='')
+  );
+  if AreFieldsEmpty then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.del_act_out do
+      begin
+        if not dm.Connection.Connected then
+          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
+           Parameters.ParamByName('@exit_akt_id').Value :=
+           dm.act_outQuery.FieldByName('exit_akt_id').AsString;
+           ExecProc;
+           dm.act_outQuery.Close;
+           dm.act_outQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise; // Повторное выбрасывание исключения
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise;
+end;
+end;
+end;
+
 procedure TFrm_act_out.act_out_reset_RadioClick(Sender: TObject);
 var i,j,c:Integer;
 begin
@@ -364,6 +426,7 @@ procedure TFrm_act_out.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   SaveFormState(Self);
   CloseAllQueriesOnDataModule('dm');
+  on_balance_st:=0;
 end;
 
 procedure TFrm_act_out.FormCreate(Sender: TObject);
@@ -374,6 +437,138 @@ begin
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   UniformizeComponentAnchors(Self);
   LoadFormState(Self);
+  on_balance_st:=0;
+end;
+
+procedure TFrm_act_out.ins_act_out_btnClick(Sender: TObject);
+const
+  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+  PriceText: string;
+  PriceValue: Int64;
+begin
+  PriceText:=ins_akt_out_ex_cost_inp.Text;
+  AreFieldsEmpty:=(
+  (Trim(akt_out_akt_s_nom_inp.Text)='')or
+  (Trim(ins_akt_kind_id_inp.Text)='')or
+  (Trim(ins_akt_out_ex_cost_inp.Text)='')
+  );
+  AreFieldsValid:=(
+  ValidateComponentText(akt_out_akt_s_nom_inp,AllowedChars)and
+  ValidateComponentText(ins_akt_kind_id_inp,AllowedChars)and
+  IsDigitsOnly(ins_akt_out_ex_cost_inp.Text)
+  );
+  if AreFieldsEmpty or not AreFieldsValid then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.ins_akt_out do
+      begin
+      PriceValue:=StrToInt64(ins_akt_out_ex_cost_inp.Text);
+        if not dm.Connection.Connected then
+          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
+           Parameters.ParamByName('@akt_data').Value :=
+           ins_akt_out_akt_data_inp.date;
+           Parameters.ParamByName('@akt_s_nom').Value:=
+           akt_out_akt_s_nom_inp.Text;
+           Parameters.ParamByName('@doc_kind_id').Value:=
+           ins_akt_kind_id_inp.Text;
+           Parameters.ParamByName('@on_balance').Value:=on_balance_st;
+           Parameters.ParamByName('@ex_cost').Value:=PriceValue;
+           Parameters.ParamByName('@date_s_doc').Value:=
+           ins_akt_out_s_doc_data_inp.Date;
+           ExecProc;
+           dm.act_outQuery.Close;
+           dm.act_outQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise; // Повторное выбрасывание исключения
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise;
+end;
+end;
+end;
+
+procedure TFrm_act_out.ins_akt_out_balance_cbChange(Sender: TObject);
+begin
+  if ins_akt_out_balance_cb.ItemIndex=0 then  on_balance_st:=0
+     else  on_balance_st:=1;
+end;
+
+procedure TFrm_act_out.Upd_act_out_btnClick(Sender: TObject);
+var
+  AreFieldsEmpty: Boolean;
+begin
+  AreFieldsEmpty:=(
+  (upd_act_out_id_dbl.Text='')
+  );
+  if AreFieldsEmpty then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.upd_act_out do
+      begin
+        if not dm.Connection.Connected then
+          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
+           Parameters.ParamByName('@exit_akt_id').Value :=
+           dm.act_outQuery.FieldByName('exit_akt_id').AsString;
+           Parameters.ParamByName('@on_balance').Value:=on_balance_st;
+           ExecProc;
+           dm.act_outQuery.Close;
+           dm.act_outQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise; // Повторное выбрасывание исключения
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise;
+end;
+end;
+end;
+
+procedure TFrm_act_out.Upd_act_out_inpChange(Sender: TObject);
+begin
+    if Upd_act_out_inp.ItemIndex=0 then  on_balance_st:=0
+     else  on_balance_st:=1;
 end;
 
 end.

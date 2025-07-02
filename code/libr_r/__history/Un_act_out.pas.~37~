@@ -45,11 +45,18 @@ type
     aboutactoutPC: TPageControl;
     aboutactoutPCTabone: TTabSheet;
     aboutactoutPCTabtwo: TTabSheet;
-    aboutactoutGr: TGroupBox;
+    aboutactoutGr_one: TGroupBox;
     ins_akt_out_akt_data_lbl: TStaticText;
     ins_akt_out_akt_data_inp: TDateTimePicker;
     akt_out_akt_s_nom_inp: TLabeledEdit;
-    DBGrid1: TDBGrid;
+    ins_act_out_grid: TDBGrid;
+    ins_akt_out_s_doc_data_lbl: TStaticText;
+    ins_akt_out_s_doc_data_inp: TDateTimePicker;
+    aboutactoutGr_two: TGroupBox;
+    ins_akt_out_ex_cost_inp: TLabeledEdit;
+    ins_akt_out_balance_lbl: TStaticText;
+    ins_akt_out_balance_cb: TComboBox;
+    ins_akt_kind_id_inp: TLabeledEdit;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -58,6 +65,7 @@ type
     procedure act_out_date_radioClick(Sender: TObject);
     procedure act_out_balance_cbClick(Sender: TObject);
     procedure act_out_reset_RadioClick(Sender: TObject);
+    procedure ins_act_out_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -66,6 +74,7 @@ type
 
 var
   Frm_act_out: TFrm_act_out;
+  on_balance_st:Integer;
 
 implementation
 
@@ -127,6 +136,7 @@ begin
     'select'+' '+
    'akt_out.exit_akt_id,'+''+
    'akt_out.akt_data,'+' '+
+   'akt_out.date_s_doc,'+' '+
    'akt_out.akt_s_nom,'+' '+
    'akt_out.doc_kind_id,'+' '+
    'case when akt_out.on_balance=0 then ''На балансе'' else ''Снят с баланса'' end as balance,'+' '+
@@ -168,6 +178,7 @@ begin
     'select'+' '+
    'akt_out.exit_akt_id,'+''+
    'akt_out.akt_data,'+' '+
+   'akt_out.date_s_doc,'+' '+
    'akt_out.akt_s_nom,'+' '+
    'akt_out.doc_kind_id,'+' '+
    'case when akt_out.on_balance=0 then ''На балансе'' else ''Снят с баланса'' end as balance,'+' '+
@@ -286,6 +297,7 @@ begin
     'select'+' '+
    'akt_out.exit_akt_id,'+''+
    'akt_out.akt_data,'+' '+
+   'akt_out.date_s_doc,'+' '+
    'akt_out.akt_s_nom,'+' '+
    'akt_out.doc_kind_id,'+' '+
    'case when akt_out.on_balance=0 then ''На балансе'' else ''Снят с баланса'' end as balance,'+' '+
@@ -371,6 +383,73 @@ begin
   UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
   UniformizeComponentAnchors(Self);
   LoadFormState(Self);
+  on_balance_st:=0;
+end;
+
+procedure TFrm_act_out.ins_act_out_btnClick(Sender: TObject);
+const
+  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+  PriceText: string;
+  PriceValue: Int64;
+begin
+  AreFieldsEmpty:=(
+  (Trim(akt_out_akt_s_nom_inp.Text)='')or
+  (Trim(ins_akt_kind_id_inp.Text)='')or
+  (Trim(ins_akt_out_ex_cost_inp.Text)='')
+  );
+  AreFieldsValid:=(
+  ValidateComponentText(akt_out_akt_s_nom_inp,AllowedChars)and
+  ValidateComponentText(ins_akt_kind_id_inp,AllowedChars)and
+  IsDigitsOnly(ins_akt_out_ex_cost_inp.Text)
+  );
+  if AreFieldsEmpty or not AreFieldsValid then
+  begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+  end;
+  try
+      with dm.ins_akt_out do
+      begin
+      PriceValue:=StrToInt64(ins_akt_out_ex_cost_inp.Text);
+        if not dm.Connection.Connected then
+          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
+           Parameters.ParamByName('@akt_data').Value :=
+           ins_akt_out_akt_data_inp.date;
+           Parameters.ParamByName('@akt_s_nom').Value:=
+           akt_out_akt_s_nom_inp.Text;
+           Parameters.ParamByName('@doc_kind_id').Value:=
+           ins_akt_kind_id_inp.Text;
+           Parameters.ParamByName('@on_balance').Value:=on_balance_st;
+           ExecProc;
+           dm.act_outQuery.Close;
+           dm.act_outQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise; // Повторное выбрасывание исключения
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise;
+end;
+end;
 end;
 
 end.

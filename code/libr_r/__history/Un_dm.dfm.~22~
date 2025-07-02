@@ -358,6 +358,7 @@ object DM: TDM
     Top = 384
   end
   object act_outQuery: TADOQuery
+    Active = True
     Connection = Connection
     CursorType = ctStatic
     Parameters = <>
@@ -484,23 +485,8 @@ object DM: TDM
     Left = 508
     Top = 328
   end
-  object del_act_out: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'del_act_out;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@exit_akt_id'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = 0
-      end>
+  object ADOStoredProc4: TADOStoredProc
+    Parameters = <>
     Left = 520
     Top = 392
   end

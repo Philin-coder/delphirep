@@ -31,7 +31,7 @@ type
     sel_akt_out_by_kind: TADOStoredProc;
     ins_akt_out: TADOStoredProc;
     upd_act_out: TADOStoredProc;
-    del_act_out: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public
