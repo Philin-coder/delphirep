@@ -532,7 +532,7 @@ object DM: TDM
       '   doc.doc_lang'
       '   from doc '
       '   inner join akt_in on akt_in.akt_in_id=doc.akt_in_id'
-      '   inner join doc_kind on doc_kind.doc_kind_id=doc.doc_kind_id'
+      '   inner join doc_kind on doc_kind.doc_kind_id=doc.doc_id'
       '   where 1=1')
     Left = 600
     Top = 72
@@ -643,49 +643,13 @@ object DM: TDM
     Left = 600
     Top = 272
   end
-  object upd_doc: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'upd_doc;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@doc_id'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = 0
-      end
-      item
-        Name = '@doc_bbk'
-        Attributes = [paNullable]
-        DataType = ftWideString
-        Size = 255
-      end>
+  object ADOStoredProc3: TADOStoredProc
+    Parameters = <>
     Left = 592
     Top = 328
   end
-  object del_doc: TADOStoredProc
-    Connection = Connection
-    ProcedureName = 'del_doc;1'
-    Parameters = <
-      item
-        Name = '@RETURN_VALUE'
-        DataType = ftInteger
-        Direction = pdReturnValue
-        Precision = 10
-      end
-      item
-        Name = '@doc_id'
-        Attributes = [paNullable]
-        DataType = ftInteger
-        Precision = 10
-        Value = 0
-      end>
+  object ADOStoredProc4: TADOStoredProc
+    Parameters = <>
     Left = 592
     Top = 392
   end

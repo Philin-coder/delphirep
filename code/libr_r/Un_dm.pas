@@ -32,6 +32,12 @@ type
     ins_akt_out: TADOStoredProc;
     upd_act_out: TADOStoredProc;
     del_act_out: TADOStoredProc;
+    docQuery: TADOQuery;
+    docDS: TDataSource;
+    sel_doc_by_theme: TADOStoredProc;
+    ins_doc: TADOStoredProc;
+    upd_doc: TADOStoredProc;
+    del_doc: TADOStoredProc;
   private
     { Private declarations }
   public

@@ -21,7 +21,7 @@ object Frm_act_out: TFrm_act_out
     Top = 0
     Width = 1045
     Height = 612
-    ActivePage = delTab
+    ActivePage = SelTab
     Align = alClient
     TabOrder = 0
     object SelTab: TTabSheet
@@ -337,7 +337,6 @@ object Frm_act_out: TFrm_act_out
             Align = alClient
             Caption = #1042#1074#1086#1076' '#1076#1072#1085#1085#1099#1093
             TabOrder = 0
-            ExplicitTop = -3
             object ins_akt_out_ex_cost_inp: TLabeledEdit
               Left = 19
               Top = 128

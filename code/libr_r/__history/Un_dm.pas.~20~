@@ -20,6 +20,24 @@ type
     ins_c: TADOStoredProc;
     upd_c: TADOStoredProc;
     del_c: TADOStoredProc;
+    Akt_inQuery: TADOQuery;
+    Akt_inDS: TDataSource;
+    sel_akt_in_by_akt_soure: TADOStoredProc;
+    ins_akt_in: TADOStoredProc;
+    upd_akt_in: TADOStoredProc;
+    del_akt_in: TADOStoredProc;
+    act_outQuery: TADOQuery;
+    actoutDS: TDataSource;
+    sel_akt_out_by_kind: TADOStoredProc;
+    ins_akt_out: TADOStoredProc;
+    upd_act_out: TADOStoredProc;
+    del_act_out: TADOStoredProc;
+    docQuery: TADOQuery;
+    docDS: TDataSource;
+    sel_doc_by_theme: TADOStoredProc;
+    ADOStoredProc2: TADOStoredProc;
+    ADOStoredProc3: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public

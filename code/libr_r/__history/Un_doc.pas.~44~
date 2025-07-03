@@ -1,0 +1,472 @@
+unit Un_doc;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ComCtrls, StdCtrls, Grids, DBGrids, ExtCtrls,ADODB,db, DBCtrls;
+
+type
+  TFrm_doc = class(TForm)
+    docPC: TPageControl;
+    SelTab: TTabSheet;
+    insTab: TTabSheet;
+    updTab: TTabSheet;
+    delTab: TTabSheet;
+    doc_inp_Box: TGroupBox;
+    doc_Data_Box: TGroupBox;
+    doc_grouper_Box: TGroupBox;
+    doc_btn_Box: TGroupBox;
+    doc_sel_btn: TButton;
+    sel_doc_grid: TDBGrid;
+    doc_theme_radio: TRadioButton;
+    doc_reset_Radio: TRadioButton;
+    docCondEdit: TLabeledEdit;
+    docfndEdit: TLabeledEdit;
+    ins_doc_data_Box: TGroupBox;
+    ins_doc_btn_Box: TGroupBox;
+    ins_doc_btn: TButton;
+    Upd_doc_data_Box: TGroupBox;
+    Upd_doc_inp_Box: TGroupBox;
+    Upd_doc_btn_Box: TGroupBox;
+    Upd_doc_btn: TButton;
+    upd_doc_bbk_inp: TLabeledEdit;
+    upd_doc_id_dbl: TDBLookupComboBox;
+    upd_doc_id_lbl: TStaticText;
+    doc_del_inp_Box: TGroupBox;
+    doc_del_btn_Box: TGroupBox;
+    doc_del_data_Box: TGroupBox;
+    doc_del_inp_lbl: TStaticText;
+    doc_del_inp_dbl: TDBLookupComboBox;
+    doc_del_btn: TButton;
+    doc_doc_save_t_Radio: TRadioButton;
+    ins_doc_Grid: TDBGrid;
+    about_docPC: TPageControl;
+    about_doc_Tab_one: TTabSheet;
+    about_doc_Tab_two: TTabSheet;
+    about_doc_TabThree: TTabSheet;
+    about_doc_inp_Box_one: TGroupBox;
+    ins_doc_act_in_lbl: TStaticText;
+    ins_doc_act_in_dbl: TDBLookupComboBox;
+    ins_doc_theme_inp: TLabeledEdit;
+    about_doc_inp_Box_two: TGroupBox;
+    ins_doc_save_t_inp: TLabeledEdit;
+    ins_doc_save_t_grader: TUpDown;
+    ins_doc_isbn_inp: TLabeledEdit;
+    about_doc_inp_Box_three: TGroupBox;
+    doc_bbk_inp: TLabeledEdit;
+    doc_cost_inp: TLabeledEdit;
+    about_doc_Tab_four: TTabSheet;
+    about_doc_Tab_five: TTabSheet;
+    about_doc_inp_Box_five: TGroupBox;
+    doc_kind_save_lbl: TStaticText;
+    doc_kind_save_inp: TComboBox;
+    ins_doc_kind_id_inp: TStaticText;
+    ins_doc_kind_id_dbl: TDBLookupComboBox;
+    about_doc_inp_Box_Six: TGroupBox;
+    doc_ammount_inp: TLabeledEdit;
+    doc_ammount_grader: TUpDown;
+    doc_lang_inp: TLabeledEdit;
+    upd_docGrid: TDBGrid;
+    Del_doc_Grid: TDBGrid;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormActivate(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure doc_sel_btnClick(Sender: TObject);
+    procedure docfndEditKeyPress(Sender: TObject; var Key: Char);
+    procedure doc_theme_radioClick(Sender: TObject);
+    procedure doc_doc_save_t_RadioClick(Sender: TObject);
+    procedure doc_reset_RadioClick(Sender: TObject);
+    procedure doc_kind_save_inpChange(Sender: TObject);
+    procedure ins_doc_btnClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_doc: TFrm_doc;
+  doc_kind_save_st:Integer;
+
+implementation
+
+uses Un_dm, Un_func;
+
+{$R *.dfm}
+
+procedure TFrm_doc.docfndEditKeyPress(Sender: TObject; var Key: Char);
+begin
+  try
+   dm.docQuery.SQL.Text:=
+   'select'+' '+
+   'doc.doc_id,'+' '+
+   'akt_in.s_doc_id,'+' '+
+   'doc.doc_theme,'+' '+
+    'doc.doc_save_t,'+' '+
+   'doc.doc_isbn,'+
+   'doc.doc_bbk,'+' '+
+   'doc.doc_cost,'+' '+
+   'case when doc.doc_kind_save=0 then ''Постояннго хранения'' else ''Временного хранения'' end as kind_save,'+' '+
+   'doc_kind.doc_kind_naim,'+' '+
+   'doc.doc_ammount,'+' '+
+   'doc.doc_lang'+' '+
+   'from doc'+' '+
+   'inner join akt_in on akt_in.akt_in_id=doc.akt_in_id'+' '+
+   'inner join doc_kind on doc_kind.doc_kind_id=doc.doc_id'+' '+
+   'where 1=1'+' '+
+  'and doc.doc_bbk like'+' '+
+   QuotedStr(Concat(docfndEdit.Text,#37));
+   dm.docQuery.close;
+   dm.docQuery.Open;
+except
+   on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка   Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка  : ' + E.Message);
+    HandleException(E);
+    raise;
+end;
+end;
+end;
+
+procedure TFrm_doc.doc_doc_save_t_RadioClick(Sender: TObject);
+begin
+    if  doc_doc_save_t_Radio.Checked=true then
+  begin
+    try
+     with dm.docQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+    'select'+' '+
+   'doc.doc_id,'+' '+
+   'akt_in.s_doc_id,'+' '+
+   'doc.doc_theme,'+' '+
+    'doc.doc_save_t,'+' '+
+   'doc.doc_isbn,'+
+   'doc.doc_bbk,'+' '+
+   'doc.doc_cost,'+' '+
+   'case when doc.doc_kind_save=0 then ''Постояннго хранения'' else ''Временного хранения'' end as kind_save,'+' '+
+   'doc_kind.doc_kind_naim,'+' '+
+   'doc.doc_ammount,'+' '+
+   'doc.doc_lang'+' '+
+   'from doc'+' '+
+   'inner join akt_in on akt_in.akt_in_id=doc.akt_in_id'+' '+
+   'inner join doc_kind on doc_kind.doc_kind_id=doc.doc_kind_id'+' '+
+   'where 1=1'+' '+
+    'order by doc.doc_save_t asc';
+      Open;
+     end;
+    except
+        on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    Raise;
+  end;
+end;
+end;
+end;
+
+procedure TFrm_doc.doc_kind_save_inpChange(Sender: TObject);
+begin
+  if doc_kind_save_inp.ItemIndex=0 then doc_kind_save_st:=0
+    else doc_kind_save_st:=1;
+end;
+
+procedure TFrm_doc.doc_reset_RadioClick(Sender: TObject);
+var i,j,c:Integer;
+begin
+   try
+  if doc_reset_Radio.Checked then
+  begin
+    with Frm_doc do
+    begin
+      for I := 0 to ComponentCount - 1 do
+      begin
+        if Components[I] is TLabeledEdit then
+        begin
+          (Components[I] as TLabeledEdit).Clear;
+        end;
+      end;
+      for c := 0 to ComponentCount - 1 do
+      begin
+        if Components[c] is TCheckBox then
+        begin
+          (Components[c] as TCheckBox).Checked := False;
+        end;
+      end;
+      for j := 0 to ComponentCount - 1 do
+      begin
+        if Components[j] is TRadioButton then
+        begin
+          (Components[j] as TRadioButton).Checked := False;
+        end;
+      end;
+    end;
+    with dm.docQuery do
+    begin
+      Close;
+      sql.Clear;
+      sql.Text :=
+    'select'+' '+
+   'doc.doc_id,'+' '+
+   'akt_in.s_doc_id,'+' '+
+   'doc.doc_theme,'+' '+
+    'doc.doc_save_t,'+' '+
+   'doc.doc_isbn,'+
+   'doc.doc_bbk,'+' '+
+   'doc.doc_cost,'+' '+
+   'case when doc.doc_kind_save=0 then ''Постояннго хранения'' else ''Временного хранения'' end as kind_save,'+' '+
+   'doc_kind.doc_kind_naim,'+' '+
+   'doc.doc_ammount,'+' '+
+   'doc.doc_lang'+' '+
+   'from doc'+' '+
+   'inner join akt_in on akt_in.akt_in_id=doc.akt_in_id'+' '+
+   'inner join doc_kind on doc_kind.doc_kind_id=doc.doc_id'+' '+
+   'where 1=1';
+      Open;
+    end;
+  end;
+except
+  on E: EDatabaseError do
+  begin
+    ShowMessage('Ощибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+end;
+end;
+
+procedure TFrm_doc.doc_sel_btnClick(Sender: TObject);
+begin
+   try
+    if not DM.Connection.Connected then
+      raise EDatabaseError.Create('Соединение с базой не установлено ',4001);
+    with DM.sel_doc_by_theme do
+    begin
+      Close;
+      Parameters.ParamByName('@doc_theme').Value :=docCondEdit.Text;
+      Open;
+       DM.docQuery.Recordset:=dm.sel_doc_by_theme.Recordset;
+    end;
+  except
+  on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка   Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    Raise;
+  end;
+end;
+end;
+
+procedure TFrm_doc.doc_theme_radioClick(Sender: TObject);
+begin
+      if  doc_theme_radio.Checked=true then
+  begin
+    try
+     with dm.docQuery do
+     begin
+      close;
+      sql.Clear;
+      sql.Text:=
+    'select'+' '+
+   'doc.doc_id,'+' '+
+   'akt_in.s_doc_id,'+' '+
+   'doc.doc_theme,'+' '+
+    'doc.doc_save_t,'+' '+
+   'doc.doc_isbn,'+
+   'doc.doc_bbk,'+' '+
+   'doc.doc_cost,'+' '+
+   'case when doc.doc_kind_save=0 then ''Постояннго хранения'' else ''Временного хранения'' end as kind_save,'+' '+
+   'doc_kind.doc_kind_naim,'+' '+
+   'doc.doc_ammount,'+' '+
+   'doc.doc_lang'+' '+
+   'from doc'+' '+
+   'inner join akt_in on akt_in.akt_in_id=doc.akt_in_id'+' '+
+   'inner join doc_kind on doc_kind.doc_kind_id=doc.doc_kind_id'+' '+
+   'where 1=1'+' '+
+    'order by doc.doc_theme asc';
+      Open;
+     end;
+    except
+        on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка  Ole: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E);
+    Raise;
+  end;
+end;
+end;
+end;
+
+procedure TFrm_doc.FormActivate(Sender: TObject);
+begin
+  dm.docQuery.Open;
+  dm.kindQuery.Open;
+  dm.Akt_inQuery.Open;
+  AdjustDBGridColumnWidths('Frm_doc',6000, 10);
+end;
+
+procedure TFrm_doc.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  SaveFormState(Self);
+  CloseAllQueriesOnDataModule('dm');
+  doc_kind_save_st:=0;
+end;
+
+procedure TFrm_doc.FormCreate(Sender: TObject);
+begin
+  UpdateFormShowHint('Frm_doc');
+  UniformizeButtonsSize(Self,  273, 25);
+  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+  UniformizeComponentAnchors(Self);
+  LoadFormState(Self);
+  doc_kind_save_st:=0;
+end;
+
+procedure TFrm_doc.ins_doc_btnClick(Sender: TObject);
+const
+  AllowedChars: TSysCharSet = ['А'..'Я', 'а'..'я', '0'..'9', ' ', '-', '.'];
+var
+  AreFieldsEmpty: Boolean;
+  AreFieldsValid: Boolean;
+  PriceText: string;
+  PriceValue: Int64;
+begin
+  PriceText:=doc_cost_inp.Text;
+  AreFieldsEmpty:=(
+  (ins_doc_act_in_dbl.Text='')or
+  (Trim(ins_doc_theme_inp.Text)='')or
+  (ins_doc_save_t_grader.Position=0)or
+  (Trim(ins_doc_isbn_inp.Text)='')or
+  (Trim(doc_bbk_inp.Text)='')or
+  (Trim(doc_cost_inp.Text)='')or
+  (ins_doc_kind_id_dbl.Text='')or
+  (doc_ammount_grader.Position=0)or
+  (Trim(doc_lang_inp.Text)='')
+ );
+  AreFieldsValid:=(
+  ValidateComponentText(ins_doc_theme_inp,AllowedChars)and
+  ValidateComponentText(ins_doc_isbn_inp,AllowedChars)and
+  ValidateComponentText(doc_bbk_inp,AllowedChars)and
+  IsDigitsOnly(doc_cost_inp.Text)and
+  ValidateComponentText(doc_lang_inp,AllowedChars)
+ );
+ if AreFieldsEmpty or not AreFieldsValid then
+ begin
+    MessageDlg('Ошибка: одно из полей пустое или текст не прошел проверку.',
+    mtError, [mbOK], 0);
+    Beep;
+    Exit;
+ end;
+ try
+      with dm.ins_doc do
+      begin
+      PriceValue:=StrToInt64(PriceText);
+        if not dm.Connection.Connected then
+          raise EDatabaseError.Create('Соединение с базой не установлено',4001);
+           Parameters.ParamByName('@akt_in_id').Value :=
+           dm.Akt_inQuery.FieldByName('akt_in_id').AsString;
+           Parameters.ParamByName('@doc_theme').Value :=ins_doc_theme_inp.Text;
+           Parameters.ParamByName('@doc_save_t').Value:=
+           ins_doc_save_t_grader.Position;
+           Parameters.ParamByName('@doc_isbn').Value:=ins_doc_isbn_inp.Text;
+           Parameters.ParamByName('@doc_bbk').Value:=doc_bbk_inp.Text;
+           Parameters.ParamByName('@doc_cost').Value:=PriceValue;
+           Parameters.ParamByName('@doc_kind_save').Value:=doc_kind_save_st;
+           Parameters.ParamByName('@doc_kind_id').Value:=
+           dm.kindQuery.FieldByName('doc_kind_id').AsString;
+           Parameters.ParamByName('@doc_ammount').Value:=
+           doc_ammount_grader.Position;
+           Parameters.ParamByName('@doc_lang').Value:=doc_lang_inp.Text;
+           ExecProc;
+           dm.docQuery.Close;
+           dm.docQuery.Open;
+        MessageDlg('Изменения внесены', mtInformation, [mbOK], 0);
+      end;
+    except
+      on E: EDatabaseError do
+  begin
+    ShowMessage('Ошибка базы данных: ' + E.Message);
+    HandleException(E);
+    raise;
+  end;
+  on E: EOleError do
+  begin
+    ShowMessage('Ошибка COM: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise; // Повторное выбрасывание исключения
+  end;
+  on E: Exception do
+  begin
+    ShowMessage('Общая ошибка: ' + E.Message);
+    HandleException(E); // Логирование ошибки
+    raise;
+end;
+end;
+end;
+
+end.
