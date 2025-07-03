@@ -159,7 +159,7 @@ end;
 procedure TFrm_main.Exempl_itemClick(Sender: TObject);
 begin
   try
-    UpdateFormProperties('frm_ex', 'Информация об экземпляре',
+    UpdateFormProperties('Frm_ex', 'Информация об экземпляре',
       clBtnFace, 1024, 768);
     Frm_ex.ShowModal;
   except

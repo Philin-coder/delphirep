@@ -1,7 +1,7 @@
 object DM: TDM
   OldCreateOrder = False
   Height = 475
-  Width = 683
+  Width = 796
   object Connection: TADOConnection
     Connected = True
     ConnectionString = 
@@ -687,6 +687,54 @@ object DM: TDM
         Value = 0
       end>
     Left = 592
+    Top = 392
+  end
+  object ex_Query: TADOQuery
+    Connection = Connection
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      'exempl.ex_inv_id,'
+      'exempl.ex_data_pr,'
+      'exempl.ex_data_out,'
+      'doc.doc_theme,'
+      'doc_kind.doc_kind_naim,'
+      'akt_out.akt_s_nom,'
+      'exempl.ex_test_data,'
+      
+        'case when exempl.ex_test_mark=0 then '#39#1055#1088#1086#1074#1077#1088#1077#1085#39'  else '#39#1053#1077' '#1087#1088#1086#1074#1077#1088 +
+        #1077#1085#39' end as test_mark'
+      'from exempl '
+      'inner join doc on exempl.doc_id=doc.doc_id'
+      'inner join doc_kind on exempl.c_exit_id=doc_kind.doc_kind_id'
+      'inner join akt_out on exempl.exit_akt_id=akt_out.exit_akt_id'
+      'where 1=1')
+    Left = 704
+    Top = 72
+  end
+  object ex_DS: TDataSource
+    DataSet = ex_Query
+    Left = 712
+    Top = 144
+  end
+  object ADOStoredProc1: TADOStoredProc
+    Parameters = <>
+    Left = 720
+    Top = 200
+  end
+  object ADOStoredProc2: TADOStoredProc
+    Parameters = <>
+    Left = 720
+    Top = 272
+  end
+  object ADOStoredProc3: TADOStoredProc
+    Parameters = <>
+    Left = 720
+    Top = 328
+  end
+  object ADOStoredProc4: TADOStoredProc
+    Parameters = <>
+    Left = 720
     Top = 392
   end
 end

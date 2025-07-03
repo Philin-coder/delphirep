@@ -38,6 +38,12 @@ type
     ins_doc: TADOStoredProc;
     upd_doc: TADOStoredProc;
     del_doc: TADOStoredProc;
+    ex_Query: TADOQuery;
+    ex_DS: TDataSource;
+    ADOStoredProc1: TADOStoredProc;
+    ADOStoredProc2: TADOStoredProc;
+    ADOStoredProc3: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
   private
     { Private declarations }
   public
