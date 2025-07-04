@@ -572,6 +572,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@akt_in_id'
@@ -585,6 +586,7 @@ object DM: TDM
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 255
+        Value = Null
       end
       item
         Name = '@doc_save_t'
@@ -598,12 +600,14 @@ object DM: TDM
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 255
+        Value = Null
       end
       item
         Name = '@doc_bbk'
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 255
+        Value = Null
       end
       item
         Name = '@doc_cost'
@@ -639,6 +643,7 @@ object DM: TDM
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 255
+        Value = Null
       end>
     Left = 600
     Top = 272
@@ -652,6 +657,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@doc_id'
@@ -665,6 +671,7 @@ object DM: TDM
         Attributes = [paNullable]
         DataType = ftWideString
         Size = 255
+        Value = Null
       end>
     Left = 592
     Top = 328
@@ -678,6 +685,7 @@ object DM: TDM
         DataType = ftInteger
         Direction = pdReturnValue
         Precision = 10
+        Value = Null
       end
       item
         Name = '@doc_id'
@@ -691,6 +699,7 @@ object DM: TDM
   end
   object ex_Query: TADOQuery
     Connection = Connection
+    CursorType = ctStatic
     Parameters = <>
     SQL.Strings = (
       'select '
@@ -698,7 +707,7 @@ object DM: TDM
       'exempl.ex_data_pr,'
       'exempl.ex_data_out,'
       'doc.doc_theme,'
-      'doc_kind.doc_kind_naim,'
+      'c_exit.c_exit_desc,'
       'akt_out.akt_s_nom,'
       'exempl.ex_test_data,'
       
@@ -706,7 +715,7 @@ object DM: TDM
         #1077#1085#39' end as test_mark'
       'from exempl '
       'inner join doc on exempl.doc_id=doc.doc_id'
-      'inner join doc_kind on exempl.c_exit_id=doc_kind.doc_kind_id'
+      'inner join c_exit on exempl.c_exit_id=c_exit.c_exit_id'
       'inner join akt_out on exempl.exit_akt_id=akt_out.exit_akt_id'
       'where 1=1')
     Left = 704
@@ -717,23 +726,128 @@ object DM: TDM
     Left = 712
     Top = 144
   end
-  object ADOStoredProc1: TADOStoredProc
-    Parameters = <>
+  object sel_ex_by_exit_desc: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_ex_by_exit_desc;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@c_exit_desc'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 255
+      end>
     Left = 720
     Top = 200
   end
-  object ADOStoredProc2: TADOStoredProc
-    Parameters = <>
+  object ins_ex: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'ins_ex;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@ex_data_pr'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end
+      item
+        Name = '@ex_data_out'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end
+      item
+        Name = '@doc_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@c_exit_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@exit_akt_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@ex_test_data'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end
+      item
+        Name = '@ex_test_mark'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
     Left = 720
     Top = 272
   end
-  object ADOStoredProc3: TADOStoredProc
-    Parameters = <>
+  object upd_ex: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_ex;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@ex_inv_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@ex_test_mark'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
     Left = 720
     Top = 328
   end
-  object ADOStoredProc4: TADOStoredProc
-    Parameters = <>
+  object del_ex: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'del_ex;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@ex_inv_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
     Left = 720
     Top = 392
   end

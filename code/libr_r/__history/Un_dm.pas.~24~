@@ -1,0 +1,60 @@
+unit Un_dm;
+
+interface
+
+uses
+  SysUtils, Classes, DB, ADODB;
+
+type
+  TDM = class(TDataModule)
+    Connection: TADOConnection;
+    kindQuery: TADOQuery;
+    KindDS: TDataSource;
+    sel_kind_by_name: TADOStoredProc;
+    ins_kind: TADOStoredProc;
+    upd_kind: TADOStoredProc;
+    del_kind: TADOStoredProc;
+    exit_cQuery: TADOQuery;
+    exit_cDS: TDataSource;
+    sel_c_exit_by_desc: TADOStoredProc;
+    ins_c: TADOStoredProc;
+    upd_c: TADOStoredProc;
+    del_c: TADOStoredProc;
+    Akt_inQuery: TADOQuery;
+    Akt_inDS: TDataSource;
+    sel_akt_in_by_akt_soure: TADOStoredProc;
+    ins_akt_in: TADOStoredProc;
+    upd_akt_in: TADOStoredProc;
+    del_akt_in: TADOStoredProc;
+    act_outQuery: TADOQuery;
+    actoutDS: TDataSource;
+    sel_akt_out_by_kind: TADOStoredProc;
+    ins_akt_out: TADOStoredProc;
+    upd_act_out: TADOStoredProc;
+    del_act_out: TADOStoredProc;
+    docQuery: TADOQuery;
+    docDS: TDataSource;
+    sel_doc_by_theme: TADOStoredProc;
+    ins_doc: TADOStoredProc;
+    upd_doc: TADOStoredProc;
+    del_doc: TADOStoredProc;
+    ex_Query: TADOQuery;
+    ex_DS: TDataSource;
+    sel_ex_by_exit_desc: TADOStoredProc;
+    ADOStoredProc2: TADOStoredProc;
+    ADOStoredProc3: TADOStoredProc;
+    ADOStoredProc4: TADOStoredProc;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  DM: TDM;
+
+implementation
+
+{$R *.dfm}
+
+end.

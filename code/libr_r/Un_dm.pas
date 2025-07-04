@@ -40,10 +40,10 @@ type
     del_doc: TADOStoredProc;
     ex_Query: TADOQuery;
     ex_DS: TDataSource;
-    ADOStoredProc1: TADOStoredProc;
-    ADOStoredProc2: TADOStoredProc;
-    ADOStoredProc3: TADOStoredProc;
-    ADOStoredProc4: TADOStoredProc;
+    sel_ex_by_exit_desc: TADOStoredProc;
+    ins_ex: TADOStoredProc;
+    upd_ex: TADOStoredProc;
+    del_ex: TADOStoredProc;
   private
     { Private declarations }
   public
