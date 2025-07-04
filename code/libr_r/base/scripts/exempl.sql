@@ -1,7 +1,7 @@
 USE [libr_r]
 GO
 
-/****** Object:  Table [dbo].[exempl]    Script Date: 28.06.2025 16:02:12 ******/
+/****** Object:  Table [dbo].[exempl]    Script Date: 04.07.2025 17:11:49 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -31,6 +31,15 @@ ON DELETE CASCADE
 GO
 
 ALTER TABLE [dbo].[exempl] CHECK CONSTRAINT [FK_exempl_akt_out]
+GO
+
+ALTER TABLE [dbo].[exempl]  WITH CHECK ADD  CONSTRAINT [FK_exempl_c_exit] FOREIGN KEY([c_exit_id])
+REFERENCES [dbo].[c_exit] ([c_exit_id])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+
+ALTER TABLE [dbo].[exempl] CHECK CONSTRAINT [FK_exempl_c_exit]
 GO
 
 ALTER TABLE [dbo].[exempl]  WITH CHECK ADD  CONSTRAINT [FK_exempl_doc1] FOREIGN KEY([doc_id])

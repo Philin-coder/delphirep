@@ -18,6 +18,7 @@ type
     act_out_item: TMenuItem;
     doc_item: TMenuItem;
     Exempl_item: TMenuItem;
+    reporrt_item: TMenuItem;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -27,6 +28,7 @@ type
     procedure act_out_itemClick(Sender: TObject);
     procedure doc_itemClick(Sender: TObject);
     procedure Exempl_itemClick(Sender: TObject);
+    procedure reporrt_itemClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -38,7 +40,8 @@ var
 
 implementation
 
-uses Un_dm, Un_func, Un_kind, Un_c_exit, Un_act_in, Un_act_out, Un_doc, Un_ex;
+uses Un_dm, Un_func, Un_kind, Un_c_exit, Un_act_in, Un_act_out, Un_doc, Un_ex,
+  Un_report;
 
 {$R *.dfm}
 
@@ -75,6 +78,25 @@ begin
       HandleException(E);
       if Assigned(Frm_kind) then
         Frm_kind.Free;
+      raise;
+    end;
+  end;
+end;
+
+procedure TFrm_main.reporrt_itemClick(Sender: TObject);
+begin
+  try
+    UpdateFormProperties('Frm_report', 'Форма работы с отчетностью',
+      clBtnFace, 1024, 768);
+    Frm_report.ShowModal;
+  except
+    on E: Exception do
+    begin
+      if not (E is EMyException) then
+        raise EDatabaseError.Create('Ошибка при работе с формой отчета', 3001);
+      HandleException(E);
+      if Assigned(Frm_report) then
+        Frm_report.Free;
       raise;
     end;
   end;

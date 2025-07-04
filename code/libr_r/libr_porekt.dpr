@@ -10,6 +10,7 @@ uses
   Un_act_out in 'Un_act_out.pas' {Frm_act_out},
   Un_doc in 'Un_doc.pas' {Frm_doc},
   Un_ex in 'Un_ex.pas' {Frm_ex},
+  Un_report in 'Un_report.pas' {Frm_report},
   Un_kind in 'Un_kind.pas' {Frm_kind};
 
 {$R *.res}
@@ -24,6 +25,7 @@ begin
   Application.CreateForm(TFrm_act_out, Frm_act_out);
   Application.CreateForm(TFrm_doc, Frm_doc);
   Application.CreateForm(TFrm_ex, Frm_ex);
+  Application.CreateForm(TFrm_report, Frm_report);
   Application.CreateForm(TFrm_kind, Frm_kind);
   Application.Run;
 end.

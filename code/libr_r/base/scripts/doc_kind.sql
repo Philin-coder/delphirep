@@ -1,7 +1,7 @@
 USE [libr_r]
 GO
 
-/****** Object:  Table [dbo].[doc_kind]    Script Date: 28.06.2025 16:01:50 ******/
+/****** Object:  Table [dbo].[doc_kind]    Script Date: 04.07.2025 17:11:23 ******/
 SET ANSI_NULLS ON
 GO
 

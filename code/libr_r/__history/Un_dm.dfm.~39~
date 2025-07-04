@@ -1,0 +1,907 @@
+object DM: TDM
+  OldCreateOrder = False
+  Height = 475
+  Width = 903
+  object Connection: TADOConnection
+    Connected = True
+    ConnectionString = 
+      'Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security In' +
+      'fo=False;Initial Catalog=libr_r'
+    LoginPrompt = False
+    Provider = 'SQLOLEDB.1'
+    Left = 32
+    Top = 16
+  end
+  object kindQuery: TADOQuery
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      ' doc_kind.doc_kind_id,'
+      ' doc_kind.doc_kind_naim '
+      'from doc_kind '
+      'where 1=1')
+    Left = 88
+    Top = 88
+  end
+  object KindDS: TDataSource
+    DataSet = kindQuery
+    Left = 96
+    Top = 152
+  end
+  object sel_kind_by_name: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_kind_by_name;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@doc_kind_naim'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 255
+        Value = Null
+      end>
+    Left = 112
+    Top = 216
+  end
+  object ins_kind: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'ins_kind;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@doc_kind_naim'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 255
+        Value = Null
+      end>
+    Left = 112
+    Top = 264
+  end
+  object upd_kind: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_kind;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@doc_kind_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@doc_kind_naim'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 255
+        Value = Null
+      end>
+    Left = 112
+    Top = 328
+  end
+  object del_kind: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'del_kind;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@doc_kind_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 112
+    Top = 384
+  end
+  object exit_cQuery: TADOQuery
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      ' c_exit.c_exit_id,'
+      ' c_exit.c_exit_desc '
+      ' from c_exit '
+      ' where 1=1')
+    Left = 192
+    Top = 88
+  end
+  object exit_cDS: TDataSource
+    DataSet = exit_cQuery
+    Left = 208
+    Top = 160
+  end
+  object sel_c_exit_by_desc: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_c_exit_by_desc;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@c_exit_desc'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 255
+        Value = Null
+      end>
+    Left = 216
+    Top = 216
+  end
+  object ins_c: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'ins_c;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@c_exit_desc'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 255
+        Value = Null
+      end>
+    Left = 224
+    Top = 272
+  end
+  object upd_c: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_c;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@c_exit_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@c_exit_desc'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 255
+        Value = Null
+      end>
+    Left = 224
+    Top = 320
+  end
+  object del_c: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'del_c;1'
+    Parameters = <>
+    Left = 224
+    Top = 384
+  end
+  object Akt_inQuery: TADOQuery
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      '   akt_in.akt_in_id,'
+      '   akt_in.akt_in_data,'
+      '   akt_in.akt_soure,'
+      '   akt_in.s_doc_id,'
+      '   akt_in.s_doc_date,'
+      '   akt_in.s_doc_kind'
+      '   from  akt_in '
+      '   where 1=1')
+    Left = 320
+    Top = 80
+  end
+  object Akt_inDS: TDataSource
+    DataSet = Akt_inQuery
+    Left = 328
+    Top = 136
+  end
+  object sel_akt_in_by_akt_soure: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_akt_in_by_akt_soure;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@akt_soure'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 255
+        Value = Null
+      end>
+    Left = 336
+    Top = 208
+  end
+  object ins_akt_in: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'ins_akt_in;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@akt_in_data'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+        Value = Null
+      end
+      item
+        Name = '@akt_soure'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 255
+        Value = Null
+      end
+      item
+        Name = '@s_doc_id'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 255
+        Value = Null
+      end
+      item
+        Name = '@s_doc_date'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+        Value = Null
+      end
+      item
+        Name = '@s_doc_kind'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 255
+        Value = Null
+      end>
+    Left = 344
+    Top = 264
+  end
+  object upd_akt_in: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_akt_in;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@akt_in_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@s_doc_id'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 255
+        Value = Null
+      end>
+    Left = 352
+    Top = 320
+  end
+  object del_akt_in: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'del_akt_in;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@akt_in_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 368
+    Top = 384
+  end
+  object act_outQuery: TADOQuery
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      '   akt_out.exit_akt_id,'
+      '   akt_out.akt_data,'
+      '   akt_out.date_s_doc,'
+      '   akt_out.akt_s_nom,'
+      '   akt_out.doc_kind_id,'
+      
+        '   case when akt_out.on_balance=0 then '#39#1053#1072' '#1073#1072#1083#1072#1085#1089#1077#39' else '#39#1057#1085#1103#1090' '#1089 +
+        ' '#1073#1072#1083#1072#1085#1089#1072#39' end as balance,'
+      '   akt_out.ex_cost '
+      '   from akt_out '
+      '   where 1=1'
+      ''
+      '')
+    Left = 488
+    Top = 72
+  end
+  object actoutDS: TDataSource
+    DataSet = act_outQuery
+    Left = 488
+    Top = 136
+  end
+  object sel_akt_out_by_kind: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_akt_out_by_kind;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@doc_kind_id'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 255
+        Value = Null
+      end>
+    Left = 488
+    Top = 200
+  end
+  object ins_akt_out: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'ins_akt_out;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@akt_data'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+        Value = Null
+      end
+      item
+        Name = '@akt_s_nom'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 255
+        Value = Null
+      end
+      item
+        Name = '@doc_kind_id'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 255
+        Value = Null
+      end
+      item
+        Name = '@on_balance'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@ex_cost'
+        Attributes = [paNullable]
+        DataType = ftFloat
+        NumericScale = 2
+        Precision = 10
+        Value = 0.000000000000000000
+      end
+      item
+        Name = '@date_s_doc'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+        Value = Null
+      end>
+    Left = 504
+    Top = 272
+  end
+  object upd_act_out: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_act_out;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@exit_akt_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@on_balance'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 508
+    Top = 328
+  end
+  object del_act_out: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'del_act_out;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@exit_akt_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 520
+    Top = 392
+  end
+  object docQuery: TADOQuery
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      '   doc.doc_id,'
+      '   akt_in.s_doc_id,'
+      '   doc.doc_theme,'
+      '    doc.doc_save_t,'
+      '   doc.doc_isbn,'
+      '   doc.doc_bbk,'
+      '   doc.doc_cost,'
+      
+        '   case when doc.doc_kind_save=0 then '#39#1055#1086#1089#1090#1086#1103#1085#1085#1075#1086' '#1093#1088#1072#1085#1077#1085#1080#1103#39' else' +
+        ' '#39#1042#1088#1077#1084#1077#1085#1085#1086#1075#1086' '#1093#1088#1072#1085#1077#1085#1080#1103#39' end as kind_save,'
+      '   doc_kind.doc_kind_naim,'
+      '   doc.doc_ammount,'
+      '   doc.doc_lang'
+      '   from doc '
+      '   inner join akt_in on akt_in.akt_in_id=doc.akt_in_id'
+      '   inner join doc_kind on doc_kind.doc_kind_id=doc.doc_kind_id'
+      '   where 1=1')
+    Left = 600
+    Top = 72
+  end
+  object docDS: TDataSource
+    DataSet = docQuery
+    Left = 608
+    Top = 144
+  end
+  object sel_doc_by_theme: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_doc_by_theme;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@doc_theme'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 255
+        Value = Null
+      end>
+    Left = 608
+    Top = 208
+  end
+  object ins_doc: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'ins_doc;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@akt_in_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@doc_theme'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 255
+        Value = Null
+      end
+      item
+        Name = '@doc_save_t'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@doc_isbn'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 255
+        Value = Null
+      end
+      item
+        Name = '@doc_bbk'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 255
+        Value = Null
+      end
+      item
+        Name = '@doc_cost'
+        Attributes = [paNullable]
+        DataType = ftFloat
+        NumericScale = 2
+        Precision = 10
+        Value = 0.000000000000000000
+      end
+      item
+        Name = '@doc_kind_save'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@doc_kind_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@doc_ammount'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@doc_lang'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 255
+        Value = Null
+      end>
+    Left = 600
+    Top = 272
+  end
+  object upd_doc: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_doc;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@doc_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@doc_bbk'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 255
+        Value = Null
+      end>
+    Left = 592
+    Top = 328
+  end
+  object del_doc: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'del_doc;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+        Value = Null
+      end
+      item
+        Name = '@doc_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 592
+    Top = 392
+  end
+  object ex_Query: TADOQuery
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      'exempl.ex_inv_id,'
+      'exempl.ex_data_pr,'
+      'exempl.ex_data_out,'
+      'doc.doc_theme,'
+      'c_exit.c_exit_desc,'
+      'akt_out.akt_s_nom,'
+      'exempl.ex_test_data,'
+      
+        'case when exempl.ex_test_mark=0 then '#39#1055#1088#1086#1074#1077#1088#1077#1085#39'  else '#39#1053#1077' '#1087#1088#1086#1074#1077#1088 +
+        #1077#1085#39' end as test_mark'
+      'from exempl '
+      'inner join doc on exempl.doc_id=doc.doc_id'
+      'inner join c_exit on exempl.c_exit_id=c_exit.c_exit_id'
+      'inner join akt_out on exempl.exit_akt_id=akt_out.exit_akt_id'
+      'where 1=1')
+    Left = 704
+    Top = 72
+  end
+  object ex_DS: TDataSource
+    DataSet = ex_Query
+    Left = 712
+    Top = 144
+  end
+  object sel_ex_by_exit_desc: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'sel_ex_by_exit_desc;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@c_exit_desc'
+        Attributes = [paNullable]
+        DataType = ftWideString
+        Size = 255
+      end>
+    Left = 720
+    Top = 200
+  end
+  object ins_ex: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'ins_ex;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@ex_data_pr'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end
+      item
+        Name = '@ex_data_out'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end
+      item
+        Name = '@doc_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@c_exit_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@exit_akt_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@ex_test_data'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end
+      item
+        Name = '@ex_test_mark'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 720
+    Top = 272
+  end
+  object upd_ex: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'upd_ex;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@ex_inv_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end
+      item
+        Name = '@ex_test_mark'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 720
+    Top = 328
+  end
+  object del_ex: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'del_ex;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@ex_inv_id'
+        Attributes = [paNullable]
+        DataType = ftInteger
+        Precision = 10
+        Value = 0
+      end>
+    Left = 720
+    Top = 392
+  end
+  object report1Query: TADOQuery
+    Connection = Connection
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      'exempl.ex_inv_id,'
+      'exempl.ex_data_pr,'
+      'exempl.ex_data_out,'
+      'doc.doc_theme,'
+      'c_exit.c_exit_desc,'
+      'akt_out.akt_s_nom,'
+      'exempl.ex_test_data,'
+      
+        'case when exempl.ex_test_mark=0 then '#39#1055#1088#1086#1074#1077#1088#1077#1085#39'  else '#39#1053#1077' '#1087#1088#1086#1074#1077#1088 +
+        #1077#1085#39' end as test_mark'
+      'from exempl '
+      'inner join doc on exempl.doc_id=doc.doc_id'
+      'inner join c_exit on exempl.c_exit_id=c_exit.c_exit_id'
+      'inner join akt_out on exempl.exit_akt_id=akt_out.exit_akt_id'
+      'where 1=1')
+    Left = 800
+    Top = 72
+  end
+  object report1DS: TDataSource
+    DataSet = report1Query
+    Left = 800
+    Top = 136
+  end
+  object report1: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'report1;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@d1'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end
+      item
+        Name = '@d2'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end>
+    Left = 816
+    Top = 208
+  end
+end

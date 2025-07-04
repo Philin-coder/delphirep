@@ -1,0 +1,29 @@
+program libr_porekt;
+
+uses
+  Forms,
+  Un_main in 'Un_main.pas' {Frm_main},
+  Un_func in 'Un_func.pas',
+  Un_dm in 'Un_dm.pas' {DM: TDataModule},
+  Un_c_exit in 'Un_c_exit.pas' {Frm_c_exit},
+  Un_act_in in 'Un_act_in.pas' {Frm_act_in},
+  Un_act_out in 'Un_act_out.pas' {Frm_act_out},
+  Un_doc in 'Un_doc.pas' {Frm_doc},
+  Un_ex in 'Un_ex.pas' {Frm_ex},
+  Un_kind in 'Un_kind.pas' {Frm_kind};
+
+{$R *.res}
+{$R 'resources.RES'}
+
+begin
+  Application.Initialize;
+  Application.CreateForm(TFrm_main, Frm_main);
+  Application.CreateForm(TDM, DM);
+  Application.CreateForm(TFrm_c_exit, Frm_c_exit);
+  Application.CreateForm(TFrm_act_in, Frm_act_in);
+  Application.CreateForm(TFrm_act_out, Frm_act_out);
+  Application.CreateForm(TFrm_doc, Frm_doc);
+  Application.CreateForm(TFrm_ex, Frm_ex);
+  Application.CreateForm(TFrm_kind, Frm_kind);
+  Application.Run;
+end.

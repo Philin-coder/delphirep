@@ -44,6 +44,9 @@ type
     ins_ex: TADOStoredProc;
     upd_ex: TADOStoredProc;
     del_ex: TADOStoredProc;
+    report1Query: TADOQuery;
+    report1DS: TDataSource;
+    report1: TADOStoredProc;
   private
     { Private declarations }
   public

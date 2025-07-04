@@ -1,7 +1,7 @@
 USE [libr_r]
 GO
 
-/****** Object:  Table [dbo].[c_exit]    Script Date: 28.06.2025 16:01:12 ******/
+/****** Object:  Table [dbo].[c_exit]    Script Date: 04.07.2025 17:10:50 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -10,7 +10,7 @@ GO
 
 CREATE TABLE [dbo].[c_exit](
 	[c_exit_id] [int] IDENTITY(1,1) NOT NULL,
-	[c_exit_desc] [nchar](255) NOT NULL,
+	[c_exit_desc] [nvarchar](255) NOT NULL,
  CONSTRAINT [PK_c_exit] PRIMARY KEY CLUSTERED 
 (
 	[c_exit_id] ASC

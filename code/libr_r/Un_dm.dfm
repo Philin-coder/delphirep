@@ -1,7 +1,7 @@
 object DM: TDM
   OldCreateOrder = False
   Height = 475
-  Width = 796
+  Width = 903
   object Connection: TADOConnection
     Connected = True
     ConnectionString = 
@@ -850,5 +850,59 @@ object DM: TDM
       end>
     Left = 720
     Top = 392
+  end
+  object report1Query: TADOQuery
+    Connection = Connection
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select '
+      'exempl.ex_inv_id,'
+      'exempl.ex_data_pr,'
+      'exempl.ex_data_out,'
+      'doc.doc_theme,'
+      'c_exit.c_exit_desc,'
+      'akt_out.akt_s_nom,'
+      'exempl.ex_test_data,'
+      
+        'case when exempl.ex_test_mark=0 then '#39#1055#1088#1086#1074#1077#1088#1077#1085#39'  else '#39#1053#1077' '#1087#1088#1086#1074#1077#1088 +
+        #1077#1085#39' end as test_mark'
+      'from exempl '
+      'inner join doc on exempl.doc_id=doc.doc_id'
+      'inner join c_exit on exempl.c_exit_id=c_exit.c_exit_id'
+      'inner join akt_out on exempl.exit_akt_id=akt_out.exit_akt_id'
+      'where 1=1')
+    Left = 800
+    Top = 72
+  end
+  object report1DS: TDataSource
+    DataSet = report1Query
+    Left = 800
+    Top = 136
+  end
+  object report1: TADOStoredProc
+    Connection = Connection
+    ProcedureName = 'report1;1'
+    Parameters = <
+      item
+        Name = '@RETURN_VALUE'
+        DataType = ftInteger
+        Direction = pdReturnValue
+        Precision = 10
+      end
+      item
+        Name = '@d1'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end
+      item
+        Name = '@d2'
+        Attributes = [paNullable]
+        DataType = ftDateTime
+        Size = 10
+      end>
+    Left = 816
+    Top = 208
   end
 end

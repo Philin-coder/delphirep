@@ -1,0 +1,62 @@
+unit Un_report;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ComCtrls, StdCtrls, Grids, DBGrids, ExtCtrls,ADODB,db, DBCtrls;
+
+type
+  TFrm_report = class(TForm)
+    rpPC: TPageControl;
+    SelTab: TTabSheet;
+    kind_inp_Box: TGroupBox;
+    kind_Data_Box: TGroupBox;
+    sel_kind_grid: TDBGrid;
+    rp_btn_Box: TGroupBox;
+    rp_sel_btn: TButton;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormActivate(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Frm_report: TFrm_report;
+
+implementation
+
+uses Un_dm, Un_func;
+
+{$R *.dfm}
+
+procedure TFrm_report.FormActivate(Sender: TObject);
+begin
+  dm.exit_cQuery.Open;
+  dm.docQuery.Open;
+  dm.act_outQuery.Open;
+  dm.ex_Query.Open;
+
+  AdjustDBGridColumnWidths('Frm_report',6000, 10);
+end;
+
+procedure TFrm_report.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  SaveFormState(Self);
+  CloseAllQueriesOnDataModule('dm');
+end;
+
+procedure TFrm_report.FormCreate(Sender: TObject);
+begin
+  UpdateFormShowHint('Frm_report');
+  UniformizeButtonsSize(Self,  273, 25);
+  UniformizeDBGrids(Self, 'Arial', 10, clBlack, clWhite);
+  UniformizeComponentSizes(Self, 998, 21, clWhite, 'Arial', 10);
+  UniformizeComponentAnchors(Self);
+  LoadFormState(Self);
+end;
+
+end.
