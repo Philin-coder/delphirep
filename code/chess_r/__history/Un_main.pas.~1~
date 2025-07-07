@@ -4,11 +4,10 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, Menus;
+  Dialogs;
 
 type
   TForm2 = class(TForm)
-    itemMenu: TMainMenu;
   private
     { Private declarations }
   public
